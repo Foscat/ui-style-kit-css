@@ -1,0 +1,839 @@
+/* =========================================================
+   Y2K Theme System
+   Includes:
+   - 10 color schemes
+   - light / dark / contrast modes
+   - themed UI components and utilities
+
+   Usage:
+   <body data-ui="y2k" data-theme="midnight-gold" data-mode="light">
+   <body data-ui="y2k" data-theme="midnight-gold" data-mode="dark">
+   <body data-ui="y2k" data-theme="midnight-gold" data-mode="contrast">
+========================================================= */
+
+:root {
+  --y2k-radius-xs: 0.25rem;
+  --y2k-radius-sm: 0.5rem;
+  --y2k-radius-md: 0.75rem;
+  --y2k-radius-lg: 1rem;
+  --y2k-radius-xl: 1.5rem;
+  --y2k-radius-pill: 999px;
+
+  --y2k-space-1: 0.25rem;
+  --y2k-space-2: 0.5rem;
+  --y2k-space-3: 0.75rem;
+  --y2k-space-4: 1rem;
+  --y2k-space-5: 1.25rem;
+  --y2k-space-6: 1.5rem;
+  --y2k-space-8: 2rem;
+
+  --y2k-transition-fast: 140ms ease;
+  --y2k-transition-base: 220ms ease;
+  --y2k-transition-slow: 360ms ease;
+
+  --y2k-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --y2k-font-display: Orbitron, Rajdhani, Eurostile, "Bank Gothic", var(--y2k-font-sans);
+  --y2k-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+[data-ui="y2k"][data-mode="light"] {
+  color-scheme: light;
+  --y2k-panel-alpha: 0.92;
+  --y2k-panel-strong-alpha: 0.98;
+  --y2k-panel-soft-alpha: 0.74;
+  --y2k-border-alpha: 0.7;
+  --y2k-glow-alpha: 0.24;
+  --y2k-shadow-alpha: 0.18;
+  --y2k-grid-alpha: 0.075;
+}
+
+[data-ui="y2k"][data-mode="dark"] {
+  color-scheme: dark;
+  --y2k-panel-alpha: 0.82;
+  --y2k-panel-strong-alpha: 0.94;
+  --y2k-panel-soft-alpha: 0.58;
+  --y2k-border-alpha: 0.64;
+  --y2k-glow-alpha: 0.42;
+  --y2k-shadow-alpha: 0.42;
+  --y2k-grid-alpha: 0.12;
+}
+
+[data-ui="y2k"][data-mode="contrast"] {
+  color-scheme: dark;
+  --y2k-panel-alpha: 1;
+  --y2k-panel-strong-alpha: 1;
+  --y2k-panel-soft-alpha: 0.92;
+  --y2k-border-alpha: 1;
+  --y2k-glow-alpha: 0.68;
+  --y2k-shadow-alpha: 0.56;
+  --y2k-grid-alpha: 0.18;
+}
+
+[data-ui="y2k"][data-theme][data-mode] {
+  --y2k-bg: rgb(var(--y2k-bg-rgb));
+  --y2k-surface: rgb(var(--y2k-surface-rgb) / var(--y2k-panel-alpha));
+  --y2k-surface-strong: rgb(var(--y2k-surface-strong-rgb) / var(--y2k-panel-strong-alpha));
+  --y2k-surface-soft: rgb(var(--y2k-surface-soft-rgb) / var(--y2k-panel-soft-alpha));
+  --y2k-text: rgb(var(--y2k-text-rgb));
+  --y2k-text-muted: rgb(var(--y2k-text-muted-rgb));
+  --y2k-border: rgb(var(--y2k-border-rgb) / var(--y2k-border-alpha));
+  --y2k-primary: rgb(var(--y2k-primary-rgb));
+  --y2k-primary-hover: rgb(var(--y2k-primary-hover-rgb));
+  --y2k-primary-text: rgb(var(--y2k-primary-text-rgb));
+  --y2k-secondary: rgb(var(--y2k-secondary-rgb));
+  --y2k-secondary-hover: rgb(var(--y2k-secondary-hover-rgb));
+  --y2k-secondary-text: rgb(var(--y2k-secondary-text-rgb));
+  --y2k-accent: rgb(var(--y2k-accent-rgb));
+  --y2k-success: rgb(var(--y2k-success-rgb));
+  --y2k-warning: rgb(var(--y2k-warning-rgb));
+  --y2k-danger: rgb(var(--y2k-danger-rgb));
+  --y2k-link: rgb(var(--y2k-link-rgb));
+  --y2k-focus: rgb(var(--y2k-focus-rgb));
+  --y2k-glow-primary: rgb(var(--y2k-primary-rgb) / var(--y2k-glow-alpha));
+  --y2k-glow-secondary: rgb(var(--y2k-secondary-rgb) / var(--y2k-glow-alpha));
+  --y2k-glow-accent: rgb(var(--y2k-accent-rgb) / var(--y2k-glow-alpha));
+  --y2k-shadow-sm: 0 2px 8px rgb(0 0 0 / var(--y2k-shadow-alpha));
+  --y2k-shadow-md: 0 10px 28px rgb(0 0 0 / calc(var(--y2k-shadow-alpha) + 0.05));
+  --y2k-shadow-lg: 0 22px 60px rgb(0 0 0 / calc(var(--y2k-shadow-alpha) + 0.12));
+}
+
+/* =========================================================
+   1. Midnight Gold
+========================================================= */
+
+[data-ui="y2k"][data-theme="midnight-gold"][data-mode="light"] {
+  --y2k-bg-rgb: 246 243 234;
+  --y2k-surface-rgb: 255 250 240;
+  --y2k-surface-strong-rgb: 255 255 255;
+  --y2k-surface-soft-rgb: 237 230 211;
+  --y2k-text-rgb: 23 32 51;
+  --y2k-text-muted-rgb: 95 104 121;
+  --y2k-border-rgb: 214 200 165;
+  --y2k-primary-rgb: 184 135 47;
+  --y2k-primary-hover-rgb: 148 104 31;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 34 49 79;
+  --y2k-secondary-hover-rgb: 23 36 60;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 217 164 65;
+  --y2k-success-rgb: 47 125 84;
+  --y2k-warning-rgb: 167 106 0;
+  --y2k-danger-rgb: 185 63 63;
+  --y2k-link-rgb: 138 100 31;
+  --y2k-focus-rgb: 217 164 65;
+}
+
+[data-ui="y2k"][data-theme="midnight-gold"][data-mode="dark"] {
+  --y2k-bg-rgb: 7 17 31;
+  --y2k-surface-rgb: 16 27 45;
+  --y2k-surface-strong-rgb: 23 36 58;
+  --y2k-surface-soft-rgb: 12 22 39;
+  --y2k-text-rgb: 247 237 215;
+  --y2k-text-muted-rgb: 185 192 204;
+  --y2k-border-rgb: 57 72 97;
+  --y2k-primary-rgb: 214 168 79;
+  --y2k-primary-hover-rgb: 240 200 109;
+  --y2k-primary-text-rgb: 16 16 16;
+  --y2k-secondary-rgb: 111 134 184;
+  --y2k-secondary-hover-rgb: 146 167 209;
+  --y2k-secondary-text-rgb: 8 16 29;
+  --y2k-accent-rgb: 243 210 122;
+  --y2k-success-rgb: 107 214 156;
+  --y2k-warning-rgb: 255 203 91;
+  --y2k-danger-rgb: 255 123 123;
+  --y2k-link-rgb: 243 210 122;
+  --y2k-focus-rgb: 255 214 107;
+}
+
+[data-ui="y2k"][data-theme="midnight-gold"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 8 8 8;
+  --y2k-surface-strong-rgb: 17 17 17;
+  --y2k-surface-soft-rgb: 5 5 5;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 245 245 245;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 255 212 0;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 0 217 255;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 255 234 0;
+  --y2k-success-rgb: 0 255 117;
+  --y2k-warning-rgb: 255 191 0;
+  --y2k-danger-rgb: 255 77 77;
+  --y2k-link-rgb: 0 217 255;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   2. Ocean Steel
+========================================================= */
+
+[data-ui="y2k"][data-theme="ocean-steel"][data-mode="light"] {
+  --y2k-bg-rgb: 238 248 251;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 248 253 255;
+  --y2k-surface-soft-rgb: 220 236 242;
+  --y2k-text-rgb: 16 36 46;
+  --y2k-text-muted-rgb: 78 101 112;
+  --y2k-border-rgb: 184 211 221;
+  --y2k-primary-rgb: 8 125 157;
+  --y2k-primary-hover-rgb: 6 100 126;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 57 86 107;
+  --y2k-secondary-hover-rgb: 44 67 84;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 21 184 200;
+  --y2k-success-rgb: 38 122 92;
+  --y2k-warning-rgb: 167 101 0;
+  --y2k-danger-rgb: 182 70 70;
+  --y2k-link-rgb: 6 100 126;
+  --y2k-focus-rgb: 21 184 200;
+}
+
+[data-ui="y2k"][data-theme="ocean-steel"][data-mode="dark"] {
+  --y2k-bg-rgb: 6 22 29;
+  --y2k-surface-rgb: 13 37 48;
+  --y2k-surface-strong-rgb: 20 52 66;
+  --y2k-surface-soft-rgb: 8 29 38;
+  --y2k-text-rgb: 233 251 255;
+  --y2k-text-muted-rgb: 167 192 201;
+  --y2k-border-rgb: 49 86 102;
+  --y2k-primary-rgb: 54 196 221;
+  --y2k-primary-hover-rgb: 115 227 244;
+  --y2k-primary-text-rgb: 4 18 22;
+  --y2k-secondary-rgb: 140 183 201;
+  --y2k-secondary-hover-rgb: 178 213 226;
+  --y2k-secondary-text-rgb: 6 22 29;
+  --y2k-accent-rgb: 83 240 255;
+  --y2k-success-rgb: 103 216 166;
+  --y2k-warning-rgb: 255 192 97;
+  --y2k-danger-rgb: 255 123 123;
+  --y2k-link-rgb: 115 227 244;
+  --y2k-focus-rgb: 83 240 255;
+}
+
+[data-ui="y2k"][data-theme="ocean-steel"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 8 10;
+  --y2k-surface-rgb: 0 16 20;
+  --y2k-surface-strong-rgb: 0 26 32;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 234 255 255;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 0 229 255;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 255 255 0;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 0 255 255;
+  --y2k-success-rgb: 0 255 144;
+  --y2k-warning-rgb: 255 208 0;
+  --y2k-danger-rgb: 255 59 59;
+  --y2k-link-rgb: 0 229 255;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   3. Forest Moss
+========================================================= */
+
+[data-ui="y2k"][data-theme="forest-moss"][data-mode="light"] {
+  --y2k-bg-rgb: 242 247 239;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 251 255 248;
+  --y2k-surface-soft-rgb: 226 234 219;
+  --y2k-text-rgb: 24 36 23;
+  --y2k-text-muted-rgb: 88 104 82;
+  --y2k-border-rgb: 197 211 186;
+  --y2k-primary-rgb: 63 125 58;
+  --y2k-primary-hover-rgb: 47 97 43;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 106 95 56;
+  --y2k-secondary-hover-rgb: 81 73 43;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 156 186 82;
+  --y2k-success-rgb: 47 125 84;
+  --y2k-warning-rgb: 154 106 0;
+  --y2k-danger-rgb: 173 69 69;
+  --y2k-link-rgb: 47 97 43;
+  --y2k-focus-rgb: 156 186 82;
+}
+
+[data-ui="y2k"][data-theme="forest-moss"][data-mode="dark"] {
+  --y2k-bg-rgb: 7 16 6;
+  --y2k-surface-rgb: 16 28 15;
+  --y2k-surface-strong-rgb: 26 42 24;
+  --y2k-surface-soft-rgb: 11 22 10;
+  --y2k-text-rgb: 237 247 232;
+  --y2k-text-muted-rgb: 180 197 173;
+  --y2k-border-rgb: 61 83 56;
+  --y2k-primary-rgb: 130 210 122;
+  --y2k-primary-hover-rgb: 162 237 153;
+  --y2k-primary-text-rgb: 7 16 6;
+  --y2k-secondary-rgb: 210 189 114;
+  --y2k-secondary-hover-rgb: 239 217 139;
+  --y2k-secondary-text-rgb: 20 16 6;
+  --y2k-accent-rgb: 185 239 107;
+  --y2k-success-rgb: 117 223 167;
+  --y2k-warning-rgb: 255 210 99;
+  --y2k-danger-rgb: 255 133 133;
+  --y2k-link-rgb: 162 237 153;
+  --y2k-focus-rgb: 185 239 107;
+}
+
+[data-ui="y2k"][data-theme="forest-moss"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 7 16 7;
+  --y2k-surface-strong-rgb: 11 25 11;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 240 255 240;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 108 255 95;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 255 223 0;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 182 255 0;
+  --y2k-success-rgb: 0 255 117;
+  --y2k-warning-rgb: 255 208 0;
+  --y2k-danger-rgb: 255 64 64;
+  --y2k-link-rgb: 108 255 95;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   4. Sunset Ember
+========================================================= */
+
+[data-ui="y2k"][data-theme="sunset-ember"][data-mode="light"] {
+  --y2k-bg-rgb: 255 244 236;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 255 250 246;
+  --y2k-surface-soft-rgb: 244 222 210;
+  --y2k-text-rgb: 42 23 17;
+  --y2k-text-muted-rgb: 118 88 77;
+  --y2k-border-rgb: 227 189 170;
+  --y2k-primary-rgb: 196 81 43;
+  --y2k-primary-hover-rgb: 159 63 32;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 124 63 92;
+  --y2k-secondary-hover-rgb: 97 48 71;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 230 154 58;
+  --y2k-success-rgb: 49 122 87;
+  --y2k-warning-rgb: 184 111 0;
+  --y2k-danger-rgb: 189 61 61;
+  --y2k-link-rgb: 159 63 32;
+  --y2k-focus-rgb: 230 154 58;
+}
+
+[data-ui="y2k"][data-theme="sunset-ember"][data-mode="dark"] {
+  --y2k-bg-rgb: 23 9 5;
+  --y2k-surface-rgb: 38 17 11;
+  --y2k-surface-strong-rgb: 53 25 18;
+  --y2k-surface-soft-rgb: 30 12 7;
+  --y2k-text-rgb: 255 240 232;
+  --y2k-text-muted-rgb: 208 177 165;
+  --y2k-border-rgb: 106 59 45;
+  --y2k-primary-rgb: 255 138 91;
+  --y2k-primary-hover-rgb: 255 173 138;
+  --y2k-primary-text-rgb: 26 8 3;
+  --y2k-secondary-rgb: 227 138 181;
+  --y2k-secondary-hover-rgb: 255 175 208;
+  --y2k-secondary-text-rgb: 26 7 18;
+  --y2k-accent-rgb: 255 193 102;
+  --y2k-success-rgb: 112 215 163;
+  --y2k-warning-rgb: 255 209 102;
+  --y2k-danger-rgb: 255 119 119;
+  --y2k-link-rgb: 255 173 138;
+  --y2k-focus-rgb: 255 193 102;
+}
+
+[data-ui="y2k"][data-theme="sunset-ember"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 18 4 0;
+  --y2k-surface-strong-rgb: 29 7 0;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 255 245 239;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 255 106 0;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 255 79 184;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 255 208 0;
+  --y2k-success-rgb: 0 255 144;
+  --y2k-warning-rgb: 255 191 0;
+  --y2k-danger-rgb: 255 48 48;
+  --y2k-link-rgb: 255 157 0;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   5. Royal Plum
+========================================================= */
+
+[data-ui="y2k"][data-theme="royal-plum"][data-mode="light"] {
+  --y2k-bg-rgb: 248 241 251;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 253 248 255;
+  --y2k-surface-soft-rgb: 234 220 240;
+  --y2k-text-rgb: 36 21 45;
+  --y2k-text-muted-rgb: 105 86 113;
+  --y2k-border-rgb: 213 187 221;
+  --y2k-primary-rgb: 123 63 160;
+  --y2k-primary-hover-rgb: 99 49 127;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 63 76 154;
+  --y2k-secondary-hover-rgb: 48 58 119;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 192 90 198;
+  --y2k-success-rgb: 49 124 92;
+  --y2k-warning-rgb: 166 106 0;
+  --y2k-danger-rgb: 183 65 95;
+  --y2k-link-rgb: 99 49 127;
+  --y2k-focus-rgb: 192 90 198;
+}
+
+[data-ui="y2k"][data-theme="royal-plum"][data-mode="dark"] {
+  --y2k-bg-rgb: 16 6 20;
+  --y2k-surface-rgb: 29 16 36;
+  --y2k-surface-strong-rgb: 42 23 52;
+  --y2k-surface-soft-rgb: 22 11 27;
+  --y2k-text-rgb: 250 236 255;
+  --y2k-text-muted-rgb: 200 176 209;
+  --y2k-border-rgb: 85 57 100;
+  --y2k-primary-rgb: 216 145 242;
+  --y2k-primary-hover-rgb: 235 184 255;
+  --y2k-primary-text-rgb: 19 6 23;
+  --y2k-secondary-rgb: 157 168 255;
+  --y2k-secondary-hover-rgb: 195 202 255;
+  --y2k-secondary-text-rgb: 8 11 31;
+  --y2k-accent-rgb: 255 156 246;
+  --y2k-success-rgb: 118 220 169;
+  --y2k-warning-rgb: 255 209 102;
+  --y2k-danger-rgb: 255 122 156;
+  --y2k-link-rgb: 235 184 255;
+  --y2k-focus-rgb: 255 156 246;
+}
+
+[data-ui="y2k"][data-theme="royal-plum"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 16 0 20;
+  --y2k-surface-strong-rgb: 26 0 34;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 255 240 255;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 228 92 255;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 0 217 255;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 255 0 245;
+  --y2k-success-rgb: 0 255 144;
+  --y2k-warning-rgb: 255 225 0;
+  --y2k-danger-rgb: 255 63 110;
+  --y2k-link-rgb: 228 92 255;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   6. Graphite Cyan
+========================================================= */
+
+[data-ui="y2k"][data-theme="graphite-cyan"][data-mode="light"] {
+  --y2k-bg-rgb: 242 245 246;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 249 251 252;
+  --y2k-surface-soft-rgb: 225 231 234;
+  --y2k-text-rgb: 23 29 33;
+  --y2k-text-muted-rgb: 93 104 112;
+  --y2k-border-rgb: 197 206 212;
+  --y2k-primary-rgb: 0 124 137;
+  --y2k-primary-hover-rgb: 0 99 110;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 63 72 80;
+  --y2k-secondary-hover-rgb: 47 54 60;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 34 184 199;
+  --y2k-success-rgb: 40 122 91;
+  --y2k-warning-rgb: 167 103 0;
+  --y2k-danger-rgb: 182 64 64;
+  --y2k-link-rgb: 0 99 110;
+  --y2k-focus-rgb: 34 184 199;
+}
+
+[data-ui="y2k"][data-theme="graphite-cyan"][data-mode="dark"] {
+  --y2k-bg-rgb: 8 11 13;
+  --y2k-surface-rgb: 18 24 28;
+  --y2k-surface-strong-rgb: 28 37 43;
+  --y2k-surface-soft-rgb: 13 17 20;
+  --y2k-text-rgb: 237 246 248;
+  --y2k-text-muted-rgb: 174 187 193;
+  --y2k-border-rgb: 59 72 79;
+  --y2k-primary-rgb: 62 217 232;
+  --y2k-primary-hover-rgb: 123 243 255;
+  --y2k-primary-text-rgb: 6 16 18;
+  --y2k-secondary-rgb: 170 181 188;
+  --y2k-secondary-hover-rgb: 210 219 224;
+  --y2k-secondary-text-rgb: 8 11 13;
+  --y2k-accent-rgb: 123 243 255;
+  --y2k-success-rgb: 110 218 165;
+  --y2k-warning-rgb: 255 200 97;
+  --y2k-danger-rgb: 255 125 125;
+  --y2k-link-rgb: 123 243 255;
+  --y2k-focus-rgb: 62 217 232;
+}
+
+[data-ui="y2k"][data-theme="graphite-cyan"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 7 7 7;
+  --y2k-surface-strong-rgb: 17 17 17;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 245 245 245;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 0 240 255;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 242 242 242;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 0 240 255;
+  --y2k-success-rgb: 0 255 117;
+  --y2k-warning-rgb: 255 208 0;
+  --y2k-danger-rgb: 255 64 64;
+  --y2k-link-rgb: 0 240 255;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   7. Desert Sage
+========================================================= */
+
+[data-ui="y2k"][data-theme="desert-sage"][data-mode="light"] {
+  --y2k-bg-rgb: 248 242 231;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 255 250 241;
+  --y2k-surface-soft-rgb: 234 223 205;
+  --y2k-text-rgb: 43 36 25;
+  --y2k-text-muted-rgb: 113 103 84;
+  --y2k-border-rgb: 215 198 167;
+  --y2k-primary-rgb: 140 106 61;
+  --y2k-primary-hover-rgb: 112 83 47;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 95 118 85;
+  --y2k-secondary-hover-rgb: 72 92 64;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 201 151 74;
+  --y2k-success-rgb: 81 125 72;
+  --y2k-warning-rgb: 166 107 0;
+  --y2k-danger-rgb: 174 74 63;
+  --y2k-link-rgb: 112 83 47;
+  --y2k-focus-rgb: 201 151 74;
+}
+
+[data-ui="y2k"][data-theme="desert-sage"][data-mode="dark"] {
+  --y2k-bg-rgb: 18 15 9;
+  --y2k-surface-rgb: 33 27 18;
+  --y2k-surface-strong-rgb: 47 40 27;
+  --y2k-surface-soft-rgb: 25 20 13;
+  --y2k-text-rgb: 248 239 223;
+  --y2k-text-muted-rgb: 199 186 163;
+  --y2k-border-rgb: 91 78 56;
+  --y2k-primary-rgb: 217 184 120;
+  --y2k-primary-hover-rgb: 240 211 154;
+  --y2k-primary-text-rgb: 21 16 6;
+  --y2k-secondary-rgb: 168 206 153;
+  --y2k-secondary-hover-rgb: 200 233 187;
+  --y2k-secondary-text-rgb: 9 20 7;
+  --y2k-accent-rgb: 241 196 110;
+  --y2k-success-rgb: 141 219 125;
+  --y2k-warning-rgb: 255 209 102;
+  --y2k-danger-rgb: 255 136 122;
+  --y2k-link-rgb: 240 211 154;
+  --y2k-focus-rgb: 241 196 110;
+}
+
+[data-ui="y2k"][data-theme="desert-sage"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 15 11 3;
+  --y2k-surface-strong-rgb: 26 18 5;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 255 248 232;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 255 209 102;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 157 255 107;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 255 176 0;
+  --y2k-success-rgb: 0 255 117;
+  --y2k-warning-rgb: 255 225 0;
+  --y2k-danger-rgb: 255 77 77;
+  --y2k-link-rgb: 255 209 102;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   8. Rose Quartz
+========================================================= */
+
+[data-ui="y2k"][data-theme="rose-quartz"][data-mode="light"] {
+  --y2k-bg-rgb: 255 242 245;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 255 248 250;
+  --y2k-surface-soft-rgb: 242 220 227;
+  --y2k-text-rgb: 43 21 29;
+  --y2k-text-muted-rgb: 118 90 99;
+  --y2k-border-rgb: 223 184 198;
+  --y2k-primary-rgb: 184 71 109;
+  --y2k-primary-hover-rgb: 150 55 87;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 122 85 126;
+  --y2k-secondary-hover-rgb: 96 65 99;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 223 125 157;
+  --y2k-success-rgb: 49 122 92;
+  --y2k-warning-rgb: 166 106 0;
+  --y2k-danger-rgb: 189 63 85;
+  --y2k-link-rgb: 150 55 87;
+  --y2k-focus-rgb: 223 125 157;
+}
+
+[data-ui="y2k"][data-theme="rose-quartz"][data-mode="dark"] {
+  --y2k-bg-rgb: 22 7 12;
+  --y2k-surface-rgb: 37 16 24;
+  --y2k-surface-strong-rgb: 53 24 36;
+  --y2k-surface-soft-rgb: 28 11 17;
+  --y2k-text-rgb: 255 240 244;
+  --y2k-text-muted-rgb: 210 174 185;
+  --y2k-border-rgb: 101 55 71;
+  --y2k-primary-rgb: 255 143 179;
+  --y2k-primary-hover-rgb: 255 182 205;
+  --y2k-primary-text-rgb: 24 6 13;
+  --y2k-secondary-rgb: 217 160 223;
+  --y2k-secondary-hover-rgb: 239 194 244;
+  --y2k-secondary-text-rgb: 22 6 24;
+  --y2k-accent-rgb: 255 173 197;
+  --y2k-success-rgb: 119 219 169;
+  --y2k-warning-rgb: 255 209 102;
+  --y2k-danger-rgb: 255 120 144;
+  --y2k-link-rgb: 255 182 205;
+  --y2k-focus-rgb: 255 173 197;
+}
+
+[data-ui="y2k"][data-theme="rose-quartz"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 18 0 6;
+  --y2k-surface-strong-rgb: 32 0 13;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 255 240 245;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 255 79 147;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 240 0 255;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 255 138 179;
+  --y2k-success-rgb: 0 255 144;
+  --y2k-warning-rgb: 255 225 0;
+  --y2k-danger-rgb: 255 48 48;
+  --y2k-link-rgb: 255 138 179;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   9. Cyber Lime
+========================================================= */
+
+[data-ui="y2k"][data-theme="cyber-lime"][data-mode="light"] {
+  --y2k-bg-rgb: 244 250 237;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 251 255 246;
+  --y2k-surface-soft-rgb: 226 239 211;
+  --y2k-text-rgb: 23 34 20;
+  --y2k-text-muted-rgb: 89 105 82;
+  --y2k-border-rgb: 198 216 179;
+  --y2k-primary-rgb: 95 159 31;
+  --y2k-primary-hover-rgb: 73 125 23;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 20 127 134;
+  --y2k-secondary-hover-rgb: 14 98 104;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 164 215 46;
+  --y2k-success-rgb: 47 125 84;
+  --y2k-warning-rgb: 156 104 0;
+  --y2k-danger-rgb: 179 65 65;
+  --y2k-link-rgb: 73 125 23;
+  --y2k-focus-rgb: 164 215 46;
+}
+
+[data-ui="y2k"][data-theme="cyber-lime"][data-mode="dark"] {
+  --y2k-bg-rgb: 5 11 5;
+  --y2k-surface-rgb: 13 24 12;
+  --y2k-surface-strong-rgb: 22 37 21;
+  --y2k-surface-soft-rgb: 8 17 8;
+  --y2k-text-rgb: 239 255 233;
+  --y2k-text-muted-rgb: 180 199 173;
+  --y2k-border-rgb: 57 82 54;
+  --y2k-primary-rgb: 168 255 61;
+  --y2k-primary-hover-rgb: 202 255 127;
+  --y2k-primary-text-rgb: 6 16 5;
+  --y2k-secondary-rgb: 61 235 242;
+  --y2k-secondary-hover-rgb: 134 248 255;
+  --y2k-secondary-text-rgb: 3 16 18;
+  --y2k-accent-rgb: 198 255 77;
+  --y2k-success-rgb: 111 240 168;
+  --y2k-warning-rgb: 255 218 98;
+  --y2k-danger-rgb: 255 119 119;
+  --y2k-link-rgb: 202 255 127;
+  --y2k-focus-rgb: 168 255 61;
+}
+
+[data-ui="y2k"][data-theme="cyber-lime"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 5 11 0;
+  --y2k-surface-strong-rgb: 11 22 0;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 244 255 232;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 170 255 0;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 0 240 255;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 204 255 0;
+  --y2k-success-rgb: 0 255 117;
+  --y2k-warning-rgb: 255 225 0;
+  --y2k-danger-rgb: 255 48 48;
+  --y2k-link-rgb: 170 255 0;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   10. Arctic Indigo
+========================================================= */
+
+[data-ui="y2k"][data-theme="arctic-indigo"][data-mode="light"] {
+  --y2k-bg-rgb: 241 245 255;
+  --y2k-surface-rgb: 255 255 255;
+  --y2k-surface-strong-rgb: 248 251 255;
+  --y2k-surface-soft-rgb: 223 231 246;
+  --y2k-text-rgb: 20 27 46;
+  --y2k-text-muted-rgb: 88 100 122;
+  --y2k-border-rgb: 190 203 227;
+  --y2k-primary-rgb: 64 94 184;
+  --y2k-primary-hover-rgb: 49 72 148;
+  --y2k-primary-text-rgb: 255 255 255;
+  --y2k-secondary-rgb: 46 125 157;
+  --y2k-secondary-hover-rgb: 35 97 122;
+  --y2k-secondary-text-rgb: 255 255 255;
+  --y2k-accent-rgb: 123 147 232;
+  --y2k-success-rgb: 47 125 84;
+  --y2k-warning-rgb: 166 106 0;
+  --y2k-danger-rgb: 182 64 82;
+  --y2k-link-rgb: 49 72 148;
+  --y2k-focus-rgb: 123 147 232;
+}
+
+[data-ui="y2k"][data-theme="arctic-indigo"][data-mode="dark"] {
+  --y2k-bg-rgb: 6 10 22;
+  --y2k-surface-rgb: 16 24 43;
+  --y2k-surface-strong-rgb: 24 35 66;
+  --y2k-surface-soft-rgb: 10 16 32;
+  --y2k-text-rgb: 237 243 255;
+  --y2k-text-muted-rgb: 178 191 217;
+  --y2k-border-rgb: 58 75 120;
+  --y2k-primary-rgb: 145 168 255;
+  --y2k-primary-hover-rgb: 183 197 255;
+  --y2k-primary-text-rgb: 5 8 22;
+  --y2k-secondary-rgb: 118 216 243;
+  --y2k-secondary-hover-rgb: 165 234 255;
+  --y2k-secondary-text-rgb: 4 17 22;
+  --y2k-accent-rgb: 194 206 255;
+  --y2k-success-rgb: 114 219 166;
+  --y2k-warning-rgb: 255 209 102;
+  --y2k-danger-rgb: 255 125 145;
+  --y2k-link-rgb: 183 197 255;
+  --y2k-focus-rgb: 145 168 255;
+}
+
+[data-ui="y2k"][data-theme="arctic-indigo"][data-mode="contrast"] {
+  --y2k-bg-rgb: 0 0 0;
+  --y2k-surface-rgb: 3 8 22;
+  --y2k-surface-strong-rgb: 8 18 42;
+  --y2k-surface-soft-rgb: 0 0 0;
+  --y2k-text-rgb: 255 255 255;
+  --y2k-text-muted-rgb: 238 244 255;
+  --y2k-border-rgb: 255 255 255;
+  --y2k-primary-rgb: 111 140 255;
+  --y2k-primary-hover-rgb: 255 255 255;
+  --y2k-primary-text-rgb: 0 0 0;
+  --y2k-secondary-rgb: 0 217 255;
+  --y2k-secondary-hover-rgb: 255 255 255;
+  --y2k-secondary-text-rgb: 0 0 0;
+  --y2k-accent-rgb: 184 196 255;
+  --y2k-success-rgb: 0 255 144;
+  --y2k-warning-rgb: 255 225 0;
+  --y2k-danger-rgb: 255 63 95;
+  --y2k-link-rgb: 159 178 255;
+  --y2k-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   Y2K Base
+========================================================= */
+
+[data-ui="y2k"] {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 10%, rgb(var(--y2k-accent-rgb) / 0.22), transparent 24rem),
+    radial-gradient(circle at 90% 20%, rgb(var(--y2k-secondary-rgb) / 0.18), transparent 28rem),
+    linear-gradient(135deg, rgb(255 255 255 / 0.1), transparent 45%),
+    var(--y2k-bg);
+  color: var(--y2k-text);
+  font-family: var(--y2k-font-sans);
+}
+[data-ui="y2k"] *, [data-ui="y2k"] *::before, [data-ui="y2k"] *::after { box-sizing: border-box; }
+[data-ui="y2k"] a { color: var(--y2k-link); text-decoration-thickness: 0.11em; text-underline-offset: 0.18em; } [data-ui="y2k"] ::selection { background: var(--y2k-primary); color: var(--y2k-primary-text); }
+
+.y2k-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); background-image: radial-gradient(rgb(var(--y2k-border-rgb) / var(--y2k-grid-alpha)) 1px, transparent 1px); background-size: 22px 22px; }
+.y2k-container { width: min(100% - 2rem, 1200px); margin-inline: auto; } .y2k-stack { display: flex; flex-direction: column; gap: var(--y2k-space-4); } .y2k-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--y2k-space-3); } .y2k-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--y2k-space-5); } .y2k-section { padding: clamp(1.25rem, 4vw, 2.5rem); }
+.y2k-title, .y2k-heading, .y2k-kicker, .y2k-button, .y2k-badge, .y2k-nav-link { font-family: var(--y2k-font-display); }
+.y2k-title { margin: 0; font-size: clamp(2.25rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.05em; color: var(--y2k-text); text-shadow: 2px 2px 0 rgb(var(--y2k-accent-rgb) / .56), 0 0 24px var(--y2k-glow-accent); } .y2k-heading { margin: 0; font-size: clamp(1.25rem, 3vw, 2rem); letter-spacing: -0.03em; } .y2k-kicker { margin: 0; color: var(--y2k-primary); font-size: .82rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; } .y2k-subtitle, .y2k-copy { margin: 0; color: var(--y2k-text-muted); line-height: 1.65; } .y2k-text-muted { color: var(--y2k-text-muted); }
+
+.y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap { position: relative; background: linear-gradient(145deg, rgb(255 255 255 / .42), rgb(255 255 255 / .08)), var(--y2k-surface); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .38); border-bottom-color: rgb(var(--y2k-border-rgb) / .4); border-right-color: rgb(var(--y2k-border-rgb) / .35); border-radius: var(--y2k-radius-xl); box-shadow: var(--y2k-shadow-md), inset 0 1px 0 rgb(255 255 255 / .42), 0 0 28px var(--y2k-glow-accent); overflow: hidden; transition: transform var(--y2k-transition-base), box-shadow var(--y2k-transition-base); }
+.y2k-card::before, .y2k-panel::before, .y2k-bubble::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 20% 0%, rgb(255 255 255 / .42), transparent 22%), linear-gradient(120deg, transparent 0 55%, rgb(var(--y2k-accent-rgb) / .12)); }
+.y2k-card, .y2k-panel, .y2k-bubble { padding: var(--y2k-space-6); } .y2k-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--y2k-space-4); padding: var(--y2k-space-4); border-radius: var(--y2k-radius-pill); } .y2k-hover-lift:hover { transform: translateY(-3px) scale(1.005); box-shadow: var(--y2k-shadow-lg), 0 0 42px var(--y2k-glow-accent); } .y2k-inset, .y2k-well { background: linear-gradient(180deg, rgb(0 0 0 / .08), rgb(255 255 255 / .12)), var(--y2k-surface-soft); border: 1px solid rgb(var(--y2k-border-rgb) / .42); border-radius: var(--y2k-radius-lg); box-shadow: inset 0 8px 18px rgb(0 0 0 / .12); } .y2k-well { padding: var(--y2k-space-5); }
+
+.y2k-button, .y2k-icon-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--y2k-space-2); min-height: 2.85rem; padding: .75rem 1.15rem; background: linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .08)), var(--y2k-surface-strong); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .42); border-radius: var(--y2k-radius-pill); box-shadow: var(--y2k-shadow-sm), inset 0 1px 0 rgb(255 255 255 / .5); font: inherit; font-family: var(--y2k-font-display); font-weight: 900; letter-spacing: .02em; cursor: pointer; text-decoration: none; transition: transform var(--y2k-transition-fast), box-shadow var(--y2k-transition-fast), background var(--y2k-transition-fast); }
+.y2k-button:hover, .y2k-icon-button:hover { transform: translateY(-2px); box-shadow: var(--y2k-shadow-md), 0 0 26px var(--y2k-glow-accent); } .y2k-button:active, .y2k-icon-button:active, .y2k-button.is-active, .y2k-button[aria-pressed="true"] { transform: translateY(1px) scale(.99); box-shadow: inset 0 8px 16px rgb(0 0 0 / .14); }
+.y2k-button-primary { background: linear-gradient(180deg, rgb(255 255 255 / .46), rgb(255 255 255 / .08)), var(--y2k-primary); color: var(--y2k-primary-text); } .y2k-button-primary:hover { background: linear-gradient(180deg, rgb(255 255 255 / .5), rgb(255 255 255 / .1)), var(--y2k-primary-hover); } .y2k-button-secondary { background: linear-gradient(180deg, rgb(255 255 255 / .46), rgb(255 255 255 / .08)), var(--y2k-secondary); color: var(--y2k-secondary-text); } .y2k-button-secondary:hover { background: var(--y2k-secondary-hover); } .y2k-button-danger { background: var(--y2k-danger); color: #fff; } .y2k-icon-button { width: 2.85rem; padding: 0; }
+
+.y2k-field { display: flex; flex-direction: column; gap: var(--y2k-space-2); } .y2k-label { font-weight: 900; letter-spacing: .04em; } .y2k-input, .y2k-textarea, .y2k-select { width: 100%; min-height: 2.9rem; padding: .8rem 1rem; background: linear-gradient(180deg, rgb(255 255 255 / .22), rgb(0 0 0 / .05)), var(--y2k-surface-soft); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .38); border-radius: var(--y2k-radius-lg); box-shadow: inset 0 6px 14px rgb(0 0 0 / .12); font: inherit; outline: none; } .y2k-textarea { min-height: 8rem; resize: vertical; } .y2k-input:focus, .y2k-textarea:focus, .y2k-select:focus { border-color: var(--y2k-focus); box-shadow: inset 0 6px 14px rgb(0 0 0 / .12), 0 0 0 3px rgb(var(--y2k-focus-rgb) / .25), 0 0 24px rgb(var(--y2k-focus-rgb) / .22); } .y2k-help-text { color: var(--y2k-text-muted); font-size: .9rem; }
+
+.y2k-badge { display: inline-flex; align-items: center; min-height: 1.8rem; padding: .35rem .8rem; background: linear-gradient(180deg, rgb(255 255 255 / .4), rgb(255 255 255 / .08)), var(--y2k-surface-strong); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .42); border-radius: var(--y2k-radius-pill); box-shadow: var(--y2k-shadow-sm); font-size: .78rem; font-weight: 900; } .y2k-badge-primary { background: var(--y2k-primary); color: var(--y2k-primary-text); } .y2k-badge-secondary { background: var(--y2k-secondary); color: var(--y2k-secondary-text); } .y2k-badge-success { background: var(--y2k-success); color: #fff; } .y2k-badge-warning { background: var(--y2k-warning); color: #111; } .y2k-badge-danger { background: var(--y2k-danger); color: #fff; }
+.y2k-nav { display: flex; flex-wrap: wrap; gap: var(--y2k-space-2); padding: var(--y2k-space-2); background: linear-gradient(180deg, rgb(255 255 255 / .38), rgb(255 255 255 / .08)), var(--y2k-surface); border: 1px solid rgb(255 255 255 / .42); border-radius: var(--y2k-radius-pill); box-shadow: var(--y2k-shadow-md); } .y2k-nav-link { display: inline-flex; min-height: 2.5rem; align-items: center; padding: .65rem 1rem; color: var(--y2k-text-muted); border-radius: var(--y2k-radius-pill); text-decoration: none; font-weight: 900; } .y2k-nav-link:hover { color: var(--y2k-text); background: rgb(255 255 255 / .16); } .y2k-nav-link.is-active, .y2k-nav-link[aria-current="page"] { background: var(--y2k-primary); color: var(--y2k-primary-text); box-shadow: 0 0 20px var(--y2k-glow-primary); }
+.y2k-progress { width: 100%; height: .9rem; background: var(--y2k-surface-soft); border-radius: var(--y2k-radius-pill); box-shadow: inset 0 6px 14px rgb(0 0 0 / .12); overflow: hidden; } .y2k-progress-bar { height: 100%; width: var(--y2k-progress-value, 50%); background: linear-gradient(90deg, var(--y2k-primary), var(--y2k-accent), var(--y2k-secondary)); border-radius: inherit; }
+.y2k-alert { padding: var(--y2k-space-4); background: var(--y2k-surface); border: 1px solid rgb(255 255 255 / .38); border-radius: var(--y2k-radius-xl); box-shadow: var(--y2k-shadow-md); } .y2k-alert-title { margin: 0; font-weight: 900; } .y2k-alert-body { margin: .5rem 0 0; color: var(--y2k-text-muted); } .y2k-alert-success { box-shadow: var(--y2k-shadow-md), 0 0 22px rgb(var(--y2k-success-rgb) / .2); } .y2k-alert-warning { box-shadow: var(--y2k-shadow-md), 0 0 22px rgb(var(--y2k-warning-rgb) / .2); } .y2k-alert-danger { box-shadow: var(--y2k-shadow-md), 0 0 22px rgb(var(--y2k-danger-rgb) / .2); }
+.y2k-table-wrap { overflow: auto; } .y2k-table { width: 100%; border-collapse: collapse; } .y2k-table th, .y2k-table td { padding: .9rem 1rem; border-bottom: 1px solid rgb(var(--y2k-border-rgb) / .34); text-align: left; } .y2k-table th { background: rgb(255 255 255 / .16); font-weight: 900; } .y2k-table td { color: var(--y2k-text-muted); }
+.y2k-text-primary { color: var(--y2k-primary); } .y2k-text-secondary { color: var(--y2k-secondary); } .y2k-text-accent { color: var(--y2k-accent); } .y2k-text-success { color: var(--y2k-success); } .y2k-text-warning { color: var(--y2k-warning); } .y2k-text-danger { color: var(--y2k-danger); }
+[data-ui="y2k"] :focus-visible { outline: 3px solid var(--y2k-focus); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { [data-ui="y2k"] *, [data-ui="y2k"] *::before, [data-ui="y2k"] *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }

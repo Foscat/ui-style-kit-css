@@ -1,0 +1,1015 @@
+/* =========================================================
+   UI Style Kit CSS — Retrofuturism Theme System
+   Includes 10 color schemes, light/dark/contrast modes,
+   component classes, native element coverage, and CSS-only
+   accessibility presentation helpers.
+
+   Usage:
+   <body data-ui="retrofuturism" data-theme="midnight-gold" data-mode="light">
+   <body data-ui="retrofuturism" data-theme="arctic-indigo" data-mode="dark">
+   <body data-ui="retrofuturism" data-theme="cyber-lime" data-mode="contrast">
+========================================================= */
+
+:root {
+  --retro-font-sans: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --retro-font-display: Orbitron, Eurostile, "Bank Gothic", Rajdhani, Inter, ui-sans-serif, system-ui, sans-serif;
+  --retro-radius-xs: .25rem;
+  --retro-radius-sm: .5rem;
+  --retro-radius-md: 0.75rem;
+  --retro-radius-lg: 1rem;
+  --retro-radius-xl: calc(1rem + .5rem);
+  --retro-radius-pill: 999px;
+  --retro-space-1: .25rem;
+  --retro-space-2: .5rem;
+  --retro-space-3: .75rem;
+  --retro-space-4: 1rem;
+  --retro-space-5: 1.25rem;
+  --retro-space-6: 1.5rem;
+  --retro-space-8: 2rem;
+  --retro-transition-fast: 150ms ease;
+  --retro-transition-base: 240ms ease;
+}
+
+[data-ui="retrofuturism"][data-mode="light"] {
+  color-scheme: light;
+  --retro-panel-alpha: .98;
+  --retro-panel-soft-alpha: .78;
+  --retro-border-alpha: .58;
+  --retro-shadow-alpha: .12;
+  --retro-focus-alpha: .34;
+}
+
+[data-ui="retrofuturism"][data-mode="dark"] {
+  color-scheme: dark;
+  --retro-panel-alpha: .92;
+  --retro-panel-soft-alpha: .64;
+  --retro-border-alpha: .52;
+  --retro-shadow-alpha: .34;
+  --retro-focus-alpha: .42;
+}
+
+[data-ui="retrofuturism"][data-mode="contrast"] {
+  color-scheme: dark;
+  --retro-panel-alpha: 1;
+  --retro-panel-soft-alpha: .92;
+  --retro-border-alpha: 1;
+  --retro-shadow-alpha: .5;
+  --retro-focus-alpha: .72;
+}
+
+[data-ui="retrofuturism"][data-theme][data-mode] {
+  --retro-bg: rgb(var(--retro-bg-rgb));
+  --retro-surface: rgb(var(--retro-surface-rgb) / var(--retro-panel-alpha));
+  --retro-surface-strong: rgb(var(--retro-surface-strong-rgb) / var(--retro-panel-alpha));
+  --retro-surface-soft: rgb(var(--retro-surface-soft-rgb) / var(--retro-panel-soft-alpha));
+  --retro-text: rgb(var(--retro-text-rgb));
+  --retro-text-muted: rgb(var(--retro-text-muted-rgb));
+  --retro-border: rgb(var(--retro-border-rgb) / var(--retro-border-alpha));
+  --retro-primary: rgb(var(--retro-primary-rgb));
+  --retro-primary-hover: rgb(var(--retro-primary-hover-rgb));
+  --retro-primary-text: rgb(var(--retro-primary-text-rgb));
+  --retro-secondary: rgb(var(--retro-secondary-rgb));
+  --retro-secondary-hover: rgb(var(--retro-secondary-hover-rgb));
+  --retro-secondary-text: rgb(var(--retro-secondary-text-rgb));
+  --retro-accent: rgb(var(--retro-accent-rgb));
+  --retro-success: rgb(var(--retro-success-rgb));
+  --retro-warning: rgb(var(--retro-warning-rgb));
+  --retro-danger: rgb(var(--retro-danger-rgb));
+  --retro-link: rgb(var(--retro-link-rgb));
+  --retro-focus: rgb(var(--retro-focus-rgb));
+  --retro-focus-ring: 0 0 0 3px rgb(var(--retro-focus-rgb) / var(--retro-focus-alpha));
+}
+
+[data-ui="retrofuturism"][data-theme="midnight-gold"][data-mode="light"] {
+  --retro-bg-rgb: 246 243 234;
+  --retro-surface-rgb: 255 250 240;
+  --retro-surface-strong-rgb: 255 255 255;
+  --retro-surface-soft-rgb: 237 230 211;
+  --retro-text-rgb: 23 32 51;
+  --retro-text-muted-rgb: 95 104 121;
+  --retro-border-rgb: 214 200 165;
+  --retro-primary-rgb: 184 135 47;
+  --retro-primary-hover-rgb: 148 104 31;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 34 49 79;
+  --retro-secondary-hover-rgb: 23 36 60;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 217 164 65;
+  --retro-success-rgb: 47 125 84;
+  --retro-warning-rgb: 167 106 0;
+  --retro-danger-rgb: 185 63 63;
+  --retro-link-rgb: 138 100 31;
+  --retro-focus-rgb: 217 164 65;
+}
+
+[data-ui="retrofuturism"][data-theme="midnight-gold"][data-mode="dark"] {
+  --retro-bg-rgb: 7 17 31;
+  --retro-surface-rgb: 16 27 45;
+  --retro-surface-strong-rgb: 23 36 58;
+  --retro-surface-soft-rgb: 12 22 39;
+  --retro-text-rgb: 247 237 215;
+  --retro-text-muted-rgb: 185 192 204;
+  --retro-border-rgb: 57 72 97;
+  --retro-primary-rgb: 214 168 79;
+  --retro-primary-hover-rgb: 240 200 109;
+  --retro-primary-text-rgb: 16 16 16;
+  --retro-secondary-rgb: 111 134 184;
+  --retro-secondary-hover-rgb: 146 167 209;
+  --retro-secondary-text-rgb: 8 16 29;
+  --retro-accent-rgb: 243 210 122;
+  --retro-success-rgb: 107 214 156;
+  --retro-warning-rgb: 255 203 91;
+  --retro-danger-rgb: 255 123 123;
+  --retro-link-rgb: 243 210 122;
+  --retro-focus-rgb: 255 214 107;
+}
+
+[data-ui="retrofuturism"][data-theme="midnight-gold"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 8 8 8;
+  --retro-surface-strong-rgb: 17 17 17;
+  --retro-surface-soft-rgb: 5 5 5;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 245 245 245;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 255 212 0;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 0 217 255;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 255 234 0;
+  --retro-success-rgb: 0 255 117;
+  --retro-warning-rgb: 255 191 0;
+  --retro-danger-rgb: 255 77 77;
+  --retro-link-rgb: 0 217 255;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="ocean-steel"][data-mode="light"] {
+  --retro-bg-rgb: 238 248 251;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 248 253 255;
+  --retro-surface-soft-rgb: 220 236 242;
+  --retro-text-rgb: 16 36 46;
+  --retro-text-muted-rgb: 78 101 112;
+  --retro-border-rgb: 184 211 221;
+  --retro-primary-rgb: 8 125 157;
+  --retro-primary-hover-rgb: 6 100 126;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 57 86 107;
+  --retro-secondary-hover-rgb: 44 67 84;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 21 184 200;
+  --retro-success-rgb: 38 122 92;
+  --retro-warning-rgb: 167 101 0;
+  --retro-danger-rgb: 182 70 70;
+  --retro-link-rgb: 6 100 126;
+  --retro-focus-rgb: 21 184 200;
+}
+
+[data-ui="retrofuturism"][data-theme="ocean-steel"][data-mode="dark"] {
+  --retro-bg-rgb: 6 22 29;
+  --retro-surface-rgb: 13 37 48;
+  --retro-surface-strong-rgb: 20 52 66;
+  --retro-surface-soft-rgb: 8 29 38;
+  --retro-text-rgb: 233 251 255;
+  --retro-text-muted-rgb: 167 192 201;
+  --retro-border-rgb: 49 86 102;
+  --retro-primary-rgb: 54 196 221;
+  --retro-primary-hover-rgb: 115 227 244;
+  --retro-primary-text-rgb: 4 18 22;
+  --retro-secondary-rgb: 140 183 201;
+  --retro-secondary-hover-rgb: 178 213 226;
+  --retro-secondary-text-rgb: 6 22 29;
+  --retro-accent-rgb: 83 240 255;
+  --retro-success-rgb: 103 216 166;
+  --retro-warning-rgb: 255 192 97;
+  --retro-danger-rgb: 255 123 123;
+  --retro-link-rgb: 115 227 244;
+  --retro-focus-rgb: 83 240 255;
+}
+
+[data-ui="retrofuturism"][data-theme="ocean-steel"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 8 10;
+  --retro-surface-rgb: 0 16 20;
+  --retro-surface-strong-rgb: 0 26 32;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 234 255 255;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 0 229 255;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 255 255 0;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 0 255 255;
+  --retro-success-rgb: 0 255 144;
+  --retro-warning-rgb: 255 208 0;
+  --retro-danger-rgb: 255 59 59;
+  --retro-link-rgb: 0 229 255;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="forest-moss"][data-mode="light"] {
+  --retro-bg-rgb: 242 247 239;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 251 255 248;
+  --retro-surface-soft-rgb: 226 234 219;
+  --retro-text-rgb: 24 36 23;
+  --retro-text-muted-rgb: 88 104 82;
+  --retro-border-rgb: 197 211 186;
+  --retro-primary-rgb: 63 125 58;
+  --retro-primary-hover-rgb: 47 97 43;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 106 95 56;
+  --retro-secondary-hover-rgb: 81 73 43;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 156 186 82;
+  --retro-success-rgb: 47 125 84;
+  --retro-warning-rgb: 154 106 0;
+  --retro-danger-rgb: 173 69 69;
+  --retro-link-rgb: 47 97 43;
+  --retro-focus-rgb: 156 186 82;
+}
+
+[data-ui="retrofuturism"][data-theme="forest-moss"][data-mode="dark"] {
+  --retro-bg-rgb: 7 16 6;
+  --retro-surface-rgb: 16 28 15;
+  --retro-surface-strong-rgb: 26 42 24;
+  --retro-surface-soft-rgb: 11 22 10;
+  --retro-text-rgb: 237 247 232;
+  --retro-text-muted-rgb: 180 197 173;
+  --retro-border-rgb: 61 83 56;
+  --retro-primary-rgb: 130 210 122;
+  --retro-primary-hover-rgb: 162 237 153;
+  --retro-primary-text-rgb: 7 16 6;
+  --retro-secondary-rgb: 210 189 114;
+  --retro-secondary-hover-rgb: 239 217 139;
+  --retro-secondary-text-rgb: 20 16 6;
+  --retro-accent-rgb: 185 239 107;
+  --retro-success-rgb: 117 223 167;
+  --retro-warning-rgb: 255 210 99;
+  --retro-danger-rgb: 255 133 133;
+  --retro-link-rgb: 162 237 153;
+  --retro-focus-rgb: 185 239 107;
+}
+
+[data-ui="retrofuturism"][data-theme="forest-moss"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 7 16 7;
+  --retro-surface-strong-rgb: 11 25 11;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 240 255 240;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 108 255 95;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 255 223 0;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 182 255 0;
+  --retro-success-rgb: 0 255 117;
+  --retro-warning-rgb: 255 208 0;
+  --retro-danger-rgb: 255 64 64;
+  --retro-link-rgb: 108 255 95;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="sunset-ember"][data-mode="light"] {
+  --retro-bg-rgb: 255 244 236;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 255 250 246;
+  --retro-surface-soft-rgb: 244 222 210;
+  --retro-text-rgb: 42 23 17;
+  --retro-text-muted-rgb: 118 88 77;
+  --retro-border-rgb: 227 189 170;
+  --retro-primary-rgb: 196 81 43;
+  --retro-primary-hover-rgb: 159 63 32;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 124 63 92;
+  --retro-secondary-hover-rgb: 97 48 71;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 230 154 58;
+  --retro-success-rgb: 49 122 87;
+  --retro-warning-rgb: 184 111 0;
+  --retro-danger-rgb: 189 61 61;
+  --retro-link-rgb: 159 63 32;
+  --retro-focus-rgb: 230 154 58;
+}
+
+[data-ui="retrofuturism"][data-theme="sunset-ember"][data-mode="dark"] {
+  --retro-bg-rgb: 23 9 5;
+  --retro-surface-rgb: 38 17 11;
+  --retro-surface-strong-rgb: 53 25 18;
+  --retro-surface-soft-rgb: 30 12 7;
+  --retro-text-rgb: 255 240 232;
+  --retro-text-muted-rgb: 208 177 165;
+  --retro-border-rgb: 106 59 45;
+  --retro-primary-rgb: 255 138 91;
+  --retro-primary-hover-rgb: 255 173 138;
+  --retro-primary-text-rgb: 26 8 3;
+  --retro-secondary-rgb: 227 138 181;
+  --retro-secondary-hover-rgb: 255 175 208;
+  --retro-secondary-text-rgb: 26 7 18;
+  --retro-accent-rgb: 255 193 102;
+  --retro-success-rgb: 112 215 163;
+  --retro-warning-rgb: 255 209 102;
+  --retro-danger-rgb: 255 119 119;
+  --retro-link-rgb: 255 173 138;
+  --retro-focus-rgb: 255 193 102;
+}
+
+[data-ui="retrofuturism"][data-theme="sunset-ember"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 18 4 0;
+  --retro-surface-strong-rgb: 29 7 0;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 255 245 239;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 255 106 0;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 255 79 184;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 255 208 0;
+  --retro-success-rgb: 0 255 144;
+  --retro-warning-rgb: 255 191 0;
+  --retro-danger-rgb: 255 48 48;
+  --retro-link-rgb: 255 157 0;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="royal-plum"][data-mode="light"] {
+  --retro-bg-rgb: 248 241 251;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 253 248 255;
+  --retro-surface-soft-rgb: 234 220 240;
+  --retro-text-rgb: 36 21 45;
+  --retro-text-muted-rgb: 105 86 113;
+  --retro-border-rgb: 213 187 221;
+  --retro-primary-rgb: 123 63 160;
+  --retro-primary-hover-rgb: 99 49 127;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 63 76 154;
+  --retro-secondary-hover-rgb: 48 58 119;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 192 90 198;
+  --retro-success-rgb: 49 124 92;
+  --retro-warning-rgb: 166 106 0;
+  --retro-danger-rgb: 183 65 95;
+  --retro-link-rgb: 99 49 127;
+  --retro-focus-rgb: 192 90 198;
+}
+
+[data-ui="retrofuturism"][data-theme="royal-plum"][data-mode="dark"] {
+  --retro-bg-rgb: 16 6 20;
+  --retro-surface-rgb: 29 16 36;
+  --retro-surface-strong-rgb: 42 23 52;
+  --retro-surface-soft-rgb: 22 11 27;
+  --retro-text-rgb: 250 236 255;
+  --retro-text-muted-rgb: 200 176 209;
+  --retro-border-rgb: 85 57 100;
+  --retro-primary-rgb: 216 145 242;
+  --retro-primary-hover-rgb: 235 184 255;
+  --retro-primary-text-rgb: 19 6 23;
+  --retro-secondary-rgb: 157 168 255;
+  --retro-secondary-hover-rgb: 195 202 255;
+  --retro-secondary-text-rgb: 8 11 31;
+  --retro-accent-rgb: 255 156 246;
+  --retro-success-rgb: 118 220 169;
+  --retro-warning-rgb: 255 209 102;
+  --retro-danger-rgb: 255 122 156;
+  --retro-link-rgb: 235 184 255;
+  --retro-focus-rgb: 255 156 246;
+}
+
+[data-ui="retrofuturism"][data-theme="royal-plum"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 16 0 20;
+  --retro-surface-strong-rgb: 26 0 34;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 255 240 255;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 228 92 255;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 0 217 255;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 255 0 245;
+  --retro-success-rgb: 0 255 144;
+  --retro-warning-rgb: 255 225 0;
+  --retro-danger-rgb: 255 63 110;
+  --retro-link-rgb: 228 92 255;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="graphite-cyan"][data-mode="light"] {
+  --retro-bg-rgb: 242 245 246;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 249 251 252;
+  --retro-surface-soft-rgb: 225 231 234;
+  --retro-text-rgb: 23 29 33;
+  --retro-text-muted-rgb: 93 104 112;
+  --retro-border-rgb: 197 206 212;
+  --retro-primary-rgb: 0 124 137;
+  --retro-primary-hover-rgb: 0 99 110;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 63 72 80;
+  --retro-secondary-hover-rgb: 47 54 60;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 34 184 199;
+  --retro-success-rgb: 40 122 91;
+  --retro-warning-rgb: 167 103 0;
+  --retro-danger-rgb: 182 64 64;
+  --retro-link-rgb: 0 99 110;
+  --retro-focus-rgb: 34 184 199;
+}
+
+[data-ui="retrofuturism"][data-theme="graphite-cyan"][data-mode="dark"] {
+  --retro-bg-rgb: 8 11 13;
+  --retro-surface-rgb: 18 24 28;
+  --retro-surface-strong-rgb: 28 37 43;
+  --retro-surface-soft-rgb: 13 17 20;
+  --retro-text-rgb: 237 246 248;
+  --retro-text-muted-rgb: 174 187 193;
+  --retro-border-rgb: 59 72 79;
+  --retro-primary-rgb: 62 217 232;
+  --retro-primary-hover-rgb: 123 243 255;
+  --retro-primary-text-rgb: 6 16 18;
+  --retro-secondary-rgb: 170 181 188;
+  --retro-secondary-hover-rgb: 210 219 224;
+  --retro-secondary-text-rgb: 8 11 13;
+  --retro-accent-rgb: 123 243 255;
+  --retro-success-rgb: 110 218 165;
+  --retro-warning-rgb: 255 200 97;
+  --retro-danger-rgb: 255 125 125;
+  --retro-link-rgb: 123 243 255;
+  --retro-focus-rgb: 62 217 232;
+}
+
+[data-ui="retrofuturism"][data-theme="graphite-cyan"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 7 7 7;
+  --retro-surface-strong-rgb: 17 17 17;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 245 245 245;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 0 240 255;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 242 242 242;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 0 240 255;
+  --retro-success-rgb: 0 255 117;
+  --retro-warning-rgb: 255 208 0;
+  --retro-danger-rgb: 255 64 64;
+  --retro-link-rgb: 0 240 255;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="desert-sage"][data-mode="light"] {
+  --retro-bg-rgb: 248 242 231;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 255 250 241;
+  --retro-surface-soft-rgb: 234 223 205;
+  --retro-text-rgb: 43 36 25;
+  --retro-text-muted-rgb: 113 103 84;
+  --retro-border-rgb: 215 198 167;
+  --retro-primary-rgb: 140 106 61;
+  --retro-primary-hover-rgb: 112 83 47;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 95 118 85;
+  --retro-secondary-hover-rgb: 72 92 64;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 201 151 74;
+  --retro-success-rgb: 81 125 72;
+  --retro-warning-rgb: 166 107 0;
+  --retro-danger-rgb: 174 74 63;
+  --retro-link-rgb: 112 83 47;
+  --retro-focus-rgb: 201 151 74;
+}
+
+[data-ui="retrofuturism"][data-theme="desert-sage"][data-mode="dark"] {
+  --retro-bg-rgb: 18 15 9;
+  --retro-surface-rgb: 33 27 18;
+  --retro-surface-strong-rgb: 47 40 27;
+  --retro-surface-soft-rgb: 25 20 13;
+  --retro-text-rgb: 248 239 223;
+  --retro-text-muted-rgb: 199 186 163;
+  --retro-border-rgb: 91 78 56;
+  --retro-primary-rgb: 217 184 120;
+  --retro-primary-hover-rgb: 240 211 154;
+  --retro-primary-text-rgb: 21 16 6;
+  --retro-secondary-rgb: 168 206 153;
+  --retro-secondary-hover-rgb: 200 233 187;
+  --retro-secondary-text-rgb: 9 20 7;
+  --retro-accent-rgb: 241 196 110;
+  --retro-success-rgb: 141 219 125;
+  --retro-warning-rgb: 255 209 102;
+  --retro-danger-rgb: 255 136 122;
+  --retro-link-rgb: 240 211 154;
+  --retro-focus-rgb: 241 196 110;
+}
+
+[data-ui="retrofuturism"][data-theme="desert-sage"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 15 11 3;
+  --retro-surface-strong-rgb: 26 18 5;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 255 248 232;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 255 209 102;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 157 255 107;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 255 176 0;
+  --retro-success-rgb: 0 255 117;
+  --retro-warning-rgb: 255 225 0;
+  --retro-danger-rgb: 255 77 77;
+  --retro-link-rgb: 255 209 102;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="rose-quartz"][data-mode="light"] {
+  --retro-bg-rgb: 255 242 245;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 255 248 250;
+  --retro-surface-soft-rgb: 242 220 227;
+  --retro-text-rgb: 43 21 29;
+  --retro-text-muted-rgb: 118 90 99;
+  --retro-border-rgb: 223 184 198;
+  --retro-primary-rgb: 184 71 109;
+  --retro-primary-hover-rgb: 150 55 87;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 122 85 126;
+  --retro-secondary-hover-rgb: 96 65 99;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 223 125 157;
+  --retro-success-rgb: 49 122 92;
+  --retro-warning-rgb: 166 106 0;
+  --retro-danger-rgb: 189 63 85;
+  --retro-link-rgb: 150 55 87;
+  --retro-focus-rgb: 223 125 157;
+}
+
+[data-ui="retrofuturism"][data-theme="rose-quartz"][data-mode="dark"] {
+  --retro-bg-rgb: 22 7 12;
+  --retro-surface-rgb: 37 16 24;
+  --retro-surface-strong-rgb: 53 24 36;
+  --retro-surface-soft-rgb: 28 11 17;
+  --retro-text-rgb: 255 240 244;
+  --retro-text-muted-rgb: 210 174 185;
+  --retro-border-rgb: 101 55 71;
+  --retro-primary-rgb: 255 143 179;
+  --retro-primary-hover-rgb: 255 182 205;
+  --retro-primary-text-rgb: 24 6 13;
+  --retro-secondary-rgb: 217 160 223;
+  --retro-secondary-hover-rgb: 239 194 244;
+  --retro-secondary-text-rgb: 22 6 24;
+  --retro-accent-rgb: 255 173 197;
+  --retro-success-rgb: 119 219 169;
+  --retro-warning-rgb: 255 209 102;
+  --retro-danger-rgb: 255 120 144;
+  --retro-link-rgb: 255 182 205;
+  --retro-focus-rgb: 255 173 197;
+}
+
+[data-ui="retrofuturism"][data-theme="rose-quartz"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 18 0 6;
+  --retro-surface-strong-rgb: 32 0 13;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 255 240 245;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 255 79 147;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 240 0 255;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 255 138 179;
+  --retro-success-rgb: 0 255 144;
+  --retro-warning-rgb: 255 225 0;
+  --retro-danger-rgb: 255 48 48;
+  --retro-link-rgb: 255 138 179;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="cyber-lime"][data-mode="light"] {
+  --retro-bg-rgb: 244 250 237;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 251 255 246;
+  --retro-surface-soft-rgb: 226 239 211;
+  --retro-text-rgb: 23 34 20;
+  --retro-text-muted-rgb: 89 105 82;
+  --retro-border-rgb: 198 216 179;
+  --retro-primary-rgb: 95 159 31;
+  --retro-primary-hover-rgb: 73 125 23;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 20 127 134;
+  --retro-secondary-hover-rgb: 14 98 104;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 164 215 46;
+  --retro-success-rgb: 47 125 84;
+  --retro-warning-rgb: 156 104 0;
+  --retro-danger-rgb: 179 65 65;
+  --retro-link-rgb: 73 125 23;
+  --retro-focus-rgb: 164 215 46;
+}
+
+[data-ui="retrofuturism"][data-theme="cyber-lime"][data-mode="dark"] {
+  --retro-bg-rgb: 5 11 5;
+  --retro-surface-rgb: 13 24 12;
+  --retro-surface-strong-rgb: 22 37 21;
+  --retro-surface-soft-rgb: 8 17 8;
+  --retro-text-rgb: 239 255 233;
+  --retro-text-muted-rgb: 180 199 173;
+  --retro-border-rgb: 57 82 54;
+  --retro-primary-rgb: 168 255 61;
+  --retro-primary-hover-rgb: 202 255 127;
+  --retro-primary-text-rgb: 6 16 5;
+  --retro-secondary-rgb: 61 235 242;
+  --retro-secondary-hover-rgb: 134 248 255;
+  --retro-secondary-text-rgb: 3 16 18;
+  --retro-accent-rgb: 198 255 77;
+  --retro-success-rgb: 111 240 168;
+  --retro-warning-rgb: 255 218 98;
+  --retro-danger-rgb: 255 119 119;
+  --retro-link-rgb: 202 255 127;
+  --retro-focus-rgb: 168 255 61;
+}
+
+[data-ui="retrofuturism"][data-theme="cyber-lime"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 5 11 0;
+  --retro-surface-strong-rgb: 11 22 0;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 244 255 232;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 170 255 0;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 0 240 255;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 204 255 0;
+  --retro-success-rgb: 0 255 117;
+  --retro-warning-rgb: 255 225 0;
+  --retro-danger-rgb: 255 48 48;
+  --retro-link-rgb: 170 255 0;
+  --retro-focus-rgb: 255 255 255;
+}
+
+[data-ui="retrofuturism"][data-theme="arctic-indigo"][data-mode="light"] {
+  --retro-bg-rgb: 241 245 255;
+  --retro-surface-rgb: 255 255 255;
+  --retro-surface-strong-rgb: 248 251 255;
+  --retro-surface-soft-rgb: 223 231 246;
+  --retro-text-rgb: 20 27 46;
+  --retro-text-muted-rgb: 88 100 122;
+  --retro-border-rgb: 190 203 227;
+  --retro-primary-rgb: 64 94 184;
+  --retro-primary-hover-rgb: 49 72 148;
+  --retro-primary-text-rgb: 255 255 255;
+  --retro-secondary-rgb: 46 125 157;
+  --retro-secondary-hover-rgb: 35 97 122;
+  --retro-secondary-text-rgb: 255 255 255;
+  --retro-accent-rgb: 123 147 232;
+  --retro-success-rgb: 47 125 84;
+  --retro-warning-rgb: 166 106 0;
+  --retro-danger-rgb: 182 64 82;
+  --retro-link-rgb: 49 72 148;
+  --retro-focus-rgb: 123 147 232;
+}
+
+[data-ui="retrofuturism"][data-theme="arctic-indigo"][data-mode="dark"] {
+  --retro-bg-rgb: 6 10 22;
+  --retro-surface-rgb: 16 24 43;
+  --retro-surface-strong-rgb: 24 35 66;
+  --retro-surface-soft-rgb: 10 16 32;
+  --retro-text-rgb: 237 243 255;
+  --retro-text-muted-rgb: 178 191 217;
+  --retro-border-rgb: 58 75 120;
+  --retro-primary-rgb: 145 168 255;
+  --retro-primary-hover-rgb: 183 197 255;
+  --retro-primary-text-rgb: 5 8 22;
+  --retro-secondary-rgb: 118 216 243;
+  --retro-secondary-hover-rgb: 165 234 255;
+  --retro-secondary-text-rgb: 4 17 22;
+  --retro-accent-rgb: 194 206 255;
+  --retro-success-rgb: 114 219 166;
+  --retro-warning-rgb: 255 209 102;
+  --retro-danger-rgb: 255 125 145;
+  --retro-link-rgb: 183 197 255;
+  --retro-focus-rgb: 145 168 255;
+}
+
+[data-ui="retrofuturism"][data-theme="arctic-indigo"][data-mode="contrast"] {
+  --retro-bg-rgb: 0 0 0;
+  --retro-surface-rgb: 3 8 22;
+  --retro-surface-strong-rgb: 8 18 42;
+  --retro-surface-soft-rgb: 0 0 0;
+  --retro-text-rgb: 255 255 255;
+  --retro-text-muted-rgb: 238 244 255;
+  --retro-border-rgb: 255 255 255;
+  --retro-primary-rgb: 111 140 255;
+  --retro-primary-hover-rgb: 255 255 255;
+  --retro-primary-text-rgb: 0 0 0;
+  --retro-secondary-rgb: 0 217 255;
+  --retro-secondary-hover-rgb: 255 255 255;
+  --retro-secondary-text-rgb: 0 0 0;
+  --retro-accent-rgb: 184 196 255;
+  --retro-success-rgb: 0 255 144;
+  --retro-warning-rgb: 255 225 0;
+  --retro-danger-rgb: 255 63 95;
+  --retro-link-rgb: 159 178 255;
+  --retro-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   Base Page + Layout
+========================================================= */
+
+[data-ui="retrofuturism"] {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 5%, rgb(var(--retro-accent-rgb) / .18), transparent 26rem), radial-gradient(circle at 85% 0%, rgb(var(--retro-secondary-rgb) / .12), transparent 24rem), var(--retro-bg);
+  color: var(--retro-text);
+  font-family: var(--retro-font-sans);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-ui="retrofuturism"] *,
+[data-ui="retrofuturism"] *::before,
+[data-ui="retrofuturism"] *::after { box-sizing: border-box; }
+
+.retro-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
+.retro-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
+.retro-section { display: grid; gap: var(--retro-space-5); padding: clamp(1rem, 3vw, 2rem); }
+.retro-stack { display: flex; flex-direction: column; gap: var(--retro-space-4); }
+.retro-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--retro-space-3); }
+.retro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--retro-space-5); }
+.retro-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--retro-space-6); align-items: start; }
+
+/* =========================================================
+   Typography
+========================================================= */
+
+.retro-title, .retro-heading, .retro-kicker, .retro-button, .retro-badge, .retro-nav-link { font-family: var(--retro-font-display); }
+.retro-title { margin: 0; color: var(--retro-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.055em; }
+.retro-heading { margin: 0; color: var(--retro-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
+.retro-kicker { margin: 0; color: var(--retro-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.retro-subtitle, .retro-copy { margin: 0; color: var(--retro-text-muted); line-height: 1.65; }
+.retro-text-muted { color: var(--retro-text-muted); }
+.retro-divider { width: 100%; height: 1px; border: 0; background: var(--retro-border); }
+
+/* =========================================================
+   Surfaces
+========================================================= */
+
+.retro-surface, .retro-card, .retro-panel, .retro-toolbar, .retro-table-wrap {
+  position: relative;
+  background: linear-gradient(135deg, rgb(var(--retro-primary-rgb) / .08), transparent 36%), linear-gradient(180deg, rgb(255 255 255 / .08), rgb(255 255 255 / 0)), var(--retro-surface);
+  color: var(--retro-text);
+  border: 1px solid var(--retro-border);
+  border-radius: var(--retro-radius-lg);
+  box-shadow: 0 12px 34px rgb(0 0 0 / var(--retro-shadow-alpha)), 0 0 24px rgb(var(--retro-primary-rgb) / .16);
+  transition: transform var(--retro-transition-base), box-shadow var(--retro-transition-base), border-color var(--retro-transition-base), background var(--retro-transition-base);
+}
+.retro-card, .retro-panel { padding: var(--retro-space-6); }
+.retro-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--retro-space-4); padding: var(--retro-space-4); }
+.retro-surface-sm { border-radius: var(--retro-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / calc(var(--retro-shadow-alpha) * .72)); }
+.retro-surface-lg { border-radius: var(--retro-radius-xl); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--retro-shadow-alpha) + .08)); }
+.retro-well, .retro-inset { background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid rgb(var(--retro-border-rgb) / calc(var(--retro-border-alpha) * .7)); border-radius: var(--retro-radius-md); padding: var(--retro-space-5); box-shadow: inset 0 1px 3px rgb(0 0 0 / .08); }
+.retro-hover-lift:hover { transform: translateY(-3px) scale(1.005); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--retro-shadow-alpha) + .12)); }
+
+/* =========================================================
+   Buttons
+========================================================= */
+
+.retro-button, .retro-icon-button {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--retro-space-2);
+  min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--retro-surface); color: var(--retro-text);
+  border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--retro-shadow-alpha));
+  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; user-select: none;
+  transition: color var(--retro-transition-fast), background var(--retro-transition-fast), border-color var(--retro-transition-fast), box-shadow var(--retro-transition-fast), transform var(--retro-transition-fast);
+}
+.retro-button:hover, .retro-icon-button:hover { transform: translateY(-1px); border-color: var(--retro-primary); }
+.retro-button:active, .retro-icon-button:active, .retro-button[aria-pressed="true"], .retro-icon-button[aria-pressed="true"], .retro-button.is-active, .retro-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 3px 10px rgb(0 0 0 / .18); }
+.retro-button-primary { background: var(--retro-primary); color: var(--retro-primary-text); border-color: var(--retro-primary); }
+.retro-button-primary:hover { background: var(--retro-primary-hover); border-color: var(--retro-primary-hover); }
+.retro-button-secondary { background: var(--retro-secondary); color: var(--retro-secondary-text); border-color: var(--retro-secondary); }
+.retro-button-secondary:hover { background: var(--retro-secondary-hover); border-color: var(--retro-secondary-hover); }
+.retro-button-danger { background: var(--retro-danger); color: #fff; border-color: var(--retro-danger); }
+.retro-button-ghost { background: transparent; color: var(--retro-text); box-shadow: none; }
+.retro-icon-button { width: 2.75rem; padding: 0; border-radius: var(--retro-radius-pill); }
+.retro-button:disabled, .retro-icon-button:disabled, .retro-disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+/* =========================================================
+   Forms
+========================================================= */
+
+.retro-field { display: flex; flex-direction: column; gap: var(--retro-space-2); }
+.retro-label { color: var(--retro-text); font-size: .925rem; font-weight: 800; }
+.retro-input, .retro-textarea, .retro-select {
+  width: 100%; min-height: 2.875rem; padding: .75rem 1rem; background: var(--retro-surface-soft); color: var(--retro-text);
+  border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); font: inherit; outline: none;
+  transition: background var(--retro-transition-fast), border-color var(--retro-transition-fast), box-shadow var(--retro-transition-fast);
+}
+.retro-textarea { min-height: 8rem; resize: vertical; }
+.retro-input::placeholder, .retro-textarea::placeholder { color: var(--retro-text-muted); opacity: .82; }
+.retro-input:hover, .retro-textarea:hover, .retro-select:hover { border-color: rgb(var(--retro-primary-rgb) / .58); }
+.retro-input:focus, .retro-textarea:focus, .retro-select:focus { border-color: var(--retro-focus); box-shadow: var(--retro-focus-ring); }
+.retro-help-text { color: var(--retro-text-muted); font-size: .875rem; line-height: 1.45; }
+
+/* Checkbox / Radio */
+.retro-check, .retro-radio { display: inline-flex; align-items: center; gap: var(--retro-space-2); color: var(--retro-text); cursor: pointer; }
+.retro-check input, .retro-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.retro-check-control, .retro-radio-control { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; background: var(--retro-surface-soft); border: 1px solid var(--retro-border); transition: background var(--retro-transition-fast), box-shadow var(--retro-transition-fast); }
+.retro-check-control { border-radius: var(--retro-radius-xs); }
+.retro-radio-control { border-radius: 50%; }
+.retro-check input:checked + .retro-check-control, .retro-radio input:checked + .retro-radio-control { background: var(--retro-primary); border-color: var(--retro-primary); box-shadow: var(--retro-focus-ring); }
+.retro-check input:checked + .retro-check-control::after { content: "✓"; color: var(--retro-primary-text); font-size: .9rem; font-weight: 900; }
+.retro-radio input:checked + .retro-radio-control::after { content: ""; width: .55rem; height: .55rem; background: var(--retro-primary-text); border-radius: 50%; }
+
+/* Switch */
+.retro-switch { display: inline-flex; align-items: center; gap: var(--retro-space-3); color: var(--retro-text); cursor: pointer; }
+.retro-switch input { position: absolute; opacity: 0; pointer-events: none; }
+.retro-switch-track { position: relative; width: 3.5rem; height: 1.9rem; background: var(--retro-surface-soft); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-pill); transition: background var(--retro-transition-fast), box-shadow var(--retro-transition-fast); }
+.retro-switch-thumb { position: absolute; top: .22rem; left: .22rem; width: 1.34rem; height: 1.34rem; background: var(--retro-surface-strong); border: 1px solid var(--retro-border); border-radius: 50%; box-shadow: 0 4px 12px rgb(0 0 0 / var(--retro-shadow-alpha)); transition: left var(--retro-transition-fast), background var(--retro-transition-fast); }
+.retro-switch input:checked + .retro-switch-track { background: var(--retro-primary); border-color: var(--retro-primary); }
+.retro-switch input:checked + .retro-switch-track .retro-switch-thumb { left: calc(100% - 1.34rem - .22rem); background: var(--retro-primary-text); }
+
+/* =========================================================
+   Badges / Nav / Progress / Alerts / Tables
+========================================================= */
+
+.retro-badge { display: inline-flex; align-items: center; gap: var(--retro-space-1); min-height: 1.75rem; padding: .35rem .7rem; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-pill); font-size: .8125rem; font-weight: 850; line-height: 1; }
+.retro-badge-primary { background: var(--retro-primary); color: var(--retro-primary-text); border-color: var(--retro-primary); }
+.retro-badge-secondary { background: var(--retro-secondary); color: var(--retro-secondary-text); border-color: var(--retro-secondary); }
+.retro-badge-success { background: var(--retro-success); color: #fff; border-color: var(--retro-success); }
+.retro-badge-warning { background: var(--retro-warning); color: #111; border-color: var(--retro-warning); }
+.retro-badge-danger { background: var(--retro-danger); color: #fff; border-color: var(--retro-danger); }
+
+.retro-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--retro-space-2); padding: var(--retro-space-2); background: var(--retro-surface); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-xl); box-shadow: 0 10px 30px rgb(0 0 0 / var(--retro-shadow-alpha)); }
+.retro-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.5rem; padding: .65rem 1rem; color: var(--retro-text-muted); border-radius: var(--retro-radius-pill); text-decoration: none; font-weight: 850; transition: color var(--retro-transition-fast), background var(--retro-transition-fast), box-shadow var(--retro-transition-fast); }
+.retro-nav-link:hover { color: var(--retro-text); background: var(--retro-surface-soft); }
+.retro-nav-link[aria-current="page"], .retro-nav-link.is-active { color: var(--retro-primary-text); background: var(--retro-primary); }
+
+.retro-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--retro-surface-soft); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-pill); }
+.retro-progress-bar { height: 100%; width: var(--retro-progress-value, 50%); background: linear-gradient(90deg, var(--retro-primary), var(--retro-accent)); border-radius: inherit; }
+
+.retro-alert { display: grid; gap: var(--retro-space-2); padding: var(--retro-space-4); background: var(--retro-surface); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-lg); box-shadow: 0 10px 30px rgb(0 0 0 / var(--retro-shadow-alpha)); }
+.retro-alert-success { border-left-color: var(--retro-success); }
+.retro-alert-warning { border-left-color: var(--retro-warning); }
+.retro-alert-danger { border-left-color: var(--retro-danger); }
+.retro-alert-title { margin: 0; font-weight: 900; }
+.retro-alert-body { margin: 0; color: var(--retro-text-muted); line-height: 1.55; }
+
+.retro-table-wrap { overflow: auto; }
+.retro-table { width: 100%; border-collapse: collapse; }
+.retro-table th, .retro-table td { padding: .95rem 1rem; text-align: left; border-bottom: 1px solid var(--retro-border); }
+.retro-table th { color: var(--retro-text); font-size: .82rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; background: rgb(var(--retro-primary-rgb) / .08); }
+.retro-table td { color: var(--retro-text-muted); }
+.retro-table tr:hover td { background: rgb(var(--retro-primary-rgb) / .045); }
+
+/* =========================================================
+   Utilities
+========================================================= */
+
+.retro-text-primary { color: var(--retro-primary); } .retro-text-secondary { color: var(--retro-secondary); } .retro-text-accent { color: var(--retro-accent); } .retro-text-success { color: var(--retro-success); } .retro-text-warning { color: var(--retro-warning); } .retro-text-danger { color: var(--retro-danger); }
+.retro-bg-primary { background: var(--retro-primary); color: var(--retro-primary-text); } .retro-bg-secondary { background: var(--retro-secondary); color: var(--retro-secondary-text); }
+.retro-border { border: 1px solid var(--retro-border); } .retro-rounded { border-radius: var(--retro-radius-md); } .retro-rounded-lg { border-radius: var(--retro-radius-lg); } .retro-rounded-xl { border-radius: var(--retro-radius-xl); } .retro-pill { border-radius: var(--retro-radius-pill); }
+.retro-sr-only, .retro-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.retro-skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 9999; transform: translateY(-150%); padding: .75rem 1rem; background: var(--retro-primary); color: var(--retro-primary-text); border-radius: var(--retro-radius-md); font-weight: 900; }
+.retro-skip-link:focus { transform: translateY(0); }
+
+
+/* =========================================================
+   Retrofuturism Console/Grid Overrides
+========================================================= */
+[data-ui="retrofuturism"][data-theme][data-mode] {
+  --retro-scanline-alpha: .055;
+  --retro-grid-alpha: .12;
+  --retro-glow-alpha: .34;
+}
+[data-ui="retrofuturism"] {
+  background:
+    radial-gradient(circle at 50% -10%, rgb(var(--retro-accent-rgb) / .16), transparent 34rem),
+    radial-gradient(circle at 85% 12%, rgb(var(--retro-secondary-rgb) / .12), transparent 28rem),
+    linear-gradient(180deg, rgb(255 255 255 / .025), rgb(0 0 0 / .08)),
+    var(--retro-bg);
+}
+.retro-page {
+  background-image:
+    linear-gradient(to bottom, rgb(255 255 255 / var(--retro-scanline-alpha)) 0 1px, transparent 1px 4px),
+    linear-gradient(90deg, rgb(var(--retro-border-rgb) / var(--retro-grid-alpha)) 1px, transparent 1px),
+    linear-gradient(rgb(var(--retro-border-rgb) / var(--retro-grid-alpha)) 1px, transparent 1px);
+  background-size: 100% 4px, 44px 44px, 44px 44px;
+}
+.retro-title, .retro-heading {
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  text-shadow: 0 0 12px rgb(var(--retro-primary-rgb) / .24), 0 0 26px rgb(var(--retro-accent-rgb) / .16);
+}
+.retro-surface, .retro-card, .retro-panel, .retro-toolbar, .retro-table-wrap {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .1), rgb(255 255 255 / .02)),
+    linear-gradient(135deg, rgb(var(--retro-primary-rgb) / .08), transparent 46%),
+    var(--retro-surface);
+  box-shadow:
+    0 18px 48px rgb(0 0 0 / var(--retro-shadow-alpha)),
+    0 0 0 1px rgb(var(--retro-border-rgb) / .2),
+    0 0 26px rgb(var(--retro-primary-rgb) / .14);
+}
+.retro-button-primary, .retro-badge-primary, .retro-nav-link.is-active {
+  box-shadow: 0 0 0 1px rgb(var(--retro-primary-rgb) / .34), 0 0 22px rgb(var(--retro-primary-rgb) / .22);
+}
+
+
+/* =========================================================
+   Native HTML Coverage + CSS Accessibility Layer
+========================================================= */
+
+[data-ui="retrofuturism"] :where(h1, h2, h3, h4, h5, h6) { color: var(--retro-text); font-family: var(--retro-font-display); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
+[data-ui="retrofuturism"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
+[data-ui="retrofuturism"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
+[data-ui="retrofuturism"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
+[data-ui="retrofuturism"] :where(p) { margin: 0 0 1rem; color: var(--retro-text-muted); line-height: 1.7; }
+[data-ui="retrofuturism"] :where(a) { color: var(--retro-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+[data-ui="retrofuturism"] :where(a:hover) { color: var(--retro-primary-hover); }
+[data-ui="retrofuturism"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--retro-text-muted); }
+[data-ui="retrofuturism"] :where(li) { margin-block: .25rem; }
+[data-ui="retrofuturism"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--retro-text); background: var(--retro-surface-soft); border-left: .35rem solid var(--retro-primary); border-radius: var(--retro-radius-md); }
+[data-ui="retrofuturism"] :where(code, kbd, samp) { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .92em; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid rgb(var(--retro-border-rgb) / .45); border-radius: var(--retro-radius-xs); padding: .15em .35em; }
+[data-ui="retrofuturism"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); }
+[data-ui="retrofuturism"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
+[data-ui="retrofuturism"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--retro-border); }
+[data-ui="retrofuturism"] :where(mark) { background: rgb(var(--retro-warning-rgb) / .32); color: var(--retro-text); border-radius: .2em; padding-inline: .15em; }
+[data-ui="retrofuturism"] :where(small) { color: var(--retro-text-muted); }
+[data-ui="retrofuturism"] :where(abbr[title]) { text-decoration: underline dotted var(--retro-primary); text-underline-offset: .18em; cursor: help; }
+[data-ui="retrofuturism"] :where(img, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
+[data-ui="retrofuturism"] :where(figure) { margin: 1.25rem 0; }
+[data-ui="retrofuturism"] :where(figcaption) { margin-top: .5rem; color: var(--retro-text-muted); font-size: .9rem; }
+[data-ui="retrofuturism"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); }
+[data-ui="retrofuturism"] :where(legend) { padding-inline: .35rem; color: var(--retro-text); font-weight: 900; }
+[data-ui="retrofuturism"] :where(label) { color: var(--retro-text); font-weight: 750; }
+[data-ui="retrofuturism"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); font: inherit; }
+[data-ui="retrofuturism"] :where(textarea) { resize: vertical; min-height: 7rem; }
+[data-ui="retrofuturism"] :where(input, textarea, select, button) { font: inherit; }
+[data-ui="retrofuturism"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--retro-primary); color: var(--retro-primary-text); border: 1px solid var(--retro-primary); border-radius: var(--retro-radius-md); font-weight: 850; cursor: pointer; }
+[data-ui="retrofuturism"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--retro-primary-hover); border-color: var(--retro-primary-hover); }
+[data-ui="retrofuturism"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--retro-primary); }
+[data-ui="retrofuturism"] :where(input[type="range"]) { width: 100%; accent-color: var(--retro-primary); }
+[data-ui="retrofuturism"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--retro-surface-soft); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-sm); }
+[data-ui="retrofuturism"] :where(input[type="file"]) { color: var(--retro-text-muted); }
+[data-ui="retrofuturism"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--retro-primary); border-radius: var(--retro-radius-sm); background: var(--retro-primary); color: var(--retro-primary-text); font-weight: 800; cursor: pointer; }
+[data-ui="retrofuturism"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
+[data-ui="retrofuturism"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--retro-danger); }
+[data-ui="retrofuturism"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--retro-surface); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); overflow: hidden; }
+[data-ui="retrofuturism"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--retro-text-muted); font-size: .9rem; }
+[data-ui="retrofuturism"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--retro-border); }
+[data-ui="retrofuturism"] :where(th) { color: var(--retro-text); background: rgb(var(--retro-primary-rgb) / .08); }
+[data-ui="retrofuturism"] :where(td) { color: var(--retro-text-muted); }
+[data-ui="retrofuturism"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--retro-surface); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); }
+[data-ui="retrofuturism"] :where(summary) { color: var(--retro-text); font-weight: 900; cursor: pointer; }
+[data-ui="retrofuturism"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--retro-surface-strong); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
+[data-ui="retrofuturism"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
+[data-ui="retrofuturism"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--retro-primary); }
+[data-ui="retrofuturism"] :where(:focus-visible) { outline: 3px solid var(--retro-focus); outline-offset: 3px; box-shadow: var(--retro-focus-ring); }
+[data-ui="retrofuturism"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--retro-focus); outline-offset: .35rem; }
+[data-ui="retrofuturism"] :where([aria-current="page"]) { font-weight: 900; }
+[data-ui="retrofuturism"] :where([aria-busy="true"]) { cursor: progress; }
+[data-ui="retrofuturism"] :where([hidden]) { display: none !important; }
+[data-ui="retrofuturism"] ::selection { background: var(--retro-primary); color: var(--retro-primary-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ui="retrofuturism"] *, [data-ui="retrofuturism"] *::before, [data-ui="retrofuturism"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+}
+@media (prefers-contrast: more) {
+  [data-ui="retrofuturism"] { --retro-border-alpha: 1; --retro-focus-alpha: .75; }
+}
+@media (forced-colors: active) {
+  [data-ui="retrofuturism"] * { forced-color-adjust: auto; }
+  [data-ui="retrofuturism"] :where(:focus-visible) { outline: 3px solid CanvasText; }
+}
+@media print {
+  [data-ui="retrofuturism"] { background: #fff !important; color: #000 !important; }
+  [data-ui="retrofuturism"] * { box-shadow: none !important; text-shadow: none !important; }
+  [data-ui="retrofuturism"] a { color: #000 !important; text-decoration: underline; }
+}

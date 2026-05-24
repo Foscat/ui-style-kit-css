@@ -1,0 +1,840 @@
+/* =========================================================
+   Glassmorphism + Retrofuturism Hybrid Theme System
+   Includes:
+   - 10 color schemes
+   - light / dark / contrast modes
+   - themed UI components and utilities
+
+   Usage:
+   <body data-ui="retro-glass" data-theme="midnight-gold" data-mode="light">
+   <body data-ui="retro-glass" data-theme="midnight-gold" data-mode="dark">
+   <body data-ui="retro-glass" data-theme="midnight-gold" data-mode="contrast">
+========================================================= */
+
+:root {
+  --rg-radius-xs: 0.25rem;
+  --rg-radius-sm: 0.5rem;
+  --rg-radius-md: 0.75rem;
+  --rg-radius-lg: 1rem;
+  --rg-radius-xl: 1.5rem;
+  --rg-radius-pill: 999px;
+
+  --rg-space-1: 0.25rem;
+  --rg-space-2: 0.5rem;
+  --rg-space-3: 0.75rem;
+  --rg-space-4: 1rem;
+  --rg-space-5: 1.25rem;
+  --rg-space-6: 1.5rem;
+  --rg-space-8: 2rem;
+
+  --rg-transition-fast: 140ms ease;
+  --rg-transition-base: 220ms ease;
+  --rg-transition-slow: 360ms ease;
+
+  --rg-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --rg-font-display: Orbitron, Rajdhani, Eurostile, "Bank Gothic", var(--rg-font-sans);
+  --rg-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+[data-ui="retro-glass"][data-mode="light"] {
+  color-scheme: light;
+  --rg-panel-alpha: 0.92;
+  --rg-panel-strong-alpha: 0.98;
+  --rg-panel-soft-alpha: 0.74;
+  --rg-border-alpha: 0.7;
+  --rg-glow-alpha: 0.24;
+  --rg-shadow-alpha: 0.18;
+  --rg-grid-alpha: 0.075;
+}
+
+[data-ui="retro-glass"][data-mode="dark"] {
+  color-scheme: dark;
+  --rg-panel-alpha: 0.82;
+  --rg-panel-strong-alpha: 0.94;
+  --rg-panel-soft-alpha: 0.58;
+  --rg-border-alpha: 0.64;
+  --rg-glow-alpha: 0.42;
+  --rg-shadow-alpha: 0.42;
+  --rg-grid-alpha: 0.12;
+}
+
+[data-ui="retro-glass"][data-mode="contrast"] {
+  color-scheme: dark;
+  --rg-panel-alpha: 1;
+  --rg-panel-strong-alpha: 1;
+  --rg-panel-soft-alpha: 0.92;
+  --rg-border-alpha: 1;
+  --rg-glow-alpha: 0.68;
+  --rg-shadow-alpha: 0.56;
+  --rg-grid-alpha: 0.18;
+}
+
+[data-ui="retro-glass"][data-theme][data-mode] {
+  --rg-bg: rgb(var(--rg-bg-rgb));
+  --rg-surface: rgb(var(--rg-surface-rgb) / var(--rg-panel-alpha));
+  --rg-surface-strong: rgb(var(--rg-surface-strong-rgb) / var(--rg-panel-strong-alpha));
+  --rg-surface-soft: rgb(var(--rg-surface-soft-rgb) / var(--rg-panel-soft-alpha));
+  --rg-text: rgb(var(--rg-text-rgb));
+  --rg-text-muted: rgb(var(--rg-text-muted-rgb));
+  --rg-border: rgb(var(--rg-border-rgb) / var(--rg-border-alpha));
+  --rg-primary: rgb(var(--rg-primary-rgb));
+  --rg-primary-hover: rgb(var(--rg-primary-hover-rgb));
+  --rg-primary-text: rgb(var(--rg-primary-text-rgb));
+  --rg-secondary: rgb(var(--rg-secondary-rgb));
+  --rg-secondary-hover: rgb(var(--rg-secondary-hover-rgb));
+  --rg-secondary-text: rgb(var(--rg-secondary-text-rgb));
+  --rg-accent: rgb(var(--rg-accent-rgb));
+  --rg-success: rgb(var(--rg-success-rgb));
+  --rg-warning: rgb(var(--rg-warning-rgb));
+  --rg-danger: rgb(var(--rg-danger-rgb));
+  --rg-link: rgb(var(--rg-link-rgb));
+  --rg-focus: rgb(var(--rg-focus-rgb));
+  --rg-glow-primary: rgb(var(--rg-primary-rgb) / var(--rg-glow-alpha));
+  --rg-glow-secondary: rgb(var(--rg-secondary-rgb) / var(--rg-glow-alpha));
+  --rg-glow-accent: rgb(var(--rg-accent-rgb) / var(--rg-glow-alpha));
+  --rg-shadow-sm: 0 2px 8px rgb(0 0 0 / var(--rg-shadow-alpha));
+  --rg-shadow-md: 0 10px 28px rgb(0 0 0 / calc(var(--rg-shadow-alpha) + 0.05));
+  --rg-shadow-lg: 0 22px 60px rgb(0 0 0 / calc(var(--rg-shadow-alpha) + 0.12));
+}
+
+/* =========================================================
+   1. Midnight Gold
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="midnight-gold"][data-mode="light"] {
+  --rg-bg-rgb: 246 243 234;
+  --rg-surface-rgb: 255 250 240;
+  --rg-surface-strong-rgb: 255 255 255;
+  --rg-surface-soft-rgb: 237 230 211;
+  --rg-text-rgb: 23 32 51;
+  --rg-text-muted-rgb: 95 104 121;
+  --rg-border-rgb: 214 200 165;
+  --rg-primary-rgb: 184 135 47;
+  --rg-primary-hover-rgb: 148 104 31;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 34 49 79;
+  --rg-secondary-hover-rgb: 23 36 60;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 217 164 65;
+  --rg-success-rgb: 47 125 84;
+  --rg-warning-rgb: 167 106 0;
+  --rg-danger-rgb: 185 63 63;
+  --rg-link-rgb: 138 100 31;
+  --rg-focus-rgb: 217 164 65;
+}
+
+[data-ui="retro-glass"][data-theme="midnight-gold"][data-mode="dark"] {
+  --rg-bg-rgb: 7 17 31;
+  --rg-surface-rgb: 16 27 45;
+  --rg-surface-strong-rgb: 23 36 58;
+  --rg-surface-soft-rgb: 12 22 39;
+  --rg-text-rgb: 247 237 215;
+  --rg-text-muted-rgb: 185 192 204;
+  --rg-border-rgb: 57 72 97;
+  --rg-primary-rgb: 214 168 79;
+  --rg-primary-hover-rgb: 240 200 109;
+  --rg-primary-text-rgb: 16 16 16;
+  --rg-secondary-rgb: 111 134 184;
+  --rg-secondary-hover-rgb: 146 167 209;
+  --rg-secondary-text-rgb: 8 16 29;
+  --rg-accent-rgb: 243 210 122;
+  --rg-success-rgb: 107 214 156;
+  --rg-warning-rgb: 255 203 91;
+  --rg-danger-rgb: 255 123 123;
+  --rg-link-rgb: 243 210 122;
+  --rg-focus-rgb: 255 214 107;
+}
+
+[data-ui="retro-glass"][data-theme="midnight-gold"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 8 8 8;
+  --rg-surface-strong-rgb: 17 17 17;
+  --rg-surface-soft-rgb: 5 5 5;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 245 245 245;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 255 212 0;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 0 217 255;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 255 234 0;
+  --rg-success-rgb: 0 255 117;
+  --rg-warning-rgb: 255 191 0;
+  --rg-danger-rgb: 255 77 77;
+  --rg-link-rgb: 0 217 255;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   2. Ocean Steel
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="ocean-steel"][data-mode="light"] {
+  --rg-bg-rgb: 238 248 251;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 248 253 255;
+  --rg-surface-soft-rgb: 220 236 242;
+  --rg-text-rgb: 16 36 46;
+  --rg-text-muted-rgb: 78 101 112;
+  --rg-border-rgb: 184 211 221;
+  --rg-primary-rgb: 8 125 157;
+  --rg-primary-hover-rgb: 6 100 126;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 57 86 107;
+  --rg-secondary-hover-rgb: 44 67 84;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 21 184 200;
+  --rg-success-rgb: 38 122 92;
+  --rg-warning-rgb: 167 101 0;
+  --rg-danger-rgb: 182 70 70;
+  --rg-link-rgb: 6 100 126;
+  --rg-focus-rgb: 21 184 200;
+}
+
+[data-ui="retro-glass"][data-theme="ocean-steel"][data-mode="dark"] {
+  --rg-bg-rgb: 6 22 29;
+  --rg-surface-rgb: 13 37 48;
+  --rg-surface-strong-rgb: 20 52 66;
+  --rg-surface-soft-rgb: 8 29 38;
+  --rg-text-rgb: 233 251 255;
+  --rg-text-muted-rgb: 167 192 201;
+  --rg-border-rgb: 49 86 102;
+  --rg-primary-rgb: 54 196 221;
+  --rg-primary-hover-rgb: 115 227 244;
+  --rg-primary-text-rgb: 4 18 22;
+  --rg-secondary-rgb: 140 183 201;
+  --rg-secondary-hover-rgb: 178 213 226;
+  --rg-secondary-text-rgb: 6 22 29;
+  --rg-accent-rgb: 83 240 255;
+  --rg-success-rgb: 103 216 166;
+  --rg-warning-rgb: 255 192 97;
+  --rg-danger-rgb: 255 123 123;
+  --rg-link-rgb: 115 227 244;
+  --rg-focus-rgb: 83 240 255;
+}
+
+[data-ui="retro-glass"][data-theme="ocean-steel"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 8 10;
+  --rg-surface-rgb: 0 16 20;
+  --rg-surface-strong-rgb: 0 26 32;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 234 255 255;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 0 229 255;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 255 255 0;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 0 255 255;
+  --rg-success-rgb: 0 255 144;
+  --rg-warning-rgb: 255 208 0;
+  --rg-danger-rgb: 255 59 59;
+  --rg-link-rgb: 0 229 255;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   3. Forest Moss
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="forest-moss"][data-mode="light"] {
+  --rg-bg-rgb: 242 247 239;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 251 255 248;
+  --rg-surface-soft-rgb: 226 234 219;
+  --rg-text-rgb: 24 36 23;
+  --rg-text-muted-rgb: 88 104 82;
+  --rg-border-rgb: 197 211 186;
+  --rg-primary-rgb: 63 125 58;
+  --rg-primary-hover-rgb: 47 97 43;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 106 95 56;
+  --rg-secondary-hover-rgb: 81 73 43;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 156 186 82;
+  --rg-success-rgb: 47 125 84;
+  --rg-warning-rgb: 154 106 0;
+  --rg-danger-rgb: 173 69 69;
+  --rg-link-rgb: 47 97 43;
+  --rg-focus-rgb: 156 186 82;
+}
+
+[data-ui="retro-glass"][data-theme="forest-moss"][data-mode="dark"] {
+  --rg-bg-rgb: 7 16 6;
+  --rg-surface-rgb: 16 28 15;
+  --rg-surface-strong-rgb: 26 42 24;
+  --rg-surface-soft-rgb: 11 22 10;
+  --rg-text-rgb: 237 247 232;
+  --rg-text-muted-rgb: 180 197 173;
+  --rg-border-rgb: 61 83 56;
+  --rg-primary-rgb: 130 210 122;
+  --rg-primary-hover-rgb: 162 237 153;
+  --rg-primary-text-rgb: 7 16 6;
+  --rg-secondary-rgb: 210 189 114;
+  --rg-secondary-hover-rgb: 239 217 139;
+  --rg-secondary-text-rgb: 20 16 6;
+  --rg-accent-rgb: 185 239 107;
+  --rg-success-rgb: 117 223 167;
+  --rg-warning-rgb: 255 210 99;
+  --rg-danger-rgb: 255 133 133;
+  --rg-link-rgb: 162 237 153;
+  --rg-focus-rgb: 185 239 107;
+}
+
+[data-ui="retro-glass"][data-theme="forest-moss"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 7 16 7;
+  --rg-surface-strong-rgb: 11 25 11;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 240 255 240;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 108 255 95;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 255 223 0;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 182 255 0;
+  --rg-success-rgb: 0 255 117;
+  --rg-warning-rgb: 255 208 0;
+  --rg-danger-rgb: 255 64 64;
+  --rg-link-rgb: 108 255 95;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   4. Sunset Ember
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="sunset-ember"][data-mode="light"] {
+  --rg-bg-rgb: 255 244 236;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 255 250 246;
+  --rg-surface-soft-rgb: 244 222 210;
+  --rg-text-rgb: 42 23 17;
+  --rg-text-muted-rgb: 118 88 77;
+  --rg-border-rgb: 227 189 170;
+  --rg-primary-rgb: 196 81 43;
+  --rg-primary-hover-rgb: 159 63 32;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 124 63 92;
+  --rg-secondary-hover-rgb: 97 48 71;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 230 154 58;
+  --rg-success-rgb: 49 122 87;
+  --rg-warning-rgb: 184 111 0;
+  --rg-danger-rgb: 189 61 61;
+  --rg-link-rgb: 159 63 32;
+  --rg-focus-rgb: 230 154 58;
+}
+
+[data-ui="retro-glass"][data-theme="sunset-ember"][data-mode="dark"] {
+  --rg-bg-rgb: 23 9 5;
+  --rg-surface-rgb: 38 17 11;
+  --rg-surface-strong-rgb: 53 25 18;
+  --rg-surface-soft-rgb: 30 12 7;
+  --rg-text-rgb: 255 240 232;
+  --rg-text-muted-rgb: 208 177 165;
+  --rg-border-rgb: 106 59 45;
+  --rg-primary-rgb: 255 138 91;
+  --rg-primary-hover-rgb: 255 173 138;
+  --rg-primary-text-rgb: 26 8 3;
+  --rg-secondary-rgb: 227 138 181;
+  --rg-secondary-hover-rgb: 255 175 208;
+  --rg-secondary-text-rgb: 26 7 18;
+  --rg-accent-rgb: 255 193 102;
+  --rg-success-rgb: 112 215 163;
+  --rg-warning-rgb: 255 209 102;
+  --rg-danger-rgb: 255 119 119;
+  --rg-link-rgb: 255 173 138;
+  --rg-focus-rgb: 255 193 102;
+}
+
+[data-ui="retro-glass"][data-theme="sunset-ember"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 18 4 0;
+  --rg-surface-strong-rgb: 29 7 0;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 255 245 239;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 255 106 0;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 255 79 184;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 255 208 0;
+  --rg-success-rgb: 0 255 144;
+  --rg-warning-rgb: 255 191 0;
+  --rg-danger-rgb: 255 48 48;
+  --rg-link-rgb: 255 157 0;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   5. Royal Plum
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="royal-plum"][data-mode="light"] {
+  --rg-bg-rgb: 248 241 251;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 253 248 255;
+  --rg-surface-soft-rgb: 234 220 240;
+  --rg-text-rgb: 36 21 45;
+  --rg-text-muted-rgb: 105 86 113;
+  --rg-border-rgb: 213 187 221;
+  --rg-primary-rgb: 123 63 160;
+  --rg-primary-hover-rgb: 99 49 127;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 63 76 154;
+  --rg-secondary-hover-rgb: 48 58 119;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 192 90 198;
+  --rg-success-rgb: 49 124 92;
+  --rg-warning-rgb: 166 106 0;
+  --rg-danger-rgb: 183 65 95;
+  --rg-link-rgb: 99 49 127;
+  --rg-focus-rgb: 192 90 198;
+}
+
+[data-ui="retro-glass"][data-theme="royal-plum"][data-mode="dark"] {
+  --rg-bg-rgb: 16 6 20;
+  --rg-surface-rgb: 29 16 36;
+  --rg-surface-strong-rgb: 42 23 52;
+  --rg-surface-soft-rgb: 22 11 27;
+  --rg-text-rgb: 250 236 255;
+  --rg-text-muted-rgb: 200 176 209;
+  --rg-border-rgb: 85 57 100;
+  --rg-primary-rgb: 216 145 242;
+  --rg-primary-hover-rgb: 235 184 255;
+  --rg-primary-text-rgb: 19 6 23;
+  --rg-secondary-rgb: 157 168 255;
+  --rg-secondary-hover-rgb: 195 202 255;
+  --rg-secondary-text-rgb: 8 11 31;
+  --rg-accent-rgb: 255 156 246;
+  --rg-success-rgb: 118 220 169;
+  --rg-warning-rgb: 255 209 102;
+  --rg-danger-rgb: 255 122 156;
+  --rg-link-rgb: 235 184 255;
+  --rg-focus-rgb: 255 156 246;
+}
+
+[data-ui="retro-glass"][data-theme="royal-plum"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 16 0 20;
+  --rg-surface-strong-rgb: 26 0 34;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 255 240 255;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 228 92 255;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 0 217 255;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 255 0 245;
+  --rg-success-rgb: 0 255 144;
+  --rg-warning-rgb: 255 225 0;
+  --rg-danger-rgb: 255 63 110;
+  --rg-link-rgb: 228 92 255;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   6. Graphite Cyan
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="graphite-cyan"][data-mode="light"] {
+  --rg-bg-rgb: 242 245 246;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 249 251 252;
+  --rg-surface-soft-rgb: 225 231 234;
+  --rg-text-rgb: 23 29 33;
+  --rg-text-muted-rgb: 93 104 112;
+  --rg-border-rgb: 197 206 212;
+  --rg-primary-rgb: 0 124 137;
+  --rg-primary-hover-rgb: 0 99 110;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 63 72 80;
+  --rg-secondary-hover-rgb: 47 54 60;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 34 184 199;
+  --rg-success-rgb: 40 122 91;
+  --rg-warning-rgb: 167 103 0;
+  --rg-danger-rgb: 182 64 64;
+  --rg-link-rgb: 0 99 110;
+  --rg-focus-rgb: 34 184 199;
+}
+
+[data-ui="retro-glass"][data-theme="graphite-cyan"][data-mode="dark"] {
+  --rg-bg-rgb: 8 11 13;
+  --rg-surface-rgb: 18 24 28;
+  --rg-surface-strong-rgb: 28 37 43;
+  --rg-surface-soft-rgb: 13 17 20;
+  --rg-text-rgb: 237 246 248;
+  --rg-text-muted-rgb: 174 187 193;
+  --rg-border-rgb: 59 72 79;
+  --rg-primary-rgb: 62 217 232;
+  --rg-primary-hover-rgb: 123 243 255;
+  --rg-primary-text-rgb: 6 16 18;
+  --rg-secondary-rgb: 170 181 188;
+  --rg-secondary-hover-rgb: 210 219 224;
+  --rg-secondary-text-rgb: 8 11 13;
+  --rg-accent-rgb: 123 243 255;
+  --rg-success-rgb: 110 218 165;
+  --rg-warning-rgb: 255 200 97;
+  --rg-danger-rgb: 255 125 125;
+  --rg-link-rgb: 123 243 255;
+  --rg-focus-rgb: 62 217 232;
+}
+
+[data-ui="retro-glass"][data-theme="graphite-cyan"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 7 7 7;
+  --rg-surface-strong-rgb: 17 17 17;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 245 245 245;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 0 240 255;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 242 242 242;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 0 240 255;
+  --rg-success-rgb: 0 255 117;
+  --rg-warning-rgb: 255 208 0;
+  --rg-danger-rgb: 255 64 64;
+  --rg-link-rgb: 0 240 255;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   7. Desert Sage
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="desert-sage"][data-mode="light"] {
+  --rg-bg-rgb: 248 242 231;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 255 250 241;
+  --rg-surface-soft-rgb: 234 223 205;
+  --rg-text-rgb: 43 36 25;
+  --rg-text-muted-rgb: 113 103 84;
+  --rg-border-rgb: 215 198 167;
+  --rg-primary-rgb: 140 106 61;
+  --rg-primary-hover-rgb: 112 83 47;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 95 118 85;
+  --rg-secondary-hover-rgb: 72 92 64;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 201 151 74;
+  --rg-success-rgb: 81 125 72;
+  --rg-warning-rgb: 166 107 0;
+  --rg-danger-rgb: 174 74 63;
+  --rg-link-rgb: 112 83 47;
+  --rg-focus-rgb: 201 151 74;
+}
+
+[data-ui="retro-glass"][data-theme="desert-sage"][data-mode="dark"] {
+  --rg-bg-rgb: 18 15 9;
+  --rg-surface-rgb: 33 27 18;
+  --rg-surface-strong-rgb: 47 40 27;
+  --rg-surface-soft-rgb: 25 20 13;
+  --rg-text-rgb: 248 239 223;
+  --rg-text-muted-rgb: 199 186 163;
+  --rg-border-rgb: 91 78 56;
+  --rg-primary-rgb: 217 184 120;
+  --rg-primary-hover-rgb: 240 211 154;
+  --rg-primary-text-rgb: 21 16 6;
+  --rg-secondary-rgb: 168 206 153;
+  --rg-secondary-hover-rgb: 200 233 187;
+  --rg-secondary-text-rgb: 9 20 7;
+  --rg-accent-rgb: 241 196 110;
+  --rg-success-rgb: 141 219 125;
+  --rg-warning-rgb: 255 209 102;
+  --rg-danger-rgb: 255 136 122;
+  --rg-link-rgb: 240 211 154;
+  --rg-focus-rgb: 241 196 110;
+}
+
+[data-ui="retro-glass"][data-theme="desert-sage"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 15 11 3;
+  --rg-surface-strong-rgb: 26 18 5;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 255 248 232;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 255 209 102;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 157 255 107;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 255 176 0;
+  --rg-success-rgb: 0 255 117;
+  --rg-warning-rgb: 255 225 0;
+  --rg-danger-rgb: 255 77 77;
+  --rg-link-rgb: 255 209 102;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   8. Rose Quartz
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="rose-quartz"][data-mode="light"] {
+  --rg-bg-rgb: 255 242 245;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 255 248 250;
+  --rg-surface-soft-rgb: 242 220 227;
+  --rg-text-rgb: 43 21 29;
+  --rg-text-muted-rgb: 118 90 99;
+  --rg-border-rgb: 223 184 198;
+  --rg-primary-rgb: 184 71 109;
+  --rg-primary-hover-rgb: 150 55 87;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 122 85 126;
+  --rg-secondary-hover-rgb: 96 65 99;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 223 125 157;
+  --rg-success-rgb: 49 122 92;
+  --rg-warning-rgb: 166 106 0;
+  --rg-danger-rgb: 189 63 85;
+  --rg-link-rgb: 150 55 87;
+  --rg-focus-rgb: 223 125 157;
+}
+
+[data-ui="retro-glass"][data-theme="rose-quartz"][data-mode="dark"] {
+  --rg-bg-rgb: 22 7 12;
+  --rg-surface-rgb: 37 16 24;
+  --rg-surface-strong-rgb: 53 24 36;
+  --rg-surface-soft-rgb: 28 11 17;
+  --rg-text-rgb: 255 240 244;
+  --rg-text-muted-rgb: 210 174 185;
+  --rg-border-rgb: 101 55 71;
+  --rg-primary-rgb: 255 143 179;
+  --rg-primary-hover-rgb: 255 182 205;
+  --rg-primary-text-rgb: 24 6 13;
+  --rg-secondary-rgb: 217 160 223;
+  --rg-secondary-hover-rgb: 239 194 244;
+  --rg-secondary-text-rgb: 22 6 24;
+  --rg-accent-rgb: 255 173 197;
+  --rg-success-rgb: 119 219 169;
+  --rg-warning-rgb: 255 209 102;
+  --rg-danger-rgb: 255 120 144;
+  --rg-link-rgb: 255 182 205;
+  --rg-focus-rgb: 255 173 197;
+}
+
+[data-ui="retro-glass"][data-theme="rose-quartz"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 18 0 6;
+  --rg-surface-strong-rgb: 32 0 13;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 255 240 245;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 255 79 147;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 240 0 255;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 255 138 179;
+  --rg-success-rgb: 0 255 144;
+  --rg-warning-rgb: 255 225 0;
+  --rg-danger-rgb: 255 48 48;
+  --rg-link-rgb: 255 138 179;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   9. Cyber Lime
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="cyber-lime"][data-mode="light"] {
+  --rg-bg-rgb: 244 250 237;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 251 255 246;
+  --rg-surface-soft-rgb: 226 239 211;
+  --rg-text-rgb: 23 34 20;
+  --rg-text-muted-rgb: 89 105 82;
+  --rg-border-rgb: 198 216 179;
+  --rg-primary-rgb: 95 159 31;
+  --rg-primary-hover-rgb: 73 125 23;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 20 127 134;
+  --rg-secondary-hover-rgb: 14 98 104;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 164 215 46;
+  --rg-success-rgb: 47 125 84;
+  --rg-warning-rgb: 156 104 0;
+  --rg-danger-rgb: 179 65 65;
+  --rg-link-rgb: 73 125 23;
+  --rg-focus-rgb: 164 215 46;
+}
+
+[data-ui="retro-glass"][data-theme="cyber-lime"][data-mode="dark"] {
+  --rg-bg-rgb: 5 11 5;
+  --rg-surface-rgb: 13 24 12;
+  --rg-surface-strong-rgb: 22 37 21;
+  --rg-surface-soft-rgb: 8 17 8;
+  --rg-text-rgb: 239 255 233;
+  --rg-text-muted-rgb: 180 199 173;
+  --rg-border-rgb: 57 82 54;
+  --rg-primary-rgb: 168 255 61;
+  --rg-primary-hover-rgb: 202 255 127;
+  --rg-primary-text-rgb: 6 16 5;
+  --rg-secondary-rgb: 61 235 242;
+  --rg-secondary-hover-rgb: 134 248 255;
+  --rg-secondary-text-rgb: 3 16 18;
+  --rg-accent-rgb: 198 255 77;
+  --rg-success-rgb: 111 240 168;
+  --rg-warning-rgb: 255 218 98;
+  --rg-danger-rgb: 255 119 119;
+  --rg-link-rgb: 202 255 127;
+  --rg-focus-rgb: 168 255 61;
+}
+
+[data-ui="retro-glass"][data-theme="cyber-lime"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 5 11 0;
+  --rg-surface-strong-rgb: 11 22 0;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 244 255 232;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 170 255 0;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 0 240 255;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 204 255 0;
+  --rg-success-rgb: 0 255 117;
+  --rg-warning-rgb: 255 225 0;
+  --rg-danger-rgb: 255 48 48;
+  --rg-link-rgb: 170 255 0;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   10. Arctic Indigo
+========================================================= */
+
+[data-ui="retro-glass"][data-theme="arctic-indigo"][data-mode="light"] {
+  --rg-bg-rgb: 241 245 255;
+  --rg-surface-rgb: 255 255 255;
+  --rg-surface-strong-rgb: 248 251 255;
+  --rg-surface-soft-rgb: 223 231 246;
+  --rg-text-rgb: 20 27 46;
+  --rg-text-muted-rgb: 88 100 122;
+  --rg-border-rgb: 190 203 227;
+  --rg-primary-rgb: 64 94 184;
+  --rg-primary-hover-rgb: 49 72 148;
+  --rg-primary-text-rgb: 255 255 255;
+  --rg-secondary-rgb: 46 125 157;
+  --rg-secondary-hover-rgb: 35 97 122;
+  --rg-secondary-text-rgb: 255 255 255;
+  --rg-accent-rgb: 123 147 232;
+  --rg-success-rgb: 47 125 84;
+  --rg-warning-rgb: 166 106 0;
+  --rg-danger-rgb: 182 64 82;
+  --rg-link-rgb: 49 72 148;
+  --rg-focus-rgb: 123 147 232;
+}
+
+[data-ui="retro-glass"][data-theme="arctic-indigo"][data-mode="dark"] {
+  --rg-bg-rgb: 6 10 22;
+  --rg-surface-rgb: 16 24 43;
+  --rg-surface-strong-rgb: 24 35 66;
+  --rg-surface-soft-rgb: 10 16 32;
+  --rg-text-rgb: 237 243 255;
+  --rg-text-muted-rgb: 178 191 217;
+  --rg-border-rgb: 58 75 120;
+  --rg-primary-rgb: 145 168 255;
+  --rg-primary-hover-rgb: 183 197 255;
+  --rg-primary-text-rgb: 5 8 22;
+  --rg-secondary-rgb: 118 216 243;
+  --rg-secondary-hover-rgb: 165 234 255;
+  --rg-secondary-text-rgb: 4 17 22;
+  --rg-accent-rgb: 194 206 255;
+  --rg-success-rgb: 114 219 166;
+  --rg-warning-rgb: 255 209 102;
+  --rg-danger-rgb: 255 125 145;
+  --rg-link-rgb: 183 197 255;
+  --rg-focus-rgb: 145 168 255;
+}
+
+[data-ui="retro-glass"][data-theme="arctic-indigo"][data-mode="contrast"] {
+  --rg-bg-rgb: 0 0 0;
+  --rg-surface-rgb: 3 8 22;
+  --rg-surface-strong-rgb: 8 18 42;
+  --rg-surface-soft-rgb: 0 0 0;
+  --rg-text-rgb: 255 255 255;
+  --rg-text-muted-rgb: 238 244 255;
+  --rg-border-rgb: 255 255 255;
+  --rg-primary-rgb: 111 140 255;
+  --rg-primary-hover-rgb: 255 255 255;
+  --rg-primary-text-rgb: 0 0 0;
+  --rg-secondary-rgb: 0 217 255;
+  --rg-secondary-hover-rgb: 255 255 255;
+  --rg-secondary-text-rgb: 0 0 0;
+  --rg-accent-rgb: 184 196 255;
+  --rg-success-rgb: 0 255 144;
+  --rg-warning-rgb: 255 225 0;
+  --rg-danger-rgb: 255 63 95;
+  --rg-link-rgb: 159 178 255;
+  --rg-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   Retro Glass Base
+========================================================= */
+
+[data-ui="retro-glass"] {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 15%, rgb(var(--rg-primary-rgb) / 0.18), transparent 28rem),
+    radial-gradient(circle at 85% 10%, rgb(var(--rg-secondary-rgb) / 0.16), transparent 26rem),
+    radial-gradient(circle at 50% 110%, rgb(var(--rg-accent-rgb) / 0.14), transparent 34rem),
+    linear-gradient(90deg, rgb(var(--rg-border-rgb) / var(--rg-grid-alpha)) 1px, transparent 1px),
+    linear-gradient(rgb(var(--rg-border-rgb) / var(--rg-grid-alpha)) 1px, transparent 1px),
+    var(--rg-bg);
+  background-size: auto, auto, auto, 52px 52px, 52px 52px, auto;
+  color: var(--rg-text);
+  font-family: var(--rg-font-sans);
+}
+[data-ui="retro-glass"] *, [data-ui="retro-glass"] *::before, [data-ui="retro-glass"] *::after { box-sizing: border-box; }
+[data-ui="retro-glass"] a { color: var(--rg-link); text-underline-offset: 0.18em; } [data-ui="retro-glass"] ::selection { background: var(--rg-primary); color: var(--rg-primary-text); }
+
+.rg-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); } .rg-container { width: min(100% - 2rem, 1200px); margin-inline: auto; } .rg-stack { display: flex; flex-direction: column; gap: var(--rg-space-4); } .rg-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); } .rg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--rg-space-5); } .rg-section { padding: clamp(1.25rem, 4vw, 2.5rem); }
+.rg-title, .rg-heading, .rg-kicker, .rg-button, .rg-badge, .rg-nav-link { font-family: var(--rg-font-display); text-transform: uppercase; } .rg-title { margin: 0; font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.02; letter-spacing: .06em; text-shadow: 0 0 14px var(--rg-glow-primary), 0 0 34px var(--rg-glow-accent); } .rg-heading { margin: 0; font-size: clamp(1.25rem, 3vw, 2rem); letter-spacing: .06em; } .rg-kicker { margin: 0; color: var(--rg-primary); font-size: .8rem; font-weight: 900; letter-spacing: .18em; } .rg-subtitle, .rg-copy { margin: 0; color: var(--rg-text-muted); line-height: 1.65; } .rg-text-muted { color: var(--rg-text-muted); }
+
+.rg-card, .rg-panel, .rg-console, .rg-toolbar, .rg-table-wrap { position: relative; background: linear-gradient(135deg, rgb(255 255 255 / .18), rgb(255 255 255 / .04)), linear-gradient(135deg, rgb(var(--rg-primary-rgb) / .06), transparent 52%), var(--rg-surface); color: var(--rg-text); border: 1px solid var(--rg-border); border-top-color: rgb(255 255 255 / .28); border-left-color: rgb(255 255 255 / .2); border-radius: var(--rg-radius-xl); box-shadow: var(--rg-shadow-md), 0 0 28px var(--rg-glow-primary); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); overflow: hidden; transition: transform var(--rg-transition-base), box-shadow var(--rg-transition-base), border-color var(--rg-transition-base); }
+.rg-card::before, .rg-panel::before, .rg-console::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgb(255 255 255 / .1), transparent 30%), linear-gradient(90deg, transparent, rgb(var(--rg-accent-rgb) / .08), transparent); } .rg-card, .rg-panel, .rg-console { padding: var(--rg-space-6); } .rg-console { border-radius: var(--rg-radius-lg); box-shadow: var(--rg-shadow-lg), inset 0 0 28px rgb(var(--rg-primary-rgb) / .08), 0 0 32px var(--rg-glow-primary); } .rg-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-4); padding: var(--rg-space-4); } .rg-hover-lift:hover { transform: translateY(-3px); border-color: rgb(var(--rg-primary-rgb) / .68); box-shadow: var(--rg-shadow-lg), 0 0 44px var(--rg-glow-primary), 0 0 60px var(--rg-glow-secondary); }
+.rg-inset, .rg-well { background: linear-gradient(180deg, rgb(0 0 0 / .08), rgb(255 255 255 / .04)), var(--rg-surface-soft); border: 1px solid rgb(var(--rg-border-rgb) / .36); border-radius: var(--rg-radius-lg); box-shadow: inset 0 8px 22px rgb(0 0 0 / .16); backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); } .rg-well { padding: var(--rg-space-5); }
+
+.rg-button, .rg-icon-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--rg-space-2); min-height: 2.85rem; padding: .75rem 1.1rem; background: linear-gradient(135deg, rgb(255 255 255 / .24), rgb(255 255 255 / .04)), var(--rg-surface); color: var(--rg-text); border: 1px solid rgb(var(--rg-border-rgb) / .56); border-top-color: rgb(255 255 255 / .32); border-radius: var(--rg-radius-md); box-shadow: var(--rg-shadow-sm); backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); font: inherit; font-family: var(--rg-font-display); font-weight: 900; letter-spacing: .08em; cursor: pointer; text-decoration: none; transition: transform var(--rg-transition-fast), box-shadow var(--rg-transition-fast), background var(--rg-transition-fast), border-color var(--rg-transition-fast); }
+.rg-button:hover, .rg-icon-button:hover { transform: translateY(-2px); border-color: rgb(var(--rg-primary-rgb) / .68); box-shadow: var(--rg-shadow-md), 0 0 24px var(--rg-glow-primary); } .rg-button:active, .rg-icon-button:active, .rg-button.is-active, .rg-button[aria-pressed="true"] { transform: translateY(1px); box-shadow: inset 0 8px 18px rgb(0 0 0 / .18), 0 0 18px var(--rg-glow-primary); } .rg-button-primary { background: linear-gradient(135deg, rgb(255 255 255 / .22), rgb(255 255 255 / .04)), var(--rg-primary); color: var(--rg-primary-text); border-color: rgb(var(--rg-primary-rgb) / .72); } .rg-button-primary:hover { background: var(--rg-primary-hover); } .rg-button-secondary { background: linear-gradient(135deg, rgb(255 255 255 / .22), rgb(255 255 255 / .04)), var(--rg-secondary); color: var(--rg-secondary-text); border-color: rgb(var(--rg-secondary-rgb) / .72); } .rg-button-secondary:hover { background: var(--rg-secondary-hover); } .rg-button-danger { background: var(--rg-danger); color: #fff; } .rg-icon-button { width: 2.85rem; padding: 0; }
+
+.rg-field { display: flex; flex-direction: column; gap: var(--rg-space-2); } .rg-label { font-family: var(--rg-font-display); text-transform: uppercase; letter-spacing: .12em; font-weight: 900; font-size: .8rem; } .rg-input, .rg-textarea, .rg-select { width: 100%; min-height: 2.9rem; padding: .8rem 1rem; background: linear-gradient(180deg, rgb(255 255 255 / .06), rgb(0 0 0 / .08)), var(--rg-surface-soft); color: var(--rg-text); border: 1px solid rgb(var(--rg-border-rgb) / .44); border-radius: var(--rg-radius-md); box-shadow: inset 0 8px 18px rgb(0 0 0 / .14); font: inherit; outline: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); } .rg-textarea { min-height: 8rem; resize: vertical; } .rg-input:focus, .rg-textarea:focus, .rg-select:focus { border-color: var(--rg-focus); box-shadow: inset 0 8px 18px rgb(0 0 0 / .14), 0 0 0 3px rgb(var(--rg-focus-rgb) / .24), 0 0 26px rgb(var(--rg-focus-rgb) / .22); } .rg-help-text { color: var(--rg-text-muted); font-size: .9rem; }
+
+.rg-badge { display: inline-flex; align-items: center; min-height: 1.8rem; padding: .35rem .75rem; background: linear-gradient(135deg, rgb(255 255 255 / .2), rgb(255 255 255 / .04)), var(--rg-surface); color: var(--rg-text); border: 1px solid rgb(var(--rg-border-rgb) / .5); border-radius: var(--rg-radius-pill); box-shadow: var(--rg-shadow-sm); font-size: .78rem; font-weight: 900; letter-spacing: .08em; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); } .rg-badge-primary { background: var(--rg-primary); color: var(--rg-primary-text); } .rg-badge-secondary { background: var(--rg-secondary); color: var(--rg-secondary-text); } .rg-badge-success { background: var(--rg-success); color: #fff; } .rg-badge-warning { background: var(--rg-warning); color: #111; } .rg-badge-danger { background: var(--rg-danger); color: #fff; }
+.rg-nav { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); padding: var(--rg-space-2); background: linear-gradient(135deg, rgb(255 255 255 / .18), rgb(255 255 255 / .04)), var(--rg-surface); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-xl); box-shadow: var(--rg-shadow-md), 0 0 24px var(--rg-glow-primary); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); } .rg-nav-link { display: inline-flex; min-height: 2.5rem; align-items: center; padding: .65rem 1rem; color: var(--rg-text-muted); border: 1px solid transparent; border-radius: var(--rg-radius-pill); text-decoration: none; font-weight: 900; letter-spacing: .08em; } .rg-nav-link:hover { color: var(--rg-text); background: rgb(255 255 255 / .1); border-color: rgb(var(--rg-primary-rgb) / .36); } .rg-nav-link.is-active, .rg-nav-link[aria-current="page"] { background: var(--rg-primary); color: var(--rg-primary-text); box-shadow: 0 0 22px var(--rg-glow-primary); }
+.rg-progress { width: 100%; height: .9rem; background: var(--rg-surface-soft); border: 1px solid rgb(var(--rg-border-rgb) / .4); border-radius: var(--rg-radius-pill); box-shadow: inset 0 8px 18px rgb(0 0 0 / .14); overflow: hidden; } .rg-progress-bar { height: 100%; width: var(--rg-progress-value, 50%); background: linear-gradient(90deg, var(--rg-primary), var(--rg-accent), var(--rg-secondary)); border-radius: inherit; box-shadow: 0 0 18px var(--rg-glow-primary); }
+.rg-alert { padding: var(--rg-space-4); background: var(--rg-surface); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-lg); box-shadow: var(--rg-shadow-md), 0 0 22px var(--rg-glow-primary); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); } .rg-alert-title { margin: 0; font-family: var(--rg-font-display); text-transform: uppercase; } .rg-alert-body { margin: .5rem 0 0; color: var(--rg-text-muted); } .rg-alert-success { border-left: 4px solid var(--rg-success); } .rg-alert-warning { border-left: 4px solid var(--rg-warning); } .rg-alert-danger { border-left: 4px solid var(--rg-danger); }
+.rg-table-wrap { overflow: auto; } .rg-table { width: 100%; border-collapse: collapse; } .rg-table th, .rg-table td { padding: .9rem 1rem; border-bottom: 1px solid rgb(var(--rg-border-rgb) / .34); text-align: left; } .rg-table th { background: rgb(var(--rg-primary-rgb) / .1); font-family: var(--rg-font-display); text-transform: uppercase; letter-spacing: .1em; } .rg-table td { color: var(--rg-text-muted); }
+.rg-text-primary { color: var(--rg-primary); } .rg-text-secondary { color: var(--rg-secondary); } .rg-text-accent { color: var(--rg-accent); } .rg-text-success { color: var(--rg-success); } .rg-text-warning { color: var(--rg-warning); } .rg-text-danger { color: var(--rg-danger); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { [data-ui="retro-glass"] { --rg-panel-alpha: .96; --rg-panel-strong-alpha: 1; --rg-panel-soft-alpha: .9; } }
+[data-ui="retro-glass"] :focus-visible { outline: 3px solid var(--rg-focus); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { [data-ui="retro-glass"] *, [data-ui="retro-glass"] *::before, [data-ui="retro-glass"] *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }

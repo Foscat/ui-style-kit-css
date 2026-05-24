@@ -1,0 +1,911 @@
+/* =========================================================
+   Brutalism Theme System
+   Includes:
+   - 10 color schemes
+   - light / dark / contrast modes
+   - themed UI components and utilities
+
+   Usage:
+   <body data-ui="brutalism" data-theme="midnight-gold" data-mode="light">
+   <body data-ui="brutalism" data-theme="midnight-gold" data-mode="dark">
+   <body data-ui="brutalism" data-theme="midnight-gold" data-mode="contrast">
+========================================================= */
+
+:root {
+  --brutal-radius-xs: 0.25rem;
+  --brutal-radius-sm: 0.5rem;
+  --brutal-radius-md: 0.75rem;
+  --brutal-radius-lg: 1rem;
+  --brutal-radius-xl: 1.5rem;
+  --brutal-radius-pill: 999px;
+
+  --brutal-space-1: 0.25rem;
+  --brutal-space-2: 0.5rem;
+  --brutal-space-3: 0.75rem;
+  --brutal-space-4: 1rem;
+  --brutal-space-5: 1.25rem;
+  --brutal-space-6: 1.5rem;
+  --brutal-space-8: 2rem;
+
+  --brutal-transition-fast: 140ms ease;
+  --brutal-transition-base: 220ms ease;
+  --brutal-transition-slow: 360ms ease;
+
+  --brutal-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --brutal-font-display: Orbitron, Rajdhani, Eurostile, "Bank Gothic", var(--brutal-font-sans);
+  --brutal-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+[data-ui="brutalism"][data-mode="light"] {
+  color-scheme: light;
+  --brutal-panel-alpha: 0.92;
+  --brutal-panel-strong-alpha: 0.98;
+  --brutal-panel-soft-alpha: 0.74;
+  --brutal-border-alpha: 0.7;
+  --brutal-glow-alpha: 0.24;
+  --brutal-shadow-alpha: 0.18;
+  --brutal-grid-alpha: 0.075;
+}
+
+[data-ui="brutalism"][data-mode="dark"] {
+  color-scheme: dark;
+  --brutal-panel-alpha: 0.82;
+  --brutal-panel-strong-alpha: 0.94;
+  --brutal-panel-soft-alpha: 0.58;
+  --brutal-border-alpha: 0.64;
+  --brutal-glow-alpha: 0.42;
+  --brutal-shadow-alpha: 0.42;
+  --brutal-grid-alpha: 0.12;
+}
+
+[data-ui="brutalism"][data-mode="contrast"] {
+  color-scheme: dark;
+  --brutal-panel-alpha: 1;
+  --brutal-panel-strong-alpha: 1;
+  --brutal-panel-soft-alpha: 0.92;
+  --brutal-border-alpha: 1;
+  --brutal-glow-alpha: 0.68;
+  --brutal-shadow-alpha: 0.56;
+  --brutal-grid-alpha: 0.18;
+}
+
+[data-ui="brutalism"][data-theme][data-mode] {
+  --brutal-bg: rgb(var(--brutal-bg-rgb));
+  --brutal-surface: rgb(var(--brutal-surface-rgb) / var(--brutal-panel-alpha));
+  --brutal-surface-strong: rgb(var(--brutal-surface-strong-rgb) / var(--brutal-panel-strong-alpha));
+  --brutal-surface-soft: rgb(var(--brutal-surface-soft-rgb) / var(--brutal-panel-soft-alpha));
+  --brutal-text: rgb(var(--brutal-text-rgb));
+  --brutal-text-muted: rgb(var(--brutal-text-muted-rgb));
+  --brutal-border: rgb(var(--brutal-border-rgb) / var(--brutal-border-alpha));
+  --brutal-primary: rgb(var(--brutal-primary-rgb));
+  --brutal-primary-hover: rgb(var(--brutal-primary-hover-rgb));
+  --brutal-primary-text: rgb(var(--brutal-primary-text-rgb));
+  --brutal-secondary: rgb(var(--brutal-secondary-rgb));
+  --brutal-secondary-hover: rgb(var(--brutal-secondary-hover-rgb));
+  --brutal-secondary-text: rgb(var(--brutal-secondary-text-rgb));
+  --brutal-accent: rgb(var(--brutal-accent-rgb));
+  --brutal-success: rgb(var(--brutal-success-rgb));
+  --brutal-warning: rgb(var(--brutal-warning-rgb));
+  --brutal-danger: rgb(var(--brutal-danger-rgb));
+  --brutal-link: rgb(var(--brutal-link-rgb));
+  --brutal-focus: rgb(var(--brutal-focus-rgb));
+  --brutal-glow-primary: rgb(var(--brutal-primary-rgb) / var(--brutal-glow-alpha));
+  --brutal-glow-secondary: rgb(var(--brutal-secondary-rgb) / var(--brutal-glow-alpha));
+  --brutal-glow-accent: rgb(var(--brutal-accent-rgb) / var(--brutal-glow-alpha));
+  --brutal-shadow-sm: 0 2px 8px rgb(0 0 0 / var(--brutal-shadow-alpha));
+  --brutal-shadow-md: 0 10px 28px rgb(0 0 0 / calc(var(--brutal-shadow-alpha) + 0.05));
+  --brutal-shadow-lg: 0 22px 60px rgb(0 0 0 / calc(var(--brutal-shadow-alpha) + 0.12));
+}
+
+/* =========================================================
+   1. Midnight Gold
+========================================================= */
+
+[data-ui="brutalism"][data-theme="midnight-gold"][data-mode="light"] {
+  --brutal-bg-rgb: 246 243 234;
+  --brutal-surface-rgb: 255 250 240;
+  --brutal-surface-strong-rgb: 255 255 255;
+  --brutal-surface-soft-rgb: 237 230 211;
+  --brutal-text-rgb: 23 32 51;
+  --brutal-text-muted-rgb: 95 104 121;
+  --brutal-border-rgb: 214 200 165;
+  --brutal-primary-rgb: 184 135 47;
+  --brutal-primary-hover-rgb: 148 104 31;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 34 49 79;
+  --brutal-secondary-hover-rgb: 23 36 60;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 217 164 65;
+  --brutal-success-rgb: 47 125 84;
+  --brutal-warning-rgb: 167 106 0;
+  --brutal-danger-rgb: 185 63 63;
+  --brutal-link-rgb: 138 100 31;
+  --brutal-focus-rgb: 217 164 65;
+}
+
+[data-ui="brutalism"][data-theme="midnight-gold"][data-mode="dark"] {
+  --brutal-bg-rgb: 7 17 31;
+  --brutal-surface-rgb: 16 27 45;
+  --brutal-surface-strong-rgb: 23 36 58;
+  --brutal-surface-soft-rgb: 12 22 39;
+  --brutal-text-rgb: 247 237 215;
+  --brutal-text-muted-rgb: 185 192 204;
+  --brutal-border-rgb: 57 72 97;
+  --brutal-primary-rgb: 214 168 79;
+  --brutal-primary-hover-rgb: 240 200 109;
+  --brutal-primary-text-rgb: 16 16 16;
+  --brutal-secondary-rgb: 111 134 184;
+  --brutal-secondary-hover-rgb: 146 167 209;
+  --brutal-secondary-text-rgb: 8 16 29;
+  --brutal-accent-rgb: 243 210 122;
+  --brutal-success-rgb: 107 214 156;
+  --brutal-warning-rgb: 255 203 91;
+  --brutal-danger-rgb: 255 123 123;
+  --brutal-link-rgb: 243 210 122;
+  --brutal-focus-rgb: 255 214 107;
+}
+
+[data-ui="brutalism"][data-theme="midnight-gold"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 8 8 8;
+  --brutal-surface-strong-rgb: 17 17 17;
+  --brutal-surface-soft-rgb: 5 5 5;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 245 245 245;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 255 212 0;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 0 217 255;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 255 234 0;
+  --brutal-success-rgb: 0 255 117;
+  --brutal-warning-rgb: 255 191 0;
+  --brutal-danger-rgb: 255 77 77;
+  --brutal-link-rgb: 0 217 255;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   2. Ocean Steel
+========================================================= */
+
+[data-ui="brutalism"][data-theme="ocean-steel"][data-mode="light"] {
+  --brutal-bg-rgb: 238 248 251;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 248 253 255;
+  --brutal-surface-soft-rgb: 220 236 242;
+  --brutal-text-rgb: 16 36 46;
+  --brutal-text-muted-rgb: 78 101 112;
+  --brutal-border-rgb: 184 211 221;
+  --brutal-primary-rgb: 8 125 157;
+  --brutal-primary-hover-rgb: 6 100 126;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 57 86 107;
+  --brutal-secondary-hover-rgb: 44 67 84;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 21 184 200;
+  --brutal-success-rgb: 38 122 92;
+  --brutal-warning-rgb: 167 101 0;
+  --brutal-danger-rgb: 182 70 70;
+  --brutal-link-rgb: 6 100 126;
+  --brutal-focus-rgb: 21 184 200;
+}
+
+[data-ui="brutalism"][data-theme="ocean-steel"][data-mode="dark"] {
+  --brutal-bg-rgb: 6 22 29;
+  --brutal-surface-rgb: 13 37 48;
+  --brutal-surface-strong-rgb: 20 52 66;
+  --brutal-surface-soft-rgb: 8 29 38;
+  --brutal-text-rgb: 233 251 255;
+  --brutal-text-muted-rgb: 167 192 201;
+  --brutal-border-rgb: 49 86 102;
+  --brutal-primary-rgb: 54 196 221;
+  --brutal-primary-hover-rgb: 115 227 244;
+  --brutal-primary-text-rgb: 4 18 22;
+  --brutal-secondary-rgb: 140 183 201;
+  --brutal-secondary-hover-rgb: 178 213 226;
+  --brutal-secondary-text-rgb: 6 22 29;
+  --brutal-accent-rgb: 83 240 255;
+  --brutal-success-rgb: 103 216 166;
+  --brutal-warning-rgb: 255 192 97;
+  --brutal-danger-rgb: 255 123 123;
+  --brutal-link-rgb: 115 227 244;
+  --brutal-focus-rgb: 83 240 255;
+}
+
+[data-ui="brutalism"][data-theme="ocean-steel"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 8 10;
+  --brutal-surface-rgb: 0 16 20;
+  --brutal-surface-strong-rgb: 0 26 32;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 234 255 255;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 0 229 255;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 255 255 0;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 0 255 255;
+  --brutal-success-rgb: 0 255 144;
+  --brutal-warning-rgb: 255 208 0;
+  --brutal-danger-rgb: 255 59 59;
+  --brutal-link-rgb: 0 229 255;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   3. Forest Moss
+========================================================= */
+
+[data-ui="brutalism"][data-theme="forest-moss"][data-mode="light"] {
+  --brutal-bg-rgb: 242 247 239;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 251 255 248;
+  --brutal-surface-soft-rgb: 226 234 219;
+  --brutal-text-rgb: 24 36 23;
+  --brutal-text-muted-rgb: 88 104 82;
+  --brutal-border-rgb: 197 211 186;
+  --brutal-primary-rgb: 63 125 58;
+  --brutal-primary-hover-rgb: 47 97 43;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 106 95 56;
+  --brutal-secondary-hover-rgb: 81 73 43;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 156 186 82;
+  --brutal-success-rgb: 47 125 84;
+  --brutal-warning-rgb: 154 106 0;
+  --brutal-danger-rgb: 173 69 69;
+  --brutal-link-rgb: 47 97 43;
+  --brutal-focus-rgb: 156 186 82;
+}
+
+[data-ui="brutalism"][data-theme="forest-moss"][data-mode="dark"] {
+  --brutal-bg-rgb: 7 16 6;
+  --brutal-surface-rgb: 16 28 15;
+  --brutal-surface-strong-rgb: 26 42 24;
+  --brutal-surface-soft-rgb: 11 22 10;
+  --brutal-text-rgb: 237 247 232;
+  --brutal-text-muted-rgb: 180 197 173;
+  --brutal-border-rgb: 61 83 56;
+  --brutal-primary-rgb: 130 210 122;
+  --brutal-primary-hover-rgb: 162 237 153;
+  --brutal-primary-text-rgb: 7 16 6;
+  --brutal-secondary-rgb: 210 189 114;
+  --brutal-secondary-hover-rgb: 239 217 139;
+  --brutal-secondary-text-rgb: 20 16 6;
+  --brutal-accent-rgb: 185 239 107;
+  --brutal-success-rgb: 117 223 167;
+  --brutal-warning-rgb: 255 210 99;
+  --brutal-danger-rgb: 255 133 133;
+  --brutal-link-rgb: 162 237 153;
+  --brutal-focus-rgb: 185 239 107;
+}
+
+[data-ui="brutalism"][data-theme="forest-moss"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 7 16 7;
+  --brutal-surface-strong-rgb: 11 25 11;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 240 255 240;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 108 255 95;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 255 223 0;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 182 255 0;
+  --brutal-success-rgb: 0 255 117;
+  --brutal-warning-rgb: 255 208 0;
+  --brutal-danger-rgb: 255 64 64;
+  --brutal-link-rgb: 108 255 95;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   4. Sunset Ember
+========================================================= */
+
+[data-ui="brutalism"][data-theme="sunset-ember"][data-mode="light"] {
+  --brutal-bg-rgb: 255 244 236;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 255 250 246;
+  --brutal-surface-soft-rgb: 244 222 210;
+  --brutal-text-rgb: 42 23 17;
+  --brutal-text-muted-rgb: 118 88 77;
+  --brutal-border-rgb: 227 189 170;
+  --brutal-primary-rgb: 196 81 43;
+  --brutal-primary-hover-rgb: 159 63 32;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 124 63 92;
+  --brutal-secondary-hover-rgb: 97 48 71;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 230 154 58;
+  --brutal-success-rgb: 49 122 87;
+  --brutal-warning-rgb: 184 111 0;
+  --brutal-danger-rgb: 189 61 61;
+  --brutal-link-rgb: 159 63 32;
+  --brutal-focus-rgb: 230 154 58;
+}
+
+[data-ui="brutalism"][data-theme="sunset-ember"][data-mode="dark"] {
+  --brutal-bg-rgb: 23 9 5;
+  --brutal-surface-rgb: 38 17 11;
+  --brutal-surface-strong-rgb: 53 25 18;
+  --brutal-surface-soft-rgb: 30 12 7;
+  --brutal-text-rgb: 255 240 232;
+  --brutal-text-muted-rgb: 208 177 165;
+  --brutal-border-rgb: 106 59 45;
+  --brutal-primary-rgb: 255 138 91;
+  --brutal-primary-hover-rgb: 255 173 138;
+  --brutal-primary-text-rgb: 26 8 3;
+  --brutal-secondary-rgb: 227 138 181;
+  --brutal-secondary-hover-rgb: 255 175 208;
+  --brutal-secondary-text-rgb: 26 7 18;
+  --brutal-accent-rgb: 255 193 102;
+  --brutal-success-rgb: 112 215 163;
+  --brutal-warning-rgb: 255 209 102;
+  --brutal-danger-rgb: 255 119 119;
+  --brutal-link-rgb: 255 173 138;
+  --brutal-focus-rgb: 255 193 102;
+}
+
+[data-ui="brutalism"][data-theme="sunset-ember"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 18 4 0;
+  --brutal-surface-strong-rgb: 29 7 0;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 255 245 239;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 255 106 0;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 255 79 184;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 255 208 0;
+  --brutal-success-rgb: 0 255 144;
+  --brutal-warning-rgb: 255 191 0;
+  --brutal-danger-rgb: 255 48 48;
+  --brutal-link-rgb: 255 157 0;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   5. Royal Plum
+========================================================= */
+
+[data-ui="brutalism"][data-theme="royal-plum"][data-mode="light"] {
+  --brutal-bg-rgb: 248 241 251;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 253 248 255;
+  --brutal-surface-soft-rgb: 234 220 240;
+  --brutal-text-rgb: 36 21 45;
+  --brutal-text-muted-rgb: 105 86 113;
+  --brutal-border-rgb: 213 187 221;
+  --brutal-primary-rgb: 123 63 160;
+  --brutal-primary-hover-rgb: 99 49 127;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 63 76 154;
+  --brutal-secondary-hover-rgb: 48 58 119;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 192 90 198;
+  --brutal-success-rgb: 49 124 92;
+  --brutal-warning-rgb: 166 106 0;
+  --brutal-danger-rgb: 183 65 95;
+  --brutal-link-rgb: 99 49 127;
+  --brutal-focus-rgb: 192 90 198;
+}
+
+[data-ui="brutalism"][data-theme="royal-plum"][data-mode="dark"] {
+  --brutal-bg-rgb: 16 6 20;
+  --brutal-surface-rgb: 29 16 36;
+  --brutal-surface-strong-rgb: 42 23 52;
+  --brutal-surface-soft-rgb: 22 11 27;
+  --brutal-text-rgb: 250 236 255;
+  --brutal-text-muted-rgb: 200 176 209;
+  --brutal-border-rgb: 85 57 100;
+  --brutal-primary-rgb: 216 145 242;
+  --brutal-primary-hover-rgb: 235 184 255;
+  --brutal-primary-text-rgb: 19 6 23;
+  --brutal-secondary-rgb: 157 168 255;
+  --brutal-secondary-hover-rgb: 195 202 255;
+  --brutal-secondary-text-rgb: 8 11 31;
+  --brutal-accent-rgb: 255 156 246;
+  --brutal-success-rgb: 118 220 169;
+  --brutal-warning-rgb: 255 209 102;
+  --brutal-danger-rgb: 255 122 156;
+  --brutal-link-rgb: 235 184 255;
+  --brutal-focus-rgb: 255 156 246;
+}
+
+[data-ui="brutalism"][data-theme="royal-plum"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 16 0 20;
+  --brutal-surface-strong-rgb: 26 0 34;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 255 240 255;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 228 92 255;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 0 217 255;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 255 0 245;
+  --brutal-success-rgb: 0 255 144;
+  --brutal-warning-rgb: 255 225 0;
+  --brutal-danger-rgb: 255 63 110;
+  --brutal-link-rgb: 228 92 255;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   6. Graphite Cyan
+========================================================= */
+
+[data-ui="brutalism"][data-theme="graphite-cyan"][data-mode="light"] {
+  --brutal-bg-rgb: 242 245 246;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 249 251 252;
+  --brutal-surface-soft-rgb: 225 231 234;
+  --brutal-text-rgb: 23 29 33;
+  --brutal-text-muted-rgb: 93 104 112;
+  --brutal-border-rgb: 197 206 212;
+  --brutal-primary-rgb: 0 124 137;
+  --brutal-primary-hover-rgb: 0 99 110;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 63 72 80;
+  --brutal-secondary-hover-rgb: 47 54 60;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 34 184 199;
+  --brutal-success-rgb: 40 122 91;
+  --brutal-warning-rgb: 167 103 0;
+  --brutal-danger-rgb: 182 64 64;
+  --brutal-link-rgb: 0 99 110;
+  --brutal-focus-rgb: 34 184 199;
+}
+
+[data-ui="brutalism"][data-theme="graphite-cyan"][data-mode="dark"] {
+  --brutal-bg-rgb: 8 11 13;
+  --brutal-surface-rgb: 18 24 28;
+  --brutal-surface-strong-rgb: 28 37 43;
+  --brutal-surface-soft-rgb: 13 17 20;
+  --brutal-text-rgb: 237 246 248;
+  --brutal-text-muted-rgb: 174 187 193;
+  --brutal-border-rgb: 59 72 79;
+  --brutal-primary-rgb: 62 217 232;
+  --brutal-primary-hover-rgb: 123 243 255;
+  --brutal-primary-text-rgb: 6 16 18;
+  --brutal-secondary-rgb: 170 181 188;
+  --brutal-secondary-hover-rgb: 210 219 224;
+  --brutal-secondary-text-rgb: 8 11 13;
+  --brutal-accent-rgb: 123 243 255;
+  --brutal-success-rgb: 110 218 165;
+  --brutal-warning-rgb: 255 200 97;
+  --brutal-danger-rgb: 255 125 125;
+  --brutal-link-rgb: 123 243 255;
+  --brutal-focus-rgb: 62 217 232;
+}
+
+[data-ui="brutalism"][data-theme="graphite-cyan"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 7 7 7;
+  --brutal-surface-strong-rgb: 17 17 17;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 245 245 245;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 0 240 255;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 242 242 242;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 0 240 255;
+  --brutal-success-rgb: 0 255 117;
+  --brutal-warning-rgb: 255 208 0;
+  --brutal-danger-rgb: 255 64 64;
+  --brutal-link-rgb: 0 240 255;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   7. Desert Sage
+========================================================= */
+
+[data-ui="brutalism"][data-theme="desert-sage"][data-mode="light"] {
+  --brutal-bg-rgb: 248 242 231;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 255 250 241;
+  --brutal-surface-soft-rgb: 234 223 205;
+  --brutal-text-rgb: 43 36 25;
+  --brutal-text-muted-rgb: 113 103 84;
+  --brutal-border-rgb: 215 198 167;
+  --brutal-primary-rgb: 140 106 61;
+  --brutal-primary-hover-rgb: 112 83 47;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 95 118 85;
+  --brutal-secondary-hover-rgb: 72 92 64;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 201 151 74;
+  --brutal-success-rgb: 81 125 72;
+  --brutal-warning-rgb: 166 107 0;
+  --brutal-danger-rgb: 174 74 63;
+  --brutal-link-rgb: 112 83 47;
+  --brutal-focus-rgb: 201 151 74;
+}
+
+[data-ui="brutalism"][data-theme="desert-sage"][data-mode="dark"] {
+  --brutal-bg-rgb: 18 15 9;
+  --brutal-surface-rgb: 33 27 18;
+  --brutal-surface-strong-rgb: 47 40 27;
+  --brutal-surface-soft-rgb: 25 20 13;
+  --brutal-text-rgb: 248 239 223;
+  --brutal-text-muted-rgb: 199 186 163;
+  --brutal-border-rgb: 91 78 56;
+  --brutal-primary-rgb: 217 184 120;
+  --brutal-primary-hover-rgb: 240 211 154;
+  --brutal-primary-text-rgb: 21 16 6;
+  --brutal-secondary-rgb: 168 206 153;
+  --brutal-secondary-hover-rgb: 200 233 187;
+  --brutal-secondary-text-rgb: 9 20 7;
+  --brutal-accent-rgb: 241 196 110;
+  --brutal-success-rgb: 141 219 125;
+  --brutal-warning-rgb: 255 209 102;
+  --brutal-danger-rgb: 255 136 122;
+  --brutal-link-rgb: 240 211 154;
+  --brutal-focus-rgb: 241 196 110;
+}
+
+[data-ui="brutalism"][data-theme="desert-sage"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 15 11 3;
+  --brutal-surface-strong-rgb: 26 18 5;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 255 248 232;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 255 209 102;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 157 255 107;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 255 176 0;
+  --brutal-success-rgb: 0 255 117;
+  --brutal-warning-rgb: 255 225 0;
+  --brutal-danger-rgb: 255 77 77;
+  --brutal-link-rgb: 255 209 102;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   8. Rose Quartz
+========================================================= */
+
+[data-ui="brutalism"][data-theme="rose-quartz"][data-mode="light"] {
+  --brutal-bg-rgb: 255 242 245;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 255 248 250;
+  --brutal-surface-soft-rgb: 242 220 227;
+  --brutal-text-rgb: 43 21 29;
+  --brutal-text-muted-rgb: 118 90 99;
+  --brutal-border-rgb: 223 184 198;
+  --brutal-primary-rgb: 184 71 109;
+  --brutal-primary-hover-rgb: 150 55 87;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 122 85 126;
+  --brutal-secondary-hover-rgb: 96 65 99;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 223 125 157;
+  --brutal-success-rgb: 49 122 92;
+  --brutal-warning-rgb: 166 106 0;
+  --brutal-danger-rgb: 189 63 85;
+  --brutal-link-rgb: 150 55 87;
+  --brutal-focus-rgb: 223 125 157;
+}
+
+[data-ui="brutalism"][data-theme="rose-quartz"][data-mode="dark"] {
+  --brutal-bg-rgb: 22 7 12;
+  --brutal-surface-rgb: 37 16 24;
+  --brutal-surface-strong-rgb: 53 24 36;
+  --brutal-surface-soft-rgb: 28 11 17;
+  --brutal-text-rgb: 255 240 244;
+  --brutal-text-muted-rgb: 210 174 185;
+  --brutal-border-rgb: 101 55 71;
+  --brutal-primary-rgb: 255 143 179;
+  --brutal-primary-hover-rgb: 255 182 205;
+  --brutal-primary-text-rgb: 24 6 13;
+  --brutal-secondary-rgb: 217 160 223;
+  --brutal-secondary-hover-rgb: 239 194 244;
+  --brutal-secondary-text-rgb: 22 6 24;
+  --brutal-accent-rgb: 255 173 197;
+  --brutal-success-rgb: 119 219 169;
+  --brutal-warning-rgb: 255 209 102;
+  --brutal-danger-rgb: 255 120 144;
+  --brutal-link-rgb: 255 182 205;
+  --brutal-focus-rgb: 255 173 197;
+}
+
+[data-ui="brutalism"][data-theme="rose-quartz"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 18 0 6;
+  --brutal-surface-strong-rgb: 32 0 13;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 255 240 245;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 255 79 147;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 240 0 255;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 255 138 179;
+  --brutal-success-rgb: 0 255 144;
+  --brutal-warning-rgb: 255 225 0;
+  --brutal-danger-rgb: 255 48 48;
+  --brutal-link-rgb: 255 138 179;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   9. Cyber Lime
+========================================================= */
+
+[data-ui="brutalism"][data-theme="cyber-lime"][data-mode="light"] {
+  --brutal-bg-rgb: 244 250 237;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 251 255 246;
+  --brutal-surface-soft-rgb: 226 239 211;
+  --brutal-text-rgb: 23 34 20;
+  --brutal-text-muted-rgb: 89 105 82;
+  --brutal-border-rgb: 198 216 179;
+  --brutal-primary-rgb: 95 159 31;
+  --brutal-primary-hover-rgb: 73 125 23;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 20 127 134;
+  --brutal-secondary-hover-rgb: 14 98 104;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 164 215 46;
+  --brutal-success-rgb: 47 125 84;
+  --brutal-warning-rgb: 156 104 0;
+  --brutal-danger-rgb: 179 65 65;
+  --brutal-link-rgb: 73 125 23;
+  --brutal-focus-rgb: 164 215 46;
+}
+
+[data-ui="brutalism"][data-theme="cyber-lime"][data-mode="dark"] {
+  --brutal-bg-rgb: 5 11 5;
+  --brutal-surface-rgb: 13 24 12;
+  --brutal-surface-strong-rgb: 22 37 21;
+  --brutal-surface-soft-rgb: 8 17 8;
+  --brutal-text-rgb: 239 255 233;
+  --brutal-text-muted-rgb: 180 199 173;
+  --brutal-border-rgb: 57 82 54;
+  --brutal-primary-rgb: 168 255 61;
+  --brutal-primary-hover-rgb: 202 255 127;
+  --brutal-primary-text-rgb: 6 16 5;
+  --brutal-secondary-rgb: 61 235 242;
+  --brutal-secondary-hover-rgb: 134 248 255;
+  --brutal-secondary-text-rgb: 3 16 18;
+  --brutal-accent-rgb: 198 255 77;
+  --brutal-success-rgb: 111 240 168;
+  --brutal-warning-rgb: 255 218 98;
+  --brutal-danger-rgb: 255 119 119;
+  --brutal-link-rgb: 202 255 127;
+  --brutal-focus-rgb: 168 255 61;
+}
+
+[data-ui="brutalism"][data-theme="cyber-lime"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 5 11 0;
+  --brutal-surface-strong-rgb: 11 22 0;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 244 255 232;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 170 255 0;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 0 240 255;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 204 255 0;
+  --brutal-success-rgb: 0 255 117;
+  --brutal-warning-rgb: 255 225 0;
+  --brutal-danger-rgb: 255 48 48;
+  --brutal-link-rgb: 170 255 0;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   10. Arctic Indigo
+========================================================= */
+
+[data-ui="brutalism"][data-theme="arctic-indigo"][data-mode="light"] {
+  --brutal-bg-rgb: 241 245 255;
+  --brutal-surface-rgb: 255 255 255;
+  --brutal-surface-strong-rgb: 248 251 255;
+  --brutal-surface-soft-rgb: 223 231 246;
+  --brutal-text-rgb: 20 27 46;
+  --brutal-text-muted-rgb: 88 100 122;
+  --brutal-border-rgb: 190 203 227;
+  --brutal-primary-rgb: 64 94 184;
+  --brutal-primary-hover-rgb: 49 72 148;
+  --brutal-primary-text-rgb: 255 255 255;
+  --brutal-secondary-rgb: 46 125 157;
+  --brutal-secondary-hover-rgb: 35 97 122;
+  --brutal-secondary-text-rgb: 255 255 255;
+  --brutal-accent-rgb: 123 147 232;
+  --brutal-success-rgb: 47 125 84;
+  --brutal-warning-rgb: 166 106 0;
+  --brutal-danger-rgb: 182 64 82;
+  --brutal-link-rgb: 49 72 148;
+  --brutal-focus-rgb: 123 147 232;
+}
+
+[data-ui="brutalism"][data-theme="arctic-indigo"][data-mode="dark"] {
+  --brutal-bg-rgb: 6 10 22;
+  --brutal-surface-rgb: 16 24 43;
+  --brutal-surface-strong-rgb: 24 35 66;
+  --brutal-surface-soft-rgb: 10 16 32;
+  --brutal-text-rgb: 237 243 255;
+  --brutal-text-muted-rgb: 178 191 217;
+  --brutal-border-rgb: 58 75 120;
+  --brutal-primary-rgb: 145 168 255;
+  --brutal-primary-hover-rgb: 183 197 255;
+  --brutal-primary-text-rgb: 5 8 22;
+  --brutal-secondary-rgb: 118 216 243;
+  --brutal-secondary-hover-rgb: 165 234 255;
+  --brutal-secondary-text-rgb: 4 17 22;
+  --brutal-accent-rgb: 194 206 255;
+  --brutal-success-rgb: 114 219 166;
+  --brutal-warning-rgb: 255 209 102;
+  --brutal-danger-rgb: 255 125 145;
+  --brutal-link-rgb: 183 197 255;
+  --brutal-focus-rgb: 145 168 255;
+}
+
+[data-ui="brutalism"][data-theme="arctic-indigo"][data-mode="contrast"] {
+  --brutal-bg-rgb: 0 0 0;
+  --brutal-surface-rgb: 3 8 22;
+  --brutal-surface-strong-rgb: 8 18 42;
+  --brutal-surface-soft-rgb: 0 0 0;
+  --brutal-text-rgb: 255 255 255;
+  --brutal-text-muted-rgb: 238 244 255;
+  --brutal-border-rgb: 255 255 255;
+  --brutal-primary-rgb: 111 140 255;
+  --brutal-primary-hover-rgb: 255 255 255;
+  --brutal-primary-text-rgb: 0 0 0;
+  --brutal-secondary-rgb: 0 217 255;
+  --brutal-secondary-hover-rgb: 255 255 255;
+  --brutal-secondary-text-rgb: 0 0 0;
+  --brutal-accent-rgb: 184 196 255;
+  --brutal-success-rgb: 0 255 144;
+  --brutal-warning-rgb: 255 225 0;
+  --brutal-danger-rgb: 255 63 95;
+  --brutal-link-rgb: 159 178 255;
+  --brutal-focus-rgb: 255 255 255;
+}
+
+/* =========================================================
+   Brutalism Base
+========================================================= */
+
+[data-ui="brutalism"] {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgb(var(--brutal-border-rgb) / var(--brutal-grid-alpha)) 1px, transparent 1px),
+    linear-gradient(rgb(var(--brutal-border-rgb) / var(--brutal-grid-alpha)) 1px, transparent 1px),
+    var(--brutal-bg);
+  background-size: 32px 32px;
+  color: var(--brutal-text);
+  font-family: var(--brutal-font-sans);
+}
+
+[data-ui="brutalism"] *,
+[data-ui="brutalism"] *::before,
+[data-ui="brutalism"] *::after { box-sizing: border-box; }
+
+[data-ui="brutalism"] a { color: var(--brutal-link); text-decoration-thickness: 0.14em; text-underline-offset: 0.16em; font-weight: 800; }
+[data-ui="brutalism"] ::selection { background: var(--brutal-primary); color: var(--brutal-primary-text); }
+
+.brutal-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
+.brutal-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
+.brutal-stack { display: flex; flex-direction: column; gap: var(--brutal-space-4); }
+.brutal-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--brutal-space-3); }
+.brutal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--brutal-space-5); }
+.brutal-section { padding: clamp(1.25rem, 4vw, 2.5rem); }
+
+.brutal-title,
+.brutal-heading,
+.brutal-kicker,
+.brutal-button,
+.brutal-badge,
+.brutal-nav-link { font-family: var(--brutal-font-display); text-transform: uppercase; }
+
+.brutal-title { margin: 0; font-size: clamp(2rem, 6vw, 4.25rem); line-height: 0.95; letter-spacing: -0.04em; color: var(--brutal-text); text-shadow: 4px 4px 0 var(--brutal-accent); }
+.brutal-heading { margin: 0; font-size: clamp(1.25rem, 3vw, 2rem); line-height: 1.05; letter-spacing: -0.02em; }
+.brutal-kicker { margin: 0; color: var(--brutal-primary); font-size: 0.85rem; font-weight: 900; letter-spacing: 0.12em; }
+.brutal-subtitle, .brutal-copy { margin: 0; color: var(--brutal-text-muted); line-height: 1.6; }
+.brutal-text-muted { color: var(--brutal-text-muted); }
+
+.brutal-card,
+.brutal-panel,
+.brutal-surface,
+.brutal-toolbar,
+.brutal-table-wrap {
+  background: var(--brutal-surface-strong);
+  color: var(--brutal-text);
+  border: 3px solid var(--brutal-border);
+  border-radius: var(--brutal-radius-sm);
+  box-shadow: 10px 10px 0 var(--brutal-primary);
+  transition: transform var(--brutal-transition-fast), box-shadow var(--brutal-transition-fast), background var(--brutal-transition-fast);
+}
+.brutal-card, .brutal-panel { padding: var(--brutal-space-6); }
+.brutal-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--brutal-space-4); padding: var(--brutal-space-4); }
+.brutal-inset, .brutal-well { background: var(--brutal-surface-soft); color: var(--brutal-text); border: 3px solid var(--brutal-border); box-shadow: inset 6px 6px 0 rgb(0 0 0 / 0.16); border-radius: var(--brutal-radius-sm); }
+.brutal-well { padding: var(--brutal-space-5); }
+.brutal-hover-lift:hover { transform: translate(-3px, -3px); box-shadow: 14px 14px 0 var(--brutal-primary-hover); }
+.brutal-pressed { transform: translate(4px, 4px); box-shadow: 4px 4px 0 var(--brutal-primary); }
+
+.brutal-button,
+.brutal-icon-button {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--brutal-space-2);
+  min-height: 2.85rem; padding: 0.75rem 1.1rem; background: var(--brutal-surface-strong); color: var(--brutal-text);
+  border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-xs); box-shadow: 6px 6px 0 var(--brutal-secondary);
+  font: inherit; font-family: var(--brutal-font-display); font-weight: 900; letter-spacing: 0.04em; line-height: 1; cursor: pointer; text-decoration: none;
+  transition: transform var(--brutal-transition-fast), box-shadow var(--brutal-transition-fast), background var(--brutal-transition-fast), color var(--brutal-transition-fast);
+}
+.brutal-button:hover, .brutal-icon-button:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--brutal-primary); }
+.brutal-button:active, .brutal-icon-button:active, .brutal-button.is-active, .brutal-button[aria-pressed="true"] { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--brutal-secondary); }
+.brutal-button-primary { background: var(--brutal-primary); color: var(--brutal-primary-text); }
+.brutal-button-primary:hover { background: var(--brutal-primary-hover); }
+.brutal-button-secondary { background: var(--brutal-secondary); color: var(--brutal-secondary-text); box-shadow: 6px 6px 0 var(--brutal-primary); }
+.brutal-button-secondary:hover { background: var(--brutal-secondary-hover); }
+.brutal-button-danger { background: var(--brutal-danger); color: #fff; }
+.brutal-icon-button { width: 2.85rem; padding: 0; }
+.brutal-button:disabled, .brutal-icon-button:disabled, .brutal-disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.brutal-field { display: flex; flex-direction: column; gap: var(--brutal-space-2); }
+.brutal-label { font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
+.brutal-input, .brutal-textarea, .brutal-select { width: 100%; min-height: 2.9rem; padding: 0.75rem 1rem; background: var(--brutal-surface-strong); color: var(--brutal-text); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-xs); box-shadow: inset 4px 4px 0 rgb(0 0 0 / 0.12); font: inherit; outline: none; }
+.brutal-textarea { min-height: 8rem; resize: vertical; }
+.brutal-input:focus, .brutal-textarea:focus, .brutal-select:focus { border-color: var(--brutal-focus); box-shadow: 0 0 0 4px rgb(var(--brutal-focus-rgb) / 0.28), inset 4px 4px 0 rgb(0 0 0 / 0.12); }
+.brutal-help-text { color: var(--brutal-text-muted); font-size: 0.9rem; }
+
+.brutal-badge { display: inline-flex; align-items: center; min-height: 1.8rem; padding: 0.35rem 0.75rem; background: var(--brutal-surface-strong); color: var(--brutal-text); border: 3px solid var(--brutal-border); box-shadow: 4px 4px 0 var(--brutal-accent); font-size: 0.8rem; font-weight: 900; }
+.brutal-badge-primary { background: var(--brutal-primary); color: var(--brutal-primary-text); }
+.brutal-badge-secondary { background: var(--brutal-secondary); color: var(--brutal-secondary-text); }
+.brutal-badge-success { background: var(--brutal-success); color: #fff; }
+.brutal-badge-warning { background: var(--brutal-warning); color: #111; }
+.brutal-badge-danger { background: var(--brutal-danger); color: #fff; }
+
+.brutal-nav { display: flex; flex-wrap: wrap; gap: var(--brutal-space-2); padding: var(--brutal-space-2); background: var(--brutal-surface-strong); border: 3px solid var(--brutal-border); box-shadow: 8px 8px 0 var(--brutal-primary); }
+.brutal-nav-link { display: inline-flex; min-height: 2.5rem; align-items: center; padding: 0.65rem 1rem; color: var(--brutal-text); border: 3px solid transparent; font-weight: 900; text-decoration: none; }
+.brutal-nav-link:hover { border-color: var(--brutal-border); background: var(--brutal-surface-soft); }
+.brutal-nav-link.is-active, .brutal-nav-link[aria-current="page"] { background: var(--brutal-primary); color: var(--brutal-primary-text); border-color: var(--brutal-border); }
+
+.brutal-progress { width: 100%; height: 1rem; background: var(--brutal-surface-soft); border: 3px solid var(--brutal-border); }
+.brutal-progress-bar { height: 100%; width: var(--brutal-progress-value, 50%); background: var(--brutal-primary); }
+.brutal-alert { padding: var(--brutal-space-4); background: var(--brutal-surface-strong); border: 3px solid var(--brutal-border); box-shadow: 8px 8px 0 var(--brutal-accent); }
+.brutal-alert-success { box-shadow: 8px 8px 0 var(--brutal-success); } .brutal-alert-warning { box-shadow: 8px 8px 0 var(--brutal-warning); } .brutal-alert-danger { box-shadow: 8px 8px 0 var(--brutal-danger); }
+.brutal-alert-title { margin: 0; font-weight: 900; text-transform: uppercase; } .brutal-alert-body { margin: 0.5rem 0 0; color: var(--brutal-text-muted); }
+
+.brutal-table-wrap { overflow: auto; box-shadow: 8px 8px 0 var(--brutal-primary); }
+.brutal-table { width: 100%; border-collapse: collapse; } .brutal-table th, .brutal-table td { padding: 0.9rem 1rem; border: 2px solid var(--brutal-border); text-align: left; } .brutal-table th { background: var(--brutal-primary); color: var(--brutal-primary-text); text-transform: uppercase; }
+
+.brutal-text-primary { color: var(--brutal-primary); } .brutal-text-secondary { color: var(--brutal-secondary); } .brutal-text-accent { color: var(--brutal-accent); } .brutal-text-success { color: var(--brutal-success); } .brutal-text-warning { color: var(--brutal-warning); } .brutal-text-danger { color: var(--brutal-danger); }
+.brutal-bg-primary { background: var(--brutal-primary); color: var(--brutal-primary-text); } .brutal-bg-secondary { background: var(--brutal-secondary); color: var(--brutal-secondary-text); }
+
+[data-ui="brutalism"] :focus-visible { outline: 4px solid var(--brutal-focus); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { [data-ui="brutalism"] *, [data-ui="brutalism"] *::before, [data-ui="brutalism"] *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }
