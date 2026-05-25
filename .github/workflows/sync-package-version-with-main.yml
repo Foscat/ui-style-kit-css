@@ -1,0 +1,66 @@
+name: Sync Package Version With Main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-package-version:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+
+      - name: Read version from main
+        id: main_version
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main --depth=1
+          MAIN_VERSION="$(git show origin/main:package.json | node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync(0, 'utf8')); process.stdout.write(pkg.version);")"
+          echo "value=${MAIN_VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Align local package.json version
+        shell: bash
+        env:
+          MAIN_VERSION: ${{ steps.main_version.outputs.value }}
+        run: |
+          set -euo pipefail
+          CURRENT_VERSION="$(node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); process.stdout.write(pkg.version);")"
+
+          if [[ "$CURRENT_VERSION" == "$MAIN_VERSION" ]]; then
+            echo "package.json already matches main (${MAIN_VERSION})."
+            exit 0
+          fi
+
+          node -e 'const fs = require("fs"); const file = "package.json"; const pkg = JSON.parse(fs.readFileSync(file, "utf8")); pkg.version = process.env.MAIN_VERSION; fs.writeFileSync(file, JSON.stringify(pkg, null, 2) + "\n");'
+          echo "Updated package.json version from ${CURRENT_VERSION} to ${MAIN_VERSION}."
+
+      - name: Commit and push if changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- package.json; then
+            echo "No version changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "chore: sync package.json version with main"
+          git push origin "HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
