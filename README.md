@@ -18,6 +18,49 @@ It is designed to be separate from, but complementary to, **Interactive Surface 
 - print styles
 - NPM/CDN-friendly package structure
 
+## Wiki
+
+Extended documentation lives in [`wiki/`](wiki/):
+
+- [`wiki/Home.md`](wiki/Home.md)
+- [`wiki/Installation-and-Setup.md`](wiki/Installation-and-Setup.md)
+- [`wiki/Theming-Model.md`](wiki/Theming-Model.md)
+- [`wiki/Class-API.md`](wiki/Class-API.md)
+- [`wiki/UI-Systems.md`](wiki/UI-Systems.md)
+- [`wiki/Accessibility.md`](wiki/Accessibility.md)
+
+## Community
+
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
+
+## Quality
+
+```bash
+npm install
+npm run lint:css
+```
+
+Auto-fix style issues:
+
+```bash
+npm run lint:css:fix
+```
+
+## Demo SEO Files
+
+The demo page includes production SEO/social metadata plus supporting files for GitHub Pages:
+
+- `index.html` comprehensive metadata + JSON-LD
+- `robots.txt`
+- `sitemap.xml`
+- `site.webmanifest`
+- `browserconfig.xml`
+- `.nojekyll`
+- `favicon.svg`
+- `assets/seo/og-preview.svg`
+
 ## Install
 
 ```bash
@@ -115,7 +158,27 @@ document.body.dataset.mode = "dark";
 ui-style-kit-css/
   package.json
   README.md
+  CONTRIBUTING.md
+  SECURITY.md
+  CODE_OF_CONDUCT.md
   LICENSE
+  index.html
+  favicon.svg
+  llms.txt
+  robots.txt
+  sitemap.xml
+  site.webmanifest
+  browserconfig.xml
+  assets/
+    seo/
+      og-preview.svg
+  .stylelintrc.json
+  .stylelintignore
+  .editorconfig
+  .gitattributes
+  .github/
+    workflows/
+      ci.yml
   dist/
     ui-style-kit.css
     ui-style-kit.min.css
@@ -131,8 +194,13 @@ ui-style-kit-css/
     cyberpunk.css
     y2k.css
     retro-glass.css
-  demo/
-    index.html
+  wiki/
+    Home.md
+    Installation-and-Setup.md
+    Theming-Model.md
+    Class-API.md
+    UI-Systems.md
+    Accessibility.md
 ```
 
 ## Accessibility scope
