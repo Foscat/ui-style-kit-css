@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   publish-and-label:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +24,13 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org
+
+      - name: Restrict manual runs to main
+        if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
+        shell: bash
+        run: |
+          echo "::error::workflow_dispatch is only allowed from refs/heads/main."
+          exit 1
 
       - name: Resolve release version
         id: version
@@ -97,7 +105,7 @@ jobs:
             echo "Created and pushed tag ${EXPECTED_TAG}."
           fi
 
-      - name: Create GitHub release label
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.expected_tag }}
