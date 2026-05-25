@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `.github/workflows/sync-package-version-with-main.yml` to keep pull request branch versions aligned with `main`.
+- `.github/workflows/release-version-alignment.yml` to enforce matching GitHub tag, `package.json`, changelog entry, and npm publish target version.
 
 ### Changed
 
