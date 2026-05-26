@@ -39,13 +39,28 @@ Extended documentation lives in [`wiki/`](wiki/):
 
 ```bash
 npm install
+npm run build
 npm run lint:css
+npm test
+```
+
+Run Playwright tests:
+
+```bash
+npm run test:e2e:install
+npm run test:e2e
 ```
 
 Auto-fix style issues:
 
 ```bash
 npm run lint:css:fix
+```
+
+Full release gate:
+
+```bash
+npm run verify
 ```
 
 ## Demo SEO Files
@@ -58,8 +73,8 @@ The demo page includes production SEO/social metadata plus supporting files for 
 - `site.webmanifest`
 - `browserconfig.xml`
 - `.nojekyll`
-- `favicon.svg`
-- `assets/seo/og-preview.svg`
+- `logo.png`
+- `assets/seo/social-card.png`
 
 ## Install
 
@@ -163,7 +178,7 @@ ui-style-kit-css/
   CODE_OF_CONDUCT.md
   LICENSE
   index.html
-  favicon.svg
+  logo.png
   llms.txt
   robots.txt
   sitemap.xml
@@ -171,7 +186,7 @@ ui-style-kit-css/
   browserconfig.xml
   assets/
     seo/
-      og-preview.svg
+      social-card.png
   .stylelintrc.json
   .stylelintignore
   .editorconfig

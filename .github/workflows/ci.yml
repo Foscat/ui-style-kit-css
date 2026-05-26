@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  lint-css:
-    name: Lint CSS
+  quality:
+    name: Lint, Build, Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,5 +25,44 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run stylelint
-        run: npm run lint:css
+      - name: Run lint checks
+        run: npm run lint
+
+      - name: Build dist assets
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+  playwright:
+    name: Playwright E2E
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npm run test:e2e:install:ci
+
+      - name: Run Playwright tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore

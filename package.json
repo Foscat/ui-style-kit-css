@@ -33,9 +33,20 @@
     "retrofuturism"
   ],
   "scripts": {
+    "build": "node scripts/build-css.js",
     "lint": "npm run lint:css",
     "lint:css": "stylelint \"styles/**/*.css\"",
-    "lint:css:fix": "stylelint \"styles/**/*.css\" --fix"
+    "lint:css:fix": "stylelint \"styles/**/*.css\" --fix",
+    "prepublishOnly": "npm run lint && npm run build && npm run test:unit",
+    "test": "npm run test:unit",
+    "test:ci": "npm run lint && npm run build && npm run test:unit && npm run test:e2e",
+    "test:e2e": "node scripts/playwright-cli.js test",
+    "test:e2e:headed": "node scripts/playwright-cli.js test --headed",
+    "test:e2e:install": "node scripts/playwright-cli.js install chromium",
+    "test:e2e:install:ci": "node scripts/playwright-cli.js install --with-deps chromium",
+    "test:e2e:ui": "node scripts/playwright-cli.js test --ui",
+    "test:unit": "node --test tests/package-integrity.test.js",
+    "verify": "npm run lint && npm run build && npm run test:unit && npm run test:e2e"
   },
   "license": "MIT",
   "engines": {
@@ -80,6 +91,8 @@
   },
   "homepage": "https://github.com/Foscat/ui-style-kit-css#readme",
   "devDependencies": {
+    "@playwright/test": "^1.54.0",
+    "lightningcss": "^1.30.2",
     "stylelint": "^17.12.0"
   },
   "dependencies": {
