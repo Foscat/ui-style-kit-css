@@ -25,6 +25,24 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint checks
+        run: npm run lint
+
+      - name: Build dist assets
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Install Playwright browser
+        run: npm run test:e2e:install:ci
+
+      - name: Run Playwright tests
+        run: npm run test:e2e
+
       - name: Restrict manual runs to main
         if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
         shell: bash
@@ -75,11 +93,12 @@ jobs:
         if: steps.npm_check.outputs.already_published == 'false'
         shell: bash
         env:
-          PACKAGE_NAME: ${{ steps.version.outputs.package_name }}
-          PACKAGE_VERSION: ${{ steps.version.outputs.package_version }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          echo "::error::Missing NPM_TOKEN secret; cannot publish ${PACKAGE_NAME}@${PACKAGE_VERSION}."
-          exit 1
+          if [[ -z "${NPM_TOKEN}" ]]; then
+            echo "::error::Missing NPM_TOKEN secret."
+            exit 1
+          fi
 
       - name: Publish package to npm
         if: steps.npm_check.outputs.already_published == 'false'

@@ -2,13 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2026-05-26
+
+### Changed
+
+- Bumped package version to `1.0.4` for a clean npm republish after failed `1.0.2` / `1.0.3` attempts.
+- Synced release metadata in `package.json` and `package-lock.json` to `1.0.4`.
+
 ## [1.0.3] - 2026-05-26
 
 ### Fixed
 
 - Standardized changelog formatting and version notation for the latest patch release entry.
+- Replaced legacy demo image references with branded assets (`logo.png`, `assets/seo/social-card.png`).
 
-## [1.0.2]-2026-05-25
+## [1.0.2] - 2026-05-25
 
 ### Added
 
@@ -41,8 +49,8 @@ All notable changes to this project will be documented in this file.
   - `site.webmanifest`
   - `browserconfig.xml`
   - `.nojekyll`
-  - `favicon.svg`
-  - `assets/seo/og-preview.svg`
+  - `logo.png`
+  - `assets/seo/social-card.png`
 - `llms.txt`
 - Professional repository scaffolding:
   - `CONTRIBUTING.md`

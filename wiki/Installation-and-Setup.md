@@ -30,6 +30,21 @@ Local build:
 <link rel="stylesheet" href="dist/ui-style-kit.css" />
 ```
 
+## Package Maintenance Scripts
+
+```bash
+npm run build
+npm run lint
+npm test
+```
+
+Playwright E2E:
+
+```bash
+npm run test:e2e:install
+npm run test:e2e
+```
+
 ## Minimal Markup Contract
 
 1. Apply all three attributes on your root container (usually `<body>`): `data-ui`, `data-theme`, `data-mode`.
