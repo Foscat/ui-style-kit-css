@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.3] - 2026-05-26
+
+### Fixed
+
+- Corrected `CHANGELOG.md` formatting and metadata for consistency and clarity.
+- Updated release date to `2026-05-26` for the latest patch release.
+- Ensured all version references in the changelog are accurate and reflect the current state of the project.
+
 ## [1.0.2]-2026-05-25
 
 ### Added
