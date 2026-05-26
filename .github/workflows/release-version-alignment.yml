@@ -72,7 +72,7 @@ jobs:
           fi
 
       - name: Ensure npm token is configured
-        if: steps.npm_check.outputs.already_published == 'false' && secrets.NPM_TOKEN == ''
+        if: steps.npm_check.outputs.already_published == 'false'
         shell: bash
         env:
           PACKAGE_NAME: ${{ steps.version.outputs.package_name }}
