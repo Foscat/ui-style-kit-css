@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.3] - 2026-05-26
+
+### Fixed
+
+- Standardized changelog formatting and version notation for the latest patch release entry.
+
 ## [1.0.2]-2026-05-25
 
 ### Added
