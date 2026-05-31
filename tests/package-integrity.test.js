@@ -72,5 +72,7 @@ test('interactive surface bridge is exported and bundled', () => {
   assertFileExists('styles/interactive-surface-bridge.css');
 
   const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
-  assert.match(css, /\.interactive-surface/);
+  const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
+  assert.match(css, /--interactive-surface-border-width/);
+  assert.match(minCss, /--interactive-surface-border-width/);
 });

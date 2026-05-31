@@ -17,8 +17,8 @@ If you use per-style UI Style Kit imports, also include the bridge:
 
 ```js
 import "ui-style-kit-css/styles/minimal-saas.css";
-import "ui-style-kit-css/interactive-surface-bridge";
 import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/interactive-surface-bridge";
 ```
 
 The bridge maps active `data-ui`, `data-theme`, and `data-mode` tokens to Interactive Surface tokens, including variant and icon-role hooks.
