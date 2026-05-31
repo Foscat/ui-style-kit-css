@@ -27,6 +27,12 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 - [UI Systems](UI-Systems.md)
 - [Accessibility](Accessibility.md)
 
+## Companion Integration
+
+- Built-in bridge for `interactive-surface-css` in combined build output.
+- Standalone bridge file: `styles/interactive-surface-bridge.css`
+- Export alias: `ui-style-kit-css/interactive-surface-bridge`
+
 ## Canonical Data Attributes
 
 - `data-ui`: selected UI system
@@ -36,7 +42,7 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 ## UI Systems
 
 | Style | `data-ui` | Prefix | File |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Minimal SaaS | `minimal-saas` | `saas` | `styles/minimal-saas.css` |
 | Bento UI | `bento` | `bento` | `styles/bento.css` |
 | Maximalist / Playful | `maximalist` | `max` | `styles/maximalist.css` |

@@ -73,40 +73,6 @@ jobs:
           echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
           echo "expected_tag=${EXPECTED_TAG}" >> "$GITHUB_OUTPUT"
 
-      - name: Check npm for target version
-        id: npm_check
-        shell: bash
-        env:
-          PACKAGE_NAME: ${{ steps.version.outputs.package_name }}
-          PACKAGE_VERSION: ${{ steps.version.outputs.package_version }}
-        run: |
-          set -euo pipefail
-          if npm view "${PACKAGE_NAME}@${PACKAGE_VERSION}" version >/dev/null 2>&1; then
-            echo "already_published=true" >> "$GITHUB_OUTPUT"
-            echo "Version ${PACKAGE_VERSION} is already published on npm."
-          else
-            echo "already_published=false" >> "$GITHUB_OUTPUT"
-            echo "Version ${PACKAGE_VERSION} is not yet published on npm."
-          fi
-
-      - name: Ensure npm token is configured
-        if: steps.npm_check.outputs.already_published == 'false'
-        shell: bash
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [[ -z "${NPM_TOKEN}" ]]; then
-            echo "::error::Missing NPM_TOKEN secret."
-            exit 1
-          fi
-
-      - name: Publish package to npm
-        if: steps.npm_check.outputs.already_published == 'false'
-        shell: bash
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
-
       - name: Create tag on manual run
         if: github.event_name == 'workflow_dispatch'
         shell: bash

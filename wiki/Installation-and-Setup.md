@@ -18,6 +18,24 @@ import "ui-style-kit-css/dist/ui-style-kit.css";
 import "ui-style-kit-css/styles/minimal-saas.css";
 ```
 
+## Integration with interactive-surface-css
+
+Combined build users (`dist/ui-style-kit.css`) do not need extra imports because the bridge file is included in the build.
+
+If you import style files individually, add the bridge:
+
+```js
+import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/styles/minimal-saas.css";
+import "ui-style-kit-css/styles/interactive-surface-bridge.css";
+```
+
+Alternate export:
+
+```js
+import "ui-style-kit-css/interactive-surface-bridge";
+```
+
 ## Browser / CDN Usage
 
 ```html

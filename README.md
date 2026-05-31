@@ -95,6 +95,28 @@ import "ui-style-kit-css/styles/minimal-saas.css";
 import "ui-style-kit-css/styles/cyberpunk.css";
 ```
 
+## Integration with Interactive Surface CSS
+
+This package now ships with an integration bridge for `interactive-surface-css`.
+
+If you import the combined build (`dist/ui-style-kit.css`), the bridge is already included.
+
+If you import individual style files, also import the bridge file:
+
+```js
+import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/styles/minimal-saas.css";
+import "ui-style-kit-css/styles/interactive-surface-bridge.css";
+```
+
+Shortcut export path:
+
+```js
+import "ui-style-kit-css/interactive-surface-bridge";
+```
+
+The bridge maps active `data-ui`, `data-theme`, and `data-mode` tokens to `.interactive-surface` tokens, including variant tokens (`variant-primary`, `variant-secondary`, etc.) and focus/icon color hooks.
+
 ## Browser / CDN usage
 
 After publishing to NPM:
@@ -127,7 +149,7 @@ Local usage:
 ## UI systems
 
 | UI style | `data-ui` | Class prefix |
-|---|---:|---:|
+| --- | ---: | ---: |
 | Minimal SaaS | `minimal-saas` | `saas` |
 | Bento UI | `bento` | `bento` |
 | Maximalist / Playful | `maximalist` | `max` |

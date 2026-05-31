@@ -5,7 +5,7 @@
 Security updates are applied to the latest version on the default branch.
 
 | Version | Supported |
-|---|---|
+| --- | --- |
 | Latest (`main`) | Yes |
 | Older versions | No |
 

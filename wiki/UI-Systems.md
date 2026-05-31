@@ -10,7 +10,7 @@ This library ships 11 style systems with a shared theme/mode model.
 ## Style Matrix
 
 | Style | `data-ui` | Prefix | Tier | Notes |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Minimal SaaS | `minimal-saas` | `saas` | Full utility | Includes `empty-state`, `metric*` helpers |
 | Bento UI | `bento` | `bento` | Full utility | Includes `tile*`, `stat*`, `grid-feature` |
 | Maximalist / Playful | `maximalist` | `max` | Full utility | Includes `callout`, `sticker`, `wiggle` |
