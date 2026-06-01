@@ -20,7 +20,7 @@ import "ui-style-kit-css/styles/minimal-saas.css";
 
 ## Integration with interactive-surface-css
 
-Combined build users (`dist/ui-style-kit.css`) do not need extra imports because the bridge file is included in the build.
+Combined build users (`dist/ui-style-kit.css`) still need to import `interactive-surface-css/interactive-surface.css`, but do not need an extra bridge import because the bridge file is included in the build.
 
 If you import style files individually, add the bridge:
 
