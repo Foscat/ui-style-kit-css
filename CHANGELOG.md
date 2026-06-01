@@ -5,6 +5,11 @@ Entries are aligned to commits merged into `main` between tagged release points.
 
 ## [Unreleased]
 
+### Fixed - Sync workflow push ambiguity
+
+- Fixed `git push` in `.github/workflows/sync-package-version-with-main.yml` to explicitly target branch refs, preventing potential conflicts with tag refs.
+
+
 ## [1.1.1] - 2026-06-01
 
 ### Changed - Release readiness
