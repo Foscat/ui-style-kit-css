@@ -5,9 +5,17 @@ Entries are aligned to commits merged into `main` between tagged release points.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-01
+
+### Changed - Release stabilization
+
+- Bumped package version metadata to `1.2.0`.
+- Aligned `package-lock.json` root metadata with `package.json` at `1.2.0`.
+- Updated release workflow guidance to avoid release branch version rewrites during pull request automation.
+
 ## [1.1.3] - 2026-06-01
 
-### Changed - Release metadata
+### Changed - 1.1.3 release metadata
 
 - Bumped package version metadata to `1.1.3`.
 - Aligned `package-lock.json` root metadata with `package.json` at `1.1.3`.
@@ -22,7 +30,6 @@ Entries are aligned to commits merged into `main` between tagged release points.
 
 - Bumped package version metadata to `1.1.2`.
 - Aligned `package-lock.json` root metadata with `package.json` at `1.1.2`.
-
 
 ## [1.1.1] - 2026-06-01
 
