@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: "Tag to publish (example: v1.1.3)"
+        description: "Tag or version to publish (example: v1.2.0 or 1.2.0)"
         required: true
         type: string
 
@@ -27,6 +27,9 @@ jobs:
           set -euo pipefail
           if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
             RELEASE_TAG="${{ inputs.release_tag }}"
+            if [[ "${RELEASE_TAG}" != v* ]]; then
+              RELEASE_TAG="v${RELEASE_TAG}"
+            fi
           else
             RELEASE_TAG="${{ github.event.release.tag_name }}"
           fi
