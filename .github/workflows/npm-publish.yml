@@ -3,6 +3,12 @@ name: Publish to npm
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Tag to publish (example: v1.1.1)
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -11,11 +17,31 @@ jobs:
   verify:
     name: Verify Release
     runs-on: ubuntu-latest
+    outputs:
+      release_tag: ${{ steps.release_ref.outputs.release_tag }}
     steps:
+      - name: Resolve release tag
+        id: release_ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            RELEASE_TAG="${{ inputs.release_tag }}"
+          else
+            RELEASE_TAG="${{ github.event.release.tag_name }}"
+          fi
+
+          if [[ -z "${RELEASE_TAG}" ]]; then
+            echo "::error::Release tag could not be resolved."
+            exit 1
+          fi
+
+          echo "release_tag=${RELEASE_TAG}" >> "$GITHUB_OUTPUT"
+
       - name: Checkout release tag
         uses: actions/checkout@v6
         with:
-          ref: refs/tags/${{ github.event.release.tag_name }}
+          ref: refs/tags/${{ steps.release_ref.outputs.release_tag }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -26,7 +52,7 @@ jobs:
       - name: Validate release tag and package version
         shell: bash
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ steps.release_ref.outputs.release_tag }}
         run: |
           set -euo pipefail
           if [[ -z "${RELEASE_TAG}" ]]; then
@@ -76,7 +102,7 @@ jobs:
       - name: Checkout release tag
         uses: actions/checkout@v6
         with:
-          ref: refs/tags/${{ github.event.release.tag_name }}
+          ref: refs/tags/${{ needs.verify.outputs.release_tag }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
