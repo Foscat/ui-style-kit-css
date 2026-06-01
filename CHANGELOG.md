@@ -1,10 +1,20 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+Entries are aligned to commits merged into `main` between tagged release points.
 
 ## [Unreleased]
 
-## [1.0.5] - 2026-05-31
+## [1.1.1] - 2026-06-01
+
+### Changed - Release readiness
+
+- Bumped package version metadata to `1.1.1` for the next publish target.
+- Aligned `package-lock.json` root metadata with `package.json` at `1.1.1`.
+- Hardened npm publish automation to validate release tag/version alignment before attempting `npm publish`.
+- Updated changelog history alignment notes to reflect tagged release progression.
+
+## [1.1.0] - 2026-06-01
 
 ### Added - UI Style Kit bridge
 
@@ -17,20 +27,27 @@ All notable changes to this project will be documented in this file.
 
 - Included `interactive-surface-bridge.css` in the combined `dist/ui-style-kit.css` and `dist/ui-style-kit.min.css` build pipeline.
 - Updated README and wiki setup docs with first-class cross-library integration guidance.
+- Added package integrity coverage for interactive surface bridge export and bundling.
+- Included release metadata correction commit (`chore(release): bump version to 1.0.4`) in the `1.0.4..v1.1.0` commit range.
 
 ## [1.0.4] - 2026-05-26
 
 ### Changed - 1.0.4
 
-- Bumped package version to `1.0.4` for a clean npm republish after failed `1.0.2` / `1.0.3` attempts.
-- Synced release metadata in `package.json` and `package-lock.json` to `1.0.4`.
+- Added deployment/build prep updates across CI, publish, and release workflows (`[chore] Build deployment pieces`).
+- Synced `package.json` version from `main` (`chore: sync package.json version with main`).
 
 ## [1.0.3] - 2026-05-26
 
-### Fixed - 1.0.3
+### Added - 1.0.3
 
-- Standardized changelog formatting and version notation for the latest patch release entry.
-- Replaced legacy demo image references with branded assets (`logo.png`, `assets/seo/social-card.png`).
+- Added `.github/workflows/npm-publish.yml` (`Add publish workflow`).
+
+### Changed - 1.0.3
+
+- Updated `package.json` version metadata and changelog formatting for the `1.0.3` line.
+- Applied pull request follow-up changelog fix (`Potential fix for pull request finding`).
+- Included `package.json` sync commits from automation (`chore: sync package.json version with main`).
 
 ## [1.0.2] - 2026-05-25
 
@@ -42,10 +59,11 @@ All notable changes to this project will be documented in this file.
 ### Changed - 1.0.2
 
 - Bumped package version to `1.0.2`.
-- Upgraded `stylelint` from `^16.24.0` to `^17.12.0`.
+- Upgraded `stylelint` from `16.26.1` to `17.12.0`.
 - Updated GitHub Actions in CI:
   - `actions/checkout` from `v4` to `v6`
   - `actions/setup-node` from `v4` to `v6`
+- Updated release alignment notes and changelog formatting during review feedback.
 
 ## [1.0.1] - 2026-05-25
 
