@@ -58,3 +58,21 @@ test('package files include required publish assets', () => {
     assert.ok(packageJson.files.includes(item), `package.json files[] should include ${item}`);
   }
 });
+
+test('interactive surface bridge is exported and bundled', () => {
+  assert.equal(
+    packageJson.exports['./interactive-surface-bridge'],
+    './styles/interactive-surface-bridge.css'
+  );
+  assert.equal(
+    packageJson.exports['./styles/interactive-surface-bridge'],
+    './styles/interactive-surface-bridge.css'
+  );
+
+  assertFileExists('styles/interactive-surface-bridge.css');
+
+  const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
+  const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
+  assert.match(css, /--interactive-surface-border-width/);
+  assert.match(minCss, /--interactive-surface-border-width/);
+});

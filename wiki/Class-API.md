@@ -123,7 +123,7 @@ Suffixes:
 ## Additional Selective Suffixes
 
 | Suffix | Styles |
-|---|---|
+| --- | --- |
 | `pressed` | `tactile`, `brutalism` |
 | `console` | `cyberpunk`, `retro-glass` |
 | `empty-state`, `metric`, `metric-label`, `metric-value` | `minimal-saas` |

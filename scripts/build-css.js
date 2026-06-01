@@ -19,7 +19,8 @@ const styleFiles = [
   'brutalism.css',
   'cyberpunk.css',
   'y2k.css',
-  'retro-glass.css'
+  'retro-glass.css',
+  'interactive-surface-bridge.css'
 ];
 
 const fullBanner = [
