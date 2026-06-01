@@ -5,6 +5,13 @@ Entries are aligned to commits merged into `main` between tagged release points.
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-06-01
+
+### Changed - 1.2.1 release metadata
+
+- Bumped package version metadata to `1.2.1`.
+- Aligned `package-lock.json` root metadata with `package.json` at `1.2.1`.
+
 ## [1.2.0] - 2026-06-01
 
 ### Changed - Release stabilization
