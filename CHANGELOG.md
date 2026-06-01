@@ -5,9 +5,16 @@ Entries are aligned to commits merged into `main` between tagged release points.
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-06-01
+
 ### Fixed - Sync workflow push ambiguity
 
 - Fixed `git push` in `.github/workflows/sync-package-version-with-main.yml` to explicitly target branch refs, preventing potential conflicts with tag refs.
+
+### Changed - Release metadata
+
+- Bumped package version metadata to `1.1.2`.
+- Aligned `package-lock.json` root metadata with `package.json` at `1.1.2`.
 
 
 ## [1.1.1] - 2026-06-01
