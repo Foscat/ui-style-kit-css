@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const demoUrl = `file://${path.resolve(__dirname, '../demo/index.html')}`;
+const demoUrl = pathToFileURL(path.resolve(__dirname, '../demo/index.html')).href;
 
 const styles = [
   'minimal-saas', 'bento', 'maximalist', 'bauhaus', 'tactile', 'neumorphism',

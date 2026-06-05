@@ -13,19 +13,16 @@
 | Cyberpunk | Security, gaming, encryption, developer demos, nightlife/tech branding |
 | Y2K | Nostalgic, playful, music/fashion/event sites |
 | Retro Glass | Futuristic premium apps, glass dashboards, hero sections |
-```
-
 Use `data-mode="contrast"` for high-contrast variants and pair it with semantic HTML for best accessibility outcomes.
 
 
 ## Visual regression baseline
 
-The repository includes optional Playwright snapshot scaffolding:
+The repository includes optional Playwright visual smoke checks:
 
 ```bash
 npm install
-npm run test:visual:update
 npm run test:visual
 ```
 
-The first command creates the baseline snapshots. Use visual tests before major releases or after large CSS refactors.
+Run visual tests before major releases or after large CSS refactors.

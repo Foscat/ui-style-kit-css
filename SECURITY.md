@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only package. It does not execute client-side JavaScript and does not collect or transmit data.
 
-Report security concerns through the repository issue tracker or preferred private contact channel once configured.
+Report potential vulnerabilities privately via GitHub Security Advisories (Security tab → Report a vulnerability), or through the preferred private contact channel once configured.
 
 ## Scope
 
