@@ -3,7 +3,7 @@
 ## UI systems
 
 | UI style | `data-ui` | Prefix | File |
-| --- | ---: | ---: | --- |
+|---|---:|---:|---|
 | Minimal SaaS | `minimal-saas` | `saas` | `styles/minimal-saas.css` |
 | Bento UI | `bento` | `bento` | `styles/bento.css` |
 | Maximalist / Playful | `maximalist` | `max` | `styles/maximalist.css` |
@@ -34,7 +34,3 @@
 - `light`
 - `dark`
 - `contrast`
-
-## Companion Bridges
-
-- `styles/interactive-surface-bridge.css` maps active UI Style Kit tokens to `interactive-surface-css` tokens.

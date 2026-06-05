@@ -1,7 +1,8 @@
-const { test, expect } = require('@playwright/test');
-const path = require('node:path');
-const { pathToFileURL } = require('node:url');
+import { test, expect } from '@playwright/test';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'index.html')).href;
 
 test('demo loads with default theme settings', async ({ page }) => {

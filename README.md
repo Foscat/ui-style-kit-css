@@ -1,80 +1,22 @@
 # UI Style Kit CSS
 
-**UI Style Kit CSS** is a CSS-only theme and visual style preset library for standardizing websites, dashboards, admin tools, and customer-facing pages.
+**UI Style Kit CSS** is a CSS-only theme and UI style preset library for accessible websites, dashboards, admin interfaces, and customer-facing pages.
 
-It is designed to be separate from, but complementary to, **Interactive Surface CSS**. Use this library for visual identity, color themes, UI style presets, and native HTML coverage. Use Interactive Surface CSS for interaction-state animation systems and surface behavior.
+It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior.
 
 ## Features
 
 - 11 UI style systems
 - 10 shared color schemes
 - `light`, `dark`, and `contrast` modes
-- one combined CSS entry file
-- optional per-style CSS files
-- CSS-only native HTML element coverage
-- visible focus states
-- reduced-motion support
-- high-contrast and forced-colors support
-- print styles
-- NPM/CDN-friendly package structure
-
-## Wiki
-
-Extended documentation lives in [`wiki/`](wiki/):
-
-- [`wiki/Home.md`](wiki/Home.md)
-- [`wiki/Installation-and-Setup.md`](wiki/Installation-and-Setup.md)
-- [`wiki/Theming-Model.md`](wiki/Theming-Model.md)
-- [`wiki/Class-API.md`](wiki/Class-API.md)
-- [`wiki/UI-Systems.md`](wiki/UI-Systems.md)
-- [`wiki/Accessibility.md`](wiki/Accessibility.md)
-
-## Community
-
-- [Code of Conduct](CODE_OF_CONDUCT.md)
-- [Contributing Guide](CONTRIBUTING.md)
-- [Security Policy](SECURITY.md)
-
-## Quality
-
-```bash
-npm install
-npm run build
-npm run lint:css
-npm test
-```
-
-Run Playwright tests:
-
-```bash
-npm run test:e2e:install
-npm run test:e2e
-```
-
-Auto-fix style issues:
-
-```bash
-npm run lint:css:fix
-```
-
-Full release gate:
-
-```bash
-npm run verify
-```
-
-## Demo SEO Files
-
-The demo page includes production SEO/social metadata plus supporting files for GitHub Pages:
-
-- `index.html` comprehensive metadata + JSON-LD
-- `robots.txt`
-- `sitemap.xml`
-- `site.webmanifest`
-- `browserconfig.xml`
-- `.nojekyll`
-- `logo.png`
-- `assets/seo/social-card.png`
+- Combined CSS bundle and optional per-style imports
+- Scoped native HTML element coverage
+- Visible `:focus-visible` defaults
+- Skip-link and visually-hidden helpers per style prefix
+- Optional bridge tokens for `interactive-surface-css`
+- Reduced-motion, high-contrast, forced-colors, and print support
+- Cascade-layered CSS for easier consumer overrides
+- No runtime dependencies
 
 ## Install
 
@@ -84,40 +26,33 @@ npm install ui-style-kit-css
 
 ## Import
 
+Full bundle:
+
 ```js
 import "ui-style-kit-css/dist/ui-style-kit.css";
 ```
 
-Or import one style system only:
+Single style system:
 
 ```js
 import "ui-style-kit-css/styles/minimal-saas.css";
 import "ui-style-kit-css/styles/cyberpunk.css";
 ```
 
-## Integration with Interactive Surface CSS
-
-This package now ships with an integration bridge for `interactive-surface-css`.
-
-If you import the combined build (`dist/ui-style-kit.css`), the bridge is already included.
-
-If you import individual style files, also import the bridge file:
+Shortcut imports are also exported:
 
 ```js
-import "interactive-surface-css/interactive-surface.css";
-import "ui-style-kit-css/styles/minimal-saas.css";
-import "ui-style-kit-css/styles/interactive-surface-bridge.css";
+import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css/retro-glass.css";
 ```
 
-Shortcut export path:
+Optional bridge for Interactive Surface CSS:
 
 ```js
 import "ui-style-kit-css/interactive-surface-bridge";
 ```
 
-The bridge maps active `data-ui`, `data-theme`, and `data-mode` tokens to `.interactive-surface` tokens, including variant tokens (`variant-primary`, `variant-secondary`, etc.) and focus/icon color hooks.
-
-## Browser / CDN usage
+## CDN usage
 
 After publishing to NPM:
 
@@ -125,10 +60,10 @@ After publishing to NPM:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@latest/dist/ui-style-kit.min.css" />
 ```
 
-Local usage:
+For production, pin a version:
 
 ```html
-<link rel="stylesheet" href="dist/ui-style-kit.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@1.2.2/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -140,46 +75,12 @@ Local usage:
       <article class="saas-card">
         <h1 class="saas-title">UI Style Kit CSS</h1>
         <p class="saas-subtitle">Switch UI systems, themes, and modes with attributes.</p>
+        <button class="saas-button saas-button-primary">Primary Action</button>
       </article>
     </section>
   </main>
 </body>
 ```
-
-## UI systems
-
-| UI style | `data-ui` | Class prefix |
-| --- | ---: | ---: |
-| Minimal SaaS | `minimal-saas` | `saas` |
-| Bento UI | `bento` | `bento` |
-| Maximalist / Playful | `maximalist` | `max` |
-| Bauhaus / Swiss Modern | `bauhaus` | `bau` |
-| Skeuomorphic / Tactile | `tactile` | `tactile` |
-| Neumorphism | `neumorphism` | `neo` |
-| Retrofuturism | `retrofuturism` | `retro` |
-| Brutalism | `brutalism` | `brutal` |
-| Cyberpunk | `cyberpunk` | `cyber` |
-| Y2K | `y2k` | `y2k` |
-| Retro Glass | `retro-glass` | `rg` |
-
-## Color themes
-
-- `midnight-gold`
-- `ocean-steel`
-- `forest-moss`
-- `sunset-ember`
-- `royal-plum`
-- `graphite-cyan`
-- `desert-sage`
-- `rose-quartz`
-- `cyber-lime`
-- `arctic-indigo`
-
-## Modes
-
-- `light`
-- `dark`
-- `contrast`
 
 ## Dynamic switching
 
@@ -189,33 +90,77 @@ document.body.dataset.theme = "midnight-gold";
 document.body.dataset.mode = "dark";
 ```
 
+## UI systems
+
+| UI style | `data-ui` | Class prefix | Best for |
+|---|---:|---:|---|
+| Minimal SaaS | `minimal-saas` | `saas` | dashboards, admin tools, SaaS apps |
+| Bento UI | `bento` | `bento` | landing pages, feature sections, showcases |
+| Maximalist / Playful | `maximalist` | `max` | creators, entertainment, bold client sites |
+| Bauhaus / Swiss Modern | `bauhaus` | `bau` | agencies, editorial layouts, design-forward brands |
+| Skeuomorphic / Tactile | `tactile` | `tactile` | premium tactile interfaces, control panels |
+| Neumorphism | `neumorphism` | `neo` | soft dashboards, experimental UI |
+| Retrofuturism | `retrofuturism` | `retro` | futuristic portfolios and product pages |
+| Brutalism | `brutalism` | `brutal` | bold creative websites |
+| Cyberpunk | `cyberpunk` | `cyber` | security, gaming, encryption, tech demos |
+| Y2K | `y2k` | `y2k` | nostalgic, playful, fashion/music/event sites |
+| Retro Glass | `retro-glass` | `rg` | futuristic glass dashboards and hero sections |
+
+## Color themes
+
+```txt
+midnight-gold
+ocean-steel
+forest-moss
+sunset-ember
+royal-plum
+graphite-cyan
+desert-sage
+rose-quartz
+cyber-lime
+arctic-indigo
+```
+
+## Modes
+
+```txt
+light
+dark
+contrast
+```
+
+## Native HTML coverage
+
+Each style system scopes defaults under `[data-ui="..."]` and covers common native elements, including:
+
+- headings, paragraphs, links, lists, blockquotes, code, pre, mark, abbr
+- images, media, figures, captions
+- forms, fieldsets, labels, inputs, textareas, selects, checkboxes, radios, range, color, file inputs
+- buttons and submit/reset controls
+- tables and captions
+- `details`, `summary`, `dialog`, `progress`, and `meter`
+
+CSS improves accessibility presentation, but it cannot guarantee accessibility by itself. Use semantic HTML, real labels, keyboard-safe JavaScript, meaningful link/button text, and correct ARIA state management.
+
+## Cascade layers
+
+The library styles are wrapped in `@layer ui-style-kit.*`. Unlayered consumer CSS can override the library without specificity fights:
+
+```css
+[data-ui="minimal-saas"][data-theme="arctic-indigo"] {
+  --saas-primary-rgb: 72 91 255;
+}
+```
+
 ## File structure
 
 ```txt
 ui-style-kit-css/
   package.json
   README.md
-  CONTRIBUTING.md
-  SECURITY.md
-  CODE_OF_CONDUCT.md
   LICENSE
-  index.html
-  logo.png
-  llms.txt
-  robots.txt
-  sitemap.xml
-  site.webmanifest
-  browserconfig.xml
-  assets/
-    seo/
-      social-card.png
-  .stylelintrc.json
-  .stylelintignore
-  .editorconfig
-  .gitattributes
-  .github/
-    workflows/
-      ci.yml
+  CHANGELOG.md
+  STYLE-MAP.md
   dist/
     ui-style-kit.css
     ui-style-kit.min.css
@@ -231,28 +176,23 @@ ui-style-kit-css/
     cyberpunk.css
     y2k.css
     retro-glass.css
-  wiki/
-    Home.md
-    Installation-and-Setup.md
-    Theming-Model.md
-    Class-API.md
-    UI-Systems.md
-    Accessibility.md
+    interactive-surface-bridge.css
+  docs/
+    TOKENS.md
+    STYLE-GUIDE.md
+    PUBLISHING.md
+  demo/
+    index.html
 ```
 
-## Accessibility scope
+## Development checks
 
-UI Style Kit CSS includes CSS-only accessibility presentation helpers:
+```bash
+npm run check
+npm run pack:dry-run
+```
 
-- scoped native HTML defaults
-- visible `:focus-visible` styles
-- `prefers-reduced-motion` support
-- `prefers-contrast: more` support
-- `forced-colors: active` support
-- print styles
-- skip-link and visually-hidden utilities per style prefix
-
-CSS cannot guarantee accessibility by itself. Use semantic HTML, real labels, keyboard-safe JavaScript, and correct ARIA state management for interactive components.
+`npm run check` rebuilds the bundle, runs stylelint, verifies package metadata, and checks core contrast pairs. Optional Playwright visual smoke tests are available through `npm run test:visual` after installing dev dependencies.
 
 ## License
 
