@@ -11,6 +11,8 @@
    <body data-ui="retro-glass" data-theme="midnight-gold" data-mode="contrast">
 ========================================================= */
 
+
+@layer ui-style-kit.retro_glass {
 :root {
   --rg-radius-xs: 0.25rem;
   --rg-radius-sm: 0.5rem;
@@ -111,7 +113,7 @@
   --rg-border-rgb: 214 200 165;
   --rg-primary-rgb: 184 135 47;
   --rg-primary-hover-rgb: 148 104 31;
-  --rg-primary-text-rgb: 255 255 255;
+  --rg-primary-text-rgb: 16 16 16;
   --rg-secondary-rgb: 34 49 79;
   --rg-secondary-hover-rgb: 23 36 60;
   --rg-secondary-text-rgb: 255 255 255;
@@ -671,7 +673,7 @@
   --rg-border-rgb: 198 216 179;
   --rg-primary-rgb: 95 159 31;
   --rg-primary-hover-rgb: 73 125 23;
-  --rg-primary-text-rgb: 255 255 255;
+  --rg-primary-text-rgb: 16 16 16;
   --rg-secondary-rgb: 20 127 134;
   --rg-secondary-hover-rgb: 14 98 104;
   --rg-secondary-text-rgb: 255 255 255;
@@ -838,3 +840,82 @@
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { [data-ui="retro-glass"] { --rg-panel-alpha: .96; --rg-panel-strong-alpha: 1; --rg-panel-soft-alpha: .9; } }
 [data-ui="retro-glass"] :focus-visible { outline: 3px solid var(--rg-focus); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { [data-ui="retro-glass"] *, [data-ui="retro-glass"] *::before, [data-ui="retro-glass"] *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }
+
+/* =========================================================
+   Native HTML Coverage + CSS Accessibility Layer
+========================================================= */
+
+.rg-sr-only,
+.rg-visually-hidden { position: absolute !important; inline-size: 1px !important; block-size: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
+.rg-skip-link { position: fixed; inset-block-start: 1rem; inset-inline-start: 1rem; z-index: 10000; transform: translateY(-150%); padding: .75rem 1rem; background: var(--rg-primary); color: var(--rg-primary-text); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-sm); box-shadow: var(--rg-shadow-md); font-weight: 900; text-decoration: none; }
+.rg-skip-link:focus { transform: translateY(0); }
+.rg-divider { width: 100%; height: 1px; border: 0; margin: 1.5rem 0; background: var(--rg-border); }
+
+[data-ui="retro-glass"] :where(h1, h2, h3, h4, h5, h6) { color: var(--rg-text); font-family: var(--rg-font-display); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
+[data-ui="retro-glass"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
+[data-ui="retro-glass"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
+[data-ui="retro-glass"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
+[data-ui="retro-glass"] :where(p) { margin: 0 0 1rem; color: var(--rg-text-muted); line-height: 1.7; }
+[data-ui="retro-glass"] :where(a) { color: var(--rg-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+[data-ui="retro-glass"] :where(a:hover) { color: var(--rg-primary-hover); }
+[data-ui="retro-glass"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--rg-text-muted); }
+[data-ui="retro-glass"] :where(li) { margin-block: .25rem; }
+[data-ui="retro-glass"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--rg-text); background: var(--rg-surface-soft); border-left: .35rem solid var(--rg-primary); border-radius: var(--rg-radius-md); }
+[data-ui="retro-glass"] :where(code, kbd, samp) { font-family: var(--rg-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace); font-size: .92em; background: var(--rg-surface-soft); color: var(--rg-text); border: 1px solid rgb(var(--rg-border-rgb) / .45); border-radius: var(--rg-radius-xs); padding: .15em .35em; }
+[data-ui="retro-glass"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--rg-surface-soft); color: var(--rg-text); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-md); }
+[data-ui="retro-glass"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
+[data-ui="retro-glass"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--rg-border); }
+[data-ui="retro-glass"] :where(mark) { background: rgb(var(--rg-warning-rgb) / .32); color: var(--rg-text); border-radius: .2em; padding-inline: .15em; }
+[data-ui="retro-glass"] :where(small) { color: var(--rg-text-muted); }
+[data-ui="retro-glass"] :where(abbr[title]) { text-decoration: underline dotted var(--rg-primary); text-underline-offset: .18em; cursor: help; }
+[data-ui="retro-glass"] :where(img, picture, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
+[data-ui="retro-glass"] :where(figure) { margin: 1.25rem 0; }
+[data-ui="retro-glass"] :where(figcaption) { margin-top: .5rem; color: var(--rg-text-muted); font-size: .9rem; }
+[data-ui="retro-glass"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--rg-border); border-radius: var(--rg-radius-md); }
+[data-ui="retro-glass"] :where(legend) { padding-inline: .35rem; color: var(--rg-text); font-weight: 900; }
+[data-ui="retro-glass"] :where(label) { color: var(--rg-text); font-weight: 750; }
+[data-ui="retro-glass"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--rg-surface-soft); color: var(--rg-text); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-md); font: inherit; }
+[data-ui="retro-glass"] :where(textarea) { resize: vertical; min-height: 7rem; }
+[data-ui="retro-glass"] :where(input, textarea, select, button) { font: inherit; }
+[data-ui="retro-glass"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--rg-primary); color: var(--rg-primary-text); border: 1px solid var(--rg-primary); border-radius: var(--rg-radius-md); font-weight: 850; cursor: pointer; }
+[data-ui="retro-glass"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--rg-primary-hover); border-color: var(--rg-primary-hover); }
+[data-ui="retro-glass"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--rg-primary); }
+[data-ui="retro-glass"] :where(input[type="range"]) { width: 100%; accent-color: var(--rg-primary); }
+[data-ui="retro-glass"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--rg-surface-soft); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-sm); }
+[data-ui="retro-glass"] :where(input[type="file"]) { color: var(--rg-text-muted); }
+[data-ui="retro-glass"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--rg-primary); border-radius: var(--rg-radius-sm); background: var(--rg-primary); color: var(--rg-primary-text); font-weight: 800; cursor: pointer; }
+[data-ui="retro-glass"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
+[data-ui="retro-glass"] :where(input:invalid, textarea:invalid, select:invalid, [aria-invalid="true"]) { border-color: var(--rg-danger); }
+[data-ui="retro-glass"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--rg-surface); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-md); overflow: hidden; }
+[data-ui="retro-glass"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--rg-text-muted); font-size: .9rem; }
+[data-ui="retro-glass"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--rg-border); }
+[data-ui="retro-glass"] :where(th) { color: var(--rg-text); background: rgb(var(--rg-primary-rgb) / .08); }
+[data-ui="retro-glass"] :where(td) { color: var(--rg-text-muted); }
+[data-ui="retro-glass"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--rg-surface); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-md); }
+[data-ui="retro-glass"] :where(summary) { color: var(--rg-text); font-weight: 900; cursor: pointer; }
+[data-ui="retro-glass"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--rg-surface-strong); color: var(--rg-text); border: 1px solid var(--rg-border); border-radius: var(--rg-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
+[data-ui="retro-glass"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
+[data-ui="retro-glass"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--rg-primary); }
+[data-ui="retro-glass"] :where(:focus-visible) { outline: 3px solid var(--rg-focus); outline-offset: 3px; box-shadow: 0 0 0 4px rgb(var(--rg-focus-rgb) / .28); }
+[data-ui="retro-glass"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--rg-focus); outline-offset: .35rem; }
+[data-ui="retro-glass"] :where([aria-current="page"]) { font-weight: 900; }
+[data-ui="retro-glass"] :where([aria-busy="true"]) { cursor: progress; }
+[data-ui="retro-glass"] :where([hidden]) { display: none !important; }
+[data-ui="retro-glass"] ::selection { background: var(--rg-primary); color: var(--rg-primary-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ui="retro-glass"] *, [data-ui="retro-glass"] *::before, [data-ui="retro-glass"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+}
+@media (prefers-contrast: more) {
+  [data-ui="retro-glass"] { --rg-border-alpha: 1; }
+}
+@media (forced-colors: active) {
+  [data-ui="retro-glass"] * { forced-color-adjust: auto; }
+  [data-ui="retro-glass"] :where(:focus-visible) { outline: 3px solid CanvasText; box-shadow: none; }
+}
+@media print {
+  [data-ui="retro-glass"] { background: #fff !important; color: #000 !important; }
+  [data-ui="retro-glass"] * { box-shadow: none !important; text-shadow: none !important; }
+  [data-ui="retro-glass"] a { color: #000 !important; text-decoration: underline; }
+}
+}

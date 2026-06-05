@@ -1,28 +1,18 @@
 # Security Policy
 
-## Supported Versions
+UI Style Kit CSS is a CSS-only package. It does not execute client-side JavaScript and does not collect or transmit data.
 
-Security updates are applied to the latest version on the default branch.
+Report potential vulnerabilities privately via GitHub Security Advisories (Security tab → Report a vulnerability), or through the preferred private contact channel once configured.
 
-| Version | Supported |
-| --- | --- |
-| Latest (`main`) | Yes |
-| Older versions | No |
+## Scope
 
-## Reporting a Vulnerability
+In scope:
 
-Please do not open public issues for potential vulnerabilities.
+- Supply-chain/package integrity concerns
+- Malicious or unexpected files in published package contents
+- Unsafe generated demo code
 
-Report privately by emailing:
+Out of scope:
 
-- `fosterkyle6456@gmail.com`
-- or submit a private advisory draft: `https://github.com/Foscat/ui-style-kit-css/security/advisories/new`
-
-Include:
-
-- A clear description of the issue
-- Steps to reproduce
-- Potential impact
-- Suggested remediation (if available)
-
-You can expect an acknowledgment within 3 business days.
+- Accessibility bugs that do not create a security issue
+- Visual rendering inconsistencies across browsers
