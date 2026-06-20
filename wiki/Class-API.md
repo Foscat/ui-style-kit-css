@@ -42,6 +42,7 @@ These suffixes exist in every style file.
 - `heading`
 - `copy`
 - `label`
+- `help-text`
 - `text-primary`
 - `text-secondary`
 - `text-muted`
@@ -79,7 +80,34 @@ These suffixes exist in every style file.
 - `progress`
 - `progress-bar`
 - `hover-lift`
-- `is-active`
+- `spinner`
+- `loading-spinner`
+- `spinner-sm`
+- `spinner-lg`
+
+
+## Loading API
+
+Every style has prefixed spinner utilities:
+
+```html
+<span class="saas-spinner" aria-label="Loading"></span>
+<span class="saas-loading-spinner saas-spinner-lg" aria-hidden="true"></span>
+<button class="saas-button saas-button-primary" aria-busy="true">Saving</button>
+```
+
+Inside a `[data-ui="..."]` scope, generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` elements also receive theme-aware spinner styling.
+
+## Shared State Class
+
+`is-active` is a state class, not a prefixed utility. Apply it to supported prefixed components:
+
+```html
+<a class="saas-nav-link is-active">Overview</a>
+<button class="saas-button is-active">Active</button>
+```
+
+The same components also support native state hooks such as `aria-current="page"` and `aria-pressed="true"` where appropriate.
 
 ## Extended Utility Bundle (7 styles)
 
@@ -132,6 +160,19 @@ Suffixes:
 | `block`, `composition`, `rail` | `bauhaus` |
 | `bevel`, `knob` | `tactile` |
 | `bubble` | `y2k` |
+
+## Semantic Text Utilities
+
+Semantic text utilities use the active theme palette directly:
+
+```css
+.saas-text-primary { color: var(--saas-primary); }
+.saas-text-warning { color: var(--saas-warning); }
+```
+
+Filled classes such as `button-primary` and `badge-warning` use compact `on-*` aliases such as `--saas-on-primary` and `--saas-on-warning` for text over colored fills.
+
+Color schemes are shared across UI systems in `theme-colors.css`; class APIs remain prefix-bound to the selected `data-ui`.
 
 ## Prefix Translation Example
 

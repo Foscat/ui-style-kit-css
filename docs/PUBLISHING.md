@@ -7,7 +7,7 @@ npm run check
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds dist CSS, runs stylelint, executes unit package checks, verifies contrast pairs, and confirms package metadata. `npm run pack:dry-run` shows the exact files that would publish.
+`npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. `npm run pack:dry-run` shows the exact files that would publish.
 
 ## Publish
 
@@ -15,7 +15,7 @@ npm run pack:dry-run
 npm publish
 ```
 
-For GitHub releases, create or dispatch a release for the matching package tag, such as `v1.2.2`. The release workflows verify that `package.json`, `package-lock.json`, and `CHANGELOG.md` are aligned before publishing.
+For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.0`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 
@@ -25,4 +25,4 @@ npm run release:minor
 npm run release:major
 ```
 
-Use patch for fixes, minor for new themes/styles, and major for breaking public API changes.
+Use patch for fixes, minor for new themes/styles, and major for breaking public API changes. The 2.0.0 release is major because color-scheme authoring moved from per-UI `--<prefix>-*-rgb` blocks to shared `--usk-*-rgb` roles in `styles/theme-colors.css`.

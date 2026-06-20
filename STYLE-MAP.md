@@ -2,6 +2,8 @@
 
 ## UI systems
 
+Color schemes are defined once in `styles/theme-colors.css`. Each UI system file imports that shared layer and aliases `--usk-*` RGB roles back to its prefix.
+
 | UI style | `data-ui` | Prefix | File |
 |---|---:|---:|---|
 | Minimal SaaS | `minimal-saas` | `saas` | `styles/minimal-saas.css` |
@@ -15,6 +17,12 @@
 | Cyberpunk | `cyberpunk` | `cyber` | `styles/cyberpunk.css` |
 | Y2K | `y2k` | `y2k` | `styles/y2k.css` |
 | Retro Glass | `retro-glass` | `rg` | `styles/retro-glass.css` |
+
+## Shared color file
+
+| Purpose | Import |
+|---|---|
+| Shared color schemes and mode palettes | `styles/theme-colors.css` |
 
 ## Themes
 

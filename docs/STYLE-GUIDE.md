@@ -13,6 +13,9 @@
 | Cyberpunk | Security, gaming, encryption, developer demos, nightlife/tech branding |
 | Y2K | Nostalgic, playful, music/fashion/event sites |
 | Retro Glass | Futuristic premium apps, glass dashboards, hero sections |
+
+All styles share the same 10 color schemes through `styles/theme-colors.css`, so changing `data-theme` affects the active color scheme independently from the selected UI treatment.
+
 Use `data-mode="contrast"` for high-contrast variants and pair it with semantic HTML for best accessibility outcomes.
 
 

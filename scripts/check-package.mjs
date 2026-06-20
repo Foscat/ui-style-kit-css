@@ -7,10 +7,13 @@ const lock = JSON.parse(fs.readFileSync(path.join(root, 'package-lock.json'), 'u
 const required = [
   'dist/ui-style-kit.css',
   'dist/ui-style-kit.min.css',
+  'dist/ui-style-kit.with-bridge.css',
+  'dist/ui-style-kit.with-bridge.min.css',
   'README.md',
   'LICENSE',
   'CHANGELOG.md',
   'STYLE-MAP.md',
+  'styles/theme-colors.css',
   'styles/interactive-surface-bridge.css'
 ];
 for (const file of required) {
@@ -45,6 +48,11 @@ for (const scriptName of requiredScripts) {
 const requiredExports = [
   './dist/ui-style-kit.css',
   './dist/ui-style-kit.min.css',
+  './dist/ui-style-kit.with-bridge.css',
+  './dist/ui-style-kit.with-bridge.min.css',
+  './with-bridge.css',
+  './styles/theme-colors.css',
+  './theme-colors.css',
   './styles/minimal-saas.css',
   './cyberpunk.css',
   './styles/interactive-surface-bridge.css',
@@ -62,11 +70,18 @@ for (const [key, target] of Object.entries(pkg.exports)) {
 }
 
 const css = fs.readFileSync(path.join(root, 'dist/ui-style-kit.css'), 'utf8');
+const minCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.min.css'), 'utf8');
+const withBridgeCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.with-bridge.css'), 'utf8');
+const withBridgeMinCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.with-bridge.min.css'), 'utf8');
+
 if (!css.includes(`UI Style Kit CSS v${pkg.version}`)) {
   throw new Error(`dist/ui-style-kit.css banner must include version ${pkg.version}.`);
 }
-if (!css.includes('--interactive-surface-border-width')) {
-  throw new Error('dist/ui-style-kit.css must bundle the interactive surface bridge.');
+if (css.includes('--interactive-surface-border-width') || minCss.includes('--interactive-surface-border-width')) {
+  throw new Error('Default dist bundle must not include the interactive surface bridge.');
+}
+if (!withBridgeCss.includes('--interactive-surface-border-width') || !withBridgeMinCss.includes('--interactive-surface-border-width')) {
+  throw new Error('with-bridge dist bundle must include the interactive surface bridge.');
 }
 
 console.log('Package integrity check passed.');

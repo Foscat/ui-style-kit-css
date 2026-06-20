@@ -2,6 +2,8 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 11 UI systems, 10 shared color themes, and 3 display modes.
 
+Version 2.0.0 defines color schemes once in `styles/theme-colors.css` as shared `--usk-*` roles. UI systems consume those shared roles through their prefixed functional tokens.
+
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
 ## Quick Start
@@ -29,15 +31,17 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 
 ## Companion Integration
 
-- Built-in bridge for `interactive-surface-css` in combined build output.
+- Opt-in bridge for `interactive-surface-css` in `with-bridge` build output.
 - Standalone bridge file: `styles/interactive-surface-bridge.css`
 - Export alias: `ui-style-kit-css/interactive-surface-bridge`
+- The bridge is isolated so `interactive-surface-css` can be revised independently.
 
 ## Canonical Data Attributes
 
 - `data-ui`: selected UI system
 - `data-theme`: selected color scheme
 - `data-mode`: selected mode (`light`, `dark`, `contrast`)
+- `--usk-*`: shared color-scheme RGB roles provided by the active `data-theme` and `data-mode`
 
 ## UI Systems
 

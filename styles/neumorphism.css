@@ -11,10 +11,16 @@
 ========================================================= */
 
 
+@import url("./theme-colors.css");
+
 @layer ui-style-kit.neumorphism {
 :root {
   --neo-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --neo-font-display: Inter, ui-sans-serif, system-ui, sans-serif;
+  --neo-font-body: var(--neo-font-sans);
+  --neo-font-heading: var(--neo-font-display);
+  --neo-font-control: var(--neo-font-display);
+  --neo-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --neo-radius-xs: .25rem;
   --neo-radius-sm: .5rem;
   --neo-radius-md: 0.9rem;
@@ -60,19 +66,53 @@
 }
 
 [data-ui="neumorphism"][data-theme][data-mode] {
+  /* Shared scheme aliases preserve the existing prefixed token API. */
+  --neo-bg-rgb: var(--usk-bg-rgb);
+  --neo-surface-rgb: var(--usk-surface-rgb);
+  --neo-surface-strong-rgb: var(--usk-surface-strong-rgb);
+  --neo-surface-soft-rgb: var(--usk-surface-soft-rgb);
+  --neo-text-rgb: var(--usk-text-rgb);
+  --neo-text-muted-rgb: var(--usk-text-muted-rgb);
+  --neo-border-rgb: var(--usk-border-rgb);
+  --neo-primary-rgb: var(--usk-primary-rgb);
+  --neo-primary-hover-rgb: var(--usk-primary-hover-rgb);
+  --neo-primary-text-rgb: var(--usk-primary-text-rgb);
+  --neo-secondary-rgb: var(--usk-secondary-rgb);
+  --neo-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
+  --neo-secondary-text-rgb: var(--usk-secondary-text-rgb);
+  --neo-accent-rgb: var(--usk-accent-rgb);
+  --neo-success-rgb: var(--usk-success-rgb);
+  --neo-warning-rgb: var(--usk-warning-rgb);
+  --neo-danger-rgb: var(--usk-danger-rgb);
+  --neo-link-rgb: var(--usk-link-rgb);
+  --neo-accent-text-rgb: var(--usk-accent-text-rgb);
+  --neo-success-text-rgb: var(--usk-success-text-rgb);
+  --neo-warning-text-rgb: var(--usk-warning-text-rgb);
+  --neo-danger-text-rgb: var(--usk-danger-text-rgb);
+  --neo-focus-rgb: var(--usk-focus-rgb);
   --neo-bg: rgb(var(--neo-bg-rgb));
   --neo-surface: rgb(var(--neo-surface-rgb) / var(--neo-panel-alpha));
   --neo-surface-strong: rgb(var(--neo-surface-strong-rgb) / var(--neo-panel-alpha));
   --neo-surface-soft: rgb(var(--neo-surface-soft-rgb) / var(--neo-panel-soft-alpha));
   --neo-text: rgb(var(--neo-text-rgb));
   --neo-text-muted: rgb(var(--neo-text-muted-rgb));
+  --neo-fg: var(--neo-text);
+  --neo-surface-fg: var(--neo-text);
+  --neo-muted: var(--neo-text-muted);
   --neo-border: rgb(var(--neo-border-rgb) / var(--neo-border-alpha));
+  --neo-control-fg: var(--neo-text);
   --neo-primary: rgb(var(--neo-primary-rgb));
   --neo-primary-hover: rgb(var(--neo-primary-hover-rgb));
   --neo-primary-text: rgb(var(--neo-primary-text-rgb));
   --neo-secondary: rgb(var(--neo-secondary-rgb));
   --neo-secondary-hover: rgb(var(--neo-secondary-hover-rgb));
   --neo-secondary-text: rgb(var(--neo-secondary-text-rgb));
+  --neo-on-primary: var(--neo-primary-text);
+  --neo-on-secondary: var(--neo-secondary-text);
+  --neo-on-accent: rgb(var(--neo-accent-text-rgb));
+  --neo-on-success: rgb(var(--neo-success-text-rgb));
+  --neo-on-warning: rgb(var(--neo-warning-text-rgb));
+  --neo-on-danger: rgb(var(--neo-danger-text-rgb));
   --neo-accent: rgb(var(--neo-accent-rgb));
   --neo-success: rgb(var(--neo-success-rgb));
   --neo-warning: rgb(var(--neo-warning-rgb));
@@ -80,667 +120,44 @@
   --neo-link: rgb(var(--neo-link-rgb));
   --neo-focus: rgb(var(--neo-focus-rgb));
   --neo-focus-ring: 0 0 0 3px rgb(var(--neo-focus-rgb) / var(--neo-focus-alpha));
+  --neo-theme-bg-size: auto;
+  --neo-theme-bg: radial-gradient(circle at 0% 0%, rgb(var(--neo-primary-rgb) / .16), transparent 32rem), radial-gradient(circle at 100% 0%, rgb(var(--neo-accent-rgb) / .12), transparent 30rem), radial-gradient(circle at 50% 100%, rgb(var(--neo-secondary-rgb) / .10), transparent 34rem), var(--neo-bg);
+  --neo-card-bg: linear-gradient(135deg, rgb(var(--neo-primary-rgb) / .10), rgb(var(--neo-accent-rgb) / .055) 42%, rgb(var(--neo-surface-strong-rgb) / var(--neo-panel-alpha)) 100%), var(--neo-surface);
+  --neo-control-bg: linear-gradient(180deg, rgb(var(--neo-surface-strong-rgb) / var(--neo-panel-alpha)), rgb(var(--neo-surface-soft-rgb) / var(--neo-panel-soft-alpha)));
+  --neo-spinner-track: rgb(var(--neo-border-rgb) / max(.28, calc(var(--neo-border-alpha) * .7)));
+  --neo-spinner-stroke: var(--neo-primary);
+  --neo-spinner-accent: var(--neo-accent);
 }
 
-[data-ui="neumorphism"][data-theme="midnight-gold"][data-mode="light"] {
-  --neo-bg-rgb: 246 243 234;
-  --neo-surface-rgb: 255 250 240;
-  --neo-surface-strong-rgb: 255 255 255;
-  --neo-surface-soft-rgb: 237 230 211;
-  --neo-text-rgb: 23 32 51;
-  --neo-text-muted-rgb: 95 104 121;
-  --neo-border-rgb: 214 200 165;
-  --neo-primary-rgb: 184 135 47;
-  --neo-primary-hover-rgb: 148 104 31;
-  --neo-primary-text-rgb: 16 16 16;
-  --neo-secondary-rgb: 34 49 79;
-  --neo-secondary-hover-rgb: 23 36 60;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 217 164 65;
-  --neo-success-rgb: 47 125 84;
-  --neo-warning-rgb: 167 106 0;
-  --neo-danger-rgb: 185 63 63;
-  --neo-link-rgb: 138 100 31;
-  --neo-focus-rgb: 217 164 65;
-}
 
-[data-ui="neumorphism"][data-theme="midnight-gold"][data-mode="dark"] {
-  --neo-bg-rgb: 7 17 31;
-  --neo-surface-rgb: 16 27 45;
-  --neo-surface-strong-rgb: 23 36 58;
-  --neo-surface-soft-rgb: 12 22 39;
-  --neo-text-rgb: 247 237 215;
-  --neo-text-muted-rgb: 185 192 204;
-  --neo-border-rgb: 57 72 97;
-  --neo-primary-rgb: 214 168 79;
-  --neo-primary-hover-rgb: 240 200 109;
-  --neo-primary-text-rgb: 16 16 16;
-  --neo-secondary-rgb: 111 134 184;
-  --neo-secondary-hover-rgb: 146 167 209;
-  --neo-secondary-text-rgb: 8 16 29;
-  --neo-accent-rgb: 243 210 122;
-  --neo-success-rgb: 107 214 156;
-  --neo-warning-rgb: 255 203 91;
-  --neo-danger-rgb: 255 123 123;
-  --neo-link-rgb: 243 210 122;
-  --neo-focus-rgb: 255 214 107;
-}
 
-[data-ui="neumorphism"][data-theme="midnight-gold"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 8 8 8;
-  --neo-surface-strong-rgb: 17 17 17;
-  --neo-surface-soft-rgb: 5 5 5;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 245 245 245;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 255 212 0;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 0 217 255;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 255 234 0;
-  --neo-success-rgb: 0 255 117;
-  --neo-warning-rgb: 255 191 0;
-  --neo-danger-rgb: 255 77 77;
-  --neo-link-rgb: 0 217 255;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="ocean-steel"][data-mode="light"] {
-  --neo-bg-rgb: 238 248 251;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 248 253 255;
-  --neo-surface-soft-rgb: 220 236 242;
-  --neo-text-rgb: 16 36 46;
-  --neo-text-muted-rgb: 78 101 112;
-  --neo-border-rgb: 184 211 221;
-  --neo-primary-rgb: 8 125 157;
-  --neo-primary-hover-rgb: 6 100 126;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 57 86 107;
-  --neo-secondary-hover-rgb: 44 67 84;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 21 184 200;
-  --neo-success-rgb: 38 122 92;
-  --neo-warning-rgb: 167 101 0;
-  --neo-danger-rgb: 182 70 70;
-  --neo-link-rgb: 6 100 126;
-  --neo-focus-rgb: 21 184 200;
-}
 
-[data-ui="neumorphism"][data-theme="ocean-steel"][data-mode="dark"] {
-  --neo-bg-rgb: 6 22 29;
-  --neo-surface-rgb: 13 37 48;
-  --neo-surface-strong-rgb: 20 52 66;
-  --neo-surface-soft-rgb: 8 29 38;
-  --neo-text-rgb: 233 251 255;
-  --neo-text-muted-rgb: 167 192 201;
-  --neo-border-rgb: 49 86 102;
-  --neo-primary-rgb: 54 196 221;
-  --neo-primary-hover-rgb: 115 227 244;
-  --neo-primary-text-rgb: 4 18 22;
-  --neo-secondary-rgb: 140 183 201;
-  --neo-secondary-hover-rgb: 178 213 226;
-  --neo-secondary-text-rgb: 6 22 29;
-  --neo-accent-rgb: 83 240 255;
-  --neo-success-rgb: 103 216 166;
-  --neo-warning-rgb: 255 192 97;
-  --neo-danger-rgb: 255 123 123;
-  --neo-link-rgb: 115 227 244;
-  --neo-focus-rgb: 83 240 255;
-}
 
-[data-ui="neumorphism"][data-theme="ocean-steel"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 8 10;
-  --neo-surface-rgb: 0 16 20;
-  --neo-surface-strong-rgb: 0 26 32;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 234 255 255;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 0 229 255;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 255 255 0;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 0 255 255;
-  --neo-success-rgb: 0 255 144;
-  --neo-warning-rgb: 255 208 0;
-  --neo-danger-rgb: 255 59 59;
-  --neo-link-rgb: 0 229 255;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="forest-moss"][data-mode="light"] {
-  --neo-bg-rgb: 242 247 239;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 251 255 248;
-  --neo-surface-soft-rgb: 226 234 219;
-  --neo-text-rgb: 24 36 23;
-  --neo-text-muted-rgb: 88 104 82;
-  --neo-border-rgb: 197 211 186;
-  --neo-primary-rgb: 63 125 58;
-  --neo-primary-hover-rgb: 47 97 43;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 106 95 56;
-  --neo-secondary-hover-rgb: 81 73 43;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 156 186 82;
-  --neo-success-rgb: 47 125 84;
-  --neo-warning-rgb: 154 106 0;
-  --neo-danger-rgb: 173 69 69;
-  --neo-link-rgb: 47 97 43;
-  --neo-focus-rgb: 156 186 82;
-}
 
-[data-ui="neumorphism"][data-theme="forest-moss"][data-mode="dark"] {
-  --neo-bg-rgb: 7 16 6;
-  --neo-surface-rgb: 16 28 15;
-  --neo-surface-strong-rgb: 26 42 24;
-  --neo-surface-soft-rgb: 11 22 10;
-  --neo-text-rgb: 237 247 232;
-  --neo-text-muted-rgb: 180 197 173;
-  --neo-border-rgb: 61 83 56;
-  --neo-primary-rgb: 130 210 122;
-  --neo-primary-hover-rgb: 162 237 153;
-  --neo-primary-text-rgb: 7 16 6;
-  --neo-secondary-rgb: 210 189 114;
-  --neo-secondary-hover-rgb: 239 217 139;
-  --neo-secondary-text-rgb: 20 16 6;
-  --neo-accent-rgb: 185 239 107;
-  --neo-success-rgb: 117 223 167;
-  --neo-warning-rgb: 255 210 99;
-  --neo-danger-rgb: 255 133 133;
-  --neo-link-rgb: 162 237 153;
-  --neo-focus-rgb: 185 239 107;
-}
 
-[data-ui="neumorphism"][data-theme="forest-moss"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 7 16 7;
-  --neo-surface-strong-rgb: 11 25 11;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 240 255 240;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 108 255 95;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 255 223 0;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 182 255 0;
-  --neo-success-rgb: 0 255 117;
-  --neo-warning-rgb: 255 208 0;
-  --neo-danger-rgb: 255 64 64;
-  --neo-link-rgb: 108 255 95;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="sunset-ember"][data-mode="light"] {
-  --neo-bg-rgb: 255 244 236;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 255 250 246;
-  --neo-surface-soft-rgb: 244 222 210;
-  --neo-text-rgb: 42 23 17;
-  --neo-text-muted-rgb: 118 88 77;
-  --neo-border-rgb: 227 189 170;
-  --neo-primary-rgb: 196 81 43;
-  --neo-primary-hover-rgb: 159 63 32;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 124 63 92;
-  --neo-secondary-hover-rgb: 97 48 71;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 230 154 58;
-  --neo-success-rgb: 49 122 87;
-  --neo-warning-rgb: 184 111 0;
-  --neo-danger-rgb: 189 61 61;
-  --neo-link-rgb: 159 63 32;
-  --neo-focus-rgb: 230 154 58;
-}
 
-[data-ui="neumorphism"][data-theme="sunset-ember"][data-mode="dark"] {
-  --neo-bg-rgb: 23 9 5;
-  --neo-surface-rgb: 38 17 11;
-  --neo-surface-strong-rgb: 53 25 18;
-  --neo-surface-soft-rgb: 30 12 7;
-  --neo-text-rgb: 255 240 232;
-  --neo-text-muted-rgb: 208 177 165;
-  --neo-border-rgb: 106 59 45;
-  --neo-primary-rgb: 255 138 91;
-  --neo-primary-hover-rgb: 255 173 138;
-  --neo-primary-text-rgb: 26 8 3;
-  --neo-secondary-rgb: 227 138 181;
-  --neo-secondary-hover-rgb: 255 175 208;
-  --neo-secondary-text-rgb: 26 7 18;
-  --neo-accent-rgb: 255 193 102;
-  --neo-success-rgb: 112 215 163;
-  --neo-warning-rgb: 255 209 102;
-  --neo-danger-rgb: 255 119 119;
-  --neo-link-rgb: 255 173 138;
-  --neo-focus-rgb: 255 193 102;
-}
 
-[data-ui="neumorphism"][data-theme="sunset-ember"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 18 4 0;
-  --neo-surface-strong-rgb: 29 7 0;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 255 245 239;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 255 106 0;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 255 79 184;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 255 208 0;
-  --neo-success-rgb: 0 255 144;
-  --neo-warning-rgb: 255 191 0;
-  --neo-danger-rgb: 255 48 48;
-  --neo-link-rgb: 255 157 0;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="royal-plum"][data-mode="light"] {
-  --neo-bg-rgb: 248 241 251;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 253 248 255;
-  --neo-surface-soft-rgb: 234 220 240;
-  --neo-text-rgb: 36 21 45;
-  --neo-text-muted-rgb: 105 86 113;
-  --neo-border-rgb: 213 187 221;
-  --neo-primary-rgb: 123 63 160;
-  --neo-primary-hover-rgb: 99 49 127;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 63 76 154;
-  --neo-secondary-hover-rgb: 48 58 119;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 192 90 198;
-  --neo-success-rgb: 49 124 92;
-  --neo-warning-rgb: 166 106 0;
-  --neo-danger-rgb: 183 65 95;
-  --neo-link-rgb: 99 49 127;
-  --neo-focus-rgb: 192 90 198;
-}
 
-[data-ui="neumorphism"][data-theme="royal-plum"][data-mode="dark"] {
-  --neo-bg-rgb: 16 6 20;
-  --neo-surface-rgb: 29 16 36;
-  --neo-surface-strong-rgb: 42 23 52;
-  --neo-surface-soft-rgb: 22 11 27;
-  --neo-text-rgb: 250 236 255;
-  --neo-text-muted-rgb: 200 176 209;
-  --neo-border-rgb: 85 57 100;
-  --neo-primary-rgb: 216 145 242;
-  --neo-primary-hover-rgb: 235 184 255;
-  --neo-primary-text-rgb: 19 6 23;
-  --neo-secondary-rgb: 157 168 255;
-  --neo-secondary-hover-rgb: 195 202 255;
-  --neo-secondary-text-rgb: 8 11 31;
-  --neo-accent-rgb: 255 156 246;
-  --neo-success-rgb: 118 220 169;
-  --neo-warning-rgb: 255 209 102;
-  --neo-danger-rgb: 255 122 156;
-  --neo-link-rgb: 235 184 255;
-  --neo-focus-rgb: 255 156 246;
-}
 
-[data-ui="neumorphism"][data-theme="royal-plum"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 16 0 20;
-  --neo-surface-strong-rgb: 26 0 34;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 255 240 255;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 228 92 255;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 0 217 255;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 255 0 245;
-  --neo-success-rgb: 0 255 144;
-  --neo-warning-rgb: 255 225 0;
-  --neo-danger-rgb: 255 63 110;
-  --neo-link-rgb: 228 92 255;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="graphite-cyan"][data-mode="light"] {
-  --neo-bg-rgb: 242 245 246;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 249 251 252;
-  --neo-surface-soft-rgb: 225 231 234;
-  --neo-text-rgb: 23 29 33;
-  --neo-text-muted-rgb: 93 104 112;
-  --neo-border-rgb: 197 206 212;
-  --neo-primary-rgb: 0 124 137;
-  --neo-primary-hover-rgb: 0 99 110;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 63 72 80;
-  --neo-secondary-hover-rgb: 47 54 60;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 34 184 199;
-  --neo-success-rgb: 40 122 91;
-  --neo-warning-rgb: 167 103 0;
-  --neo-danger-rgb: 182 64 64;
-  --neo-link-rgb: 0 99 110;
-  --neo-focus-rgb: 34 184 199;
-}
 
-[data-ui="neumorphism"][data-theme="graphite-cyan"][data-mode="dark"] {
-  --neo-bg-rgb: 8 11 13;
-  --neo-surface-rgb: 18 24 28;
-  --neo-surface-strong-rgb: 28 37 43;
-  --neo-surface-soft-rgb: 13 17 20;
-  --neo-text-rgb: 237 246 248;
-  --neo-text-muted-rgb: 174 187 193;
-  --neo-border-rgb: 59 72 79;
-  --neo-primary-rgb: 62 217 232;
-  --neo-primary-hover-rgb: 123 243 255;
-  --neo-primary-text-rgb: 6 16 18;
-  --neo-secondary-rgb: 170 181 188;
-  --neo-secondary-hover-rgb: 210 219 224;
-  --neo-secondary-text-rgb: 8 11 13;
-  --neo-accent-rgb: 123 243 255;
-  --neo-success-rgb: 110 218 165;
-  --neo-warning-rgb: 255 200 97;
-  --neo-danger-rgb: 255 125 125;
-  --neo-link-rgb: 123 243 255;
-  --neo-focus-rgb: 62 217 232;
-}
 
-[data-ui="neumorphism"][data-theme="graphite-cyan"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 7 7 7;
-  --neo-surface-strong-rgb: 17 17 17;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 245 245 245;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 0 240 255;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 242 242 242;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 0 240 255;
-  --neo-success-rgb: 0 255 117;
-  --neo-warning-rgb: 255 208 0;
-  --neo-danger-rgb: 255 64 64;
-  --neo-link-rgb: 0 240 255;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="desert-sage"][data-mode="light"] {
-  --neo-bg-rgb: 248 242 231;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 255 250 241;
-  --neo-surface-soft-rgb: 234 223 205;
-  --neo-text-rgb: 43 36 25;
-  --neo-text-muted-rgb: 113 103 84;
-  --neo-border-rgb: 215 198 167;
-  --neo-primary-rgb: 140 106 61;
-  --neo-primary-hover-rgb: 112 83 47;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 95 118 85;
-  --neo-secondary-hover-rgb: 72 92 64;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 201 151 74;
-  --neo-success-rgb: 81 125 72;
-  --neo-warning-rgb: 166 107 0;
-  --neo-danger-rgb: 174 74 63;
-  --neo-link-rgb: 112 83 47;
-  --neo-focus-rgb: 201 151 74;
-}
 
-[data-ui="neumorphism"][data-theme="desert-sage"][data-mode="dark"] {
-  --neo-bg-rgb: 18 15 9;
-  --neo-surface-rgb: 33 27 18;
-  --neo-surface-strong-rgb: 47 40 27;
-  --neo-surface-soft-rgb: 25 20 13;
-  --neo-text-rgb: 248 239 223;
-  --neo-text-muted-rgb: 199 186 163;
-  --neo-border-rgb: 91 78 56;
-  --neo-primary-rgb: 217 184 120;
-  --neo-primary-hover-rgb: 240 211 154;
-  --neo-primary-text-rgb: 21 16 6;
-  --neo-secondary-rgb: 168 206 153;
-  --neo-secondary-hover-rgb: 200 233 187;
-  --neo-secondary-text-rgb: 9 20 7;
-  --neo-accent-rgb: 241 196 110;
-  --neo-success-rgb: 141 219 125;
-  --neo-warning-rgb: 255 209 102;
-  --neo-danger-rgb: 255 136 122;
-  --neo-link-rgb: 240 211 154;
-  --neo-focus-rgb: 241 196 110;
-}
 
-[data-ui="neumorphism"][data-theme="desert-sage"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 15 11 3;
-  --neo-surface-strong-rgb: 26 18 5;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 255 248 232;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 255 209 102;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 157 255 107;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 255 176 0;
-  --neo-success-rgb: 0 255 117;
-  --neo-warning-rgb: 255 225 0;
-  --neo-danger-rgb: 255 77 77;
-  --neo-link-rgb: 255 209 102;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="rose-quartz"][data-mode="light"] {
-  --neo-bg-rgb: 255 242 245;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 255 248 250;
-  --neo-surface-soft-rgb: 242 220 227;
-  --neo-text-rgb: 43 21 29;
-  --neo-text-muted-rgb: 118 90 99;
-  --neo-border-rgb: 223 184 198;
-  --neo-primary-rgb: 184 71 109;
-  --neo-primary-hover-rgb: 150 55 87;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 122 85 126;
-  --neo-secondary-hover-rgb: 96 65 99;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 223 125 157;
-  --neo-success-rgb: 49 122 92;
-  --neo-warning-rgb: 166 106 0;
-  --neo-danger-rgb: 189 63 85;
-  --neo-link-rgb: 150 55 87;
-  --neo-focus-rgb: 223 125 157;
-}
 
-[data-ui="neumorphism"][data-theme="rose-quartz"][data-mode="dark"] {
-  --neo-bg-rgb: 22 7 12;
-  --neo-surface-rgb: 37 16 24;
-  --neo-surface-strong-rgb: 53 24 36;
-  --neo-surface-soft-rgb: 28 11 17;
-  --neo-text-rgb: 255 240 244;
-  --neo-text-muted-rgb: 210 174 185;
-  --neo-border-rgb: 101 55 71;
-  --neo-primary-rgb: 255 143 179;
-  --neo-primary-hover-rgb: 255 182 205;
-  --neo-primary-text-rgb: 24 6 13;
-  --neo-secondary-rgb: 217 160 223;
-  --neo-secondary-hover-rgb: 239 194 244;
-  --neo-secondary-text-rgb: 22 6 24;
-  --neo-accent-rgb: 255 173 197;
-  --neo-success-rgb: 119 219 169;
-  --neo-warning-rgb: 255 209 102;
-  --neo-danger-rgb: 255 120 144;
-  --neo-link-rgb: 255 182 205;
-  --neo-focus-rgb: 255 173 197;
-}
 
-[data-ui="neumorphism"][data-theme="rose-quartz"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 18 0 6;
-  --neo-surface-strong-rgb: 32 0 13;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 255 240 245;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 255 79 147;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 240 0 255;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 255 138 179;
-  --neo-success-rgb: 0 255 144;
-  --neo-warning-rgb: 255 225 0;
-  --neo-danger-rgb: 255 48 48;
-  --neo-link-rgb: 255 138 179;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="cyber-lime"][data-mode="light"] {
-  --neo-bg-rgb: 244 250 237;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 251 255 246;
-  --neo-surface-soft-rgb: 226 239 211;
-  --neo-text-rgb: 23 34 20;
-  --neo-text-muted-rgb: 89 105 82;
-  --neo-border-rgb: 198 216 179;
-  --neo-primary-rgb: 95 159 31;
-  --neo-primary-hover-rgb: 73 125 23;
-  --neo-primary-text-rgb: 16 16 16;
-  --neo-secondary-rgb: 20 127 134;
-  --neo-secondary-hover-rgb: 14 98 104;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 164 215 46;
-  --neo-success-rgb: 47 125 84;
-  --neo-warning-rgb: 156 104 0;
-  --neo-danger-rgb: 179 65 65;
-  --neo-link-rgb: 73 125 23;
-  --neo-focus-rgb: 164 215 46;
-}
 
-[data-ui="neumorphism"][data-theme="cyber-lime"][data-mode="dark"] {
-  --neo-bg-rgb: 5 11 5;
-  --neo-surface-rgb: 13 24 12;
-  --neo-surface-strong-rgb: 22 37 21;
-  --neo-surface-soft-rgb: 8 17 8;
-  --neo-text-rgb: 239 255 233;
-  --neo-text-muted-rgb: 180 199 173;
-  --neo-border-rgb: 57 82 54;
-  --neo-primary-rgb: 168 255 61;
-  --neo-primary-hover-rgb: 202 255 127;
-  --neo-primary-text-rgb: 6 16 5;
-  --neo-secondary-rgb: 61 235 242;
-  --neo-secondary-hover-rgb: 134 248 255;
-  --neo-secondary-text-rgb: 3 16 18;
-  --neo-accent-rgb: 198 255 77;
-  --neo-success-rgb: 111 240 168;
-  --neo-warning-rgb: 255 218 98;
-  --neo-danger-rgb: 255 119 119;
-  --neo-link-rgb: 202 255 127;
-  --neo-focus-rgb: 168 255 61;
-}
 
-[data-ui="neumorphism"][data-theme="cyber-lime"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 5 11 0;
-  --neo-surface-strong-rgb: 11 22 0;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 244 255 232;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 170 255 0;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 0 240 255;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 204 255 0;
-  --neo-success-rgb: 0 255 117;
-  --neo-warning-rgb: 255 225 0;
-  --neo-danger-rgb: 255 48 48;
-  --neo-link-rgb: 170 255 0;
-  --neo-focus-rgb: 255 255 255;
-}
 
-[data-ui="neumorphism"][data-theme="arctic-indigo"][data-mode="light"] {
-  --neo-bg-rgb: 241 245 255;
-  --neo-surface-rgb: 255 255 255;
-  --neo-surface-strong-rgb: 248 251 255;
-  --neo-surface-soft-rgb: 223 231 246;
-  --neo-text-rgb: 20 27 46;
-  --neo-text-muted-rgb: 88 100 122;
-  --neo-border-rgb: 190 203 227;
-  --neo-primary-rgb: 64 94 184;
-  --neo-primary-hover-rgb: 49 72 148;
-  --neo-primary-text-rgb: 255 255 255;
-  --neo-secondary-rgb: 46 125 157;
-  --neo-secondary-hover-rgb: 35 97 122;
-  --neo-secondary-text-rgb: 255 255 255;
-  --neo-accent-rgb: 123 147 232;
-  --neo-success-rgb: 47 125 84;
-  --neo-warning-rgb: 166 106 0;
-  --neo-danger-rgb: 182 64 82;
-  --neo-link-rgb: 49 72 148;
-  --neo-focus-rgb: 123 147 232;
-}
 
-[data-ui="neumorphism"][data-theme="arctic-indigo"][data-mode="dark"] {
-  --neo-bg-rgb: 6 10 22;
-  --neo-surface-rgb: 16 24 43;
-  --neo-surface-strong-rgb: 24 35 66;
-  --neo-surface-soft-rgb: 10 16 32;
-  --neo-text-rgb: 237 243 255;
-  --neo-text-muted-rgb: 178 191 217;
-  --neo-border-rgb: 58 75 120;
-  --neo-primary-rgb: 145 168 255;
-  --neo-primary-hover-rgb: 183 197 255;
-  --neo-primary-text-rgb: 5 8 22;
-  --neo-secondary-rgb: 118 216 243;
-  --neo-secondary-hover-rgb: 165 234 255;
-  --neo-secondary-text-rgb: 4 17 22;
-  --neo-accent-rgb: 194 206 255;
-  --neo-success-rgb: 114 219 166;
-  --neo-warning-rgb: 255 209 102;
-  --neo-danger-rgb: 255 125 145;
-  --neo-link-rgb: 183 197 255;
-  --neo-focus-rgb: 145 168 255;
-}
 
-[data-ui="neumorphism"][data-theme="arctic-indigo"][data-mode="contrast"] {
-  --neo-bg-rgb: 0 0 0;
-  --neo-surface-rgb: 3 8 22;
-  --neo-surface-strong-rgb: 8 18 42;
-  --neo-surface-soft-rgb: 0 0 0;
-  --neo-text-rgb: 255 255 255;
-  --neo-text-muted-rgb: 238 244 255;
-  --neo-border-rgb: 255 255 255;
-  --neo-primary-rgb: 111 140 255;
-  --neo-primary-hover-rgb: 255 255 255;
-  --neo-primary-text-rgb: 0 0 0;
-  --neo-secondary-rgb: 0 217 255;
-  --neo-secondary-hover-rgb: 255 255 255;
-  --neo-secondary-text-rgb: 0 0 0;
-  --neo-accent-rgb: 184 196 255;
-  --neo-success-rgb: 0 255 144;
-  --neo-warning-rgb: 255 225 0;
-  --neo-danger-rgb: 255 63 95;
-  --neo-link-rgb: 159 178 255;
-  --neo-focus-rgb: 255 255 255;
-}
 
 /* =========================================================
    Base Page + Layout
@@ -750,15 +167,18 @@
   min-height: 100vh;
   background: radial-gradient(circle at 50% -10%, rgb(255 255 255 / .08), transparent 30rem), var(--neo-bg);
   color: var(--neo-text);
-  font-family: var(--neo-font-sans);
+  font-family: var(--neo-font-body);
   line-height: 1.5;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 [data-ui="neumorphism"] *,
 [data-ui="neumorphism"] *::before,
 [data-ui="neumorphism"] *::after { box-sizing: border-box; }
+
+[data-ui="neumorphism"][data-theme][data-mode] { background: var(--neo-theme-bg); background-size: var(--neo-theme-bg-size); }
 
 .neo-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .neo-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -772,7 +192,7 @@
    Typography
 ========================================================= */
 
-.neo-title, .neo-heading, .neo-kicker, .neo-button, .neo-badge, .neo-nav-link { font-family: var(--neo-font-display); }
+.neo-title, .neo-heading, .neo-kicker, .neo-button, .neo-badge, .neo-nav-link { font-family: var(--neo-font-heading); }
 .neo-title { margin: 0; color: var(--neo-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.045em; }
 .neo-heading { margin: 0; color: var(--neo-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
 .neo-kicker { margin: 0; color: var(--neo-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
@@ -808,19 +228,26 @@
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--neo-space-2);
   min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--neo-surface); color: var(--neo-text);
   border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--neo-shadow-alpha));
-  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; user-select: none;
+  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
   transition: color var(--neo-transition-fast), background var(--neo-transition-fast), border-color var(--neo-transition-fast), box-shadow var(--neo-transition-fast), transform var(--neo-transition-fast);
 }
 .neo-button:hover, .neo-icon-button:hover { transform: translateY(-1px); border-color: var(--neo-primary); }
 .neo-button:active, .neo-icon-button:active, .neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"], .neo-button.is-active, .neo-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 3px 10px rgb(0 0 0 / .18); }
-.neo-button-primary { background: var(--neo-primary); color: var(--neo-primary-text); border-color: var(--neo-primary); }
+.neo-button-primary { background: var(--neo-primary); color: var(--neo-on-primary); border-color: var(--neo-primary); }
 .neo-button-primary:hover { background: var(--neo-primary-hover); border-color: var(--neo-primary-hover); }
-.neo-button-secondary { background: var(--neo-secondary); color: var(--neo-secondary-text); border-color: var(--neo-secondary); }
+.neo-button-secondary { background: var(--neo-secondary); color: var(--neo-on-secondary); border-color: var(--neo-secondary); }
 .neo-button-secondary:hover { background: var(--neo-secondary-hover); border-color: var(--neo-secondary-hover); }
-.neo-button-danger { background: var(--neo-danger); color: #fff; border-color: var(--neo-danger); }
+.neo-button-danger { background: var(--neo-danger); color: var(--neo-on-danger); border-color: var(--neo-danger); }
 .neo-button-ghost { background: transparent; color: var(--neo-text); box-shadow: none; }
 .neo-icon-button { width: 2.75rem; padding: 0; border-radius: var(--neo-radius-pill); }
 .neo-button:disabled, .neo-icon-button:disabled, .neo-disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+/* Theme-responsive component defaults */
+.neo-card, .neo-panel { background: var(--neo-card-bg); }
+.neo-toolbar, .neo-table-wrap { background: var(--neo-control-bg); }
+.neo-button:not(.neo-button-primary):not(.neo-button-secondary):not(.neo-button-danger):not(.neo-button-ghost), .neo-icon-button { background: var(--neo-control-bg); }
+.neo-button, .neo-icon-button, .neo-badge, .neo-nav-link { font-family: var(--neo-font-control); }
+
 
 /* =========================================================
    Forms
@@ -846,8 +273,8 @@
 .neo-check-control { border-radius: var(--neo-radius-xs); }
 .neo-radio-control { border-radius: 50%; }
 .neo-check input:checked + .neo-check-control, .neo-radio input:checked + .neo-radio-control { background: var(--neo-primary); border-color: var(--neo-primary); box-shadow: var(--neo-focus-ring); }
-.neo-check input:checked + .neo-check-control::after { content: "✓"; color: var(--neo-primary-text); font-size: .9rem; font-weight: 900; }
-.neo-radio input:checked + .neo-radio-control::after { content: ""; width: .55rem; height: .55rem; background: var(--neo-primary-text); border-radius: 50%; }
+.neo-check input:checked + .neo-check-control::after { content: "✓"; color: var(--neo-on-primary); font-size: .9rem; font-weight: 900; }
+.neo-radio input:checked + .neo-radio-control::after { content: ""; width: .55rem; height: .55rem; background: var(--neo-on-primary); border-radius: 50%; }
 
 /* Switch */
 .neo-switch { display: inline-flex; align-items: center; gap: var(--neo-space-3); color: var(--neo-text); cursor: pointer; }
@@ -855,23 +282,23 @@
 .neo-switch-track { position: relative; width: 3.5rem; height: 1.9rem; background: var(--neo-surface-soft); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-pill); transition: background var(--neo-transition-fast), box-shadow var(--neo-transition-fast); }
 .neo-switch-thumb { position: absolute; top: .22rem; left: .22rem; width: 1.34rem; height: 1.34rem; background: var(--neo-surface-strong); border: 1px solid var(--neo-border); border-radius: 50%; box-shadow: 0 4px 12px rgb(0 0 0 / var(--neo-shadow-alpha)); transition: left var(--neo-transition-fast), background var(--neo-transition-fast); }
 .neo-switch input:checked + .neo-switch-track { background: var(--neo-primary); border-color: var(--neo-primary); }
-.neo-switch input:checked + .neo-switch-track .neo-switch-thumb { left: calc(100% - 1.34rem - .22rem); background: var(--neo-primary-text); }
+.neo-switch input:checked + .neo-switch-track .neo-switch-thumb { left: calc(100% - 1.34rem - .22rem); background: var(--neo-on-primary); }
 
 /* =========================================================
    Badges / Nav / Progress / Alerts / Tables
 ========================================================= */
 
 .neo-badge { display: inline-flex; align-items: center; gap: var(--neo-space-1); min-height: 1.75rem; padding: .35rem .7rem; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-pill); font-size: .8125rem; font-weight: 850; line-height: 1; }
-.neo-badge-primary { background: var(--neo-primary); color: var(--neo-primary-text); border-color: var(--neo-primary); }
-.neo-badge-secondary { background: var(--neo-secondary); color: var(--neo-secondary-text); border-color: var(--neo-secondary); }
-.neo-badge-success { background: var(--neo-success); color: #fff; border-color: var(--neo-success); }
-.neo-badge-warning { background: var(--neo-warning); color: #111; border-color: var(--neo-warning); }
-.neo-badge-danger { background: var(--neo-danger); color: #fff; border-color: var(--neo-danger); }
+.neo-badge-primary { background: var(--neo-primary); color: var(--neo-on-primary); border-color: var(--neo-primary); }
+.neo-badge-secondary { background: var(--neo-secondary); color: var(--neo-on-secondary); border-color: var(--neo-secondary); }
+.neo-badge-success { background: var(--neo-success); color: var(--neo-on-success); border-color: var(--neo-success); }
+.neo-badge-warning { background: var(--neo-warning); color: var(--neo-on-warning); border-color: var(--neo-warning); }
+.neo-badge-danger { background: var(--neo-danger); color: var(--neo-on-danger); border-color: var(--neo-danger); }
 
 .neo-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--neo-space-2); padding: var(--neo-space-2); background: var(--neo-surface); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-xl); box-shadow: 0 10px 30px rgb(0 0 0 / var(--neo-shadow-alpha)); }
 .neo-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.5rem; padding: .65rem 1rem; color: var(--neo-text-muted); border-radius: var(--neo-radius-pill); text-decoration: none; font-weight: 850; transition: color var(--neo-transition-fast), background var(--neo-transition-fast), box-shadow var(--neo-transition-fast); }
 .neo-nav-link:hover { color: var(--neo-text); background: var(--neo-surface-soft); }
-.neo-nav-link[aria-current="page"], .neo-nav-link.is-active { color: var(--neo-primary-text); background: var(--neo-primary); }
+.neo-nav-link[aria-current="page"], .neo-nav-link.is-active { color: var(--neo-on-primary); background: var(--neo-primary); }
 
 .neo-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--neo-surface-soft); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-pill); }
 .neo-progress-bar { height: 100%; width: var(--neo-progress-value, 50%); background: linear-gradient(90deg, var(--neo-primary), var(--neo-accent)); border-radius: inherit; }
@@ -895,10 +322,10 @@
 ========================================================= */
 
 .neo-text-primary { color: var(--neo-primary); } .neo-text-secondary { color: var(--neo-secondary); } .neo-text-accent { color: var(--neo-accent); } .neo-text-success { color: var(--neo-success); } .neo-text-warning { color: var(--neo-warning); } .neo-text-danger { color: var(--neo-danger); }
-.neo-bg-primary { background: var(--neo-primary); color: var(--neo-primary-text); } .neo-bg-secondary { background: var(--neo-secondary); color: var(--neo-secondary-text); }
+.neo-bg-primary { background: var(--neo-primary); color: var(--neo-on-primary); } .neo-bg-secondary { background: var(--neo-secondary); color: var(--neo-on-secondary); }
 .neo-border { border: 1px solid var(--neo-border); } .neo-rounded { border-radius: var(--neo-radius-md); } .neo-rounded-lg { border-radius: var(--neo-radius-lg); } .neo-rounded-xl { border-radius: var(--neo-radius-xl); } .neo-pill { border-radius: var(--neo-radius-pill); }
 .neo-sr-only, .neo-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
-.neo-skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 9999; transform: translateY(-150%); padding: .75rem 1rem; background: var(--neo-primary); color: var(--neo-primary-text); border-radius: var(--neo-radius-md); font-weight: 900; }
+.neo-skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 9999; transform: translateY(-150%); padding: .75rem 1rem; background: var(--neo-primary); color: var(--neo-on-primary); border-radius: var(--neo-radius-md); font-weight: 900; }
 .neo-skip-link:focus { transform: translateY(0); }
 
 
@@ -940,7 +367,7 @@
    Native HTML Coverage + CSS Accessibility Layer
 ========================================================= */
 
-[data-ui="neumorphism"] :where(h1, h2, h3, h4, h5, h6) { color: var(--neo-text); font-family: var(--neo-font-display); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
+[data-ui="neumorphism"] :where(h1, h2, h3, h4, h5, h6) { color: var(--neo-text); font-family: var(--neo-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
 [data-ui="neumorphism"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
 [data-ui="neumorphism"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
 [data-ui="neumorphism"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
@@ -950,7 +377,7 @@
 [data-ui="neumorphism"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--neo-text-muted); }
 [data-ui="neumorphism"] :where(li) { margin-block: .25rem; }
 [data-ui="neumorphism"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--neo-text); background: var(--neo-surface-soft); border-left: .35rem solid var(--neo-primary); border-radius: var(--neo-radius-md); }
-[data-ui="neumorphism"] :where(code, kbd, samp) { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .92em; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid rgb(var(--neo-border-rgb) / .45); border-radius: var(--neo-radius-xs); padding: .15em .35em; }
+[data-ui="neumorphism"] :where(code, kbd, samp) { font-family: var(--neo-font-mono); font-size: .92em; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid rgb(var(--neo-border-rgb) / .45); border-radius: var(--neo-radius-xs); padding: .15em .35em; }
 [data-ui="neumorphism"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); }
 [data-ui="neumorphism"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
 [data-ui="neumorphism"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--neo-border); }
@@ -966,13 +393,13 @@
 [data-ui="neumorphism"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); font: inherit; }
 [data-ui="neumorphism"] :where(textarea) { resize: vertical; min-height: 7rem; }
 [data-ui="neumorphism"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="neumorphism"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--neo-primary); color: var(--neo-primary-text); border: 1px solid var(--neo-primary); border-radius: var(--neo-radius-md); font-weight: 850; cursor: pointer; }
+[data-ui="neumorphism"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--neo-primary); color: var(--neo-on-primary); border: 1px solid var(--neo-primary); border-radius: var(--neo-radius-md); font-weight: 850; cursor: pointer; }
 [data-ui="neumorphism"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--neo-primary-hover); border-color: var(--neo-primary-hover); }
 [data-ui="neumorphism"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--neo-primary); }
 [data-ui="neumorphism"] :where(input[type="range"]) { width: 100%; accent-color: var(--neo-primary); }
 [data-ui="neumorphism"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--neo-surface-soft); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-sm); }
 [data-ui="neumorphism"] :where(input[type="file"]) { color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--neo-primary); border-radius: var(--neo-radius-sm); background: var(--neo-primary); color: var(--neo-primary-text); font-weight: 800; cursor: pointer; }
+[data-ui="neumorphism"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--neo-primary); border-radius: var(--neo-radius-sm); background: var(--neo-primary); color: var(--neo-on-primary); font-weight: 800; cursor: pointer; }
 [data-ui="neumorphism"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
 [data-ui="neumorphism"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--neo-danger); }
 [data-ui="neumorphism"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--neo-surface); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); overflow: hidden; }
@@ -990,7 +417,56 @@
 [data-ui="neumorphism"] :where([aria-current="page"]) { font-weight: 900; }
 [data-ui="neumorphism"] :where([aria-busy="true"]) { cursor: progress; }
 [data-ui="neumorphism"] :where([hidden]) { display: none !important; }
-[data-ui="neumorphism"] ::selection { background: var(--neo-primary); color: var(--neo-primary-text); }
+[data-ui="neumorphism"] ::selection { background: var(--neo-primary); color: var(--neo-on-primary); }
+
+/* Extended native element coverage */
+[data-ui="neumorphism"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--neo-text); }
+[data-ui="neumorphism"] :where(article, aside) { background: var(--neo-card-bg); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-lg); padding: var(--neo-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--neo-shadow-alpha) * .72)); }
+[data-ui="neumorphism"] :where(dl) { margin: 0 0 1rem; color: var(--neo-text-muted); }
+[data-ui="neumorphism"] :where(dt) { color: var(--neo-text); font-weight: 900; }
+[data-ui="neumorphism"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
+[data-ui="neumorphism"] :where(strong, b) { color: var(--neo-text); font-weight: 900; }
+[data-ui="neumorphism"] :where(em, i, cite, var) { color: var(--neo-text); }
+[data-ui="neumorphism"] :where(q) { color: var(--neo-text); }
+[data-ui="neumorphism"] :where(ins) { color: var(--neo-text); text-decoration-color: var(--neo-success); }
+[data-ui="neumorphism"] :where(del, s) { color: var(--neo-text); text-decoration-color: var(--neo-danger); }
+[data-ui="neumorphism"] :where(sub, sup) { color: var(--neo-text-muted); }
+[data-ui="neumorphism"] :where(output) { color: var(--neo-text); font-weight: 800; }
+[data-ui="neumorphism"] :where(optgroup) { color: var(--neo-text); background: var(--neo-surface); }
+[data-ui="neumorphism"] :where(option) { color: var(--neo-text); background: var(--neo-surface); }
+[data-ui="neumorphism"] :where(time, data, dfn) { color: var(--neo-text); }
+[data-ui="neumorphism"] :where(ruby) { color: var(--neo-text); }
+[data-ui="neumorphism"] :where(rt, rp) { color: var(--neo-text-muted); font-size: .72em; }
+[data-ui="neumorphism"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--neo-text-muted); }
+[data-ui="neumorphism"] :where(search) { display: block; color: var(--neo-text); }
+[data-ui="neumorphism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
+
+.neo-spinner, .neo-loading-spinner, [data-ui="neumorphism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  display: inline-block;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: .25rem solid var(--neo-spinner-track);
+  border-block-start-color: var(--neo-spinner-stroke);
+  border-inline-end-color: var(--neo-spinner-accent);
+  border-radius: 50%;
+  vertical-align: -.2em;
+  animation: neo-spin .75s linear infinite;
+}
+.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
+.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.neo-button[aria-busy="true"], .neo-icon-button[aria-busy="true"], [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
+.neo-button[aria-busy="true"]::after, .neo-icon-button[aria-busy="true"]::after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  content: "";
+  display: inline-block;
+  inline-size: 1em;
+  block-size: 1em;
+  border: .16em solid rgb(var(--neo-primary-text-rgb) / .42);
+  border-block-start-color: currentColor;
+  border-radius: 50%;
+  animation: neo-spin .75s linear infinite;
+}
+@keyframes neo-spin { to { transform: rotate(360deg); } }
+
 
 @media (prefers-reduced-motion: reduce) {
   [data-ui="neumorphism"] *, [data-ui="neumorphism"] *::before, [data-ui="neumorphism"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }

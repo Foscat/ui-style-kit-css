@@ -11,11 +11,12 @@ The library is CSS-only for consumers. Build and validation scripts run with Nod
 
 ## Adding or changing a style system
 
-1. Keep the public `data-ui`, `data-theme`, and `data-mode` API stable.
-2. Preserve class prefixes.
-3. Include the native HTML coverage and accessibility layer.
-4. Run `npm run check` before publishing.
-5. Update `STYLE-MAP.md`, `docs/TOKENS.md`, and `CHANGELOG.md` for public API changes.
+1. Keep the public `data-ui`, `data-theme`, and `data-mode` API stable unless preparing a documented major version.
+2. Preserve class prefixes and prefixed functional tokens.
+3. Define concrete color scheme values in `styles/theme-colors.css` as shared `--usk-*` roles; UI style files should only alias those roles and define visual treatment.
+4. Include the native HTML coverage and accessibility layer.
+5. Run `npm run check` before publishing.
+6. Update `STYLE-MAP.md`, `docs/TOKENS.md`, `README.md`, wiki pages, and `CHANGELOG.md` for public API changes.
 
 ## Versioning
 

@@ -1,6 +1,6 @@
 {
   "name": "ui-style-kit-css",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "CSS theme and UI style preset library for accessible websites, dashboards, admin interfaces, and client-facing pages.",
   "style": "dist/ui-style-kit.css",
   "main": "dist/ui-style-kit.css",
@@ -61,6 +61,10 @@
     "./dist/ui-style-kit.css": "./dist/ui-style-kit.css",
     "./dist/ui-style-kit.min.css": "./dist/ui-style-kit.min.css",
     "./package.json": "./package.json",
+    "./styles/theme-colors": "./styles/theme-colors.css",
+    "./styles/theme-colors.css": "./styles/theme-colors.css",
+    "./theme-colors": "./styles/theme-colors.css",
+    "./theme-colors.css": "./styles/theme-colors.css",
     "./styles/minimal-saas": "./styles/minimal-saas.css",
     "./styles/minimal-saas.css": "./styles/minimal-saas.css",
     "./minimal-saas": "./styles/minimal-saas.css",
@@ -108,7 +112,11 @@
     "./styles/interactive-surface-bridge": "./styles/interactive-surface-bridge.css",
     "./styles/interactive-surface-bridge.css": "./styles/interactive-surface-bridge.css",
     "./interactive-surface-bridge": "./styles/interactive-surface-bridge.css",
-    "./interactive-surface-bridge.css": "./styles/interactive-surface-bridge.css"
+    "./interactive-surface-bridge.css": "./styles/interactive-surface-bridge.css",
+    "./with-bridge": "./dist/ui-style-kit.with-bridge.css",
+    "./with-bridge.css": "./dist/ui-style-kit.with-bridge.css",
+    "./dist/ui-style-kit.with-bridge.css": "./dist/ui-style-kit.with-bridge.css",
+    "./dist/ui-style-kit.with-bridge.min.css": "./dist/ui-style-kit.with-bridge.min.css"
   },
   "repository": {
     "type": "git",
@@ -132,7 +140,7 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:package": "node scripts/check-package.mjs",
     "test": "npm run test:unit",
-    "test:unit": "node --test tests/package-integrity.test.js",
+    "test:unit": "node --test tests/*.test.js",
     "test:e2e": "playwright test --config playwright.config.js",
     "test:e2e:install:ci": "playwright install --with-deps chromium",
     "check": "npm run build && npm run lint && npm run test:unit && npm run check:contrast && npm run check:package",

@@ -2,6 +2,8 @@
 
 This library ships 11 style systems with a shared theme/mode model.
 
+All UI systems use the same color scheme layer: `styles/theme-colors.css`. Individual UI files define structure, texture, typography, component treatment, and prefixed aliases for the shared `--usk-*` roles.
+
 ## Coverage Tiers
 
 - Full utility tier: denser utility and a11y helper set.
@@ -32,6 +34,7 @@ All 11 styles implement:
 
 ## File Locations
 
+- `styles/theme-colors.css`
 - `styles/minimal-saas.css`
 - `styles/bento.css`
 - `styles/maximalist.css`

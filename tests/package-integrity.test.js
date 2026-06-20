@@ -26,6 +26,18 @@ function exactHeadTag() {
   }
 }
 
+function hasWorkingTreeChanges() {
+  try {
+    return execFileSync('git', ['status', '--short'], {
+      cwd: rootDir,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore']
+    }).trim() !== '';
+  } catch {
+    return true;
+  }
+}
+
 function assertFileExists(relativePath) {
   const absolutePath = path.join(rootDir, relativePath);
   assert.ok(fs.existsSync(absolutePath), `Expected file to exist: ${relativePath}`);
@@ -110,13 +122,16 @@ test('package metadata is aligned for the release version', () => {
 });
 
 test('exact release tag at HEAD matches package version', () => {
+  // Release prep can happen on the previous tagged commit before the new tag exists.
+  if (hasWorkingTreeChanges()) return;
+
   const tag = exactHeadTag();
   if (!/^v\d+\.\d+\.\d+$/.test(tag)) return;
 
   assert.equal(tag, `v${packageJson.version}`);
 });
 
-test('interactive surface bridge is exported and bundled', () => {
+test('interactive surface bridge is exported and available as an opt-in bundle', () => {
   assert.equal(
     packageJson.exports['./interactive-surface-bridge'],
     './styles/interactive-surface-bridge.css'
@@ -128,8 +143,41 @@ test('interactive surface bridge is exported and bundled', () => {
 
   assertFileExists('styles/interactive-surface-bridge.css');
 
+  assert.equal(
+    packageJson.exports['./with-bridge'],
+    './dist/ui-style-kit.with-bridge.css'
+  );
+  assert.equal(
+    packageJson.exports['./dist/ui-style-kit.with-bridge.min.css'],
+    './dist/ui-style-kit.with-bridge.min.css'
+  );
+
+  assertFileExists('dist/ui-style-kit.with-bridge.css');
+  assertFileExists('dist/ui-style-kit.with-bridge.min.css');
+
   const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
-  assert.match(css, /--interactive-surface-border-width/);
-  assert.match(minCss, /--interactive-surface-border-width/);
+  const withBridgeCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.with-bridge.css'), 'utf8');
+  const withBridgeMinCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.with-bridge.min.css'), 'utf8');
+
+  assert.doesNotMatch(css, /--interactive-surface-border-width/);
+  assert.doesNotMatch(minCss, /--interactive-surface-border-width/);
+  assert.match(withBridgeCss, /--interactive-surface-border-width/);
+  assert.match(withBridgeMinCss, /--interactive-surface-border-width/);
+});
+
+test('published CSS import targets are resolvable', () => {
+  const importTargets = [
+    '.',
+    './minimal-saas.css',
+    './styles/cyberpunk.css',
+    './interactive-surface-bridge',
+    './with-bridge.css'
+  ];
+
+  for (const exportPath of importTargets) {
+    const target = packageJson.exports[exportPath];
+    assert.equal(typeof target, 'string', `Missing export: ${exportPath}`);
+    assertFileExists(target.replace(/^\.\//, ''));
+  }
 });

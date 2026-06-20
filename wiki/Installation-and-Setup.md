@@ -6,35 +6,55 @@
 npm install ui-style-kit-css
 ```
 
-## Import (combined CSS)
+## Import a single style file
+
+Recommended for production apps that use one visual system:
+
+```js
+import "ui-style-kit-css/minimal-saas.css";
+```
+
+Standalone style files import `theme-colors.css` internally. If your CSS pipeline does not follow `@import`, import the shared color layer first:
+
+```js
+import "ui-style-kit-css/theme-colors.css";
+import "ui-style-kit-css/minimal-saas.css";
+```
+
+The explicit `styles/*` path is also available:
+
+```js
+import "ui-style-kit-css/styles/minimal-saas.css";
+```
+
+## Import the combined CSS
+
+Use the combined build for runtime UI-system switchers and demos:
 
 ```js
 import "ui-style-kit-css/dist/ui-style-kit.css";
 ```
 
-## Import (single style file)
-
-```js
-import "ui-style-kit-css/styles/minimal-saas.css";
-```
+The default combined build does not include the Interactive Surface bridge.
 
 ## Integration with interactive-surface-css
 
-Combined build users (`dist/ui-style-kit.css`) still need to import `interactive-surface-css/interactive-surface.css`, but do not need an extra bridge import because the bridge file is included in the build.
-
-If you import style files individually, add the bridge:
+Import Interactive Surface itself, then either add the bridge separately:
 
 ```js
 import "interactive-surface-css/interactive-surface.css";
-import "ui-style-kit-css/styles/minimal-saas.css";
-import "ui-style-kit-css/styles/interactive-surface-bridge.css";
-```
-
-Alternate export:
-
-```js
+import "ui-style-kit-css/minimal-saas.css";
 import "ui-style-kit-css/interactive-surface-bridge";
 ```
+
+Or use the opt-in full bundle with bridge:
+
+```js
+import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/with-bridge.css";
+```
+
+The bridge remains opt-in for 2.0.0. This keeps UI Style Kit CSS release-ready while `interactive-surface-css` can be revised separately.
 
 ## Browser / CDN Usage
 
@@ -54,12 +74,14 @@ Local build:
 npm run build
 npm run lint
 npm test
+npm run check:contrast
+npm run check:package
 ```
 
 Playwright E2E:
 
 ```bash
-npm run test:e2e:install
+npm run test:e2e:install:ci
 npm run test:e2e
 ```
 
@@ -68,6 +90,7 @@ npm run test:e2e
 1. Apply all three attributes on your root container (usually `<body>`): `data-ui`, `data-theme`, `data-mode`.
 2. Use classes that match the selected style prefix.
 3. Keep prefix usage consistent in a component tree.
+4. Override color schemes through shared `--usk-*` roles when changing palette values.
 
 Example:
 
