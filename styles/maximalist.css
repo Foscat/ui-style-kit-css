@@ -412,19 +412,22 @@
 [data-ui="maximalist"] :where(search) { display: block; color: var(--max-text); }
 [data-ui="maximalist"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the maximalist preset's expressive shape language. */
 .max-spinner, .max-loading-spinner, [data-ui="maximalist"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--max-spinner-track);
+  border: .18rem solid rgb(var(--max-border-rgb) / .5);
   border-block-start-color: var(--max-spinner-stroke);
   border-inline-end-color: var(--max-spinner-accent);
-  border-radius: 50%;
+  border-radius: 44% 56% 52% 48%;
+  background: radial-gradient(circle at 30% 26%, rgb(var(--max-accent-rgb) / .72), transparent 24%), conic-gradient(var(--max-spinner-stroke), var(--max-spinner-accent), var(--max-secondary), var(--max-spinner-track));
+  box-shadow: .18rem .18rem 0 rgb(var(--max-secondary-rgb) / .55), -.18rem -.18rem 0 rgb(var(--max-primary-rgb) / .35);
   vertical-align: -.2em;
-  animation: max-spin .75s linear infinite;
+  animation: max-spin .85s ease-in-out infinite;
 }
-.max-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.max-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.max-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.max-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .max-button[aria-busy="true"], .max-icon-button[aria-busy="true"], [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .max-button[aria-busy="true"]::after, .max-icon-button[aria-busy="true"]::after, [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

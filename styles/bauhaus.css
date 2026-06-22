@@ -412,19 +412,21 @@
 [data-ui="bauhaus"] :where(search) { display: block; color: var(--bau-text); }
 [data-ui="bauhaus"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the bauhaus preset's hard-edged composition. */
 .bau-spinner, .bau-loading-spinner, [data-ui="bauhaus"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--bau-spinner-track);
+  border: .2rem double var(--bau-border);
   border-block-start-color: var(--bau-spinner-stroke);
   border-inline-end-color: var(--bau-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--bau-radius-xs);
+  background: conic-gradient(var(--bau-primary) 0 25%, var(--bau-surface) 0 50%, var(--bau-accent) 0 75%, var(--bau-surface-soft) 0);
   vertical-align: -.2em;
-  animation: bau-spin .75s linear infinite;
+  animation: bau-spin .8s steps(4, end) infinite;
 }
-.bau-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.bau-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.bau-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.bau-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .28rem; }
 .bau-button[aria-busy="true"], .bau-icon-button[aria-busy="true"], [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .bau-button[aria-busy="true"]::after, .bau-icon-button[aria-busy="true"]::after, [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

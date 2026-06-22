@@ -367,19 +367,23 @@
 [data-ui="cyberpunk"] :where(search) { display: block; color: var(--cyber-text); }
 [data-ui="cyberpunk"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the cyberpunk preset's clipped neon readouts. */
 .cyber-spinner, .cyber-loading-spinner, [data-ui="cyberpunk"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--cyber-spinner-track);
+  border: .16rem solid rgb(var(--cyber-primary-rgb) / .72);
   border-block-start-color: var(--cyber-spinner-stroke);
   border-inline-end-color: var(--cyber-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--cyber-radius-xs);
+  clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%);
+  background: conic-gradient(from 90deg, transparent 0 22%, var(--cyber-spinner-stroke) 0 45%, transparent 0 58%, var(--cyber-spinner-accent) 0 82%, transparent 0);
+  box-shadow: 0 0 1rem var(--cyber-glow-primary), inset 0 0 .65rem rgb(var(--cyber-accent-rgb) / .38);
   vertical-align: -.2em;
-  animation: cyber-spin .75s linear infinite;
+  animation: cyber-spin .72s linear infinite;
 }
-.cyber-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.cyber-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.cyber-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .1rem; }
+.cyber-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .22rem; }
 .cyber-button[aria-busy="true"], .cyber-icon-button[aria-busy="true"], [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .cyber-button[aria-busy="true"]::after, .cyber-icon-button[aria-busy="true"]::after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

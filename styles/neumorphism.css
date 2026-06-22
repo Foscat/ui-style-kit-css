@@ -441,19 +441,22 @@
 [data-ui="neumorphism"] :where(search) { display: block; color: var(--neo-text); }
 [data-ui="neumorphism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the neumorphism preset's soft extruded surfaces. */
 .neo-spinner, .neo-loading-spinner, [data-ui="neumorphism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--neo-spinner-track);
+  border: .2rem solid transparent;
   border-block-start-color: var(--neo-spinner-stroke);
   border-inline-end-color: var(--neo-spinner-accent);
   border-radius: 50%;
+  background: conic-gradient(from 45deg, var(--neo-spinner-stroke), transparent 34%, var(--neo-spinner-accent), var(--neo-spinner-track));
+  box-shadow: -.35rem -.35rem .8rem rgb(255 255 255 / .32), .35rem .35rem .8rem rgb(0 0 0 / .18), inset 0 0 0 .38rem var(--neo-surface);
   vertical-align: -.2em;
-  animation: neo-spin .75s linear infinite;
+  animation: neo-spin 1s linear infinite;
 }
-.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .28rem; }
 .neo-button[aria-busy="true"], .neo-icon-button[aria-busy="true"], [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .neo-button[aria-busy="true"]::after, .neo-icon-button[aria-busy="true"]::after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

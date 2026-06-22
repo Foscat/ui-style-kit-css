@@ -1668,19 +1668,22 @@
 [data-ui="bento"] :where(search) { display: block; color: var(--bento-text); }
 [data-ui="bento"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the bento preset's compact tile language. */
 .bento-spinner, .bento-loading-spinner, [data-ui="bento"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--bento-spinner-track);
+  border: .18rem solid rgb(var(--bento-border-rgb) / .44);
   border-block-start-color: var(--bento-spinner-stroke);
   border-inline-end-color: var(--bento-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--bento-radius-md);
+  background: conic-gradient(from 0deg, var(--bento-spinner-stroke), var(--bento-spinner-accent), transparent 58%, var(--bento-spinner-track));
+  box-shadow: inset 0 0 0 .28rem var(--bento-surface), 0 .5rem 1.15rem rgb(0 0 0 / var(--bento-shadow-alpha));
   vertical-align: -.2em;
-  animation: bento-spin .75s linear infinite;
+  animation: bento-spin .9s steps(4, end) infinite;
 }
-.bento-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.bento-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.bento-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.bento-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .bento-button[aria-busy="true"], .bento-icon-button[aria-busy="true"], [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .bento-button[aria-busy="true"]::after, .bento-icon-button[aria-busy="true"]::after, [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -2126,19 +2129,22 @@
 [data-ui="maximalist"] :where(search) { display: block; color: var(--max-text); }
 [data-ui="maximalist"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the maximalist preset's expressive shape language. */
 .max-spinner, .max-loading-spinner, [data-ui="maximalist"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--max-spinner-track);
+  border: .18rem solid rgb(var(--max-border-rgb) / .5);
   border-block-start-color: var(--max-spinner-stroke);
   border-inline-end-color: var(--max-spinner-accent);
-  border-radius: 50%;
+  border-radius: 44% 56% 52% 48%;
+  background: radial-gradient(circle at 30% 26%, rgb(var(--max-accent-rgb) / .72), transparent 24%), conic-gradient(var(--max-spinner-stroke), var(--max-spinner-accent), var(--max-secondary), var(--max-spinner-track));
+  box-shadow: .18rem .18rem 0 rgb(var(--max-secondary-rgb) / .55), -.18rem -.18rem 0 rgb(var(--max-primary-rgb) / .35);
   vertical-align: -.2em;
-  animation: max-spin .75s linear infinite;
+  animation: max-spin .85s ease-in-out infinite;
 }
-.max-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.max-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.max-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.max-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .max-button[aria-busy="true"], .max-icon-button[aria-busy="true"], [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .max-button[aria-busy="true"]::after, .max-icon-button[aria-busy="true"]::after, [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -2584,19 +2590,21 @@
 [data-ui="bauhaus"] :where(search) { display: block; color: var(--bau-text); }
 [data-ui="bauhaus"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the bauhaus preset's hard-edged composition. */
 .bau-spinner, .bau-loading-spinner, [data-ui="bauhaus"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--bau-spinner-track);
+  border: .2rem double var(--bau-border);
   border-block-start-color: var(--bau-spinner-stroke);
   border-inline-end-color: var(--bau-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--bau-radius-xs);
+  background: conic-gradient(var(--bau-primary) 0 25%, var(--bau-surface) 0 50%, var(--bau-accent) 0 75%, var(--bau-surface-soft) 0);
   vertical-align: -.2em;
-  animation: bau-spin .75s linear infinite;
+  animation: bau-spin .8s steps(4, end) infinite;
 }
-.bau-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.bau-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.bau-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.bau-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .28rem; }
 .bau-button[aria-busy="true"], .bau-icon-button[aria-busy="true"], [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .bau-button[aria-busy="true"]::after, .bau-icon-button[aria-busy="true"]::after, [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -3041,19 +3049,22 @@
 [data-ui="tactile"] :where(search) { display: block; color: var(--tactile-text); }
 [data-ui="tactile"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the tactile preset's pressed material controls. */
 .tactile-spinner, .tactile-loading-spinner, [data-ui="tactile"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--tactile-spinner-track);
+  border: .18rem solid rgb(var(--tactile-border-rgb) / .55);
   border-block-start-color: var(--tactile-spinner-stroke);
   border-inline-end-color: var(--tactile-spinner-accent);
   border-radius: 50%;
+  background: linear-gradient(145deg, rgb(var(--tactile-surface-strong-rgb) / .96), rgb(var(--tactile-surface-soft-rgb) / .72));
+  box-shadow: inset .16rem .16rem .32rem rgb(0 0 0 / .18), inset -.16rem -.16rem .32rem rgb(255 255 255 / .26), 0 .25rem .75rem rgb(0 0 0 / var(--tactile-shadow-alpha));
   vertical-align: -.2em;
-  animation: tactile-spin .75s linear infinite;
+  animation: tactile-spin .85s cubic-bezier(.2, .8, .2, 1) infinite;
 }
-.tactile-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.tactile-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.tactile-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.tactile-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .tactile-button[aria-busy="true"], .tactile-icon-button[aria-busy="true"], [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .tactile-button[aria-busy="true"]::after, .tactile-icon-button[aria-busy="true"]::after, [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -3528,19 +3539,22 @@
 [data-ui="neumorphism"] :where(search) { display: block; color: var(--neo-text); }
 [data-ui="neumorphism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the neumorphism preset's soft extruded surfaces. */
 .neo-spinner, .neo-loading-spinner, [data-ui="neumorphism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--neo-spinner-track);
+  border: .2rem solid transparent;
   border-block-start-color: var(--neo-spinner-stroke);
   border-inline-end-color: var(--neo-spinner-accent);
   border-radius: 50%;
+  background: conic-gradient(from 45deg, var(--neo-spinner-stroke), transparent 34%, var(--neo-spinner-accent), var(--neo-spinner-track));
+  box-shadow: -.35rem -.35rem .8rem rgb(255 255 255 / .32), .35rem .35rem .8rem rgb(0 0 0 / .18), inset 0 0 0 .38rem var(--neo-surface);
   vertical-align: -.2em;
-  animation: neo-spin .75s linear infinite;
+  animation: neo-spin 1s linear infinite;
 }
-.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .28rem; }
 .neo-button[aria-busy="true"], .neo-icon-button[aria-busy="true"], [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .neo-button[aria-busy="true"]::after, .neo-icon-button[aria-busy="true"]::after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -4023,19 +4037,22 @@
 [data-ui="retrofuturism"] :where(search) { display: block; color: var(--retro-text); }
 [data-ui="retrofuturism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the retrofuturism preset's radar-style motion. */
 .retro-spinner, .retro-loading-spinner, [data-ui="retrofuturism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--retro-spinner-track);
+  border: .12rem solid var(--retro-border);
   border-block-start-color: var(--retro-spinner-stroke);
   border-inline-end-color: var(--retro-spinner-accent);
   border-radius: 50%;
+  background: radial-gradient(circle at center, var(--retro-accent) 0 .16rem, transparent .18rem), conic-gradient(from -45deg, var(--retro-spinner-stroke), transparent 42%, var(--retro-spinner-accent), var(--retro-spinner-track));
+  box-shadow: 0 0 0 .2rem rgb(var(--retro-primary-rgb) / .16), 0 0 1.35rem rgb(var(--retro-accent-rgb) / var(--retro-glow-alpha));
   vertical-align: -.2em;
-  animation: retro-spin .75s linear infinite;
+  animation: retro-spin 1.05s linear infinite;
 }
-.retro-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.retro-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.retro-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .08rem; }
+.retro-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .18rem; }
 .retro-button[aria-busy="true"], .retro-icon-button[aria-busy="true"], [data-ui="retrofuturism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .retro-button[aria-busy="true"]::after, .retro-icon-button[aria-busy="true"]::after, [data-ui="retrofuturism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -4330,19 +4347,21 @@
 [data-ui="brutalism"] :where(search) { display: block; color: var(--brutal-text); }
 [data-ui="brutalism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the brutalism preset's blunt mechanical edges. */
 .brutal-spinner, .brutal-loading-spinner, [data-ui="brutalism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--brutal-spinner-track);
+  border: .28rem solid var(--brutal-border);
   border-block-start-color: var(--brutal-spinner-stroke);
   border-inline-end-color: var(--brutal-spinner-accent);
-  border-radius: 50%;
+  border-radius: 0;
+  box-shadow: .25rem .25rem 0 var(--brutal-secondary);
   vertical-align: -.2em;
-  animation: brutal-spin .75s linear infinite;
+  animation: brutal-spin .65s steps(4, end) infinite;
 }
 .brutal-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.brutal-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.brutal-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .36rem; }
 .brutal-button[aria-busy="true"], .brutal-icon-button[aria-busy="true"], [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .brutal-button[aria-busy="true"]::after, .brutal-icon-button[aria-busy="true"]::after, [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -4903,19 +4922,23 @@
 [data-ui="cyberpunk"] :where(search) { display: block; color: var(--cyber-text); }
 [data-ui="cyberpunk"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the cyberpunk preset's clipped neon readouts. */
 .cyber-spinner, .cyber-loading-spinner, [data-ui="cyberpunk"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--cyber-spinner-track);
+  border: .16rem solid rgb(var(--cyber-primary-rgb) / .72);
   border-block-start-color: var(--cyber-spinner-stroke);
   border-inline-end-color: var(--cyber-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--cyber-radius-xs);
+  clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%);
+  background: conic-gradient(from 90deg, transparent 0 22%, var(--cyber-spinner-stroke) 0 45%, transparent 0 58%, var(--cyber-spinner-accent) 0 82%, transparent 0);
+  box-shadow: 0 0 1rem var(--cyber-glow-primary), inset 0 0 .65rem rgb(var(--cyber-accent-rgb) / .38);
   vertical-align: -.2em;
-  animation: cyber-spin .75s linear infinite;
+  animation: cyber-spin .72s linear infinite;
 }
-.cyber-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.cyber-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.cyber-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .1rem; }
+.cyber-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .22rem; }
 .cyber-button[aria-busy="true"], .cyber-icon-button[aria-busy="true"], [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .cyber-button[aria-busy="true"]::after, .cyber-icon-button[aria-busy="true"]::after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -5297,19 +5320,22 @@
 [data-ui="y2k"] :where(search) { display: block; color: var(--y2k-text); }
 [data-ui="y2k"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the y2k preset's glossy plastic controls. */
 .y2k-spinner, .y2k-loading-spinner, [data-ui="y2k"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--y2k-spinner-track);
+  border: .14rem solid rgb(255 255 255 / .42);
   border-block-start-color: var(--y2k-spinner-stroke);
   border-inline-end-color: var(--y2k-spinner-accent);
   border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, rgb(255 255 255 / .9), transparent 18%), conic-gradient(var(--y2k-spinner-stroke), var(--y2k-spinner-accent), var(--y2k-spinner-track), var(--y2k-secondary));
+  box-shadow: 0 0 1.2rem var(--y2k-glow-primary), inset -.18rem -.18rem .45rem rgb(var(--y2k-secondary-rgb) / .28);
   vertical-align: -.2em;
-  animation: y2k-spin .75s linear infinite;
+  animation: y2k-spin .88s linear infinite;
 }
-.y2k-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.y2k-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.y2k-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .08rem; }
+.y2k-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .22rem; }
 .y2k-button[aria-busy="true"], .y2k-icon-button[aria-busy="true"], [data-ui="y2k"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .y2k-button[aria-busy="true"]::after, .y2k-icon-button[aria-busy="true"]::after, [data-ui="y2k"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
@@ -5692,19 +5718,24 @@
 [data-ui="retro-glass"] :where(search) { display: block; color: var(--rg-text); }
 [data-ui="retro-glass"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the retro glass preset's translucent lens shape. */
 .rg-spinner, .rg-loading-spinner, [data-ui="retro-glass"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--rg-spinner-track);
+  border: .12rem solid rgb(255 255 255 / .32);
   border-block-start-color: var(--rg-spinner-stroke);
   border-inline-end-color: var(--rg-spinner-accent);
-  border-radius: 50%;
+  border-radius: 38% 62% 48% 52%;
+  background: linear-gradient(135deg, rgb(255 255 255 / .32), transparent 46%), conic-gradient(from 35deg, var(--rg-spinner-stroke), transparent 40%, var(--rg-spinner-accent), var(--rg-spinner-track));
+  box-shadow: 0 0 1.35rem var(--rg-glow-primary), inset 0 0 .85rem rgb(255 255 255 / .18);
+  -webkit-backdrop-filter: blur(.4rem);
+  backdrop-filter: blur(.4rem);
   vertical-align: -.2em;
-  animation: rg-spin .75s linear infinite;
+  animation: rg-spin .95s linear infinite;
 }
-.rg-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.rg-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.rg-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .08rem; }
+.rg-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .2rem; }
 .rg-button[aria-busy="true"], .rg-icon-button[aria-busy="true"], [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .rg-button[aria-busy="true"]::after, .rg-icon-button[aria-busy="true"]::after, [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

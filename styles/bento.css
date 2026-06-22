@@ -413,19 +413,22 @@
 [data-ui="bento"] :where(search) { display: block; color: var(--bento-text); }
 [data-ui="bento"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the bento preset's compact tile language. */
 .bento-spinner, .bento-loading-spinner, [data-ui="bento"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--bento-spinner-track);
+  border: .18rem solid rgb(var(--bento-border-rgb) / .44);
   border-block-start-color: var(--bento-spinner-stroke);
   border-inline-end-color: var(--bento-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--bento-radius-md);
+  background: conic-gradient(from 0deg, var(--bento-spinner-stroke), var(--bento-spinner-accent), transparent 58%, var(--bento-spinner-track));
+  box-shadow: inset 0 0 0 .28rem var(--bento-surface), 0 .5rem 1.15rem rgb(0 0 0 / var(--bento-shadow-alpha));
   vertical-align: -.2em;
-  animation: bento-spin .75s linear infinite;
+  animation: bento-spin .9s steps(4, end) infinite;
 }
-.bento-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.bento-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.bento-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.bento-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .bento-button[aria-busy="true"], .bento-icon-button[aria-busy="true"], [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .bento-button[aria-busy="true"]::after, .bento-icon-button[aria-busy="true"]::after, [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

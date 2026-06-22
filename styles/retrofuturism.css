@@ -449,19 +449,22 @@
 [data-ui="retrofuturism"] :where(search) { display: block; color: var(--retro-text); }
 [data-ui="retrofuturism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the retrofuturism preset's radar-style motion. */
 .retro-spinner, .retro-loading-spinner, [data-ui="retrofuturism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--retro-spinner-track);
+  border: .12rem solid var(--retro-border);
   border-block-start-color: var(--retro-spinner-stroke);
   border-inline-end-color: var(--retro-spinner-accent);
   border-radius: 50%;
+  background: radial-gradient(circle at center, var(--retro-accent) 0 .16rem, transparent .18rem), conic-gradient(from -45deg, var(--retro-spinner-stroke), transparent 42%, var(--retro-spinner-accent), var(--retro-spinner-track));
+  box-shadow: 0 0 0 .2rem rgb(var(--retro-primary-rgb) / .16), 0 0 1.35rem rgb(var(--retro-accent-rgb) / var(--retro-glow-alpha));
   vertical-align: -.2em;
-  animation: retro-spin .75s linear infinite;
+  animation: retro-spin 1.05s linear infinite;
 }
-.retro-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.retro-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.retro-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .08rem; }
+.retro-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .18rem; }
 .retro-button[aria-busy="true"], .retro-icon-button[aria-busy="true"], [data-ui="retrofuturism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .retro-button[aria-busy="true"]::after, .retro-icon-button[aria-busy="true"]::after, [data-ui="retrofuturism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

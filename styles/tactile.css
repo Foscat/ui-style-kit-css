@@ -411,19 +411,22 @@
 [data-ui="tactile"] :where(search) { display: block; color: var(--tactile-text); }
 [data-ui="tactile"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the tactile preset's pressed material controls. */
 .tactile-spinner, .tactile-loading-spinner, [data-ui="tactile"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--tactile-spinner-track);
+  border: .18rem solid rgb(var(--tactile-border-rgb) / .55);
   border-block-start-color: var(--tactile-spinner-stroke);
   border-inline-end-color: var(--tactile-spinner-accent);
   border-radius: 50%;
+  background: linear-gradient(145deg, rgb(var(--tactile-surface-strong-rgb) / .96), rgb(var(--tactile-surface-soft-rgb) / .72));
+  box-shadow: inset .16rem .16rem .32rem rgb(0 0 0 / .18), inset -.16rem -.16rem .32rem rgb(255 255 255 / .26), 0 .25rem .75rem rgb(0 0 0 / var(--tactile-shadow-alpha));
   vertical-align: -.2em;
-  animation: tactile-spin .75s linear infinite;
+  animation: tactile-spin .85s cubic-bezier(.2, .8, .2, 1) infinite;
 }
-.tactile-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.tactile-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.tactile-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.tactile-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .tactile-button[aria-busy="true"], .tactile-icon-button[aria-busy="true"], [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .tactile-button[aria-busy="true"]::after, .tactile-icon-button[aria-busy="true"]::after, [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

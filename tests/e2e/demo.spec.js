@@ -167,6 +167,66 @@ test('demo exposes the styled element and state showcase', async ({ page }) => {
   await page.getByTestId('component-button-focus').focus();
 });
 
+test('spinner treatments are structurally distinct across UI styles', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const spinnerSignatures = [];
+
+  for (const [ui, prefix] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+
+    const signature = await page.locator(`.${prefix}-spinner:not(.${prefix}-spinner-sm):not(.${prefix}-spinner-lg)`).first()
+      .evaluate((spinner) => {
+        const styles = getComputedStyle(spinner);
+
+        return [
+          styles.borderRadius,
+          styles.borderStyle,
+          styles.borderWidth,
+          styles.backgroundImage === 'none' ? 'none' : 'image',
+          styles.boxShadow === 'none' ? 'none' : 'shadow',
+          styles.clipPath === 'none' ? 'none' : 'clip',
+          styles.outlineStyle,
+          styles.outlineWidth
+        ].join('|');
+      });
+
+    spinnerSignatures.push([ui, signature]);
+  }
+
+  const uniqueSignatures = new Set(spinnerSignatures.map(([, signature]) => signature));
+  expect(uniqueSignatures.size, JSON.stringify(spinnerSignatures, null, 2)).toBeGreaterThanOrEqual(9);
+});
+
+test('demo component cards keep balanced rows at square and tablet widths', async ({ page }) => {
+  for (const viewport of [
+    { width: 900, height: 900 },
+    { width: 768, height: 1024 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto(demoUrl);
+
+    const rowSpreads = await page.locator('#components .demo-showcase-grid > article').evaluateAll((cards) => {
+      const rows = new Map();
+
+      for (const card of cards) {
+        const rect = card.getBoundingClientRect();
+        const rowKey = Math.round(rect.top);
+        const row = rows.get(rowKey) || [];
+        row.push(Math.round(rect.height));
+        rows.set(rowKey, row);
+      }
+
+      return [...rows.values()]
+        .filter((row) => row.length > 1)
+        .map((row) => Math.max(...row) - Math.min(...row));
+    });
+
+    expect(rowSpreads.length, `${viewport.width}x${viewport.height} should render multi-card rows`).toBeGreaterThan(0);
+    expect(Math.max(...rowSpreads), `${viewport.width}x${viewport.height} row height spreads`).toBeLessThanOrEqual(72);
+  }
+});
+
 test('neutral demo buttons keep theme text color across styles and modes', async ({ page }) => {
   await page.goto(demoUrl);
 

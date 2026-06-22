@@ -78,7 +78,29 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
       gap: 1rem;
-      align-items: start;
+      align-items: stretch;
+    }
+
+    .demo-showcase-grid > *,
+    .demo-native-grid > *,
+    .demo-state-grid > *,
+    .demo-token-grid > *,
+    .demo-bridge-grid > * {
+      min-width: 0;
+    }
+
+    /* The component showcase needs a tighter tablet grid than the wider native-element samples. */
+    #components .demo-showcase-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
+    }
+
+    #components .demo-showcase-grid > article {
+      display: grid;
+      align-content: start;
+    }
+
+    #components .demo-showcase-grid > [data-testid="component-table"] {
+      align-content: stretch;
     }
 
     .demo-tight-grid {

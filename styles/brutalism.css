@@ -261,19 +261,21 @@
 [data-ui="brutalism"] :where(search) { display: block; color: var(--brutal-text); }
 [data-ui="brutalism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
+/* Spinner geometry follows the brutalism preset's blunt mechanical edges. */
 .brutal-spinner, .brutal-loading-spinner, [data-ui="brutalism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--brutal-spinner-track);
+  border: .28rem solid var(--brutal-border);
   border-block-start-color: var(--brutal-spinner-stroke);
   border-inline-end-color: var(--brutal-spinner-accent);
-  border-radius: 50%;
+  border-radius: 0;
+  box-shadow: .25rem .25rem 0 var(--brutal-secondary);
   vertical-align: -.2em;
-  animation: brutal-spin .75s linear infinite;
+  animation: brutal-spin .65s steps(4, end) infinite;
 }
 .brutal-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.brutal-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.brutal-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .36rem; }
 .brutal-button[aria-busy="true"], .brutal-icon-button[aria-busy="true"], [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .brutal-button[aria-busy="true"]::after, .brutal-icon-button[aria-busy="true"]::after, [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
