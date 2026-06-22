@@ -16,6 +16,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 - Moved the bridge attach switch into the demo bridge section so the opt-in behavior is documented where it is exercised.
 - Refactored native HTML fallback rules into one shared `styles/native-elements.css` layer while each preset now supplies only visual token mappings through `--usk-native-*`.
 - Polished the demo component layout at desktop, tablet, and square viewports with denser controls, richer badge examples, padded native controls, and balanced showcase rows.
+- Moved the demo Usage section to match the primary navigation order and tightened the mobile controls showcase into a readable single-column flow.
 
 ## [2.0.0] - 2026-06-20
 

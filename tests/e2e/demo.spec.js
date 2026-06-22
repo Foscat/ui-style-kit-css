@@ -413,6 +413,56 @@ test('demo component cards keep balanced rows at square and tablet widths', asyn
   }
 });
 
+test('demo primary navigation follows page order and updates the current link', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const sectionOrder = await page.evaluate(() => ['overview', 'components', 'native', 'bridge', 'usage']
+    .map((id) => ({
+      id,
+      top: Math.round(document.getElementById(id).getBoundingClientRect().top + window.scrollY)
+    })));
+  const sortedOrder = [...sectionOrder].sort((first, second) => first.top - second.top).map(({ id }) => id);
+
+  expect(sortedOrder).toEqual(['overview', 'components', 'native', 'bridge', 'usage']);
+
+  const primaryNav = page.locator('nav[aria-label="Primary"]').first();
+  await primaryNav.getByRole('link', { name: 'Components' }).click();
+
+  await expect(primaryNav.getByRole('link', { name: 'Components' })).toHaveAttribute('aria-current', 'page');
+  await expect(primaryNav.getByRole('link', { name: 'Overview' })).not.toHaveAttribute('aria-current', 'page');
+});
+
+test('mobile controls showcase stacks panels without cramped columns', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'cyberpunk');
+  await page.selectOption('#modeSelect', 'dark');
+  await page.locator('nav[aria-label="Primary"]').first().getByRole('link', { name: 'Components' }).click();
+
+  const panelMetrics = await page.getByTestId('component-controls').locator('section[data-testid]').evaluateAll((panels) => panels
+    .map((panel) => {
+      const rect = panel.getBoundingClientRect();
+
+      return {
+        id: panel.dataset.testid,
+        left: Math.round(rect.left),
+        top: Math.round(rect.top),
+        width: Math.round(rect.width)
+      };
+    }));
+  const leftSpread = Math.max(...panelMetrics.map(({ left }) => left)) - Math.min(...panelMetrics.map(({ left }) => left));
+
+  expect(panelMetrics.map(({ id }) => id)).toEqual([
+    'component-buttons',
+    'component-progress',
+    'component-spinner',
+    'component-tooltips'
+  ]);
+  expect(leftSpread, JSON.stringify(panelMetrics, null, 2)).toBeLessThanOrEqual(2);
+  expect(panelMetrics.every(({ width }) => width >= 240), JSON.stringify(panelMetrics, null, 2)).toBe(true);
+  expect(panelMetrics.map(({ top }) => top)).toEqual([...panelMetrics.map(({ top }) => top)].sort((first, second) => first - second));
+});
+
 test('table showcase has readable inset spacing inside its card', async ({ page }) => {
   await page.goto(demoUrl);
 

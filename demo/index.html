@@ -386,6 +386,11 @@
 
     @media (max-width: 760px) {
       .demo-control-showcase {
+        grid-template-areas:
+          "buttons"
+          "progress"
+          "loading"
+          "tooltips";
         grid-template-columns: 1fr;
       }
     }
@@ -677,6 +682,33 @@
       syncInteractiveSurfaceHooks(isAttached);
     }
 
+    function syncPrimaryNavCurrent(targetId = "overview") {
+      const nav = main.querySelector('nav[aria-label="Primary"]');
+      if (!nav) return;
+
+      nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+        const isCurrent = link.getAttribute("href") === `#${targetId}`;
+        link.classList.toggle("is-active", isCurrent);
+
+        if (isCurrent) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    function bindPrimaryNav() {
+      const nav = main.querySelector('nav[aria-label="Primary"]');
+      if (!nav) return;
+
+      nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", () => {
+          syncPrimaryNavCurrent(link.getAttribute("href").slice(1));
+        });
+      });
+    }
+
     function drawDemoCanvas() {
       const canvas = document.querySelector("[data-demo-canvas]");
       if (!canvas) return;
@@ -729,27 +761,11 @@
                 <button class="${p}-button ${p}-button-secondary">Secondary</button>
                 <button class="${p}-button">Neutral</button>
                 <button class="${p}-button ${p}-button-ghost">Ghost</button>
-                <button class="${p}-icon-button" aria-label="Favorite">★</button>
+                <button class="${p}-icon-button" aria-label="Favorite">&#9733;</button>
                 <span class="${p}-badge ${p}-badge-primary">Primary</span>
                 <span class="${p}-badge ${p}-badge-warning">Warning</span>
               </div>
             </header>
-
-            <section id="usage" class="${p}-card" data-testid="usage-imports">
-              <p class="${p}-kicker">Usage</p>
-              <h2 class="${p}-heading">Import paths and data attributes</h2>
-              <div class="demo-showcase-grid">
-                <pre class="demo-code"><code>import "ui-style-kit-css";
-
-document.body.dataset.ui = "${ui}";
-document.body.dataset.theme = "${themeSelect.value}";
-document.body.dataset.mode = "${modeSelect.value}";</code></pre>
-                <pre class="demo-code"><code>import "ui-style-kit-css/${ui}.css";
-import "ui-style-kit-css/theme-colors.css";</code></pre>
-                <pre class="demo-code"><code>import "ui-style-kit-css/with-bridge.css";
-import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
-              </div>
-            </section>
 
             <section id="components" class="${p}-stack">
               <div class="demo-section-lede">
@@ -1067,10 +1083,29 @@ import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
                 <div class="interactive-surface" data-surface-variant="primary" data-surface-level="3" data-testid="bridge-level-3"><strong>Level 3 surface</strong><small>Prominent active state with the strongest state layer.</small></div>
               </div>
             </section>
+
+            <section id="usage" class="${p}-card" data-testid="usage-imports">
+              <p class="${p}-kicker">Usage</p>
+              <h2 class="${p}-heading">Import paths and data attributes</h2>
+              <div class="demo-showcase-grid">
+                <pre class="demo-code"><code>import "ui-style-kit-css";
+
+document.body.dataset.ui = "${ui}";
+document.body.dataset.theme = "${themeSelect.value}";
+document.body.dataset.mode = "${modeSelect.value}";</code></pre>
+                <pre class="demo-code"><code>import "ui-style-kit-css/theme-colors.css";
+import "ui-style-kit-css/native-elements.css";
+import "ui-style-kit-css/${ui}.css";</code></pre>
+                <pre class="demo-code"><code>import "ui-style-kit-css/with-bridge.css";
+import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
+              </div>
+            </section>
           </div>
         </section>`;
 
       const bridgeToggle = document.getElementById("bridgeToggle");
+      bindPrimaryNav();
+      syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview");
       if (bridgeToggle) {
         bridgeToggle.checked = bridgeAttached;
         bridgeToggle.addEventListener("change", updateBridge);
@@ -1082,6 +1117,7 @@ import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
     uiSelect.addEventListener("change", render);
     themeSelect.addEventListener("change", render);
     modeSelect.addEventListener("change", render);
+    window.addEventListener("hashchange", () => syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview"));
     render();
   </script>
 </body>
