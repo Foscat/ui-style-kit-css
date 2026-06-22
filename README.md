@@ -16,6 +16,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 - Skip-link and visually-hidden helpers per style prefix
 - Compact shared palette → prefixed alias → UI-rule token model
 - Theme-driven card, panel, control, page-background, and spinner defaults
+- Visible tooltip classes and native `[role="tooltip"]` styling inside each UI scope
 - Font-family override variables for body, headings, controls, and mono text
 - Optional bridge tokens and opt-in bridge bundle for `interactive-surface-css`
 - Reduced-motion, high-contrast, forced-colors, and print support
@@ -173,6 +174,7 @@ Each style system scopes defaults under `[data-ui="..."]` and covers common nati
 - tables and captions
 - `details`, `summary`, `dialog`, `progress`, `meter`, `menu`, `search`, `optgroup`, and `option`
 - loading indicators through `<prefix>-spinner`, `<prefix>-loading-spinner`, and busy native buttons with `aria-busy="true"`
+- tooltip surfaces through `<prefix>-tooltip`, `<prefix>-tooltip-arrow`, `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]`
 
 CSS improves accessibility presentation, but it cannot guarantee accessibility by itself. Use semantic HTML, real labels, keyboard-safe JavaScript, meaningful link/button text, and correct ARIA state management.
 
@@ -190,6 +192,19 @@ Every style includes theme-driven spinner utilities:
 ```
 
 Spinner track, stroke, and accent colors come from the active `data-theme` and `data-mode`. The generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks are also themed inside any `[data-ui="..."]` scope.
+
+## Tooltip surfaces
+
+Every style includes visible tooltip utilities with the same API and preset-specific visual treatment:
+
+```html
+<span class="saas-tooltip" role="tooltip">
+  Helpful context
+  <span class="saas-tooltip-arrow" aria-hidden="true"></span>
+</span>
+```
+
+Inside a `[data-ui="..."]` scope, generic `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]` hooks inherit the active UI system.
 
 ## Font overrides
 

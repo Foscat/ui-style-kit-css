@@ -2,6 +2,13 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## Unreleased
+
+### Added
+
+- Added visible tooltip utilities for every UI preset through `<prefix>-tooltip`, `<prefix>-tooltip-arrow`, `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]`.
+- Added demo coverage for tooltips, switch-style Interactive Surface bridge controls, padded table showcases, combined controls/loading/progress displays, and more useful utility samples.
+
 ## [2.0.0] - 2026-06-20
 
 ### Changed

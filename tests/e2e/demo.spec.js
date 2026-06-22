@@ -74,12 +74,19 @@ test('demo starts with the interactive surface bridge detached and can attach it
 
   const stylesheet = page.locator('#styleKitStylesheet');
   const bridgeToggle = page.locator('#bridgeToggle');
+  const switchTrack = page.getByTestId('bridge-switch-track');
+  const switchThumb = page.getByTestId('bridge-switch-thumb');
 
   await expect(bridgeToggle).not.toBeChecked();
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'detached');
   await expect(stylesheet).toHaveAttribute('href', 'dist/ui-style-kit.css');
   await expect(page.getByTestId('bridge-status')).toContainText('Detached');
   await expect(page.locator('.interactive-surface').first()).not.toHaveCSS('--interactive-surface-bg', /.+/);
+  await expect(page.getByTestId('bridge-switch')).toBeVisible();
+  await expect(switchTrack).toBeVisible();
+  await expect(switchTrack).toHaveCSS('border-radius', /px|%/);
+
+  const detachedThumbX = await switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left);
 
   await bridgeToggle.check();
 
@@ -87,6 +94,9 @@ test('demo starts with the interactive surface bridge detached and can attach it
   await expect(stylesheet).toHaveAttribute('href', 'dist/ui-style-kit.with-bridge.css');
   await expect(page.getByTestId('bridge-status')).toContainText('Attached');
   await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
+
+  const attachedThumbX = await switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left);
+  expect(attachedThumbX).toBeGreaterThan(detachedThumbX + 8);
 });
 
 test('attached bridge wires every enabled interactable element to interactive surface hooks', async ({ page }) => {
@@ -132,6 +142,7 @@ test('demo exposes the styled element and state showcase', async ({ page }) => {
   await page.goto(demoUrl);
 
   const showcaseItems = [
+    'component-controls',
     'component-buttons',
     'component-button-hover',
     'component-button-active',
@@ -142,6 +153,7 @@ test('demo exposes the styled element and state showcase', async ({ page }) => {
     'component-progress',
     'component-table',
     'component-spinner',
+    'component-tooltips',
     'component-fields',
     'native-text',
     'native-lists',
@@ -165,6 +177,58 @@ test('demo exposes the styled element and state showcase', async ({ page }) => {
   await page.getByTestId('component-button-hover').hover();
   await expect(page.getByTestId('component-button-focus')).toBeVisible();
   await page.getByTestId('component-button-focus').focus();
+});
+
+test('buttons progress loading and tooltip examples share a polished controls card', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const controlsCard = page.getByTestId('component-controls');
+  await expect(controlsCard).toBeVisible();
+  await expect(controlsCard.getByTestId('component-buttons')).toBeVisible();
+  await expect(controlsCard.getByTestId('component-progress')).toBeVisible();
+  await expect(controlsCard.getByTestId('component-spinner')).toBeVisible();
+  await expect(controlsCard.getByTestId('component-tooltips')).toBeVisible();
+
+  const containerIds = await page.evaluate(() => ['component-buttons', 'component-progress', 'component-spinner']
+    .map((testId) => document.querySelector(`[data-testid="${testId}"]`)?.closest('article')?.dataset.testid));
+  expect(containerIds).toEqual(['component-controls', 'component-controls', 'component-controls']);
+
+  const controlsBox = await controlsCard.boundingBox();
+  const tooltipBox = await controlsCard.getByTestId('component-tooltips').boundingBox();
+  expect(tooltipBox.width).toBeLessThanOrEqual(controlsBox.width);
+});
+
+test('tooltip treatments are visible and structurally distinct across UI styles', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const tooltipSignatures = [];
+
+  for (const [ui, prefix] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+
+    await expect(page.getByTestId('component-tooltips')).toBeVisible();
+    await expect(page.locator(`.${prefix}-tooltip`).first()).toBeVisible();
+
+    const signature = await page.locator(`.${prefix}-tooltip`).first().evaluate((tooltip) => {
+      const styles = getComputedStyle(tooltip);
+
+      return [
+        styles.borderRadius,
+        styles.borderStyle,
+        styles.borderWidth,
+        styles.backgroundImage === 'none' ? 'none' : 'image',
+        styles.boxShadow === 'none' ? 'none' : 'shadow',
+        styles.clipPath === 'none' ? 'none' : 'clip',
+        styles.textTransform,
+        styles.letterSpacing
+      ].join('|');
+    });
+
+    tooltipSignatures.push([ui, signature]);
+  }
+
+  const uniqueSignatures = new Set(tooltipSignatures.map(([, signature]) => signature));
+  expect(uniqueSignatures.size, JSON.stringify(tooltipSignatures, null, 2)).toBeGreaterThanOrEqual(8);
 });
 
 test('spinner treatments are structurally distinct across UI styles', async ({ page }) => {
@@ -225,6 +289,47 @@ test('demo component cards keep balanced rows at square and tablet widths', asyn
     expect(rowSpreads.length, `${viewport.width}x${viewport.height} should render multi-card rows`).toBeGreaterThan(0);
     expect(Math.max(...rowSpreads), `${viewport.width}x${viewport.height} row height spreads`).toBeLessThanOrEqual(72);
   }
+});
+
+test('table showcase has readable inset spacing inside its card', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  await expect(page.getByTestId('component-table')).toHaveClass(/demo-table-card/);
+
+  const spacing = await page.getByTestId('component-table').evaluate((card) => {
+    const table = card.querySelector('table');
+    const cardRect = card.getBoundingClientRect();
+    const tableRect = table.getBoundingClientRect();
+    const styles = getComputedStyle(card);
+
+    return {
+      left: Math.round(tableRect.left - cardRect.left),
+      right: Math.round(cardRect.right - tableRect.right),
+      paddingInlineStart: Math.round(parseFloat(styles.paddingInlineStart)),
+      paddingInlineEnd: Math.round(parseFloat(styles.paddingInlineEnd))
+    };
+  });
+
+  expect(spacing.left).toBeGreaterThanOrEqual(12);
+  expect(spacing.right).toBeGreaterThanOrEqual(12);
+  expect(spacing.paddingInlineStart).toBeGreaterThanOrEqual(16);
+  expect(spacing.paddingInlineEnd).toBeGreaterThanOrEqual(16);
+});
+
+test('utility showcase demonstrates distinct utility jobs', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  await expect(page.getByTestId('utility-classes')).toBeVisible();
+  await expect(page.getByTestId('utility-color-grid')).toBeVisible();
+  await expect(page.getByTestId('utility-surface-grid')).toBeVisible();
+  await expect(page.getByTestId('utility-layout-sample')).toBeVisible();
+  await expect(page.getByTestId('utility-color-chip')).toHaveCount(6);
+
+  const utilityText = await page.getByTestId('utility-classes').innerText();
+  expect(utilityText).not.toContain('Primary text utility');
+  expect(utilityText).toContain('Action emphasis');
+  expect(utilityText).toContain('Inset content');
+  expect(utilityText).toContain('Pill shape');
 });
 
 test('neutral demo buttons keep theme text color across styles and modes', async ({ page }) => {

@@ -300,6 +300,16 @@
 .retro-nav-link:hover { color: var(--retro-text); background: var(--retro-surface-soft); }
 .retro-nav-link[aria-current="page"], .retro-nav-link.is-active { color: var(--retro-on-primary); background: var(--retro-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.retro-tooltip, [data-ui="retrofuturism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .6rem .82rem;
+  background: radial-gradient(circle at 20% 20%, rgb(var(--retro-accent-rgb) / .18), transparent 35%), var(--retro-surface-strong);
+  color: var(--retro-text); border: 1px solid rgb(var(--retro-primary-rgb) / .62); border-radius: var(--retro-radius-pill);
+  box-shadow: 0 0 1.2rem rgb(var(--retro-accent-rgb) / var(--retro-glow-alpha)); font-size: .82rem; font-weight: 900; line-height: 1.25;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.retro-tooltip-arrow { inline-size: .58rem; block-size: .58rem; flex: 0 0 auto; background: var(--retro-accent); border-radius: 50%; box-shadow: 0 0 .8rem rgb(var(--retro-accent-rgb) / var(--retro-glow-alpha)); }
+
 .retro-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--retro-surface-soft); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-pill); }
 .retro-progress-bar { height: 100%; width: var(--retro-progress-value, 50%); background: linear-gradient(90deg, var(--retro-primary), var(--retro-accent)); border-radius: inherit; }
 

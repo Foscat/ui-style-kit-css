@@ -300,6 +300,15 @@
 .max-nav-link:hover { color: var(--max-text); background: var(--max-surface-soft); }
 .max-nav-link[aria-current="page"], .max-nav-link.is-active { color: var(--max-on-primary); background: var(--max-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.max-tooltip, [data-ui="maximalist"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .6rem .85rem;
+  background: linear-gradient(135deg, var(--max-primary), var(--max-accent)); color: var(--max-on-primary);
+  border: 3px solid var(--max-border); border-radius: var(--max-radius-pill); box-shadow: .32rem .32rem 0 rgb(var(--max-secondary-rgb) / .68);
+  font-size: .82rem; font-weight: 950; line-height: 1.25; text-transform: uppercase; letter-spacing: .04em;
+}
+.max-tooltip-arrow { inline-size: .62rem; block-size: .62rem; flex: 0 0 auto; background: var(--max-warning); border: 2px solid var(--max-border); transform: rotate(45deg); }
+
 .max-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--max-surface-soft); border: 3px solid var(--max-border); border-radius: var(--max-radius-pill); }
 .max-progress-bar { height: 100%; width: var(--max-progress-value, 50%); background: linear-gradient(90deg, var(--max-primary), var(--max-accent)); border-radius: inherit; }
 

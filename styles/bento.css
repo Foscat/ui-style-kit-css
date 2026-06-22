@@ -300,6 +300,15 @@
 .bento-nav-link:hover { color: var(--bento-text); background: var(--bento-surface-soft); }
 .bento-nav-link[aria-current="page"], .bento-nav-link.is-active { color: var(--bento-on-primary); background: var(--bento-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.bento-tooltip, [data-ui="bento"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .6rem .8rem;
+  background: linear-gradient(135deg, rgb(var(--bento-primary-rgb) / .18), transparent 52%), var(--bento-surface-strong);
+  color: var(--bento-text); border: 1px solid rgb(var(--bento-border-rgb) / .7); border-radius: var(--bento-radius-sm);
+  box-shadow: 0 .65rem 1.35rem rgb(0 0 0 / var(--bento-shadow-alpha)); font-size: .82rem; font-weight: 850; line-height: 1.35;
+}
+.bento-tooltip-arrow { inline-size: .6rem; block-size: .6rem; flex: 0 0 auto; background: var(--bento-primary); border-radius: var(--bento-radius-xs); transform: rotate(45deg); }
+
 .bento-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--bento-surface-soft); border: 1px solid var(--bento-border); border-radius: var(--bento-radius-pill); }
 .bento-progress-bar { height: 100%; width: var(--bento-progress-value, 50%); background: linear-gradient(90deg, var(--bento-primary), var(--bento-accent)); border-radius: inherit; }
 

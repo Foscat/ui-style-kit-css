@@ -300,6 +300,15 @@
 .neo-nav-link:hover { color: var(--neo-text); background: var(--neo-surface-soft); }
 .neo-nav-link[aria-current="page"], .neo-nav-link.is-active { color: var(--neo-on-primary); background: var(--neo-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.neo-tooltip, [data-ui="neumorphism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .62rem .86rem;
+  background: var(--neo-surface); color: var(--neo-text); border: 1px solid transparent; border-radius: var(--neo-radius-pill);
+  box-shadow: -.35rem -.35rem .8rem rgb(255 255 255 / .28), .35rem .35rem .8rem rgb(0 0 0 / .18);
+  font-size: .82rem; font-weight: 850; line-height: 1.35;
+}
+.neo-tooltip-arrow { inline-size: .58rem; block-size: .58rem; flex: 0 0 auto; background: var(--neo-surface); border-radius: 50%; box-shadow: inset .12rem .12rem .24rem rgb(0 0 0 / .12); }
+
 .neo-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--neo-surface-soft); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-pill); }
 .neo-progress-bar { height: 100%; width: var(--neo-progress-value, 50%); background: linear-gradient(90deg, var(--neo-primary), var(--neo-accent)); border-radius: inherit; }
 

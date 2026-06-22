@@ -373,6 +373,14 @@
 .brutal-nav-link:hover { border-color: var(--brutal-border); background: var(--brutal-surface-soft); }
 .brutal-nav-link.is-active, .brutal-nav-link[aria-current="page"] { background: var(--brutal-primary); color: var(--brutal-on-primary); border-color: var(--brutal-border); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.brutal-tooltip, [data-ui="brutalism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .58rem .78rem;
+  background: var(--brutal-warning); color: #111; border: 3px solid var(--brutal-border); border-radius: 0; box-shadow: .28rem .28rem 0 var(--brutal-primary);
+  font-size: .82rem; font-weight: 950; line-height: 1.2; text-transform: uppercase; letter-spacing: .04em;
+}
+.brutal-tooltip-arrow { inline-size: .6rem; block-size: .6rem; flex: 0 0 auto; background: var(--brutal-danger); border: 3px solid var(--brutal-border); transform: rotate(45deg); }
+
 .brutal-progress { width: 100%; height: 1rem; background: var(--brutal-surface-soft); border: 3px solid var(--brutal-border); }
 .brutal-progress-bar { height: 100%; width: var(--brutal-progress-value, 50%); background: var(--brutal-primary); }
 .brutal-alert { padding: var(--brutal-space-4); background: var(--brutal-surface-strong); border: 3px solid var(--brutal-border); box-shadow: 8px 8px 0 var(--brutal-accent); }
