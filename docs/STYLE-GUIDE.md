@@ -18,7 +18,6 @@ All styles share the same 10 color schemes through `styles/theme-colors.css`, so
 
 Use `data-mode="contrast"` for high-contrast variants and pair it with semantic HTML for best accessibility outcomes.
 
-
 ## Visual regression baseline
 
 The repository includes optional Playwright visual smoke checks:

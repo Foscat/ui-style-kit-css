@@ -186,7 +186,6 @@ CSS improves accessibility presentation, but it cannot guarantee accessibility b
 
 Semantic text utilities such as `saas-text-primary`, `saas-text-warning`, and `saas-text-danger` use the active theme palette directly. Filled UI such as buttons, badges, and busy states use compact `on-*` aliases like `--saas-on-primary` and `--saas-on-danger`.
 
-
 ## Loading states
 
 Every style includes theme-driven spinner utilities:

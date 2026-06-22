@@ -42,7 +42,6 @@ The following are present in `minimal-saas`, `bento`, `maximalist`, `bauhaus`, `
 
 Use the matching prefix (`saas-`, `bento-`, `retro-`, etc.) for the selected `data-ui`.
 
-
 ## Loading states
 
 Spinner utilities are visual indicators only. Use accessible names or status text when loading state is meaningful:
@@ -53,7 +52,6 @@ Spinner utilities are visual indicators only. Use accessible names or status tex
 ```
 
 `aria-busy="true"` on themed buttons adds an inline spinner automatically. Remove the attribute when the action completes.
-
 
 ## Native element coverage
 

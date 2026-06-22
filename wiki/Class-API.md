@@ -85,7 +85,6 @@ These suffixes exist in every style file.
 - `spinner-sm`
 - `spinner-lg`
 
-
 ## Loading API
 
 Every style has prefixed spinner utilities:
