@@ -27,6 +27,16 @@ const stylePresets = [
 ];
 
 const displayModes = ['light', 'dark', 'contrast'];
+const interactableSelector = [
+  'a[href]',
+  'button:not(:disabled)',
+  'input:not([type="hidden"]):not(:disabled)',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
+  'summary',
+  'audio[controls]',
+  'video[controls]'
+].join(',');
 
 test('demo loads with default theme settings', async ({ page }) => {
   await page.goto(demoUrl);
@@ -77,6 +87,45 @@ test('demo starts with the interactive surface bridge detached and can attach it
   await expect(stylesheet).toHaveAttribute('href', 'dist/ui-style-kit.with-bridge.css');
   await expect(page.getByTestId('bridge-status')).toContainText('Attached');
   await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
+});
+
+test('attached bridge wires every enabled interactable element to interactive surface hooks', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const detachedHookCount = await page.evaluate((selector) => [...document.querySelectorAll(selector)]
+    .filter((element) => element.classList.contains('interactive-surface')).length, interactableSelector);
+  expect(detachedHookCount).toBe(0);
+
+  await page.locator('#bridgeToggle').check();
+  await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
+
+  const bridgeCoverage = await page.evaluate((selector) => {
+    const elements = [...document.querySelectorAll(selector)].filter((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+    });
+    const missingHooks = elements
+      .filter((element) => !element.classList.contains('interactive-surface'))
+      .map((element) => `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}`);
+    const missingVariants = elements
+      .filter((element) => !element.dataset.surfaceVariant)
+      .map((element) => `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}`);
+    const missingBridgeTokens = elements
+      .filter((element) => !getComputedStyle(element).getPropertyValue('--interactive-surface-bg').trim())
+      .map((element) => `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}`);
+
+    return {
+      total: elements.length,
+      missingHooks,
+      missingVariants,
+      missingBridgeTokens
+    };
+  }, interactableSelector);
+
+  expect(bridgeCoverage.total).toBeGreaterThan(40);
+  expect(bridgeCoverage.missingHooks).toEqual([]);
+  expect(bridgeCoverage.missingVariants).toEqual([]);
+  expect(bridgeCoverage.missingBridgeTokens).toEqual([]);
 });
 
 test('demo exposes the styled element and state showcase', async ({ page }) => {

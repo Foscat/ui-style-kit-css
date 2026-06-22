@@ -287,6 +287,16 @@
     const styleKitStylesheet = document.getElementById("styleKitStylesheet");
     const main = document.getElementById("main");
     const skip = document.getElementById("skip");
+    const interactiveSurfaceSelector = [
+      "a[href]",
+      "button:not(:disabled)",
+      "input:not([type='hidden']):not(:disabled)",
+      "select:not(:disabled)",
+      "textarea:not(:disabled)",
+      "summary",
+      "audio[controls]",
+      "video[controls]"
+    ].join(",");
 
     function renderChoiceControls(ui, p) {
       if (!stylesWithCustomChoices.has(ui)) {
@@ -340,6 +350,33 @@
       return extras[ui] || `<div class="${p}-well">Core surfaces carry this style preset.</div>`;
     }
 
+    function getSurfaceVariant(element) {
+      const className = element.getAttribute("class") || "";
+      const inputType = element.getAttribute("type");
+
+      if (element.matches("[aria-current='page'], [aria-pressed='true'], .is-active")) return "primary";
+      if (className.includes("-button-danger") || inputType === "reset") return "danger";
+      if (className.includes("-button-secondary")) return "secondary";
+      if (className.includes("-button-primary") || inputType === "submit" || inputType === "button") return "primary";
+
+      return "subtle";
+    }
+
+    function syncInteractiveSurfaceHooks(isAttached) {
+      const elements = document.querySelectorAll(interactiveSurfaceSelector);
+
+      elements.forEach((element) => {
+        if (!isAttached) {
+          element.classList.remove("interactive-surface");
+          delete element.dataset.surfaceVariant;
+          return;
+        }
+
+        element.classList.add("interactive-surface");
+        element.dataset.surfaceVariant = getSurfaceVariant(element);
+      });
+    }
+
     function updateBridge() {
       const isAttached = bridgeToggle.checked;
 
@@ -348,6 +385,8 @@
       bridgeStatus.textContent = isAttached
         ? "Attached - using with-bridge bundle"
         : "Detached - default bundle";
+      // The bridge stylesheet supplies tokens; this demo adds the hook expected by interactive-surface-css.
+      syncInteractiveSurfaceHooks(isAttached);
     }
 
     function drawDemoCanvas() {
