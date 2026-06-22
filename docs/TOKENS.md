@@ -268,7 +268,7 @@ Filled UI uses the matching `on-*` alias:
 }
 ```
 
-## 2.0.0 compatibility notes
+## 2.x compatibility notes
 
 - Component-facing prefixed tokens remain available.
 - Concrete color authoring moved to `--usk-*` shared roles.

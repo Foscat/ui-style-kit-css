@@ -2,7 +2,7 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
-## [v2.0.0] - 2026-06-22
+## [2.0.1] - 2026-06-22
 
 ### Added
 
@@ -12,6 +12,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ### Changed
 
+- Aligned package metadata, generated dist banners, and release documentation to publish from the `v2.0.1` tag after the previous release tag was retired.
 - Moved concrete color scheme values into the shared `styles/theme-colors.css` layer.
 - Updated all UI systems to alias shared `--usk-*` RGB roles back to their public style prefixes.
 - Reduced generated bundle size by removing duplicated per-UI color scheme blocks from `dist`.

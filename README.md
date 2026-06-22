@@ -6,7 +6,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.0.0` is the current major release. It centralizes color schemes in `styles/theme-colors.css`, centralizes native HTML fallback styling in `styles/native-elements.css`, keeps style-specific component APIs prefix-bound, and ships the Interactive Surface bridge as an opt-in import.
+`v2.0.1` is the current v2 release. It centralizes color schemes in `styles/theme-colors.css`, centralizes native HTML fallback styling in `styles/native-elements.css`, keeps style-specific component APIs prefix-bound, and ships the Interactive Surface bridge as an opt-in import.
 
 ## Features
 
@@ -41,7 +41,7 @@ Use a single style import for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.0`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+In `v2.0.1`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -100,7 +100,7 @@ After publishing to NPM:
 For production, pin a version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.0/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.1/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -301,9 +301,9 @@ npm run pack:dry-run
 
 `npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Optional Playwright visual smoke tests are available through `npm run test:visual` after installing dev dependencies.
 
-## v2.0.0 Migration Notes
+## v2.0.1 Migration Notes
 
-The `v2.0.0` release removes duplicated per-UI color-scheme blocks. Color schemes now live in `theme-colors.css` as shared `--usk-*` roles, native HTML fallback styling lives in `native-elements.css`, and each UI style aliases those shared roles back to its prefix.
+The `v2.0.1` release line removes duplicated per-UI color-scheme blocks. Color schemes now live in `theme-colors.css` as shared `--usk-*` roles, native HTML fallback styling lives in `native-elements.css`, and each UI style aliases those shared roles back to its prefix.
 
 - Use `--usk-*-rgb` when defining or overriding a color scheme.
 - Continue using prefixed functional tokens such as `--saas-primary`, `--neo-card-bg`, and `--rg-on-primary` inside components.

@@ -14,7 +14,7 @@ Recommended for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.0`, standalone style files import `theme-colors.css` and `native-elements.css` internally. If your CSS pipeline does not follow `@import`, import the shared layers first:
+In `v2.0.1`, standalone style files import `theme-colors.css` and `native-elements.css` internally. If your CSS pipeline does not follow `@import`, import the shared layers first:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -55,7 +55,7 @@ import "interactive-surface-css/interactive-surface.css";
 import "ui-style-kit-css/with-bridge.css";
 ```
 
-The bridge remains opt-in for `v2.0.0`. Use `.interactive-surface` on interactable elements with `data-surface-variant` and `data-surface-level="1"`, `"2"`, or `"3"` when the bridge is attached.
+The bridge remains opt-in for `v2.0.1`. Use `.interactive-surface` on interactable elements with `data-surface-variant` and `data-surface-level="1"`, `"2"`, or `"3"` when the bridge is attached.
 
 ## Browser / CDN Usage
 

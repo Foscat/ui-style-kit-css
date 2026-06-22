@@ -105,9 +105,9 @@ Use scoped custom properties instead of editing classes directly:
 
 When overriding a filled color substantially, review the matching shared `--usk-*-text-rgb` role and the prefixed `on-*` alias used over that filled surface. For normal text, prefer `--<prefix>-text`, `--<prefix>-text-muted`, and `--<prefix>-link`.
 
-## v2.0.0 Migration
+## v2.0.1 Migration
 
-Before `v2.0.0`, each UI file repeated concrete color values under selectors such as `[data-ui="minimal-saas"][data-theme="arctic-indigo"][data-mode="light"]`. In `v2.0.0`, those values live once in `theme-colors.css` under `:where([data-ui][data-theme="arctic-indigo"][data-mode="light"])`, and native selectors live once in `native-elements.css`.
+Before the v2 token model, each UI file repeated concrete color values under selectors such as `[data-ui="minimal-saas"][data-theme="arctic-indigo"][data-mode="light"]`. In `v2.0.1`, those values live once in `theme-colors.css` under `:where([data-ui][data-theme="arctic-indigo"][data-mode="light"])`, and native selectors live once in `native-elements.css`.
 
 - Add or change schemes with `--usk-*` roles.
 - Keep component code on prefixed functional tokens.
