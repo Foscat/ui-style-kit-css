@@ -4,6 +4,10 @@
 
 It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior.
 
+## Current Release
+
+`v2.0.0` is the current major release. It centralizes color schemes in `styles/theme-colors.css`, centralizes native HTML fallback styling in `styles/native-elements.css`, keeps style-specific component APIs prefix-bound, and ships the Interactive Surface bridge as an opt-in import.
+
 ## Features
 
 - 11 UI style systems
@@ -37,7 +41,7 @@ Use a single style import for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In 2.0.0, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+In `v2.0.0`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -267,6 +271,7 @@ ui-style-kit-css/
     ui-style-kit.with-bridge.min.css
   styles/
     theme-colors.css
+    native-elements.css
     minimal-saas.css
     bento.css
     maximalist.css
@@ -296,13 +301,13 @@ npm run pack:dry-run
 
 `npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Optional Playwright visual smoke tests are available through `npm run test:visual` after installing dev dependencies.
 
-## 2.0.0 Migration Notes
+## v2.0.0 Migration Notes
 
-The 2.0.0 release removes duplicated per-UI color-scheme blocks. Color schemes now live in `theme-colors.css` as shared `--usk-*` roles, and each UI style aliases those roles back to its prefix.
+The `v2.0.0` release removes duplicated per-UI color-scheme blocks. Color schemes now live in `theme-colors.css` as shared `--usk-*` roles, native HTML fallback styling lives in `native-elements.css`, and each UI style aliases those shared roles back to its prefix.
 
 - Use `--usk-*-rgb` when defining or overriding a color scheme.
 - Continue using prefixed functional tokens such as `--saas-primary`, `--neo-card-bg`, and `--rg-on-primary` inside components.
-- Import `ui-style-kit-css/theme-colors.css` before standalone style files if your bundler does not follow CSS `@import`.
+- Import `ui-style-kit-css/theme-colors.css` and `ui-style-kit-css/native-elements.css` before standalone style files if your bundler does not follow CSS `@import`.
 - Keep using `ui-style-kit-css/interactive-surface-bridge` or `ui-style-kit-css/with-bridge.css` for the opt-in bridge. The bridge now inherits shared `--usk-*` roles and exposes three `data-surface-level` visual states while the default bundle remains bridge-free.
 
 ## License

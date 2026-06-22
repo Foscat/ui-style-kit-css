@@ -4,6 +4,8 @@ This library ships 11 style systems with a shared theme/mode model.
 
 All UI systems use the same color scheme layer: `styles/theme-colors.css`. Individual UI files define structure, texture, typography, component treatment, and prefixed aliases for the shared `--usk-*` roles.
 
+In `v2.0.0`, all UI systems also share `styles/native-elements.css` for native HTML selectors. Each preset controls the final treatment through `--usk-native-*` token mappings instead of repeating the same selector coverage.
+
 ## Coverage Tiers
 
 - Full utility tier: denser utility and a11y helper set.
@@ -35,6 +37,7 @@ All 11 styles implement:
 ## File Locations
 
 - `styles/theme-colors.css`
+- `styles/native-elements.css`
 - `styles/minimal-saas.css`
 - `styles/bento.css`
 - `styles/maximalist.css`
@@ -46,3 +49,4 @@ All 11 styles implement:
 - `styles/cyberpunk.css`
 - `styles/y2k.css`
 - `styles/retro-glass.css`
+- `styles/interactive-surface-bridge.css`

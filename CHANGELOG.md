@@ -2,7 +2,7 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
-## Unreleased
+## [v2.0.0] - 2026-06-22
 
 ### Added
 
@@ -12,26 +12,21 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ### Changed
 
+- Moved concrete color scheme values into the shared `styles/theme-colors.css` layer.
+- Updated all UI systems to alias shared `--usk-*` RGB roles back to their public style prefixes.
+- Reduced generated bundle size by removing duplicated per-UI color scheme blocks from `dist`.
+- Kept prefixed functional tokens such as `--saas-primary`, `--neo-card-bg`, and `--rg-on-primary` for component styling.
 - Refactored the Interactive Surface bridge to inherit shared `--usk-*` roles, expose visible hover/active/focus state layers, and support `data-surface-level="1"`, `"2"`, and `"3"` surface depth hooks.
 - Moved the bridge attach switch into the demo bridge section so the opt-in behavior is documented where it is exercised.
 - Refactored native HTML fallback rules into one shared `styles/native-elements.css` layer while each preset now supplies only visual token mappings through `--usk-native-*`.
 - Polished the demo component layout at desktop, tablet, and square viewports with denser controls, richer badge examples, padded native controls, and balanced showcase rows.
 - Moved the demo Usage section to match the primary navigation order and tightened the mobile controls showcase into a readable single-column flow.
-
-## [2.0.0] - 2026-06-20
-
-### Changed
-
-- Moved concrete color scheme values into the shared `styles/theme-colors.css` layer.
-- Updated all UI systems to alias shared `--usk-*` RGB roles back to their public style prefixes.
-- Reduced generated bundle size by removing duplicated per-UI color scheme blocks from `dist`.
-- Kept prefixed functional tokens such as `--saas-primary`, `--neo-card-bg`, and `--rg-on-primary` for component styling.
 - Updated the Interactive Surface bridge docs to keep the bridge opt-in while `interactive-surface-css` is revised separately.
 
 ### Breaking
 
 - Concrete scheme overrides should now target shared `--usk-*-rgb` roles instead of redefining one copy per UI prefix.
-- Standalone style imports rely on `styles/theme-colors.css`; import `ui-style-kit-css/theme-colors.css` first if your CSS pipeline does not resolve `@import`.
+- Standalone style imports rely on `styles/theme-colors.css` and `styles/native-elements.css`; import those shared layers first if your CSS pipeline does not resolve `@import`.
 
 ## [1.2.2] - 2026-06-05
 

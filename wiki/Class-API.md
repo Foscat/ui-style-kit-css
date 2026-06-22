@@ -84,6 +84,8 @@ These suffixes exist in every style file.
 - `loading-spinner`
 - `spinner-sm`
 - `spinner-lg`
+- `tooltip`
+- `tooltip-arrow`
 
 ## Loading API
 
@@ -96,6 +98,19 @@ Every style has prefixed spinner utilities:
 ```
 
 Inside a `[data-ui="..."]` scope, generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` elements also receive theme-aware spinner styling.
+
+## Tooltip API
+
+Every style has prefixed tooltip utilities plus generic scoped hooks:
+
+```html
+<span class="saas-tooltip" role="tooltip">
+  Helpful context
+  <span class="saas-tooltip-arrow" aria-hidden="true"></span>
+</span>
+```
+
+Inside a `[data-ui="..."]` scope, generic `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]` elements inherit the selected UI system.
 
 ## Shared State Class
 
