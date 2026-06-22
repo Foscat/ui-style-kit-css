@@ -1,0 +1,374 @@
+/* =========================================================
+   UI Style Kit CSS - Shared Native Element Layer
+
+   Native fallback selectors are shared so UI presets can focus
+   on visual identity while inheriting the same semantic coverage.
+   Presets map --usk-native-* tokens to their public prefix tokens.
+========================================================= */
+
+@layer ui-style-kit.native_elements {
+[data-ui][data-theme][data-mode] {
+  --usk-native-surface: rgb(var(--usk-surface-rgb));
+  --usk-native-surface-strong: rgb(var(--usk-surface-strong-rgb));
+  --usk-native-surface-soft: rgb(var(--usk-surface-soft-rgb));
+  --usk-native-card-bg: var(--usk-native-surface);
+  --usk-native-control-bg: var(--usk-native-surface-soft);
+  --usk-native-text: rgb(var(--usk-text-rgb));
+  --usk-native-text-muted: rgb(var(--usk-text-muted-rgb));
+  --usk-native-border: rgb(var(--usk-border-rgb));
+  --usk-native-primary: rgb(var(--usk-primary-rgb));
+  --usk-native-primary-hover: rgb(var(--usk-primary-hover-rgb));
+  --usk-native-on-primary: rgb(var(--usk-primary-text-rgb));
+  --usk-native-focus: rgb(var(--usk-focus-rgb));
+  --usk-native-success: rgb(var(--usk-success-rgb));
+  --usk-native-warning: rgb(var(--usk-warning-rgb));
+  --usk-native-danger: rgb(var(--usk-danger-rgb));
+  --usk-native-link: rgb(var(--usk-link-rgb));
+  --usk-native-font-body: inherit;
+  --usk-native-font-heading: inherit;
+  --usk-native-font-control: inherit;
+  --usk-native-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --usk-native-radius-sm: .5rem;
+  --usk-native-radius: .75rem;
+  --usk-native-radius-lg: 1rem;
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: 1rem;
+  --usk-native-control-padding-block: .72rem;
+  --usk-native-control-padding-inline: .95rem;
+  --usk-native-shadow: none;
+  --usk-native-shadow-md: var(--usk-native-shadow);
+  --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+}
+
+[data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--usk-native-text);
+  font-family: var(--usk-native-font-heading);
+  line-height: 1.15;
+  margin: 0 0 .65em;
+  text-wrap: balance;
+}
+
+[data-ui][data-theme][data-mode] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
+[data-ui][data-theme][data-mode] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
+[data-ui][data-theme][data-mode] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
+
+[data-ui][data-theme][data-mode] :where(p) {
+  margin: 0 0 1rem;
+  color: var(--usk-native-text-muted);
+  line-height: 1.7;
+}
+
+[data-ui][data-theme][data-mode] :where(a) {
+  color: var(--usk-native-link);
+  text-decoration-thickness: .08em;
+  text-underline-offset: .18em;
+}
+
+[data-ui][data-theme][data-mode] :where(a:hover) { color: var(--usk-native-primary-hover); }
+
+[data-ui][data-theme][data-mode] :where(ul, ol, menu) {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+  color: var(--usk-native-text-muted);
+}
+
+[data-ui][data-theme][data-mode] :where(li) { margin-block: .25rem; }
+
+[data-ui][data-theme][data-mode] :where(blockquote) {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  color: var(--usk-native-text);
+  background: var(--usk-native-surface-soft);
+  border-left: .35rem solid var(--usk-native-primary);
+  border-radius: var(--usk-native-radius);
+}
+
+[data-ui][data-theme][data-mode] :where(code, kbd, samp) {
+  padding: .15em .35em;
+  color: var(--usk-native-text);
+  background: var(--usk-native-surface-soft);
+  border: var(--usk-native-border-width) solid color-mix(in srgb, var(--usk-native-border) 62%, transparent);
+  border-radius: var(--usk-native-radius-sm);
+  font-family: var(--usk-native-font-mono);
+  font-size: .92em;
+}
+
+[data-ui][data-theme][data-mode] :where(pre) {
+  overflow: auto;
+  margin: 1rem 0;
+  padding: 1rem;
+  color: var(--usk-native-text);
+  background: var(--usk-native-surface-soft);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius);
+}
+
+[data-ui][data-theme][data-mode] :where(pre code) {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+[data-ui][data-theme][data-mode] :where(hr) {
+  height: 1px;
+  margin: 2rem 0;
+  background: var(--usk-native-border);
+  border: 0;
+}
+
+[data-ui][data-theme][data-mode] :where(mark) {
+  padding-inline: .15em;
+  color: var(--usk-native-text);
+  background: color-mix(in srgb, var(--usk-native-warning) 32%, transparent);
+  border-radius: .2em;
+}
+
+[data-ui][data-theme][data-mode] :where(small, sub, sup, rt, rp) { color: var(--usk-native-text-muted); }
+[data-ui][data-theme][data-mode] :where(rt, rp) { font-size: .72em; }
+
+[data-ui][data-theme][data-mode] :where(abbr[title]) {
+  text-decoration: underline dotted var(--usk-native-primary);
+  text-underline-offset: .18em;
+  cursor: help;
+}
+
+[data-ui][data-theme][data-mode] :where(img, picture, video, canvas, svg, iframe, audio, object, embed, math) {
+  max-width: 100%;
+}
+
+[data-ui][data-theme][data-mode] :where(img, video, canvas, svg, iframe) { height: auto; }
+
+[data-ui][data-theme][data-mode] :where(figure) { margin: 1.25rem 0; }
+
+[data-ui][data-theme][data-mode] :where(figcaption) {
+  margin-top: .5rem;
+  color: var(--usk-native-text-muted);
+  font-size: .9rem;
+}
+
+[data-ui][data-theme][data-mode] :where(fieldset) {
+  display: grid;
+  gap: .9rem;
+  min-inline-size: 0;
+  margin: 0 0 1rem;
+  padding: var(--usk-native-panel-padding);
+  background: color-mix(in srgb, var(--usk-native-card-bg) 88%, transparent);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius);
+}
+
+[data-ui][data-theme][data-mode] :where(legend) {
+  padding-inline: .35rem;
+  color: var(--usk-native-text);
+  font-weight: 900;
+}
+
+[data-ui][data-theme][data-mode] :where(label) {
+  color: var(--usk-native-text);
+  font-weight: 750;
+}
+
+[data-ui][data-theme][data-mode] :where(label:has(input), label:has(select), label:has(textarea)) {
+  display: grid;
+  gap: var(--usk-native-field-gap);
+  align-content: start;
+}
+
+[data-ui][data-theme][data-mode] :where(label:has(input[type="checkbox"]), label:has(input[type="radio"])) {
+  display: inline-flex;
+  gap: var(--usk-native-field-gap);
+  align-items: center;
+}
+
+[data-ui][data-theme][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--usk-native-control-padding-block) var(--usk-native-control-padding-inline);
+  color: var(--usk-native-text);
+  background: var(--usk-native-control-bg);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius);
+  font: inherit;
+}
+
+[data-ui][data-theme][data-mode] :where(textarea) {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+[data-ui][data-theme][data-mode] :where(input, textarea, select, button) { font: inherit; }
+
+[data-ui][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  min-height: 2.75rem;
+  padding: .7rem 1rem;
+  color: var(--usk-native-on-primary);
+  background: var(--usk-native-primary);
+  border: var(--usk-native-border-width) solid var(--usk-native-primary);
+  border-radius: var(--usk-native-radius);
+  font-family: var(--usk-native-font-control);
+  font-weight: 850;
+  cursor: pointer;
+}
+
+[data-ui][data-theme][data-mode] :where(button:not([class]):hover, input[type="button"]:not([class]):hover, input[type="submit"]:not([class]):hover, input[type="reset"]:not([class]):hover) {
+  background: var(--usk-native-primary-hover);
+  border-color: var(--usk-native-primary-hover);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"]) {
+  width: 100%;
+  accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="color"]) {
+  inline-size: 3rem;
+  block-size: 2.4rem;
+  padding: .2rem;
+  background: var(--usk-native-control-bg);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius-sm);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="file"]) { color: var(--usk-native-text-muted); }
+
+[data-ui][data-theme][data-mode] :where(input[type="file"]::file-selector-button) {
+  margin-inline-end: .75rem;
+  padding: .55rem .8rem;
+  color: var(--usk-native-on-primary);
+  background: var(--usk-native-primary);
+  border: var(--usk-native-border-width) solid var(--usk-native-primary);
+  border-radius: var(--usk-native-radius-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+[data-ui][data-theme][data-mode] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+[data-ui][data-theme][data-mode] :where(input:invalid, textarea:invalid, select:invalid, [aria-invalid="true"]) {
+  border-color: var(--usk-native-danger);
+}
+
+[data-ui][data-theme][data-mode] :where(table) {
+  width: 100%;
+  margin: 1rem 0;
+  overflow: hidden;
+  background: var(--usk-native-surface);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius);
+  border-collapse: collapse;
+}
+
+[data-ui][data-theme][data-mode] :where(caption) {
+  caption-side: bottom;
+  padding: .75rem;
+  color: var(--usk-native-text-muted);
+  font-size: .9rem;
+}
+
+[data-ui][data-theme][data-mode] :where(th, td) {
+  padding: .8rem .9rem;
+  text-align: left;
+  border-bottom: var(--usk-native-border-width) solid var(--usk-native-border);
+}
+
+[data-ui][data-theme][data-mode] :where(th) {
+  color: var(--usk-native-text);
+  background: color-mix(in srgb, var(--usk-native-primary) 10%, transparent);
+}
+
+[data-ui][data-theme][data-mode] :where(td) { color: var(--usk-native-text-muted); }
+
+[data-ui][data-theme][data-mode] :where(details) {
+  margin: 1rem 0;
+  padding: .9rem 1rem;
+  color: var(--usk-native-text);
+  background: var(--usk-native-surface);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius);
+}
+
+[data-ui][data-theme][data-mode] :where(summary) {
+  color: var(--usk-native-text);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+[data-ui][data-theme][data-mode] :where(dialog) {
+  max-width: min(92vw, 42rem);
+  padding: 0;
+  color: var(--usk-native-text);
+  background: var(--usk-native-surface-strong);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius-lg);
+  box-shadow: var(--usk-native-shadow-md), 0 30px 80px rgb(0 0 0 / .42);
+}
+
+[data-ui][data-theme][data-mode] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
+
+[data-ui][data-theme][data-mode] :where(progress, meter) {
+  width: 100%;
+  min-height: .9rem;
+  accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(main, section, header, footer, nav, article, aside, address) {
+  color: var(--usk-native-text);
+}
+
+[data-ui][data-theme][data-mode] :where(article, aside) {
+  padding: var(--usk-native-panel-padding);
+  color: var(--usk-native-text);
+  background: var(--usk-native-card-bg);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: var(--usk-native-radius-lg);
+  box-shadow: var(--usk-native-shadow);
+}
+
+[data-ui][data-theme][data-mode] :where(dl) {
+  margin: 0 0 1rem;
+  color: var(--usk-native-text-muted);
+}
+
+[data-ui][data-theme][data-mode] :where(dt) {
+  color: var(--usk-native-text);
+  font-weight: 900;
+}
+
+[data-ui][data-theme][data-mode] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
+[data-ui][data-theme][data-mode] :where(strong, b) { color: var(--usk-native-text); font-weight: 900; }
+[data-ui][data-theme][data-mode] :where(em, i, cite, var, q) { color: var(--usk-native-text); }
+[data-ui][data-theme][data-mode] :where(ins) { color: var(--usk-native-text); text-decoration-color: var(--usk-native-success); }
+[data-ui][data-theme][data-mode] :where(del, s) { color: var(--usk-native-text); text-decoration-color: var(--usk-native-danger); }
+[data-ui][data-theme][data-mode] :where(output) { color: var(--usk-native-text); font-weight: 800; }
+[data-ui][data-theme][data-mode] :where(optgroup, option) { color: var(--usk-native-text); background: var(--usk-native-surface); }
+[data-ui][data-theme][data-mode] :where(time, data, dfn, ruby) { color: var(--usk-native-text); }
+[data-ui][data-theme][data-mode] :where(search) { display: block; color: var(--usk-native-text); }
+
+[data-ui][data-theme][data-mode] :where(:focus-visible) {
+  outline: 3px solid var(--usk-native-focus);
+  outline-offset: 3px;
+  box-shadow: var(--usk-native-focus-ring);
+}
+
+[data-ui][data-theme][data-mode] :where(:target) {
+  scroll-margin-top: 6rem;
+  outline: 3px solid var(--usk-native-focus);
+  outline-offset: .35rem;
+}
+
+[data-ui][data-theme][data-mode] :where([aria-current="page"]) { font-weight: 900; }
+[data-ui][data-theme][data-mode] :where([aria-busy="true"]) { cursor: progress; }
+[data-ui][data-theme][data-mode] :where([hidden]) { display: none !important; }
+[data-ui][data-theme][data-mode] ::selection { color: var(--usk-native-on-primary); background: var(--usk-native-primary); }
+}

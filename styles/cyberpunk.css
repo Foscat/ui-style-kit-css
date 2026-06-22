@@ -13,6 +13,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.cyberpunk {
 :root {
@@ -101,6 +102,38 @@
   --cyber-warning-text-rgb: var(--usk-warning-text-rgb);
   --cyber-danger-text-rgb: var(--usk-danger-text-rgb);
   --cyber-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--cyber-surface);
+  --usk-native-surface-strong: var(--cyber-surface-strong);
+  --usk-native-surface-soft: var(--cyber-surface-soft);
+  --usk-native-card-bg: var(--cyber-card-bg);
+  --usk-native-control-bg: var(--cyber-control-bg);
+  --usk-native-text: var(--cyber-text);
+  --usk-native-text-muted: var(--cyber-text-muted);
+  --usk-native-border: var(--cyber-border);
+  --usk-native-primary: var(--cyber-primary);
+  --usk-native-primary-hover: var(--cyber-primary-hover);
+  --usk-native-on-primary: var(--cyber-on-primary);
+  --usk-native-focus: var(--cyber-focus);
+  --usk-native-success: var(--cyber-success);
+  --usk-native-warning: var(--cyber-warning);
+  --usk-native-danger: var(--cyber-danger);
+  --usk-native-link: var(--cyber-link);
+  --usk-native-font-body: var(--cyber-font-body);
+  --usk-native-font-heading: var(--cyber-font-heading);
+  --usk-native-font-control: var(--cyber-font-control);
+  --usk-native-font-mono: var(--cyber-font-mono);
+  --usk-native-radius-sm: var(--cyber-radius-sm);
+  --usk-native-radius: var(--cyber-radius-md);
+  --usk-native-radius-lg: var(--cyber-radius-lg);
+  --usk-native-shadow: var(--cyber-shadow-sm, none);
+  --usk-native-shadow-md: var(--cyber-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--cyber-focus-ring, 0 0 0 3px rgb(var(--cyber-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--cyber-space-5);
+  --usk-native-shadow: 0 0 18px rgb(var(--cyber-primary-rgb) / .16);
+  --usk-native-focus-ring: 0 0 0 2px rgb(var(--cyber-focus-rgb) / .24), 0 0 24px rgb(var(--cyber-focus-rgb) / .24);
   --cyber-bg: rgb(var(--cyber-bg-rgb));
   --cyber-surface: rgb(var(--cyber-surface-rgb) / var(--cyber-panel-alpha));
   --cyber-surface-strong: rgb(var(--cyber-surface-strong-rgb) / var(--cyber-panel-strong-alpha));
@@ -285,90 +318,6 @@
 .cyber-toolbar, .cyber-table-wrap { background: var(--cyber-control-bg); }
 .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button { background: var(--cyber-control-bg); }
 .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link { font-family: var(--cyber-font-control); }
-
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-.cyber-sr-only,
-.cyber-visually-hidden { position: absolute !important; inline-size: 1px !important; block-size: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
-.cyber-skip-link { position: fixed; inset-block-start: 1rem; inset-inline-start: 1rem; z-index: 10000; transform: translateY(-150%); padding: .75rem 1rem; background: var(--cyber-primary); color: var(--cyber-on-primary); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-sm); box-shadow: var(--cyber-shadow-md); font-weight: 900; text-decoration: none; }
-.cyber-skip-link:focus { transform: translateY(0); }
-.cyber-divider { width: 100%; height: 1px; border: 0; margin: 1.5rem 0; background: var(--cyber-border); }
-
-[data-ui="cyberpunk"] :where(h1, h2, h3, h4, h5, h6) { color: var(--cyber-text); font-family: var(--cyber-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="cyberpunk"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="cyberpunk"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="cyberpunk"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="cyberpunk"] :where(p) { margin: 0 0 1rem; color: var(--cyber-text-muted); line-height: 1.7; }
-[data-ui="cyberpunk"] :where(a) { color: var(--cyber-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="cyberpunk"] :where(a:hover) { color: var(--cyber-primary-hover); }
-[data-ui="cyberpunk"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(li) { margin-block: .25rem; }
-[data-ui="cyberpunk"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--cyber-text); background: var(--cyber-surface-soft); border-left: .35rem solid var(--cyber-primary); border-radius: var(--cyber-radius-md); }
-[data-ui="cyberpunk"] :where(code, kbd, samp) { font-family: var(--cyber-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace); font-size: .92em; background: var(--cyber-surface-soft); color: var(--cyber-text); border: 1px solid rgb(var(--cyber-border-rgb) / .45); border-radius: var(--cyber-radius-xs); padding: .15em .35em; }
-[data-ui="cyberpunk"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--cyber-surface-soft); color: var(--cyber-text); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); }
-[data-ui="cyberpunk"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="cyberpunk"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--cyber-border); }
-[data-ui="cyberpunk"] :where(mark) { background: rgb(var(--cyber-warning-rgb) / .32); color: var(--cyber-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="cyberpunk"] :where(small) { color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(abbr[title]) { text-decoration: underline dotted var(--cyber-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="cyberpunk"] :where(img, picture, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="cyberpunk"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="cyberpunk"] :where(figcaption) { margin-top: .5rem; color: var(--cyber-text-muted); font-size: .9rem; }
-[data-ui="cyberpunk"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); }
-[data-ui="cyberpunk"] :where(legend) { padding-inline: .35rem; color: var(--cyber-text); font-weight: 900; }
-[data-ui="cyberpunk"] :where(label) { color: var(--cyber-text); font-weight: 750; }
-[data-ui="cyberpunk"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--cyber-surface-soft); color: var(--cyber-text); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); font: inherit; }
-[data-ui="cyberpunk"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="cyberpunk"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="cyberpunk"] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--cyber-primary); color: var(--cyber-on-primary); border: 1px solid var(--cyber-primary); border-radius: var(--cyber-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="cyberpunk"] :where(button:not([class]):hover, input[type="button"]:not([class]):hover, input[type="submit"]:not([class]):hover, input[type="reset"]:not([class]):hover) { background: var(--cyber-primary-hover); border-color: var(--cyber-primary-hover); }
-[data-ui="cyberpunk"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--cyber-primary); }
-[data-ui="cyberpunk"] :where(input[type="range"]) { width: 100%; accent-color: var(--cyber-primary); }
-[data-ui="cyberpunk"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--cyber-surface-soft); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-sm); }
-[data-ui="cyberpunk"] :where(input[type="file"]) { color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--cyber-primary); border-radius: var(--cyber-radius-sm); background: var(--cyber-primary); color: var(--cyber-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="cyberpunk"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="cyberpunk"] :where(input:invalid, textarea:invalid, select:invalid, [aria-invalid="true"]) { border-color: var(--cyber-danger); }
-[data-ui="cyberpunk"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--cyber-surface); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); overflow: hidden; }
-[data-ui="cyberpunk"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--cyber-text-muted); font-size: .9rem; }
-[data-ui="cyberpunk"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--cyber-border); }
-[data-ui="cyberpunk"] :where(th) { color: var(--cyber-text); background: rgb(var(--cyber-primary-rgb) / .08); }
-[data-ui="cyberpunk"] :where(td) { color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--cyber-surface); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); }
-[data-ui="cyberpunk"] :where(summary) { color: var(--cyber-text); font-weight: 900; cursor: pointer; }
-[data-ui="cyberpunk"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--cyber-surface-strong); color: var(--cyber-text); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="cyberpunk"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="cyberpunk"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--cyber-primary); }
-[data-ui="cyberpunk"] :where(:focus-visible) { outline: 3px solid var(--cyber-focus); outline-offset: 3px; box-shadow: 0 0 0 4px rgb(var(--cyber-focus-rgb) / .28); }
-[data-ui="cyberpunk"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--cyber-focus); outline-offset: .35rem; }
-[data-ui="cyberpunk"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="cyberpunk"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="cyberpunk"] :where([hidden]) { display: none !important; }
-[data-ui="cyberpunk"] ::selection { background: var(--cyber-primary); color: var(--cyber-on-primary); }
-
-/* Extended native element coverage */
-[data-ui="cyberpunk"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--cyber-text); }
-[data-ui="cyberpunk"] :where(article, aside) { background: var(--cyber-card-bg); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-lg); padding: var(--cyber-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--cyber-shadow-alpha) * .72)); }
-[data-ui="cyberpunk"] :where(dl) { margin: 0 0 1rem; color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(dt) { color: var(--cyber-text); font-weight: 900; }
-[data-ui="cyberpunk"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="cyberpunk"] :where(strong, b) { color: var(--cyber-text); font-weight: 900; }
-[data-ui="cyberpunk"] :where(em, i, cite, var) { color: var(--cyber-text); }
-[data-ui="cyberpunk"] :where(q) { color: var(--cyber-text); }
-[data-ui="cyberpunk"] :where(ins) { color: var(--cyber-text); text-decoration-color: var(--cyber-success); }
-[data-ui="cyberpunk"] :where(del, s) { color: var(--cyber-text); text-decoration-color: var(--cyber-danger); }
-[data-ui="cyberpunk"] :where(sub, sup) { color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(output) { color: var(--cyber-text); font-weight: 800; }
-[data-ui="cyberpunk"] :where(optgroup) { color: var(--cyber-text); background: var(--cyber-surface); }
-[data-ui="cyberpunk"] :where(option) { color: var(--cyber-text); background: var(--cyber-surface); }
-[data-ui="cyberpunk"] :where(time, data, dfn) { color: var(--cyber-text); }
-[data-ui="cyberpunk"] :where(ruby) { color: var(--cyber-text); }
-[data-ui="cyberpunk"] :where(rt, rp) { color: var(--cyber-text-muted); font-size: .72em; }
-[data-ui="cyberpunk"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--cyber-text-muted); }
-[data-ui="cyberpunk"] :where(search) { display: block; color: var(--cyber-text); }
-[data-ui="cyberpunk"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
 /* Spinner geometry follows the cyberpunk preset's clipped neon readouts. */
 .cyber-spinner, .cyber-loading-spinner, [data-ui="cyberpunk"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {

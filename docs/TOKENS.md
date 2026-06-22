@@ -6,7 +6,7 @@ Each UI style uses its own prefix, but concrete color schemes are shared. The 2.
 shared scheme channels -> prefixed aliases -> UI rules
 ```
 
-`styles/theme-colors.css` defines the active scheme and mode once as `--usk-*` RGB channels. Each UI style maps those shared channels to its public prefix, then components and native HTML rules consume prefixed functional variables.
+`styles/theme-colors.css` defines the active scheme and mode once as `--usk-*` RGB channels. Each UI style maps those shared channels to its public prefix, then component rules consume prefixed functional variables. `styles/native-elements.css` owns native HTML fallback selectors and consumes `--usk-native-*` tokens that each preset maps back to its own public variables.
 
 ## Prefixes
 
@@ -104,7 +104,7 @@ Concrete theme/mode blocks now live in `styles/theme-colors.css` and expose shar
 --usk-focus-rgb
 ```
 
-Each standalone style file imports the shared color layer and aliases those roles back to the style prefix:
+Each standalone style file imports the shared color and native layers, then aliases those roles back to the style prefix:
 
 ```css
 [data-ui="minimal-saas"][data-theme][data-mode] {
@@ -113,6 +113,41 @@ Each standalone style file imports the shared color layer and aliases those role
   --saas-primary-text-rgb: var(--usk-primary-text-rgb);
 }
 ```
+
+## Native fallback tokens
+
+Native HTML coverage is shared in `styles/native-elements.css` to avoid repeating the same semantic selector blocks in every preset. Preset files provide visual mappings for these stable native-layer tokens:
+
+```css
+--usk-native-surface
+--usk-native-surface-strong
+--usk-native-surface-soft
+--usk-native-card-bg
+--usk-native-control-bg
+--usk-native-text
+--usk-native-text-muted
+--usk-native-border
+--usk-native-primary
+--usk-native-primary-hover
+--usk-native-on-primary
+--usk-native-focus
+--usk-native-success
+--usk-native-warning
+--usk-native-danger
+--usk-native-link
+--usk-native-font-body
+--usk-native-font-heading
+--usk-native-font-control
+--usk-native-font-mono
+--usk-native-radius-sm
+--usk-native-radius
+--usk-native-radius-lg
+--usk-native-shadow
+--usk-native-shadow-md
+--usk-native-focus-ring
+```
+
+Consumers usually override the prefixed public tokens, not these internal bridge tokens. Use `--usk-native-*` only when intentionally customizing native fallback styling across every UI preset.
 
 Use prefixed RGB aliases for component-local alpha effects:
 
@@ -156,6 +191,27 @@ Loading indicators use theme variables by default:
 ```
 
 The class utilities are `<prefix>-spinner`, `<prefix>-loading-spinner`, `<prefix>-spinner-sm`, and `<prefix>-spinner-lg`. Native buttons and prefixed buttons also render an inline spinner when `aria-busy="true"` is present.
+
+## Interactive Surface bridge tokens
+
+The opt-in bridge maps shared `--usk-*` roles directly to `--interactive-surface-*` tokens. It avoids per-UI token maps so the bridge follows the same shared scheme -> mode role -> component rule flow as the main bundle.
+
+Use `.interactive-surface` with `data-surface-variant` for semantic intent and `data-surface-level` for visual depth:
+
+```html
+<button class="interactive-surface" data-surface-variant="primary" data-surface-level="2">
+  Save changes
+</button>
+```
+
+Stable bridge attributes:
+
+```txt
+data-surface-variant="primary|secondary|accent|subtle|warning|danger"
+data-surface-level="1|2|3"
+```
+
+The bridge defines visible state layer tokens for hover, active, and focus plus level tokens such as `--interactive-surface-level-1-bg`, `--interactive-surface-level-2-bg`, and `--interactive-surface-level-3-bg`.
 
 ## Typography tokens
 

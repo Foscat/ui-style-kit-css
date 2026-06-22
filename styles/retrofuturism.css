@@ -12,6 +12,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.retrofuturism {
 :root {
@@ -90,6 +91,37 @@
   --retro-warning-text-rgb: var(--usk-warning-text-rgb);
   --retro-danger-text-rgb: var(--usk-danger-text-rgb);
   --retro-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--retro-surface);
+  --usk-native-surface-strong: var(--retro-surface-strong);
+  --usk-native-surface-soft: var(--retro-surface-soft);
+  --usk-native-card-bg: var(--retro-card-bg);
+  --usk-native-control-bg: var(--retro-control-bg);
+  --usk-native-text: var(--retro-text);
+  --usk-native-text-muted: var(--retro-text-muted);
+  --usk-native-border: var(--retro-border);
+  --usk-native-primary: var(--retro-primary);
+  --usk-native-primary-hover: var(--retro-primary-hover);
+  --usk-native-on-primary: var(--retro-on-primary);
+  --usk-native-focus: var(--retro-focus);
+  --usk-native-success: var(--retro-success);
+  --usk-native-warning: var(--retro-warning);
+  --usk-native-danger: var(--retro-danger);
+  --usk-native-link: var(--retro-link);
+  --usk-native-font-body: var(--retro-font-body);
+  --usk-native-font-heading: var(--retro-font-heading);
+  --usk-native-font-control: var(--retro-font-control);
+  --usk-native-font-mono: var(--retro-font-mono);
+  --usk-native-radius-sm: var(--retro-radius-sm);
+  --usk-native-radius: var(--retro-radius-md);
+  --usk-native-radius-lg: var(--retro-radius-lg);
+  --usk-native-shadow: var(--retro-shadow-sm, none);
+  --usk-native-shadow-md: var(--retro-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--retro-focus-ring, 0 0 0 3px rgb(var(--retro-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--retro-space-5);
+  --usk-native-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--retro-shadow-alpha) * .72));
   --retro-bg: rgb(var(--retro-bg-rgb));
   --retro-surface: rgb(var(--retro-surface-rgb) / var(--retro-panel-alpha));
   --retro-surface-strong: rgb(var(--retro-surface-strong-rgb) / var(--retro-panel-alpha));
@@ -379,85 +411,6 @@
 .retro-button-primary, .retro-badge-primary, .retro-nav-link.is-active {
   box-shadow: 0 0 0 1px rgb(var(--retro-primary-rgb) / .34), 0 0 22px rgb(var(--retro-primary-rgb) / .22);
 }
-
-
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-[data-ui="retrofuturism"] :where(h1, h2, h3, h4, h5, h6) { color: var(--retro-text); font-family: var(--retro-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="retrofuturism"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="retrofuturism"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="retrofuturism"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="retrofuturism"] :where(p) { margin: 0 0 1rem; color: var(--retro-text-muted); line-height: 1.7; }
-[data-ui="retrofuturism"] :where(a) { color: var(--retro-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="retrofuturism"] :where(a:hover) { color: var(--retro-primary-hover); }
-[data-ui="retrofuturism"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(li) { margin-block: .25rem; }
-[data-ui="retrofuturism"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--retro-text); background: var(--retro-surface-soft); border-left: .35rem solid var(--retro-primary); border-radius: var(--retro-radius-md); }
-[data-ui="retrofuturism"] :where(code, kbd, samp) { font-family: var(--retro-font-mono); font-size: .92em; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid rgb(var(--retro-border-rgb) / .45); border-radius: var(--retro-radius-xs); padding: .15em .35em; }
-[data-ui="retrofuturism"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); }
-[data-ui="retrofuturism"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="retrofuturism"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--retro-border); }
-[data-ui="retrofuturism"] :where(mark) { background: rgb(var(--retro-warning-rgb) / .32); color: var(--retro-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="retrofuturism"] :where(small) { color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(abbr[title]) { text-decoration: underline dotted var(--retro-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="retrofuturism"] :where(img, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="retrofuturism"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="retrofuturism"] :where(figcaption) { margin-top: .5rem; color: var(--retro-text-muted); font-size: .9rem; }
-[data-ui="retrofuturism"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); }
-[data-ui="retrofuturism"] :where(legend) { padding-inline: .35rem; color: var(--retro-text); font-weight: 900; }
-[data-ui="retrofuturism"] :where(label) { color: var(--retro-text); font-weight: 750; }
-[data-ui="retrofuturism"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--retro-surface-soft); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); font: inherit; }
-[data-ui="retrofuturism"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="retrofuturism"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="retrofuturism"] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--retro-primary); color: var(--retro-on-primary); border: 1px solid var(--retro-primary); border-radius: var(--retro-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="retrofuturism"] :where(button:not([class]):hover, input[type="button"]:not([class]):hover, input[type="submit"]:not([class]):hover, input[type="reset"]:not([class]):hover) { background: var(--retro-primary-hover); border-color: var(--retro-primary-hover); }
-[data-ui="retrofuturism"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--retro-primary); }
-[data-ui="retrofuturism"] :where(input[type="range"]) { width: 100%; accent-color: var(--retro-primary); }
-[data-ui="retrofuturism"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--retro-surface-soft); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-sm); }
-[data-ui="retrofuturism"] :where(input[type="file"]) { color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--retro-primary); border-radius: var(--retro-radius-sm); background: var(--retro-primary); color: var(--retro-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="retrofuturism"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="retrofuturism"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--retro-danger); }
-[data-ui="retrofuturism"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--retro-surface); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); overflow: hidden; }
-[data-ui="retrofuturism"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--retro-text-muted); font-size: .9rem; }
-[data-ui="retrofuturism"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--retro-border); }
-[data-ui="retrofuturism"] :where(th) { color: var(--retro-text); background: rgb(var(--retro-primary-rgb) / .08); }
-[data-ui="retrofuturism"] :where(td) { color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--retro-surface); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-md); }
-[data-ui="retrofuturism"] :where(summary) { color: var(--retro-text); font-weight: 900; cursor: pointer; }
-[data-ui="retrofuturism"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--retro-surface-strong); color: var(--retro-text); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="retrofuturism"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="retrofuturism"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--retro-primary); }
-[data-ui="retrofuturism"] :where(:focus-visible) { outline: 3px solid var(--retro-focus); outline-offset: 3px; box-shadow: var(--retro-focus-ring); }
-[data-ui="retrofuturism"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--retro-focus); outline-offset: .35rem; }
-[data-ui="retrofuturism"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="retrofuturism"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="retrofuturism"] :where([hidden]) { display: none !important; }
-[data-ui="retrofuturism"] ::selection { background: var(--retro-primary); color: var(--retro-on-primary); }
-
-/* Extended native element coverage */
-[data-ui="retrofuturism"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--retro-text); }
-[data-ui="retrofuturism"] :where(article, aside) { background: var(--retro-card-bg); border: 1px solid var(--retro-border); border-radius: var(--retro-radius-lg); padding: var(--retro-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--retro-shadow-alpha) * .72)); }
-[data-ui="retrofuturism"] :where(dl) { margin: 0 0 1rem; color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(dt) { color: var(--retro-text); font-weight: 900; }
-[data-ui="retrofuturism"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="retrofuturism"] :where(strong, b) { color: var(--retro-text); font-weight: 900; }
-[data-ui="retrofuturism"] :where(em, i, cite, var) { color: var(--retro-text); }
-[data-ui="retrofuturism"] :where(q) { color: var(--retro-text); }
-[data-ui="retrofuturism"] :where(ins) { color: var(--retro-text); text-decoration-color: var(--retro-success); }
-[data-ui="retrofuturism"] :where(del, s) { color: var(--retro-text); text-decoration-color: var(--retro-danger); }
-[data-ui="retrofuturism"] :where(sub, sup) { color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(output) { color: var(--retro-text); font-weight: 800; }
-[data-ui="retrofuturism"] :where(optgroup) { color: var(--retro-text); background: var(--retro-surface); }
-[data-ui="retrofuturism"] :where(option) { color: var(--retro-text); background: var(--retro-surface); }
-[data-ui="retrofuturism"] :where(time, data, dfn) { color: var(--retro-text); }
-[data-ui="retrofuturism"] :where(ruby) { color: var(--retro-text); }
-[data-ui="retrofuturism"] :where(rt, rp) { color: var(--retro-text-muted); font-size: .72em; }
-[data-ui="retrofuturism"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--retro-text-muted); }
-[data-ui="retrofuturism"] :where(search) { display: block; color: var(--retro-text); }
-[data-ui="retrofuturism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
 /* Spinner geometry follows the retrofuturism preset's radar-style motion. */
 .retro-spinner, .retro-loading-spinner, [data-ui="retrofuturism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {

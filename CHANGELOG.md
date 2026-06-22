@@ -8,6 +8,14 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 - Added visible tooltip utilities for every UI preset through `<prefix>-tooltip`, `<prefix>-tooltip-arrow`, `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]`.
 - Added demo coverage for tooltips, switch-style Interactive Surface bridge controls, padded table showcases, combined controls/loading/progress displays, and more useful utility samples.
+- Added the exported `native-elements.css` shared fallback layer for standalone style imports.
+
+### Changed
+
+- Refactored the Interactive Surface bridge to inherit shared `--usk-*` roles, expose visible hover/active/focus state layers, and support `data-surface-level="1"`, `"2"`, and `"3"` surface depth hooks.
+- Moved the bridge attach switch into the demo bridge section so the opt-in behavior is documented where it is exercised.
+- Refactored native HTML fallback rules into one shared `styles/native-elements.css` layer while each preset now supplies only visual token mappings through `--usk-native-*`.
+- Polished the demo component layout at desktop, tablet, and square viewports with denser controls, richer badge examples, padded native controls, and balanced showcase rows.
 
 ## [2.0.0] - 2026-06-20
 

@@ -122,6 +122,14 @@ function cssFor(ui) {
   return fs.readFileSync(path.join(rootDir, 'styles', `${ui}.css`), 'utf8');
 }
 
+function sharedNativeCss() {
+  return fs.readFileSync(path.join(rootDir, 'styles', 'native-elements.css'), 'utf8');
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 test('documented core class suffixes exist in every style file', () => {
   for (const [ui, prefix] of styles) {
     const css = cssFor(ui);
@@ -190,32 +198,36 @@ test('theme-driven defaults cover fonts, backgrounds, cards, controls, and spinn
 });
 
 test('native element coverage includes semantic containers and inline HTML elements', () => {
+  const css = sharedNativeCss();
+  const nativeGroups = [
+    'main, section, header, footer, nav, article, aside, address',
+    'article, aside',
+    'dl',
+    'dt',
+    'dd',
+    'strong, b',
+    'em, i, cite, var, q',
+    'ins',
+    'del, s',
+    'output',
+    'optgroup, option',
+    'time, data, dfn, ruby',
+    'rt, rp',
+    'ul, ol, menu',
+    'search',
+    'img, picture, video, canvas, svg, iframe, audio, object, embed, math'
+  ];
+
+  for (const group of nativeGroups) {
+    assert.match(
+      css,
+      new RegExp(`\\[data-ui\\]\\[data-theme\\]\\[data-mode\\] :where\\(${escapeRegExp(group)}\\)`),
+      `shared native layer is missing coverage for ${group}`
+    );
+  }
+
   for (const [ui, prefix] of styles) {
     const css = cssFor(ui);
-    const nativeGroups = [
-      'main, section, header, footer, nav, article, aside, address',
-      'article, aside',
-      'dl',
-      'dt',
-      'dd',
-      'strong, b',
-      'em, i, cite, var',
-      'ins',
-      'del, s',
-      'output',
-      'optgroup',
-      'option',
-      'time, data, dfn',
-      'ruby',
-      'rt, rp',
-      'menu',
-      'search',
-      'audio, picture, object, embed, math'
-    ];
-
-    for (const group of nativeGroups) {
-      assert.match(css, new RegExp(`\\[data-ui="${ui}"\\] :where\\(${group.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)`), `${ui} is missing native coverage for ${group}`);
-    }
     assert.match(css, new RegExp(`\\.${prefix}-spinner, \\.${prefix}-loading-spinner`), `${ui} is missing spinner utility aliases`);
   }
 });

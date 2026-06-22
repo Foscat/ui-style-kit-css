@@ -13,6 +13,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.brutalism {
 :root {
@@ -101,6 +102,40 @@
   --brutal-warning-text-rgb: var(--usk-warning-text-rgb);
   --brutal-danger-text-rgb: var(--usk-danger-text-rgb);
   --brutal-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--brutal-surface);
+  --usk-native-surface-strong: var(--brutal-surface-strong);
+  --usk-native-surface-soft: var(--brutal-surface-soft);
+  --usk-native-card-bg: var(--brutal-card-bg);
+  --usk-native-control-bg: var(--brutal-control-bg);
+  --usk-native-text: var(--brutal-text);
+  --usk-native-text-muted: var(--brutal-text-muted);
+  --usk-native-border: var(--brutal-border);
+  --usk-native-primary: var(--brutal-primary);
+  --usk-native-primary-hover: var(--brutal-primary-hover);
+  --usk-native-on-primary: var(--brutal-on-primary);
+  --usk-native-focus: var(--brutal-focus);
+  --usk-native-success: var(--brutal-success);
+  --usk-native-warning: var(--brutal-warning);
+  --usk-native-danger: var(--brutal-danger);
+  --usk-native-link: var(--brutal-link);
+  --usk-native-font-body: var(--brutal-font-body);
+  --usk-native-font-heading: var(--brutal-font-heading);
+  --usk-native-font-control: var(--brutal-font-control);
+  --usk-native-font-mono: var(--brutal-font-mono);
+  --usk-native-radius-sm: var(--brutal-radius-sm);
+  --usk-native-radius: var(--brutal-radius-md);
+  --usk-native-radius-lg: var(--brutal-radius-lg);
+  --usk-native-shadow: var(--brutal-shadow-sm, none);
+  --usk-native-shadow-md: var(--brutal-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--brutal-focus-ring, 0 0 0 3px rgb(var(--brutal-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--brutal-space-5);
+  --usk-native-border-width: 3px;
+  --usk-native-radius-sm: var(--brutal-radius-xs);
+  --usk-native-radius: var(--brutal-radius-sm);
+  --usk-native-shadow: 6px 6px 0 var(--brutal-primary);
   --brutal-bg: rgb(var(--brutal-bg-rgb));
   --brutal-surface: rgb(var(--brutal-surface-rgb) / var(--brutal-panel-alpha));
   --brutal-surface-strong: rgb(var(--brutal-surface-strong-rgb) / var(--brutal-panel-strong-alpha));
@@ -239,28 +274,6 @@
 [data-ui="brutalism"] a { color: var(--brutal-link); text-decoration-thickness: 0.14em; text-underline-offset: 0.16em; font-weight: 800; }
 [data-ui="brutalism"] ::selection { background: var(--brutal-primary); color: var(--brutal-on-primary); }
 
-/* Extended native element coverage */
-[data-ui="brutalism"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--brutal-text); }
-[data-ui="brutalism"] :where(article, aside) { background: var(--brutal-card-bg); border: 1px solid var(--brutal-border); border-radius: var(--brutal-radius-lg); padding: var(--brutal-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--brutal-shadow-alpha) * .72)); }
-[data-ui="brutalism"] :where(dl) { margin: 0 0 1rem; color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(dt) { color: var(--brutal-text); font-weight: 900; }
-[data-ui="brutalism"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="brutalism"] :where(strong, b) { color: var(--brutal-text); font-weight: 900; }
-[data-ui="brutalism"] :where(em, i, cite, var) { color: var(--brutal-text); }
-[data-ui="brutalism"] :where(q) { color: var(--brutal-text); }
-[data-ui="brutalism"] :where(ins) { color: var(--brutal-text); text-decoration-color: var(--brutal-success); }
-[data-ui="brutalism"] :where(del, s) { color: var(--brutal-text); text-decoration-color: var(--brutal-danger); }
-[data-ui="brutalism"] :where(sub, sup) { color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(output) { color: var(--brutal-text); font-weight: 800; }
-[data-ui="brutalism"] :where(optgroup) { color: var(--brutal-text); background: var(--brutal-surface); }
-[data-ui="brutalism"] :where(option) { color: var(--brutal-text); background: var(--brutal-surface); }
-[data-ui="brutalism"] :where(time, data, dfn) { color: var(--brutal-text); }
-[data-ui="brutalism"] :where(ruby) { color: var(--brutal-text); }
-[data-ui="brutalism"] :where(rt, rp) { color: var(--brutal-text-muted); font-size: .72em; }
-[data-ui="brutalism"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(search) { display: block; color: var(--brutal-text); }
-[data-ui="brutalism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
-
 /* Spinner geometry follows the brutalism preset's blunt mechanical edges. */
 .brutal-spinner, .brutal-loading-spinner, [data-ui="brutalism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
@@ -395,68 +408,6 @@
 
 [data-ui="brutalism"] :focus-visible { outline: 4px solid var(--brutal-focus); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { [data-ui="brutalism"] *, [data-ui="brutalism"] *::before, [data-ui="brutalism"] *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }
-
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-.brutal-sr-only,
-.brutal-visually-hidden { position: absolute !important; inline-size: 1px !important; block-size: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
-.brutal-skip-link { position: fixed; inset-block-start: 1rem; inset-inline-start: 1rem; z-index: 10000; transform: translateY(-150%); padding: .75rem 1rem; background: var(--brutal-primary); color: var(--brutal-on-primary); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-sm); box-shadow: var(--brutal-shadow-md); font-weight: 900; text-decoration: none; }
-.brutal-skip-link:focus { transform: translateY(0); }
-.brutal-divider { width: 100%; height: 1px; border: 0; margin: 1.5rem 0; background: var(--brutal-border); }
-
-[data-ui="brutalism"] :where(h1, h2, h3, h4, h5, h6) { color: var(--brutal-text); font-family: var(--brutal-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="brutalism"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="brutalism"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="brutalism"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="brutalism"] :where(p) { margin: 0 0 1rem; color: var(--brutal-text-muted); line-height: 1.7; }
-[data-ui="brutalism"] :where(a) { color: var(--brutal-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="brutalism"] :where(a:hover) { color: var(--brutal-primary-hover); }
-[data-ui="brutalism"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(li) { margin-block: .25rem; }
-[data-ui="brutalism"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--brutal-text); background: var(--brutal-surface-soft); border-left: .35rem solid var(--brutal-primary); border-radius: var(--brutal-radius-md); }
-[data-ui="brutalism"] :where(code, kbd, samp) { font-family: var(--brutal-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace); font-size: .92em; background: var(--brutal-surface-soft); color: var(--brutal-text); border: 1px solid rgb(var(--brutal-border-rgb) / .45); border-radius: var(--brutal-radius-xs); padding: .15em .35em; }
-[data-ui="brutalism"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--brutal-surface-soft); color: var(--brutal-text); border: 1px solid var(--brutal-border); border-radius: var(--brutal-radius-md); }
-[data-ui="brutalism"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="brutalism"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--brutal-border); }
-[data-ui="brutalism"] :where(mark) { background: rgb(var(--brutal-warning-rgb) / .32); color: var(--brutal-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="brutalism"] :where(small) { color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(abbr[title]) { text-decoration: underline dotted var(--brutal-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="brutalism"] :where(img, picture, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="brutalism"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="brutalism"] :where(figcaption) { margin-top: .5rem; color: var(--brutal-text-muted); font-size: .9rem; }
-[data-ui="brutalism"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-md); }
-[data-ui="brutalism"] :where(legend) { padding-inline: .35rem; color: var(--brutal-text); font-weight: 900; }
-[data-ui="brutalism"] :where(label) { color: var(--brutal-text); font-weight: 750; }
-[data-ui="brutalism"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--brutal-surface-soft); color: var(--brutal-text); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-md); font: inherit; }
-[data-ui="brutalism"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="brutalism"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="brutalism"] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--brutal-primary); color: var(--brutal-on-primary); border: 3px solid var(--brutal-primary); border-radius: var(--brutal-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="brutalism"] :where(button:not([class]):hover, input[type="button"]:not([class]):hover, input[type="submit"]:not([class]):hover, input[type="reset"]:not([class]):hover) { background: var(--brutal-primary-hover); border-color: var(--brutal-primary-hover); }
-[data-ui="brutalism"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--brutal-primary); }
-[data-ui="brutalism"] :where(input[type="range"]) { width: 100%; accent-color: var(--brutal-primary); }
-[data-ui="brutalism"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--brutal-surface-soft); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-sm); }
-[data-ui="brutalism"] :where(input[type="file"]) { color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 3px solid var(--brutal-primary); border-radius: var(--brutal-radius-sm); background: var(--brutal-primary); color: var(--brutal-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="brutalism"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="brutalism"] :where(input:invalid, textarea:invalid, select:invalid, [aria-invalid="true"]) { border-color: var(--brutal-danger); }
-[data-ui="brutalism"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--brutal-surface); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-md); overflow: hidden; }
-[data-ui="brutalism"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--brutal-text-muted); font-size: .9rem; }
-[data-ui="brutalism"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--brutal-border); }
-[data-ui="brutalism"] :where(th) { color: var(--brutal-text); background: rgb(var(--brutal-primary-rgb) / .08); }
-[data-ui="brutalism"] :where(td) { color: var(--brutal-text-muted); }
-[data-ui="brutalism"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--brutal-surface); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-md); }
-[data-ui="brutalism"] :where(summary) { color: var(--brutal-text); font-weight: 900; cursor: pointer; }
-[data-ui="brutalism"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--brutal-surface-strong); color: var(--brutal-text); border: 3px solid var(--brutal-border); border-radius: var(--brutal-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="brutalism"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="brutalism"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--brutal-primary); }
-[data-ui="brutalism"] :where(:focus-visible) { outline: 3px solid var(--brutal-focus); outline-offset: 3px; box-shadow: 0 0 0 4px rgb(var(--brutal-focus-rgb) / .28); }
-[data-ui="brutalism"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--brutal-focus); outline-offset: .35rem; }
-[data-ui="brutalism"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="brutalism"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="brutalism"] :where([hidden]) { display: none !important; }
-[data-ui="brutalism"] ::selection { background: var(--brutal-primary); color: var(--brutal-on-primary); }
 
 @media (prefers-reduced-motion: reduce) {
   [data-ui="brutalism"] *, [data-ui="brutalism"] *::before, [data-ui="brutalism"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }

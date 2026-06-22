@@ -127,7 +127,8 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
       gap: 1rem;
-      align-items: stretch;
+      align-items: start;
+      grid-auto-flow: dense;
     }
 
     .demo-showcase-grid > *,
@@ -148,17 +149,27 @@
       align-content: start;
     }
 
+    #components .demo-showcase-grid h3 {
+      font-size: clamp(1.08rem, 1.4vw, 1.55rem);
+      line-height: 1.18;
+    }
+
     #components .demo-showcase-grid > [data-testid="component-table"] {
       align-content: stretch;
     }
 
     .demo-control-card {
-      gap: 1rem;
+      gap: 1.15rem;
+      overflow: visible;
     }
 
     .demo-control-showcase {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(14rem, .85fr);
+      grid-template-areas:
+        "buttons progress"
+        "buttons loading"
+        "tooltips tooltips";
+      grid-template-columns: minmax(14rem, .9fr) minmax(16rem, 1fr);
       gap: 1rem;
       align-items: start;
     }
@@ -167,12 +178,32 @@
       display: grid;
       gap: .75rem;
       min-width: 0;
+      padding-block-start: .8rem;
+      border-block-start: 1px solid color-mix(in srgb, currentColor 16%, transparent);
     }
 
     .demo-control-panel h4 {
       margin: 0;
-      font-size: .95rem;
+      font-size: .82rem;
       line-height: 1.2;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .demo-control-panel[data-testid="component-buttons"] {
+      grid-area: buttons;
+    }
+
+    .demo-control-panel[data-testid="component-progress"] {
+      grid-area: progress;
+    }
+
+    .demo-control-panel[data-testid="component-spinner"] {
+      grid-area: loading;
+    }
+
+    .demo-control-panel[data-testid="component-tooltips"] {
+      grid-area: tooltips;
     }
 
     .demo-progress-stack {
@@ -185,6 +216,83 @@
       flex-wrap: wrap;
       gap: .8rem;
       align-items: center;
+      padding-block-end: .45rem;
+    }
+
+    .demo-badge-showcase {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .demo-badge-group {
+      display: grid;
+      gap: .45rem;
+      padding-block-start: .72rem;
+      border-block-start: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    }
+
+    .demo-badge-group:first-child {
+      padding-block-start: 0;
+      border-block-start: 0;
+    }
+
+    .demo-badge-label {
+      margin: 0;
+      color: color-mix(in srgb, currentColor 72%, transparent);
+      font-size: .76rem;
+      font-weight: 850;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .demo-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .52rem;
+      align-items: center;
+    }
+
+    @media (min-width: 720px) and (max-width: 979.98px) {
+      #components .demo-showcase-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-controls"],
+      #components .demo-showcase-grid > [data-testid="component-buttons-states"],
+      #components .demo-showcase-grid > [data-testid="component-fields"],
+      #components .demo-showcase-grid > [data-testid="component-table"] {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (min-width: 980px) {
+      #components .demo-showcase-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-controls"] {
+        grid-column: span 7;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-buttons-states"] {
+        grid-column: span 5;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-fields"] {
+        grid-column: span 5;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-badges"] {
+        grid-column: span 3;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-alerts"] {
+        grid-column: span 4;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-table"] {
+        grid-column: 1 / -1;
+      }
     }
 
     .demo-table-card {
@@ -322,33 +430,28 @@
       overflow-x: auto;
     }
 
+    .demo-bridge-preview .demo-switch-control {
+      max-inline-size: 36rem;
+      margin-block: 1rem 1.25rem;
+      background: color-mix(in srgb, currentColor 7%, transparent);
+      color: inherit;
+      border-color: color-mix(in srgb, currentColor 22%, transparent);
+    }
+
+    .demo-bridge-preview .demo-switch-copy strong {
+      color: inherit;
+    }
+
+    .demo-bridge-preview .demo-switch-copy span {
+      color: color-mix(in srgb, currentColor 72%, transparent);
+    }
+
     .demo-bridge-preview .interactive-surface {
       display: grid;
       gap: .5rem;
       min-block-size: 7rem;
+      align-content: start;
       padding: 1rem;
-      background: var(--interactive-surface-bg, color-mix(in srgb, Canvas 92%, CanvasText 8%));
-      color: var(--interactive-surface-fg, CanvasText);
-      border: 1px solid var(--interactive-surface-border-color, color-mix(in srgb, CanvasText 24%, transparent));
-      border-radius: var(--interactive-surface-radius, .75rem);
-    }
-
-    .demo-bridge-preview .interactive-surface[data-surface-variant="primary"] {
-      background: var(--interactive-surface-variant-primary-bg, color-mix(in srgb, CanvasText 12%, Canvas));
-      color: var(--interactive-surface-variant-primary-fg, CanvasText);
-      border-color: var(--interactive-surface-variant-primary-border-color, currentColor);
-    }
-
-    .demo-bridge-preview .interactive-surface[data-surface-variant="secondary"] {
-      background: var(--interactive-surface-variant-secondary-bg, color-mix(in srgb, CanvasText 10%, Canvas));
-      color: var(--interactive-surface-variant-secondary-fg, CanvasText);
-      border-color: var(--interactive-surface-variant-secondary-border-color, currentColor);
-    }
-
-    .demo-bridge-preview .interactive-surface[data-surface-variant="subtle"] {
-      background: var(--interactive-surface-variant-subtle-bg, color-mix(in srgb, CanvasText 6%, Canvas));
-      color: var(--interactive-surface-variant-subtle-fg, CanvasText);
-      border-color: var(--interactive-surface-variant-subtle-border-color, currentColor);
     }
 
     .demo-bridge-preview small {
@@ -405,16 +508,6 @@
         <option value="contrast">contrast</option>
       </select>
     </label>
-    <label class="demo-switch-control" data-testid="bridge-switch">
-      <input id="bridgeToggle" type="checkbox" role="switch" />
-      <span class="demo-switch-track" data-testid="bridge-switch-track" aria-hidden="true">
-        <span class="demo-switch-thumb" data-testid="bridge-switch-thumb"></span>
-      </span>
-      <span class="demo-switch-copy">
-        <strong>Interactive Surface Bridge</strong>
-        <span data-testid="bridge-status">Detached - default bundle</span>
-      </span>
-    </label>
   </aside>
 
   <main id="main"></main>
@@ -460,11 +553,10 @@
     const uiSelect = document.getElementById("uiSelect");
     const themeSelect = document.getElementById("themeSelect");
     const modeSelect = document.getElementById("modeSelect");
-    const bridgeToggle = document.getElementById("bridgeToggle");
-    const bridgeStatus = document.querySelector("[data-testid='bridge-status']");
     const styleKitStylesheet = document.getElementById("styleKitStylesheet");
     const main = document.getElementById("main");
     const skip = document.getElementById("skip");
+    let bridgeAttached = false;
     const interactiveSurfaceSelector = [
       "a[href]",
       "button:not(:disabled)",
@@ -540,6 +632,16 @@
       return "subtle";
     }
 
+    function getSurfaceLevel(element) {
+      const inputType = element.getAttribute("type");
+
+      if (element.matches("[aria-current='page'], [aria-pressed='true'], .is-active, [aria-busy='true']")) return "3";
+      if (element.matches("button, select, summary, audio[controls], video[controls]")) return "2";
+      if (["button", "submit", "reset"].includes(inputType)) return "2";
+
+      return "1";
+    }
+
     function syncInteractiveSurfaceHooks(isAttached) {
       const elements = document.querySelectorAll(interactiveSurfaceSelector);
 
@@ -547,23 +649,31 @@
         if (!isAttached) {
           element.classList.remove("interactive-surface");
           delete element.dataset.surfaceVariant;
+          delete element.dataset.surfaceLevel;
           return;
         }
 
         element.classList.add("interactive-surface");
         element.dataset.surfaceVariant = getSurfaceVariant(element);
+        element.dataset.surfaceLevel = getSurfaceLevel(element);
       });
     }
 
     function updateBridge() {
-      const isAttached = bridgeToggle.checked;
+      const bridgeToggle = document.getElementById("bridgeToggle");
+      const bridgeStatus = document.querySelector("[data-testid='bridge-status']");
+      const isAttached = bridgeToggle ? bridgeToggle.checked : bridgeAttached;
+
+      bridgeAttached = isAttached;
 
       document.body.dataset.bridge = isAttached ? "attached" : "detached";
       styleKitStylesheet.setAttribute("href", isAttached ? bridgeAwareBundle : defaultBundle);
-      bridgeStatus.textContent = isAttached
-        ? "Attached - using with-bridge bundle"
-        : "Detached - default bundle";
-      // The bridge stylesheet supplies tokens; this demo adds the hook expected by interactive-surface-css.
+      if (bridgeStatus) {
+        bridgeStatus.textContent = isAttached
+          ? "Attached - using with-bridge bundle"
+          : "Detached - default bundle";
+      }
+      // The bridge stylesheet owns the surface visuals; the demo only attaches the expected hooks.
       syncInteractiveSurfaceHooks(isAttached);
     }
 
@@ -720,13 +830,35 @@ import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
                 <article class="${p}-card" data-testid="component-badges">
                   <p class="${p}-kicker">Badges</p>
                   <h3 class="${p}-heading">Status badges</h3>
-                  <div class="demo-button-row">
-                    <span class="${p}-badge">Neutral</span>
-                    <span class="${p}-badge ${p}-badge-primary">Primary</span>
-                    <span class="${p}-badge ${p}-badge-secondary">Secondary</span>
-                    <span class="${p}-badge ${p}-badge-success">Success</span>
-                    <span class="${p}-badge ${p}-badge-warning">Warning</span>
-                    <span class="${p}-badge ${p}-badge-danger">Danger</span>
+                  <div class="demo-badge-showcase">
+                    <div class="demo-badge-group">
+                      <p class="demo-badge-label">Color roles</p>
+                      <div class="demo-badge-row">
+                        <span class="${p}-badge">Neutral</span>
+                        <span class="${p}-badge ${p}-badge-primary">Primary</span>
+                        <span class="${p}-badge ${p}-badge-secondary">Secondary</span>
+                        <span class="${p}-badge ${p}-badge-success">Success</span>
+                        <span class="${p}-badge ${p}-badge-warning">Warning</span>
+                        <span class="${p}-badge ${p}-badge-danger">Danger</span>
+                      </div>
+                    </div>
+                    <div class="demo-badge-group">
+                      <p class="demo-badge-label">Workflow</p>
+                      <div class="demo-badge-row">
+                        <span class="${p}-badge ${p}-badge-primary">Draft</span>
+                        <span class="${p}-badge ${p}-badge-secondary">Review</span>
+                        <span class="${p}-badge ${p}-badge-success">Ready</span>
+                        <span class="${p}-badge ${p}-badge-warning">Blocked</span>
+                      </div>
+                    </div>
+                    <div class="demo-badge-group">
+                      <p class="demo-badge-label">Counts</p>
+                      <div class="demo-badge-row">
+                        <span class="${p}-badge">12 open</span>
+                        <span class="${p}-badge ${p}-badge-primary">4 new</span>
+                        <span class="${p}-badge ${p}-badge-danger">2 failed</span>
+                      </div>
+                    </div>
                   </div>
                 </article>
 
@@ -918,16 +1050,31 @@ import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
             <section id="bridge" class="${p}-card demo-bridge-preview" data-testid="bridge-preview">
               <p class="${p}-kicker">Interactive Surface Bridge</p>
               <h2 class="${p}-heading">Detached by default, attached on demand</h2>
-              <p class="${p}-copy">The toggle swaps the demo stylesheet between <code>${defaultBundle}</code> and <code>${bridgeAwareBundle}</code>. The preview surfaces use <code>.interactive-surface</code> tokens so the bridge mapping is visible when attached.</p>
+              <p class="${p}-copy">The bridge swaps the demo stylesheet between <code>${defaultBundle}</code> and <code>${bridgeAwareBundle}</code>. When attached, interactable elements receive <code>.interactive-surface</code>, <code>data-surface-variant</code>, and <code>data-surface-level</code> hooks.</p>
+              <label class="demo-switch-control" data-testid="bridge-switch">
+                <input id="bridgeToggle" type="checkbox" role="switch" />
+                <span class="demo-switch-track" data-testid="bridge-switch-track" aria-hidden="true">
+                  <span class="demo-switch-thumb" data-testid="bridge-switch-thumb"></span>
+                </span>
+                <span class="demo-switch-copy">
+                  <strong>Attach interactive surface bridge</strong>
+                  <span data-testid="bridge-status">Detached - default bundle</span>
+                </span>
+              </label>
               <div class="demo-bridge-grid">
-                <div class="interactive-surface" data-surface-variant="primary"><strong>Primary surface</strong><small>Uses primary bridge variant tokens.</small></div>
-                <div class="interactive-surface" data-surface-variant="secondary"><strong>Secondary surface</strong><small>Uses secondary bridge variant tokens.</small></div>
-                <div class="interactive-surface" data-surface-variant="subtle"><strong>Subtle surface</strong><small>Uses subtle bridge variant tokens.</small></div>
+                <div class="interactive-surface" data-surface-variant="subtle" data-surface-level="1" data-testid="bridge-level-1"><strong>Level 1 surface</strong><small>Subtle rest layer for quiet inline interactions.</small></div>
+                <div class="interactive-surface" data-surface-variant="secondary" data-surface-level="2" data-testid="bridge-level-2"><strong>Level 2 surface</strong><small>Raised state for controls, selects, and grouped actions.</small></div>
+                <div class="interactive-surface" data-surface-variant="primary" data-surface-level="3" data-testid="bridge-level-3"><strong>Level 3 surface</strong><small>Prominent active state with the strongest state layer.</small></div>
               </div>
             </section>
           </div>
         </section>`;
 
+      const bridgeToggle = document.getElementById("bridgeToggle");
+      if (bridgeToggle) {
+        bridgeToggle.checked = bridgeAttached;
+        bridgeToggle.addEventListener("change", updateBridge);
+      }
       drawDemoCanvas();
       updateBridge();
     }
@@ -935,7 +1082,6 @@ import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
     uiSelect.addEventListener("change", render);
     themeSelect.addEventListener("change", render);
     modeSelect.addEventListener("change", render);
-    bridgeToggle.addEventListener("change", updateBridge);
     render();
   </script>
 </body>

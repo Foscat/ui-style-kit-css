@@ -73,16 +73,18 @@ test('demo starts with the interactive surface bridge detached and can attach it
   await page.goto(demoUrl);
 
   const stylesheet = page.locator('#styleKitStylesheet');
-  const bridgeToggle = page.locator('#bridgeToggle');
-  const switchTrack = page.getByTestId('bridge-switch-track');
-  const switchThumb = page.getByTestId('bridge-switch-thumb');
+  const bridgePreview = page.getByTestId('bridge-preview');
+  const bridgeToggle = bridgePreview.locator('#bridgeToggle');
+  const switchTrack = bridgePreview.getByTestId('bridge-switch-track');
+  const switchThumb = bridgePreview.getByTestId('bridge-switch-thumb');
 
   await expect(bridgeToggle).not.toBeChecked();
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'detached');
   await expect(stylesheet).toHaveAttribute('href', 'dist/ui-style-kit.css');
   await expect(page.getByTestId('bridge-status')).toContainText('Detached');
   await expect(page.locator('.interactive-surface').first()).not.toHaveCSS('--interactive-surface-bg', /.+/);
-  await expect(page.getByTestId('bridge-switch')).toBeVisible();
+  await expect(bridgePreview.getByTestId('bridge-switch')).toBeVisible();
+  await expect(page.locator('.demo-controls').getByTestId('bridge-switch')).toHaveCount(0);
   await expect(switchTrack).toBeVisible();
   await expect(switchTrack).toHaveCSS('border-radius', /px|%/);
 
@@ -120,6 +122,9 @@ test('attached bridge wires every enabled interactable element to interactive su
     const missingVariants = elements
       .filter((element) => !element.dataset.surfaceVariant)
       .map((element) => `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}`);
+    const missingLevels = elements
+      .filter((element) => !element.dataset.surfaceLevel)
+      .map((element) => `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}`);
     const missingBridgeTokens = elements
       .filter((element) => !getComputedStyle(element).getPropertyValue('--interactive-surface-bg').trim())
       .map((element) => `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}`);
@@ -128,6 +133,7 @@ test('attached bridge wires every enabled interactable element to interactive su
       total: elements.length,
       missingHooks,
       missingVariants,
+      missingLevels,
       missingBridgeTokens
     };
   }, interactableSelector);
@@ -135,7 +141,51 @@ test('attached bridge wires every enabled interactable element to interactive su
   expect(bridgeCoverage.total).toBeGreaterThan(40);
   expect(bridgeCoverage.missingHooks).toEqual([]);
   expect(bridgeCoverage.missingVariants).toEqual([]);
+  expect(bridgeCoverage.missingLevels).toEqual([]);
   expect(bridgeCoverage.missingBridgeTokens).toEqual([]);
+});
+
+test('attached bridge shows three distinct interactive surface state levels', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const bridgePreview = page.getByTestId('bridge-preview');
+  await expect(bridgePreview.getByTestId('bridge-level-1')).toBeVisible();
+  await expect(bridgePreview.getByTestId('bridge-level-2')).toBeVisible();
+  await expect(bridgePreview.getByTestId('bridge-level-3')).toBeVisible();
+
+  await bridgePreview.locator('#bridgeToggle').check();
+  await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
+  await page.waitForFunction(() => {
+    const surfaces = [1, 2, 3].map((level) => document.querySelector(`[data-testid="bridge-level-${level}"]`));
+    if (surfaces.some((surface) => !surface)) return false;
+
+    const signatures = surfaces.map((surface) => {
+      const styles = getComputedStyle(surface);
+      return `${styles.backgroundColor}|${styles.borderColor}|${styles.boxShadow}`;
+    });
+
+    return new Set(signatures).size === 3
+      && signatures.every((signature) => !signature.startsWith('rgba(0, 0, 0, 0)|'));
+  });
+
+  const levelSignatures = await page.evaluate(() => [1, 2, 3].map((level) => {
+    const surface = document.querySelector(`[data-testid="bridge-level-${level}"]`);
+    const styles = getComputedStyle(surface);
+
+    return {
+      backgroundColor: styles.backgroundColor,
+      borderColor: styles.borderColor,
+      boxShadow: styles.boxShadow,
+      levelBg: styles.getPropertyValue('--interactive-surface-level-bg').trim(),
+      hoverOpacity: styles.getPropertyValue('--interactive-surface-state-layer-opacity-hover').trim()
+    };
+  }));
+
+  const visualSignatures = new Set(levelSignatures
+    .map(({ backgroundColor, borderColor, boxShadow }) => `${backgroundColor}|${borderColor}|${boxShadow}`));
+
+  expect(visualSignatures.size, JSON.stringify(levelSignatures, null, 2)).toBe(3);
+  expect(levelSignatures.every(({ levelBg, hoverOpacity }) => levelBg && hoverOpacity)).toBe(true);
 });
 
 test('demo exposes the styled element and state showcase', async ({ page }) => {
@@ -196,6 +246,78 @@ test('buttons progress loading and tooltip examples share a polished controls ca
   const controlsBox = await controlsCard.boundingBox();
   const tooltipBox = await controlsCard.getByTestId('component-tooltips').boundingBox();
   expect(tooltipBox.width).toBeLessThanOrEqual(controlsBox.width);
+});
+
+test('component showcase avoids overlap and oversized empty card areas', async ({ page }) => {
+  await page.setViewportSize({ width: 1696, height: 1155 });
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'retrofuturism');
+  await page.selectOption('#modeSelect', 'dark');
+
+  const controlOverlaps = await page.getByTestId('component-controls').evaluate((card) => {
+    const targets = [...card.querySelectorAll('section[data-testid]')]
+      .map((section) => ({
+        id: section.dataset.testid,
+        rect: section.getBoundingClientRect()
+      }));
+    const overlaps = [];
+
+    for (let firstIndex = 0; firstIndex < targets.length; firstIndex++) {
+      for (let secondIndex = firstIndex + 1; secondIndex < targets.length; secondIndex++) {
+        const first = targets[firstIndex];
+        const second = targets[secondIndex];
+        const width = Math.min(first.rect.right, second.rect.right) - Math.max(first.rect.left, second.rect.left);
+        const height = Math.min(first.rect.bottom, second.rect.bottom) - Math.max(first.rect.top, second.rect.top);
+
+        if (width > 2 && height > 2) overlaps.push(`${first.id}/${second.id}`);
+      }
+    }
+
+    return overlaps;
+  });
+
+  const deadSpace = await page.locator('#components .demo-showcase-grid > article').evaluateAll((cards) => cards.map((card) => {
+    const cardRect = card.getBoundingClientRect();
+    const visibleChildren = [...card.children].filter((child) => {
+      const rect = child.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+    });
+    const contentBottom = Math.max(...visibleChildren.map((child) => child.getBoundingClientRect().bottom));
+
+    return {
+      id: card.dataset.testid,
+      emptyBlockEnd: Math.round(cardRect.bottom - contentBottom)
+    };
+  }));
+
+  expect(controlOverlaps).toEqual([]);
+  expect(Math.max(...deadSpace.map(({ emptyBlockEnd }) => emptyBlockEnd)), JSON.stringify(deadSpace, null, 2)).toBeLessThanOrEqual(128);
+});
+
+test('native form samples provide padded block layout for unclassed controls', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'retrofuturism');
+  await page.selectOption('#modeSelect', 'dark');
+
+  const nativeLabelMetrics = await page.getByTestId('native-forms').locator('label').evaluateAll((labels) => labels
+    .filter((label) => label.querySelector('input, select, textarea'))
+    .map((label) => {
+      const control = label.querySelector('input, select, textarea');
+      const labelStyles = getComputedStyle(label);
+      const labelRect = label.getBoundingClientRect();
+      const controlRect = control.getBoundingClientRect();
+
+      return {
+        display: labelStyles.display,
+        rowGap: labelStyles.rowGap,
+        inlinePadding: Math.round(controlRect.left - labelRect.left)
+      };
+    }));
+
+  expect(nativeLabelMetrics.length).toBeGreaterThan(6);
+  expect(nativeLabelMetrics.every(({ display }) => display !== 'inline'), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
+  expect(nativeLabelMetrics.every(({ rowGap }) => parseFloat(rowGap) >= 6), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
+  expect(nativeLabelMetrics.every(({ inlinePadding }) => inlinePadding >= 0), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
 });
 
 test('tooltip treatments are visible and structurally distinct across UI styles', async ({ page }) => {
