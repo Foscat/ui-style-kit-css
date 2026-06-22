@@ -12,6 +12,22 @@ const defaultDemoState = {
   mode: 'light'
 };
 
+const stylePresets = [
+  ['minimal-saas', 'saas'],
+  ['bento', 'bento'],
+  ['maximalist', 'max'],
+  ['bauhaus', 'bau'],
+  ['tactile', 'tactile'],
+  ['neumorphism', 'neo'],
+  ['retrofuturism', 'retro'],
+  ['brutalism', 'brutal'],
+  ['cyberpunk', 'cyber'],
+  ['y2k', 'y2k'],
+  ['retro-glass', 'rg']
+];
+
+const displayModes = ['light', 'dark', 'contrast'];
+
 test('demo loads with default theme settings', async ({ page }) => {
   await page.goto(demoUrl);
 
@@ -41,4 +57,34 @@ test('switching demo controls updates body attributes and rendered classes', asy
 
   await expect(page.locator('#main .cyber-title')).toBeVisible();
   await expect(page.locator('#main .cyber-button.cyber-button-primary')).toHaveCount(1);
+});
+
+test('neutral demo buttons keep theme text color across styles and modes', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  for (const [ui, prefix] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+
+    for (const mode of displayModes) {
+      await page.selectOption('#modeSelect', mode);
+
+      const colors = await page.evaluate((tokenPrefix) => {
+        const neutralButton = [...document.querySelectorAll('button')]
+          .find((button) => button.textContent.trim() === 'Neutral');
+        const probe = document.createElement('span');
+
+        // Resolve the CSS custom property through computed styles, matching browser cascade behavior.
+        probe.style.color = `var(--${tokenPrefix}-text)`;
+        document.body.append(probe);
+
+        const buttonColor = getComputedStyle(neutralButton).color;
+        const themeTextColor = getComputedStyle(probe).color;
+        probe.remove();
+
+        return { buttonColor, themeTextColor };
+      }, prefix);
+
+      expect(colors.buttonColor, `${ui}/${mode} neutral button text`).toBe(colors.themeTextColor);
+    }
+  }
 });

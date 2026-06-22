@@ -365,8 +365,8 @@
 [data-ui="bento"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--bento-surface-soft); color: var(--bento-text); border: 1px solid var(--bento-border); border-radius: var(--bento-radius-md); font: inherit; }
 [data-ui="bento"] :where(textarea) { resize: vertical; min-height: 7rem; }
 [data-ui="bento"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="bento"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--bento-primary); color: var(--bento-on-primary); border: 1px solid var(--bento-primary); border-radius: var(--bento-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="bento"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--bento-primary-hover); border-color: var(--bento-primary-hover); }
+[data-ui="bento"] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--bento-primary); color: var(--bento-on-primary); border: 1px solid var(--bento-primary); border-radius: var(--bento-radius-md); font-weight: 850; cursor: pointer; }
+[data-ui="bento"] :where(button:not([class]):hover, input[type="button"]:not([class]):hover, input[type="submit"]:not([class]):hover, input[type="reset"]:not([class]):hover) { background: var(--bento-primary-hover); border-color: var(--bento-primary-hover); }
 [data-ui="bento"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--bento-primary); }
 [data-ui="bento"] :where(input[type="range"]) { width: 100%; accent-color: var(--bento-primary); }
 [data-ui="bento"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--bento-surface-soft); border: 1px solid var(--bento-border); border-radius: var(--bento-radius-sm); }
