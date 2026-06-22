@@ -1,120 +1,1123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UI Style Kit CSS Demo</title>
-  <link rel="stylesheet" href="dist/ui-style-kit.css" />
+  <link id="styleKitStylesheet" rel="stylesheet" href="dist/ui-style-kit.css">
   <style>
-    .demo-controls { position: sticky; top: 0; z-index: 1000; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .75rem; padding: 1rem; background: Canvas; color: CanvasText; border-bottom: 1px solid color-mix(in srgb, CanvasText 20%, transparent); }
-    .demo-controls label { display: grid; gap: .25rem; font: 700 .85rem system-ui; }
-    .demo-controls select { min-height: 2.5rem; padding: .5rem; font: inherit; }
+    .demo-controls {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+      gap: .75rem;
+      padding: 1rem;
+      background: Canvas;
+      color: CanvasText;
+      border: 0;
+      border-bottom: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .demo-controls label,
+    .demo-switch-control {
+      display: grid;
+      gap: .25rem;
+      font: 700 .85rem system-ui, sans-serif;
+    }
+
+    .demo-controls select {
+      min-height: 2.5rem;
+      padding: .5rem;
+      font: inherit;
+    }
+
+    .demo-switch-control {
+      position: relative;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      column-gap: .75rem;
+      padding: .65rem .75rem;
+      border: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+      border-radius: 1rem;
+      background: color-mix(in srgb, Canvas 88%, CanvasText 12%);
+      cursor: pointer;
+    }
+
+    .demo-switch-control input {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      inline-size: 100%;
+      block-size: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .demo-switch-track {
+      position: relative;
+      inline-size: 3.35rem;
+      block-size: 1.85rem;
+      border: 1px solid color-mix(in srgb, CanvasText 22%, transparent);
+      border-radius: 999px;
+      background: color-mix(in srgb, Canvas 76%, CanvasText 24%);
+      box-shadow: inset 0 1px 3px rgb(0 0 0 / .18);
+      transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .demo-switch-thumb {
+      position: absolute;
+      inset-block-start: .2rem;
+      inset-inline-start: .2rem;
+      inline-size: 1.35rem;
+      block-size: 1.35rem;
+      border-radius: 50%;
+      background: Canvas;
+      box-shadow: 0 2px 8px rgb(0 0 0 / .25);
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .demo-switch-control input:focus-visible + .demo-switch-track {
+      outline: 3px solid Highlight;
+      outline-offset: 3px;
+    }
+
+    .demo-switch-control input:checked + .demo-switch-track {
+      background: Highlight;
+      border-color: Highlight;
+      box-shadow: inset 0 1px 3px rgb(0 0 0 / .2), 0 0 0 3px color-mix(in srgb, Highlight 22%, transparent);
+    }
+
+    .demo-switch-control input:checked + .demo-switch-track .demo-switch-thumb {
+      transform: translateX(1.5rem);
+      background: Canvas;
+    }
+
+    .demo-switch-copy {
+      display: grid;
+      gap: .15rem;
+      min-width: 0;
+    }
+
+    .demo-switch-copy strong {
+      color: CanvasText;
+    }
+
+    .demo-switch-copy span {
+      color: color-mix(in srgb, CanvasText 72%, transparent);
+      font-weight: 650;
+    }
+
+    .demo-showcase {
+      min-height: 100vh;
+    }
+
+    .demo-section-lede {
+      max-width: 72rem;
+    }
+
+    .demo-showcase-grid,
+    .demo-native-grid,
+    .demo-state-grid,
+    .demo-token-grid,
+    .demo-bridge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+      gap: 1rem;
+      align-items: start;
+      grid-auto-flow: dense;
+    }
+
+    .demo-showcase-grid > *,
+    .demo-native-grid > *,
+    .demo-state-grid > *,
+    .demo-token-grid > *,
+    .demo-bridge-grid > * {
+      min-width: 0;
+    }
+
+    /* The component showcase needs a tighter tablet grid than the wider native-element samples. */
+    #components .demo-showcase-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
+    }
+
+    #components .demo-showcase-grid > article {
+      display: grid;
+      align-content: start;
+    }
+
+    #components .demo-showcase-grid h3 {
+      font-size: clamp(1.08rem, 1.4vw, 1.55rem);
+      line-height: 1.18;
+    }
+
+    #components .demo-showcase-grid > [data-testid="component-table"] {
+      align-content: stretch;
+    }
+
+    .demo-control-card {
+      gap: 1.15rem;
+      overflow: visible;
+    }
+
+    .demo-control-showcase {
+      display: grid;
+      grid-template-areas:
+        "buttons progress"
+        "buttons loading"
+        "tooltips tooltips";
+      grid-template-columns: minmax(14rem, .9fr) minmax(16rem, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .demo-control-panel {
+      display: grid;
+      gap: .75rem;
+      min-width: 0;
+      padding-block-start: .8rem;
+      border-block-start: 1px solid rgba(0, 0, 0, 0.16);
+    }
+
+    .demo-control-panel h4 {
+      margin: 0;
+      font-size: .82rem;
+      line-height: 1.2;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .demo-control-panel[data-testid="component-buttons"] {
+      grid-area: buttons;
+    }
+
+    .demo-control-panel[data-testid="component-progress"] {
+      grid-area: progress;
+    }
+
+    .demo-control-panel[data-testid="component-spinner"] {
+      grid-area: loading;
+    }
+
+    .demo-control-panel[data-testid="component-tooltips"] {
+      grid-area: tooltips;
+    }
+
+    .demo-progress-stack {
+      display: grid;
+      gap: .55rem;
+    }
+
+    .demo-tooltip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      align-items: center;
+      padding-block-end: .45rem;
+    }
+
+    .demo-badge-showcase {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .demo-badge-group {
+      display: grid;
+      gap: .45rem;
+      padding-block-start: .72rem;
+      border-block-start: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    }
+
+    .demo-badge-group:first-child {
+      padding-block-start: 0;
+      border-block-start: 0;
+    }
+
+    .demo-badge-label {
+      margin: 0;
+      color: color-mix(in srgb, currentColor 72%, transparent);
+      font-size: .76rem;
+      font-weight: 850;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .demo-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .52rem;
+      align-items: center;
+    }
+
+    @media (min-width: 720px) and (max-width: 979.98px) {
+      #components .demo-showcase-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-controls"],
+      #components .demo-showcase-grid > [data-testid="component-buttons-states"],
+      #components .demo-showcase-grid > [data-testid="component-fields"],
+      #components .demo-showcase-grid > [data-testid="component-table"] {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (min-width: 980px) {
+      #components .demo-showcase-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-controls"] {
+        grid-column: span 7;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-buttons-states"] {
+        grid-column: span 5;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-fields"] {
+        grid-column: span 5;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-badges"] {
+        grid-column: span 3;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-alerts"] {
+        grid-column: span 4;
+      }
+
+      #components .demo-showcase-grid > [data-testid="component-table"] {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .demo-table-card {
+      padding: clamp(1rem, 2vw, 1.4rem);
+    }
+
+    .demo-table-card table {
+      inline-size: 100%;
+    }
+
+    .demo-tight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+      gap: .75rem;
+    }
+
+    .demo-state-sample,
+    .demo-native-sample,
+    .demo-token-sample {
+      display: grid;
+      gap: .65rem;
+      min-width: 0;
+    }
+
+    .demo-state-sample > p,
+    .demo-native-sample > p,
+    .demo-token-sample > p {
+      margin: 0;
+    }
+
+    .demo-button-row,
+    .demo-inline-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      align-items: center;
+    }
+
+    .demo-color-chip-grid,
+    .demo-utility-surface-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+      gap: .65rem;
+    }
+
+    .demo-color-chip,
+    .demo-utility-surface {
+      display: grid;
+      gap: .35rem;
+      min-width: 0;
+      padding: .75rem;
+      border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+      border-radius: .75rem;
+      background: color-mix(in srgb, Canvas 88%, CanvasText 12%);
+    }
+
+    .demo-color-chip {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+    }
+
+    .demo-color-swatch {
+      inline-size: 1.1rem;
+      block-size: 1.1rem;
+      border-radius: 50%;
+      background: var(--demo-token-color);
+      box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 18%, transparent);
+    }
+
+    .demo-color-chip small {
+      display: block;
+      color: color-mix(in srgb, currentColor 72%, transparent);
+      font-size: .78rem;
+      line-height: 1.35;
+    }
+
+    .demo-utility-layout-sample {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      align-items: center;
+    }
+
+    .demo-utility-label {
+      margin: 0;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 760px) {
+      .demo-control-showcase {
+        grid-template-areas:
+          "buttons"
+          "progress"
+          "loading"
+          "tooltips";
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .demo-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+      gap: .85rem;
+    }
+
+    .demo-media-box,
+    .demo-object,
+    .demo-embed,
+    .demo-iframe {
+      display: block;
+      inline-size: 100%;
+      min-block-size: 8rem;
+      border: 1px dashed color-mix(in srgb, currentColor 35%, transparent);
+      border-radius: .75rem;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, currentColor 16%, transparent), transparent 55%),
+        color-mix(in srgb, Canvas 92%, CanvasText 8%);
+    }
+
+    .demo-canvas {
+      aspect-ratio: 16 / 7;
+    }
+
+    .demo-inline-dialog {
+      position: static;
+      display: block;
+      inline-size: 100%;
+      margin: 0;
+    }
+
+    .demo-code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .demo-native-table-scroll {
+      overflow-x: auto;
+    }
+
+    .demo-bridge-preview .demo-switch-control {
+      max-inline-size: 36rem;
+      margin-block: 1rem 1.25rem;
+      background: color-mix(in srgb, currentColor 7%, transparent);
+      color: inherit;
+      border-color: color-mix(in srgb, currentColor 22%, transparent);
+    }
+
+    .demo-bridge-preview .demo-switch-copy strong {
+      color: inherit;
+    }
+
+    .demo-bridge-preview .demo-switch-copy span {
+      color: color-mix(in srgb, currentColor 72%, transparent);
+    }
+
+    .demo-bridge-preview .interactive-surface {
+      display: grid;
+      gap: .5rem;
+      min-block-size: 7rem;
+      align-content: start;
+      padding: 1rem;
+    }
+
+    .demo-bridge-preview small {
+      color: inherit;
+      opacity: .8;
+    }
+
+    @media (max-width: 720px) {
+      .demo-controls {
+        position: static;
+      }
+    }
   </style>
 </head>
-<body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
+<body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light" data-bridge="detached">
   <a id="skip" class="saas-skip-link" href="#main">Skip to content</a>
   <aside class="demo-controls" aria-label="Demo controls">
-    <label>UI Style<select id="uiSelect"><option value="minimal-saas" data-prefix="saas">Minimal SaaS</option><option value="bento" data-prefix="bento">Bento UI</option><option value="maximalist" data-prefix="max">Maximalist / Playful</option><option value="bauhaus" data-prefix="bau">Bauhaus / Swiss Modern</option><option value="tactile" data-prefix="tactile">Skeuomorphic / Tactile</option><option value="neumorphism" data-prefix="neo">Neumorphism</option><option value="retrofuturism" data-prefix="retro">Retrofuturism</option><option value="brutalism" data-prefix="brutal">Brutalism</option><option value="cyberpunk" data-prefix="cyber">Cyberpunk</option><option value="y2k" data-prefix="y2k">Y2K</option><option value="retro-glass" data-prefix="rg">Retro Glass</option></select></label>
-    <label>Color Theme<select id="themeSelect"><option value="midnight-gold">midnight-gold</option><option value="ocean-steel">ocean-steel</option><option value="forest-moss">forest-moss</option><option value="sunset-ember">sunset-ember</option><option value="royal-plum">royal-plum</option><option value="graphite-cyan">graphite-cyan</option><option value="desert-sage">desert-sage</option><option value="rose-quartz">rose-quartz</option><option value="cyber-lime">cyber-lime</option><option value="arctic-indigo" selected>arctic-indigo</option></select></label>
-    <label>Mode<select id="modeSelect"><option value="light">light</option><option value="dark">dark</option><option value="contrast">contrast</option></select></label>
+    <label>
+      UI Style
+      <select id="uiSelect">
+        <option value="minimal-saas" data-prefix="saas">Minimal SaaS</option>
+        <option value="bento" data-prefix="bento">Bento UI</option>
+        <option value="maximalist" data-prefix="max">Maximalist / Playful</option>
+        <option value="bauhaus" data-prefix="bau">Bauhaus / Swiss Modern</option>
+        <option value="tactile" data-prefix="tactile">Skeuomorphic / Tactile</option>
+        <option value="neumorphism" data-prefix="neo">Neumorphism</option>
+        <option value="retrofuturism" data-prefix="retro">Retrofuturism</option>
+        <option value="brutalism" data-prefix="brutal">Brutalism</option>
+        <option value="cyberpunk" data-prefix="cyber">Cyberpunk</option>
+        <option value="y2k" data-prefix="y2k">Y2K</option>
+        <option value="retro-glass" data-prefix="rg">Retro Glass</option>
+      </select>
+    </label>
+    <label>
+      Color Theme
+      <select id="themeSelect">
+        <option value="midnight-gold">midnight-gold</option>
+        <option value="ocean-steel">ocean-steel</option>
+        <option value="forest-moss">forest-moss</option>
+        <option value="sunset-ember">sunset-ember</option>
+        <option value="royal-plum">royal-plum</option>
+        <option value="graphite-cyan">graphite-cyan</option>
+        <option value="desert-sage">desert-sage</option>
+        <option value="rose-quartz">rose-quartz</option>
+        <option value="cyber-lime">cyber-lime</option>
+        <option value="arctic-indigo" selected>arctic-indigo</option>
+      </select>
+    </label>
+    <label>
+      Mode
+      <select id="modeSelect">
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+        <option value="contrast">contrast</option>
+      </select>
+    </label>
   </aside>
+
   <main id="main"></main>
+
   <script>
-    const stylePrefixes = {"minimal-saas": "saas", "bento": "bento", "maximalist": "max", "bauhaus": "bau", "tactile": "tactile", "neumorphism": "neo", "retrofuturism": "retro", "brutalism": "brutal", "cyberpunk": "cyber", "y2k": "y2k", "retro-glass": "rg"};
-    const styleTitles = {"minimal-saas": "Minimal SaaS", "bento": "Bento UI", "maximalist": "Maximalist / Playful", "bauhaus": "Bauhaus / Swiss Modern", "tactile": "Skeuomorphic / Tactile", "neumorphism": "Neumorphism", "retrofuturism": "Retrofuturism", "brutalism": "Brutalism", "cyberpunk": "Cyberpunk", "y2k": "Y2K", "retro-glass": "Retro Glass"};
-    const uiSelect = document.getElementById('uiSelect');
-    const themeSelect = document.getElementById('themeSelect');
-    const modeSelect = document.getElementById('modeSelect');
-    const main = document.getElementById('main');
-    const skip = document.getElementById('skip');
+    const stylePrefixes = {
+      "minimal-saas": "saas",
+      bento: "bento",
+      maximalist: "max",
+      bauhaus: "bau",
+      tactile: "tactile",
+      neumorphism: "neo",
+      retrofuturism: "retro",
+      brutalism: "brutal",
+      cyberpunk: "cyber",
+      y2k: "y2k",
+      "retro-glass": "rg"
+    };
+    const styleTitles = {
+      "minimal-saas": "Minimal SaaS",
+      bento: "Bento UI",
+      maximalist: "Maximalist / Playful",
+      bauhaus: "Bauhaus / Swiss Modern",
+      tactile: "Skeuomorphic / Tactile",
+      neumorphism: "Neumorphism",
+      retrofuturism: "Retrofuturism",
+      brutalism: "Brutalism",
+      cyberpunk: "Cyberpunk",
+      y2k: "Y2K",
+      "retro-glass": "Retro Glass"
+    };
+    const bridgeAwareBundle = "dist/ui-style-kit.with-bridge.css";
+    const defaultBundle = "dist/ui-style-kit.css";
+    const stylesWithCustomChoices = new Set([
+      "minimal-saas",
+      "bento",
+      "maximalist",
+      "bauhaus",
+      "tactile",
+      "neumorphism",
+      "retrofuturism"
+    ]);
+    const uiSelect = document.getElementById("uiSelect");
+    const themeSelect = document.getElementById("themeSelect");
+    const modeSelect = document.getElementById("modeSelect");
+    const styleKitStylesheet = document.getElementById("styleKitStylesheet");
+    const main = document.getElementById("main");
+    const skip = document.getElementById("skip");
+    let bridgeAttached = false;
+    const interactiveSurfaceSelector = [
+      "a[href]",
+      "button:not(:disabled)",
+      "input:not([type='hidden']):not(:disabled)",
+      "select:not(:disabled)",
+      "textarea:not(:disabled)",
+      "summary",
+      "audio[controls]",
+      "video[controls]"
+    ].join(",");
+
+    function renderChoiceControls(ui, p) {
+      if (!stylesWithCustomChoices.has(ui)) {
+        return `
+          <div class="demo-inline-row">
+            <label><input type="checkbox" checked> Native checkbox</label>
+            <label><input type="radio" name="native-choice-${ui}" checked> Native radio</label>
+            <label><input type="radio" name="native-choice-${ui}"> Native radio</label>
+          </div>`;
+      }
+
+      return `
+        <div class="demo-inline-row">
+          <label class="${p}-check"><input type="checkbox" checked><span class="${p}-check-control"></span><span>Checked</span></label>
+          <label class="${p}-check"><input type="checkbox"><span class="${p}-check-control"></span><span>Unchecked</span></label>
+          <label class="${p}-radio"><input type="radio" name="component-radio-${ui}" checked><span class="${p}-radio-control"></span><span>Radio A</span></label>
+          <label class="${p}-radio"><input type="radio" name="component-radio-${ui}"><span class="${p}-radio-control"></span><span>Radio B</span></label>
+          <label class="${p}-switch"><input type="checkbox" checked><span class="${p}-switch-track"><span class="${p}-switch-thumb"></span></span><span>Switch</span></label>
+        </div>`;
+    }
+
+    function renderStyleSpecificSurface(ui, p) {
+      const extras = {
+        "minimal-saas": `
+          <div class="${p}-metric"><span class="${p}-metric-value">98%</span><span class="${p}-metric-label">metric</span></div>
+          <div class="${p}-empty-state"><h3 class="${p}-heading">Empty state</h3><p class="${p}-copy">No records need attention.</p></div>`,
+        bento: `
+          <div class="${p}-grid-feature">
+            <div class="${p}-tile ${p}-tile-lg"><span class="${p}-stat-value">42</span><span class="${p}-stat-label">large tile</span></div>
+            <div class="${p}-tile ${p}-tile-sm"><span class="${p}-stat-value">8</span><span class="${p}-stat-label">small tile</span></div>
+          </div>`,
+        maximalist: `
+          <span class="${p}-sticker">Sticker</span>
+          <div class="${p}-callout ${p}-wiggle">Playful callout motion utility</div>`,
+        bauhaus: `
+          <div class="${p}-composition"><div class="${p}-block">Block</div><div class="${p}-rail">Rail</div></div>`,
+        tactile: `
+          <div class="${p}-bevel">Beveled surface</div>
+          <button class="${p}-button ${p}-pressed">Pressed surface</button>
+          <span class="${p}-knob" aria-hidden="true"></span>`,
+        brutalism: `
+          <button class="${p}-button ${p}-pressed">Pressed block</button>`,
+        cyberpunk: `
+          <div class="${p}-console"><code>console.surface.ready()</code></div>`,
+        y2k: `
+          <div class="${p}-bubble">Bubble surface</div>`,
+        "retro-glass": `
+          <div class="${p}-console"><code>glass.surface.ready()</code></div>`
+      };
+
+      return extras[ui] || `<div class="${p}-well">Core surfaces carry this style preset.</div>`;
+    }
+
+    function getSurfaceVariant(element) {
+      const className = element.getAttribute("class") || "";
+      const inputType = element.getAttribute("type");
+
+      if (element.matches("[aria-current='page'], [aria-pressed='true'], .is-active")) return "primary";
+      if (className.includes("-button-danger") || inputType === "reset") return "danger";
+      if (className.includes("-button-secondary")) return "secondary";
+      if (className.includes("-button-primary") || inputType === "submit" || inputType === "button") return "primary";
+
+      return "subtle";
+    }
+
+    function getSurfaceLevel(element) {
+      const inputType = element.getAttribute("type");
+
+      if (element.matches("[aria-current='page'], [aria-pressed='true'], .is-active, [aria-busy='true']")) return "3";
+      if (element.matches("button, select, summary, audio[controls], video[controls]")) return "2";
+      if (["button", "submit", "reset"].includes(inputType)) return "2";
+
+      return "1";
+    }
+
+    function syncInteractiveSurfaceHooks(isAttached) {
+      const elements = document.querySelectorAll(interactiveSurfaceSelector);
+
+      elements.forEach((element) => {
+        if (!isAttached) {
+          element.classList.remove("interactive-surface");
+          delete element.dataset.surfaceVariant;
+          delete element.dataset.surfaceLevel;
+          return;
+        }
+
+        element.classList.add("interactive-surface");
+        element.dataset.surfaceVariant = getSurfaceVariant(element);
+        element.dataset.surfaceLevel = getSurfaceLevel(element);
+      });
+    }
+
+    function updateBridge() {
+      const bridgeToggle = document.getElementById("bridgeToggle");
+      const bridgeStatus = document.querySelector("[data-testid='bridge-status']");
+      const isAttached = bridgeToggle ? bridgeToggle.checked : bridgeAttached;
+
+      bridgeAttached = isAttached;
+
+      document.body.dataset.bridge = isAttached ? "attached" : "detached";
+      styleKitStylesheet.setAttribute("href", isAttached ? bridgeAwareBundle : defaultBundle);
+      if (bridgeStatus) {
+        bridgeStatus.textContent = isAttached
+          ? "Attached - using with-bridge bundle"
+          : "Detached - default bundle";
+      }
+      // The bridge stylesheet owns the surface visuals; the demo only attaches the expected hooks.
+      syncInteractiveSurfaceHooks(isAttached);
+    }
+
+    function syncPrimaryNavCurrent(targetId = "overview") {
+      const nav = main.querySelector('nav[aria-label="Primary"]');
+      if (!nav) return;
+
+      nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+        const isCurrent = link.getAttribute("href") === `#${targetId}`;
+        link.classList.toggle("is-active", isCurrent);
+
+        if (isCurrent) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    function bindPrimaryNav() {
+      const nav = main.querySelector('nav[aria-label="Primary"]');
+      if (!nav) return;
+
+      nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", () => {
+          syncPrimaryNavCurrent(link.getAttribute("href").slice(1));
+        });
+      });
+    }
+
+    function drawDemoCanvas() {
+      const canvas = document.querySelector("[data-demo-canvas]");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      const styles = getComputedStyle(document.body);
+      const primary = styles.getPropertyValue(`--${stylePrefixes[uiSelect.value]}-primary`).trim() || "#6f8cff";
+      const accent = styles.getPropertyValue(`--${stylePrefixes[uiSelect.value]}-accent`).trim() || "#ffcc66";
+
+      // Canvas is drawn after render so the native canvas element is visibly represented.
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = primary;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.arc(canvas.width * .72, canvas.height * .46, canvas.height * .28, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(255, 255, 255, .72)";
+      ctx.fillRect(canvas.width * .08, canvas.height * .2, canvas.width * .42, canvas.height * .12);
+      ctx.fillRect(canvas.width * .08, canvas.height * .42, canvas.width * .3, canvas.height * .12);
+    }
 
     function render() {
       const ui = uiSelect.value;
       const p = stylePrefixes[ui];
       const title = styleTitles[ui];
+
       document.body.dataset.ui = ui;
       document.body.dataset.theme = themeSelect.value;
       document.body.dataset.mode = modeSelect.value;
       skip.className = `${p}-skip-link`;
+
       main.innerHTML = `
-        <section class="${p}-page">
+        <section class="${p}-page demo-showcase">
           <div class="${p}-container ${p}-stack">
             <nav class="${p}-nav" aria-label="Primary">
-              <a class="${p}-nav-link is-active" href="#">Overview</a>
+              <a class="${p}-nav-link is-active" aria-current="page" href="#overview">Overview</a>
               <a class="${p}-nav-link" href="#components">Components</a>
               <a class="${p}-nav-link" href="#native">Native HTML</a>
-              <a class="${p}-nav-link" href="#table">Table</a>
+              <a class="${p}-nav-link" href="#bridge">Bridge</a>
+              <a class="${p}-nav-link" href="#usage">Usage</a>
             </nav>
 
-            <article class="${p}-card ${p}-hover-lift">
+            <header id="overview" class="${p}-card ${p}-hover-lift">
               <p class="${p}-kicker">${title}</p>
               <h1 class="${p}-title">UI Style Kit CSS</h1>
-              <p class="${p}-subtitle">A CSS-only style kit with multiple UI systems, 10 shared color themes, light/dark/contrast modes, and native HTML coverage.</p>
+              <p class="${p}-subtitle demo-section-lede">A CSS-only style kit with 11 UI systems, 10 shared color themes, light/dark/contrast modes, component classes, native HTML coverage, and an optional Interactive Surface bridge.</p>
               <div class="${p}-cluster">
                 <button class="${p}-button ${p}-button-primary">Primary</button>
                 <button class="${p}-button ${p}-button-secondary">Secondary</button>
                 <button class="${p}-button">Neutral</button>
-                <button class="${p}-icon-button" aria-label="Icon button">★</button>
+                <button class="${p}-button ${p}-button-ghost">Ghost</button>
+                <button class="${p}-icon-button" aria-label="Favorite">&#9733;</button>
                 <span class="${p}-badge ${p}-badge-primary">Primary</span>
                 <span class="${p}-badge ${p}-badge-warning">Warning</span>
               </div>
-            </article>
+            </header>
 
-            <section id="components" class="${p}-grid">
-              <article class="${p}-card">
-                <p class="${p}-kicker">Controls</p>
-                <h2 class="${p}-heading">Form Components</h2>
-                <label class="${p}-field"><span class="${p}-label">Project Name</span><input class="${p}-input" placeholder="Golden Goose Website" /></label>
-                <label class="${p}-field"><span class="${p}-label">Message</span><textarea class="${p}-textarea" placeholder="Write something useful..."></textarea></label>
-                <label class="${p}-switch"><input type="checkbox" checked><span class="${p}-switch-track"><span class="${p}-switch-thumb"></span></span><span>Enabled</span></label>
-              </article>
+            <section id="components" class="${p}-stack">
+              <div class="demo-section-lede">
+                <p class="${p}-kicker">Components</p>
+                <h2 class="${p}-heading">Prefixed component classes and visible states</h2>
+                <p class="${p}-copy">Each style preset uses the same component API with a style-specific prefix such as <code>${p}-button</code>, <code>${p}-card</code>, and <code>${p}-alert</code>.</p>
+              </div>
 
-              <article class="${p}-card">
-                <p class="${p}-kicker">Status</p>
-                <h2 class="${p}-heading">Alerts + Progress</h2>
-                <div class="${p}-alert ${p}-alert-success"><p class="${p}-alert-title">Success</p><p class="${p}-alert-body">The package stylesheet is loaded.</p></div>
-                <div class="${p}-progress" aria-label="Progress"><div class="${p}-progress-bar" style="--${p}-progress-value: 68%"></div></div>
-                <div class="${p}-cluster"><span class="${p}-badge ${p}-badge-success">Success</span><span class="${p}-badge ${p}-badge-danger">Danger</span></div>
-              </article>
+              <div class="demo-showcase-grid">
+                <article class="${p}-card demo-control-card" data-testid="component-controls">
+                  <p class="${p}-kicker">Controls</p>
+                  <h3 class="${p}-heading">Buttons, progress, loading, and tooltips</h3>
+                  <div class="demo-control-showcase">
+                    <section class="demo-control-panel" data-testid="component-buttons">
+                      <h4>Button variants</h4>
+                      <div class="demo-button-row">
+                        <button class="${p}-button ${p}-button-primary">Primary</button>
+                        <button class="${p}-button ${p}-button-secondary">Secondary</button>
+                        <button class="${p}-button">Neutral</button>
+                        <button class="${p}-button ${p}-button-danger">Danger</button>
+                        <button class="${p}-button ${p}-button-ghost">Ghost</button>
+                        <button class="${p}-icon-button" aria-label="Icon action">?</button>
+                      </div>
+                    </section>
 
-              <article class="${p}-well">
-                <h2 class="${p}-heading">Surface Well</h2>
-                <p class="${p}-copy">This inset/soft surface demonstrates secondary containers and grouped content.</p>
-                <hr class="${p}-divider" />
-                <p><code>data-ui="${ui}"</code> <code>data-theme="${themeSelect.value}"</code> <code>data-mode="${modeSelect.value}"</code></p>
-              </article>
+                    <section class="demo-control-panel" data-testid="component-progress">
+                      <h4>Progress</h4>
+                      <div class="demo-progress-stack">
+                        <div class="${p}-progress" aria-label="Component progress"><div class="${p}-progress-bar" style="--${p}-progress-value: 68%"></div></div>
+                        <div class="${p}-progress" aria-label="Secondary progress"><div class="${p}-progress-bar" style="--${p}-progress-value: 34%"></div></div>
+                      </div>
+                    </section>
+
+                    <section class="demo-control-panel" data-testid="component-spinner">
+                      <h4>Loading</h4>
+                      <div class="demo-button-row">
+                        <span class="${p}-spinner ${p}-spinner-sm" aria-label="Small loading spinner"></span>
+                        <span class="${p}-spinner" aria-label="Loading spinner"></span>
+                        <span class="${p}-spinner ${p}-spinner-lg" aria-label="Large loading spinner"></span>
+                        <span class="ui-spinner" data-loading-spinner aria-label="Native loading spinner"></span>
+                      </div>
+                    </section>
+
+                    <section class="demo-control-panel" data-testid="component-tooltips">
+                      <h4>Visible tooltips</h4>
+                      <div class="demo-tooltip-row">
+                        <span class="${p}-tooltip ${p}-tooltip-top" role="tooltip" data-testid="tooltip-primary">Primary tip<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
+                        <span class="${p}-tooltip ${p}-tooltip-right" role="tooltip" data-testid="tooltip-secondary">Context cue<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
+                        <span class="${p}-tooltip ${p}-tooltip-bottom" role="tooltip" data-testid="tooltip-accent">Action hint<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
+                      </div>
+                    </section>
+                  </div>
+                </article>
+
+                <article class="${p}-card" data-testid="component-buttons-states">
+                  <p class="${p}-kicker">States</p>
+                  <h3 class="${p}-heading">Interactive states</h3>
+                  <div class="demo-state-grid">
+                    <button class="${p}-button" data-testid="component-button-hover">Hover target</button>
+                    <button class="${p}-button" data-testid="component-button-focus">Focus target</button>
+                    <button class="${p}-button is-active" data-testid="component-button-active" aria-pressed="true">Active pressed</button>
+                    <button class="${p}-button" data-testid="component-button-disabled" disabled>Disabled</button>
+                    <button class="${p}-button ${p}-button-primary" data-testid="component-button-busy" aria-busy="true">Busy</button>
+                  </div>
+                </article>
+
+                <article class="${p}-card" data-testid="component-fields">
+                  <p class="${p}-kicker">Fields</p>
+                  <h3 class="${p}-heading">Inputs and choices</h3>
+                  <div class="demo-form-grid">
+                    <label class="${p}-field"><span class="${p}-label">Text input</span><input class="${p}-input" value="Styled input"><span class="${p}-help-text">Help text</span></label>
+                    <label class="${p}-field"><span class="${p}-label">Select</span><select class="${p}-select"><option>Default</option><option>Alternate</option></select></label>
+                    <label class="${p}-field"><span class="${p}-label">Textarea</span><textarea class="${p}-textarea">Styled textarea content.</textarea></label>
+                  </div>
+                  ${renderChoiceControls(ui, p)}
+                </article>
+
+                <article class="${p}-card" data-testid="component-badges">
+                  <p class="${p}-kicker">Badges</p>
+                  <h3 class="${p}-heading">Status badges</h3>
+                  <div class="demo-badge-showcase">
+                    <div class="demo-badge-group">
+                      <p class="demo-badge-label">Color roles</p>
+                      <div class="demo-badge-row">
+                        <span class="${p}-badge">Neutral</span>
+                        <span class="${p}-badge ${p}-badge-primary">Primary</span>
+                        <span class="${p}-badge ${p}-badge-secondary">Secondary</span>
+                        <span class="${p}-badge ${p}-badge-success">Success</span>
+                        <span class="${p}-badge ${p}-badge-warning">Warning</span>
+                        <span class="${p}-badge ${p}-badge-danger">Danger</span>
+                      </div>
+                    </div>
+                    <div class="demo-badge-group">
+                      <p class="demo-badge-label">Workflow</p>
+                      <div class="demo-badge-row">
+                        <span class="${p}-badge ${p}-badge-primary">Draft</span>
+                        <span class="${p}-badge ${p}-badge-secondary">Review</span>
+                        <span class="${p}-badge ${p}-badge-success">Ready</span>
+                        <span class="${p}-badge ${p}-badge-warning">Blocked</span>
+                      </div>
+                    </div>
+                    <div class="demo-badge-group">
+                      <p class="demo-badge-label">Counts</p>
+                      <div class="demo-badge-row">
+                        <span class="${p}-badge">12 open</span>
+                        <span class="${p}-badge ${p}-badge-primary">4 new</span>
+                        <span class="${p}-badge ${p}-badge-danger">2 failed</span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="${p}-card" data-testid="component-alerts">
+                  <p class="${p}-kicker">Alerts</p>
+                  <h3 class="${p}-heading">Messages</h3>
+                  <div class="${p}-alert ${p}-alert-success"><p class="${p}-alert-title">Success</p><p class="${p}-alert-body">The stylesheet is active.</p></div>
+                  <div class="${p}-alert ${p}-alert-warning"><p class="${p}-alert-title">Warning</p><p class="${p}-alert-body">Check contrast mode before release.</p></div>
+                  <div class="${p}-alert ${p}-alert-danger"><p class="${p}-alert-title">Danger</p><p class="${p}-alert-body">Invalid state styling is visible.</p></div>
+                </article>
+
+                <article class="${p}-table-wrap demo-table-card" data-testid="component-table">
+                  <table class="${p}-table">
+                    <caption>Classed table component</caption>
+                    <thead><tr><th>Element</th><th>State</th><th>Coverage</th></tr></thead>
+                    <tbody>
+                      <tr><td>Button</td><td>hover / active / disabled / busy</td><td>Classed</td></tr>
+                      <tr><td>Input</td><td>hover / focus / invalid / disabled</td><td>Classed</td></tr>
+                      <tr><td>Table</td><td>header / caption / row hover</td><td>Classed</td></tr>
+                    </tbody>
+                  </table>
+                </article>
+              </div>
             </section>
 
-            <section id="native" class="${p}-card">
-              <h2>Native HTML Coverage</h2>
-              <p>This paragraph, <a href="#native">link</a>, <mark>marked text</mark>, <code>inline code</code>, <kbd>Ctrl</kbd> + <kbd>S</kbd>, and <abbr title="Accessible Rich Internet Applications">ARIA</abbr> abbreviation are styled without utility classes.</p>
-              <blockquote>CSS can improve presentation accessibility, but semantic HTML and keyboard-safe JavaScript are still required.</blockquote>
-              <ul><li>Unordered list item</li><li>Another item</li></ul>
-              <ol><li>Ordered list item</li><li>Another item</li></ol>
-              <details><summary>Details and summary</summary><p>Native disclosure widgets are covered too.</p></details>
-              <fieldset><legend>Native Fieldset</legend><label>Email <input type="email" placeholder="name@example.com"></label><br><label><input type="checkbox" checked> Receive updates</label><br><label><input type="radio" name="demo-radio" checked> Option A</label></fieldset>
-              <label>Range <input type="range" value="62"></label>
-              <progress value="72" max="100">72%</progress>
-              <meter value="0.68">68%</meter>
+            <section class="${p}-card" data-testid="utility-classes">
+              <p class="${p}-kicker">Utilities</p>
+              <h2 class="${p}-heading">Text, surfaces, layout, and style-specific utilities</h2>
+              <div class="demo-token-grid">
+                <div class="demo-token-sample" data-testid="utility-color-grid">
+                  <p class="demo-utility-label">Color utilities</p>
+                  <div class="demo-color-chip-grid">
+                    <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-primary)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-primary">Primary</strong><small>Action emphasis</small></span></div>
+                    <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-secondary)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-secondary">Secondary</strong><small>Supporting action</small></span></div>
+                    <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-accent)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-accent">Accent</strong><small>Highlight note</small></span></div>
+                    <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-success)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-success">Success</strong><small>Positive state</small></span></div>
+                    <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-warning)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-warning">Warning</strong><small>Needs review</small></span></div>
+                    <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-danger)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-danger">Danger</strong><small>Blocking state</small></span></div>
+                  </div>
+                </div>
+                <div class="demo-token-sample" data-testid="utility-surface-grid">
+                  <p class="demo-utility-label">Surface utilities</p>
+                  <div class="demo-utility-surface-grid">
+                    <div class="${p}-well demo-utility-surface"><strong>Inset content</strong><span class="${p}-text-muted">Well utility</span></div>
+                    <div class="${p}-well ${p}-surface-sm demo-utility-surface"><strong>Compact inset</strong><span class="${p}-text-muted">Small surface</span></div>
+                    <div class="${p}-bg-primary ${p}-rounded-lg demo-utility-surface"><strong>Primary fill</strong><span>Background utility</span></div>
+                  </div>
+                </div>
+                <div class="demo-token-sample" data-testid="utility-layout-sample">
+                  <p class="demo-utility-label">Shape and layout utilities</p>
+                  <div class="demo-utility-layout-sample">
+                    <span class="${p}-badge ${p}-pill">Pill shape</span>
+                    <span class="${p}-badge ${p}-rounded">Rounded</span>
+                    <span class="${p}-badge ${p}-border">Border utility</span>
+                    <span class="${p}-text-muted">Muted annotation</span>
+                  </div>
+                  <hr class="${p}-divider">
+                  ${renderStyleSpecificSurface(ui, p)}
+                </div>
+              </div>
             </section>
 
-            <section id="table" class="${p}-table-wrap">
-              <table class="${p}-table">
-                <caption>Component coverage example</caption>
-                <thead><tr><th>Element</th><th>State</th><th>Coverage</th></tr></thead>
-                <tbody>
-                  <tr><td>Button</td><td>Hover / active / disabled</td><td>Class + native</td></tr>
-                  <tr><td>Input</td><td>Focus / invalid / disabled</td><td>Class + native</td></tr>
-                  <tr><td>Table</td><td>Caption / header / hover</td><td>Class + native</td></tr>
-                </tbody>
-              </table>
+            <section id="native" class="${p}-stack">
+              <div class="demo-section-lede">
+                <p class="${p}-kicker">Native HTML</p>
+                <h2 class="${p}-heading">Unclassed elements styled by <code>data-ui</code></h2>
+                <p class="${p}-copy">These samples use semantic HTML without UI Style Kit component classes, so the native fallback selectors are visible.</p>
+              </div>
+
+              <div class="demo-native-grid">
+                <section class="${p}-panel demo-native-sample" data-testid="native-text">
+                  <h1>Native heading h1</h1>
+                  <h2>Native heading h2</h2>
+                  <h3>Native heading h3</h3>
+                  <p>Paragraph text with a <a href="#native">link</a>, <mark>mark</mark>, <code>code</code>, <kbd>Ctrl</kbd>, <samp>sample</samp>, <abbr title="Accessible Rich Internet Applications">ARIA</abbr>, <small>small text</small>, <strong>strong</strong>, <em>emphasis</em>, <q>quote</q>, <ins>inserted</ins>, <del>deleted</del>, H<sub>2</sub>O, x<sup>2</sup>, <time datetime="2026-06-22">June 22, 2026</time>, <data value="20">20 tokens</data>, and <dfn>definition</dfn>.</p>
+                  <p><ruby>UI<rt>style</rt></ruby> <output>Output value</output></p>
+                  <blockquote>Native blockquote styling is part of the fallback surface.</blockquote>
+                  <pre><code>button:not([class]) {
+  color: var(--${p}-on-primary);
+}</code></pre>
+                  <hr>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-lists">
+                  <h3>Lists and descriptions</h3>
+                  <ul><li>Unordered item</li><li>Second unordered item</li></ul>
+                  <ol><li>Ordered item</li><li>Second ordered item</li></ol>
+                  <menu><li>Menu item</li><li>Second menu item</li></menu>
+                  <dl><dt>Definition term</dt><dd>Definition description</dd><dt>Token</dt><dd>Shared color variable</dd></dl>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-media">
+                  <h3>Media elements</h3>
+                  <figure>
+                    <picture>
+                      <img alt="Abstract style swatch" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 160'%3E%3Crect width='320' height='160' fill='%236f8cff'/%3E%3Ccircle cx='235' cy='78' r='46' fill='%23ffcc66'/%3E%3Cpath d='M38 116 L126 32 L188 116 Z' fill='%23ffffff' fill-opacity='.72'/%3E%3C/svg%3E">
+                    </picture>
+                    <figcaption>Figure, picture, image, and figcaption.</figcaption>
+                  </figure>
+                  <canvas class="demo-media-box demo-canvas" width="320" height="140" data-demo-canvas>Canvas preview</canvas>
+                  <svg class="demo-media-box" role="img" aria-label="Inline SVG sample" viewBox="0 0 320 140"><rect width="320" height="140" fill="currentColor" opacity=".12"></rect><circle cx="90" cy="70" r="42" fill="currentColor" opacity=".45"></circle><rect x="150" y="45" width="110" height="50" fill="currentColor" opacity=".28"></rect></svg>
+                  <video class="demo-media-box" controls></video>
+                  <audio controls></audio>
+                  <iframe class="demo-iframe" title="Inline iframe sample" srcdoc="<p>iframe preview</p>"></iframe>
+                  <object class="demo-object" aria-label="Object sample">Object sample</object>
+                  <embed class="demo-embed" title="Embed sample">
+                  <math><mi>x</mi><mo>=</mo><mn>2</mn></math>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-forms">
+                  <h3>Forms</h3>
+                  <fieldset>
+                    <legend>Native fieldset</legend>
+                    <div class="demo-form-grid">
+                      <label>Text <input type="text" value="Text value"></label>
+                      <label>Email <input type="email" value="name@example.com"></label>
+                      <label>Search <search><input type="search" value="Query"></search></label>
+                      <label>Textarea <textarea>Native textarea</textarea></label>
+                      <label>Select <select><optgroup label="Group"><option>Option A</option><option>Option B</option></optgroup></select></label>
+                      <label>Invalid <input required aria-invalid="true" placeholder="Required"></label>
+                      <label>Disabled <input disabled value="Disabled"></label>
+                      <label>Color <input type="color" value="#6f8cff"></label>
+                      <label>File <input type="file"></label>
+                    </div>
+                    <div class="demo-inline-row">
+                      <label><input type="checkbox" checked> Checked</label>
+                      <label><input type="checkbox"> Unchecked</label>
+                      <label><input type="radio" name="native-radio-${ui}" checked> Radio A</label>
+                      <label><input type="radio" name="native-radio-${ui}"> Radio B</label>
+                    </div>
+                    <label>Range <input type="range" value="62"></label>
+                  </fieldset>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-buttons">
+                  <h3>Native buttons</h3>
+                  <div class="demo-button-row">
+                    <button>Native button</button>
+                    <button type="button">Hover target</button>
+                    <button type="button" aria-busy="true">Busy native</button>
+                    <button type="button" disabled>Disabled native</button>
+                    <input type="button" value="Input button">
+                    <input type="submit" value="Submit input">
+                    <input type="reset" value="Reset input">
+                  </div>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-table">
+                  <h3>Native table</h3>
+                  <div class="demo-native-table-scroll">
+                    <table>
+                      <caption>Native table caption</caption>
+                      <thead><tr><th>Element</th><th>Selector</th></tr></thead>
+                      <tbody><tr><td>Table cell</td><td>td</td></tr><tr><td>Header cell</td><td>th</td></tr></tbody>
+                    </table>
+                  </div>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-disclosure-dialog">
+                  <h3>Disclosure and dialog</h3>
+                  <details open><summary>Open details summary</summary><p>Details content is styled as a native disclosure.</p></details>
+                  <dialog class="demo-inline-dialog" open>
+                    <form method="dialog">
+                      <h3>Inline dialog</h3>
+                      <p>This open dialog shows the native dialog surface without a modal backdrop.</p>
+                      <button>Close sample</button>
+                    </form>
+                  </dialog>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-meter-progress">
+                  <h3>Meter and progress</h3>
+                  <label>Progress <progress value="72" max="100">72%</progress></label>
+                  <label>Meter <meter value=".68">68%</meter></label>
+                </section>
+
+                <section class="${p}-panel demo-native-sample" data-testid="native-semantics">
+                  <header><h3>Semantic regions</h3></header>
+                  <nav aria-label="Native region navigation"><a href="#overview" aria-current="page">Current link</a> <a href="#usage">Usage link</a></nav>
+                  <article><p>Native article surface</p></article>
+                  <aside><p>Native aside surface</p></aside>
+                  <address>Address block, 100 Demo Avenue</address>
+                  <footer><small>Footer and small text</small></footer>
+                  <p hidden>Hidden content remains hidden.</p>
+                </section>
+              </div>
+            </section>
+
+            <section id="bridge" class="${p}-card demo-bridge-preview" data-testid="bridge-preview">
+              <p class="${p}-kicker">Interactive Surface Bridge</p>
+              <h2 class="${p}-heading">Detached by default, attached on demand</h2>
+              <p class="${p}-copy">The bridge swaps the demo stylesheet between <code>${defaultBundle}</code> and <code>${bridgeAwareBundle}</code>. When attached, interactable elements receive <code>.interactive-surface</code>, <code>data-surface-variant</code>, and <code>data-surface-level</code> hooks.</p>
+              <label class="demo-switch-control" data-testid="bridge-switch">
+                <input id="bridgeToggle" type="checkbox" role="switch" />
+                <span class="demo-switch-track" data-testid="bridge-switch-track" aria-hidden="true">
+                  <span class="demo-switch-thumb" data-testid="bridge-switch-thumb"></span>
+                </span>
+                <span class="demo-switch-copy">
+                  <strong>Attach interactive surface bridge</strong>
+                  <span data-testid="bridge-status">Detached - default bundle</span>
+                </span>
+              </label>
+              <div class="demo-bridge-grid">
+                <div class="interactive-surface" data-surface-variant="subtle" data-surface-level="1" data-testid="bridge-level-1"><strong>Level 1 surface</strong><small>Subtle rest layer for quiet inline interactions.</small></div>
+                <div class="interactive-surface" data-surface-variant="secondary" data-surface-level="2" data-testid="bridge-level-2"><strong>Level 2 surface</strong><small>Raised state for controls, selects, and grouped actions.</small></div>
+                <div class="interactive-surface" data-surface-variant="primary" data-surface-level="3" data-testid="bridge-level-3"><strong>Level 3 surface</strong><small>Prominent active state with the strongest state layer.</small></div>
+              </div>
+            </section>
+
+            <section id="usage" class="${p}-card" data-testid="usage-imports">
+              <p class="${p}-kicker">Usage</p>
+              <h2 class="${p}-heading">Import paths and data attributes</h2>
+              <div class="demo-showcase-grid">
+                <pre class="demo-code"><code>import "ui-style-kit-css";
+
+document.body.dataset.ui = "${ui}";
+document.body.dataset.theme = "${themeSelect.value}";
+document.body.dataset.mode = "${modeSelect.value}";</code></pre>
+                <pre class="demo-code"><code>import "ui-style-kit-css/theme-colors.css";
+import "ui-style-kit-css/native-elements.css";
+import "ui-style-kit-css/${ui}.css";</code></pre>
+                <pre class="demo-code"><code>import "ui-style-kit-css/with-bridge.css";
+import "ui-style-kit-css/interactive-surface-bridge.css";</code></pre>
+              </div>
             </section>
           </div>
         </section>`;
+
+      const bridgeToggle = document.getElementById("bridgeToggle");
+      bindPrimaryNav();
+      syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview");
+      if (bridgeToggle) {
+        bridgeToggle.checked = bridgeAttached;
+        bridgeToggle.addEventListener("change", updateBridge);
+      }
+      drawDemoCanvas();
+      updateBridge();
     }
-    uiSelect.addEventListener('change', render);
-    themeSelect.addEventListener('change', render);
-    modeSelect.addEventListener('change', render);
+
+    uiSelect.addEventListener("change", render);
+    themeSelect.addEventListener("change", render);
+    modeSelect.addEventListener("change", render);
+    window.addEventListener("hashchange", () => syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview"));
     render();
   </script>
 </body>

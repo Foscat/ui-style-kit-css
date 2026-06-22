@@ -12,6 +12,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.minimal_saas {
 :root {
@@ -90,6 +91,36 @@
   --saas-warning-text-rgb: var(--usk-warning-text-rgb);
   --saas-danger-text-rgb: var(--usk-danger-text-rgb);
   --saas-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--saas-surface);
+  --usk-native-surface-strong: var(--saas-surface-strong);
+  --usk-native-surface-soft: var(--saas-surface-soft);
+  --usk-native-card-bg: var(--saas-card-bg);
+  --usk-native-control-bg: var(--saas-control-bg);
+  --usk-native-text: var(--saas-text);
+  --usk-native-text-muted: var(--saas-text-muted);
+  --usk-native-border: var(--saas-border);
+  --usk-native-primary: var(--saas-primary);
+  --usk-native-primary-hover: var(--saas-primary-hover);
+  --usk-native-on-primary: var(--saas-on-primary);
+  --usk-native-focus: var(--saas-focus);
+  --usk-native-success: var(--saas-success);
+  --usk-native-warning: var(--saas-warning);
+  --usk-native-danger: var(--saas-danger);
+  --usk-native-link: var(--saas-link);
+  --usk-native-font-body: var(--saas-font-body);
+  --usk-native-font-heading: var(--saas-font-heading);
+  --usk-native-font-control: var(--saas-font-control);
+  --usk-native-font-mono: var(--saas-font-mono);
+  --usk-native-radius-sm: var(--saas-radius-sm);
+  --usk-native-radius: var(--saas-radius-md);
+  --usk-native-radius-lg: var(--saas-radius-lg);
+  --usk-native-shadow: var(--saas-shadow-sm, none);
+  --usk-native-shadow-md: var(--saas-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--saas-focus-ring, 0 0 0 3px rgb(var(--saas-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--saas-space-5);
   --saas-bg: rgb(var(--saas-bg-rgb));
   --saas-surface: rgb(var(--saas-surface-rgb) / var(--saas-panel-alpha));
   --saas-surface-strong: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha));
@@ -228,7 +259,7 @@
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--saas-space-2);
   min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--saas-surface); color: var(--saas-text);
   border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--saas-shadow-alpha));
-  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; user-select: none;
+  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
   transition: color var(--saas-transition-fast), background var(--saas-transition-fast), border-color var(--saas-transition-fast), box-shadow var(--saas-transition-fast), transform var(--saas-transition-fast);
 }
 .saas-button:hover, .saas-icon-button:hover { transform: translateY(-1px); border-color: var(--saas-primary); }
@@ -300,6 +331,14 @@
 .saas-nav-link:hover { color: var(--saas-text); background: var(--saas-surface-soft); }
 .saas-nav-link[aria-current="page"], .saas-nav-link.is-active { color: var(--saas-on-primary); background: var(--saas-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.saas-tooltip, [data-ui="minimal-saas"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .55rem .75rem;
+  background: var(--saas-text); color: var(--saas-bg); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md);
+  box-shadow: 0 .75rem 1.6rem rgb(15 23 42 / .24); font-size: .82rem; font-weight: 850; line-height: 1.35;
+}
+.saas-tooltip-arrow { inline-size: .55rem; block-size: .55rem; flex: 0 0 auto; background: currentColor; border-radius: .12rem; opacity: .9; transform: rotate(45deg); }
+
 .saas-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--saas-surface-soft); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-pill); }
 .saas-progress-bar { height: 100%; width: var(--saas-progress-value, 50%); background: linear-gradient(90deg, var(--saas-primary), var(--saas-accent)); border-radius: inherit; }
 
@@ -333,84 +372,6 @@
 .saas-metric-value { color: var(--saas-text); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 850; line-height: 1; letter-spacing: -.04em; }
 .saas-metric-label { color: var(--saas-text-muted); font-size: .9rem; font-weight: 700; }
 .saas-empty-state { display: grid; place-items: center; gap: var(--saas-space-3); min-height: 14rem; padding: var(--saas-space-6); text-align: center; background: var(--saas-surface-soft); border: 1px dashed var(--saas-border); border-radius: var(--saas-radius-lg); }
-
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-[data-ui="minimal-saas"] :where(h1, h2, h3, h4, h5, h6) { color: var(--saas-text); font-family: var(--saas-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="minimal-saas"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="minimal-saas"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="minimal-saas"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="minimal-saas"] :where(p) { margin: 0 0 1rem; color: var(--saas-text-muted); line-height: 1.7; }
-[data-ui="minimal-saas"] :where(a) { color: var(--saas-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="minimal-saas"] :where(a:hover) { color: var(--saas-primary-hover); }
-[data-ui="minimal-saas"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(li) { margin-block: .25rem; }
-[data-ui="minimal-saas"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--saas-text); background: var(--saas-surface-soft); border-left: .35rem solid var(--saas-primary); border-radius: var(--saas-radius-md); }
-[data-ui="minimal-saas"] :where(code, kbd, samp) { font-family: var(--saas-font-mono); font-size: .92em; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid rgb(var(--saas-border-rgb) / .45); border-radius: var(--saas-radius-xs); padding: .15em .35em; }
-[data-ui="minimal-saas"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); }
-[data-ui="minimal-saas"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="minimal-saas"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--saas-border); }
-[data-ui="minimal-saas"] :where(mark) { background: rgb(var(--saas-warning-rgb) / .32); color: var(--saas-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="minimal-saas"] :where(small) { color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(abbr[title]) { text-decoration: underline dotted var(--saas-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="minimal-saas"] :where(img, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="minimal-saas"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="minimal-saas"] :where(figcaption) { margin-top: .5rem; color: var(--saas-text-muted); font-size: .9rem; }
-[data-ui="minimal-saas"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); }
-[data-ui="minimal-saas"] :where(legend) { padding-inline: .35rem; color: var(--saas-text); font-weight: 900; }
-[data-ui="minimal-saas"] :where(label) { color: var(--saas-text); font-weight: 750; }
-[data-ui="minimal-saas"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); font: inherit; }
-[data-ui="minimal-saas"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="minimal-saas"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="minimal-saas"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--saas-primary); color: var(--saas-on-primary); border: 1px solid var(--saas-primary); border-radius: var(--saas-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="minimal-saas"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--saas-primary-hover); border-color: var(--saas-primary-hover); }
-[data-ui="minimal-saas"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--saas-primary); }
-[data-ui="minimal-saas"] :where(input[type="range"]) { width: 100%; accent-color: var(--saas-primary); }
-[data-ui="minimal-saas"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--saas-surface-soft); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-sm); }
-[data-ui="minimal-saas"] :where(input[type="file"]) { color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--saas-primary); border-radius: var(--saas-radius-sm); background: var(--saas-primary); color: var(--saas-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="minimal-saas"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="minimal-saas"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--saas-danger); }
-[data-ui="minimal-saas"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); overflow: hidden; }
-[data-ui="minimal-saas"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--saas-text-muted); font-size: .9rem; }
-[data-ui="minimal-saas"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--saas-border); }
-[data-ui="minimal-saas"] :where(th) { color: var(--saas-text); background: rgb(var(--saas-primary-rgb) / .08); }
-[data-ui="minimal-saas"] :where(td) { color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); }
-[data-ui="minimal-saas"] :where(summary) { color: var(--saas-text); font-weight: 900; cursor: pointer; }
-[data-ui="minimal-saas"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--saas-surface-strong); color: var(--saas-text); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="minimal-saas"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="minimal-saas"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--saas-primary); }
-[data-ui="minimal-saas"] :where(:focus-visible) { outline: 3px solid var(--saas-focus); outline-offset: 3px; box-shadow: var(--saas-focus-ring); }
-[data-ui="minimal-saas"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--saas-focus); outline-offset: .35rem; }
-[data-ui="minimal-saas"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="minimal-saas"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="minimal-saas"] :where([hidden]) { display: none !important; }
-[data-ui="minimal-saas"] ::selection { background: var(--saas-primary); color: var(--saas-on-primary); }
-
-/* Extended native element coverage */
-[data-ui="minimal-saas"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--saas-text); }
-[data-ui="minimal-saas"] :where(article, aside) { background: var(--saas-card-bg); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-lg); padding: var(--saas-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--saas-shadow-alpha) * .72)); }
-[data-ui="minimal-saas"] :where(dl) { margin: 0 0 1rem; color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(dt) { color: var(--saas-text); font-weight: 900; }
-[data-ui="minimal-saas"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="minimal-saas"] :where(strong, b) { color: var(--saas-text); font-weight: 900; }
-[data-ui="minimal-saas"] :where(em, i, cite, var) { color: var(--saas-text); }
-[data-ui="minimal-saas"] :where(q) { color: var(--saas-text); }
-[data-ui="minimal-saas"] :where(ins) { color: var(--saas-text); text-decoration-color: var(--saas-success); }
-[data-ui="minimal-saas"] :where(del, s) { color: var(--saas-text); text-decoration-color: var(--saas-danger); }
-[data-ui="minimal-saas"] :where(sub, sup) { color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(output) { color: var(--saas-text); font-weight: 800; }
-[data-ui="minimal-saas"] :where(optgroup) { color: var(--saas-text); background: var(--saas-surface); }
-[data-ui="minimal-saas"] :where(option) { color: var(--saas-text); background: var(--saas-surface); }
-[data-ui="minimal-saas"] :where(time, data, dfn) { color: var(--saas-text); }
-[data-ui="minimal-saas"] :where(ruby) { color: var(--saas-text); }
-[data-ui="minimal-saas"] :where(rt, rp) { color: var(--saas-text-muted); font-size: .72em; }
-[data-ui="minimal-saas"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--saas-text-muted); }
-[data-ui="minimal-saas"] :where(search) { display: block; color: var(--saas-text); }
-[data-ui="minimal-saas"] :where(audio, picture, object, embed, math) { max-width: 100%; }
 
 .saas-spinner, .saas-loading-spinner, [data-ui="minimal-saas"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;

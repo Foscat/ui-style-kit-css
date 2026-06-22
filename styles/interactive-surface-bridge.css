@@ -1,341 +1,177 @@
 /* =========================================================
    UI Style Kit CSS x Interactive Surface CSS Bridge
 
-   This optional bridge maps UI Style Kit semantic tokens to
-   interactive-surface-css tokens so both libraries can be
-   used together without per-theme overrides.
+   This optional bridge maps shared UI Style Kit semantic roles to
+   interactive-surface-css tokens and supplies visible state layers.
+   The flow follows scheme tokens -> mode roles -> bridge tokens ->
+   surface behavior, avoiding per-theme and per-preset token maps.
 ========================================================= */
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface {
   --interactive-surface-border-width: 1px;
+  --interactive-surface-bg: rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255)));
+  --interactive-surface-fg: rgb(var(--usk-text-rgb));
+  --interactive-surface-border-color: rgb(var(--usk-border-rgb, 128 128 128) / .72);
+  --interactive-surface-focus-ring-color: rgb(var(--usk-focus-rgb, var(--usk-primary-rgb, 72 120 255)));
+  --interactive-surface-radius: .85rem;
+  --interactive-surface-state-layer-color: currentColor;
+  --interactive-surface-state-layer-opacity: 0;
+  --interactive-surface-state-layer-opacity-hover: .08;
+  --interactive-surface-state-layer-opacity-active: .14;
+  --interactive-surface-state-layer-opacity-focus: .18;
+  --interactive-surface-light-icon-color: rgb(var(--usk-warning-rgb, var(--usk-accent-rgb, 255 190 72)));
+  --interactive-surface-dark-icon-color: rgb(var(--usk-text-rgb, 18 18 18));
+  --interactive-surface-accessibility-icon-color: var(--interactive-surface-focus-ring-color);
+  --interactive-surface-light-icon-color-dark: var(--interactive-surface-light-icon-color);
+  --interactive-surface-dark-icon-color-dark: var(--interactive-surface-dark-icon-color);
+  --interactive-surface-accessibility-icon-color-dark: var(--interactive-surface-accessibility-icon-color);
+  --interactive-surface-variant-primary-bg: rgb(var(--usk-primary-rgb));
+  --interactive-surface-variant-primary-fg: rgb(var(--usk-primary-text-rgb, var(--usk-bg-rgb, 255 255 255)));
+  --interactive-surface-variant-primary-border-color: rgb(var(--usk-primary-rgb, 72 120 255));
+  --interactive-surface-variant-secondary-bg: rgb(var(--usk-secondary-rgb, var(--usk-surface-soft-rgb, 96 112 128)));
+  --interactive-surface-variant-secondary-fg: rgb(var(--usk-secondary-text-rgb, var(--usk-text-rgb, 18 18 18)));
+  --interactive-surface-variant-secondary-border-color: rgb(var(--usk-secondary-rgb, 96 112 128));
+  --interactive-surface-variant-accent-bg: rgb(var(--usk-accent-rgb, var(--usk-primary-rgb, 72 120 255)));
+  --interactive-surface-variant-accent-fg: rgb(var(--usk-accent-text-rgb, var(--usk-bg-rgb, 255 255 255)));
+  --interactive-surface-variant-accent-border-color: rgb(var(--usk-accent-rgb, var(--usk-primary-rgb, 72 120 255)));
+  --interactive-surface-variant-subtle-bg: rgb(var(--usk-surface-soft-rgb, var(--usk-surface-rgb, 244 244 244)));
+  --interactive-surface-variant-subtle-fg: rgb(var(--usk-text-rgb, 18 18 18));
+  --interactive-surface-variant-subtle-border-color: rgb(var(--usk-border-rgb, 128 128 128) / .64);
+  --interactive-surface-variant-warning-bg: rgb(var(--usk-warning-rgb, 255 190 72));
+  --interactive-surface-variant-warning-fg: rgb(var(--usk-warning-text-rgb, var(--usk-bg-rgb, 18 18 18)));
+  --interactive-surface-variant-warning-border-color: rgb(var(--usk-warning-rgb, 255 190 72));
+  --interactive-surface-variant-danger-bg: rgb(var(--usk-danger-rgb, 210 72 72));
+  --interactive-surface-variant-danger-fg: rgb(var(--usk-danger-text-rgb, 255 255 255));
+  --interactive-surface-variant-danger-border-color: rgb(var(--usk-danger-rgb, 210 72 72));
+  --interactive-surface-level-1-bg: var(--interactive-surface-variant-subtle-bg);
+  --interactive-surface-level-1-border-color: var(--interactive-surface-variant-subtle-border-color);
+  --interactive-surface-level-1-shadow: 0 1px 2px rgb(var(--usk-bg-rgb, 0 0 0) / .18);
+  --interactive-surface-level-2-bg: var(--interactive-surface-bg);
+  --interactive-surface-level-2-border-color: var(--interactive-surface-border-color);
+  --interactive-surface-level-2-shadow: 0 8px 20px rgb(var(--usk-bg-rgb, 0 0 0) / .22);
+  --interactive-surface-level-3-bg: color-mix(in srgb, var(--interactive-surface-bg) 82%, var(--interactive-surface-variant-primary-bg));
+  --interactive-surface-level-3-border-color: color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 72%, var(--interactive-surface-border-color));
+  --interactive-surface-level-3-shadow: 0 14px 34px rgb(var(--usk-bg-rgb, 0 0 0) / .3), 0 0 0 1px color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 34%, transparent);
+  --interactive-surface-level-bg: var(--interactive-surface-level-1-bg);
+  --interactive-surface-level-border-color: var(--interactive-surface-level-1-border-color);
+  --interactive-surface-level-shadow: var(--interactive-surface-level-1-shadow);
+
+  position: relative;
+  isolation: isolate;
+  background-color: var(--interactive-surface-level-bg, var(--interactive-surface-bg));
+  color: var(--interactive-surface-fg);
+  border-width: var(--interactive-surface-border-width);
+  border-style: solid;
+  border-color: var(--interactive-surface-level-border-color, var(--interactive-surface-border-color));
+  border-radius: var(--interactive-surface-radius);
+  box-shadow: var(--interactive-surface-level-shadow, none);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
 }
 
-:where([data-ui="minimal-saas"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--saas-surface-strong, var(--saas-surface, var(--saas-bg)));
-  --interactive-surface-fg: var(--saas-text);
-  --interactive-surface-border-color: var(--saas-border);
-  --interactive-surface-focus-ring-color: var(--saas-focus, var(--saas-accent, var(--saas-primary)));
-  --interactive-surface-radius: var(--saas-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--saas-text);
-  --interactive-surface-light-icon-color: var(--saas-warning, var(--saas-accent));
-  --interactive-surface-dark-icon-color: var(--saas-text);
-  --interactive-surface-accessibility-icon-color: var(--saas-focus, var(--saas-accent));
-  --interactive-surface-light-icon-color-dark: var(--saas-warning, var(--saas-accent));
-  --interactive-surface-dark-icon-color-dark: var(--saas-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--saas-focus, var(--saas-accent));
-  --interactive-surface-variant-primary-bg: var(--saas-primary);
-  --interactive-surface-variant-primary-fg: var(--saas-on-primary, var(--saas-primary-text, var(--saas-bg)));
-  --interactive-surface-variant-primary-border-color: var(--saas-primary);
-  --interactive-surface-variant-secondary-bg: var(--saas-secondary);
-  --interactive-surface-variant-secondary-fg: var(--saas-on-secondary, var(--saas-secondary-text, var(--saas-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--saas-secondary);
-  --interactive-surface-variant-accent-bg: var(--saas-accent);
-  --interactive-surface-variant-accent-border-color: var(--saas-accent);
-  --interactive-surface-variant-subtle-bg: var(--saas-surface-soft, var(--saas-surface));
-  --interactive-surface-variant-subtle-fg: var(--saas-text);
-  --interactive-surface-variant-subtle-border-color: var(--saas-border);
-  --interactive-surface-variant-warning-bg: var(--saas-warning);
-  --interactive-surface-variant-warning-border-color: var(--saas-warning);
-  --interactive-surface-variant-danger-bg: var(--saas-danger);
-  --interactive-surface-variant-danger-border-color: var(--saas-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--interactive-surface-state-layer-color);
+  opacity: var(--interactive-surface-state-layer-opacity);
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  content: "";
 }
 
-:where([data-ui="bento"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--bento-surface-strong, var(--bento-surface, var(--bento-bg)));
-  --interactive-surface-fg: var(--bento-text);
-  --interactive-surface-border-color: var(--bento-border);
-  --interactive-surface-focus-ring-color: var(--bento-focus, var(--bento-accent, var(--bento-primary)));
-  --interactive-surface-radius: var(--bento-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--bento-text);
-  --interactive-surface-light-icon-color: var(--bento-warning, var(--bento-accent));
-  --interactive-surface-dark-icon-color: var(--bento-text);
-  --interactive-surface-accessibility-icon-color: var(--bento-focus, var(--bento-accent));
-  --interactive-surface-light-icon-color-dark: var(--bento-warning, var(--bento-accent));
-  --interactive-surface-dark-icon-color-dark: var(--bento-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--bento-focus, var(--bento-accent));
-  --interactive-surface-variant-primary-bg: var(--bento-primary);
-  --interactive-surface-variant-primary-fg: var(--bento-on-primary, var(--bento-primary-text, var(--bento-bg)));
-  --interactive-surface-variant-primary-border-color: var(--bento-primary);
-  --interactive-surface-variant-secondary-bg: var(--bento-secondary);
-  --interactive-surface-variant-secondary-fg: var(--bento-on-secondary, var(--bento-secondary-text, var(--bento-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--bento-secondary);
-  --interactive-surface-variant-accent-bg: var(--bento-accent);
-  --interactive-surface-variant-accent-border-color: var(--bento-accent);
-  --interactive-surface-variant-subtle-bg: var(--bento-surface-soft, var(--bento-surface));
-  --interactive-surface-variant-subtle-fg: var(--bento-text);
-  --interactive-surface-variant-subtle-border-color: var(--bento-border);
-  --interactive-surface-variant-warning-bg: var(--bento-warning);
-  --interactive-surface-variant-warning-border-color: var(--bento-warning);
-  --interactive-surface-variant-danger-bg: var(--bento-danger);
-  --interactive-surface-variant-danger-border-color: var(--bento-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface:not([disabled]):not([aria-disabled="true"]):hover {
+  --interactive-surface-state-layer-opacity: var(--interactive-surface-state-layer-opacity-hover);
+
+  transform: translateY(-1px);
 }
 
-:where([data-ui="maximalist"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--max-surface-strong, var(--max-surface, var(--max-bg)));
-  --interactive-surface-fg: var(--max-text);
-  --interactive-surface-border-color: var(--max-border);
-  --interactive-surface-focus-ring-color: var(--max-focus, var(--max-accent, var(--max-primary)));
-  --interactive-surface-radius: var(--max-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--max-text);
-  --interactive-surface-light-icon-color: var(--max-warning, var(--max-accent));
-  --interactive-surface-dark-icon-color: var(--max-text);
-  --interactive-surface-accessibility-icon-color: var(--max-focus, var(--max-accent));
-  --interactive-surface-light-icon-color-dark: var(--max-warning, var(--max-accent));
-  --interactive-surface-dark-icon-color-dark: var(--max-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--max-focus, var(--max-accent));
-  --interactive-surface-variant-primary-bg: var(--max-primary);
-  --interactive-surface-variant-primary-fg: var(--max-on-primary, var(--max-primary-text, var(--max-bg)));
-  --interactive-surface-variant-primary-border-color: var(--max-primary);
-  --interactive-surface-variant-secondary-bg: var(--max-secondary);
-  --interactive-surface-variant-secondary-fg: var(--max-on-secondary, var(--max-secondary-text, var(--max-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--max-secondary);
-  --interactive-surface-variant-accent-bg: var(--max-accent);
-  --interactive-surface-variant-accent-border-color: var(--max-accent);
-  --interactive-surface-variant-subtle-bg: var(--max-surface-soft, var(--max-surface));
-  --interactive-surface-variant-subtle-fg: var(--max-text);
-  --interactive-surface-variant-subtle-border-color: var(--max-border);
-  --interactive-surface-variant-warning-bg: var(--max-warning);
-  --interactive-surface-variant-warning-border-color: var(--max-warning);
-  --interactive-surface-variant-danger-bg: var(--max-danger);
-  --interactive-surface-variant-danger-border-color: var(--max-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface:not([disabled]):not([aria-disabled="true"]):active,
+:where([data-ui][data-theme][data-mode]) .interactive-surface[aria-pressed="true"],
+:where([data-ui][data-theme][data-mode]) .interactive-surface[aria-current="page"],
+:where([data-ui][data-theme][data-mode]) .interactive-surface.is-active {
+  --interactive-surface-state-layer-opacity: var(--interactive-surface-state-layer-opacity-active);
+
+  transform: translateY(0);
 }
 
-:where([data-ui="bauhaus"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--bau-surface-strong, var(--bau-surface, var(--bau-bg)));
-  --interactive-surface-fg: var(--bau-text);
-  --interactive-surface-border-color: var(--bau-border);
-  --interactive-surface-focus-ring-color: var(--bau-focus, var(--bau-accent, var(--bau-primary)));
-  --interactive-surface-radius: var(--bau-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--bau-text);
-  --interactive-surface-light-icon-color: var(--bau-warning, var(--bau-accent));
-  --interactive-surface-dark-icon-color: var(--bau-text);
-  --interactive-surface-accessibility-icon-color: var(--bau-focus, var(--bau-accent));
-  --interactive-surface-light-icon-color-dark: var(--bau-warning, var(--bau-accent));
-  --interactive-surface-dark-icon-color-dark: var(--bau-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--bau-focus, var(--bau-accent));
-  --interactive-surface-variant-primary-bg: var(--bau-primary);
-  --interactive-surface-variant-primary-fg: var(--bau-on-primary, var(--bau-primary-text, var(--bau-bg)));
-  --interactive-surface-variant-primary-border-color: var(--bau-primary);
-  --interactive-surface-variant-secondary-bg: var(--bau-secondary);
-  --interactive-surface-variant-secondary-fg: var(--bau-on-secondary, var(--bau-secondary-text, var(--bau-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--bau-secondary);
-  --interactive-surface-variant-accent-bg: var(--bau-accent);
-  --interactive-surface-variant-accent-border-color: var(--bau-accent);
-  --interactive-surface-variant-subtle-bg: var(--bau-surface-soft, var(--bau-surface));
-  --interactive-surface-variant-subtle-fg: var(--bau-text);
-  --interactive-surface-variant-subtle-border-color: var(--bau-border);
-  --interactive-surface-variant-warning-bg: var(--bau-warning);
-  --interactive-surface-variant-warning-border-color: var(--bau-warning);
-  --interactive-surface-variant-danger-bg: var(--bau-danger);
-  --interactive-surface-variant-danger-border-color: var(--bau-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface:focus-visible {
+  --interactive-surface-state-layer-opacity: var(--interactive-surface-state-layer-opacity-focus);
+
+  outline: 2px solid var(--interactive-surface-focus-ring-color);
+  outline-offset: 3px;
 }
 
-:where([data-ui="tactile"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--tactile-surface-strong, var(--tactile-surface, var(--tactile-bg)));
-  --interactive-surface-fg: var(--tactile-text);
-  --interactive-surface-border-color: var(--tactile-border);
-  --interactive-surface-focus-ring-color: var(--tactile-focus, var(--tactile-accent, var(--tactile-primary)));
-  --interactive-surface-radius: var(--tactile-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--tactile-text);
-  --interactive-surface-light-icon-color: var(--tactile-warning, var(--tactile-accent));
-  --interactive-surface-dark-icon-color: var(--tactile-text);
-  --interactive-surface-accessibility-icon-color: var(--tactile-focus, var(--tactile-accent));
-  --interactive-surface-light-icon-color-dark: var(--tactile-warning, var(--tactile-accent));
-  --interactive-surface-dark-icon-color-dark: var(--tactile-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--tactile-focus, var(--tactile-accent));
-  --interactive-surface-variant-primary-bg: var(--tactile-primary);
-  --interactive-surface-variant-primary-fg: var(--tactile-on-primary, var(--tactile-primary-text, var(--tactile-bg)));
-  --interactive-surface-variant-primary-border-color: var(--tactile-primary);
-  --interactive-surface-variant-secondary-bg: var(--tactile-secondary);
-  --interactive-surface-variant-secondary-fg: var(--tactile-on-secondary, var(--tactile-secondary-text, var(--tactile-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--tactile-secondary);
-  --interactive-surface-variant-accent-bg: var(--tactile-accent);
-  --interactive-surface-variant-accent-border-color: var(--tactile-accent);
-  --interactive-surface-variant-subtle-bg: var(--tactile-surface-soft, var(--tactile-surface));
-  --interactive-surface-variant-subtle-fg: var(--tactile-text);
-  --interactive-surface-variant-subtle-border-color: var(--tactile-border);
-  --interactive-surface-variant-warning-bg: var(--tactile-warning);
-  --interactive-surface-variant-warning-border-color: var(--tactile-warning);
-  --interactive-surface-variant-danger-bg: var(--tactile-danger);
-  --interactive-surface-variant-danger-border-color: var(--tactile-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[disabled],
+:where([data-ui][data-theme][data-mode]) .interactive-surface[aria-disabled="true"] {
+  opacity: .56;
+  cursor: not-allowed;
 }
 
-:where([data-ui="neumorphism"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--neo-surface-strong, var(--neo-surface, var(--neo-bg)));
-  --interactive-surface-fg: var(--neo-text);
-  --interactive-surface-border-color: var(--neo-border);
-  --interactive-surface-focus-ring-color: var(--neo-focus, var(--neo-accent, var(--neo-primary)));
-  --interactive-surface-radius: var(--neo-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--neo-text);
-  --interactive-surface-light-icon-color: var(--neo-warning, var(--neo-accent));
-  --interactive-surface-dark-icon-color: var(--neo-text);
-  --interactive-surface-accessibility-icon-color: var(--neo-focus, var(--neo-accent));
-  --interactive-surface-light-icon-color-dark: var(--neo-warning, var(--neo-accent));
-  --interactive-surface-dark-icon-color-dark: var(--neo-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--neo-focus, var(--neo-accent));
-  --interactive-surface-variant-primary-bg: var(--neo-primary);
-  --interactive-surface-variant-primary-fg: var(--neo-on-primary, var(--neo-primary-text, var(--neo-bg)));
-  --interactive-surface-variant-primary-border-color: var(--neo-primary);
-  --interactive-surface-variant-secondary-bg: var(--neo-secondary);
-  --interactive-surface-variant-secondary-fg: var(--neo-on-secondary, var(--neo-secondary-text, var(--neo-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--neo-secondary);
-  --interactive-surface-variant-accent-bg: var(--neo-accent);
-  --interactive-surface-variant-accent-border-color: var(--neo-accent);
-  --interactive-surface-variant-subtle-bg: var(--neo-surface-soft, var(--neo-surface));
-  --interactive-surface-variant-subtle-fg: var(--neo-text);
-  --interactive-surface-variant-subtle-border-color: var(--neo-border);
-  --interactive-surface-variant-warning-bg: var(--neo-warning);
-  --interactive-surface-variant-warning-border-color: var(--neo-warning);
-  --interactive-surface-variant-danger-bg: var(--neo-danger);
-  --interactive-surface-variant-danger-border-color: var(--neo-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="primary"] {
+  --interactive-surface-bg: var(--interactive-surface-variant-primary-bg);
+  --interactive-surface-fg: var(--interactive-surface-variant-primary-fg);
+  --interactive-surface-border-color: var(--interactive-surface-variant-primary-border-color);
 }
 
-:where([data-ui="retrofuturism"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--retro-surface-strong, var(--retro-surface, var(--retro-bg)));
-  --interactive-surface-fg: var(--retro-text);
-  --interactive-surface-border-color: var(--retro-border);
-  --interactive-surface-focus-ring-color: var(--retro-focus, var(--retro-accent, var(--retro-primary)));
-  --interactive-surface-radius: var(--retro-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--retro-text);
-  --interactive-surface-light-icon-color: var(--retro-warning, var(--retro-accent));
-  --interactive-surface-dark-icon-color: var(--retro-text);
-  --interactive-surface-accessibility-icon-color: var(--retro-focus, var(--retro-accent));
-  --interactive-surface-light-icon-color-dark: var(--retro-warning, var(--retro-accent));
-  --interactive-surface-dark-icon-color-dark: var(--retro-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--retro-focus, var(--retro-accent));
-  --interactive-surface-variant-primary-bg: var(--retro-primary);
-  --interactive-surface-variant-primary-fg: var(--retro-on-primary, var(--retro-primary-text, var(--retro-bg)));
-  --interactive-surface-variant-primary-border-color: var(--retro-primary);
-  --interactive-surface-variant-secondary-bg: var(--retro-secondary);
-  --interactive-surface-variant-secondary-fg: var(--retro-on-secondary, var(--retro-secondary-text, var(--retro-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--retro-secondary);
-  --interactive-surface-variant-accent-bg: var(--retro-accent);
-  --interactive-surface-variant-accent-border-color: var(--retro-accent);
-  --interactive-surface-variant-subtle-bg: var(--retro-surface-soft, var(--retro-surface));
-  --interactive-surface-variant-subtle-fg: var(--retro-text);
-  --interactive-surface-variant-subtle-border-color: var(--retro-border);
-  --interactive-surface-variant-warning-bg: var(--retro-warning);
-  --interactive-surface-variant-warning-border-color: var(--retro-warning);
-  --interactive-surface-variant-danger-bg: var(--retro-danger);
-  --interactive-surface-variant-danger-border-color: var(--retro-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="secondary"] {
+  --interactive-surface-bg: var(--interactive-surface-variant-secondary-bg);
+  --interactive-surface-fg: var(--interactive-surface-variant-secondary-fg);
+  --interactive-surface-border-color: var(--interactive-surface-variant-secondary-border-color);
 }
 
-:where([data-ui="brutalism"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--brutal-surface-strong, var(--brutal-surface, var(--brutal-bg)));
-  --interactive-surface-fg: var(--brutal-text);
-  --interactive-surface-border-color: var(--brutal-border);
-  --interactive-surface-focus-ring-color: var(--brutal-focus, var(--brutal-accent, var(--brutal-primary)));
-  --interactive-surface-radius: var(--brutal-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--brutal-text);
-  --interactive-surface-light-icon-color: var(--brutal-warning, var(--brutal-accent));
-  --interactive-surface-dark-icon-color: var(--brutal-text);
-  --interactive-surface-accessibility-icon-color: var(--brutal-focus, var(--brutal-accent));
-  --interactive-surface-light-icon-color-dark: var(--brutal-warning, var(--brutal-accent));
-  --interactive-surface-dark-icon-color-dark: var(--brutal-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--brutal-focus, var(--brutal-accent));
-  --interactive-surface-variant-primary-bg: var(--brutal-primary);
-  --interactive-surface-variant-primary-fg: var(--brutal-on-primary, var(--brutal-primary-text, var(--brutal-bg)));
-  --interactive-surface-variant-primary-border-color: var(--brutal-primary);
-  --interactive-surface-variant-secondary-bg: var(--brutal-secondary);
-  --interactive-surface-variant-secondary-fg: var(--brutal-on-secondary, var(--brutal-secondary-text, var(--brutal-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--brutal-secondary);
-  --interactive-surface-variant-accent-bg: var(--brutal-accent);
-  --interactive-surface-variant-accent-border-color: var(--brutal-accent);
-  --interactive-surface-variant-subtle-bg: var(--brutal-surface-soft, var(--brutal-surface));
-  --interactive-surface-variant-subtle-fg: var(--brutal-text);
-  --interactive-surface-variant-subtle-border-color: var(--brutal-border);
-  --interactive-surface-variant-warning-bg: var(--brutal-warning);
-  --interactive-surface-variant-warning-border-color: var(--brutal-warning);
-  --interactive-surface-variant-danger-bg: var(--brutal-danger);
-  --interactive-surface-variant-danger-border-color: var(--brutal-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="accent"] {
+  --interactive-surface-bg: var(--interactive-surface-variant-accent-bg);
+  --interactive-surface-fg: var(--interactive-surface-variant-accent-fg);
+  --interactive-surface-border-color: var(--interactive-surface-variant-accent-border-color);
 }
 
-:where([data-ui="cyberpunk"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--cyber-surface-strong, var(--cyber-surface, var(--cyber-bg)));
-  --interactive-surface-fg: var(--cyber-text);
-  --interactive-surface-border-color: var(--cyber-border);
-  --interactive-surface-focus-ring-color: var(--cyber-focus, var(--cyber-accent, var(--cyber-primary)));
-  --interactive-surface-radius: var(--cyber-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--cyber-text);
-  --interactive-surface-light-icon-color: var(--cyber-warning, var(--cyber-accent));
-  --interactive-surface-dark-icon-color: var(--cyber-text);
-  --interactive-surface-accessibility-icon-color: var(--cyber-focus, var(--cyber-accent));
-  --interactive-surface-light-icon-color-dark: var(--cyber-warning, var(--cyber-accent));
-  --interactive-surface-dark-icon-color-dark: var(--cyber-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--cyber-focus, var(--cyber-accent));
-  --interactive-surface-variant-primary-bg: var(--cyber-primary);
-  --interactive-surface-variant-primary-fg: var(--cyber-on-primary, var(--cyber-primary-text, var(--cyber-bg)));
-  --interactive-surface-variant-primary-border-color: var(--cyber-primary);
-  --interactive-surface-variant-secondary-bg: var(--cyber-secondary);
-  --interactive-surface-variant-secondary-fg: var(--cyber-on-secondary, var(--cyber-secondary-text, var(--cyber-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--cyber-secondary);
-  --interactive-surface-variant-accent-bg: var(--cyber-accent);
-  --interactive-surface-variant-accent-border-color: var(--cyber-accent);
-  --interactive-surface-variant-subtle-bg: var(--cyber-surface-soft, var(--cyber-surface));
-  --interactive-surface-variant-subtle-fg: var(--cyber-text);
-  --interactive-surface-variant-subtle-border-color: var(--cyber-border);
-  --interactive-surface-variant-warning-bg: var(--cyber-warning);
-  --interactive-surface-variant-warning-border-color: var(--cyber-warning);
-  --interactive-surface-variant-danger-bg: var(--cyber-danger);
-  --interactive-surface-variant-danger-border-color: var(--cyber-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="subtle"] {
+  --interactive-surface-bg: var(--interactive-surface-variant-subtle-bg);
+  --interactive-surface-fg: var(--interactive-surface-variant-subtle-fg);
+  --interactive-surface-border-color: var(--interactive-surface-variant-subtle-border-color);
 }
 
-:where([data-ui="y2k"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--y2k-surface-strong, var(--y2k-surface, var(--y2k-bg)));
-  --interactive-surface-fg: var(--y2k-text);
-  --interactive-surface-border-color: var(--y2k-border);
-  --interactive-surface-focus-ring-color: var(--y2k-focus, var(--y2k-accent, var(--y2k-primary)));
-  --interactive-surface-radius: var(--y2k-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--y2k-text);
-  --interactive-surface-light-icon-color: var(--y2k-warning, var(--y2k-accent));
-  --interactive-surface-dark-icon-color: var(--y2k-text);
-  --interactive-surface-accessibility-icon-color: var(--y2k-focus, var(--y2k-accent));
-  --interactive-surface-light-icon-color-dark: var(--y2k-warning, var(--y2k-accent));
-  --interactive-surface-dark-icon-color-dark: var(--y2k-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--y2k-focus, var(--y2k-accent));
-  --interactive-surface-variant-primary-bg: var(--y2k-primary);
-  --interactive-surface-variant-primary-fg: var(--y2k-on-primary, var(--y2k-primary-text, var(--y2k-bg)));
-  --interactive-surface-variant-primary-border-color: var(--y2k-primary);
-  --interactive-surface-variant-secondary-bg: var(--y2k-secondary);
-  --interactive-surface-variant-secondary-fg: var(--y2k-on-secondary, var(--y2k-secondary-text, var(--y2k-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--y2k-secondary);
-  --interactive-surface-variant-accent-bg: var(--y2k-accent);
-  --interactive-surface-variant-accent-border-color: var(--y2k-accent);
-  --interactive-surface-variant-subtle-bg: var(--y2k-surface-soft, var(--y2k-surface));
-  --interactive-surface-variant-subtle-fg: var(--y2k-text);
-  --interactive-surface-variant-subtle-border-color: var(--y2k-border);
-  --interactive-surface-variant-warning-bg: var(--y2k-warning);
-  --interactive-surface-variant-warning-border-color: var(--y2k-warning);
-  --interactive-surface-variant-danger-bg: var(--y2k-danger);
-  --interactive-surface-variant-danger-border-color: var(--y2k-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="warning"] {
+  --interactive-surface-bg: var(--interactive-surface-variant-warning-bg);
+  --interactive-surface-fg: var(--interactive-surface-variant-warning-fg);
+  --interactive-surface-border-color: var(--interactive-surface-variant-warning-border-color);
 }
 
-:where([data-ui="retro-glass"][data-theme][data-mode]) .interactive-surface {
-  --interactive-surface-bg: var(--rg-surface-strong, var(--rg-surface, var(--rg-bg)));
-  --interactive-surface-fg: var(--rg-text);
-  --interactive-surface-border-color: var(--rg-border);
-  --interactive-surface-focus-ring-color: var(--rg-focus, var(--rg-accent, var(--rg-primary)));
-  --interactive-surface-radius: var(--rg-radius-md, 0.75rem);
-  --interactive-surface-state-layer-color: var(--rg-text);
-  --interactive-surface-light-icon-color: var(--rg-warning, var(--rg-accent));
-  --interactive-surface-dark-icon-color: var(--rg-text);
-  --interactive-surface-accessibility-icon-color: var(--rg-focus, var(--rg-accent));
-  --interactive-surface-light-icon-color-dark: var(--rg-warning, var(--rg-accent));
-  --interactive-surface-dark-icon-color-dark: var(--rg-text);
-  --interactive-surface-accessibility-icon-color-dark: var(--rg-focus, var(--rg-accent));
-  --interactive-surface-variant-primary-bg: var(--rg-primary);
-  --interactive-surface-variant-primary-fg: var(--rg-on-primary, var(--rg-primary-text, var(--rg-bg)));
-  --interactive-surface-variant-primary-border-color: var(--rg-primary);
-  --interactive-surface-variant-secondary-bg: var(--rg-secondary);
-  --interactive-surface-variant-secondary-fg: var(--rg-on-secondary, var(--rg-secondary-text, var(--rg-bg)));
-  --interactive-surface-variant-secondary-border-color: var(--rg-secondary);
-  --interactive-surface-variant-accent-bg: var(--rg-accent);
-  --interactive-surface-variant-accent-border-color: var(--rg-accent);
-  --interactive-surface-variant-subtle-bg: var(--rg-surface-soft, var(--rg-surface));
-  --interactive-surface-variant-subtle-fg: var(--rg-text);
-  --interactive-surface-variant-subtle-border-color: var(--rg-border);
-  --interactive-surface-variant-warning-bg: var(--rg-warning);
-  --interactive-surface-variant-warning-border-color: var(--rg-warning);
-  --interactive-surface-variant-danger-bg: var(--rg-danger);
-  --interactive-surface-variant-danger-border-color: var(--rg-danger);
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="danger"] {
+  --interactive-surface-bg: var(--interactive-surface-variant-danger-bg);
+  --interactive-surface-fg: var(--interactive-surface-variant-danger-fg);
+  --interactive-surface-border-color: var(--interactive-surface-variant-danger-border-color);
+}
+
+/* Surface levels define the three visual depths consumed by the demo and bridge hooks. */
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="1"] {
+  --interactive-surface-level-bg: var(--interactive-surface-level-1-bg);
+  --interactive-surface-level-border-color: var(--interactive-surface-level-1-border-color);
+  --interactive-surface-level-shadow: var(--interactive-surface-level-1-shadow);
+  --interactive-surface-state-layer-opacity-hover: .08;
+  --interactive-surface-state-layer-opacity-active: .14;
+  --interactive-surface-state-layer-opacity-focus: .18;
+}
+
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="2"] {
+  --interactive-surface-level-bg: var(--interactive-surface-level-2-bg);
+  --interactive-surface-level-border-color: var(--interactive-surface-level-2-border-color);
+  --interactive-surface-level-shadow: var(--interactive-surface-level-2-shadow);
+  --interactive-surface-state-layer-opacity-hover: .11;
+  --interactive-surface-state-layer-opacity-active: .18;
+  --interactive-surface-state-layer-opacity-focus: .22;
+}
+
+:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="3"] {
+  --interactive-surface-level-bg: var(--interactive-surface-level-3-bg);
+  --interactive-surface-level-border-color: var(--interactive-surface-level-3-border-color);
+  --interactive-surface-level-shadow: var(--interactive-surface-level-3-shadow);
+  --interactive-surface-state-layer-opacity-hover: .14;
+  --interactive-surface-state-layer-opacity-active: .24;
+  --interactive-surface-state-layer-opacity-focus: .28;
 }

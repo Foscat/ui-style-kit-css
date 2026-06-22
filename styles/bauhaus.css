@@ -12,6 +12,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.bauhaus {
 :root {
@@ -90,6 +91,36 @@
   --bau-warning-text-rgb: var(--usk-warning-text-rgb);
   --bau-danger-text-rgb: var(--usk-danger-text-rgb);
   --bau-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--bau-surface);
+  --usk-native-surface-strong: var(--bau-surface-strong);
+  --usk-native-surface-soft: var(--bau-surface-soft);
+  --usk-native-card-bg: var(--bau-card-bg);
+  --usk-native-control-bg: var(--bau-control-bg);
+  --usk-native-text: var(--bau-text);
+  --usk-native-text-muted: var(--bau-text-muted);
+  --usk-native-border: var(--bau-border);
+  --usk-native-primary: var(--bau-primary);
+  --usk-native-primary-hover: var(--bau-primary-hover);
+  --usk-native-on-primary: var(--bau-on-primary);
+  --usk-native-focus: var(--bau-focus);
+  --usk-native-success: var(--bau-success);
+  --usk-native-warning: var(--bau-warning);
+  --usk-native-danger: var(--bau-danger);
+  --usk-native-link: var(--bau-link);
+  --usk-native-font-body: var(--bau-font-body);
+  --usk-native-font-heading: var(--bau-font-heading);
+  --usk-native-font-control: var(--bau-font-control);
+  --usk-native-font-mono: var(--bau-font-mono);
+  --usk-native-radius-sm: var(--bau-radius-sm);
+  --usk-native-radius: var(--bau-radius-md);
+  --usk-native-radius-lg: var(--bau-radius-lg);
+  --usk-native-shadow: var(--bau-shadow-sm, none);
+  --usk-native-shadow-md: var(--bau-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--bau-focus-ring, 0 0 0 3px rgb(var(--bau-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--bau-space-5);
   --bau-bg: rgb(var(--bau-bg-rgb));
   --bau-surface: rgb(var(--bau-surface-rgb) / var(--bau-panel-alpha));
   --bau-surface-strong: rgb(var(--bau-surface-strong-rgb) / var(--bau-panel-alpha));
@@ -300,6 +331,15 @@
 .bau-nav-link:hover { color: var(--bau-text); background: var(--bau-surface-soft); }
 .bau-nav-link[aria-current="page"], .bau-nav-link.is-active { color: var(--bau-on-primary); background: var(--bau-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.bau-tooltip, [data-ui="bauhaus"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .58rem .78rem;
+  background: linear-gradient(90deg, var(--bau-primary) 0 .45rem, var(--bau-surface-strong) .45rem); color: var(--bau-text);
+  border: 2px double var(--bau-border); border-radius: 0; box-shadow: none; font-size: .82rem; font-weight: 900; line-height: 1.25;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.bau-tooltip-arrow { inline-size: .6rem; block-size: .6rem; flex: 0 0 auto; background: var(--bau-accent); transform: rotate(45deg); }
+
 .bau-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--bau-surface-soft); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-pill); }
 .bau-progress-bar { height: 100%; width: var(--bau-progress-value, 50%); background: linear-gradient(90deg, var(--bau-primary), var(--bau-accent)); border-radius: inherit; }
 
@@ -334,97 +374,21 @@
 .bau-block { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 4rem; min-block-size: 4rem; background: var(--bau-primary); color: var(--bau-on-primary); border: 2px solid var(--bau-border); font-weight: 950; }
 .bau-rail { border-left: .75rem solid var(--bau-primary); padding-left: var(--bau-space-4); }
 
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-[data-ui="bauhaus"] :where(h1, h2, h3, h4, h5, h6) { color: var(--bau-text); font-family: var(--bau-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="bauhaus"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="bauhaus"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="bauhaus"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="bauhaus"] :where(p) { margin: 0 0 1rem; color: var(--bau-text-muted); line-height: 1.7; }
-[data-ui="bauhaus"] :where(a) { color: var(--bau-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="bauhaus"] :where(a:hover) { color: var(--bau-primary-hover); }
-[data-ui="bauhaus"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(li) { margin-block: .25rem; }
-[data-ui="bauhaus"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--bau-text); background: var(--bau-surface-soft); border-left: .35rem solid var(--bau-primary); border-radius: var(--bau-radius-md); }
-[data-ui="bauhaus"] :where(code, kbd, samp) { font-family: var(--bau-font-mono); font-size: .92em; background: var(--bau-surface-soft); color: var(--bau-text); border: 2px solid rgb(var(--bau-border-rgb) / .45); border-radius: var(--bau-radius-xs); padding: .15em .35em; }
-[data-ui="bauhaus"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--bau-surface-soft); color: var(--bau-text); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); }
-[data-ui="bauhaus"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="bauhaus"] :where(hr) { height: 2px; border: 0; margin: 2rem 0; background: var(--bau-border); }
-[data-ui="bauhaus"] :where(mark) { background: rgb(var(--bau-warning-rgb) / .32); color: var(--bau-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="bauhaus"] :where(small) { color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(abbr[title]) { text-decoration: underline dotted var(--bau-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="bauhaus"] :where(img, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="bauhaus"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="bauhaus"] :where(figcaption) { margin-top: .5rem; color: var(--bau-text-muted); font-size: .9rem; }
-[data-ui="bauhaus"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); }
-[data-ui="bauhaus"] :where(legend) { padding-inline: .35rem; color: var(--bau-text); font-weight: 900; }
-[data-ui="bauhaus"] :where(label) { color: var(--bau-text); font-weight: 750; }
-[data-ui="bauhaus"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--bau-surface-soft); color: var(--bau-text); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); font: inherit; }
-[data-ui="bauhaus"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="bauhaus"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="bauhaus"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--bau-primary); color: var(--bau-on-primary); border: 2px solid var(--bau-primary); border-radius: var(--bau-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="bauhaus"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--bau-primary-hover); border-color: var(--bau-primary-hover); }
-[data-ui="bauhaus"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--bau-primary); }
-[data-ui="bauhaus"] :where(input[type="range"]) { width: 100%; accent-color: var(--bau-primary); }
-[data-ui="bauhaus"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--bau-surface-soft); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-sm); }
-[data-ui="bauhaus"] :where(input[type="file"]) { color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 2px solid var(--bau-primary); border-radius: var(--bau-radius-sm); background: var(--bau-primary); color: var(--bau-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="bauhaus"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="bauhaus"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--bau-danger); }
-[data-ui="bauhaus"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--bau-surface); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); overflow: hidden; }
-[data-ui="bauhaus"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--bau-text-muted); font-size: .9rem; }
-[data-ui="bauhaus"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 2px solid var(--bau-border); }
-[data-ui="bauhaus"] :where(th) { color: var(--bau-text); background: rgb(var(--bau-primary-rgb) / .08); }
-[data-ui="bauhaus"] :where(td) { color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--bau-surface); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); }
-[data-ui="bauhaus"] :where(summary) { color: var(--bau-text); font-weight: 900; cursor: pointer; }
-[data-ui="bauhaus"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--bau-surface-strong); color: var(--bau-text); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="bauhaus"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="bauhaus"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--bau-primary); }
-[data-ui="bauhaus"] :where(:focus-visible) { outline: 3px solid var(--bau-focus); outline-offset: 3px; box-shadow: var(--bau-focus-ring); }
-[data-ui="bauhaus"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--bau-focus); outline-offset: .35rem; }
-[data-ui="bauhaus"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="bauhaus"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="bauhaus"] :where([hidden]) { display: none !important; }
-[data-ui="bauhaus"] ::selection { background: var(--bau-primary); color: var(--bau-on-primary); }
-
-/* Extended native element coverage */
-[data-ui="bauhaus"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--bau-text); }
-[data-ui="bauhaus"] :where(article, aside) { background: var(--bau-card-bg); border: 1px solid var(--bau-border); border-radius: var(--bau-radius-lg); padding: var(--bau-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--bau-shadow-alpha) * .72)); }
-[data-ui="bauhaus"] :where(dl) { margin: 0 0 1rem; color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(dt) { color: var(--bau-text); font-weight: 900; }
-[data-ui="bauhaus"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="bauhaus"] :where(strong, b) { color: var(--bau-text); font-weight: 900; }
-[data-ui="bauhaus"] :where(em, i, cite, var) { color: var(--bau-text); }
-[data-ui="bauhaus"] :where(q) { color: var(--bau-text); }
-[data-ui="bauhaus"] :where(ins) { color: var(--bau-text); text-decoration-color: var(--bau-success); }
-[data-ui="bauhaus"] :where(del, s) { color: var(--bau-text); text-decoration-color: var(--bau-danger); }
-[data-ui="bauhaus"] :where(sub, sup) { color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(output) { color: var(--bau-text); font-weight: 800; }
-[data-ui="bauhaus"] :where(optgroup) { color: var(--bau-text); background: var(--bau-surface); }
-[data-ui="bauhaus"] :where(option) { color: var(--bau-text); background: var(--bau-surface); }
-[data-ui="bauhaus"] :where(time, data, dfn) { color: var(--bau-text); }
-[data-ui="bauhaus"] :where(ruby) { color: var(--bau-text); }
-[data-ui="bauhaus"] :where(rt, rp) { color: var(--bau-text-muted); font-size: .72em; }
-[data-ui="bauhaus"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--bau-text-muted); }
-[data-ui="bauhaus"] :where(search) { display: block; color: var(--bau-text); }
-[data-ui="bauhaus"] :where(audio, picture, object, embed, math) { max-width: 100%; }
-
+/* Spinner geometry follows the bauhaus preset's hard-edged composition. */
 .bau-spinner, .bau-loading-spinner, [data-ui="bauhaus"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--bau-spinner-track);
+  border: .2rem double var(--bau-border);
   border-block-start-color: var(--bau-spinner-stroke);
   border-inline-end-color: var(--bau-spinner-accent);
-  border-radius: 50%;
+  border-radius: var(--bau-radius-xs);
+  background: conic-gradient(var(--bau-primary) 0 25%, var(--bau-surface) 0 50%, var(--bau-accent) 0 75%, var(--bau-surface-soft) 0);
   vertical-align: -.2em;
-  animation: bau-spin .75s linear infinite;
+  animation: bau-spin .8s steps(4, end) infinite;
 }
-.bau-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.bau-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.bau-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.bau-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .28rem; }
 .bau-button[aria-busy="true"], .bau-icon-button[aria-busy="true"], [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .bau-button[aria-busy="true"]::after, .bau-icon-button[aria-busy="true"]::after, [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

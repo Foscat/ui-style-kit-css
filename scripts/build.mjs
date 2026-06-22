@@ -3,8 +3,10 @@ import path from 'node:path';
 
 const root = process.cwd();
 const themeColorFile = 'styles/theme-colors.css';
+const nativeElementsFile = 'styles/native-elements.css';
 const styleFiles = [
   themeColorFile,
+  nativeElementsFile,
   'styles/minimal-saas.css',
   'styles/bento.css',
   'styles/maximalist.css',
@@ -72,6 +74,7 @@ const colorRoles = [
 
 const layerOrder = [
   'ui-style-kit.theme_colors',
+  'ui-style-kit.native_elements',
   'ui-style-kit.minimal_saas',
   'ui-style-kit.bento',
   'ui-style-kit.maximalist',
@@ -93,8 +96,11 @@ function readFile(file) {
   if (!fs.existsSync(absolute)) throw new Error(`Missing stylesheet: ${file}`);
   const css = prepareUiCss(file, fs.readFileSync(absolute, 'utf8'));
 
-  // Standalone UI themes import shared colors; bundles include that sheet once.
-  return css.replace(/^@import url\("\.\/theme-colors\.css"\);\s*/m, '').trim();
+  // Standalone UI themes import shared dependencies; bundles include each shared sheet once.
+  return css
+    .replace(/^@import url\("\.\/theme-colors\.css"\);\s*/m, '')
+    .replace(/^@import url\("\.\/native-elements\.css"\);\s*/m, '')
+    .trim();
 }
 
 function minifyCss(css) {

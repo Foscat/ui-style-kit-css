@@ -166,6 +166,97 @@ test('interactive surface bridge is exported and available as an opt-in bundle',
   assert.match(withBridgeMinCss, /--interactive-surface-border-width/);
 });
 
+test('interactive surface bridge inherits shared tokens and exposes visible state levels', () => {
+  const bridgeCss = fs.readFileSync(path.join(rootDir, 'styles', 'interactive-surface-bridge.css'), 'utf8');
+  const perUiBridgeSelectors = [
+    'minimal-saas',
+    'bento',
+    'maximalist',
+    'bauhaus',
+    'tactile',
+    'neumorphism',
+    'retrofuturism',
+    'brutalism',
+    'cyberpunk',
+    'y2k',
+    'retro-glass'
+  ];
+
+  assert.match(bridgeCss, /--interactive-surface-bg:\s*rgb\(var\(--usk-surface-strong-rgb,/);
+  assert.match(bridgeCss, /--interactive-surface-fg:\s*rgb\(var\(--usk-text-rgb\)\)/);
+  assert.match(bridgeCss, /--interactive-surface-variant-primary-bg:\s*rgb\(var\(--usk-primary-rgb\)\)/);
+
+  for (const level of [1, 2, 3]) {
+    assert.match(
+      bridgeCss,
+      new RegExp(`--interactive-surface-level-${level}-bg\\s*:`),
+      `Bridge should expose level ${level} background tokens`
+    );
+    assert.match(
+      bridgeCss,
+      new RegExp(`\\[data-surface-level="${level}"\\]`),
+      `Bridge should expose level ${level} selectors`
+    );
+  }
+
+  for (const uiName of perUiBridgeSelectors) {
+    assert.doesNotMatch(
+      bridgeCss,
+      new RegExp(`data-ui="${uiName}"\\]\\[data-theme\\]\\[data-mode\\]\\) \\.interactive-surface`),
+      `Bridge should inherit shared --usk-* roles instead of duplicating ${uiName} token maps`
+    );
+  }
+});
+
+test('native element fallback styles are shared instead of duplicated per preset', () => {
+  assert.equal(
+    packageJson.exports['./styles/native-elements.css'],
+    './styles/native-elements.css'
+  );
+  assert.equal(
+    packageJson.exports['./native-elements.css'],
+    './styles/native-elements.css'
+  );
+  assertFileExists('styles/native-elements.css');
+
+  const nativeCss = fs.readFileSync(path.join(rootDir, 'styles', 'native-elements.css'), 'utf8');
+  const styleFiles = [
+    ['minimal-saas', 'minimal-saas.css'],
+    ['bento', 'bento.css'],
+    ['maximalist', 'maximalist.css'],
+    ['bauhaus', 'bauhaus.css'],
+    ['tactile', 'tactile.css'],
+    ['neumorphism', 'neumorphism.css'],
+    ['retrofuturism', 'retrofuturism.css'],
+    ['brutalism', 'brutalism.css'],
+    ['cyberpunk', 'cyberpunk.css'],
+    ['y2k', 'y2k.css'],
+    ['retro-glass', 'retro-glass.css']
+  ];
+
+  for (const selector of [
+    'fieldset',
+    'label:has(input',
+    'button:not([class])',
+    'table',
+    'details',
+    'dialog',
+    'article, aside'
+  ]) {
+    assert.match(nativeCss, new RegExp(`\\[data-ui\\]\\[data-theme\\]\\[data-mode\\] :where\\(${escapeRegExp(selector)}`));
+  }
+  assert.match(nativeCss, /--usk-native-surface/);
+  assert.match(nativeCss, /--usk-native-radius/);
+
+  for (const [uiName, fileName] of styleFiles) {
+    const css = fs.readFileSync(path.join(rootDir, 'styles', fileName), 'utf8');
+    assert.match(css, /@import url\("\.\/native-elements\.css"\);/, `${fileName} should import the shared native layer`);
+    assert.match(css, /--usk-native-surface\s*:/, `${fileName} should map native surface tokens`);
+    assert.doesNotMatch(css, /Native HTML Coverage \+ CSS Accessibility Layer/);
+    assert.doesNotMatch(css, new RegExp(`\\[data-ui="${uiName}"\\] :where\\(fieldset\\)`));
+  }
+});
+
 test('published CSS import targets are resolvable', () => {
   const importTargets = [
     '.',

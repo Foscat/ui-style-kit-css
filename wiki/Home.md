@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 11 UI systems, 10 shared color themes, and 3 display modes.
 
-Version 2.0.0 defines color schemes once in `styles/theme-colors.css` as shared `--usk-*` roles. UI systems consume those shared roles through their prefixed functional tokens.
+Version `v2.0.0` defines color schemes once in `styles/theme-colors.css` as shared `--usk-*` roles and keeps native HTML fallback styling in `styles/native-elements.css`. UI systems consume those shared roles through their prefixed functional tokens.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
@@ -31,10 +31,11 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 
 ## Companion Integration
 
-- Opt-in bridge for `interactive-surface-css` in `with-bridge` build output.
+- Opt-in bridge bundle for `interactive-surface-css`: `ui-style-kit-css/with-bridge.css`
 - Standalone bridge file: `styles/interactive-surface-bridge.css`
 - Export alias: `ui-style-kit-css/interactive-surface-bridge`
-- The bridge is isolated so `interactive-surface-css` can be revised independently.
+- The default `dist/ui-style-kit.css` bundle remains bridge-free.
+- The bridge maps shared `--usk-*` roles to `--interactive-surface-*` tokens and supports `data-surface-level="1"`, `"2"`, and `"3"` visual depth hooks.
 
 ## Canonical Data Attributes
 

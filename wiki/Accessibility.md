@@ -7,6 +7,7 @@ UI Style Kit CSS provides presentation-level accessibility helpers. Semantic str
 - Visible focus treatment (`:focus-visible`)
 - Reduced motion support (`@media (prefers-reduced-motion: reduce)`)
 - Native HTML coverage for common typography/form/table elements
+- Visible tooltip surfaces through prefixed utilities and generic `[role="tooltip"]` hooks
 - Theme-aware text utilities, filled-surface `on-*` colors, and contrast checks for base text, links, and filled UI
 - Shared `--usk-*` color-scheme roles so contrast validation happens once per active scheme/mode
 
@@ -42,7 +43,6 @@ The following are present in `minimal-saas`, `bento`, `maximalist`, `bauhaus`, `
 
 Use the matching prefix (`saas-`, `bento-`, `retro-`, etc.) for the selected `data-ui`.
 
-
 ## Loading states
 
 Spinner utilities are visual indicators only. Use accessible names or status text when loading state is meaningful:
@@ -54,6 +54,9 @@ Spinner utilities are visual indicators only. Use accessible names or status tex
 
 `aria-busy="true"` on themed buttons adds an inline spinner automatically. Remove the attribute when the action completes.
 
+## Tooltip surfaces
+
+Tooltip classes are presentation helpers. Connect them to controls with application-managed IDs, `aria-describedby`, hover/focus behavior, and dismissal logic when tooltips are interactive or dynamic.
 
 ## Native element coverage
 

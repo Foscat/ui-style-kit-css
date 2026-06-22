@@ -12,6 +12,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.neumorphism {
 :root {
@@ -90,6 +91,38 @@
   --neo-warning-text-rgb: var(--usk-warning-text-rgb);
   --neo-danger-text-rgb: var(--usk-danger-text-rgb);
   --neo-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--neo-surface);
+  --usk-native-surface-strong: var(--neo-surface-strong);
+  --usk-native-surface-soft: var(--neo-surface-soft);
+  --usk-native-card-bg: var(--neo-card-bg);
+  --usk-native-control-bg: var(--neo-control-bg);
+  --usk-native-text: var(--neo-text);
+  --usk-native-text-muted: var(--neo-text-muted);
+  --usk-native-border: var(--neo-border);
+  --usk-native-primary: var(--neo-primary);
+  --usk-native-primary-hover: var(--neo-primary-hover);
+  --usk-native-on-primary: var(--neo-on-primary);
+  --usk-native-focus: var(--neo-focus);
+  --usk-native-success: var(--neo-success);
+  --usk-native-warning: var(--neo-warning);
+  --usk-native-danger: var(--neo-danger);
+  --usk-native-link: var(--neo-link);
+  --usk-native-font-body: var(--neo-font-body);
+  --usk-native-font-heading: var(--neo-font-heading);
+  --usk-native-font-control: var(--neo-font-control);
+  --usk-native-font-mono: var(--neo-font-mono);
+  --usk-native-radius-sm: var(--neo-radius-sm);
+  --usk-native-radius: var(--neo-radius-md);
+  --usk-native-radius-lg: var(--neo-radius-lg);
+  --usk-native-shadow: var(--neo-shadow-sm, none);
+  --usk-native-shadow-md: var(--neo-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--neo-focus-ring, 0 0 0 3px rgb(var(--neo-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--neo-space-5);
+  --usk-native-shadow: var(--neo-shadow-sm);
+  --usk-native-shadow-md: var(--neo-shadow-md);
   --neo-bg: rgb(var(--neo-bg-rgb));
   --neo-surface: rgb(var(--neo-surface-rgb) / var(--neo-panel-alpha));
   --neo-surface-strong: rgb(var(--neo-surface-strong-rgb) / var(--neo-panel-alpha));
@@ -300,6 +333,15 @@
 .neo-nav-link:hover { color: var(--neo-text); background: var(--neo-surface-soft); }
 .neo-nav-link[aria-current="page"], .neo-nav-link.is-active { color: var(--neo-on-primary); background: var(--neo-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.neo-tooltip, [data-ui="neumorphism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .62rem .86rem;
+  background: var(--neo-surface); color: var(--neo-text); border: 1px solid transparent; border-radius: var(--neo-radius-pill);
+  box-shadow: -.35rem -.35rem .8rem rgb(255 255 255 / .28), .35rem .35rem .8rem rgb(0 0 0 / .18);
+  font-size: .82rem; font-weight: 850; line-height: 1.35;
+}
+.neo-tooltip-arrow { inline-size: .58rem; block-size: .58rem; flex: 0 0 auto; background: var(--neo-surface); border-radius: 50%; box-shadow: inset .12rem .12rem .24rem rgb(0 0 0 / .12); }
+
 .neo-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--neo-surface-soft); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-pill); }
 .neo-progress-bar { height: 100%; width: var(--neo-progress-value, 50%); background: linear-gradient(90deg, var(--neo-primary), var(--neo-accent)); border-radius: inherit; }
 
@@ -362,98 +404,22 @@
   box-shadow: inset 4px 4px 9px var(--neo-nm-dark), inset -4px -4px 9px var(--neo-nm-light);
 }
 
-
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-[data-ui="neumorphism"] :where(h1, h2, h3, h4, h5, h6) { color: var(--neo-text); font-family: var(--neo-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="neumorphism"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="neumorphism"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="neumorphism"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="neumorphism"] :where(p) { margin: 0 0 1rem; color: var(--neo-text-muted); line-height: 1.7; }
-[data-ui="neumorphism"] :where(a) { color: var(--neo-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="neumorphism"] :where(a:hover) { color: var(--neo-primary-hover); }
-[data-ui="neumorphism"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(li) { margin-block: .25rem; }
-[data-ui="neumorphism"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--neo-text); background: var(--neo-surface-soft); border-left: .35rem solid var(--neo-primary); border-radius: var(--neo-radius-md); }
-[data-ui="neumorphism"] :where(code, kbd, samp) { font-family: var(--neo-font-mono); font-size: .92em; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid rgb(var(--neo-border-rgb) / .45); border-radius: var(--neo-radius-xs); padding: .15em .35em; }
-[data-ui="neumorphism"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); }
-[data-ui="neumorphism"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="neumorphism"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--neo-border); }
-[data-ui="neumorphism"] :where(mark) { background: rgb(var(--neo-warning-rgb) / .32); color: var(--neo-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="neumorphism"] :where(small) { color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(abbr[title]) { text-decoration: underline dotted var(--neo-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="neumorphism"] :where(img, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="neumorphism"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="neumorphism"] :where(figcaption) { margin-top: .5rem; color: var(--neo-text-muted); font-size: .9rem; }
-[data-ui="neumorphism"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); }
-[data-ui="neumorphism"] :where(legend) { padding-inline: .35rem; color: var(--neo-text); font-weight: 900; }
-[data-ui="neumorphism"] :where(label) { color: var(--neo-text); font-weight: 750; }
-[data-ui="neumorphism"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--neo-surface-soft); color: var(--neo-text); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); font: inherit; }
-[data-ui="neumorphism"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="neumorphism"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="neumorphism"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--neo-primary); color: var(--neo-on-primary); border: 1px solid var(--neo-primary); border-radius: var(--neo-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="neumorphism"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--neo-primary-hover); border-color: var(--neo-primary-hover); }
-[data-ui="neumorphism"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--neo-primary); }
-[data-ui="neumorphism"] :where(input[type="range"]) { width: 100%; accent-color: var(--neo-primary); }
-[data-ui="neumorphism"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--neo-surface-soft); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-sm); }
-[data-ui="neumorphism"] :where(input[type="file"]) { color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--neo-primary); border-radius: var(--neo-radius-sm); background: var(--neo-primary); color: var(--neo-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="neumorphism"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="neumorphism"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--neo-danger); }
-[data-ui="neumorphism"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--neo-surface); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); overflow: hidden; }
-[data-ui="neumorphism"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--neo-text-muted); font-size: .9rem; }
-[data-ui="neumorphism"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--neo-border); }
-[data-ui="neumorphism"] :where(th) { color: var(--neo-text); background: rgb(var(--neo-primary-rgb) / .08); }
-[data-ui="neumorphism"] :where(td) { color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--neo-surface); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-md); }
-[data-ui="neumorphism"] :where(summary) { color: var(--neo-text); font-weight: 900; cursor: pointer; }
-[data-ui="neumorphism"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--neo-surface-strong); color: var(--neo-text); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="neumorphism"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="neumorphism"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--neo-primary); }
-[data-ui="neumorphism"] :where(:focus-visible) { outline: 3px solid var(--neo-focus); outline-offset: 3px; box-shadow: var(--neo-focus-ring); }
-[data-ui="neumorphism"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--neo-focus); outline-offset: .35rem; }
-[data-ui="neumorphism"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="neumorphism"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="neumorphism"] :where([hidden]) { display: none !important; }
-[data-ui="neumorphism"] ::selection { background: var(--neo-primary); color: var(--neo-on-primary); }
-
-/* Extended native element coverage */
-[data-ui="neumorphism"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--neo-text); }
-[data-ui="neumorphism"] :where(article, aside) { background: var(--neo-card-bg); border: 1px solid var(--neo-border); border-radius: var(--neo-radius-lg); padding: var(--neo-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--neo-shadow-alpha) * .72)); }
-[data-ui="neumorphism"] :where(dl) { margin: 0 0 1rem; color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(dt) { color: var(--neo-text); font-weight: 900; }
-[data-ui="neumorphism"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="neumorphism"] :where(strong, b) { color: var(--neo-text); font-weight: 900; }
-[data-ui="neumorphism"] :where(em, i, cite, var) { color: var(--neo-text); }
-[data-ui="neumorphism"] :where(q) { color: var(--neo-text); }
-[data-ui="neumorphism"] :where(ins) { color: var(--neo-text); text-decoration-color: var(--neo-success); }
-[data-ui="neumorphism"] :where(del, s) { color: var(--neo-text); text-decoration-color: var(--neo-danger); }
-[data-ui="neumorphism"] :where(sub, sup) { color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(output) { color: var(--neo-text); font-weight: 800; }
-[data-ui="neumorphism"] :where(optgroup) { color: var(--neo-text); background: var(--neo-surface); }
-[data-ui="neumorphism"] :where(option) { color: var(--neo-text); background: var(--neo-surface); }
-[data-ui="neumorphism"] :where(time, data, dfn) { color: var(--neo-text); }
-[data-ui="neumorphism"] :where(ruby) { color: var(--neo-text); }
-[data-ui="neumorphism"] :where(rt, rp) { color: var(--neo-text-muted); font-size: .72em; }
-[data-ui="neumorphism"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--neo-text-muted); }
-[data-ui="neumorphism"] :where(search) { display: block; color: var(--neo-text); }
-[data-ui="neumorphism"] :where(audio, picture, object, embed, math) { max-width: 100%; }
-
+/* Spinner geometry follows the neumorphism preset's soft extruded surfaces. */
 .neo-spinner, .neo-loading-spinner, [data-ui="neumorphism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--neo-spinner-track);
+  border: .2rem solid transparent;
   border-block-start-color: var(--neo-spinner-stroke);
   border-inline-end-color: var(--neo-spinner-accent);
   border-radius: 50%;
+  background: conic-gradient(from 45deg, var(--neo-spinner-stroke), transparent 34%, var(--neo-spinner-accent), var(--neo-spinner-track));
+  box-shadow: -.35rem -.35rem .8rem rgb(255 255 255 / .32), .35rem .35rem .8rem rgb(0 0 0 / .18), inset 0 0 0 .38rem var(--neo-surface);
   vertical-align: -.2em;
-  animation: neo-spin .75s linear infinite;
+  animation: neo-spin 1s linear infinite;
 }
-.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.neo-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.neo-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .28rem; }
 .neo-button[aria-busy="true"], .neo-icon-button[aria-busy="true"], [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .neo-button[aria-busy="true"]::after, .neo-icon-button[aria-busy="true"]::after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";

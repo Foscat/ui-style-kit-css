@@ -12,6 +12,7 @@
 
 
 @import url("./theme-colors.css");
+@import url("./native-elements.css");
 
 @layer ui-style-kit.tactile {
 :root {
@@ -90,6 +91,36 @@
   --tactile-warning-text-rgb: var(--usk-warning-text-rgb);
   --tactile-danger-text-rgb: var(--usk-danger-text-rgb);
   --tactile-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--tactile-surface);
+  --usk-native-surface-strong: var(--tactile-surface-strong);
+  --usk-native-surface-soft: var(--tactile-surface-soft);
+  --usk-native-card-bg: var(--tactile-card-bg);
+  --usk-native-control-bg: var(--tactile-control-bg);
+  --usk-native-text: var(--tactile-text);
+  --usk-native-text-muted: var(--tactile-text-muted);
+  --usk-native-border: var(--tactile-border);
+  --usk-native-primary: var(--tactile-primary);
+  --usk-native-primary-hover: var(--tactile-primary-hover);
+  --usk-native-on-primary: var(--tactile-on-primary);
+  --usk-native-focus: var(--tactile-focus);
+  --usk-native-success: var(--tactile-success);
+  --usk-native-warning: var(--tactile-warning);
+  --usk-native-danger: var(--tactile-danger);
+  --usk-native-link: var(--tactile-link);
+  --usk-native-font-body: var(--tactile-font-body);
+  --usk-native-font-heading: var(--tactile-font-heading);
+  --usk-native-font-control: var(--tactile-font-control);
+  --usk-native-font-mono: var(--tactile-font-mono);
+  --usk-native-radius-sm: var(--tactile-radius-sm);
+  --usk-native-radius: var(--tactile-radius-md);
+  --usk-native-radius-lg: var(--tactile-radius-lg);
+  --usk-native-shadow: var(--tactile-shadow-sm, none);
+  --usk-native-shadow-md: var(--tactile-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--tactile-focus-ring, 0 0 0 3px rgb(var(--tactile-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--tactile-space-5);
   --tactile-bg: rgb(var(--tactile-bg-rgb));
   --tactile-surface: rgb(var(--tactile-surface-rgb) / var(--tactile-panel-alpha));
   --tactile-surface-strong: rgb(var(--tactile-surface-strong-rgb) / var(--tactile-panel-alpha));
@@ -228,7 +259,7 @@
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--tactile-space-2);
   min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--tactile-surface); color: var(--tactile-text);
   border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--tactile-shadow-alpha));
-  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; user-select: none;
+  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
   transition: color var(--tactile-transition-fast), background var(--tactile-transition-fast), border-color var(--tactile-transition-fast), box-shadow var(--tactile-transition-fast), transform var(--tactile-transition-fast);
 }
 .tactile-button:hover, .tactile-icon-button:hover { transform: translateY(-1px); border-color: var(--tactile-primary); }
@@ -300,6 +331,15 @@
 .tactile-nav-link:hover { color: var(--tactile-text); background: var(--tactile-surface-soft); }
 .tactile-nav-link[aria-current="page"], .tactile-nav-link.is-active { color: var(--tactile-on-primary); background: var(--tactile-primary); }
 
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.tactile-tooltip, [data-ui="tactile"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .6rem .82rem;
+  background: linear-gradient(180deg, rgb(255 255 255 / .18), rgb(0 0 0 / .08)), var(--tactile-surface-strong);
+  color: var(--tactile-text); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-lg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .32), 0 .7rem 1.4rem rgb(0 0 0 / var(--tactile-shadow-alpha)); font-size: .82rem; font-weight: 850; line-height: 1.35;
+}
+.tactile-tooltip-arrow { inline-size: .6rem; block-size: .6rem; flex: 0 0 auto; background: var(--tactile-surface-strong); border: 1px solid var(--tactile-border); border-radius: .18rem; transform: rotate(45deg); }
+
 .tactile-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--tactile-surface-soft); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-pill); }
 .tactile-progress-bar { height: 100%; width: var(--tactile-progress-value, 50%); background: linear-gradient(90deg, var(--tactile-primary), var(--tactile-accent)); border-radius: inherit; }
 
@@ -333,97 +373,22 @@
 .tactile-pressed { background: var(--tactile-surface-soft); box-shadow: inset 0 4px 14px rgb(0 0 0 / .22), inset 0 -1px 0 rgb(255 255 255 / .12); transform: translateY(1px); }
 .tactile-knob { inline-size: 3.25rem; block-size: 3.25rem; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / .35), transparent 28%), var(--tactile-surface-strong); border: 1px solid var(--tactile-border); box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), 0 12px 24px rgb(0 0 0 / var(--tactile-shadow-alpha)); }
 
-/* =========================================================
-   Native HTML Coverage + CSS Accessibility Layer
-========================================================= */
-
-[data-ui="tactile"] :where(h1, h2, h3, h4, h5, h6) { color: var(--tactile-text); font-family: var(--tactile-font-heading); line-height: 1.15; margin: 0 0 .65em; text-wrap: balance; }
-[data-ui="tactile"] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
-[data-ui="tactile"] :where(h2) { font-size: clamp(1.55rem, 3vw, 2.35rem); }
-[data-ui="tactile"] :where(h3) { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-[data-ui="tactile"] :where(p) { margin: 0 0 1rem; color: var(--tactile-text-muted); line-height: 1.7; }
-[data-ui="tactile"] :where(a) { color: var(--tactile-link); text-decoration-thickness: .08em; text-underline-offset: .18em; }
-[data-ui="tactile"] :where(a:hover) { color: var(--tactile-primary-hover); }
-[data-ui="tactile"] :where(ul, ol) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(li) { margin-block: .25rem; }
-[data-ui="tactile"] :where(blockquote) { margin: 1.25rem 0; padding: 1rem 1.25rem; color: var(--tactile-text); background: var(--tactile-surface-soft); border-left: .35rem solid var(--tactile-primary); border-radius: var(--tactile-radius-md); }
-[data-ui="tactile"] :where(code, kbd, samp) { font-family: var(--tactile-font-mono); font-size: .92em; background: var(--tactile-surface-soft); color: var(--tactile-text); border: 1px solid rgb(var(--tactile-border-rgb) / .45); border-radius: var(--tactile-radius-xs); padding: .15em .35em; }
-[data-ui="tactile"] :where(pre) { overflow: auto; margin: 1rem 0; padding: 1rem; background: var(--tactile-surface-soft); color: var(--tactile-text); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-md); }
-[data-ui="tactile"] :where(pre code) { display: block; padding: 0; border: 0; background: transparent; }
-[data-ui="tactile"] :where(hr) { height: 1px; border: 0; margin: 2rem 0; background: var(--tactile-border); }
-[data-ui="tactile"] :where(mark) { background: rgb(var(--tactile-warning-rgb) / .32); color: var(--tactile-text); border-radius: .2em; padding-inline: .15em; }
-[data-ui="tactile"] :where(small) { color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(abbr[title]) { text-decoration: underline dotted var(--tactile-primary); text-underline-offset: .18em; cursor: help; }
-[data-ui="tactile"] :where(img, video, canvas, svg, iframe) { max-width: 100%; height: auto; }
-[data-ui="tactile"] :where(figure) { margin: 1.25rem 0; }
-[data-ui="tactile"] :where(figcaption) { margin-top: .5rem; color: var(--tactile-text-muted); font-size: .9rem; }
-[data-ui="tactile"] :where(fieldset) { min-inline-size: 0; margin: 0 0 1rem; padding: 1rem; border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-md); }
-[data-ui="tactile"] :where(legend) { padding-inline: .35rem; color: var(--tactile-text); font-weight: 900; }
-[data-ui="tactile"] :where(label) { color: var(--tactile-text); font-weight: 750; }
-[data-ui="tactile"] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .72rem .95rem; background: var(--tactile-surface-soft); color: var(--tactile-text); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-md); font: inherit; }
-[data-ui="tactile"] :where(textarea) { resize: vertical; min-height: 7rem; }
-[data-ui="tactile"] :where(input, textarea, select, button) { font: inherit; }
-[data-ui="tactile"] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { min-height: 2.75rem; padding: .7rem 1rem; background: var(--tactile-primary); color: var(--tactile-on-primary); border: 1px solid var(--tactile-primary); border-radius: var(--tactile-radius-md); font-weight: 850; cursor: pointer; }
-[data-ui="tactile"] :where(button:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover) { background: var(--tactile-primary-hover); border-color: var(--tactile-primary-hover); }
-[data-ui="tactile"] :where(input[type="checkbox"], input[type="radio"]) { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--tactile-primary); }
-[data-ui="tactile"] :where(input[type="range"]) { width: 100%; accent-color: var(--tactile-primary); }
-[data-ui="tactile"] :where(input[type="color"]) { inline-size: 3rem; block-size: 2.4rem; padding: .2rem; background: var(--tactile-surface-soft); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-sm); }
-[data-ui="tactile"] :where(input[type="file"]) { color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(input[type="file"]::file-selector-button) { margin-inline-end: .75rem; padding: .55rem .8rem; border: 1px solid var(--tactile-primary); border-radius: var(--tactile-radius-sm); background: var(--tactile-primary); color: var(--tactile-on-primary); font-weight: 800; cursor: pointer; }
-[data-ui="tactile"] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) { opacity: .55; cursor: not-allowed; }
-[data-ui="tactile"] :where(input:invalid, textarea:invalid, select:invalid) { border-color: var(--tactile-danger); }
-[data-ui="tactile"] :where(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; background: var(--tactile-surface); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-md); overflow: hidden; }
-[data-ui="tactile"] :where(caption) { caption-side: bottom; padding: .75rem; color: var(--tactile-text-muted); font-size: .9rem; }
-[data-ui="tactile"] :where(th, td) { padding: .8rem .9rem; text-align: left; border-bottom: 1px solid var(--tactile-border); }
-[data-ui="tactile"] :where(th) { color: var(--tactile-text); background: rgb(var(--tactile-primary-rgb) / .08); }
-[data-ui="tactile"] :where(td) { color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(details) { margin: 1rem 0; padding: .9rem 1rem; background: var(--tactile-surface); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-md); }
-[data-ui="tactile"] :where(summary) { color: var(--tactile-text); font-weight: 900; cursor: pointer; }
-[data-ui="tactile"] :where(dialog) { max-width: min(92vw, 42rem); padding: 0; background: var(--tactile-surface-strong); color: var(--tactile-text); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-lg); box-shadow: 0 30px 80px rgb(0 0 0 / .42); }
-[data-ui="tactile"] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
-[data-ui="tactile"] :where(progress, meter) { width: 100%; min-height: .9rem; accent-color: var(--tactile-primary); }
-[data-ui="tactile"] :where(:focus-visible) { outline: 3px solid var(--tactile-focus); outline-offset: 3px; box-shadow: var(--tactile-focus-ring); }
-[data-ui="tactile"] :where(:target) { scroll-margin-top: 6rem; outline: 3px solid var(--tactile-focus); outline-offset: .35rem; }
-[data-ui="tactile"] :where([aria-current="page"]) { font-weight: 900; }
-[data-ui="tactile"] :where([aria-busy="true"]) { cursor: progress; }
-[data-ui="tactile"] :where([hidden]) { display: none !important; }
-[data-ui="tactile"] ::selection { background: var(--tactile-primary); color: var(--tactile-on-primary); }
-
-/* Extended native element coverage */
-[data-ui="tactile"] :where(main, section, header, footer, nav, article, aside, address) { color: var(--tactile-text); }
-[data-ui="tactile"] :where(article, aside) { background: var(--tactile-card-bg); border: 1px solid var(--tactile-border); border-radius: var(--tactile-radius-lg); padding: var(--tactile-space-5); box-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--tactile-shadow-alpha) * .72)); }
-[data-ui="tactile"] :where(dl) { margin: 0 0 1rem; color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(dt) { color: var(--tactile-text); font-weight: 900; }
-[data-ui="tactile"] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui="tactile"] :where(strong, b) { color: var(--tactile-text); font-weight: 900; }
-[data-ui="tactile"] :where(em, i, cite, var) { color: var(--tactile-text); }
-[data-ui="tactile"] :where(q) { color: var(--tactile-text); }
-[data-ui="tactile"] :where(ins) { color: var(--tactile-text); text-decoration-color: var(--tactile-success); }
-[data-ui="tactile"] :where(del, s) { color: var(--tactile-text); text-decoration-color: var(--tactile-danger); }
-[data-ui="tactile"] :where(sub, sup) { color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(output) { color: var(--tactile-text); font-weight: 800; }
-[data-ui="tactile"] :where(optgroup) { color: var(--tactile-text); background: var(--tactile-surface); }
-[data-ui="tactile"] :where(option) { color: var(--tactile-text); background: var(--tactile-surface); }
-[data-ui="tactile"] :where(time, data, dfn) { color: var(--tactile-text); }
-[data-ui="tactile"] :where(ruby) { color: var(--tactile-text); }
-[data-ui="tactile"] :where(rt, rp) { color: var(--tactile-text-muted); font-size: .72em; }
-[data-ui="tactile"] :where(menu) { margin: 0 0 1rem; padding-left: 1.35rem; color: var(--tactile-text-muted); }
-[data-ui="tactile"] :where(search) { display: block; color: var(--tactile-text); }
-[data-ui="tactile"] :where(audio, picture, object, embed, math) { max-width: 100%; }
-
+/* Spinner geometry follows the tactile preset's pressed material controls. */
 .tactile-spinner, .tactile-loading-spinner, [data-ui="tactile"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
   display: inline-block;
   inline-size: 2rem;
   block-size: 2rem;
-  border: .25rem solid var(--tactile-spinner-track);
+  border: .18rem solid rgb(var(--tactile-border-rgb) / .55);
   border-block-start-color: var(--tactile-spinner-stroke);
   border-inline-end-color: var(--tactile-spinner-accent);
   border-radius: 50%;
+  background: linear-gradient(145deg, rgb(var(--tactile-surface-strong-rgb) / .96), rgb(var(--tactile-surface-soft-rgb) / .72));
+  box-shadow: inset .16rem .16rem .32rem rgb(0 0 0 / .18), inset -.16rem -.16rem .32rem rgb(255 255 255 / .26), 0 .25rem .75rem rgb(0 0 0 / var(--tactile-shadow-alpha));
   vertical-align: -.2em;
-  animation: tactile-spin .75s linear infinite;
+  animation: tactile-spin .85s cubic-bezier(.2, .8, .2, 1) infinite;
 }
-.tactile-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
-.tactile-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.tactile-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .12rem; }
+.tactile-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .24rem; }
 .tactile-button[aria-busy="true"], .tactile-icon-button[aria-busy="true"], [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
 .tactile-button[aria-busy="true"]::after, .tactile-icon-button[aria-busy="true"]::after, [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   content: "";
