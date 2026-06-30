@@ -1,6 +1,5 @@
 # UI Style Kit CSS
 
-[![Demo Page](foscat.github.io/ui-style-kit-css/)
 [![npm package](https://img.shields.io/npm/v/ui-style-kit-css.svg)](https://www.npmjs.com/package/ui-style-kit-css)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
@@ -11,6 +10,9 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 ## Current Release
 
 `v2.0.1` is the current v2 release. It centralizes color schemes in `styles/theme-colors.css`, centralizes native HTML fallback styling in `styles/native-elements.css`, keeps style-specific component APIs prefix-bound, and ships the Interactive Surface bridge as an opt-in import.
+
+[Showcase website](foscat.github.io/ui-style-kit-css/)
+
 
 ## Features
 
