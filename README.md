@@ -1,5 +1,9 @@
 # UI Style Kit CSS
 
+[![Demo Page](foscat.github.io/ui-style-kit-css/)
+[![npm package](https://img.shields.io/npm/v/ui-style-kit-css.svg)](https://www.npmjs.com/package/ui-style-kit-css)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 **UI Style Kit CSS** is a CSS-only theme and UI style preset library for accessible websites, dashboards, admin interfaces, and customer-facing pages.
 
 It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior.
@@ -313,3 +317,4 @@ The `v2.0.1` release line removes duplicated per-UI color-scheme blocks. Color s
 ## License
 
 MIT
+](https://www.npmjs.com/package/ui-style-kit-css)
