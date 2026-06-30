@@ -11,7 +11,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 `v2.0.1` is the current v2 release. It centralizes color schemes in `styles/theme-colors.css`, centralizes native HTML fallback styling in `styles/native-elements.css`, keeps style-specific component APIs prefix-bound, and ships the Interactive Surface bridge as an opt-in import.
 
-[Showcase website](foscat.github.io/ui-style-kit-css/)
+[Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
 
 ## Features
