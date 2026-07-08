@@ -272,3 +272,57 @@ test('published CSS import targets are resolvable', () => {
     assertFileExists(target.replace(/^\.\//, ''));
   }
 });
+
+test('demo favicon assets are packaged and linked with portable paths', () => {
+  // Favicon paths must remain subpath-safe for GitHub Pages and npm package demos.
+  const faviconAssets = [
+    'android-chrome-192x192.png',
+    'android-chrome-512x512.png',
+    'apple-touch-icon.png',
+    'browserconfig.xml',
+    'favicon-16x16.png',
+    'favicon-32x32.png',
+    'favicon-48x48.png',
+    'favicon-64x64.png',
+    'favicon-96x96.png',
+    'favicon-128x128.png',
+    'favicon-256x256.png',
+    'favicon-384x384.png',
+    'favicon-head-snippet.html',
+    'favicon-master-1024.png',
+    'favicon.ico',
+    'favicon.svg',
+    'mstile-150x150.png',
+    'README.md',
+    'safari-pinned-tab.svg',
+    'site.webmanifest'
+  ];
+  const rootDemoHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+  const packageDemoHtml = fs.readFileSync(path.join(rootDir, 'demo', 'index.html'), 'utf8');
+  const rootManifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'site.webmanifest'), 'utf8'));
+  const packageDemoManifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'demo', 'assets', 'site.webmanifest'), 'utf8'));
+
+  assert.ok(packageJson.files.includes('demo'), 'package.json files[] should include the demo asset pack');
+  for (const asset of faviconAssets) {
+    assertFileExists(path.join('demo', 'assets', asset));
+  }
+
+  assert.match(rootDemoHtml, /href="demo\/assets\/favicon\.ico"/);
+  assert.match(rootDemoHtml, /href="site\.webmanifest"/);
+  assert.match(rootDemoHtml, /content="browserconfig\.xml"/);
+  assert.match(packageDemoHtml, /href="assets\/favicon\.ico"/);
+  assert.match(packageDemoHtml, /href="assets\/site\.webmanifest"/);
+  assert.match(packageDemoHtml, /content="assets\/browserconfig\.xml"/);
+  assert.doesNotMatch(packageDemoHtml, /href="\/(?:favicon|site\.webmanifest|apple-touch-icon)/);
+
+  assert.equal(rootManifest.theme_color, '#070b24');
+  assert.deepEqual(
+    rootManifest.icons.map((icon) => icon.src),
+    ['demo/assets/android-chrome-192x192.png', 'demo/assets/android-chrome-512x512.png']
+  );
+  assert.equal(packageDemoManifest.start_url, '../');
+  assert.deepEqual(
+    packageDemoManifest.icons.map((icon) => icon.src),
+    ['android-chrome-192x192.png', 'android-chrome-512x512.png']
+  );
+});

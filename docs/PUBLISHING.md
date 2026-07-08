@@ -15,7 +15,7 @@ npm run pack:dry-run
 npm publish
 ```
 
-For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.1`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
+For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.2`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 

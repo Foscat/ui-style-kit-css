@@ -2,6 +2,22 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [2.0.2] - 2026-07-08
+
+### Added
+
+- Added the demo favicon pack, root Pages manifest wiring, and package-demo manifest wiring so release demos have consistent browser icons.
+
+### Changed
+
+- Clarified the UI systems wiki with the full style matrix, core class suffixes, utility tiers, generic loading and tooltip hooks, and Interactive Surface bridge hooks.
+- Polished README release guidance, CDN pinning, and token-model wording for the `2.0.2` maintenance release.
+- Refreshed development tooling for style linting and Playwright verification without changing the public CSS API.
+
+### Security
+
+- Added dependency maintenance coverage for the transitive development-only `js-yaml` advisory path used by stylelint configuration loading.
+
 ## [2.0.1] - 2026-06-22
 
 ### Added

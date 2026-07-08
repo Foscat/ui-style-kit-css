@@ -9,10 +9,9 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.0.1` is the current v2 release. It centralizes color schemes in `styles/theme-colors.css`, centralizes native HTML fallback styling in `styles/native-elements.css`, keeps style-specific component APIs prefix-bound, and ships the Interactive Surface bridge as an opt-in import.
+`v2.0.2` is the current v2 patch release. It keeps the `v2.0.1` shared color-scheme and native-element model, documents the public UI-system contracts more clearly, and refreshes development tooling without changing the CSS API.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
-
 
 ## Features
 
@@ -24,7 +23,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 - Scoped native HTML element coverage, including semantic containers and inline text elements
 - Visible `:focus-visible` defaults
 - Skip-link and visually-hidden helpers per style prefix
-- Compact shared palette → prefixed alias → UI-rule token model
+- Compact shared palette -> prefixed alias -> UI-rule token model
 - Theme-driven card, panel, control, page-background, and spinner defaults
 - Visible tooltip classes and native `[role="tooltip"]` styling inside each UI scope
 - Font-family override variables for body, headings, controls, and mono text
@@ -47,7 +46,7 @@ Use a single style import for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.1`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+In `v2.0.2`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -106,7 +105,7 @@ After publishing to NPM:
 For production, pin a version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.1/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.2/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -296,6 +295,9 @@ ui-style-kit-css/
     PUBLISHING.md
   demo/
     index.html
+    assets/
+      favicon.svg
+      site.webmanifest
 ```
 
 ## Development checks
@@ -319,4 +321,3 @@ The `v2.0.1` release line removes duplicated per-UI color-scheme blocks. Color s
 ## License
 
 MIT
-](https://www.npmjs.com/package/ui-style-kit-css)
