@@ -9,13 +9,15 @@ npm run pack:dry-run
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. `npm run pack:dry-run` shows the exact files that would publish.
 
+The npm artifact is library-focused: `dist/`, `styles/`, docs, and metadata. Demo pages, favicon source assets, and social preview images remain checked in for GitHub Pages but are excluded from the tarball to keep package installs small.
+
 ## Publish
 
 ```bash
 npm publish
 ```
 
-For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.2`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
+For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.3`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 

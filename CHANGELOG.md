@@ -2,6 +2,27 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [2.0.3] - 2026-07-11
+
+### Added
+
+- Added an active theme and mode token workbench to the demo for editing concrete `--usk-*-rgb` values live and copying drop-in theme override CSS.
+- Added copy buttons with clipboard icons and tooltips to demo code blocks.
+- Added README Mermaid diagrams for the three-library ecosystem and the shared token flow.
+- Added demo resource links for GitHub, GitHub Wiki, npm, Interactive Surface CSS, and Layout Style CSS.
+- Added search, social sharing, web manifest, sitemap, and structured-data metadata for the published demo.
+
+### Changed
+
+- Aligned package metadata for `2.0.3` after the manual `2.0.2` npm release.
+- Split duplicated demo CSS and JavaScript into shared `demo/demo.css` and `demo/demo.js` entrypoint assets.
+- Expanded stylelint coverage to include extracted demo CSS.
+- Updated the demo HTML with static fallback content so crawlers and no-JavaScript users can read the core library description before JavaScript renders the interactive showcase.
+
+### Removed
+
+- Removed unused tracked image assets and stale local release/test artifacts from the repo.
+
 ## [2.0.2] - 2026-07-08
 
 ### Added

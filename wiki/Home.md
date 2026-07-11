@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 11 UI systems, 10 shared color themes, and 3 display modes.
 
-Version `v2.0.2` keeps color schemes defined once in `styles/theme-colors.css` as shared `--usk-*` roles and keeps native HTML fallback styling in `styles/native-elements.css`. UI systems consume those shared roles through their prefixed functional tokens.
+Version `v2.0.3` keeps color schemes defined once in `styles/theme-colors.css` as shared `--usk-*` roles and keeps native HTML fallback styling in `styles/native-elements.css`. UI systems consume those shared roles through their prefixed functional tokens.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
@@ -23,11 +23,11 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 
 ## Wiki Pages
 
-- [Installation and Setup](Installation-and-Setup.md)
-- [Theming Model](Theming-Model.md)
-- [Class API](Class-API.md)
-- [UI Systems](UI-Systems.md)
-- [Accessibility](Accessibility.md)
+- [Installation and Setup](Installation-and-Setup)
+- [Theming Model](Theming-Model)
+- [Class API](Class-API)
+- [UI Systems](UI-Systems)
+- [Accessibility](Accessibility)
 
 ## Companion Integration
 

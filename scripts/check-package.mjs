@@ -45,6 +45,11 @@ for (const scriptName of requiredScripts) {
   if (!pkg.scripts?.[scriptName]) throw new Error(`Missing script: ${scriptName}`);
 }
 
+const packageFileEntries = pkg.files ?? [];
+if (packageFileEntries.some((entry) => entry === 'demo' || entry.startsWith('demo/'))) {
+  throw new Error('Keep the npm package library-focused; demo assets publish through GitHub Pages only.');
+}
+
 const requiredExports = [
   './dist/ui-style-kit.css',
   './dist/ui-style-kit.min.css',
