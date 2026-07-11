@@ -196,7 +196,7 @@ test('README documents the library system and theme override flow', () => {
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /ui-style-kit-css@2\.0\.3/);
+  assert.match(readme, /ui-style-kit-css@2\.0\.4/);
 });
 
 test('wiki links use rendered GitHub Wiki page routes', () => {

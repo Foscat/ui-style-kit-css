@@ -17,7 +17,7 @@ The npm artifact is library-focused: `dist/`, `styles/`, docs, and metadata. Dem
 npm publish
 ```
 
-For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.3`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
+For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.4`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 

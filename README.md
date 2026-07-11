@@ -9,7 +9,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.0.3` is the current v2 patch release. It keeps the `v2.0.1` shared color-scheme and native-element model, adds a demo theme-override workbench, improves copyable documentation examples, and refreshes release metadata without changing the CSS API.
+`v2.0.4` is the current v2 patch release. It keeps the shared color-scheme and native-element model, restores the shared content-overflow contract, expands rendered responsive coverage, and refreshes release metadata without changing the CSS API.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -50,7 +50,7 @@ The demo page documents this flow directly: it shows computed RGB color tokens f
 - 10 shared color schemes
 - `light`, `dark`, and `contrast` modes
 - Combined CSS bundle and per-style production imports
-- Shared `theme-colors.css` scheme layer and `native-elements.css` fallback layer for all UI systems
+- Shared `theme-colors.css`, `native-elements.css`, and `content-overflow.css` layers for all UI systems
 - Scoped native HTML element coverage, including semantic containers and inline text elements
 - Visible `:focus-visible` defaults
 - Skip-link and visually-hidden helpers per style prefix
@@ -77,11 +77,12 @@ Use a single style import for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.3`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+In `v2.0.4`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css`, the shared native-element fallback layer from `styles/native-elements.css`, and the shared content-overflow layer from `styles/content-overflow.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
 import "ui-style-kit-css/native-elements.css";
+import "ui-style-kit-css/content-overflow.css";
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
@@ -123,6 +124,7 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 | `ui-style-kit-css/with-bridge.css` | ~331 KB | ~39 KB | Runtime switchers plus Interactive Surface bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~13 KB | ~2 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/content-overflow.css` | ~5 KB | ~1 KB | Shared long-text containment for standalone style imports |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
 
 ## CDN usage
@@ -136,7 +138,7 @@ After publishing to NPM:
 For production, pin a version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.3/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.4/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -208,6 +210,8 @@ contrast
 ## Native HTML coverage
 
 `styles/native-elements.css` owns the shared native selectors under `[data-ui][data-theme][data-mode]`. Each style system maps those selectors to its visual identity through `--usk-native-*` tokens, so native controls keep the same coverage while inheriting each preset's radius, shadows, borders, typography, and color surfaces.
+
+`styles/content-overflow.css` owns the shared text containment contract under `[data-ui][data-theme][data-mode]`. It keeps headings, paragraphs, links, table cells, controls, badges, nav links, and common UI wrappers from widening their parent wrapper when content contains long words, hashes, URLs, or copyable tokens.
 
 The shared native layer covers common native elements, including:
 
@@ -308,6 +312,7 @@ ui-style-kit-css/
   styles/
     theme-colors.css
     native-elements.css
+    content-overflow.css
     minimal-saas.css
     bento.css
     maximalist.css
@@ -343,7 +348,7 @@ The `v2.0.1` release line removes duplicated per-UI color-scheme blocks. Color s
 
 - Use `--usk-*-rgb` when defining or overriding a color scheme.
 - Continue using prefixed functional tokens such as `--saas-primary`, `--neo-card-bg`, and `--rg-on-primary` inside components.
-- Import `ui-style-kit-css/theme-colors.css` and `ui-style-kit-css/native-elements.css` before standalone style files if your bundler does not follow CSS `@import`.
+- Import `ui-style-kit-css/theme-colors.css`, `ui-style-kit-css/native-elements.css`, and `ui-style-kit-css/content-overflow.css` before standalone style files if your bundler does not follow CSS `@import`.
 - Keep using `ui-style-kit-css/interactive-surface-bridge` or `ui-style-kit-css/with-bridge.css` for the opt-in bridge. The bridge now inherits shared `--usk-*` roles and exposes three `data-surface-level` visual states while the default bundle remains bridge-free.
 
 ## License

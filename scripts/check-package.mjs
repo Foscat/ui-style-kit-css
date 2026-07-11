@@ -14,6 +14,7 @@ const required = [
   'CHANGELOG.md',
   'STYLE-MAP.md',
   'styles/theme-colors.css',
+  'styles/content-overflow.css',
   'styles/interactive-surface-bridge.css'
 ];
 for (const file of required) {
@@ -58,6 +59,8 @@ const requiredExports = [
   './with-bridge.css',
   './styles/theme-colors.css',
   './theme-colors.css',
+  './styles/content-overflow.css',
+  './content-overflow.css',
   './styles/minimal-saas.css',
   './cyberpunk.css',
   './styles/interactive-surface-bridge.css',

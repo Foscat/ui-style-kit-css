@@ -603,6 +603,71 @@ test('layout wrappers contain long text without page-level overflow', async ({ p
   }
 });
 
+test('demo avoids page-level overflow across the responsive orientation matrix', async ({ page }) => {
+  const viewports = [
+    { width: 320, height: 568 },
+    { width: 568, height: 320 },
+    { width: 390, height: 844 },
+    { width: 844, height: 390 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1440, height: 900 },
+    { width: 1920, height: 1080 }
+  ];
+  const representativeStates = [
+    { ui: 'minimal-saas', mode: 'light', bridge: false },
+    { ui: 'cyberpunk', mode: 'dark', bridge: true },
+    { ui: 'retro-glass', mode: 'contrast', bridge: true }
+  ];
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    await page.goto(demoUrl);
+
+    for (const state of representativeStates) {
+      await page.selectOption('#uiSelect', state.ui);
+      await page.selectOption('#modeSelect', state.mode);
+      const bridgeToggle = page.locator('#bridgeToggle');
+      if (state.bridge) await bridgeToggle.check();
+      else await bridgeToggle.uncheck();
+
+      const overflowReport = await page.evaluate(() => {
+        const viewportWidth = document.documentElement.clientWidth;
+        const pageOverflow = Math.max(
+          document.documentElement.scrollWidth,
+          document.body.scrollWidth
+        ) - viewportWidth;
+        const incoherentOverflow = [...document.body.querySelectorAll('*')]
+          .filter((element) => {
+            const styles = getComputedStyle(element);
+            if (styles.position === 'fixed') return false;
+            if (styles.overflowX === 'auto' || styles.overflowX === 'scroll') return false;
+
+            const rect = element.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0 && (rect.left < -1 || rect.right > viewportWidth + 1);
+          })
+          .slice(0, 8)
+          .map((element) => ({
+            tag: element.tagName.toLowerCase(),
+            testId: element.getAttribute('data-testid') || '',
+            className: element.className,
+            rect: element.getBoundingClientRect().toJSON()
+          }));
+
+        return { pageOverflow, incoherentOverflow };
+      });
+
+      expect(
+        overflowReport.pageOverflow,
+        `${state.ui}/${state.mode}/bridge-${state.bridge} overflow at ${viewport.width}x${viewport.height}: ${JSON.stringify(overflowReport, null, 2)}`
+      ).toBeLessThanOrEqual(1);
+      expect(overflowReport.incoherentOverflow).toEqual([]);
+      await expect(page.locator('main')).toBeVisible();
+    }
+  }
+});
+
 test('token workbench uses a responsive single-column layout on mobile', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(demoUrl);

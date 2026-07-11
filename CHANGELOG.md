@@ -2,6 +2,18 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [2.0.4] - 2026-07-11
+
+### Added
+
+- Restored the exported `content-overflow.css` shared layer for standalone style imports.
+- Added rendered regression coverage for long text containment and responsive orientation checks across mobile, tablet, desktop, portrait, and landscape viewports.
+
+### Changed
+
+- Aligned package metadata, generated bundle banners, demo structured data, and release documentation to `2.0.4`.
+- Reconnected every standalone UI preset to the shared content-overflow layer so long words, URLs, and token strings stay inside layout wrappers.
+
 ## [2.0.3] - 2026-07-11
 
 ### Added
