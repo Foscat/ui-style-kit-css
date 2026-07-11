@@ -89,6 +89,36 @@ test('package files include required publish assets', () => {
   for (const item of requiredFiles) {
     assert.ok(packageJson.files.includes(item), `package.json files[] should include ${item}`);
   }
+
+  assert.ok(
+    !packageJson.files.some((item) => item === 'demo' || item.startsWith('demo/')),
+    'package.json files[] should keep preview-only demo assets out of the npm tarball'
+  );
+});
+
+test('README documents the library system and theme override flow', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+
+  assert.match(readme, /```mermaid/);
+  assert.match(readme, /layout-style-css/);
+  assert.match(readme, /interactive-surface-css/);
+  assert.match(readme, /Demo token workbench/);
+  assert.match(readme, /ui-style-kit-css@2\.0\.3/);
+});
+
+test('wiki links use rendered GitHub Wiki page routes', () => {
+  const wikiDir = path.join(rootDir, 'wiki');
+  const markdownFiles = fs.readdirSync(wikiDir).filter((file) => file.endsWith('.md'));
+  const rawFileLinks = [];
+
+  for (const file of markdownFiles) {
+    const contents = fs.readFileSync(path.join(wikiDir, file), 'utf8');
+    for (const match of contents.matchAll(/\]\(([^)]+\.md(?:#[^)]+)?)\)/g)) {
+      rawFileLinks.push(`${file}: ${match[1]}`);
+    }
+  }
+
+  assert.deepEqual(rawFileLinks, []);
 });
 
 test('release automation scripts are exposed', () => {
@@ -273,8 +303,8 @@ test('published CSS import targets are resolvable', () => {
   }
 });
 
-test('demo favicon assets are packaged and linked with portable paths', () => {
-  // Favicon paths must remain subpath-safe for GitHub Pages and npm package demos.
+test('demo favicon assets stay repo-local and use portable paths', () => {
+  // Demo assets publish through GitHub Pages, while the npm package stays focused on CSS.
   const faviconAssets = [
     'android-chrome-192x192.png',
     'android-chrome-512x512.png',
@@ -302,7 +332,10 @@ test('demo favicon assets are packaged and linked with portable paths', () => {
   const rootManifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'site.webmanifest'), 'utf8'));
   const packageDemoManifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'demo', 'assets', 'site.webmanifest'), 'utf8'));
 
-  assert.ok(packageJson.files.includes('demo'), 'package.json files[] should include the demo asset pack');
+  assert.ok(!packageJson.files.includes('demo'), 'package.json files[] should exclude the demo asset pack');
+  assertFileExists('demo/assets/seo/social-card.png');
+  assertFileExists('demo/demo.css');
+  assertFileExists('demo/demo.js');
   for (const asset of faviconAssets) {
     assertFileExists(path.join('demo', 'assets', asset));
   }
@@ -310,19 +343,68 @@ test('demo favicon assets are packaged and linked with portable paths', () => {
   assert.match(rootDemoHtml, /href="demo\/assets\/favicon\.ico"/);
   assert.match(rootDemoHtml, /href="site\.webmanifest"/);
   assert.match(rootDemoHtml, /content="browserconfig\.xml"/);
+  assert.match(rootDemoHtml, /href="demo\/demo\.css"/);
+  assert.match(rootDemoHtml, /src="demo\/demo\.js"/);
+  assert.match(rootDemoHtml, /data-default-href="dist\/ui-style-kit\.css"/);
+  assert.match(rootDemoHtml, /data-bridge-href="dist\/ui-style-kit\.with-bridge\.css"/);
   assert.match(packageDemoHtml, /href="assets\/favicon\.ico"/);
   assert.match(packageDemoHtml, /href="assets\/site\.webmanifest"/);
   assert.match(packageDemoHtml, /content="assets\/browserconfig\.xml"/);
+  assert.match(packageDemoHtml, /href="demo\.css"/);
+  assert.match(packageDemoHtml, /src="demo\.js"/);
+  assert.match(packageDemoHtml, /data-default-href="\.\.\/dist\/ui-style-kit\.css"/);
+  assert.match(packageDemoHtml, /data-bridge-href="\.\.\/dist\/ui-style-kit\.with-bridge\.css"/);
   assert.doesNotMatch(packageDemoHtml, /href="\/(?:favicon|site\.webmanifest|apple-touch-icon)/);
 
   assert.equal(rootManifest.theme_color, '#070b24');
+  assert.equal(rootManifest.lang, 'en-US');
   assert.deepEqual(
     rootManifest.icons.map((icon) => icon.src),
     ['demo/assets/android-chrome-192x192.png', 'demo/assets/android-chrome-512x512.png']
   );
+  assert.deepEqual(rootManifest.screenshots.map((screenshot) => screenshot.src), ['demo/assets/seo/social-card.png']);
   assert.equal(packageDemoManifest.start_url, '../');
+  assert.equal(packageDemoManifest.lang, 'en-US');
   assert.deepEqual(
     packageDemoManifest.icons.map((icon) => icon.src),
     ['android-chrome-192x192.png', 'android-chrome-512x512.png']
   );
+  assert.deepEqual(packageDemoManifest.screenshots.map((screenshot) => screenshot.src), ['seo/social-card.png']);
+});
+
+test('published demo HTML exposes search and social metadata', () => {
+  const rootDemoHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+  const packageDemoHtml = fs.readFileSync(path.join(rootDir, 'demo', 'index.html'), 'utf8');
+  const jsonLdMatch = rootDemoHtml.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
+
+  assert.match(rootDemoHtml, /<html lang="en-US">/);
+  assert.match(rootDemoHtml, /<title>UI Style Kit CSS \| CSS Theme and Component Preset Library<\/title>/);
+  assert.match(rootDemoHtml, /<meta name="description" content="CSS-only UI style kit/);
+  assert.match(rootDemoHtml, /<meta name="robots" content="index, follow, max-image-preview:large">/);
+  assert.match(rootDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/">/);
+  assert.match(rootDemoHtml, /<meta property="og:image" content="https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card\.png">/);
+  assert.match(rootDemoHtml, /<meta name="twitter:card" content="summary_large_image">/);
+  assert.match(rootDemoHtml, /A CSS-only library with 11 visual systems/);
+  assert.ok(jsonLdMatch, 'Root demo should include JSON-LD structured data');
+
+  const jsonLd = JSON.parse(jsonLdMatch[1]);
+  const softwareNode = jsonLd['@graph'].find((node) => node['@type'] === 'SoftwareSourceCode');
+  assert.equal(softwareNode.name, 'UI Style Kit CSS');
+  assert.equal(softwareNode.version, packageJson.version);
+  assert.equal(softwareNode.codeRepository, 'https://github.com/Foscat/ui-style-kit-css');
+  assert.equal(softwareNode.downloadUrl, 'https://www.npmjs.com/package/ui-style-kit-css');
+
+  assert.match(packageDemoHtml, /<meta name="robots" content="noindex, follow">/);
+  assert.match(packageDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/">/);
+});
+
+test('robots and sitemap describe the canonical demo URL', () => {
+  const robots = fs.readFileSync(path.join(rootDir, 'robots.txt'), 'utf8');
+  const sitemap = fs.readFileSync(path.join(rootDir, 'sitemap.xml'), 'utf8');
+
+  assert.match(robots, /Sitemap: https:\/\/foscat\.github\.io\/ui-style-kit-css\/sitemap\.xml/);
+  assert.match(sitemap, /<loc>https:\/\/foscat\.github\.io\/ui-style-kit-css\/<\/loc>/);
+  assert.match(sitemap, /<lastmod>2026-07-11<\/lastmod>/);
+  assert.match(sitemap, /<image:loc>https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card\.png<\/image:loc>/);
+  assert.doesNotMatch(sitemap, /ui-style-kit-css\/index\.html/);
 });

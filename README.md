@@ -9,9 +9,40 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.0.2` is the current v2 patch release. It keeps the `v2.0.1` shared color-scheme and native-element model, documents the public UI-system contracts more clearly, and refreshes development tooling without changing the CSS API.
+`v2.0.3` is the current v2 patch release. It keeps the `v2.0.1` shared color-scheme and native-element model, adds a demo theme-override workbench, improves copyable documentation examples, and refreshes release metadata without changing the CSS API.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
+
+## How the library fits together
+
+UI Style Kit CSS owns visual identity: themes, component paint, native HTML styling, and the prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
+
+```mermaid
+flowchart LR
+  App["Application markup"] --> Attrs["data-ui + data-theme + data-mode"]
+  Attrs --> USK["ui-style-kit-css"]
+  USK --> Themes["Shared --usk-* theme roles"]
+  USK --> Components["Prefixed component classes"]
+  USK --> Native["Scoped native HTML fallback"]
+  Layout["layout-style-css"] --> App
+  Surface["interactive-surface-css"] --> Bridge["Optional bridge bundle"]
+  Bridge --> USK
+  Components --> UI["Branded UI surface"]
+  Native --> UI
+  Themes --> UI
+```
+
+```mermaid
+flowchart TB
+  Theme["styles/theme-colors.css"] --> Rgb["Concrete --usk-*-rgb channels"]
+  Rgb --> Modes["Light, dark, and contrast modes"]
+  Modes --> Prefixes["Per-style prefixed aliases"]
+  Prefixes --> Rules["Component, utility, and native rules"]
+  Demo["Demo token workbench"] --> Overrides["Copyable :where([data-ui][data-theme][data-mode]) override block"]
+  Overrides --> Rgb
+```
+
+The demo page documents this flow directly: it shows computed RGB color tokens for the active theme and mode, lets developers edit them live, and copies the exact override block to drop into an app stylesheet.
 
 ## Features
 
@@ -46,7 +77,7 @@ Use a single style import for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.2`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+In `v2.0.3`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css` and the shared native-element fallback layer from `styles/native-elements.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -105,7 +136,7 @@ After publishing to NPM:
 For production, pin a version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.2/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.3/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -293,12 +324,9 @@ ui-style-kit-css/
     TOKENS.md
     STYLE-GUIDE.md
     PUBLISHING.md
-  demo/
-    index.html
-    assets/
-      favicon.svg
-      site.webmanifest
 ```
+
+The checked-in demo, favicon pack, and social preview image stay in the repository for GitHub Pages, but they are intentionally excluded from the npm tarball so installs only receive the CSS library, docs, and metadata.
 
 ## Development checks
 

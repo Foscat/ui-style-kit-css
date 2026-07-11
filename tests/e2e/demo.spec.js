@@ -38,10 +38,24 @@ const interactableSelector = [
   'video[controls]'
 ].join(',');
 
+async function installClipboardStub(page) {
+  await page.addInitScript(() => {
+    window.__copiedText = [];
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (text) => {
+          window.__copiedText.push(text);
+        }
+      }
+    });
+  });
+}
+
 test('demo loads with default theme settings', async ({ page }) => {
   await page.goto(demoUrl);
 
-  await expect(page).toHaveTitle(/UI Style Kit CSS Demo/i);
+  await expect(page).toHaveTitle(/UI Style Kit CSS \| CSS Theme and Component Preset Library/i);
 
   await expect(page.locator('#uiSelect')).toHaveValue(defaultDemoState.ui);
   await expect(page.locator('#themeSelect')).toHaveValue(defaultDemoState.theme);
@@ -52,6 +66,70 @@ test('demo loads with default theme settings', async ({ page }) => {
   await expect(page.locator('body')).toHaveAttribute('data-mode', defaultDemoState.mode);
 
   await expect(page.getByRole('heading', { level: 1, name: 'UI Style Kit CSS' })).toBeVisible();
+});
+
+test('demo exposes project resource links', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const resources = page.getByTestId('resource-links');
+  await expect(resources.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Foscat/ui-style-kit-css');
+  await expect(resources.getByRole('link', { name: 'Wiki' })).toHaveAttribute('href', 'https://github.com/Foscat/ui-style-kit-css/wiki');
+  await expect(resources.getByRole('link', { name: 'npm' })).toHaveAttribute('href', 'https://www.npmjs.com/package/ui-style-kit-css');
+  await expect(resources.getByRole('link', { name: 'Interactive Surface demo' })).toHaveAttribute('href', 'https://foscat.github.io/interactive-surface-css/');
+  await expect(resources.getByRole('link', { name: 'Layout Style demo' })).toHaveAttribute('href', 'https://foscat.github.io/layout-style-css/');
+});
+
+test('theme token workbench edits active RGB tokens and copies overrides', async ({ page }) => {
+  await installClipboardStub(page);
+  await page.goto(demoUrl);
+
+  const workbench = page.getByTestId('theme-token-workbench');
+  await expect(workbench).toBeVisible();
+  await expect(workbench.locator('[data-token-role]')).toHaveCount(23);
+
+  const primaryRow = workbench.locator('[data-token-role="primary"]');
+  const textInput = primaryRow.locator('.demo-token-input');
+  const colorInput = primaryRow.locator('.demo-token-color');
+
+  await expect(textInput).toHaveValue('64 94 184');
+  await expect(colorInput).toHaveValue('#405eb8');
+
+  await textInput.fill('72 91 255');
+  await expect(colorInput).toHaveValue('#485bff');
+  await expect(page.getByTestId('theme-override-preview')).toContainText('--usk-primary-rgb: 72 91 255;');
+
+  await colorInput.fill('#123456');
+  await expect(textInput).toHaveValue('18 52 86');
+  await expect(page.locator('body')).toHaveCSS('--usk-primary-rgb', '18 52 86');
+
+  await page.getByTestId('copy-theme-override').click();
+  const copiedOverride = await page.evaluate(() => window.__copiedText.at(-1));
+  expect(copiedOverride).toContain(':where([data-ui][data-theme="arctic-indigo"][data-mode="light"])');
+  expect(copiedOverride).toContain('--usk-primary-rgb: 18 52 86;');
+});
+
+test('demo code blocks expose copy buttons with clipboard tooltips', async ({ page }) => {
+  await installClipboardStub(page);
+  await page.goto(demoUrl);
+
+  const firstCodeBlock = page.locator('#native [data-testid="code-block"]').first();
+  const copyButton = firstCodeBlock.locator('[data-copy-code]');
+  const tooltip = firstCodeBlock.locator('.demo-copy-tooltip');
+
+  await expect(copyButton).toBeVisible();
+  await expect(copyButton).toHaveAttribute('aria-label', /Copy code/);
+  await expect(copyButton).toHaveAttribute('data-copy-tooltip-id', /^demo-copy-tooltip-/);
+  await expect(tooltip).toHaveAttribute('aria-hidden', 'true');
+  await expect(tooltip).toContainText(/Copy/);
+  await expect(tooltip).toHaveCSS('opacity', '0');
+
+  await copyButton.hover();
+  await expect(tooltip).toHaveCSS('opacity', '1');
+
+  await copyButton.click();
+  await expect(tooltip).toContainText('Copied');
+  const copiedCode = await page.evaluate(() => window.__copiedText.at(-1));
+  expect(copiedCode).toContain('button:not([class])');
 });
 
 test('switching demo controls updates body attributes and rendered classes', async ({ page }) => {
@@ -205,6 +283,7 @@ test('demo exposes the styled element and state showcase', async ({ page }) => {
     'component-spinner',
     'component-tooltips',
     'component-fields',
+    'theme-token-workbench',
     'native-text',
     'native-lists',
     'native-media',
@@ -416,20 +495,39 @@ test('demo component cards keep balanced rows at square and tablet widths', asyn
 test('demo primary navigation follows page order and updates the current link', async ({ page }) => {
   await page.goto(demoUrl);
 
-  const sectionOrder = await page.evaluate(() => ['overview', 'components', 'native', 'bridge', 'usage']
+  const sectionOrder = await page.evaluate(() => ['overview', 'tokens', 'components', 'native', 'bridge', 'usage']
     .map((id) => ({
       id,
       top: Math.round(document.getElementById(id).getBoundingClientRect().top + window.scrollY)
     })));
   const sortedOrder = [...sectionOrder].sort((first, second) => first.top - second.top).map(({ id }) => id);
 
-  expect(sortedOrder).toEqual(['overview', 'components', 'native', 'bridge', 'usage']);
+  expect(sortedOrder).toEqual(['overview', 'tokens', 'components', 'native', 'bridge', 'usage']);
 
   const primaryNav = page.locator('nav[aria-label="Primary"]').first();
+  await expect(primaryNav.getByRole('link')).toHaveText([
+    'Overview',
+    'Tokens',
+    'Components',
+    'Native HTML',
+    'Bridge',
+    'Usage'
+  ]);
   await primaryNav.getByRole('link', { name: 'Components' }).click();
 
   await expect(primaryNav.getByRole('link', { name: 'Components' })).toHaveAttribute('aria-current', 'page');
   await expect(primaryNav.getByRole('link', { name: 'Overview' })).not.toHaveAttribute('aria-current', 'page');
+});
+
+test('token workbench uses a responsive single-column layout on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(demoUrl);
+  await page.locator('nav[aria-label="Primary"]').first().getByRole('link', { name: 'Tokens' }).click();
+
+  const gridColumns = await page.getByTestId('theme-token-workbench').locator('.demo-token-workbench-grid')
+    .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+
+  expect(gridColumns).toBe(1);
 });
 
 test('mobile controls showcase stacks panels without cramped columns', async ({ page }) => {
