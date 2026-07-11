@@ -79,6 +79,30 @@ test('demo exposes project resource links', async ({ page }) => {
   await expect(resources.getByRole('link', { name: 'Layout Style demo' })).toHaveAttribute('href', 'https://foscat.github.io/layout-style-css/');
 });
 
+test('rendered demo links resolve to page sections or external destinations', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const linkIssues = await page.evaluate(() => [...document.querySelectorAll('a[href]')]
+    .map((link) => {
+      const url = new URL(link.getAttribute('href'), window.location.href);
+      const label = link.textContent.trim() || link.getAttribute('aria-label') || link.getAttribute('href');
+
+      if (url.protocol === 'file:' && url.pathname === window.location.pathname && url.hash) {
+        return document.getElementById(decodeURIComponent(url.hash.slice(1)))
+          ? null
+          : `${label}: missing ${url.hash}`;
+      }
+
+      if (url.protocol === 'http:' || url.protocol === 'https:') return null;
+      if (url.protocol === 'file:' && url.pathname !== window.location.pathname) return null;
+
+      return `${label}: unsupported ${url.href}`;
+    })
+    .filter(Boolean));
+
+  expect(linkIssues).toEqual([]);
+});
+
 test('theme token workbench edits active RGB tokens and copies overrides', async ({ page }) => {
   await installClipboardStub(page);
   await page.goto(demoUrl);
@@ -517,6 +541,66 @@ test('demo primary navigation follows page order and updates the current link', 
 
   await expect(primaryNav.getByRole('link', { name: 'Components' })).toHaveAttribute('aria-current', 'page');
   await expect(primaryNav.getByRole('link', { name: 'Overview' })).not.toHaveAttribute('aria-current', 'page');
+});
+
+test('layout wrappers contain long text without page-level overflow', async ({ page }) => {
+  const longText = 'UnbrokenLayoutWrapperContentToken'.repeat(10);
+
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1024, height: 768 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto(demoUrl);
+
+    for (const [ui, prefix] of stylePresets) {
+      await page.selectOption('#uiSelect', ui);
+      await page.evaluate(({ longText: injectedText, prefix: classPrefix }) => {
+        document.querySelector('main').innerHTML = `
+          <section class="${classPrefix}-page">
+            <div class="${classPrefix}-container ${classPrefix}-stack" data-testid="overflow-wrapper">
+              <article class="${classPrefix}-card ${classPrefix}-stack">
+                <p class="${classPrefix}-kicker">${injectedText}</p>
+                <h1 class="${classPrefix}-title">${injectedText}</h1>
+                <p class="${classPrefix}-copy">${injectedText}</p>
+                <nav class="${classPrefix}-nav" aria-label="Overflow probe navigation">
+                  <a class="${classPrefix}-nav-link" href="#main">${injectedText}</a>
+                </nav>
+              </article>
+            </div>
+          </section>`;
+      }, { longText, prefix });
+
+      const overflowReport = await page.evaluate(() => {
+        const viewportWidth = document.documentElement.clientWidth;
+        const candidates = [...document.querySelectorAll('[data-testid="overflow-wrapper"], [data-testid="overflow-wrapper"] *')];
+        const overflowers = candidates
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              tag: element.tagName.toLowerCase(),
+              className: element.className,
+              left: Math.floor(rect.left),
+              right: Math.ceil(rect.right),
+              width: Math.ceil(rect.width)
+            };
+          })
+          .filter(({ left, right }) => left < -1 || right > viewportWidth + 1);
+
+        return {
+          documentWidth: document.documentElement.scrollWidth,
+          viewportWidth,
+          overflowers
+        };
+      });
+
+      expect(
+        overflowReport.documentWidth,
+        `${ui} should not force page overflow at ${viewport.width}px: ${JSON.stringify(overflowReport, null, 2)}`
+      ).toBeLessThanOrEqual(overflowReport.viewportWidth + 1);
+      expect(overflowReport.overflowers, `${ui} overflowers at ${viewport.width}px`).toEqual([]);
+    }
+  }
 });
 
 test('token workbench uses a responsive single-column layout on mobile', async ({ page }) => {

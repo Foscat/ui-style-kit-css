@@ -43,6 +43,51 @@ function assertFileExists(relativePath) {
   assert.ok(fs.existsSync(absolutePath), `Expected file to exist: ${relativePath}`);
 }
 
+function isExternalReference(reference) {
+  return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(reference);
+}
+
+function splitReference(reference) {
+  const trimmed = reference.trim().replace(/^<|>$/g, '');
+  const withoutTitle = trimmed.match(/^([^\s]+)(?:\s+["'][^"']+["'])?$/)?.[1] || trimmed;
+  const [pathname = '', hash = ''] = withoutTitle.split('#');
+
+  return { pathname, hash };
+}
+
+function assertLocalReference(file, reference, failures) {
+  if (!reference || isExternalReference(reference)) return;
+
+  const { pathname, hash } = splitReference(reference);
+  const sourcePath = path.join(rootDir, file);
+  const sourceContents = fs.readFileSync(sourcePath, 'utf8');
+
+  if (!pathname) {
+    if (hash && !new RegExp(`\\bid=["']${escapeRegExp(hash)}["']`).test(sourceContents)) {
+      failures.push(`${file}: missing #${hash}`);
+    }
+    return;
+  }
+
+  let targetPath = pathname;
+  if (file.startsWith(`wiki${path.sep}`) && !path.extname(pathname) && !pathname.includes('/')) {
+    targetPath = `${pathname}.md`;
+  }
+
+  const absoluteTarget = path.resolve(path.dirname(sourcePath), targetPath);
+  if (!absoluteTarget.startsWith(rootDir) || !fs.existsSync(absoluteTarget)) {
+    failures.push(`${file}: ${reference}`);
+  }
+}
+
+function relativeFiles(directory, extension) {
+  const absoluteDirectory = path.join(rootDir, directory);
+
+  return fs.readdirSync(absoluteDirectory)
+    .filter((file) => file.endsWith(extension))
+    .map((file) => path.join(directory, file));
+}
+
 test('package entry points point to dist output', () => {
   assert.equal(packageJson.main, 'dist/ui-style-kit.css');
   assert.equal(packageJson.style, 'dist/ui-style-kit.css');
@@ -58,6 +103,54 @@ test('export targets map to real files', () => {
     assert.equal(typeof targetPath, 'string', `Expected string export target for ${exportPath}`);
     assertFileExists(targetPath.replace(/^\.\//, ''));
   }
+});
+
+test('repository-local links and asset references resolve', () => {
+  const markdownFiles = [
+    'README.md',
+    'CHANGELOG.md',
+    'CONTRIBUTING.md',
+    'SECURITY.md',
+    'STYLE-MAP.md',
+    path.join('demo', 'assets', 'README.md'),
+    ...relativeFiles('docs', '.md'),
+    ...relativeFiles('wiki', '.md')
+  ];
+  const htmlFiles = [
+    'index.html',
+    path.join('demo', 'index.html')
+  ];
+  const cssFiles = [
+    ...relativeFiles('styles', '.css'),
+    ...relativeFiles('demo', '.css')
+  ];
+  const failures = [];
+
+  for (const file of markdownFiles) {
+    const contents = fs.readFileSync(path.join(rootDir, file), 'utf8');
+    for (const match of contents.matchAll(/!?\[[^\]]*]\(([^)]+)\)/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+  }
+
+  for (const file of htmlFiles) {
+    const contents = fs.readFileSync(path.join(rootDir, file), 'utf8');
+    for (const match of contents.matchAll(/\b(?:href|src)=["']([^"']+)["']/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+    for (const match of contents.matchAll(/<meta\s+name=["']msapplication-config["']\s+content=["']([^"']+)["']/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+  }
+
+  for (const file of cssFiles) {
+    const contents = fs.readFileSync(path.join(rootDir, file), 'utf8');
+    for (const match of contents.matchAll(/url\(["']?([^"')]+)["']?\)/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+  }
+
+  assert.deepEqual(failures, []);
 });
 
 test('dist CSS contains expected style system markers', () => {
@@ -238,6 +331,28 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
   }
 });
 
+test('content overflow contract is shared by standalone styles and bundles', () => {
+  assert.equal(
+    packageJson.exports['./content-overflow.css'],
+    './styles/content-overflow.css'
+  );
+  assert.equal(
+    packageJson.exports['./styles/content-overflow.css'],
+    './styles/content-overflow.css'
+  );
+  assertFileExists('styles/content-overflow.css');
+
+  const overflowCss = fs.readFileSync(path.join(rootDir, 'styles', 'content-overflow.css'), 'utf8');
+  const bundledCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
+  const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
+
+  assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
+  assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.match(overflowCss, /white-space:\s*normal/);
+  assert.match(bundledCss, /styles\/content-overflow\.css/);
+  assert.match(minCss, /overflow-wrap:anywhere/);
+});
+
 test('native element fallback styles are shared instead of duplicated per preset', () => {
   assert.equal(
     packageJson.exports['./styles/native-elements.css'],
@@ -281,6 +396,7 @@ test('native element fallback styles are shared instead of duplicated per preset
   for (const [uiName, fileName] of styleFiles) {
     const css = fs.readFileSync(path.join(rootDir, 'styles', fileName), 'utf8');
     assert.match(css, /@import url\("\.\/native-elements\.css"\);/, `${fileName} should import the shared native layer`);
+    assert.match(css, /@import url\("\.\/content-overflow\.css"\);/, `${fileName} should import the shared content overflow layer`);
     assert.match(css, /--usk-native-surface\s*:/, `${fileName} should map native surface tokens`);
     assert.doesNotMatch(css, /Native HTML Coverage \+ CSS Accessibility Layer/);
     assert.doesNotMatch(css, new RegExp(`\\[data-ui="${uiName}"\\] :where\\(fieldset\\)`));
@@ -291,6 +407,7 @@ test('published CSS import targets are resolvable', () => {
   const importTargets = [
     '.',
     './minimal-saas.css',
+    './content-overflow.css',
     './styles/cyberpunk.css',
     './interactive-surface-bridge',
     './with-bridge.css'

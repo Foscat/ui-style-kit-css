@@ -4,9 +4,11 @@ import path from 'node:path';
 const root = process.cwd();
 const themeColorFile = 'styles/theme-colors.css';
 const nativeElementsFile = 'styles/native-elements.css';
+const contentOverflowFile = 'styles/content-overflow.css';
 const styleFiles = [
   themeColorFile,
   nativeElementsFile,
+  contentOverflowFile,
   'styles/minimal-saas.css',
   'styles/bento.css',
   'styles/maximalist.css',
@@ -75,6 +77,7 @@ const colorRoles = [
 const layerOrder = [
   'ui-style-kit.theme_colors',
   'ui-style-kit.native_elements',
+  'ui-style-kit.content_overflow',
   'ui-style-kit.minimal_saas',
   'ui-style-kit.bento',
   'ui-style-kit.maximalist',
@@ -100,6 +103,7 @@ function readFile(file) {
   return css
     .replace(/^@import url\("\.\/theme-colors\.css"\);\s*/m, '')
     .replace(/^@import url\("\.\/native-elements\.css"\);\s*/m, '')
+    .replace(/^@import url\("\.\/content-overflow\.css"\);\s*/m, '')
     .trim();
 }
 
