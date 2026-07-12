@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import zlib from 'node:zlib';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -12,6 +13,10 @@ const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function formatApproxKb(byteLength) {
+  return `~${Math.round(byteLength / 1024)} KB`;
 }
 
 function exactHeadTag() {
@@ -196,7 +201,57 @@ test('README documents the library system and theme override flow', () => {
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
+  assert.match(readme, /v2\.0\.4/);
+  assert.match(readme, /ui-style-kit-css@2\.0\.3/);
+  assert.match(readme, /Ecosystem compatibility/);
   assert.match(readme, /ui-style-kit-css@2\.0\.4/);
+  assert.match(readme, /interactive-surface-css@1\.3\.0/);
+  assert.match(readme, /layout-style-css@1\.1\.2/);
+});
+
+test('README bundle size guide matches current built CSS output', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  // Keep the public size table honest whenever generated CSS changes.
+  const sizeExpectations = [
+    ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css', 'Runtime UI-system switchers and demos'],
+    ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css', 'Runtime switchers plus Interactive Surface bridge'],
+    ['ui-style-kit-css/theme-colors.css', 'styles/theme-colors.css', 'Shared color schemes for standalone style imports'],
+    ['ui-style-kit-css/native-elements.css', 'styles/native-elements.css', 'Shared native HTML fallback styling'],
+    ['ui-style-kit-css/content-overflow.css', 'styles/content-overflow.css', 'Shared long-text containment for standalone style imports']
+  ];
+
+  for (const [importPath, relativePath, label] of sizeExpectations) {
+    const css = fs.readFileSync(path.join(rootDir, relativePath));
+    const rawSize = formatApproxKb(css.byteLength);
+    const gzipSize = formatApproxKb(zlib.gzipSync(css).byteLength);
+    const row = new RegExp(`\\| \`${escapeRegExp(importPath)}\` \\| ${escapeRegExp(rawSize)} \\| ${escapeRegExp(gzipSize)} \\| ${escapeRegExp(label)} \\|`);
+
+    assert.match(readme, row, `${relativePath} size guide should match built CSS output`);
+  }
+});
+
+test('ecosystem compatibility guidance is packaged and linked from public docs', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');
+  const wikiSidebar = fs.readFileSync(path.join(rootDir, 'wiki', '_Sidebar.md'), 'utf8');
+  const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
+  const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
+
+  assert.match(readme, /\[Ecosystem guide\]\(docs\/ECOSYSTEM\.md\)/);
+  assert.match(wikiHome, /\[Ecosystem Compatibility\]\(Ecosystem-Compatibility\)/);
+  assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
+
+  for (const contents of [ecosystemDoc, ecosystemWiki]) {
+    assert.match(contents, /ui-style-kit-css@2\.0\.4/);
+    assert.match(contents, /interactive-surface-css@1\.3\.0/);
+    assert.match(contents, /layout-style-css@1\.1\.2/);
+    assert.match(contents, /Use one/);
+    assert.match(contents, /Use two/);
+    assert.match(contents, /Use all three/);
+    assert.match(contents, /visual identity/);
+    assert.match(contents, /interaction-state/);
+    assert.match(contents, /structural/);
+  }
 });
 
 test('wiki links use rendered GitHub Wiki page routes', () => {

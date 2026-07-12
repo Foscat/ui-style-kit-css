@@ -5,4 +5,5 @@
 - [Theming Model](Theming-Model)
 - [Class API](Class-API)
 - [UI Systems](UI-Systems)
+- [[Ecosystem Compatibility]]
 - [Accessibility](Accessibility)

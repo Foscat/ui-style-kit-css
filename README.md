@@ -44,6 +44,20 @@ flowchart TB
 
 The demo page documents this flow directly: it shows computed RGB color tokens for the active theme and mode, lets developers edit them live, and copies the exact override block to drop into an app stylesheet.
 
+## Ecosystem compatibility
+
+These libraries stay standalone, but the current aligned set is:
+
+| Library | Aligned version | Owns |
+|---|---:|---|
+| `ui-style-kit-css@2.0.4` | source release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.3.0` | latest published sibling | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@1.1.2` | latest published sibling | structural wrappers, grids, sections, app shells, and layout recipes |
+
+Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
+
+For import order, ownership boundaries, and adoption paths, see the [Ecosystem guide](docs/ECOSYSTEM.md).
+
 ## Features
 
 - 11 UI style systems
@@ -120,25 +134,25 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~269 KB | ~34 KB | Runtime UI-system switchers and demos |
-| `ui-style-kit-css/with-bridge.css` | ~331 KB | ~39 KB | Runtime switchers plus Interactive Surface bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~275 KB | ~35 KB | Runtime UI-system switchers and demos |
+| `ui-style-kit-css/with-bridge.css` | ~338 KB | ~40 KB | Runtime switchers plus Interactive Surface bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~13 KB | ~2 KB | Shared native HTML fallback styling |
-| `ui-style-kit-css/content-overflow.css` | ~5 KB | ~1 KB | Shared long-text containment for standalone style imports |
+| `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
 
 ## CDN usage
 
-After publishing to NPM:
+Use the latest published NPM package:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@latest/dist/ui-style-kit.min.css" />
 ```
 
-For production, pin a version:
+For production today, pin the latest published patch. Update this pin to `2.0.4` after that release is published:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.4/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.3/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage

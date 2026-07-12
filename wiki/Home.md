@@ -27,6 +27,7 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 - [Theming Model](Theming-Model)
 - [Class API](Class-API)
 - [UI Systems](UI-Systems)
+- [Ecosystem Compatibility](Ecosystem-Compatibility)
 - [Accessibility](Accessibility)
 
 ## Companion Integration
