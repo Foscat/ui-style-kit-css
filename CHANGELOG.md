@@ -2,6 +2,25 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [2.0.4] - 2026-07-20
+
+### Added
+
+- Restored the exported `content-overflow.css` shared layer for standalone style imports.
+- Added rendered regression coverage for long text containment and responsive orientation checks across mobile, tablet, desktop, portrait, and landscape viewports.
+
+### Changed
+
+- Replaced the regex minifier with exactly pinned Lightning CSS parsing while preserving generated bundle banners and entry points.
+- Aligned package metadata, generated bundle banners, demo structured data, and release documentation to `2.0.4`.
+- Reconnected every standalone UI preset to the shared content-overflow layer so long words, URLs, and token strings stay inside layout wrappers.
+
+### Fixed
+
+- Preserved descendant combinators and required whitespace around binary operators in generated `calc()` values.
+- Moved `::file-selector-button` and `::backdrop` outside `:where()` arguments so Chromium accepts and applies the native rules.
+- Routed Brutalism, Cyberpunk, Y2K, and Retro Glass status foregrounds through their documented `on-success`, `on-warning`, and `on-danger` tokens.
+
 ## [2.0.3] - 2026-07-11
 
 ### Added

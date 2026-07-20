@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import zlib from 'node:zlib';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -12,6 +13,10 @@ const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function formatApproxKb(byteLength) {
+  return `~${Math.round(byteLength / 1024)} KB`;
 }
 
 function exactHeadTag() {
@@ -43,6 +48,51 @@ function assertFileExists(relativePath) {
   assert.ok(fs.existsSync(absolutePath), `Expected file to exist: ${relativePath}`);
 }
 
+function isExternalReference(reference) {
+  return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(reference);
+}
+
+function splitReference(reference) {
+  const trimmed = reference.trim().replace(/^<|>$/g, '');
+  const withoutTitle = trimmed.match(/^([^\s]+)(?:\s+["'][^"']+["'])?$/)?.[1] || trimmed;
+  const [pathname = '', hash = ''] = withoutTitle.split('#');
+
+  return { pathname, hash };
+}
+
+function assertLocalReference(file, reference, failures) {
+  if (!reference || isExternalReference(reference)) return;
+
+  const { pathname, hash } = splitReference(reference);
+  const sourcePath = path.join(rootDir, file);
+  const sourceContents = fs.readFileSync(sourcePath, 'utf8');
+
+  if (!pathname) {
+    if (hash && !new RegExp(`\\bid=["']${escapeRegExp(hash)}["']`).test(sourceContents)) {
+      failures.push(`${file}: missing #${hash}`);
+    }
+    return;
+  }
+
+  let targetPath = pathname;
+  if (file.startsWith(`wiki${path.sep}`) && !path.extname(pathname) && !pathname.includes('/')) {
+    targetPath = `${pathname}.md`;
+  }
+
+  const absoluteTarget = path.resolve(path.dirname(sourcePath), targetPath);
+  if (!absoluteTarget.startsWith(rootDir) || !fs.existsSync(absoluteTarget)) {
+    failures.push(`${file}: ${reference}`);
+  }
+}
+
+function relativeFiles(directory, extension) {
+  const absoluteDirectory = path.join(rootDir, directory);
+
+  return fs.readdirSync(absoluteDirectory)
+    .filter((file) => file.endsWith(extension))
+    .map((file) => path.join(directory, file));
+}
+
 test('package entry points point to dist output', () => {
   assert.equal(packageJson.main, 'dist/ui-style-kit.css');
   assert.equal(packageJson.style, 'dist/ui-style-kit.css');
@@ -58,6 +108,54 @@ test('export targets map to real files', () => {
     assert.equal(typeof targetPath, 'string', `Expected string export target for ${exportPath}`);
     assertFileExists(targetPath.replace(/^\.\//, ''));
   }
+});
+
+test('repository-local links and asset references resolve', () => {
+  const markdownFiles = [
+    'README.md',
+    'CHANGELOG.md',
+    'CONTRIBUTING.md',
+    'SECURITY.md',
+    'STYLE-MAP.md',
+    path.join('demo', 'assets', 'README.md'),
+    ...relativeFiles('docs', '.md'),
+    ...relativeFiles('wiki', '.md')
+  ];
+  const htmlFiles = [
+    'index.html',
+    path.join('demo', 'index.html')
+  ];
+  const cssFiles = [
+    ...relativeFiles('styles', '.css'),
+    ...relativeFiles('demo', '.css')
+  ];
+  const failures = [];
+
+  for (const file of markdownFiles) {
+    const contents = fs.readFileSync(path.join(rootDir, file), 'utf8');
+    for (const match of contents.matchAll(/!?\[[^\]]*]\(([^)]+)\)/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+  }
+
+  for (const file of htmlFiles) {
+    const contents = fs.readFileSync(path.join(rootDir, file), 'utf8');
+    for (const match of contents.matchAll(/\b(?:href|src)=["']([^"']+)["']/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+    for (const match of contents.matchAll(/<meta\s+name=["']msapplication-config["']\s+content=["']([^"']+)["']/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+  }
+
+  for (const file of cssFiles) {
+    const contents = fs.readFileSync(path.join(rootDir, file), 'utf8');
+    for (const match of contents.matchAll(/url\(["']?([^"')]+)["']?\)/g)) {
+      assertLocalReference(file, match[1], failures);
+    }
+  }
+
+  assert.deepEqual(failures, []);
 });
 
 test('dist CSS contains expected style system markers', () => {
@@ -103,7 +201,73 @@ test('README documents the library system and theme override flow', () => {
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
+  assert.match(readme, /v2\.0\.4/);
   assert.match(readme, /ui-style-kit-css@2\.0\.3/);
+  assert.match(readme, /Ecosystem compatibility/);
+  assert.match(readme, /ui-style-kit-css@2\.0\.4/);
+  assert.match(readme, /interactive-surface-css@1\.3\.0/);
+  assert.match(readme, /layout-style-css@1\.1\.2/);
+});
+
+test('README bundle size guide matches current built CSS output', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  // Keep the public size table honest whenever generated CSS changes.
+  const sizeExpectations = [
+    ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css', 'Runtime UI-system switchers and demos'],
+    ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css', 'Runtime switchers plus Interactive Surface bridge'],
+    ['ui-style-kit-css/theme-colors.css', 'styles/theme-colors.css', 'Shared color schemes for standalone style imports'],
+    ['ui-style-kit-css/native-elements.css', 'styles/native-elements.css', 'Shared native HTML fallback styling'],
+    ['ui-style-kit-css/content-overflow.css', 'styles/content-overflow.css', 'Shared long-text containment for standalone style imports']
+  ];
+
+  for (const [importPath, relativePath, label] of sizeExpectations) {
+    const css = fs.readFileSync(path.join(rootDir, relativePath));
+    const rawSize = formatApproxKb(css.byteLength);
+    const gzipSize = formatApproxKb(zlib.gzipSync(css).byteLength);
+    const row = new RegExp(`\\| \`${escapeRegExp(importPath)}\` \\| ${escapeRegExp(rawSize)} \\| ${escapeRegExp(gzipSize)} \\| ${escapeRegExp(label)} \\|`);
+
+    assert.match(readme, row, `${relativePath} size guide should match built CSS output`);
+  }
+});
+
+test('2.0.4 release documentation records the correctness hotfix', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const changelog = fs.readFileSync(path.join(rootDir, 'CHANGELOG.md'), 'utf8');
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+  const releaseNotes = changelog.match(/## \[2\.0\.4\][\s\S]*?(?=\n## \[|$)/)?.[0] ?? '';
+
+  assert.match(readme, /parser-based minification/);
+  assert.match(releaseNotes, /Lightning CSS/);
+  assert.match(releaseNotes, /::file-selector-button/);
+  assert.match(releaseNotes, /::backdrop/);
+  assert.match(releaseNotes, /on-success/);
+  assert.match(releaseNotes, /on-warning/);
+  assert.match(releaseNotes, /on-danger/);
+  assert.match(publishingGuide, /Lightning CSS/);
+});
+
+test('ecosystem compatibility guidance is packaged and linked from public docs', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');
+  const wikiSidebar = fs.readFileSync(path.join(rootDir, 'wiki', '_Sidebar.md'), 'utf8');
+  const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
+  const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
+
+  assert.match(readme, /\[Ecosystem guide\]\(docs\/ECOSYSTEM\.md\)/);
+  assert.match(wikiHome, /\[Ecosystem Compatibility\]\(Ecosystem-Compatibility\)/);
+  assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
+
+  for (const contents of [ecosystemDoc, ecosystemWiki]) {
+    assert.match(contents, /ui-style-kit-css@2\.0\.4/);
+    assert.match(contents, /interactive-surface-css@1\.3\.0/);
+    assert.match(contents, /layout-style-css@1\.1\.2/);
+    assert.match(contents, /Use one/);
+    assert.match(contents, /Use two/);
+    assert.match(contents, /Use all three/);
+    assert.match(contents, /visual identity/);
+    assert.match(contents, /interaction-state/);
+    assert.match(contents, /structural/);
+  }
 });
 
 test('wiki links use rendered GitHub Wiki page routes', () => {
@@ -238,6 +402,28 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
   }
 });
 
+test('content overflow contract is shared by standalone styles and bundles', () => {
+  assert.equal(
+    packageJson.exports['./content-overflow.css'],
+    './styles/content-overflow.css'
+  );
+  assert.equal(
+    packageJson.exports['./styles/content-overflow.css'],
+    './styles/content-overflow.css'
+  );
+  assertFileExists('styles/content-overflow.css');
+
+  const overflowCss = fs.readFileSync(path.join(rootDir, 'styles', 'content-overflow.css'), 'utf8');
+  const bundledCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
+  const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
+
+  assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
+  assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.match(overflowCss, /white-space:\s*normal/);
+  assert.match(bundledCss, /styles\/content-overflow\.css/);
+  assert.match(minCss, /overflow-wrap:anywhere/);
+});
+
 test('native element fallback styles are shared instead of duplicated per preset', () => {
   assert.equal(
     packageJson.exports['./styles/native-elements.css'],
@@ -281,6 +467,7 @@ test('native element fallback styles are shared instead of duplicated per preset
   for (const [uiName, fileName] of styleFiles) {
     const css = fs.readFileSync(path.join(rootDir, 'styles', fileName), 'utf8');
     assert.match(css, /@import url\("\.\/native-elements\.css"\);/, `${fileName} should import the shared native layer`);
+    assert.match(css, /@import url\("\.\/content-overflow\.css"\);/, `${fileName} should import the shared content overflow layer`);
     assert.match(css, /--usk-native-surface\s*:/, `${fileName} should map native surface tokens`);
     assert.doesNotMatch(css, /Native HTML Coverage \+ CSS Accessibility Layer/);
     assert.doesNotMatch(css, new RegExp(`\\[data-ui="${uiName}"\\] :where\\(fieldset\\)`));
@@ -291,6 +478,7 @@ test('published CSS import targets are resolvable', () => {
   const importTargets = [
     '.',
     './minimal-saas.css',
+    './content-overflow.css',
     './styles/cyberpunk.css',
     './interactive-surface-bridge',
     './with-bridge.css'

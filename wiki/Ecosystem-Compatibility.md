@@ -1,0 +1,58 @@
+# Ecosystem Compatibility
+
+UI Style Kit CSS stays standalone while offering stable integration points for the companion libraries.
+
+## Aligned Versions
+
+| Library | Current aligned version | Owns |
+|---|---:|---|
+| `ui-style-kit-css@2.0.4` | source release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.3.0` | latest published sibling | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@1.1.2` | latest published sibling | structural wrappers, grids, sections, app shells, and layout recipes |
+
+`ui-style-kit-css@2.0.4` is the source release target. Use the published CDN pin documented in the README until that package version is available.
+
+## Adoption Paths
+
+### Use one
+
+Use UI Style Kit alone for visual identity, color themes, scoped native styling, and long-text containment.
+
+```js
+import "ui-style-kit-css/minimal-saas.css";
+```
+
+### Use two
+
+Use UI Style Kit with Interactive Surface CSS when controls need interaction-state behavior:
+
+```js
+import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css/interactive-surface-bridge";
+```
+
+Use UI Style Kit with Layout Style CSS when a project needs structural layout primitives and UI paint:
+
+```js
+import "layout-style-css";
+import "ui-style-kit-css/minimal-saas.css";
+```
+
+### Use all three
+
+Use all three when structural layout, visual styling, and interaction-state behavior should remain separate:
+
+```js
+import "layout-style-css";
+import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/with-bridge.css";
+```
+
+## Ownership Boundaries
+
+- UI Style Kit CSS owns visual identity, color themes, UI paint, scoped native element styling, content wrapping, and bridge tokens.
+- Interactive Surface CSS owns interaction-state primitives, state layers, input affordances, and surface behavior.
+- Layout Style CSS owns structural wrappers, grids, app shells, sections, and layout recipes.
+
+The optional bridge maps shared `--usk-*` roles to `--interactive-surface-*` tokens. It does not move interaction behavior into UI Style Kit.
