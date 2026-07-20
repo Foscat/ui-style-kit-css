@@ -261,6 +261,8 @@ test('attached bridge wires every enabled interactable element to interactive su
 
   await page.locator('#bridgeToggle').check();
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
+  // Firefox can observe the bridge attribute before the swapped stylesheet has finished applying.
+  await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
 
   const bridgeCoverage = await page.evaluate((selector) => {
     const elements = [...document.querySelectorAll(selector)].filter((element) => {

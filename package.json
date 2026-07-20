@@ -173,6 +173,7 @@
     "test:axe": "playwright test --config playwright.config.js tests/e2e/accessibility.spec.js",
     "test:matrix": "playwright test --config playwright.matrix.config.js",
     "test:e2e:install:ci": "playwright install --with-deps chromium firefox webkit",
+    "check:ecosystem:packs": "node scripts/check-ecosystem-packs.mjs",
     "check": "npm run build && npm run lint && npm run test:unit && npm run check:contrast && npm run check:package",
     "pack:dry-run": "npm pack --dry-run",
     "prepack": "npm run check",

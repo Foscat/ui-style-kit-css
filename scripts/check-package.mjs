@@ -66,6 +66,7 @@ const requiredScripts = [
   'test:e2e:install:ci',
   'check:contrast',
   'check:package',
+  'check:ecosystem:packs',
   'check',
   'pack:dry-run'
 ];

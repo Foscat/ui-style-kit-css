@@ -409,6 +409,7 @@ test('release automation scripts are exposed', () => {
     'test:e2e:install:ci',
     'check:contrast',
     'check:package',
+    'check:ecosystem:packs',
     'check',
     'pack:dry-run'
   ];
@@ -417,6 +418,15 @@ test('release automation scripts are exposed', () => {
     assert.equal(typeof packageJson.scripts?.[scriptName], 'string', `Missing script: ${scriptName}`);
     assert.notEqual(packageJson.scripts[scriptName].trim(), '', `Script should not be empty: ${scriptName}`);
   }
+});
+
+test('publishing docs expose the packed ecosystem compatibility gate', () => {
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+
+  assert.match(packageJson.scripts['check:ecosystem:packs'], /scripts\/check-ecosystem-packs\.mjs/);
+  assert.ok(fs.existsSync(path.join(rootDir, 'scripts', 'check-ecosystem-packs.mjs')));
+  assert.match(publishingGuide, /npm run check:ecosystem:packs/);
+  assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
 });
 
 test('CI workflow shards the UI matrix by engine and preset group', () => {
