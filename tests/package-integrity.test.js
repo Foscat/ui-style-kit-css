@@ -429,6 +429,27 @@ test('publishing docs expose the packed ecosystem compatibility gate', () => {
   assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
 });
 
+test('publishing docs preserve the approval-gated ecosystem rollout order', () => {
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+  const requiredSequence = [
+    'ui-style-kit-css@2.0.4',
+    'interactive-surface-css@1.5.0',
+    'ui-style-kit-css@2.1.0',
+    'layout-style-css@2.1.0'
+  ];
+
+  let cursor = -1;
+  for (const releaseTarget of requiredSequence) {
+    const next = publishingGuide.indexOf(releaseTarget, cursor + 1);
+    assert.ok(next > cursor, `Publishing guide must order ${releaseTarget} after the previous release target`);
+    cursor = next;
+  }
+
+  assert.match(publishingGuide, /No package, tag, or registry release occurs without explicit approval/i);
+  assert.match(publishingGuide, /2\.0\.4[^.\n]*hotfix/i);
+  assert.match(publishingGuide, /final all-three packed compatibility suite/i);
+});
+
 test('CI workflow shards the UI matrix by engine and preset group', () => {
   const ciWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
 
