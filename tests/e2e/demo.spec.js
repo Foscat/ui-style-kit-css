@@ -52,6 +52,31 @@ async function installClipboardStub(page) {
   });
 }
 
+async function waitForStyleKitBundle(page, expectedHref) {
+  await page.waitForFunction((href) => {
+    const stylesheet = document.getElementById('styleKitStylesheet');
+    if (!stylesheet || stylesheet.getAttribute('href') !== href) return false;
+    if (!stylesheet.sheet) return false;
+
+    try {
+      return stylesheet.sheet.cssRules.length > 0;
+    } catch {
+      // Cross-origin stylesheets still expose a sheet object after load.
+      return true;
+    }
+  }, expectedHref);
+}
+
+async function setBridgeForLayoutProbe(page, attached) {
+  const expectedHref = attached ? 'dist/ui-style-kit.with-bridge.css' : 'dist/ui-style-kit.css';
+  const bridgeToggle = page.locator('#bridgeToggle');
+
+  await bridgeToggle.setChecked(attached, { force: true });
+  await expect(page.locator('body')).toHaveAttribute('data-bridge', attached ? 'attached' : 'detached');
+  await expect(page.locator('#styleKitStylesheet')).toHaveAttribute('href', expectedHref);
+  await waitForStyleKitBundle(page, expectedHref);
+}
+
 test('demo loads with default theme settings', async ({ page }) => {
   await page.goto(demoUrl);
 
@@ -604,6 +629,8 @@ test('layout wrappers contain long text without page-level overflow', async ({ p
 });
 
 test('demo avoids page-level overflow across the responsive orientation matrix', async ({ page }) => {
+  test.setTimeout(90_000);
+
   const viewports = [
     { width: 320, height: 568 },
     { width: 568, height: 320 },
@@ -628,9 +655,7 @@ test('demo avoids page-level overflow across the responsive orientation matrix',
     for (const state of representativeStates) {
       await page.selectOption('#uiSelect', state.ui);
       await page.selectOption('#modeSelect', state.mode);
-      const bridgeToggle = page.locator('#bridgeToggle');
-      if (state.bridge) await bridgeToggle.check();
-      else await bridgeToggle.uncheck();
+      await setBridgeForLayoutProbe(page, state.bridge);
 
       const overflowReport = await page.evaluate(() => {
         const viewportWidth = document.documentElement.clientWidth;

@@ -155,11 +155,11 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~270 KB | ~35 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~261 KB | ~34 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~337 KB | ~39 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~299 KB | ~39 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~290 KB | ~38 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~369 KB | ~44 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~13 KB | ~2 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~21 KB | ~3 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
@@ -266,6 +266,8 @@ The shared native layer covers common native elements, including:
 CSS improves accessibility presentation, but it cannot guarantee accessibility by itself. Use semantic HTML, real labels, keyboard-safe JavaScript, meaningful link/button text, and correct ARIA state management.
 
 Semantic text utilities such as `saas-text-primary`, `saas-text-warning`, and `saas-text-danger` use the active theme palette directly. Filled UI such as buttons, badges, and busy states use compact `on-*` aliases like `--saas-on-primary` and `--saas-on-danger`.
+
+For the full native-element and subpart support contract, including platform-owned picker and popup limitations, see [Native Element Coverage](docs/NATIVE-ELEMENTS.md).
 
 ## Loading states
 

@@ -82,19 +82,11 @@ const coreSuffixes = [
   'spinner-lg'
 ];
 
-const extendedUtilityStyles = new Map([
-  ['minimal-saas', 'saas'],
-  ['bento', 'bento'],
-  ['maximalist', 'max'],
-  ['bauhaus', 'bau'],
-  ['tactile', 'tactile'],
-  ['neumorphism', 'neo'],
-  ['retrofuturism', 'retro']
-]);
-
 const extendedUtilitySuffixes = [
   'bg-primary',
   'bg-secondary',
+  'button-ghost',
+  'button-pill',
   'disabled',
   'surface',
   'surface-sm',
@@ -108,12 +100,15 @@ const extendedUtilitySuffixes = [
   'switch',
   'switch-track',
   'switch-thumb',
+  'tooltip-bottom',
+  'tooltip-left',
+  'tooltip-right',
+  'tooltip-top',
   'divider',
   'pill',
   'rounded',
   'rounded-lg',
   'rounded-xl',
-  'split',
   'sr-only',
   'visually-hidden',
   'skip-link'
@@ -135,6 +130,13 @@ function classNames(ast) {
   });
 
   return names;
+}
+
+function composedClassNames(ui) {
+  return new Set([
+    ...classNames(astFor(path.join('styles', 'components.css'))),
+    ...classNames(astFor(path.join('styles', `${ui}.css`)))
+  ]);
 }
 
 function ruleDeclarations(rule) {
@@ -165,6 +167,13 @@ function rulesWithClass(ast, className) {
   });
 
   return rules;
+}
+
+function composedRulesWithClass(ui, className) {
+  return [
+    ...rulesWithClass(astFor(path.join('styles', 'components.css')), className),
+    ...rulesWithClass(astFor(path.join('styles', `${ui}.css`)), className)
+  ];
 }
 
 function customProperties(ast) {
@@ -211,6 +220,19 @@ function ruleHasPseudoElement(rule, name) {
   return found;
 }
 
+function ruleHasPseudoClass(rule, name) {
+  let found = false;
+
+  walk(rule.prelude, {
+    visit: 'PseudoClassSelector',
+    enter(node) {
+      if (node.name === name) found = true;
+    }
+  });
+
+  return found;
+}
+
 test('documented core class suffixes have AST selectors in every style file', () => {
   for (const [ui, prefix] of styles) {
     const names = classNames(astFor(path.join('styles', `${ui}.css`)));
@@ -221,12 +243,69 @@ test('documented core class suffixes have AST selectors in every style file', ()
     assert.equal(names.has('is-active'), true, `${ui} is missing the shared .is-active state selector`);
   }
 });
-test('documented extended utilities have AST selectors in the expected style files', () => {
-  for (const [ui, prefix] of extendedUtilityStyles.entries()) {
-    const names = classNames(astFor(path.join('styles', `${ui}.css`)));
+test('documented extended utilities compose through shared components for every preset', () => {
+  for (const [ui, prefix] of styles) {
+    const names = composedClassNames(ui);
 
     for (const suffix of extendedUtilitySuffixes) {
       assert.equal(names.has(`${prefix}-${suffix}`), true, `${ui} is missing .${prefix}-${suffix}`);
+    }
+  }
+});
+
+test('button pill components have centered 44px geometry and complete interaction hooks', () => {
+  for (const [ui, prefix] of styles) {
+    const className = `${prefix}-button-pill`;
+    const rules = composedRulesWithClass(ui, className);
+    const declarations = new Map(rules.flatMap((rule) => [...ruleDeclarations(rule)]));
+
+    assert.equal(declarations.get('display'), 'inline-flex', `.${className} should use inline-flex`);
+    assert.equal(declarations.get('align-items'), 'center', `.${className} should vertically center content`);
+    assert.equal(declarations.get('justify-content'), 'center', `.${className} should horizontally center content`);
+    assert.equal(declarations.get('box-sizing'), 'border-box', `.${className} should use reliable box sizing`);
+    assert.equal(declarations.get('min-block-size'), '44px', `.${className} should prefer a 44px minimum height`);
+    assert.equal(declarations.get('text-align'), 'center', `.${className} should center multiline text`);
+    assert.equal(declarations.get('overflow-wrap'), 'anywhere', `.${className} should keep long text inside`);
+    assert.equal(declarations.get('padding-inline'), 'max(1rem,1em)', `.${className} should keep safe inline padding`);
+    assert.equal(declarations.get('color'), `var(--${prefix}-on-primary)`, `.${className} should use theme foreground`);
+    assert.equal(declarations.get('background'), `var(--${prefix}-primary)`, `.${className} should use theme paint`);
+
+    assert.equal(rules.some((rule) => ruleHasPseudoClass(rule, 'hover')), true, `.${className} should expose hover`);
+    assert.equal(rules.some((rule) => ruleHasPseudoClass(rule, 'active')), true, `.${className} should expose active`);
+    assert.equal(rules.some((rule) => ruleHasPseudoClass(rule, 'focus-visible')), true, `.${className} should expose focus-visible`);
+    assert.equal(rules.some((rule) => ruleHasPseudoClass(rule, 'disabled')), true, `.${className} should expose disabled`);
+    assert.equal(
+      rules.some((rule) => ruleHasAttributes(rule, [{ name: 'aria-pressed', value: 'true' }])),
+      true,
+      `.${className} should expose pressed state`
+    );
+  }
+});
+
+test('tooltip direction helpers position all preset tooltip surfaces', () => {
+  const expected = new Map([
+    ['tooltip-top', ['inset-block-end', 'calc(100% + .5rem)']],
+    ['tooltip-right', ['inset-inline-start', 'calc(100% + .5rem)']],
+    ['tooltip-bottom', ['inset-block-start', 'calc(100% + .5rem)']],
+    ['tooltip-left', ['inset-inline-end', 'calc(100% + .5rem)']]
+  ]);
+
+  for (const [ui, prefix] of styles) {
+    for (const [suffix, [property, value]] of expected) {
+      const className = `${prefix}-${suffix}`;
+      const declarations = new Map(
+        composedRulesWithClass(ui, className).flatMap((rule) => [...ruleDeclarations(rule)])
+      );
+      const positionedRules = composedRulesWithClass(ui, className)
+        .filter((rule) => ruleDeclarations(rule).get('position') === 'absolute');
+
+      assert.equal(declarations.get('position'), 'absolute', `.${className} should be positionable`);
+      assert.equal(declarations.get(property), value, `.${className} should set ${property}`);
+      assert.equal(
+        positionedRules.every((rule) => ruleHasAttributes(rule, [{ name: 'data-ui-tooltip-anchor', value: null }])),
+        true,
+        `.${className} should detach only inside an anchored tooltip context`
+      );
     }
   }
 });

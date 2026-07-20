@@ -88,3 +88,13 @@ test('lean preset status surfaces consume their semantic foreground tokens', () 
     }
   }
 });
+
+test('maximalist sticker foreground consumes its semantic on-accent token', () => {
+  const css = cssFor('styles/maximalist.css');
+
+  assert.match(
+    blockFor(css, '.max-sticker'),
+    /color:\s*var\(--max-on-accent\)/,
+    '.max-sticker should consume --max-on-accent'
+  );
+});

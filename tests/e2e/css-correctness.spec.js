@@ -6,6 +6,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..', '..');
 const authoredBundlePath = path.join(rootDir, 'dist', 'ui-style-kit.css');
 const minifiedBundlePath = path.join(rootDir, 'dist', 'ui-style-kit.min.css');
+const visualBundlePath = path.join(rootDir, 'dist', 'ui-style-kit.visual.css');
+const presets = [
+  ['minimal-saas', 'saas'],
+  ['bento', 'bento'],
+  ['maximalist', 'max'],
+  ['bauhaus', 'bau'],
+  ['tactile', 'tactile'],
+  ['neumorphism', 'neo'],
+  ['retrofuturism', 'retro'],
+  ['brutalism', 'brutal'],
+  ['cyberpunk', 'cyber'],
+  ['y2k', 'y2k'],
+  ['retro-glass', 'rg']
+];
 
 async function installNativeFixture(page, stylesheetPath) {
   await page.setContent(`<!doctype html>
@@ -66,7 +80,82 @@ test('minified bundle preserves computed calc values', async ({ page }) => {
   expect(minified.calcProbeInlineSize).toBe(authored.calcProbeInlineSize);
 });
 
-test('Chromium accepts and applies native pseudo-element rules to a modal fixture', async ({ page }) => {
+test('button pill controls render centered text with safe padding across presets', async ({ page }) => {
+  for (const [ui, prefix] of presets) {
+    await page.setContent(`<!doctype html>
+      <html>
+        <body data-ui="${ui}" data-theme="arctic-indigo" data-mode="light">
+          <button class="${prefix}-button-pill" type="button">VeryLongUnbrokenActionLabelThatMustRemainInsideThePill</button>
+        </body>
+      </html>`);
+    await page.addStyleTag({ path: visualBundlePath });
+
+    const result = await page.evaluate((className) => {
+      const button = document.querySelector(`.${className}`);
+      const styles = getComputedStyle(button);
+      const rect = button.getBoundingClientRect();
+
+      return {
+        alignItems: styles.alignItems,
+        justifyContent: styles.justifyContent,
+        display: styles.display,
+        minBlockSize: Number.parseFloat(styles.minBlockSize),
+        paddingInlineStart: Number.parseFloat(styles.paddingInlineStart),
+        paddingInlineEnd: Number.parseFloat(styles.paddingInlineEnd),
+        scrollWidth: button.scrollWidth,
+        clientWidth: button.clientWidth,
+        width: rect.width
+      };
+    }, `${prefix}-button-pill`);
+
+    expect(result.display, ui).toBe('inline-flex');
+    expect(result.alignItems, ui).toBe('center');
+    expect(result.justifyContent, ui).toBe('center');
+    expect(result.minBlockSize, ui).toBeGreaterThanOrEqual(44);
+    expect(result.paddingInlineStart, ui).toBeGreaterThan(0);
+    expect(result.paddingInlineEnd, ui).toBeGreaterThan(0);
+    expect(result.width, ui).toBeLessThanOrEqual(1280);
+    expect(result.scrollWidth, ui).toBeLessThanOrEqual(result.clientWidth + 1);
+  }
+});
+
+test('native validity paint waits for user-invalid or explicit invalid state and disabled wins', async ({ page }) => {
+  await page.setContent(`<!doctype html>
+    <html>
+      <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
+        <input id="required" required>
+        <input id="invalid" aria-invalid="true" value="bad">
+        <input id="disabled-invalid" disabled aria-invalid="true" value="bad">
+        <input id="readonly" readonly value="Read only">
+      </body>
+    </html>`);
+  await page.addStyleTag({ path: minifiedBundlePath });
+
+  const result = await page.evaluate(() => {
+    const probe = document.createElement('span');
+    probe.style.borderTopColor = 'var(--usk-native-danger)';
+    document.body.append(probe);
+    const danger = getComputedStyle(probe).borderTopColor;
+    const colorFor = (selector) => getComputedStyle(document.querySelector(selector)).borderTopColor;
+
+    return {
+      danger,
+      required: colorFor('#required'),
+      invalid: colorFor('#invalid'),
+      disabledInvalid: colorFor('#disabled-invalid'),
+      readonlyBackground: getComputedStyle(document.querySelector('#readonly')).backgroundColor
+    };
+  });
+
+  expect(result.required).not.toBe(result.danger);
+  expect(result.invalid).toBe(result.danger);
+  expect(result.disabledInvalid).not.toBe(result.danger);
+  expect(result.readonlyBackground).not.toBe('rgba(0, 0, 0, 0)');
+});
+
+test('Chromium accepts and applies native pseudo-element rules to a modal fixture', async ({ page, browserName }) => {
+  test.skip(browserName !== 'chromium', 'Chromium exposes file-selector-button computed styles in this fixture.');
+
   await installNativeFixture(page, minifiedBundlePath);
 
   const result = await page.evaluate(() => {
