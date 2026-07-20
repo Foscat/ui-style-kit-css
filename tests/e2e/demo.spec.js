@@ -247,8 +247,9 @@ test('demo starts with the interactive surface bridge detached and can attach it
   await expect(page.getByTestId('bridge-status')).toContainText('Attached');
   await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
 
-  const attachedThumbX = await switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left);
-  expect(attachedThumbX).toBeGreaterThan(detachedThumbX + 8);
+  // Wait for the CSS thumb transition to settle before comparing geometry across engines.
+  await expect.poll(() => switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left))
+    .toBeGreaterThan(detachedThumbX + 8);
 });
 
 test('attached bridge wires every enabled interactable element to interactive surface hooks', async ({ page }) => {
