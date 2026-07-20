@@ -230,6 +230,22 @@ test('README bundle size guide matches current built CSS output', () => {
   }
 });
 
+test('2.0.4 release documentation records the correctness hotfix', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const changelog = fs.readFileSync(path.join(rootDir, 'CHANGELOG.md'), 'utf8');
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+  const releaseNotes = changelog.match(/## \[2\.0\.4\][\s\S]*?(?=\n## \[|$)/)?.[0] ?? '';
+
+  assert.match(readme, /parser-based minification/);
+  assert.match(releaseNotes, /Lightning CSS/);
+  assert.match(releaseNotes, /::file-selector-button/);
+  assert.match(releaseNotes, /::backdrop/);
+  assert.match(releaseNotes, /on-success/);
+  assert.match(releaseNotes, /on-warning/);
+  assert.match(releaseNotes, /on-danger/);
+  assert.match(publishingGuide, /Lightning CSS/);
+});
+
 test('ecosystem compatibility guidance is packaged and linked from public docs', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
   const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');

@@ -9,7 +9,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.0.4` is the current v2 patch release. It keeps the shared color-scheme and native-element model, restores the shared content-overflow contract, expands rendered responsive coverage, and refreshes release metadata without changing the CSS API.
+`v2.0.4` is the current v2 correctness patch. It adds parser-based minification, restores valid native file-button and modal-backdrop styling, routes status foregrounds through semantic `on-*` tokens, and retains the shared content-overflow and responsive coverage work without changing the CSS API.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -134,8 +134,8 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~275 KB | ~35 KB | Runtime UI-system switchers and demos |
-| `ui-style-kit-css/with-bridge.css` | ~338 KB | ~40 KB | Runtime switchers plus Interactive Surface bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~271 KB | ~35 KB | Runtime UI-system switchers and demos |
+| `ui-style-kit-css/with-bridge.css` | ~339 KB | ~40 KB | Runtime switchers plus Interactive Surface bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~13 KB | ~2 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |

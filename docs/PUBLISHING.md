@@ -9,6 +9,8 @@ npm run pack:dry-run
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. `npm run pack:dry-run` shows the exact files that would publish.
 
+`npm run build` uses the exactly pinned Lightning CSS parser-minifier. Generated minified bundles retain the release banner while preserving grammar-sensitive selector and `calc()` whitespace.
+
 The npm artifact is library-focused: `dist/`, `styles/`, docs, and metadata. Demo pages, favicon source assets, and social preview images remain checked in for GitHub Pages but are excluded from the tarball to keep package installs small.
 
 ## Publish

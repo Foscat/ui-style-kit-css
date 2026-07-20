@@ -239,7 +239,8 @@
 
 [data-ui][data-theme][data-mode] :where(input[type="file"]) { color: var(--usk-native-text-muted); }
 
-[data-ui][data-theme][data-mode] :where(input[type="file"]::file-selector-button) {
+/* Keep pseudo-elements outside :where() because engines reject them inside selector-list arguments. */
+[data-ui][data-theme][data-mode] :where(input[type="file"])::file-selector-button {
   margin-inline-end: .75rem;
   padding: .55rem .8rem;
   color: var(--usk-native-on-primary);
@@ -314,7 +315,7 @@
   box-shadow: var(--usk-native-shadow-md), 0 30px 80px rgb(0 0 0 / .42);
 }
 
-[data-ui][data-theme][data-mode] :where(dialog::backdrop) { background: rgb(0 0 0 / .62); }
+[data-ui][data-theme][data-mode] :where(dialog)::backdrop { background: rgb(0 0 0 / .62); }
 
 [data-ui][data-theme][data-mode] :where(progress, meter) {
   width: 100%;

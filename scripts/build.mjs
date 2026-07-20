@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { transform } from 'lightningcss';
 
 const root = process.cwd();
 const themeColorFile = 'styles/theme-colors.css';
@@ -107,13 +108,13 @@ function readFile(file) {
     .trim();
 }
 
-function minifyCss(css) {
-  return css
-    .replace(/\/\*(?!!)[\s\S]*?\*\//g, '')
-    .replace(/\s+/g, ' ')
-    .replace(/\s*([{}:;,>+~])\s*/g, '$1')
-    .replace(/;}/g, '}')
-    .trim();
+function minifyCss(css, filename) {
+  // Parse before minifying so grammar-sensitive selector and calc whitespace remains valid.
+  return transform({
+    filename,
+    code: Buffer.from(css),
+    minify: true
+  }).code;
 }
 
 function sharedColorAliases(prefix) {
@@ -160,8 +161,11 @@ const baseBundle = bundle(styleFiles);
 const bridgeBundle = bundle([...styleFiles, bridgeFile]);
 
 fs.writeFileSync(path.join(dist, 'ui-style-kit.css'), baseBundle);
-fs.writeFileSync(path.join(dist, 'ui-style-kit.min.css'), minifyCss(baseBundle));
+fs.writeFileSync(path.join(dist, 'ui-style-kit.min.css'), minifyCss(baseBundle, 'ui-style-kit.css'));
 fs.writeFileSync(path.join(dist, 'ui-style-kit.with-bridge.css'), bridgeBundle);
-fs.writeFileSync(path.join(dist, 'ui-style-kit.with-bridge.min.css'), minifyCss(bridgeBundle));
+fs.writeFileSync(
+  path.join(dist, 'ui-style-kit.with-bridge.min.css'),
+  minifyCss(bridgeBundle, 'ui-style-kit.with-bridge.css')
+);
 
 console.log('Built dist/ui-style-kit.css, dist/ui-style-kit.min.css, dist/ui-style-kit.with-bridge.css, and dist/ui-style-kit.with-bridge.min.css');
