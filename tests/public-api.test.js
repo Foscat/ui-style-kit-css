@@ -143,6 +143,36 @@ function declarationIndex(ast) {
   return index;
 }
 
+function selectorDeclarations(relativeFile, selector, layerName) {
+  const declarations = [];
+  const layerStack = [];
+
+  walk(parseCss(relativeFile), {
+    enter(node) {
+      if (node.type === 'Atrule' && node.name === 'layer' && node.block && node.prelude) {
+        layerStack.push(generate(node.prelude));
+      }
+
+      if (node.type !== 'Rule') return;
+      if (generate(node.prelude) !== selector) return;
+      if (layerName && layerStack.at(-1) !== layerName) return;
+
+      const ruleDeclarations = new Map();
+      node.block.children.forEach((child) => {
+        if (child.type === 'Declaration') ruleDeclarations.set(child.property, generate(child.value));
+      });
+      declarations.push(ruleDeclarations);
+    },
+    leave(node) {
+      if (node.type === 'Atrule' && node.name === 'layer' && node.block && node.prelude) {
+        layerStack.pop();
+      }
+    }
+  });
+
+  return declarations;
+}
+
 test('2.1 package exports resolve the visual, focused, manifest, and bridge API', () => {
   const packageJson = readJson('package.json');
   const packageLock = readJson('package-lock.json');
@@ -294,6 +324,34 @@ test('visual bundles omit compatibility layout while default bundles retain it',
       assert.equal(visualMinClasses.has(className), false, `minified visual should omit .${className}`);
       assert.equal(focusedClasses.has(className), false, `${id} focused bundle should omit .${className}`);
     }
+  }
+});
+
+test('visual bundles omit preset root viewport layout while compatibility builds retain it', () => {
+  for (const [id] of presets) {
+    const selector = `[data-ui="${id}"]`;
+    const visualDeclarations = selectorDeclarations(path.join('dist', 'ui-style-kit.visual.css'), selector);
+    const visualMinDeclarations = selectorDeclarations(path.join('dist', 'ui-style-kit.visual.min.css'), selector);
+    const focusedDeclarations = selectorDeclarations(path.join('dist', 'visual', `${id}.css`), selector);
+    const defaultCompatibilityDeclarations = selectorDeclarations(
+      path.join('dist', 'ui-style-kit.css'),
+      selector,
+      'ui-style-kit.compat_layout'
+    );
+
+    for (const declarations of [
+      ...visualDeclarations,
+      ...visualMinDeclarations,
+      ...focusedDeclarations
+    ]) {
+      assert.equal(declarations.has('min-height'), false, `${selector} should not own viewport layout in visual output`);
+    }
+
+    assert.equal(
+      defaultCompatibilityDeclarations.some((declarations) => declarations.get('min-height') === '100vh'),
+      true,
+      `${selector} should retain v2 viewport compatibility in the default bundle`
+    );
   }
 });
 

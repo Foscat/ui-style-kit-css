@@ -184,21 +184,59 @@ function removeEmptyAtRules(ast) {
   });
 }
 
-function preparedPresetCss(file, prefix, composition) {
+function ruleTargetsPresetRoot(rule, id) {
+  return generate(rule.prelude).split(',')
+    .some((selector) => selector.trim() === `[data-ui="${id}"]`);
+}
+
+function ruleHasViewportLayoutDeclaration(rule) {
+  let hasViewportLayout = false;
+
+  rule.block.children.forEach((node) => {
+    if (node.type === 'Declaration' && node.property === 'min-height') {
+      hasViewportLayout = true;
+    }
+  });
+
+  return hasViewportLayout;
+}
+
+function filterViewportLayoutDeclarations(rule, keepViewportLayout) {
+  rule.block.children.forEach((node, item, list) => {
+    if (node.type !== 'Declaration') return;
+
+    const viewportLayoutDeclaration = node.property === 'min-height';
+    if (viewportLayoutDeclaration !== keepViewportLayout) list.remove(item);
+  });
+}
+
+function preparedPresetCss(file, id, prefix, composition) {
   const ast = parseStylesheet(file);
   removeImports(ast);
 
   /*
    * The public visual API excludes the fixed v2 structural suffix allowlist. The
-   * default API emits those exact rules last in compat_layout so existing markup
-   * remains stable while new layout ownership stays outside this package.
+   * default API emits those exact rules and root viewport height compatibility
+   * last in compat_layout so existing markup remains stable while new layout
+   * ownership stays outside this package.
    */
   walk(ast, {
     visit: 'Rule',
     enter(node, item, list) {
       const compatibilityRule = ruleUsesCompatibilityLayout(node, prefix);
-      const keepRule = composition === 'compatibility' ? compatibilityRule : !compatibilityRule;
-      if (!keepRule) list.remove(item);
+      const rootViewportLayoutRule = ruleTargetsPresetRoot(node, id) && ruleHasViewportLayoutDeclaration(node);
+      const keepRule = composition === 'compatibility'
+        ? compatibilityRule || rootViewportLayoutRule
+        : !compatibilityRule;
+
+      if (!keepRule) {
+        list.remove(item);
+        return;
+      }
+      if (rootViewportLayoutRule && !compatibilityRule) {
+        filterViewportLayoutDeclarations(node, composition === 'compatibility');
+      }
+      if (node.block.children.size === 0) list.remove(item);
     }
   });
   removeEmptyAtRules(ast);
@@ -229,9 +267,9 @@ function bundle(sections) {
 function visualSections(selectedPresets = presetFiles) {
   return [
     ...foundationFiles.map((file) => ({ label: file, css: sourceSection(file) })),
-    ...selectedPresets.map(({ file, prefix }) => ({
+    ...selectedPresets.map(({ file, id, prefix }) => ({
       label: `${file} (visual paint)`,
-      css: preparedPresetCss(file, prefix, 'visual')
+      css: preparedPresetCss(file, id, prefix, 'visual')
     }))
   ];
 }
@@ -242,9 +280,9 @@ function compatibilitySections() {
       label: compatibilityLayoutFile,
       css: sourceSection(compatibilityLayoutFile)
     },
-    ...presetFiles.map(({ file, prefix }) => ({
+    ...presetFiles.map(({ file, id, prefix }) => ({
       label: `${file} (deprecated structural compatibility)`,
-      css: preparedPresetCss(file, prefix, 'compatibility')
+      css: preparedPresetCss(file, id, prefix, 'compatibility')
     }))
   ];
 }
