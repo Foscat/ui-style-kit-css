@@ -4,7 +4,9 @@ This library ships 11 style systems with a shared theme and mode model.
 
 All UI systems use the same color scheme layer: `styles/theme-colors.css`. Individual UI files define structure, texture, typography, component treatment, and prefixed aliases for the shared `--usk-*` roles.
 
-In `v2.0.4`, all UI systems also share `styles/native-elements.css` for native HTML selectors and `styles/content-overflow.css` for long-text containment. Each preset controls the final treatment through `--usk-native-*` token mappings instead of repeating the same selector coverage.
+In `v2.1.0`, the combined builds use five ordered layers: `theme_colors`, `native_elements`, `components`, `presets`, and `compat_layout`. Visual-only entrypoints omit the deprecated prefixed structural helpers in `compat_layout`, while compatible entrypoints retain them.
+
+`manifest.json` describes each preset's prefix and entrypoints, the supported themes and modes, composed visual capabilities, preset extras, deprecated structural suffixes, and native-part ownership classifications.
 
 ## Coverage Tiers
 
@@ -134,21 +136,25 @@ Generic hooks inherit from the active `[data-ui][data-theme][data-mode]` scope a
 - Loading indicators: `.ui-spinner`, `.loading-spinner`, `[data-loading-spinner]`
 - Tooltip surfaces: `.ui-tooltip`, `[role="tooltip"]`, `[data-tooltip]`
 
-## Interactive Surface Bridge Hooks
+## Interactive Surface Theme Bridge
 
-The bridge remains opt-in. When `styles/interactive-surface-bridge.css` or a `with-bridge` bundle is loaded, attach `.interactive-surface` to interactive elements and select the visible treatment with these attributes:
+The canonical theme bridge remains opt-in. Load `styles/interactive-surface-theme.css` with `interactive-surface-css/state-core.css`, attach `.interactive-surface` to interactive elements, and select paint with these attributes:
 
 ```txt
 data-surface-variant="primary|secondary|accent|subtle|warning|danger"
 data-surface-level="1|2|3"
 ```
 
-The bridge inherits shared `--usk-*` color roles so it follows the selected UI style, theme, and mode without duplicating per-style token maps.
+The theme bridge inherits shared `--usk-*` color roles so it follows the selected UI style, theme, and mode without duplicating per-style token maps. It supplies tokens and paint only; Interactive Surface owns hover, active, focus, disabled, transform, opacity, and reduced-motion mechanics.
+
+The older `styles/interactive-surface-bridge.css` and `with-bridge` bundles are deprecated compatibility paths whose stateful behavior remains unchanged.
 
 ## File Locations
 
 - `styles/theme-colors.css`
 - `styles/native-elements.css`
+- `styles/components.css`
+- `styles/compat-layout.css`
 - `styles/content-overflow.css`
 - `styles/minimal-saas.css`
 - `styles/bento.css`
@@ -161,4 +167,5 @@ The bridge inherits shared `--usk-*` color roles so it follows the selected UI s
 - `styles/cyberpunk.css`
 - `styles/y2k.css`
 - `styles/retro-glass.css`
-- `styles/interactive-surface-bridge.css`
+- `styles/interactive-surface-theme.css`
+- `styles/interactive-surface-bridge.css` (deprecated)

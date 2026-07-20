@@ -6,11 +6,11 @@ UI Style Kit CSS stays standalone while offering stable integration points for t
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.0.4` | source release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.3.0` | latest published sibling | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@1.1.2` | latest published sibling | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.1.0` | staged source target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.5.0` | staged source target | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
 
-`ui-style-kit-css@2.0.4` is the source release target. Use the published CDN pin documented in the README until that package version is available.
+These 2.1 versions are local/staged targets, not registry publication claims. Keep production registry and CDN pins on the latest verified published releases until each staged release completes.
 
 ## Adoption Paths
 
@@ -27,16 +27,16 @@ import "ui-style-kit-css/minimal-saas.css";
 Use UI Style Kit with Interactive Surface CSS when controls need interaction-state behavior:
 
 ```js
-import "interactive-surface-css/interactive-surface.css";
-import "ui-style-kit-css/minimal-saas.css";
-import "ui-style-kit-css/interactive-surface-bridge";
+import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/interactive-surface-theme.css";
+import "interactive-surface-css/state-core.css";
 ```
 
 Use UI Style Kit with Layout Style CSS when a project needs structural layout primitives and UI paint:
 
 ```js
+import "ui-style-kit-css/visual/minimal-saas.css";
 import "layout-style-css";
-import "ui-style-kit-css/minimal-saas.css";
 ```
 
 ### Use all three
@@ -44,9 +44,10 @@ import "ui-style-kit-css/minimal-saas.css";
 Use all three when structural layout, visual styling, and interaction-state behavior should remain separate:
 
 ```js
+import "ui-style-kit-css/visual.css";
+import "ui-style-kit-css/interactive-surface-theme.css";
+import "interactive-surface-css/state-core.css";
 import "layout-style-css";
-import "interactive-surface-css/interactive-surface.css";
-import "ui-style-kit-css/with-bridge.css";
 ```
 
 ## Ownership Boundaries
@@ -55,4 +56,4 @@ import "ui-style-kit-css/with-bridge.css";
 - Interactive Surface CSS owns interaction-state primitives, state layers, input affordances, and surface behavior.
 - Layout Style CSS owns structural wrappers, grids, app shells, sections, and layout recipes.
 
-The optional bridge maps shared `--usk-*` roles to `--interactive-surface-*` tokens. It does not move interaction behavior into UI Style Kit.
+The canonical theme bridge maps shared `--usk-*` roles to `--interactive-surface-*` tokens and provides paint. It does not move interaction behavior into UI Style Kit; `state-core.css` owns those mechanics. The older `interactive-surface-bridge` and `with-bridge` exports are deprecated compatibility paths whose stateful behavior remains unchanged.

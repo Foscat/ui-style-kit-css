@@ -183,7 +183,7 @@ test('dist CSS contains expected style system markers', () => {
 });
 
 test('package files include required publish assets', () => {
-  const requiredFiles = ['dist', 'styles', 'README.md', 'LICENSE'];
+  const requiredFiles = ['dist', 'styles', 'README.md', 'LICENSE', 'manifest.json'];
   for (const item of requiredFiles) {
     assert.ok(packageJson.files.includes(item), `package.json files[] should include ${item}`);
   }
@@ -194,30 +194,36 @@ test('package files include required publish assets', () => {
   );
 });
 
-test('README documents the library system and theme override flow', () => {
+test('README documents the 2.1 library system and theme override flow', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.0\.4/);
-  assert.match(readme, /ui-style-kit-css@2\.0\.3/);
+  assert.match(readme, /v2\.1\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.0\.4/);
-  assert.match(readme, /interactive-surface-css@1\.3\.0/);
-  assert.match(readme, /layout-style-css@1\.1\.2/);
+  assert.match(readme, /ui-style-kit-css@2\.1\.0/);
+  assert.match(readme, /interactive-surface-css@1\.5\.0/);
+  assert.match(readme, /layout-style-css@2\.1\.0/);
+  assert.match(readme, /local\/staged targets, not registry publication claims/);
+  assert.match(readme, /ui-style-kit-css\/visual\.css/);
+  assert.match(readme, /ui-style-kit-css\/manifest\.json/);
+  assert.match(readme, /interactive-surface-theme\.css/);
+  assert.match(readme, /interactive-surface-css\/state-core\.css/);
 });
 
 test('README bundle size guide matches current built CSS output', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
   // Keep the public size table honest whenever generated CSS changes.
   const sizeExpectations = [
-    ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css', 'Runtime UI-system switchers and demos'],
-    ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css', 'Runtime switchers plus Interactive Surface bridge'],
+    ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css', 'Compatible runtime UI-system switchers and demos'],
+    ['ui-style-kit-css/visual.min.css', 'dist/ui-style-kit.visual.min.css', 'Runtime visual switching with consumer-owned layout'],
+    ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css', 'Deprecated runtime switcher plus stateful bridge'],
     ['ui-style-kit-css/theme-colors.css', 'styles/theme-colors.css', 'Shared color schemes for standalone style imports'],
     ['ui-style-kit-css/native-elements.css', 'styles/native-elements.css', 'Shared native HTML fallback styling'],
-    ['ui-style-kit-css/content-overflow.css', 'styles/content-overflow.css', 'Shared long-text containment for standalone style imports']
+    ['ui-style-kit-css/content-overflow.css', 'styles/content-overflow.css', 'Shared long-text containment for standalone style imports'],
+    ['ui-style-kit-css/interactive-surface-theme.css', 'styles/interactive-surface-theme.css', 'Canonical token-and-paint bridge for Interactive Surface state core']
   ];
 
   for (const [importPath, relativePath, label] of sizeExpectations) {
@@ -258,15 +264,48 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.0\.4/);
-    assert.match(contents, /interactive-surface-css@1\.3\.0/);
-    assert.match(contents, /layout-style-css@1\.1\.2/);
+    assert.match(contents, /ui-style-kit-css@2\.1\.0/);
+    assert.match(contents, /interactive-surface-css@1\.5\.0/);
+    assert.match(contents, /layout-style-css@2\.1\.0/);
     assert.match(contents, /Use one/);
     assert.match(contents, /Use two/);
     assert.match(contents, /Use all three/);
     assert.match(contents, /visual identity/);
     assert.match(contents, /interaction-state/);
     assert.match(contents, /structural/);
+    assert.match(contents, /interactive-surface-theme\.css/);
+    assert.match(contents, /interactive-surface-css\/state-core\.css/);
+    assert.match(contents, /deprecated compatibility paths/);
+  }
+});
+
+test('canonical ecosystem examples preserve ownership-first import order', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
+  const ecosystemGuides = [
+    fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8'),
+    fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8')
+  ];
+  const visualThemeState = [
+    'import "ui-style-kit-css/visual/minimal-saas.css";',
+    'import "ui-style-kit-css/interactive-surface-theme.css";',
+    'import "interactive-surface-css/state-core.css";'
+  ].join('\n');
+  const visualThemeStateLayout = [
+    'import "ui-style-kit-css/visual.css";',
+    'import "ui-style-kit-css/interactive-surface-theme.css";',
+    'import "interactive-surface-css/state-core.css";',
+    'import "layout-style-css";'
+  ].join('\n');
+  const exactJsBlock = (imports) => new RegExp(escapeRegExp(`\`\`\`js\n${imports}\n\`\`\``));
+
+  assert.match(readme, exactJsBlock(visualThemeState));
+  assert.match(installationWiki, exactJsBlock(visualThemeState));
+
+  for (const contents of ecosystemGuides) {
+    assert.match(contents, exactJsBlock(visualThemeState));
+    assert.match(contents, exactJsBlock(visualThemeStateLayout));
+    assert.match(contents, /local\/staged targets, not registry publication claims/);
   }
 });
 
@@ -402,7 +441,7 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
   }
 });
 
-test('content overflow contract is shared by standalone styles and bundles', () => {
+test('content overflow compatibility stays exported while 2.1 bundles use owned layers', () => {
   assert.equal(
     packageJson.exports['./content-overflow.css'],
     './styles/content-overflow.css'
@@ -414,13 +453,23 @@ test('content overflow contract is shared by standalone styles and bundles', () 
   assertFileExists('styles/content-overflow.css');
 
   const overflowCss = fs.readFileSync(path.join(rootDir, 'styles', 'content-overflow.css'), 'utf8');
+  const componentsCss = fs.readFileSync(path.join(rootDir, 'styles', 'components.css'), 'utf8');
+  const compatibilityCss = fs.readFileSync(path.join(rootDir, 'styles', 'compat-layout.css'), 'utf8');
   const bundledCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
+  const visualCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.visual.css'), 'utf8');
 
   assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
   assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
   assert.match(overflowCss, /white-space:\s*normal/);
-  assert.match(bundledCss, /styles\/content-overflow\.css/);
+  assert.match(componentsCss, /@layer ui-style-kit\.components/);
+  assert.match(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.match(compatibilityCss, /@layer ui-style-kit\.compat_layout/);
+  assert.match(compatibilityCss, /overflow-wrap:\s*anywhere/);
+  assert.match(bundledCss, /styles\/components\.css/);
+  assert.match(bundledCss, /styles\/compat-layout\.css/);
+  assert.match(visualCss, /styles\/components\.css/);
+  assert.doesNotMatch(visualCss, /styles\/compat-layout\.css/);
   assert.match(minCss, /overflow-wrap:anywhere/);
 });
 
@@ -477,11 +526,16 @@ test('native element fallback styles are shared instead of duplicated per preset
 test('published CSS import targets are resolvable', () => {
   const importTargets = [
     '.',
+    './visual.css',
+    './visual.min.css',
+    './visual/minimal-saas.css',
     './minimal-saas.css',
     './content-overflow.css',
     './styles/cyberpunk.css',
+    './interactive-surface-theme.css',
     './interactive-surface-bridge',
-    './with-bridge.css'
+    './with-bridge.css',
+    './manifest.json'
   ];
 
   for (const exportPath of importTargets) {

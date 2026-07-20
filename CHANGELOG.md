@@ -2,6 +2,26 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [2.1.0] - 2026-07-20
+
+### Added
+
+- Added visual-only full, minified, and focused preset entrypoints for applications that own their structural layout.
+- Added `manifest.json` with preset entrypoints, themes, modes, composed class capabilities, deprecated structural suffixes, and native-part ownership classifications.
+- Added a canonical `interactive-surface-theme.css` bridge that supplies public tokens and paint while leaving interaction mechanics to `interactive-surface-css/state-core.css`.
+- Added CSS Tree AST contract coverage for generated class retention, export targets, cascade layers, and bridge ownership boundaries.
+
+### Changed
+
+- Rebuilt combined output around the ordered `theme_colors`, `native_elements`, `components`, `presets`, and `compat_layout` layers.
+- Moved shared component foundations into `components` and isolated retained prefixed structural helpers in `compat_layout`.
+- Formatted generated CSS through Lightning CSS and pinned `css-tree` exactly for deterministic AST partitioning.
+
+### Deprecated
+
+- Deprecated the `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` prefixed structural suffixes for removal in v3.
+- Deprecated the stateful `interactive-surface-bridge` and `with-bridge` integration paths while preserving their existing behavior.
+
 ## [2.0.4] - 2026-07-20
 
 ### Added

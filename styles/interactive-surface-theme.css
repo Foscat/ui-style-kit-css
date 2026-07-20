@@ -1,33 +1,25 @@
 /* =========================================================
-   UI Style Kit CSS x Interactive Surface CSS Bridge (Deprecated)
+   UI Style Kit CSS x Interactive Surface CSS Theme Bridge
 
-   This legacy bridge maps shared UI Style Kit semantic roles to
-   interactive-surface-css tokens and continues to own visible states.
-   New integrations should use interactive-surface-theme.css with
-   interactive-surface-css/state-core.css instead.
-   The flow follows scheme tokens -> mode roles -> bridge tokens ->
-   surface behavior, avoiding per-theme and per-preset token maps.
+   This bridge owns public paint and geometry tokens only.
+   Interactive Surface state-core.css remains the sole owner of
+   hover, focus, active, disabled, and reduced-motion behavior.
 ========================================================= */
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface {
   --interactive-surface-border-width: 1px;
   --interactive-surface-bg: rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255)));
-  --interactive-surface-fg: rgb(var(--usk-text-rgb));
+  --interactive-surface-fg: rgb(var(--usk-text-rgb, 18 18 18));
   --interactive-surface-border-color: rgb(var(--usk-border-rgb, 128 128 128) / .72);
   --interactive-surface-focus-ring-color: rgb(var(--usk-focus-rgb, var(--usk-primary-rgb, 72 120 255)));
   --interactive-surface-radius: .85rem;
-  --interactive-surface-state-layer-color: currentColor;
-  --interactive-surface-state-layer-opacity: 0;
-  --interactive-surface-state-layer-opacity-hover: .08;
-  --interactive-surface-state-layer-opacity-active: .14;
-  --interactive-surface-state-layer-opacity-focus: .18;
   --interactive-surface-light-icon-color: rgb(var(--usk-warning-rgb, var(--usk-accent-rgb, 255 190 72)));
   --interactive-surface-dark-icon-color: rgb(var(--usk-text-rgb, 18 18 18));
   --interactive-surface-accessibility-icon-color: var(--interactive-surface-focus-ring-color);
   --interactive-surface-light-icon-color-dark: var(--interactive-surface-light-icon-color);
   --interactive-surface-dark-icon-color-dark: var(--interactive-surface-dark-icon-color);
   --interactive-surface-accessibility-icon-color-dark: var(--interactive-surface-accessibility-icon-color);
-  --interactive-surface-variant-primary-bg: rgb(var(--usk-primary-rgb));
+  --interactive-surface-variant-primary-bg: rgb(var(--usk-primary-rgb, 72 120 255));
   --interactive-surface-variant-primary-fg: rgb(var(--usk-primary-text-rgb, var(--usk-bg-rgb, 255 255 255)));
   --interactive-surface-variant-primary-border-color: rgb(var(--usk-primary-rgb, 72 120 255));
   --interactive-surface-variant-secondary-bg: rgb(var(--usk-secondary-rgb, var(--usk-surface-soft-rgb, 96 112 128)));
@@ -58,60 +50,12 @@
   --interactive-surface-level-border-color: var(--interactive-surface-level-1-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-1-shadow);
 
-  position: relative;
-  isolation: isolate;
-  background-color: var(--interactive-surface-level-bg, var(--interactive-surface-bg));
-  color: var(--interactive-surface-fg);
-  border-width: var(--interactive-surface-border-width);
-  border-style: solid;
-  border-color: var(--interactive-surface-level-border-color, var(--interactive-surface-border-color));
+  box-sizing: border-box;
+  border: var(--interactive-surface-border-width) solid var(--interactive-surface-level-border-color, var(--interactive-surface-border-color));
   border-radius: var(--interactive-surface-radius);
+  background-color: var(--interactive-surface-level-bg, var(--interactive-surface-bg));
   box-shadow: var(--interactive-surface-level-shadow, none);
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-}
-
-:where([data-ui][data-theme][data-mode]) .interactive-surface::before {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--interactive-surface-state-layer-color);
-  opacity: var(--interactive-surface-state-layer-opacity);
-  pointer-events: none;
-  transition: opacity 160ms ease;
-  content: "";
-}
-
-:where([data-ui][data-theme][data-mode]) .interactive-surface:not([disabled]):not([aria-disabled="true"]):hover {
-  --interactive-surface-state-layer-opacity: var(--interactive-surface-state-layer-opacity-hover);
-
-  transform: translateY(-1px);
-}
-
-:where([data-ui][data-theme][data-mode]) .interactive-surface:not([disabled]):not([aria-disabled="true"]):active,
-:where([data-ui][data-theme][data-mode]) .interactive-surface[aria-pressed="true"],
-:where([data-ui][data-theme][data-mode]) .interactive-surface[aria-current="page"],
-:where([data-ui][data-theme][data-mode]) .interactive-surface.is-active {
-  --interactive-surface-state-layer-opacity: var(--interactive-surface-state-layer-opacity-active);
-
-  transform: translateY(0);
-}
-
-:where([data-ui][data-theme][data-mode]) .interactive-surface:focus-visible {
-  --interactive-surface-state-layer-opacity: var(--interactive-surface-state-layer-opacity-focus);
-
-  outline: 2px solid var(--interactive-surface-focus-ring-color);
-  outline-offset: 3px;
-}
-
-:where([data-ui][data-theme][data-mode]) .interactive-surface[disabled],
-:where([data-ui][data-theme][data-mode]) .interactive-surface[aria-disabled="true"] {
-  opacity: .56;
-  cursor: not-allowed;
+  color: var(--interactive-surface-fg);
 }
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="primary"] {
@@ -150,30 +94,21 @@
   --interactive-surface-border-color: var(--interactive-surface-variant-danger-border-color);
 }
 
-/* Surface levels define the three visual depths consumed by the demo and bridge hooks. */
+/* Level selectors select paint depth without taking ownership of interaction states. */
 :where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="1"] {
   --interactive-surface-level-bg: var(--interactive-surface-level-1-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-1-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-1-shadow);
-  --interactive-surface-state-layer-opacity-hover: .08;
-  --interactive-surface-state-layer-opacity-active: .14;
-  --interactive-surface-state-layer-opacity-focus: .18;
 }
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="2"] {
   --interactive-surface-level-bg: var(--interactive-surface-level-2-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-2-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-2-shadow);
-  --interactive-surface-state-layer-opacity-hover: .11;
-  --interactive-surface-state-layer-opacity-active: .18;
-  --interactive-surface-state-layer-opacity-focus: .22;
 }
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="3"] {
   --interactive-surface-level-bg: var(--interactive-surface-level-3-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-3-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-3-shadow);
-  --interactive-surface-state-layer-opacity-hover: .14;
-  --interactive-surface-state-layer-opacity-active: .24;
-  --interactive-surface-state-layer-opacity-focus: .28;
 }
