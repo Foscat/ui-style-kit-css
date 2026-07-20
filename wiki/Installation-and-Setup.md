@@ -86,6 +86,9 @@ npm run lint
 npm test
 npm run check:contrast
 npm run check:package
+npm run test:axe
+npm run test:visual
+npm run test:matrix
 ```
 
 Playwright E2E:

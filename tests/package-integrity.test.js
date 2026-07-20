@@ -19,6 +19,33 @@ function formatApproxKb(byteLength) {
   return `~${Math.round(byteLength / 1024)} KB`;
 }
 
+function parseDemoManifestScript() {
+  const script = fs.readFileSync(path.join(rootDir, 'demo', 'demo-manifest.js'), 'utf8');
+  const match = script.match(/window\.UI_STYLE_KIT_MANIFEST\s*=\s*(\{[\s\S]*\});?\s*$/);
+  assert.ok(match, 'demo/demo-manifest.js should assign window.UI_STYLE_KIT_MANIFEST');
+
+  return JSON.parse(match[1]);
+}
+
+function selectOptions(html, selectId) {
+  const selectMatch = html.match(new RegExp(`<select id="${escapeRegExp(selectId)}"[\\s\\S]*?<\\/select>`));
+  assert.ok(selectMatch, `Expected #${selectId} to exist`);
+
+  return [...selectMatch[0].matchAll(/<option\s+([^>]*)>([\s\S]*?)<\/option>/g)].map((optionMatch) => {
+    const attributes = optionMatch[1];
+    const value = attributes.match(/\bvalue="([^"]+)"/)?.[1] ?? '';
+    const prefix = attributes.match(/\bdata-prefix="([^"]+)"/)?.[1] ?? '';
+    const selected = /\bselected\b/.test(attributes);
+
+    return {
+      value,
+      prefix,
+      selected,
+      label: optionMatch[2].trim()
+    };
+  });
+}
+
 function exactHeadTag() {
   try {
     return execFileSync('git', ['describe', '--tags', '--exact-match', 'HEAD'], {
@@ -194,6 +221,50 @@ test('package files include required publish assets', () => {
   );
 });
 
+test('demo manifest snapshot mirrors the package manifest capability source', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const demoManifest = parseDemoManifestScript();
+
+  assert.deepEqual(demoManifest.presets, manifest.presets);
+  assert.deepEqual(demoManifest.themes, manifest.themes);
+  assert.deepEqual(demoManifest.modes, manifest.modes);
+  assert.ok(
+    demoManifest.presets.every((preset) => typeof preset.label === 'string' && preset.label.length > 0),
+    'Demo preset controls need labels from manifest.json'
+  );
+});
+
+test('demo select fallbacks match manifest presets, themes, and modes', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const expectedPresets = manifest.presets.map(({ id, prefix, label }) => ({
+    value: id,
+    prefix,
+    selected: id === 'minimal-saas',
+    label
+  }));
+  const expectedThemes = manifest.themes.map((theme) => ({
+    value: theme,
+    prefix: '',
+    selected: theme === 'arctic-indigo',
+    label: theme
+  }));
+  const expectedModes = manifest.modes.map((mode) => ({
+    value: mode,
+    prefix: '',
+    selected: mode === 'light',
+    label: mode
+  }));
+
+  for (const htmlFile of ['index.html', path.join('demo', 'index.html')]) {
+    const html = fs.readFileSync(path.join(rootDir, htmlFile), 'utf8');
+
+    assert.match(html, /demo-manifest\.js/, `${htmlFile} should load the manifest snapshot before demo.js`);
+    assert.deepEqual(selectOptions(html, 'uiSelect'), expectedPresets, `${htmlFile} preset options should match manifest.json`);
+    assert.deepEqual(selectOptions(html, 'themeSelect'), expectedThemes, `${htmlFile} theme options should match manifest.json`);
+    assert.deepEqual(selectOptions(html, 'modeSelect'), expectedModes, `${htmlFile} mode options should match manifest.json`);
+  }
+});
+
 test('README documents the 2.1 library system and theme override flow', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
@@ -206,7 +277,7 @@ test('README documents the 2.1 library system and theme override flow', () => {
   assert.match(readme, /ui-style-kit-css@2\.1\.0/);
   assert.match(readme, /interactive-surface-css@1\.5\.0/);
   assert.match(readme, /layout-style-css@2\.1\.0/);
-  assert.match(readme, /local\/staged targets, not registry publication claims/);
+  assert.match(readme, /Interactive Surface `1\.5\.0` is the released companion state engine/);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
   assert.match(readme, /interactive-surface-theme\.css/);
@@ -305,7 +376,8 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeState));
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /local\/staged targets, not registry publication claims/);
+    assert.match(contents, /UI Style Kit `2\.1\.0` and Layout Style `2\.1\.0` remain staged source targets/);
+    assert.match(contents, /Interactive Surface `1\.5\.0` is the released companion state engine/);
   }
 });
 
@@ -331,6 +403,9 @@ test('release automation scripts are exposed', () => {
     'test',
     'test:unit',
     'test:e2e',
+    'test:axe',
+    'test:matrix',
+    'test:visual',
     'test:e2e:install:ci',
     'check:contrast',
     'check:package',
@@ -344,11 +419,27 @@ test('release automation scripts are exposed', () => {
   }
 });
 
+test('CI workflow shards the UI matrix by engine and preset group', () => {
+  const ciWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
+
+  assert.match(ciWorkflow, /ui-matrix:/);
+  assert.match(ciWorkflow, /engine:\s*\[chromium,\s*firefox,\s*webkit\]/);
+  assert.match(ciWorkflow, /preset-shard:\s*\[1,\s*2,\s*3,\s*4\]/);
+  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARD:/);
+  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
+  assert.match(ciWorkflow, /npm run test:matrix -- --project=\$\{\{ matrix\.engine \}\}/);
+  assert.match(ciWorkflow, /playwright-report/);
+  assert.match(ciWorkflow, /test-results/);
+});
+
 test('package metadata is aligned for the release version', () => {
   assert.equal(packageLock.version, packageJson.version);
   assert.equal(packageLock.packages[''].version, packageJson.version);
   assert.deepEqual(packageJson.dependencies || {}, {});
   assert.deepEqual(packageLock.packages[''].dependencies || {}, {});
+  assert.equal(packageJson.devDependencies['@axe-core/playwright'], '4.12.1');
+  assert.equal(packageLock.packages[''].devDependencies['@axe-core/playwright'], '4.12.1');
+  assert.equal(packageLock.packages['node_modules/@axe-core/playwright'].version, '4.12.1');
 
   const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   assert.match(css, new RegExp(`UI Style Kit CSS v${escapeRegExp(packageJson.version)}`));

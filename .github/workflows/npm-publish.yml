@@ -97,6 +97,12 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:e2e
 
+      - name: Run curated visual checks
+        run: npm run test:visual
+
+      - name: Run full UI matrix
+        run: npm run test:matrix
+
   publish-npm:
     name: Publish Package
     needs: verify

@@ -4,10 +4,15 @@
 
 ```bash
 npm run check
+npm run test:e2e
+npm run test:axe
+npm run test:visual
+npm run test:matrix
+npm audit --audit-level=moderate
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. `npm run pack:dry-run` shows the exact files that would publish.
+`npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. Browser gates cover regular demo flows, representative Axe scans, curated visual smoke checks, and the sharded 990-combination matrix. `npm run pack:dry-run` shows the exact files that would publish.
 
 `npm run build` uses exactly pinned CSS Tree parsing and Lightning CSS formatting/minification. Generated minified bundles retain the release banner while preserving grammar-sensitive selector and `calc()` whitespace.
 

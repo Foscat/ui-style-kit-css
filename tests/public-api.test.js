@@ -246,6 +246,8 @@ test('manifest describes every preset, scheme, mode, class capability, and nativ
   );
 
   for (const preset of manifest.presets) {
+    assert.equal(typeof preset.label, 'string', `${preset.id} should expose a human-readable label`);
+    assert.ok(preset.label.length > 0, `${preset.id} label should not be empty`);
     assert.deepEqual(preset.entrypoints, {
       default: `./${preset.id}.css`,
       visual: `./visual/${preset.id}.css`

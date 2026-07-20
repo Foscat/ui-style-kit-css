@@ -51,10 +51,10 @@ These libraries stay standalone, but the current aligned set is:
 | Library | Aligned version | Owns |
 |---|---:|---|
 | `ui-style-kit-css@2.1.0` | staged source target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.5.0` | staged source target | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
 
-These 2.1 versions are local/staged targets, not registry publication claims. Keep production registry and CDN pins on the latest verified published releases until each staged release completes.
+UI Style Kit `2.1.0` and Layout Style `2.1.0` remain staged source targets until their release approvals complete. Interactive Surface `1.5.0` is the released companion state engine for this upgrade path.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -387,10 +387,14 @@ The checked-in demo, favicon pack, and social preview image stay in the reposito
 
 ```bash
 npm run check
+npm run test:e2e
+npm run test:axe
+npm run test:visual
+npm run test:matrix
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Optional Playwright visual smoke tests are available through `npm run test:visual` after installing dev dependencies.
+`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `11 presets x 10 themes x 3 modes x 3 engines` matrix.
 
 ## v2.1.0 Architecture Notes
 

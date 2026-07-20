@@ -43,6 +43,12 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:e2e
 
+      - name: Run curated visual checks
+        run: npm run test:visual
+
+      - name: Run full UI matrix
+        run: npm run test:matrix
+
       - name: Restrict manual runs to main
         if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
         shell: bash

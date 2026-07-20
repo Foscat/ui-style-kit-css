@@ -93,6 +93,29 @@ test('demo loads with default theme settings', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1, name: 'UI Style Kit CSS' })).toBeVisible();
 });
 
+test('demo control options are populated from the manifest snapshot', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const manifestState = await page.evaluate(() => ({
+    presets: window.UI_STYLE_KIT_MANIFEST.presets.map(({ id, prefix, label }) => ({ id, prefix, label })),
+    themes: window.UI_STYLE_KIT_MANIFEST.themes,
+    modes: window.UI_STYLE_KIT_MANIFEST.modes,
+    uiOptions: [...document.querySelectorAll('#uiSelect option')].map((option) => ({
+      id: option.value,
+      prefix: option.dataset.prefix,
+      label: option.textContent.trim()
+    })),
+    themeOptions: [...document.querySelectorAll('#themeSelect option')].map((option) => option.value),
+    modeOptions: [...document.querySelectorAll('#modeSelect option')].map((option) => option.value)
+  }));
+
+  expect(manifestState.presets.map(({ id, prefix }) => [id, prefix])).toEqual(stylePresets);
+  expect(manifestState.uiOptions).toEqual(manifestState.presets);
+  expect(manifestState.themeOptions).toEqual(manifestState.themes);
+  expect(manifestState.modeOptions).toEqual(displayModes);
+  expect(manifestState.themeOptions).toContain('royal-plum');
+});
+
 test('demo exposes project resource links', async ({ page }) => {
   await page.goto(demoUrl);
 
@@ -446,6 +469,30 @@ test('native form samples provide padded block layout for unclassed controls', a
   expect(nativeLabelMetrics.every(({ display }) => display !== 'inline'), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
   expect(nativeLabelMetrics.every(({ rowGap }) => parseFloat(rowGap) >= 6), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
   expect(nativeLabelMetrics.every(({ inlinePadding }) => inlinePadding >= 0), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
+});
+
+test('native dialog demo opens a real modal with a themed backdrop', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'cyberpunk');
+  await page.selectOption('#modeSelect', 'dark');
+
+  await page.getByTestId('native-modal-open').click();
+
+  const modal = page.getByTestId('native-modal-dialog');
+  await expect(modal).toBeVisible();
+
+  const modalState = await modal.evaluate((dialog) => ({
+    isOpen: dialog.open,
+    isModal: dialog.matches(':modal'),
+    backdropBackground: getComputedStyle(dialog, '::backdrop').backgroundColor
+  }));
+
+  expect(modalState.isOpen).toBe(true);
+  expect(modalState.isModal).toBe(true);
+  expect(modalState.backdropBackground).not.toBe('rgba(0, 0, 0, 0)');
+
+  await page.getByTestId('native-modal-close').click();
+  await expect(modal).not.toBeVisible();
 });
 
 test('tooltip treatments are visible and structurally distinct across UI styles', async ({ page }) => {

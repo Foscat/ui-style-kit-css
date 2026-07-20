@@ -4,32 +4,14 @@
  * @license MIT
  */
 
-const stylePrefixes = {
-  "minimal-saas": "saas",
-  bento: "bento",
-  maximalist: "max",
-  bauhaus: "bau",
-  tactile: "tactile",
-  neumorphism: "neo",
-  retrofuturism: "retro",
-  brutalism: "brutal",
-  cyberpunk: "cyber",
-  y2k: "y2k",
-  "retro-glass": "rg"
-};
-const styleTitles = {
-  "minimal-saas": "Minimal SaaS",
-  bento: "Bento UI",
-  maximalist: "Maximalist / Playful",
-  bauhaus: "Bauhaus / Swiss Modern",
-  tactile: "Skeuomorphic / Tactile",
-  neumorphism: "Neumorphism",
-  retrofuturism: "Retrofuturism",
-  brutalism: "Brutalism",
-  cyberpunk: "Cyberpunk",
-  y2k: "Y2K",
-  "retro-glass": "Retro Glass"
-};
+const demoManifest = window.UI_STYLE_KIT_MANIFEST;
+
+if (!demoManifest) {
+  throw new Error("UI Style Kit demo manifest was not loaded before demo.js.");
+}
+
+const stylePrefixes = Object.fromEntries(demoManifest.presets.map(({ id, prefix }) => [id, prefix]));
+const styleTitles = Object.fromEntries(demoManifest.presets.map(({ id, label }) => [id, label]));
 const resourceLinks = [
   { label: "GitHub", href: "https://github.com/Foscat/ui-style-kit-css" },
   { label: "Wiki", href: "https://github.com/Foscat/ui-style-kit-css/wiki" },
@@ -95,6 +77,37 @@ const interactiveSurfaceSelector = [
   "audio[controls]",
   "video[controls]"
 ].join(",");
+
+function syncManifestSelectOptions() {
+  const currentUi = uiSelect.value || "minimal-saas";
+  const currentTheme = themeSelect.value || "arctic-indigo";
+  const currentMode = modeSelect.value || "light";
+
+  uiSelect.replaceChildren(...demoManifest.presets.map(({ id, label, prefix }) => {
+    const option = document.createElement("option");
+    option.value = id;
+    option.dataset.prefix = prefix;
+    option.textContent = label;
+    option.selected = id === currentUi;
+    return option;
+  }));
+
+  themeSelect.replaceChildren(...demoManifest.themes.map((theme) => {
+    const option = document.createElement("option");
+    option.value = theme;
+    option.textContent = theme;
+    option.selected = theme === currentTheme;
+    return option;
+  }));
+
+  modeSelect.replaceChildren(...demoManifest.modes.map((mode) => {
+    const option = document.createElement("option");
+    option.value = mode;
+    option.textContent = mode;
+    option.selected = mode === currentMode;
+    return option;
+  }));
+}
 
 /**
  * Escape a string for safe insertion into HTML content, replacing special characters with their corresponding HTML entities.
@@ -363,6 +376,21 @@ function bindCodeCopyButtons() {
         button.classList.remove("is-copied");
       }, 1400);
     });
+  });
+}
+
+function bindNativeDialogDemo() {
+  const openButton = main.querySelector("[data-testid='native-modal-open']");
+  const dialog = main.querySelector("[data-testid='native-modal-dialog']");
+
+  if (!openButton || !dialog) return;
+
+  openButton.addEventListener("click", () => {
+    if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+    }
   });
 }
 
@@ -647,18 +675,18 @@ function render() {
                 <section class="demo-control-panel" data-testid="component-progress">
                   <h4>Progress</h4>
                   <div class="demo-progress-stack">
-                    <div class="${p}-progress" aria-label="Component progress"><div class="${p}-progress-bar" style="--${p}-progress-value: 68%"></div></div>
-                    <div class="${p}-progress" aria-label="Secondary progress"><div class="${p}-progress-bar" style="--${p}-progress-value: 34%"></div></div>
+                    <div class="${p}-progress" role="progressbar" aria-label="Component progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68"><div class="${p}-progress-bar" style="--${p}-progress-value: 68%"></div></div>
+                    <div class="${p}-progress" role="progressbar" aria-label="Secondary progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="34"><div class="${p}-progress-bar" style="--${p}-progress-value: 34%"></div></div>
                   </div>
                 </section>
 
                 <section class="demo-control-panel" data-testid="component-spinner">
                   <h4>Loading</h4>
                   <div class="demo-button-row">
-                    <span class="${p}-spinner ${p}-spinner-sm" aria-label="Small loading spinner"></span>
-                    <span class="${p}-spinner" aria-label="Loading spinner"></span>
-                    <span class="${p}-spinner ${p}-spinner-lg" aria-label="Large loading spinner"></span>
-                    <span class="ui-spinner" data-loading-spinner aria-label="Native loading spinner"></span>
+                    <span class="${p}-spinner ${p}-spinner-sm" role="status" aria-label="Small loading spinner"></span>
+                    <span class="${p}-spinner" role="status" aria-label="Loading spinner"></span>
+                    <span class="${p}-spinner ${p}-spinner-lg" role="status" aria-label="Large loading spinner"></span>
+                    <span class="ui-spinner" data-loading-spinner role="status" aria-label="Native loading spinner"></span>
                   </div>
                 </section>
 
@@ -760,12 +788,12 @@ function render() {
             <div class="demo-token-sample" data-testid="utility-color-grid">
               <p class="demo-utility-label">Color utilities</p>
               <div class="demo-color-chip-grid">
-                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-primary)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-primary">Primary</strong><small>Action emphasis</small></span></div>
-                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-secondary)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-secondary">Secondary</strong><small>Supporting action</small></span></div>
-                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-accent)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-accent">Accent</strong><small>Highlight note</small></span></div>
-                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-success)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-success">Success</strong><small>Positive state</small></span></div>
-                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-warning)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-warning">Warning</strong><small>Needs review</small></span></div>
-                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-danger)"><span class="demo-color-swatch"></span><span><strong class="${p}-text-danger">Danger</strong><small>Blocking state</small></span></div>
+                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-primary)"><span class="demo-color-swatch"></span><span><strong>Primary</strong><small>Action emphasis</small></span></div>
+                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-secondary)"><span class="demo-color-swatch"></span><span><strong>Secondary</strong><small>Supporting action</small></span></div>
+                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-accent)"><span class="demo-color-swatch"></span><span><strong>Accent</strong><small>Highlight note</small></span></div>
+                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-success)"><span class="demo-color-swatch"></span><span><strong>Success</strong><small>Positive state</small></span></div>
+                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-warning)"><span class="demo-color-swatch"></span><span><strong>Warning</strong><small>Needs review</small></span></div>
+                <div class="demo-color-chip" data-testid="utility-color-chip" style="--demo-token-color: var(--${p}-danger)"><span class="demo-color-swatch"></span><span><strong>Danger</strong><small>Blocking state</small></span></div>
               </div>
             </div>
             <div class="demo-token-sample" data-testid="utility-surface-grid">
@@ -896,6 +924,14 @@ function render() {
                   <button>Close sample</button>
                 </form>
               </dialog>
+              <button type="button" data-testid="native-modal-open">Open modal dialog</button>
+              <dialog data-testid="native-modal-dialog">
+                <form method="dialog">
+                  <h3>Modal dialog</h3>
+                  <p>This sample opens with <code>showModal()</code> so backdrop styling is exercised by the browser.</p>
+                  <button type="submit" data-testid="native-modal-close">Close modal</button>
+                </form>
+              </dialog>
             </section>
 
             <section class="${p}-panel demo-native-sample" data-testid="native-meter-progress">
@@ -960,6 +996,7 @@ import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
   bindPrimaryNav();
   bindThemeTokenControls();
   bindCodeCopyButtons();
+  bindNativeDialogDemo();
   syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview");
   if (bridgeToggle) {
     bridgeToggle.checked = bridgeAttached;
@@ -968,6 +1005,8 @@ import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
   drawDemoCanvas();
   updateBridge();
 }
+
+syncManifestSelectOptions();
 
 uiSelect.addEventListener("change", render);
 themeSelect.addEventListener("change", render);
