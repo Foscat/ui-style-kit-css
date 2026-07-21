@@ -10,7 +10,7 @@ npm run release:verify
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. Browser gates cover regular demo flows, representative Axe scans, curated visual smoke checks, and the sharded 990-combination matrix. `npm run check:ecosystem:packs` verifies standalone, pairwise, and all-three packed package compatibility for the canonical visual/theme/state/layout imports and the deprecated bridge imports. `npm run pack:dry-run` shows the exact files that would publish.
 
-By default, `npm run check:ecosystem:packs` packs this repository, packs the sibling `../Layout-Style-CSS` checkout, and packs the published `interactive-surface-css@1.5.0` artifact. Use `-- --layout-repo <path>` or `-- --interactive-spec <specifier>` when validating a different local Layout Style checkout or a different Interactive Surface package source.
+By default, `npm run check:ecosystem:packs` packs this repository, packs the sibling `../Layout-Style-CSS` checkout, and packs the published `interactive-surface-css@1.5.0` artifact. Use `-- --ui-spec <specifier>`, `-- --layout-repo <path>`, `-- --layout-spec <specifier>`, or `-- --interactive-spec <specifier>` when validating a different package source.
 
 `npm run build` uses exactly pinned CSS Tree parsing and Lightning CSS formatting/minification. Generated minified bundles retain the release banner while preserving grammar-sensitive selector and `calc()` whitespace.
 
@@ -27,6 +27,12 @@ For this ecosystem upgrade, use the approval-gated rollout order below:
 3. Release `ui-style-kit-css@2.1.0` after the hotfix is live.
 4. Release `layout-style-css@2.1.0` after UI Style Kit 2.1 is live and Layout replaces its temporary GitHub UI fixture with the registry package.
 5. Run the final all-three packed compatibility suite against the published packages.
+
+After `layout-style-css@2.1.0` is published, run the final registry-only ecosystem proof from this repository:
+
+```bash
+npm run check:ecosystem:packs -- --ui-spec ui-style-kit-css@2.1.0 --layout-spec layout-style-css@2.1.0 --interactive-spec interactive-surface-css@1.5.0
+```
 
 ```bash
 npm publish

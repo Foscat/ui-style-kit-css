@@ -277,7 +277,8 @@ test('README documents the 2.1 library system and theme override flow', () => {
   assert.match(readme, /ui-style-kit-css@2\.1\.0/);
   assert.match(readme, /interactive-surface-css@1\.5\.0/);
   assert.match(readme, /layout-style-css@2\.1\.0/);
-  assert.match(readme, /Interactive Surface `1\.5\.0` is the released companion state engine/);
+  assert.match(readme, /UI Style Kit `2\.1\.0` and Interactive Surface `1\.5\.0` are released companion packages/);
+  assert.match(readme, /Layout Style `2\.1\.0` remains a staged source target/);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
   assert.match(readme, /interactive-surface-theme\.css/);
@@ -376,8 +377,8 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeState));
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.1\.0` and Layout Style `2\.1\.0` remain staged source targets/);
-    assert.match(contents, /Interactive Surface `1\.5\.0` is the released companion state engine/);
+    assert.match(contents, /UI Style Kit `2\.1\.0` and Interactive Surface `1\.5\.0` are released companion packages/);
+    assert.match(contents, /Layout Style `2\.1\.0` remains a staged source target/);
   }
 });
 
@@ -451,6 +452,9 @@ test('publishing docs expose the packed ecosystem compatibility gate', () => {
   assert.ok(fs.existsSync(path.join(rootDir, 'scripts', 'check-ecosystem-packs.mjs')));
   assert.match(publishingGuide, /npm run check:ecosystem:packs/);
   assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
+  assert.match(publishingGuide, /--ui-spec ui-style-kit-css@2\.1\.0/);
+  assert.match(publishingGuide, /--layout-spec layout-style-css@2\.1\.0/);
+  assert.match(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
 });
 
 test('publishing docs preserve the approval-gated ecosystem rollout order', () => {

@@ -12,9 +12,13 @@ const npmRunner = npmInvocation();
 const tempPrefix = 'usk-ecosystem-packs-';
 
 const options = parseArgs(process.argv.slice(2));
-const layoutRepo = path.resolve(
-  options.layoutRepo ?? process.env.UI_STYLE_KIT_LAYOUT_REPO ?? path.join(rootDir, '..', 'Layout-Style-CSS')
-);
+const uiSpec = options.uiSpec ?? process.env.UI_STYLE_KIT_UI_SPEC;
+const layoutSpec = options.layoutSpec ?? process.env.UI_STYLE_KIT_LAYOUT_SPEC;
+const layoutRepo = layoutSpec
+  ? null
+  : path.resolve(
+      options.layoutRepo ?? process.env.UI_STYLE_KIT_LAYOUT_REPO ?? path.join(rootDir, '..', 'Layout-Style-CSS')
+    );
 const interactiveSpec =
   options.interactiveSpec ?? process.env.UI_STYLE_KIT_INTERACTIVE_SPEC ?? 'interactive-surface-css@1.5.0';
 
@@ -124,15 +128,20 @@ let completed = false;
 
 try {
   fs.mkdirSync(packsDir, { recursive: true });
-  assertDirectory(rootDir, 'UI Style Kit repo');
-  assertDirectory(layoutRepo, 'Layout Style CSS repo');
+  if (!uiSpec) {
+    assertDirectory(rootDir, 'UI Style Kit repo');
+  }
+  if (!layoutSpec) {
+    assertDirectory(layoutRepo, 'Layout Style CSS repo');
+  }
 
-  console.log(`Using Layout Style CSS repo: ${layoutRepo}`);
+  console.log(`Using UI Style Kit package: ${uiSpec ?? rootDir}`);
+  console.log(`Using Layout Style CSS package: ${layoutSpec ?? layoutRepo}`);
   console.log(`Using Interactive Surface package: ${interactiveSpec}`);
 
   const tarballs = {
-    ui: packLocalPackage(rootDir, packsDir),
-    layout: packLocalPackage(layoutRepo, packsDir),
+    ui: uiSpec ? packPackageSpec(uiSpec, packsDir) : packLocalPackage(rootDir, packsDir),
+    layout: layoutSpec ? packPackageSpec(layoutSpec, packsDir) : packLocalPackage(layoutRepo, packsDir),
     interactive: packPackageSpec(interactiveSpec, packsDir)
   };
 
@@ -188,8 +197,12 @@ function parseArgs(args) {
 
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
-    if (arg === '--layout-repo') {
+    if (arg === '--ui-spec') {
+      parsed.uiSpec = readValue(args, (index += 1), arg);
+    } else if (arg === '--layout-repo') {
       parsed.layoutRepo = readValue(args, (index += 1), arg);
+    } else if (arg === '--layout-spec') {
+      parsed.layoutSpec = readValue(args, (index += 1), arg);
     } else if (arg === '--interactive-spec') {
       parsed.interactiveSpec = readValue(args, (index += 1), arg);
     } else if (arg === '--keep-temp') {
@@ -199,6 +212,12 @@ function parseArgs(args) {
     } else {
       throw new Error(`Unknown option: ${arg}`);
     }
+  }
+
+  // Keep source selection explicit so release checks do not accidentally mix a
+  // checked-out Layout branch with the final published package.
+  if (parsed.layoutRepo && parsed.layoutSpec) {
+    throw new Error('Use either --layout-repo or --layout-spec, not both.');
   }
 
   return parsed;

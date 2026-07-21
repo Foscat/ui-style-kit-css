@@ -50,11 +50,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.1.0` | staged source target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.1.0` and Layout Style `2.1.0` remain staged source targets until their release approvals complete. Interactive Surface `1.5.0` is the released companion state engine for this upgrade path.
+UI Style Kit `2.1.0` and Interactive Surface `1.5.0` are released companion packages for this upgrade path. Layout Style `2.1.0` remains a staged source target until its separate release approval completes.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
