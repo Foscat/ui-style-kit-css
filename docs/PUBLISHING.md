@@ -3,9 +3,10 @@
 ## Dry run
 
 ```bash
-npm run check
-npm run pack:dry-run
+npm run release:verify
 ```
+
+`npm run release:verify` is the non-publishing hotfix release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:visual`, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. `npm run pack:dry-run` shows the exact files that would publish.
 
@@ -15,11 +16,13 @@ The npm artifact is library-focused: `dist/`, `styles/`, docs, and metadata. Dem
 
 ## Publish
 
+No package, tag, or registry release occurs without explicit approval.
+
 ```bash
 npm publish
 ```
 
-For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.4`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full hotfix release gate. For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.0.4`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 
