@@ -22,7 +22,7 @@ No package, tag, or registry release occurs without explicit approval.
 
 For this ecosystem upgrade, use the approval-gated rollout order below:
 
-1. Release `ui-style-kit-css@2.0.4` as the correctness hotfix from the merged hotfix content on `origin/main`.
+1. Release `ui-style-kit-css@2.0.4` as the correctness hotfix from the merged hotfix content on `origin/main`. The 2.0.4 hotfix release line must pass `npm run release:verify` before any tag or publish step.
 2. Confirm the already published `interactive-surface-css@1.5.0` companion state engine remains available from npm.
 3. Release `ui-style-kit-css@2.1.0` after the hotfix is live.
 4. Release `layout-style-css@2.1.0` after UI Style Kit 2.1 is live and Layout replaces its temporary GitHub UI fixture with the registry package.

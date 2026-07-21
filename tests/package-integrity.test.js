@@ -471,6 +471,7 @@ test('publishing docs preserve the approval-gated ecosystem rollout order', () =
 
   assert.match(publishingGuide, /No package, tag, or registry release occurs without explicit approval/i);
   assert.match(publishingGuide, /2\.0\.4[^.\n]*hotfix/i);
+  assert.match(publishingGuide, /2\.0\.4 hotfix release line must pass `npm run release:verify`/i);
   assert.match(publishingGuide, /final all-three packed compatibility suite/i);
 });
 
