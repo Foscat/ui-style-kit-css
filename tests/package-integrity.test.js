@@ -411,13 +411,37 @@ test('release automation scripts are exposed', () => {
     'check:package',
     'check:ecosystem:packs',
     'check',
-    'pack:dry-run'
+    'pack:dry-run',
+    'release:verify'
   ];
 
   for (const scriptName of requiredScripts) {
     assert.equal(typeof packageJson.scripts?.[scriptName], 'string', `Missing script: ${scriptName}`);
     assert.notEqual(packageJson.scripts[scriptName].trim(), '', `Script should not be empty: ${scriptName}`);
   }
+});
+
+test('release verification script is non-publishing and covers the full release gate', () => {
+  const releaseVerify = packageJson.scripts['release:verify'] ?? '';
+  const requiredCommands = [
+    'npm run check',
+    'npm run test:e2e',
+    'npm run test:axe',
+    'npm run test:visual',
+    'npm run test:matrix',
+    'npm run check:ecosystem:packs',
+    'npm audit --audit-level=moderate',
+    'npm run pack:dry-run'
+  ];
+
+  for (const command of requiredCommands) {
+    assert.match(releaseVerify, new RegExp(escapeRegExp(command)), `release:verify should run ${command}`);
+  }
+
+  // Keep the reusable verification gate safe for approval-gated release preparation.
+  assert.doesNotMatch(releaseVerify, /\bnpm\s+(?:publish|version)\b/);
+  assert.doesNotMatch(releaseVerify, /\bgit\s+tag\b/);
+  assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
 });
 
 test('publishing docs expose the packed ecosystem compatibility gate', () => {

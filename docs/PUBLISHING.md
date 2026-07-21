@@ -3,15 +3,10 @@
 ## Dry run
 
 ```bash
-npm run check
-npm run test:e2e
-npm run test:axe
-npm run test:visual
-npm run test:matrix
-npm run check:ecosystem:packs
-npm audit --audit-level=moderate
-npm run pack:dry-run
+npm run release:verify
 ```
+
+`npm run release:verify` is the non-publishing release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:axe`, `npm run test:visual`, `npm run test:matrix`, `npm run check:ecosystem:packs`, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. Browser gates cover regular demo flows, representative Axe scans, curated visual smoke checks, and the sharded 990-combination matrix. `npm run check:ecosystem:packs` verifies standalone, pairwise, and all-three packed package compatibility for the canonical visual/theme/state/layout imports and the deprecated bridge imports. `npm run pack:dry-run` shows the exact files that would publish.
 
@@ -37,7 +32,7 @@ For this ecosystem upgrade, use the approval-gated rollout order below:
 npm publish
 ```
 
-For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.1.0`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.1.0`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 
