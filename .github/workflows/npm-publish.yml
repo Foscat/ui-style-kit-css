@@ -157,8 +157,19 @@ jobs:
         if: steps.npm_version_check.outputs.already_published != 'true'
         run: npm run test:e2e:install:ci
 
+      # The package prepublish gate runs packed ecosystem checks against the
+      # staged Layout Style CSS 2.1 line before this UI package reaches npm.
+      - name: Checkout Layout Style CSS for publish verification
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        uses: actions/checkout@v6
+        with:
+          repository: Foscat/Layout-Style-CSS
+          ref: 2.1.0
+          path: _ecosystem/Layout-Style-CSS
+
       - name: Publish package
         if: steps.npm_version_check.outputs.already_published != 'true'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          UI_STYLE_KIT_LAYOUT_REPO: ${{ github.workspace }}/_ecosystem/Layout-Style-CSS
