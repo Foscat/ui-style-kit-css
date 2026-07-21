@@ -19,6 +19,33 @@ function formatApproxKb(byteLength) {
   return `~${Math.round(byteLength / 1024)} KB`;
 }
 
+function parseDemoManifestScript() {
+  const script = fs.readFileSync(path.join(rootDir, 'demo', 'demo-manifest.js'), 'utf8');
+  const match = script.match(/window\.UI_STYLE_KIT_MANIFEST\s*=\s*(\{[\s\S]*\});?\s*$/);
+  assert.ok(match, 'demo/demo-manifest.js should assign window.UI_STYLE_KIT_MANIFEST');
+
+  return JSON.parse(match[1]);
+}
+
+function selectOptions(html, selectId) {
+  const selectMatch = html.match(new RegExp(`<select id="${escapeRegExp(selectId)}"[\\s\\S]*?<\\/select>`));
+  assert.ok(selectMatch, `Expected #${selectId} to exist`);
+
+  return [...selectMatch[0].matchAll(/<option\s+([^>]*)>([\s\S]*?)<\/option>/g)].map((optionMatch) => {
+    const attributes = optionMatch[1];
+    const value = attributes.match(/\bvalue="([^"]+)"/)?.[1] ?? '';
+    const prefix = attributes.match(/\bdata-prefix="([^"]+)"/)?.[1] ?? '';
+    const selected = /\bselected\b/.test(attributes);
+
+    return {
+      value,
+      prefix,
+      selected,
+      label: optionMatch[2].trim()
+    };
+  });
+}
+
 function exactHeadTag() {
   try {
     return execFileSync('git', ['describe', '--tags', '--exact-match', 'HEAD'], {
@@ -183,7 +210,7 @@ test('dist CSS contains expected style system markers', () => {
 });
 
 test('package files include required publish assets', () => {
-  const requiredFiles = ['dist', 'styles', 'README.md', 'LICENSE'];
+  const requiredFiles = ['dist', 'styles', 'README.md', 'LICENSE', 'manifest.json'];
   for (const item of requiredFiles) {
     assert.ok(packageJson.files.includes(item), `package.json files[] should include ${item}`);
   }
@@ -194,30 +221,80 @@ test('package files include required publish assets', () => {
   );
 });
 
-test('README documents the library system and theme override flow', () => {
+test('demo manifest snapshot mirrors the package manifest capability source', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const demoManifest = parseDemoManifestScript();
+
+  assert.deepEqual(demoManifest.presets, manifest.presets);
+  assert.deepEqual(demoManifest.themes, manifest.themes);
+  assert.deepEqual(demoManifest.modes, manifest.modes);
+  assert.ok(
+    demoManifest.presets.every((preset) => typeof preset.label === 'string' && preset.label.length > 0),
+    'Demo preset controls need labels from manifest.json'
+  );
+});
+
+test('demo select fallbacks match manifest presets, themes, and modes', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const expectedPresets = manifest.presets.map(({ id, prefix, label }) => ({
+    value: id,
+    prefix,
+    selected: id === 'minimal-saas',
+    label
+  }));
+  const expectedThemes = manifest.themes.map((theme) => ({
+    value: theme,
+    prefix: '',
+    selected: theme === 'arctic-indigo',
+    label: theme
+  }));
+  const expectedModes = manifest.modes.map((mode) => ({
+    value: mode,
+    prefix: '',
+    selected: mode === 'light',
+    label: mode
+  }));
+
+  for (const htmlFile of ['index.html', path.join('demo', 'index.html')]) {
+    const html = fs.readFileSync(path.join(rootDir, htmlFile), 'utf8');
+
+    assert.match(html, /demo-manifest\.js/, `${htmlFile} should load the manifest snapshot before demo.js`);
+    assert.deepEqual(selectOptions(html, 'uiSelect'), expectedPresets, `${htmlFile} preset options should match manifest.json`);
+    assert.deepEqual(selectOptions(html, 'themeSelect'), expectedThemes, `${htmlFile} theme options should match manifest.json`);
+    assert.deepEqual(selectOptions(html, 'modeSelect'), expectedModes, `${htmlFile} mode options should match manifest.json`);
+  }
+});
+
+test('README documents the 2.1 library system and theme override flow', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.0\.4/);
-  assert.match(readme, /ui-style-kit-css@2\.0\.3/);
+  assert.match(readme, /v2\.1\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.0\.4/);
-  assert.match(readme, /interactive-surface-css@1\.3\.0/);
-  assert.match(readme, /layout-style-css@1\.1\.2/);
+  assert.match(readme, /ui-style-kit-css@2\.1\.0/);
+  assert.match(readme, /interactive-surface-css@1\.5\.0/);
+  assert.match(readme, /layout-style-css@2\.1\.0/);
+  assert.match(readme, /Interactive Surface `1\.5\.0` is the released companion state engine/);
+  assert.match(readme, /ui-style-kit-css\/visual\.css/);
+  assert.match(readme, /ui-style-kit-css\/manifest\.json/);
+  assert.match(readme, /interactive-surface-theme\.css/);
+  assert.match(readme, /interactive-surface-css\/state-core\.css/);
 });
 
 test('README bundle size guide matches current built CSS output', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
   // Keep the public size table honest whenever generated CSS changes.
   const sizeExpectations = [
-    ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css', 'Runtime UI-system switchers and demos'],
-    ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css', 'Runtime switchers plus Interactive Surface bridge'],
+    ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css', 'Compatible runtime UI-system switchers and demos'],
+    ['ui-style-kit-css/visual.min.css', 'dist/ui-style-kit.visual.min.css', 'Runtime visual switching with consumer-owned layout'],
+    ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css', 'Deprecated runtime switcher plus stateful bridge'],
     ['ui-style-kit-css/theme-colors.css', 'styles/theme-colors.css', 'Shared color schemes for standalone style imports'],
     ['ui-style-kit-css/native-elements.css', 'styles/native-elements.css', 'Shared native HTML fallback styling'],
-    ['ui-style-kit-css/content-overflow.css', 'styles/content-overflow.css', 'Shared long-text containment for standalone style imports']
+    ['ui-style-kit-css/content-overflow.css', 'styles/content-overflow.css', 'Shared long-text containment for standalone style imports'],
+    ['ui-style-kit-css/interactive-surface-theme.css', 'styles/interactive-surface-theme.css', 'Canonical token-and-paint bridge for Interactive Surface state core']
   ];
 
   for (const [importPath, relativePath, label] of sizeExpectations) {
@@ -258,15 +335,49 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.0\.4/);
-    assert.match(contents, /interactive-surface-css@1\.3\.0/);
-    assert.match(contents, /layout-style-css@1\.1\.2/);
+    assert.match(contents, /ui-style-kit-css@2\.1\.0/);
+    assert.match(contents, /interactive-surface-css@1\.5\.0/);
+    assert.match(contents, /layout-style-css@2\.1\.0/);
     assert.match(contents, /Use one/);
     assert.match(contents, /Use two/);
     assert.match(contents, /Use all three/);
     assert.match(contents, /visual identity/);
     assert.match(contents, /interaction-state/);
     assert.match(contents, /structural/);
+    assert.match(contents, /interactive-surface-theme\.css/);
+    assert.match(contents, /interactive-surface-css\/state-core\.css/);
+    assert.match(contents, /deprecated compatibility paths/);
+  }
+});
+
+test('canonical ecosystem examples preserve ownership-first import order', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
+  const ecosystemGuides = [
+    fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8'),
+    fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8')
+  ];
+  const visualThemeState = [
+    'import "ui-style-kit-css/visual/minimal-saas.css";',
+    'import "ui-style-kit-css/interactive-surface-theme.css";',
+    'import "interactive-surface-css/state-core.css";'
+  ].join('\n');
+  const visualThemeStateLayout = [
+    'import "ui-style-kit-css/visual.css";',
+    'import "ui-style-kit-css/interactive-surface-theme.css";',
+    'import "interactive-surface-css/state-core.css";',
+    'import "layout-style-css";'
+  ].join('\n');
+  const exactJsBlock = (imports) => new RegExp(escapeRegExp(`\`\`\`js\n${imports}\n\`\`\``));
+
+  assert.match(readme, exactJsBlock(visualThemeState));
+  assert.match(installationWiki, exactJsBlock(visualThemeState));
+
+  for (const contents of ecosystemGuides) {
+    assert.match(contents, exactJsBlock(visualThemeState));
+    assert.match(contents, exactJsBlock(visualThemeStateLayout));
+    assert.match(contents, /UI Style Kit `2\.1\.0` and Layout Style `2\.1\.0` remain staged source targets/);
+    assert.match(contents, /Interactive Surface `1\.5\.0` is the released companion state engine/);
   }
 });
 
@@ -292,9 +403,13 @@ test('release automation scripts are exposed', () => {
     'test',
     'test:unit',
     'test:e2e',
+    'test:axe',
+    'test:matrix',
+    'test:visual',
     'test:e2e:install:ci',
     'check:contrast',
     'check:package',
+    'check:ecosystem:packs',
     'check',
     'pack:dry-run',
     'release:verify'
@@ -306,12 +421,15 @@ test('release automation scripts are exposed', () => {
   }
 });
 
-test('release verification script is non-publishing and covers the 2.0.4 release gate', () => {
+test('release verification script is non-publishing and covers the full release gate', () => {
   const releaseVerify = packageJson.scripts['release:verify'] ?? '';
   const requiredCommands = [
     'npm run check',
     'npm run test:e2e',
+    'npm run test:axe',
     'npm run test:visual',
+    'npm run test:matrix',
+    'npm run check:ecosystem:packs',
     'npm audit --audit-level=moderate',
     'npm run pack:dry-run'
   ];
@@ -320,10 +438,54 @@ test('release verification script is non-publishing and covers the 2.0.4 release
     assert.match(releaseVerify, new RegExp(escapeRegExp(command)), `release:verify should run ${command}`);
   }
 
-  // Keep the hotfix verification gate safe for approval-gated release preparation.
+  // Keep the reusable verification gate safe for approval-gated release preparation.
   assert.doesNotMatch(releaseVerify, /\bnpm\s+(?:publish|version)\b/);
   assert.doesNotMatch(releaseVerify, /\bgit\s+tag\b/);
   assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
+});
+
+test('publishing docs expose the packed ecosystem compatibility gate', () => {
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+
+  assert.match(packageJson.scripts['check:ecosystem:packs'], /scripts\/check-ecosystem-packs\.mjs/);
+  assert.ok(fs.existsSync(path.join(rootDir, 'scripts', 'check-ecosystem-packs.mjs')));
+  assert.match(publishingGuide, /npm run check:ecosystem:packs/);
+  assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
+});
+
+test('publishing docs preserve the approval-gated ecosystem rollout order', () => {
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+  const requiredSequence = [
+    'ui-style-kit-css@2.0.4',
+    'interactive-surface-css@1.5.0',
+    'ui-style-kit-css@2.1.0',
+    'layout-style-css@2.1.0'
+  ];
+
+  let cursor = -1;
+  for (const releaseTarget of requiredSequence) {
+    const next = publishingGuide.indexOf(releaseTarget, cursor + 1);
+    assert.ok(next > cursor, `Publishing guide must order ${releaseTarget} after the previous release target`);
+    cursor = next;
+  }
+
+  assert.match(publishingGuide, /No package, tag, or registry release occurs without explicit approval/i);
+  assert.match(publishingGuide, /2\.0\.4[^.\n]*hotfix/i);
+  assert.match(publishingGuide, /2\.0\.4 hotfix release line must pass `npm run release:verify`/i);
+  assert.match(publishingGuide, /final all-three packed compatibility suite/i);
+});
+
+test('CI workflow shards the UI matrix by engine and preset group', () => {
+  const ciWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
+
+  assert.match(ciWorkflow, /ui-matrix:/);
+  assert.match(ciWorkflow, /engine:\s*\[chromium,\s*firefox,\s*webkit\]/);
+  assert.match(ciWorkflow, /preset-shard:\s*\[1,\s*2,\s*3,\s*4\]/);
+  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARD:/);
+  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
+  assert.match(ciWorkflow, /npm run test:matrix -- --project=\$\{\{ matrix\.engine \}\}/);
+  assert.match(ciWorkflow, /playwright-report/);
+  assert.match(ciWorkflow, /test-results/);
 });
 
 test('package metadata is aligned for the release version', () => {
@@ -331,6 +493,9 @@ test('package metadata is aligned for the release version', () => {
   assert.equal(packageLock.packages[''].version, packageJson.version);
   assert.deepEqual(packageJson.dependencies || {}, {});
   assert.deepEqual(packageLock.packages[''].dependencies || {}, {});
+  assert.equal(packageJson.devDependencies['@axe-core/playwright'], '4.12.1');
+  assert.equal(packageLock.packages[''].devDependencies['@axe-core/playwright'], '4.12.1');
+  assert.equal(packageLock.packages['node_modules/@axe-core/playwright'].version, '4.12.1');
 
   const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   assert.match(css, new RegExp(`UI Style Kit CSS v${escapeRegExp(packageJson.version)}`));
@@ -423,7 +588,7 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
   }
 });
 
-test('content overflow contract is shared by standalone styles and bundles', () => {
+test('content overflow compatibility stays exported while 2.1 bundles use owned layers', () => {
   assert.equal(
     packageJson.exports['./content-overflow.css'],
     './styles/content-overflow.css'
@@ -435,13 +600,23 @@ test('content overflow contract is shared by standalone styles and bundles', () 
   assertFileExists('styles/content-overflow.css');
 
   const overflowCss = fs.readFileSync(path.join(rootDir, 'styles', 'content-overflow.css'), 'utf8');
+  const componentsCss = fs.readFileSync(path.join(rootDir, 'styles', 'components.css'), 'utf8');
+  const compatibilityCss = fs.readFileSync(path.join(rootDir, 'styles', 'compat-layout.css'), 'utf8');
   const bundledCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   const minCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.min.css'), 'utf8');
+  const visualCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.visual.css'), 'utf8');
 
   assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
   assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
   assert.match(overflowCss, /white-space:\s*normal/);
-  assert.match(bundledCss, /styles\/content-overflow\.css/);
+  assert.match(componentsCss, /@layer ui-style-kit\.components/);
+  assert.match(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.match(compatibilityCss, /@layer ui-style-kit\.compat_layout/);
+  assert.match(compatibilityCss, /overflow-wrap:\s*anywhere/);
+  assert.match(bundledCss, /styles\/components\.css/);
+  assert.match(bundledCss, /styles\/compat-layout\.css/);
+  assert.match(visualCss, /styles\/components\.css/);
+  assert.doesNotMatch(visualCss, /styles\/compat-layout\.css/);
   assert.match(minCss, /overflow-wrap:anywhere/);
 });
 
@@ -498,11 +673,16 @@ test('native element fallback styles are shared instead of duplicated per preset
 test('published CSS import targets are resolvable', () => {
   const importTargets = [
     '.',
+    './visual.css',
+    './visual.min.css',
+    './visual/minimal-saas.css',
     './minimal-saas.css',
     './content-overflow.css',
     './styles/cyberpunk.css',
+    './interactive-surface-theme.css',
     './interactive-surface-bridge',
-    './with-bridge.css'
+    './with-bridge.css',
+    './manifest.json'
   ];
 
   for (const exportPath of importTargets) {

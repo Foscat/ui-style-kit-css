@@ -1,0 +1,671 @@
+/* =========================================================
+   UI Style Kit CSS - Shared Component Foundations
+
+   Structural-neutral overflow rules live here so visual-only
+   entrypoints remain safe inside consumer-owned layouts.
+========================================================= */
+
+@layer ui-style-kit.components {
+[data-ui][data-theme][data-mode] :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  li,
+  dt,
+  dd,
+  figcaption,
+  blockquote,
+  label,
+  legend,
+  summary,
+  code,
+  kbd,
+  samp,
+  pre,
+  th,
+  td
+) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+[data-ui][data-theme][data-mode] :where(
+  [class~="saas-surface"],
+  [class~="saas-surface-sm"],
+  [class~="saas-surface-lg"],
+  [class~="saas-card"],
+  [class~="saas-panel"],
+  [class~="saas-toolbar"],
+  [class~="saas-well"],
+  [class~="saas-inset"],
+  [class~="saas-field"],
+  [class~="saas-alert"],
+  [class~="saas-table-wrap"],
+  [class~="saas-nav"],
+  [class~="bento-surface"],
+  [class~="bento-surface-sm"],
+  [class~="bento-surface-lg"],
+  [class~="bento-card"],
+  [class~="bento-panel"],
+  [class~="bento-toolbar"],
+  [class~="bento-well"],
+  [class~="bento-inset"],
+  [class~="bento-field"],
+  [class~="bento-alert"],
+  [class~="bento-table-wrap"],
+  [class~="bento-nav"],
+  [class~="max-surface"],
+  [class~="max-surface-sm"],
+  [class~="max-surface-lg"],
+  [class~="max-card"],
+  [class~="max-panel"],
+  [class~="max-toolbar"],
+  [class~="max-well"],
+  [class~="max-inset"],
+  [class~="max-field"],
+  [class~="max-alert"],
+  [class~="max-table-wrap"],
+  [class~="max-nav"],
+  [class~="bau-surface"],
+  [class~="bau-surface-sm"],
+  [class~="bau-surface-lg"],
+  [class~="bau-card"],
+  [class~="bau-panel"],
+  [class~="bau-toolbar"],
+  [class~="bau-well"],
+  [class~="bau-inset"],
+  [class~="bau-field"],
+  [class~="bau-alert"],
+  [class~="bau-table-wrap"],
+  [class~="bau-nav"],
+  [class~="tactile-surface"],
+  [class~="tactile-surface-sm"],
+  [class~="tactile-surface-lg"],
+  [class~="tactile-card"],
+  [class~="tactile-panel"],
+  [class~="tactile-toolbar"],
+  [class~="tactile-well"],
+  [class~="tactile-inset"],
+  [class~="tactile-field"],
+  [class~="tactile-alert"],
+  [class~="tactile-table-wrap"],
+  [class~="tactile-nav"],
+  [class~="neo-surface"],
+  [class~="neo-surface-sm"],
+  [class~="neo-surface-lg"],
+  [class~="neo-card"],
+  [class~="neo-panel"],
+  [class~="neo-toolbar"],
+  [class~="neo-well"],
+  [class~="neo-inset"],
+  [class~="neo-field"],
+  [class~="neo-alert"],
+  [class~="neo-table-wrap"],
+  [class~="neo-nav"],
+  [class~="retro-surface"],
+  [class~="retro-surface-sm"],
+  [class~="retro-surface-lg"],
+  [class~="retro-card"],
+  [class~="retro-panel"],
+  [class~="retro-toolbar"],
+  [class~="retro-well"],
+  [class~="retro-inset"],
+  [class~="retro-field"],
+  [class~="retro-alert"],
+  [class~="retro-table-wrap"],
+  [class~="retro-nav"],
+  [class~="brutal-surface"],
+  [class~="brutal-card"],
+  [class~="brutal-panel"],
+  [class~="brutal-toolbar"],
+  [class~="brutal-well"],
+  [class~="brutal-inset"],
+  [class~="brutal-field"],
+  [class~="brutal-alert"],
+  [class~="brutal-table-wrap"],
+  [class~="brutal-nav"],
+  [class~="cyber-card"],
+  [class~="cyber-panel"],
+  [class~="cyber-toolbar"],
+  [class~="cyber-well"],
+  [class~="cyber-inset"],
+  [class~="cyber-field"],
+  [class~="cyber-alert"],
+  [class~="cyber-table-wrap"],
+  [class~="cyber-nav"],
+  [class~="y2k-card"],
+  [class~="y2k-panel"],
+  [class~="y2k-toolbar"],
+  [class~="y2k-well"],
+  [class~="y2k-inset"],
+  [class~="y2k-field"],
+  [class~="y2k-alert"],
+  [class~="y2k-table-wrap"],
+  [class~="y2k-nav"],
+  [class~="rg-card"],
+  [class~="rg-panel"],
+  [class~="rg-toolbar"],
+  [class~="rg-well"],
+  [class~="rg-inset"],
+  [class~="rg-field"],
+  [class~="rg-alert"],
+  [class~="rg-table-wrap"],
+  [class~="rg-nav"]
+) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+[data-ui][data-theme][data-mode] :where(
+  [class~="saas-button"],
+  [class~="saas-icon-button"],
+  [class~="saas-badge"],
+  [class~="saas-nav-link"],
+  [class~="bento-button"],
+  [class~="bento-icon-button"],
+  [class~="bento-badge"],
+  [class~="bento-nav-link"],
+  [class~="max-button"],
+  [class~="max-icon-button"],
+  [class~="max-badge"],
+  [class~="max-nav-link"],
+  [class~="bau-button"],
+  [class~="bau-icon-button"],
+  [class~="bau-badge"],
+  [class~="bau-nav-link"],
+  [class~="tactile-button"],
+  [class~="tactile-icon-button"],
+  [class~="tactile-badge"],
+  [class~="tactile-nav-link"],
+  [class~="neo-button"],
+  [class~="neo-icon-button"],
+  [class~="neo-badge"],
+  [class~="neo-nav-link"],
+  [class~="retro-button"],
+  [class~="retro-icon-button"],
+  [class~="retro-badge"],
+  [class~="retro-nav-link"],
+  [class~="brutal-button"],
+  [class~="brutal-icon-button"],
+  [class~="brutal-badge"],
+  [class~="brutal-nav-link"],
+  [class~="cyber-button"],
+  [class~="cyber-icon-button"],
+  [class~="cyber-badge"],
+  [class~="cyber-nav-link"],
+  [class~="y2k-button"],
+  [class~="y2k-icon-button"],
+  [class~="y2k-badge"],
+  [class~="y2k-nav-link"],
+  [class~="rg-button"],
+  [class~="rg-icon-button"],
+  [class~="rg-badge"],
+  [class~="rg-nav-link"]
+) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  white-space: normal;
+}
+
+[data-ui][data-theme][data-mode] :where(
+  .saas-button,
+  .saas-icon-button,
+  .saas-button-pill,
+  .bento-button,
+  .bento-icon-button,
+  .bento-button-pill,
+  .max-button,
+  .max-icon-button,
+  .max-button-pill,
+  .bau-button,
+  .bau-icon-button,
+  .bau-button-pill,
+  .tactile-button,
+  .tactile-icon-button,
+  .tactile-button-pill,
+  .neo-button,
+  .neo-icon-button,
+  .neo-button-pill,
+  .retro-button,
+  .retro-icon-button,
+  .retro-button-pill,
+  .brutal-button,
+  .brutal-icon-button,
+  .brutal-button-pill,
+  .cyber-button,
+  .cyber-icon-button,
+  .cyber-button-pill,
+  .y2k-button,
+  .y2k-icon-button,
+  .y2k-button-pill,
+  .rg-button,
+  .rg-icon-button,
+  .rg-button-pill
+) {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  line-height: 1.15;
+  vertical-align: middle;
+}
+
+[data-ui][data-theme][data-mode] :where(
+  .saas-button-pill,
+  .bento-button-pill,
+  .max-button-pill,
+  .bau-button-pill,
+  .tactile-button-pill,
+  .neo-button-pill,
+  .retro-button-pill,
+  .brutal-button-pill,
+  .cyber-button-pill,
+  .y2k-button-pill,
+  .rg-button-pill
+) {
+  min-block-size: 44px;
+  padding-block: .65rem;
+  padding-inline: max(1rem, 1em);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 850;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.saas-button-pill { color: var(--saas-on-primary); background: var(--saas-primary); border-color: var(--saas-primary); border-radius: var(--saas-radius-pill); }
+.bento-button-pill { color: var(--bento-on-primary); background: var(--bento-primary); border-color: var(--bento-primary); border-radius: var(--bento-radius-pill); }
+.max-button-pill { color: var(--max-on-primary); background: var(--max-primary); border-color: var(--max-primary); border-radius: var(--max-radius-pill); }
+.bau-button-pill { color: var(--bau-on-primary); background: var(--bau-primary); border-color: var(--bau-primary); border-radius: var(--bau-radius-pill); }
+.tactile-button-pill { color: var(--tactile-on-primary); background: var(--tactile-primary); border-color: var(--tactile-primary); border-radius: var(--tactile-radius-pill); }
+.neo-button-pill { color: var(--neo-on-primary); background: var(--neo-primary); border-color: var(--neo-primary); border-radius: var(--neo-radius-pill); }
+.retro-button-pill { color: var(--retro-on-primary); background: var(--retro-primary); border-color: var(--retro-primary); border-radius: var(--retro-radius-pill); }
+.brutal-button-pill { color: var(--brutal-on-primary); background: var(--brutal-primary); border-color: var(--brutal-primary); border-radius: var(--brutal-radius-pill); }
+.cyber-button-pill { color: var(--cyber-on-primary); background: var(--cyber-primary); border-color: var(--cyber-primary); border-radius: var(--cyber-radius-pill); }
+.y2k-button-pill { color: var(--y2k-on-primary); background: var(--y2k-primary); border-color: var(--y2k-primary); border-radius: var(--y2k-radius-pill); }
+.rg-button-pill { color: var(--rg-on-primary); background: var(--rg-primary); border-color: var(--rg-primary); border-radius: var(--rg-radius-pill); }
+
+.saas-button-pill:hover { border-color: var(--saas-primary-hover); filter: brightness(1.04); }
+.bento-button-pill:hover { border-color: var(--bento-primary-hover); filter: brightness(1.04); }
+.max-button-pill:hover { border-color: var(--max-primary-hover); filter: brightness(1.04); }
+.bau-button-pill:hover { border-color: var(--bau-primary-hover); filter: brightness(1.04); }
+.tactile-button-pill:hover { border-color: var(--tactile-primary-hover); filter: brightness(1.04); }
+.neo-button-pill:hover { border-color: var(--neo-primary-hover); filter: brightness(1.04); }
+.retro-button-pill:hover { border-color: var(--retro-primary-hover); filter: brightness(1.04); }
+.brutal-button-pill:hover { border-color: var(--brutal-primary-hover); filter: brightness(1.04); }
+.cyber-button-pill:hover { border-color: var(--cyber-primary-hover); filter: brightness(1.04); }
+.y2k-button-pill:hover { border-color: var(--y2k-primary-hover); filter: brightness(1.04); }
+.rg-button-pill:hover { border-color: var(--rg-primary-hover); filter: brightness(1.04); }
+
+[data-ui][data-theme][data-mode] :where(
+  .saas-button-pill:active,
+  .saas-button-pill[aria-pressed="true"],
+  .bento-button-pill:active,
+  .bento-button-pill[aria-pressed="true"],
+  .max-button-pill:active,
+  .max-button-pill[aria-pressed="true"],
+  .bau-button-pill:active,
+  .bau-button-pill[aria-pressed="true"],
+  .tactile-button-pill:active,
+  .tactile-button-pill[aria-pressed="true"],
+  .neo-button-pill:active,
+  .neo-button-pill[aria-pressed="true"],
+  .retro-button-pill:active,
+  .retro-button-pill[aria-pressed="true"],
+  .brutal-button-pill:active,
+  .brutal-button-pill[aria-pressed="true"],
+  .cyber-button-pill:active,
+  .cyber-button-pill[aria-pressed="true"],
+  .y2k-button-pill:active,
+  .y2k-button-pill[aria-pressed="true"],
+  .rg-button-pill:active,
+  .rg-button-pill[aria-pressed="true"]
+) {
+  transform: translateY(1px);
+}
+
+.saas-button-pill:focus-visible { outline: 3px solid var(--saas-focus); outline-offset: 3px; box-shadow: var(--saas-focus-ring); }
+.bento-button-pill:focus-visible { outline: 3px solid var(--bento-focus); outline-offset: 3px; box-shadow: var(--bento-focus-ring); }
+.max-button-pill:focus-visible { outline: 3px solid var(--max-focus); outline-offset: 3px; box-shadow: var(--max-focus-ring); }
+.bau-button-pill:focus-visible { outline: 3px solid var(--bau-focus); outline-offset: 3px; box-shadow: var(--bau-focus-ring); }
+.tactile-button-pill:focus-visible { outline: 3px solid var(--tactile-focus); outline-offset: 3px; box-shadow: var(--tactile-focus-ring); }
+.neo-button-pill:focus-visible { outline: 3px solid var(--neo-focus); outline-offset: 3px; box-shadow: var(--neo-focus-ring); }
+.retro-button-pill:focus-visible { outline: 3px solid var(--retro-focus); outline-offset: 3px; box-shadow: var(--retro-focus-ring); }
+.brutal-button-pill:focus-visible { outline: 3px solid var(--brutal-focus); outline-offset: 3px; box-shadow: var(--brutal-focus-ring); }
+.cyber-button-pill:focus-visible { outline: 3px solid var(--cyber-focus); outline-offset: 3px; box-shadow: var(--cyber-focus-ring); }
+.y2k-button-pill:focus-visible { outline: 3px solid var(--y2k-focus); outline-offset: 3px; box-shadow: var(--y2k-focus-ring); }
+.rg-button-pill:focus-visible { outline: 3px solid var(--rg-focus); outline-offset: 3px; box-shadow: var(--rg-focus-ring); }
+
+[data-ui][data-theme][data-mode] :where(
+  .saas-button-pill:disabled,
+  .saas-button-pill[aria-disabled="true"],
+  .bento-button-pill:disabled,
+  .bento-button-pill[aria-disabled="true"],
+  .max-button-pill:disabled,
+  .max-button-pill[aria-disabled="true"],
+  .bau-button-pill:disabled,
+  .bau-button-pill[aria-disabled="true"],
+  .tactile-button-pill:disabled,
+  .tactile-button-pill[aria-disabled="true"],
+  .neo-button-pill:disabled,
+  .neo-button-pill[aria-disabled="true"],
+  .retro-button-pill:disabled,
+  .retro-button-pill[aria-disabled="true"],
+  .brutal-button-pill:disabled,
+  .brutal-button-pill[aria-disabled="true"],
+  .cyber-button-pill:disabled,
+  .cyber-button-pill[aria-disabled="true"],
+  .y2k-button-pill:disabled,
+  .y2k-button-pill[aria-disabled="true"],
+  .rg-button-pill:disabled,
+  .rg-button-pill[aria-disabled="true"]
+) {
+  opacity: .55;
+  cursor: not-allowed;
+  filter: none;
+  transform: none;
+}
+
+[data-ui][data-theme][data-mode] :where(
+  .saas-tooltip,
+  .saas-tooltip-top,
+  .saas-tooltip-right,
+  .saas-tooltip-bottom,
+  .saas-tooltip-left,
+  .bento-tooltip,
+  .bento-tooltip-top,
+  .bento-tooltip-right,
+  .bento-tooltip-bottom,
+  .bento-tooltip-left,
+  .max-tooltip,
+  .max-tooltip-top,
+  .max-tooltip-right,
+  .max-tooltip-bottom,
+  .max-tooltip-left,
+  .bau-tooltip,
+  .bau-tooltip-top,
+  .bau-tooltip-right,
+  .bau-tooltip-bottom,
+  .bau-tooltip-left,
+  .tactile-tooltip,
+  .tactile-tooltip-top,
+  .tactile-tooltip-right,
+  .tactile-tooltip-bottom,
+  .tactile-tooltip-left,
+  .neo-tooltip,
+  .neo-tooltip-top,
+  .neo-tooltip-right,
+  .neo-tooltip-bottom,
+  .neo-tooltip-left,
+  .retro-tooltip,
+  .retro-tooltip-top,
+  .retro-tooltip-right,
+  .retro-tooltip-bottom,
+  .retro-tooltip-left,
+  .brutal-tooltip,
+  .brutal-tooltip-top,
+  .brutal-tooltip-right,
+  .brutal-tooltip-bottom,
+  .brutal-tooltip-left,
+  .cyber-tooltip,
+  .cyber-tooltip-top,
+  .cyber-tooltip-right,
+  .cyber-tooltip-bottom,
+  .cyber-tooltip-left,
+  .y2k-tooltip,
+  .y2k-tooltip-top,
+  .y2k-tooltip-right,
+  .y2k-tooltip-bottom,
+  .y2k-tooltip-left,
+  .rg-tooltip,
+  .rg-tooltip-top,
+  .rg-tooltip-right,
+  .rg-tooltip-bottom,
+  .rg-tooltip-left
+) {
+  max-inline-size: min(18rem, calc(100vw - 2rem));
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+/* Directional tooltips detach only from an explicit anchor so static tooltip chips keep normal-flow sizing. */
+[data-ui][data-theme][data-mode]:where([data-ui-tooltip-anchor]),
+[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor]) {
+  position: relative;
+}
+
+[data-ui][data-theme][data-mode] :where(
+  [data-ui-tooltip-anchor] > .saas-tooltip-top,
+  [data-ui-tooltip-anchor] > .saas-tooltip-right,
+  [data-ui-tooltip-anchor] > .saas-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .saas-tooltip-left,
+  [data-ui-tooltip-anchor] > .bento-tooltip-top,
+  [data-ui-tooltip-anchor] > .bento-tooltip-right,
+  [data-ui-tooltip-anchor] > .bento-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .bento-tooltip-left,
+  [data-ui-tooltip-anchor] > .max-tooltip-top,
+  [data-ui-tooltip-anchor] > .max-tooltip-right,
+  [data-ui-tooltip-anchor] > .max-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .max-tooltip-left,
+  [data-ui-tooltip-anchor] > .bau-tooltip-top,
+  [data-ui-tooltip-anchor] > .bau-tooltip-right,
+  [data-ui-tooltip-anchor] > .bau-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .bau-tooltip-left,
+  [data-ui-tooltip-anchor] > .tactile-tooltip-top,
+  [data-ui-tooltip-anchor] > .tactile-tooltip-right,
+  [data-ui-tooltip-anchor] > .tactile-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .tactile-tooltip-left,
+  [data-ui-tooltip-anchor] > .neo-tooltip-top,
+  [data-ui-tooltip-anchor] > .neo-tooltip-right,
+  [data-ui-tooltip-anchor] > .neo-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .neo-tooltip-left,
+  [data-ui-tooltip-anchor] > .retro-tooltip-top,
+  [data-ui-tooltip-anchor] > .retro-tooltip-right,
+  [data-ui-tooltip-anchor] > .retro-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .retro-tooltip-left,
+  [data-ui-tooltip-anchor] > .brutal-tooltip-top,
+  [data-ui-tooltip-anchor] > .brutal-tooltip-right,
+  [data-ui-tooltip-anchor] > .brutal-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .brutal-tooltip-left,
+  [data-ui-tooltip-anchor] > .cyber-tooltip-top,
+  [data-ui-tooltip-anchor] > .cyber-tooltip-right,
+  [data-ui-tooltip-anchor] > .cyber-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .cyber-tooltip-left,
+  [data-ui-tooltip-anchor] > .y2k-tooltip-top,
+  [data-ui-tooltip-anchor] > .y2k-tooltip-right,
+  [data-ui-tooltip-anchor] > .y2k-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .y2k-tooltip-left,
+  [data-ui-tooltip-anchor] > .rg-tooltip-top,
+  [data-ui-tooltip-anchor] > .rg-tooltip-right,
+  [data-ui-tooltip-anchor] > .rg-tooltip-bottom,
+  [data-ui-tooltip-anchor] > .rg-tooltip-left
+) {
+  position: absolute;
+  z-index: 20;
+}
+
+[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-top, [data-ui-tooltip-anchor] > .bento-tooltip-top, [data-ui-tooltip-anchor] > .max-tooltip-top, [data-ui-tooltip-anchor] > .bau-tooltip-top, [data-ui-tooltip-anchor] > .tactile-tooltip-top, [data-ui-tooltip-anchor] > .neo-tooltip-top, [data-ui-tooltip-anchor] > .retro-tooltip-top, [data-ui-tooltip-anchor] > .brutal-tooltip-top, [data-ui-tooltip-anchor] > .cyber-tooltip-top, [data-ui-tooltip-anchor] > .y2k-tooltip-top, [data-ui-tooltip-anchor] > .rg-tooltip-top) { inset-block-end: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
+[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-right, [data-ui-tooltip-anchor] > .bento-tooltip-right, [data-ui-tooltip-anchor] > .max-tooltip-right, [data-ui-tooltip-anchor] > .bau-tooltip-right, [data-ui-tooltip-anchor] > .tactile-tooltip-right, [data-ui-tooltip-anchor] > .neo-tooltip-right, [data-ui-tooltip-anchor] > .retro-tooltip-right, [data-ui-tooltip-anchor] > .brutal-tooltip-right, [data-ui-tooltip-anchor] > .cyber-tooltip-right, [data-ui-tooltip-anchor] > .y2k-tooltip-right, [data-ui-tooltip-anchor] > .rg-tooltip-right) { inset-inline-start: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
+[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-bottom, [data-ui-tooltip-anchor] > .bento-tooltip-bottom, [data-ui-tooltip-anchor] > .max-tooltip-bottom, [data-ui-tooltip-anchor] > .bau-tooltip-bottom, [data-ui-tooltip-anchor] > .tactile-tooltip-bottom, [data-ui-tooltip-anchor] > .neo-tooltip-bottom, [data-ui-tooltip-anchor] > .retro-tooltip-bottom, [data-ui-tooltip-anchor] > .brutal-tooltip-bottom, [data-ui-tooltip-anchor] > .cyber-tooltip-bottom, [data-ui-tooltip-anchor] > .y2k-tooltip-bottom, [data-ui-tooltip-anchor] > .rg-tooltip-bottom) { inset-block-start: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
+[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-left, [data-ui-tooltip-anchor] > .bento-tooltip-left, [data-ui-tooltip-anchor] > .max-tooltip-left, [data-ui-tooltip-anchor] > .bau-tooltip-left, [data-ui-tooltip-anchor] > .tactile-tooltip-left, [data-ui-tooltip-anchor] > .neo-tooltip-left, [data-ui-tooltip-anchor] > .retro-tooltip-left, [data-ui-tooltip-anchor] > .brutal-tooltip-left, [data-ui-tooltip-anchor] > .cyber-tooltip-left, [data-ui-tooltip-anchor] > .y2k-tooltip-left, [data-ui-tooltip-anchor] > .rg-tooltip-left) { inset-inline-end: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
+
+.saas-pill { border-radius: var(--saas-radius-pill); }
+.bento-pill { border-radius: var(--bento-radius-pill); }
+.max-pill { border-radius: var(--max-radius-pill); }
+.bau-pill { border-radius: var(--bau-radius-pill); }
+.tactile-pill { border-radius: var(--tactile-radius-pill); }
+.neo-pill { border-radius: var(--neo-radius-pill); }
+.retro-pill { border-radius: var(--retro-radius-pill); }
+.brutal-pill { border-radius: var(--brutal-radius-pill); }
+.cyber-pill { border-radius: var(--cyber-radius-pill); }
+.y2k-pill { border-radius: var(--y2k-radius-pill); }
+.rg-pill { border-radius: var(--rg-radius-pill); }
+.saas-rounded { border-radius: var(--saas-radius-md); }
+.bento-rounded { border-radius: var(--bento-radius-md); }
+.max-rounded { border-radius: var(--max-radius-md); }
+.bau-rounded { border-radius: var(--bau-radius-md); }
+.tactile-rounded { border-radius: var(--tactile-radius-md); }
+.neo-rounded { border-radius: var(--neo-radius-md); }
+.retro-rounded { border-radius: var(--retro-radius-md); }
+.brutal-rounded { border-radius: var(--brutal-radius-md); }
+.cyber-rounded { border-radius: var(--cyber-radius-md); }
+.y2k-rounded { border-radius: var(--y2k-radius-md); }
+.rg-rounded { border-radius: var(--rg-radius-md); }
+.saas-rounded-lg { border-radius: var(--saas-radius-lg); }
+.bento-rounded-lg { border-radius: var(--bento-radius-lg); }
+.max-rounded-lg { border-radius: var(--max-radius-lg); }
+.bau-rounded-lg { border-radius: var(--bau-radius-lg); }
+.tactile-rounded-lg { border-radius: var(--tactile-radius-lg); }
+.neo-rounded-lg { border-radius: var(--neo-radius-lg); }
+.retro-rounded-lg { border-radius: var(--retro-radius-lg); }
+.brutal-rounded-lg { border-radius: var(--brutal-radius-lg); }
+.cyber-rounded-lg { border-radius: var(--cyber-radius-lg); }
+.y2k-rounded-lg { border-radius: var(--y2k-radius-lg); }
+.rg-rounded-lg { border-radius: var(--rg-radius-lg); }
+.saas-rounded-xl { border-radius: var(--saas-radius-xl); }
+.bento-rounded-xl { border-radius: var(--bento-radius-xl); }
+.max-rounded-xl { border-radius: var(--max-radius-xl); }
+.bau-rounded-xl { border-radius: var(--bau-radius-xl); }
+.tactile-rounded-xl { border-radius: var(--tactile-radius-xl); }
+.neo-rounded-xl { border-radius: var(--neo-radius-xl); }
+.retro-rounded-xl { border-radius: var(--retro-radius-xl); }
+.brutal-rounded-xl { border-radius: var(--brutal-radius-xl); }
+.cyber-rounded-xl { border-radius: var(--cyber-radius-xl); }
+.y2k-rounded-xl { border-radius: var(--y2k-radius-xl); }
+.rg-rounded-xl { border-radius: var(--rg-radius-xl); }
+
+.saas-surface, .saas-surface-sm, .saas-surface-lg { color: var(--saas-text); background: var(--saas-card-bg); border: 1px solid var(--saas-border); }
+.bento-surface, .bento-surface-sm, .bento-surface-lg { color: var(--bento-text); background: var(--bento-card-bg); border: 1px solid var(--bento-border); }
+.max-surface, .max-surface-sm, .max-surface-lg { color: var(--max-text); background: var(--max-card-bg); border: 1px solid var(--max-border); }
+.bau-surface, .bau-surface-sm, .bau-surface-lg { color: var(--bau-text); background: var(--bau-card-bg); border: 1px solid var(--bau-border); }
+.tactile-surface, .tactile-surface-sm, .tactile-surface-lg { color: var(--tactile-text); background: var(--tactile-card-bg); border: 1px solid var(--tactile-border); }
+.neo-surface, .neo-surface-sm, .neo-surface-lg { color: var(--neo-text); background: var(--neo-card-bg); border: 1px solid var(--neo-border); }
+.retro-surface, .retro-surface-sm, .retro-surface-lg { color: var(--retro-text); background: var(--retro-card-bg); border: 1px solid var(--retro-border); }
+.brutal-surface, .brutal-surface-sm, .brutal-surface-lg { color: var(--brutal-text); background: var(--brutal-card-bg); border: 3px solid var(--brutal-border); }
+.cyber-surface, .cyber-surface-sm, .cyber-surface-lg { color: var(--cyber-text); background: var(--cyber-card-bg); border: 1px solid var(--cyber-border); }
+.y2k-surface, .y2k-surface-sm, .y2k-surface-lg { color: var(--y2k-text); background: var(--y2k-card-bg); border: 1px solid var(--y2k-border); }
+.rg-surface, .rg-surface-sm, .rg-surface-lg { color: var(--rg-text); background: var(--rg-card-bg); border: 1px solid var(--rg-border); }
+
+.saas-bg-primary, .bento-bg-primary, .max-bg-primary, .bau-bg-primary, .tactile-bg-primary, .neo-bg-primary, .retro-bg-primary, .brutal-bg-primary, .cyber-bg-primary, .y2k-bg-primary, .rg-bg-primary { background: var(--usk-native-primary); color: var(--usk-native-on-primary); }
+.saas-bg-secondary, .bento-bg-secondary, .max-bg-secondary, .bau-bg-secondary, .tactile-bg-secondary, .neo-bg-secondary, .retro-bg-secondary, .brutal-bg-secondary, .cyber-bg-secondary, .y2k-bg-secondary, .rg-bg-secondary { background: var(--usk-native-surface-soft); color: var(--usk-native-text); }
+.saas-border, .bento-border, .max-border, .bau-border, .tactile-border, .neo-border, .retro-border, .brutal-border, .cyber-border, .y2k-border, .rg-border { border: var(--usk-native-border-width) solid var(--usk-native-border); }
+.saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
+.saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
+
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+  color: var(--usk-native-primary);
+  background: transparent;
+  border-color: var(--usk-native-border);
+}
+
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--usk-native-field-gap);
+  min-block-size: 24px;
+  color: var(--usk-native-text);
+}
+
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  accent-color: var(--usk-native-primary);
+}
+
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  inline-size: 2.75rem;
+  block-size: 1.5rem;
+  padding: .18rem;
+  background: var(--usk-native-track);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
+  border-radius: 999px;
+}
+
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+  inline-size: 1rem;
+  block-size: 1rem;
+  background: var(--usk-native-thumb);
+  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
+  border-radius: 999px;
+  transition: transform 160ms ease;
+}
+
+.saas-switch:has(input:checked) .saas-switch-track,
+.bento-switch:has(input:checked) .bento-switch-track,
+.max-switch:has(input:checked) .max-switch-track,
+.bau-switch:has(input:checked) .bau-switch-track,
+.tactile-switch:has(input:checked) .tactile-switch-track,
+.neo-switch:has(input:checked) .neo-switch-track,
+.retro-switch:has(input:checked) .retro-switch-track,
+.brutal-switch:has(input:checked) .brutal-switch-track,
+.cyber-switch:has(input:checked) .cyber-switch-track,
+.y2k-switch:has(input:checked) .y2k-switch-track,
+.rg-switch:has(input:checked) .rg-switch-track {
+  background: var(--usk-native-track-fill);
+}
+
+.saas-switch:has(input:checked) .saas-switch-thumb,
+.bento-switch:has(input:checked) .bento-switch-thumb,
+.max-switch:has(input:checked) .max-switch-thumb,
+.bau-switch:has(input:checked) .bau-switch-thumb,
+.tactile-switch:has(input:checked) .tactile-switch-thumb,
+.neo-switch:has(input:checked) .neo-switch-thumb,
+.retro-switch:has(input:checked) .retro-switch-thumb,
+.brutal-switch:has(input:checked) .brutal-switch-thumb,
+.cyber-switch:has(input:checked) .cyber-switch-thumb,
+.y2k-switch:has(input:checked) .y2k-switch-thumb,
+.rg-switch:has(input:checked) .rg-switch-thumb {
+  transform: translateX(1.25rem);
+}
+
+.saas-sr-only, .saas-visually-hidden, .bento-sr-only, .bento-visually-hidden, .max-sr-only, .max-visually-hidden, .bau-sr-only, .bau-visually-hidden, .tactile-sr-only, .tactile-visually-hidden, .neo-sr-only, .neo-visually-hidden, .retro-sr-only, .retro-visually-hidden, .brutal-sr-only, .brutal-visually-hidden, .cyber-sr-only, .cyber-visually-hidden, .y2k-sr-only, .y2k-visually-hidden, .rg-sr-only, .rg-visually-hidden {
+  position: absolute !important;
+  inline-size: 1px !important;
+  block-size: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.saas-skip-link, .bento-skip-link, .max-skip-link, .bau-skip-link, .tactile-skip-link, .neo-skip-link, .retro-skip-link, .brutal-skip-link, .cyber-skip-link, .y2k-skip-link, .rg-skip-link {
+  position: absolute;
+  inset-block-start: .75rem;
+  inset-inline-start: .75rem;
+  z-index: 1000;
+  padding: .75rem 1rem;
+  color: var(--usk-native-on-primary);
+  background: var(--usk-native-primary);
+  border-radius: var(--usk-native-radius);
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.saas-skip-link:focus-visible, .bento-skip-link:focus-visible, .max-skip-link:focus-visible, .bau-skip-link:focus-visible, .tactile-skip-link:focus-visible, .neo-skip-link:focus-visible, .retro-skip-link:focus-visible, .brutal-skip-link:focus-visible, .cyber-skip-link:focus-visible, .y2k-skip-link:focus-visible, .rg-skip-link:focus-visible {
+  transform: translateY(0);
+}
+}

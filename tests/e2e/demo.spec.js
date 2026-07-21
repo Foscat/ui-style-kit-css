@@ -52,6 +52,31 @@ async function installClipboardStub(page) {
   });
 }
 
+async function waitForStyleKitBundle(page, expectedHref) {
+  await page.waitForFunction((href) => {
+    const stylesheet = document.getElementById('styleKitStylesheet');
+    if (!stylesheet || stylesheet.getAttribute('href') !== href) return false;
+    if (!stylesheet.sheet) return false;
+
+    try {
+      return stylesheet.sheet.cssRules.length > 0;
+    } catch {
+      // Cross-origin stylesheets still expose a sheet object after load.
+      return true;
+    }
+  }, expectedHref);
+}
+
+async function setBridgeForLayoutProbe(page, attached) {
+  const expectedHref = attached ? 'dist/ui-style-kit.with-bridge.css' : 'dist/ui-style-kit.css';
+  const bridgeToggle = page.locator('#bridgeToggle');
+
+  await bridgeToggle.setChecked(attached, { force: true });
+  await expect(page.locator('body')).toHaveAttribute('data-bridge', attached ? 'attached' : 'detached');
+  await expect(page.locator('#styleKitStylesheet')).toHaveAttribute('href', expectedHref);
+  await waitForStyleKitBundle(page, expectedHref);
+}
+
 test('demo loads with default theme settings', async ({ page }) => {
   await page.goto(demoUrl);
 
@@ -66,6 +91,29 @@ test('demo loads with default theme settings', async ({ page }) => {
   await expect(page.locator('body')).toHaveAttribute('data-mode', defaultDemoState.mode);
 
   await expect(page.getByRole('heading', { level: 1, name: 'UI Style Kit CSS' })).toBeVisible();
+});
+
+test('demo control options are populated from the manifest snapshot', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const manifestState = await page.evaluate(() => ({
+    presets: window.UI_STYLE_KIT_MANIFEST.presets.map(({ id, prefix, label }) => ({ id, prefix, label })),
+    themes: window.UI_STYLE_KIT_MANIFEST.themes,
+    modes: window.UI_STYLE_KIT_MANIFEST.modes,
+    uiOptions: [...document.querySelectorAll('#uiSelect option')].map((option) => ({
+      id: option.value,
+      prefix: option.dataset.prefix,
+      label: option.textContent.trim()
+    })),
+    themeOptions: [...document.querySelectorAll('#themeSelect option')].map((option) => option.value),
+    modeOptions: [...document.querySelectorAll('#modeSelect option')].map((option) => option.value)
+  }));
+
+  expect(manifestState.presets.map(({ id, prefix }) => [id, prefix])).toEqual(stylePresets);
+  expect(manifestState.uiOptions).toEqual(manifestState.presets);
+  expect(manifestState.themeOptions).toEqual(manifestState.themes);
+  expect(manifestState.modeOptions).toEqual(displayModes);
+  expect(manifestState.themeOptions).toContain('royal-plum');
 });
 
 test('demo exposes project resource links', async ({ page }) => {
@@ -199,8 +247,9 @@ test('demo starts with the interactive surface bridge detached and can attach it
   await expect(page.getByTestId('bridge-status')).toContainText('Attached');
   await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
 
-  const attachedThumbX = await switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left);
-  expect(attachedThumbX).toBeGreaterThan(detachedThumbX + 8);
+  // Wait for the CSS thumb transition to settle before comparing geometry across engines.
+  await expect.poll(() => switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left))
+    .toBeGreaterThan(detachedThumbX + 8);
 });
 
 test('attached bridge wires every enabled interactable element to interactive surface hooks', async ({ page }) => {
@@ -212,6 +261,8 @@ test('attached bridge wires every enabled interactable element to interactive su
 
   await page.locator('#bridgeToggle').check();
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
+  // Firefox can observe the bridge attribute before the swapped stylesheet has finished applying.
+  await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
 
   const bridgeCoverage = await page.evaluate((selector) => {
     const elements = [...document.querySelectorAll(selector)].filter((element) => {
@@ -423,6 +474,30 @@ test('native form samples provide padded block layout for unclassed controls', a
   expect(nativeLabelMetrics.every(({ inlinePadding }) => inlinePadding >= 0), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
 });
 
+test('native dialog demo opens a real modal with a themed backdrop', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'cyberpunk');
+  await page.selectOption('#modeSelect', 'dark');
+
+  await page.getByTestId('native-modal-open').click();
+
+  const modal = page.getByTestId('native-modal-dialog');
+  await expect(modal).toBeVisible();
+
+  const modalState = await modal.evaluate((dialog) => ({
+    isOpen: dialog.open,
+    isModal: dialog.matches(':modal'),
+    backdropBackground: getComputedStyle(dialog, '::backdrop').backgroundColor
+  }));
+
+  expect(modalState.isOpen).toBe(true);
+  expect(modalState.isModal).toBe(true);
+  expect(modalState.backdropBackground).not.toBe('rgba(0, 0, 0, 0)');
+
+  await page.getByTestId('native-modal-close').click();
+  await expect(modal).not.toBeVisible();
+});
+
 test('tooltip treatments are visible and structurally distinct across UI styles', async ({ page }) => {
   await page.goto(demoUrl);
 
@@ -604,6 +679,8 @@ test('layout wrappers contain long text without page-level overflow', async ({ p
 });
 
 test('demo avoids page-level overflow across the responsive orientation matrix', async ({ page }) => {
+  test.setTimeout(90_000);
+
   const viewports = [
     { width: 320, height: 568 },
     { width: 568, height: 320 },
@@ -628,9 +705,7 @@ test('demo avoids page-level overflow across the responsive orientation matrix',
     for (const state of representativeStates) {
       await page.selectOption('#uiSelect', state.ui);
       await page.selectOption('#modeSelect', state.mode);
-      const bridgeToggle = page.locator('#bridgeToggle');
-      if (state.bridge) await bridgeToggle.check();
-      else await bridgeToggle.uncheck();
+      await setBridgeForLayoutProbe(page, state.bridge);
 
       const overflowReport = await page.evaluate(() => {
         const viewportWidth = document.documentElement.clientWidth;

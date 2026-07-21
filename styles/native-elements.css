@@ -34,8 +34,16 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: 1rem;
+  --usk-native-control-min-block-size: 2.75rem;
   --usk-native-control-padding-block: .72rem;
   --usk-native-control-padding-inline: .95rem;
+  --usk-native-subcontrol-padding-block: .55rem;
+  --usk-native-subcontrol-padding-inline: .8rem;
+  --usk-native-track: color-mix(in srgb, var(--usk-native-border) 50%, transparent);
+  --usk-native-track-fill: var(--usk-native-primary);
+  --usk-native-thumb: var(--usk-native-surface-strong);
+  --usk-native-thumb-border: var(--usk-native-primary);
+  --usk-native-indicator: var(--usk-native-primary);
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
@@ -47,6 +55,12 @@
   line-height: 1.15;
   margin: 0 0 .65em;
   text-wrap: balance;
+}
+
+[data-ui][data-theme][data-mode] :where(hgroup) {
+  display: grid;
+  gap: .35rem;
+  margin-block: 0 1rem;
 }
 
 [data-ui][data-theme][data-mode] :where(h1) { font-size: clamp(2rem, 5vw, 3.5rem); }
@@ -148,6 +162,12 @@
   font-size: .9rem;
 }
 
+[data-ui][data-theme][data-mode] :where(form) {
+  display: grid;
+  gap: var(--usk-native-field-gap);
+  min-inline-size: 0;
+}
+
 [data-ui][data-theme][data-mode] :where(fieldset) {
   display: grid;
   gap: .9rem;
@@ -184,13 +204,23 @@
 
 [data-ui][data-theme][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) {
   width: 100%;
-  min-height: 2.75rem;
+  min-block-size: var(--usk-native-control-min-block-size);
   padding: var(--usk-native-control-padding-block) var(--usk-native-control-padding-inline);
   color: var(--usk-native-text);
   background: var(--usk-native-control-bg);
   border: var(--usk-native-border-width) solid var(--usk-native-border);
   border-radius: var(--usk-native-radius);
   font: inherit;
+}
+
+[data-ui][data-theme][data-mode] :where(input, textarea, select, button) {
+  color-scheme: inherit;
+  accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input, textarea)::placeholder {
+  color: var(--usk-native-text-muted);
+  opacity: .78;
 }
 
 [data-ui][data-theme][data-mode] :where(textarea) {
@@ -201,7 +231,7 @@
 [data-ui][data-theme][data-mode] :where(input, textarea, select, button) { font: inherit; }
 
 [data-ui][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
-  min-height: 2.75rem;
+  min-block-size: var(--usk-native-control-min-block-size);
   padding: .7rem 1rem;
   color: var(--usk-native-on-primary);
   background: var(--usk-native-primary);
@@ -218,14 +248,51 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
-  inline-size: 1.1rem;
-  block-size: 1.1rem;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"]) {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
+  min-block-size: 1.5rem;
+  background: transparent;
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-runnable-track {
+  block-size: .45rem;
+  background: var(--usk-native-track);
+  border-radius: 999px;
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-track {
+  block-size: .45rem;
+  background: var(--usk-native-track);
+  border-radius: 999px;
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: 1.2rem;
+  block-size: 1.2rem;
+  margin-block-start: -.38rem;
+  background: var(--usk-native-thumb);
+  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
+  border-radius: 999px;
+  box-shadow: var(--usk-native-shadow);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-thumb {
+  inline-size: 1.2rem;
+  block-size: 1.2rem;
+  background: var(--usk-native-thumb);
+  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
+  border-radius: 999px;
+  box-shadow: var(--usk-native-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"]) {
@@ -237,12 +304,27 @@
   border-radius: var(--usk-native-radius-sm);
 }
 
+[data-ui][data-theme][data-mode] :where(input[type="color"])::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="color"])::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="color"])::-moz-color-swatch {
+  border: 0;
+  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+}
+
 [data-ui][data-theme][data-mode] :where(input[type="file"]) { color: var(--usk-native-text-muted); }
 
 /* Keep pseudo-elements outside :where() because engines reject them inside selector-list arguments. */
-[data-ui][data-theme][data-mode] :where(input[type="file"])::file-selector-button {
+[data-ui][data-theme][data-mode] :where(input[type="file"])::file-selector-button,
+[data-ui][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
   margin-inline-end: .75rem;
-  padding: .55rem .8rem;
+  padding: var(--usk-native-subcontrol-padding-block) var(--usk-native-subcontrol-padding-inline);
   color: var(--usk-native-on-primary);
   background: var(--usk-native-primary);
   border: var(--usk-native-border-width) solid var(--usk-native-primary);
@@ -251,13 +333,61 @@
   cursor: pointer;
 }
 
-[data-ui][data-theme][data-mode] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) {
-  opacity: .55;
+[data-ui][data-theme][data-mode] :where(input[type="file"]:hover)::file-selector-button,
+[data-ui][data-theme][data-mode] :where(input[type="file"]:hover)::-webkit-file-upload-button {
+  background: var(--usk-native-primary-hover);
+  border-color: var(--usk-native-primary-hover);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="file"]:focus-visible)::file-selector-button,
+[data-ui][data-theme][data-mode] :where(input[type="file"]:focus-visible)::-webkit-file-upload-button {
+  box-shadow: var(--usk-native-focus-ring);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="file"]:active)::file-selector-button,
+[data-ui][data-theme][data-mode] :where(input[type="file"]:active)::-webkit-file-upload-button {
+  filter: brightness(.96);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="file"]:disabled)::file-selector-button,
+[data-ui][data-theme][data-mode] :where(input[type="file"]:disabled)::-webkit-file-upload-button {
+  color: var(--usk-native-text-muted);
+  background: var(--usk-native-surface-soft);
+  border-color: var(--usk-native-border);
   cursor: not-allowed;
 }
 
-[data-ui][data-theme][data-mode] :where(input:invalid, textarea:invalid, select:invalid, [aria-invalid="true"]) {
+[data-ui][data-theme][data-mode] :where(input:read-only, textarea:read-only) {
+  background: var(--usk-native-surface-soft);
+}
+
+[data-ui][data-theme][data-mode] :where(input:required, textarea:required, select:required) {
+  box-shadow: inset .22rem 0 0 var(--usk-native-indicator);
+}
+
+[data-ui][data-theme][data-mode] :where(input:user-valid, textarea:user-valid, select:user-valid, .is-valid) {
+  border-color: var(--usk-native-success);
+}
+
+[data-ui][data-theme][data-mode] :where(input:user-invalid, textarea:user-invalid, select:user-invalid, [aria-invalid="true"], .is-invalid) {
   border-color: var(--usk-native-danger);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:indeterminate, input[type="radio"]:indeterminate) {
+  accent-color: var(--usk-native-warning);
+}
+
+[data-ui][data-theme][data-mode] :where(button:active, input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:active) {
+  filter: brightness(.96);
+}
+
+[data-ui][data-theme][data-mode] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) {
+  color: var(--usk-native-text-muted);
+  background: color-mix(in srgb, var(--usk-native-surface-soft) 72%, transparent);
+  border-color: var(--usk-native-border);
+  box-shadow: none;
+  opacity: .55;
+  cursor: not-allowed;
 }
 
 [data-ui][data-theme][data-mode] :where(table) {
@@ -323,6 +453,32 @@
   accent-color: var(--usk-native-primary);
 }
 
+[data-ui][data-theme][data-mode] :where(progress, meter)::-webkit-progress-bar,
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-bar {
+  background: var(--usk-native-track);
+  border-radius: 999px;
+}
+
+[data-ui][data-theme][data-mode] :where(progress)::-webkit-progress-value,
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value {
+  background: var(--usk-native-track-fill);
+  border-radius: inherit;
+}
+
+[data-ui][data-theme][data-mode] :where(progress)::-moz-progress-bar,
+[data-ui][data-theme][data-mode] :where(meter)::-moz-meter-bar {
+  background: var(--usk-native-track-fill);
+  border-radius: 999px;
+}
+
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-suboptimum-value {
+  background: var(--usk-native-warning);
+}
+
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-even-less-good-value {
+  background: var(--usk-native-danger);
+}
+
 [data-ui][data-theme][data-mode] :where(main, section, header, footer, nav, article, aside, address) {
   color: var(--usk-native-text);
 }
@@ -348,6 +504,8 @@
 
 [data-ui][data-theme][data-mode] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
 [data-ui][data-theme][data-mode] :where(strong, b) { color: var(--usk-native-text); font-weight: 900; }
+[data-ui][data-theme][data-mode] :where(u) { text-decoration-color: var(--usk-native-primary); text-decoration-thickness: .08em; text-underline-offset: .16em; }
+[data-ui][data-theme][data-mode] :where(bdi, bdo) { color: var(--usk-native-text); unicode-bidi: isolate; }
 [data-ui][data-theme][data-mode] :where(em, i, cite, var, q) { color: var(--usk-native-text); }
 [data-ui][data-theme][data-mode] :where(ins) { color: var(--usk-native-text); text-decoration-color: var(--usk-native-success); }
 [data-ui][data-theme][data-mode] :where(del, s) { color: var(--usk-native-text); text-decoration-color: var(--usk-native-danger); }
@@ -355,6 +513,30 @@
 [data-ui][data-theme][data-mode] :where(optgroup, option) { color: var(--usk-native-text); background: var(--usk-native-surface); }
 [data-ui][data-theme][data-mode] :where(time, data, dfn, ruby) { color: var(--usk-native-text); }
 [data-ui][data-theme][data-mode] :where(search) { display: block; color: var(--usk-native-text); }
+[data-ui][data-theme][data-mode] :where(selectedcontent) { color: var(--usk-native-text); }
+[data-ui][data-theme][data-mode] :where(datalist) { display: none; }
+
+[data-ui][data-theme][data-mode] :where(summary, li)::marker {
+  color: var(--usk-native-indicator);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="date"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"])::-webkit-calendar-picker-indicator {
+  opacity: .78;
+  accent-color: var(--usk-native-indicator);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="search"])::-webkit-search-cancel-button {
+  accent-color: var(--usk-native-indicator);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="number"])::-webkit-inner-spin-button,
+[data-ui][data-theme][data-mode] :where(input[type="number"])::-webkit-outer-spin-button {
+  opacity: .72;
+}
+
+[data-ui][data-theme][data-mode] :where(select)::picker-icon {
+  color: var(--usk-native-indicator);
+}
 
 [data-ui][data-theme][data-mode] :where(:focus-visible) {
   outline: 3px solid var(--usk-native-focus);
@@ -372,4 +554,24 @@
 [data-ui][data-theme][data-mode] :where([aria-busy="true"]) { cursor: progress; }
 [data-ui][data-theme][data-mode] :where([hidden]) { display: none !important; }
 [data-ui][data-theme][data-mode] ::selection { color: var(--usk-native-on-primary); background: var(--usk-native-primary); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: .75rem; block-size: .75rem; }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-track); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-thumb-border); border-radius: 999px; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ui][data-theme][data-mode] :where(input[type="file"])::file-selector-button,
+  [data-ui][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-ui][data-theme][data-mode] :where(input, textarea, select, button, progress, meter) {
+    forced-color-adjust: auto;
+  }
+
+  [data-ui][data-theme][data-mode] :where(input:user-invalid, textarea:user-invalid, select:user-invalid, [aria-invalid="true"], .is-invalid) {
+    border-color: Mark;
+  }
+}
 }

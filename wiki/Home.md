@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 11 UI systems, 10 shared color themes, and 3 display modes.
 
-Version `v2.0.4` keeps color schemes defined once in `styles/theme-colors.css` as shared `--usk-*` roles, keeps native HTML fallback styling in `styles/native-elements.css`, and keeps long text inside layout wrappers through `styles/content-overflow.css`. UI systems consume those shared roles through their prefixed functional tokens.
+Version `v2.1.0` adds visual-only full and focused entrypoints, a machine-readable `manifest.json`, a five-layer build architecture, and a token-and-paint-only Interactive Surface theme bridge. Existing entrypoints retain their v2 behavior, including deprecated prefixed structural helpers.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
@@ -32,11 +32,12 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 
 ## Companion Integration
 
-- Opt-in bridge bundle for `interactive-surface-css`: `ui-style-kit-css/with-bridge.css`
-- Standalone bridge file: `styles/interactive-surface-bridge.css`
-- Export alias: `ui-style-kit-css/interactive-surface-bridge`
-- The default `dist/ui-style-kit.css` bundle remains bridge-free.
-- The bridge maps shared `--usk-*` roles to `--interactive-surface-*` tokens and supports `data-surface-level="1"`, `"2"`, and `"3"` visual depth hooks.
+- Canonical theme bridge: `ui-style-kit-css/interactive-surface-theme.css`
+- Interaction mechanics: `interactive-surface-css/state-core.css`
+- Consumer-owned layout entrypoints: `ui-style-kit-css/visual.css` and `ui-style-kit-css/visual/<preset>.css`
+- Capability discovery: `ui-style-kit-css/manifest.json`
+- The default and visual-only bundles remain bridge-free.
+- The older `interactive-surface-bridge` and `with-bridge` exports are deprecated compatibility paths whose behavior remains unchanged.
 
 ## Canonical Data Attributes
 

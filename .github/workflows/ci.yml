@@ -66,3 +66,47 @@ jobs:
             playwright-report/
             test-results/
           if-no-files-found: ignore
+
+  ui-matrix:
+    name: UI Matrix (${{ matrix.engine }} shard ${{ matrix.preset-shard }}/4)
+    needs: quality
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+        preset-shard: [1, 2, 3, 4]
+    env:
+      UI_MATRIX_PRESET_SHARD: ${{ matrix.preset-shard }}
+      UI_MATRIX_PRESET_SHARDS: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dist assets
+        run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.engine }}
+
+      - name: Run UI matrix shard
+        run: npm run test:matrix -- --project=${{ matrix.engine }}
+
+      - name: Upload matrix artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-matrix-${{ matrix.engine }}-${{ matrix.preset-shard }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore

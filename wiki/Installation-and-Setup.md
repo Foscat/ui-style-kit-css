@@ -14,7 +14,7 @@ Recommended for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.4`, standalone style files import `theme-colors.css`, `native-elements.css`, and `content-overflow.css` internally. If your CSS pipeline does not follow `@import`, import the shared layers first:
+In `v2.1.0`, compatible standalone style files import `theme-colors.css`, `native-elements.css`, and `content-overflow.css` internally. If your CSS pipeline does not follow `@import`, import the shared layers first:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -39,24 +39,32 @@ import "ui-style-kit-css/dist/ui-style-kit.css";
 
 The default combined build does not include the Interactive Surface bridge.
 
-## Integration with interactive-surface-css
-
-Import Interactive Surface itself, then either add the bridge separately:
+Applications that own layout should use the visual-only full or focused entrypoints. These omit the deprecated prefixed structural helpers:
 
 ```js
-import "interactive-surface-css/interactive-surface.css";
-import "ui-style-kit-css/minimal-saas.css";
-import "ui-style-kit-css/interactive-surface-bridge";
+import "ui-style-kit-css/visual.css";
+import "ui-style-kit-css/visual/minimal-saas.css";
 ```
 
-Or use the opt-in full bundle with bridge:
+## Integration with interactive-surface-css
+
+Use the canonical token-and-paint bridge with Interactive Surface's state-only core:
 
 ```js
-import "interactive-surface-css/interactive-surface.css";
+import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/interactive-surface-theme.css";
+import "interactive-surface-css/state-core.css";
+```
+
+The older stateful bridge and combined bundle remain available for compatibility, but they are deprecated and have not been redirected to the canonical token-only behavior:
+
+```js
+import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css/interactive-surface-bridge";
 import "ui-style-kit-css/with-bridge.css";
 ```
 
-The bridge remains opt-in for `v2.0.4`. Use `.interactive-surface` on interactable elements with `data-surface-variant` and `data-surface-level="1"`, `"2"`, or `"3"` when the bridge is attached.
+All bridges remain opt-in for `v2.1.0`. Use `.interactive-surface` on interactable elements with `data-surface-variant` and `data-surface-level="1"`, `"2"`, or `"3"` when a bridge is attached.
 
 ## Browser / CDN Usage
 
@@ -78,6 +86,9 @@ npm run lint
 npm test
 npm run check:contrast
 npm run check:package
+npm run test:axe
+npm run test:visual
+npm run test:matrix
 ```
 
 Playwright E2E:

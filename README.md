@@ -9,7 +9,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.0.4` is the current v2 correctness patch. It adds parser-based minification, restores valid native file-button and modal-backdrop styling, routes status foregrounds through semantic `on-*` tokens, and retains the shared content-overflow and responsive coverage work without changing the CSS API.
+`v2.1.0` introduces a visual-only public API, a machine-readable capability manifest, a five-layer build architecture, and a canonical token-only Interactive Surface theme bridge. Existing default and focused entrypoints remain compatible, including their deprecated structural helpers, and parser-based minification remains exactly pinned.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -50,9 +50,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.0.4` | source release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.3.0` | latest published sibling | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@1.1.2` | latest published sibling | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.1.0` | staged source target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
+
+UI Style Kit `2.1.0` and Layout Style `2.1.0` remain staged source targets until their release approvals complete. Interactive Surface `1.5.0` is the released companion state engine for this upgrade path.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -64,6 +66,8 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 - 10 shared color schemes
 - `light`, `dark`, and `contrast` modes
 - Combined CSS bundle and per-style production imports
+- Visual-only full and focused entrypoints for consumer-owned layouts
+- Machine-readable `manifest.json` preset, theme, mode, class, and native-part capabilities
 - Shared `theme-colors.css`, `native-elements.css`, and `content-overflow.css` layers for all UI systems
 - Scoped native HTML element coverage, including semantic containers and inline text elements
 - Visible `:focus-visible` defaults
@@ -72,7 +76,8 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 - Theme-driven card, panel, control, page-background, and spinner defaults
 - Visible tooltip classes and native `[role="tooltip"]` styling inside each UI scope
 - Font-family override variables for body, headings, controls, and mono text
-- Optional bridge tokens, visible state layers, and an opt-in bridge bundle for `interactive-surface-css`
+- Canonical token-and-paint-only theme bridge for `interactive-surface-css/state-core.css`
+- Deprecated stateful bridge exports retained unchanged for backward compatibility
 - Reduced-motion, high-contrast, forced-colors, and print support
 - Cascade-layered CSS for easier consumer overrides
 - No runtime dependencies
@@ -91,7 +96,15 @@ Use a single style import for production apps that use one visual system:
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-In `v2.0.4`, standalone style files import the shared color-scheme layer from `styles/theme-colors.css`, the shared native-element fallback layer from `styles/native-elements.css`, and the shared content-overflow layer from `styles/content-overflow.css`. Bundlers that understand CSS `@import` will resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+The existing focused entrypoints retain the v2 structural helpers. New integrations that already own layout should use a focused visual-only entrypoint:
+
+```js
+import "ui-style-kit-css/visual/minimal-saas.css";
+```
+
+Use `ui-style-kit-css/visual.css` for runtime preset switching without the deprecated prefixed layout selectors. The exact preset, theme, mode, class, and native-part capability matrix is available from `ui-style-kit-css/manifest.json`.
+
+In `v2.1.0`, legacy standalone style files continue to import the shared color-scheme, native-element fallback, and content-overflow layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -113,7 +126,15 @@ Use the full bundle when users need to switch `data-ui` systems at runtime:
 import "ui-style-kit-css/dist/ui-style-kit.css";
 ```
 
-Use the opt-in bridge bundle when you want UI Style Kit CSS and the Interactive Surface bridge in one import:
+For the canonical state-only integration, import visual paint, the token-only theme bridge, and Interactive Surface state mechanics as separate ownership layers:
+
+```js
+import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/interactive-surface-theme.css";
+import "interactive-surface-css/state-core.css";
+```
+
+The older stateful bridge and combined bundle remain available for compatibility, but they are deprecated and have not been redirected to the token-only behavior:
 
 ```js
 import "ui-style-kit-css/with-bridge.css";
@@ -126,7 +147,7 @@ import "ui-style-kit-css/minimal-saas.css";
 import "ui-style-kit-css/interactive-surface-bridge";
 ```
 
-The default full bundle does **not** include the bridge. That keeps `dist/ui-style-kit.css` focused on UI systems and prevents accidental duplicate bridge imports.
+The default and visual-only bundles do **not** include either bridge. That keeps UI paint independent and prevents accidental duplicate bridge imports.
 
 When the bridge is attached, add `.interactive-surface` to interactable elements and use `data-surface-variant` plus `data-surface-level="1"`, `"2"`, or `"3"` to opt into the visible rest, hover, active, and focus treatments. The bridge inherits from shared `--usk-*` roles instead of duplicating per-theme or per-preset token maps.
 
@@ -134,11 +155,13 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~271 KB | ~35 KB | Runtime UI-system switchers and demos |
-| `ui-style-kit-css/with-bridge.css` | ~339 KB | ~40 KB | Runtime switchers plus Interactive Surface bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~299 KB | ~39 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~290 KB | ~38 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~369 KB | ~44 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~13 KB | ~2 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~21 KB | ~3 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
+| `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
 
 ## CDN usage
@@ -149,10 +172,10 @@ Use the latest published NPM package:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@latest/dist/ui-style-kit.min.css" />
 ```
 
-For production today, pin the latest published patch. Update this pin to `2.0.4` after that release is published:
+For production, pin the exact approved release rather than relying on `latest`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.0.3/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.1.0/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -244,6 +267,8 @@ CSS improves accessibility presentation, but it cannot guarantee accessibility b
 
 Semantic text utilities such as `saas-text-primary`, `saas-text-warning`, and `saas-text-danger` use the active theme palette directly. Filled UI such as buttons, badges, and busy states use compact `on-*` aliases like `--saas-on-primary` and `--saas-on-danger`.
 
+For the full native-element and subpart support contract, including platform-owned picker and popup limitations, see [Native Element Coverage](docs/NATIVE-ELEMENTS.md).
+
 ## Loading states
 
 Every style includes theme-driven spinner utilities:
@@ -290,6 +315,8 @@ Override `--<prefix>-font-sans` and `--<prefix>-font-display` for the broadest c
 
 The library styles are wrapped in `@layer ui-style-kit.*`. Unlayered consumer CSS can override the library without specificity fights:
 
+The declared order is `theme_colors`, `native_elements`, `components`, `presets`, then `compat_layout`. Visual-only entrypoints leave the final compatibility layer empty of deprecated structural selectors.
+
 ```css
 [data-ui="minimal-saas"][data-theme="arctic-indigo"] {
   --saas-radius-md: 1rem;
@@ -314,6 +341,7 @@ The color model is intentionally small: shared `--usk-*` RGB variables feed pref
 ```txt
 ui-style-kit-css/
   package.json
+  manifest.json
   README.md
   LICENSE
   CHANGELOG.md
@@ -321,11 +349,18 @@ ui-style-kit-css/
   dist/
     ui-style-kit.css
     ui-style-kit.min.css
+    ui-style-kit.visual.css
+    ui-style-kit.visual.min.css
     ui-style-kit.with-bridge.css
     ui-style-kit.with-bridge.min.css
+    visual/
+      minimal-saas.css
+      ...
   styles/
     theme-colors.css
     native-elements.css
+    components.css
+    compat-layout.css
     content-overflow.css
     minimal-saas.css
     bento.css
@@ -338,6 +373,7 @@ ui-style-kit-css/
     cyberpunk.css
     y2k.css
     retro-glass.css
+    interactive-surface-theme.css
     interactive-surface-bridge.css
   docs/
     TOKENS.md
@@ -351,10 +387,21 @@ The checked-in demo, favicon pack, and social preview image stay in the reposito
 
 ```bash
 npm run check
+npm run test:e2e
+npm run test:axe
+npm run test:visual
+npm run test:matrix
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Optional Playwright visual smoke tests are available through `npm run test:visual` after installing dev dependencies.
+`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `11 presets x 10 themes x 3 modes x 3 engines` matrix.
+
+## v2.1.0 Architecture Notes
+
+- Prefer `visual.css` or `visual/<preset>.css` when Layout Style CSS or application CSS owns structure.
+- Existing root, minified, focused preset, `interactive-surface-bridge`, and `with-bridge` entrypoints preserve their v2 behavior.
+- Treat `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` suffixes as deprecated compatibility helpers; their removal is reserved for v3.
+- Prefer `interactive-surface-theme.css` with `interactive-surface-css/state-core.css`. The old stateful bridge exports remain deprecated compatibility paths.
 
 ## v2.0.1 Migration Notes
 
@@ -363,7 +410,7 @@ The `v2.0.1` release line removes duplicated per-UI color-scheme blocks. Color s
 - Use `--usk-*-rgb` when defining or overriding a color scheme.
 - Continue using prefixed functional tokens such as `--saas-primary`, `--neo-card-bg`, and `--rg-on-primary` inside components.
 - Import `ui-style-kit-css/theme-colors.css`, `ui-style-kit-css/native-elements.css`, and `ui-style-kit-css/content-overflow.css` before standalone style files if your bundler does not follow CSS `@import`.
-- Keep using `ui-style-kit-css/interactive-surface-bridge` or `ui-style-kit-css/with-bridge.css` for the opt-in bridge. The bridge now inherits shared `--usk-*` roles and exposes three `data-surface-level` visual states while the default bundle remains bridge-free.
+- Existing v2.0.1 integrations can keep using `ui-style-kit-css/interactive-surface-bridge` or `ui-style-kit-css/with-bridge.css`; those stateful compatibility paths are deprecated in v2.1.0. New integrations should compose the visual, theme-bridge, and state-core entrypoints documented above.
 
 ## License
 
