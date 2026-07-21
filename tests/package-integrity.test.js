@@ -296,13 +296,34 @@ test('release automation scripts are exposed', () => {
     'check:contrast',
     'check:package',
     'check',
-    'pack:dry-run'
+    'pack:dry-run',
+    'release:verify'
   ];
 
   for (const scriptName of requiredScripts) {
     assert.equal(typeof packageJson.scripts?.[scriptName], 'string', `Missing script: ${scriptName}`);
     assert.notEqual(packageJson.scripts[scriptName].trim(), '', `Script should not be empty: ${scriptName}`);
   }
+});
+
+test('release verification script is non-publishing and covers the 2.0.4 release gate', () => {
+  const releaseVerify = packageJson.scripts['release:verify'] ?? '';
+  const requiredCommands = [
+    'npm run check',
+    'npm run test:e2e',
+    'npm run test:visual',
+    'npm audit --audit-level=moderate',
+    'npm run pack:dry-run'
+  ];
+
+  for (const command of requiredCommands) {
+    assert.match(releaseVerify, new RegExp(escapeRegExp(command)), `release:verify should run ${command}`);
+  }
+
+  // Keep the hotfix verification gate safe for approval-gated release preparation.
+  assert.doesNotMatch(releaseVerify, /\bnpm\s+(?:publish|version)\b/);
+  assert.doesNotMatch(releaseVerify, /\bgit\s+tag\b/);
+  assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
 });
 
 test('package metadata is aligned for the release version', () => {
