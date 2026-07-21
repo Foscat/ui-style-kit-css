@@ -167,6 +167,13 @@ jobs:
           ref: 2.1.0
           path: _ecosystem/Layout-Style-CSS
 
+      # Layout's prepack contract tests inspect its installed UI dependency, so
+      # install its locked dependency graph before packing it as an ecosystem fixture.
+      - name: Install Layout Style CSS dependencies for publish verification
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        working-directory: _ecosystem/Layout-Style-CSS
+        run: npm ci
+
       - name: Publish package
         if: steps.npm_version_check.outputs.already_published != 'true'
         run: npm publish --access public
