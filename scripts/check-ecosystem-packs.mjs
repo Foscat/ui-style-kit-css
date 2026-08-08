@@ -28,10 +28,20 @@ const layoutDocsRepo = path.resolve(
     path.join(rootDir, '..', 'Layout-Style-CSS')
 );
 const interactiveSpec =
-  options.interactiveSpec ?? process.env.UI_STYLE_KIT_INTERACTIVE_SPEC ?? 'interactive-surface-css@1.5.0';
+  options.interactiveSpec ??
+  process.env.UI_STYLE_KIT_INTERACTIVE_SPEC ??
+  (options.interactiveRepo ? null : 'interactive-surface-css@1.5.0');
+const interactiveRepo = interactiveSpec
+  ? null
+  : path.resolve(
+      options.interactiveRepo ??
+        process.env.UI_STYLE_KIT_INTERACTIVE_REPO ??
+        path.join(rootDir, '..', 'Interactive-Surface-CSS')
+    );
 const interactiveDocsRepo = path.resolve(
   options.interactiveDocsRepo ??
     process.env.UI_STYLE_KIT_INTERACTIVE_DOCS_REPO ??
+    interactiveRepo ??
     path.join(rootDir, '..', 'Interactive-Surface-CSS')
 );
 
@@ -138,6 +148,7 @@ const uiEntrypoints = [
 
 const layoutEntrypoints = [
   'layout-style-css',
+  'layout-style-css/manifest.json',
   'layout-style-css/min.css',
   'layout-style-css/core.css',
   'layout-style-css/wrappers.css',
@@ -151,6 +162,7 @@ const layoutEntrypoints = [
 
 const interactiveEntrypoints = [
   'interactive-surface-css',
+  'interactive-surface-css/manifest.json',
   'interactive-surface-css/package.json',
   'interactive-surface-css/index.cjs',
   'interactive-surface-css/interactive-surface.css',
@@ -201,7 +213,9 @@ const allThreeEntrypoints = [
   'ui-style-kit-css/with-bridge.css',
   'ui-style-kit-css/interactive-surface-bridge.css',
   'interactive-surface-css/interactive-surface.css',
-  'ui-style-kit-css/manifest.json'
+  'ui-style-kit-css/manifest.json',
+  'layout-style-css/manifest.json',
+  'interactive-surface-css/manifest.json'
 ];
 
 const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), tempPrefix));
@@ -216,17 +230,22 @@ try {
   if (!layoutSpec) {
     assertDirectory(layoutRepo, 'Layout Style CSS repo');
   }
+  if (!interactiveSpec) {
+    assertDirectory(interactiveRepo, 'Interactive Surface CSS repo');
+  }
   assertDirectory(layoutDocsRepo, 'Layout Style CSS documentation repo');
   assertDirectory(interactiveDocsRepo, 'Interactive Surface CSS documentation repo');
 
   console.log(`Using UI Style Kit package: ${uiSpec ?? rootDir}`);
   console.log(`Using Layout Style CSS package: ${layoutSpec ?? layoutRepo}`);
-  console.log(`Using Interactive Surface package: ${interactiveSpec}`);
+  console.log(`Using Interactive Surface package: ${interactiveSpec ?? interactiveRepo}`);
 
   const tarballs = {
     ui: uiSpec ? packPackageSpec(uiSpec, packsDir) : packLocalPackage(rootDir, packsDir),
     layout: layoutSpec ? packPackageSpec(layoutSpec, packsDir) : packLocalPackage(layoutRepo, packsDir),
-    interactive: packPackageSpec(interactiveSpec, packsDir)
+    interactive: interactiveSpec
+      ? packPackageSpec(interactiveSpec, packsDir)
+      : packLocalPackage(interactiveRepo, packsDir)
   };
 
   await runScenario({
@@ -293,6 +312,8 @@ function parseArgs(args) {
       parsed.layoutDocsRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--interactive-spec') {
       parsed.interactiveSpec = readValue(args, (index += 1), arg);
+    } else if (arg === '--interactive-repo') {
+      parsed.interactiveRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--interactive-docs-repo') {
       parsed.interactiveDocsRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--keep-temp') {
@@ -308,6 +329,9 @@ function parseArgs(args) {
   // checked-out Layout branch with the final published package.
   if (parsed.layoutRepo && parsed.layoutSpec) {
     throw new Error('Use either --layout-repo or --layout-spec, not both.');
+  }
+  if (parsed.interactiveRepo && parsed.interactiveSpec) {
+    throw new Error('Use either --interactive-repo or --interactive-spec, not both.');
   }
 
   return parsed;
@@ -437,16 +461,36 @@ function validateEntrypoints(scenarioDir, entrypoints, scenarioName) {
       throw new Error(`${scenarioName}: ${id} is not CSS-like.`);
     }
 
-    if (id === 'ui-style-kit-css/manifest.json') {
-      const manifest = JSON.parse(text);
-      assert.equal(manifest.version, '2.1.0');
-      assert.equal(manifest.presets.length, 11);
+    if (id.endsWith('/manifest.json')) {
+      validateEcosystemManifest(id, JSON.parse(text));
     }
 
     if (id === 'interactive-surface-css/package.json') {
       const manifest = JSON.parse(text);
       assert.equal(manifest.version, '1.5.0');
     }
+  }
+}
+
+function validateEcosystemManifest(id, manifest) {
+  const expected = {
+    'ui-style-kit-css/manifest.json': { name: 'ui-style-kit-css', version: '2.1.0' },
+    'layout-style-css/manifest.json': { name: 'layout-style-css', version: '3.0.0' },
+    'interactive-surface-css/manifest.json': { name: 'interactive-surface-css', version: '1.5.0' }
+  }[id];
+
+  assert.ok(expected, `Unexpected ecosystem manifest entry point: ${id}`);
+  assert.equal(manifest.schemaVersion, 1, `${id} must use ecosystem schema version 1`);
+  assert.equal(manifest.name, expected.name, `${id} must declare its package name`);
+  assert.equal(manifest.version, expected.version, `${id} must declare its package version`);
+
+  // UI Style Kit predates the shared policy field, while the new manifests declare it explicitly.
+  if (id !== 'ui-style-kit-css/manifest.json') {
+    assert.equal(manifest.schemaPolicy.compatibility, 'additive-within-major');
+    assert.equal(
+      manifest.schemaPolicy.breakingChange,
+      'increment-schemaVersion-before-removing-or-renaming-fields'
+    );
   }
 }
 
