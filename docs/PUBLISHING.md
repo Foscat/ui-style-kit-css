@@ -10,7 +10,7 @@ npm run release:verify
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. Browser gates cover regular demo flows, representative Axe scans, curated visual smoke checks, and the sharded 990-combination matrix. `npm run check:ecosystem:packs` verifies standalone, pairwise, and all-three packed package compatibility for the canonical visual/theme/state/layout imports and the deprecated bridge imports. `npm run pack:dry-run` shows the exact files that would publish.
 
-By default, `npm run check:ecosystem:packs` packs this repository, packs the sibling `../Layout-Style-CSS` checkout, and packs the published `interactive-surface-css@1.5.0` artifact. Use `-- --ui-spec <specifier>`, `-- --layout-repo <path>`, `-- --layout-spec <specifier>`, or `-- --interactive-spec <specifier>` when validating a different package source.
+By default, `npm run check:ecosystem:packs` packs this repository, packs the sibling `../Layout-Style-CSS` checkout, and packs the published `interactive-surface-css@1.5.0` artifact. It extracts imports from the explicitly maintained current documentation in all three sibling repositories and resolves every documented specifier from the installed tarballs. Deprecated UI bridge guides are validated as a separate supported-compatibility class; changelogs and Layout migration guides are reviewed historical material rather than current setup. Use `-- --ui-spec <specifier>`, `-- --layout-repo <path>`, `-- --layout-spec <specifier>`, `-- --interactive-spec <specifier>`, `-- --layout-docs-repo <path>`, or `-- --interactive-docs-repo <path>` when validating different package or documentation sources.
 
 `npm run build` uses exactly pinned CSS Tree parsing and Lightning CSS formatting/minification. Generated minified bundles retain the release banner while preserving grammar-sensitive selector and `calc()` whitespace.
 
@@ -20,15 +20,9 @@ The npm artifact is library-focused: `dist/`, `styles/`, docs, and metadata. Dem
 
 No package, tag, or registry release occurs without explicit approval.
 
-For this ecosystem upgrade, use the approval-gated rollout order below:
+The completed 2.0.4 correctness hotfix is historical context. The current companion set is already published as `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`; do not create replacement tags or registry releases merely to verify it.
 
-1. Release `ui-style-kit-css@2.0.4` as the correctness hotfix from the merged hotfix content on `origin/main`. The 2.0.4 hotfix release line must pass `npm run release:verify` before any tag or publish step.
-2. Confirm the already published `interactive-surface-css@1.5.0` companion state engine remains available from npm.
-3. Release `ui-style-kit-css@2.1.0` after the hotfix is live.
-4. Confirm the published `layout-style-css@3.0.0` companion remains available for the v3 structural contract.
-5. Run the final all-three packed compatibility suite against the published packages.
-
-Run the final registry-only ecosystem proof from this repository:
+Run the registry-only ecosystem proof from this repository:
 
 ```bash
 npm run check:ecosystem:packs -- --ui-spec ui-style-kit-css@2.1.0 --layout-spec layout-style-css@3.0.0 --interactive-spec interactive-surface-css@1.5.0

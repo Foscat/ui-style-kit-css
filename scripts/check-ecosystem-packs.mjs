@@ -6,6 +6,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { extractPackageImports } from './documented-imports.mjs';
+
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, '..');
 const npmRunner = npmInvocation();
@@ -19,8 +21,93 @@ const layoutRepo = layoutSpec
   : path.resolve(
       options.layoutRepo ?? process.env.UI_STYLE_KIT_LAYOUT_REPO ?? path.join(rootDir, '..', 'Layout-Style-CSS')
     );
+const layoutDocsRepo = path.resolve(
+  options.layoutDocsRepo ??
+    process.env.UI_STYLE_KIT_LAYOUT_DOCS_REPO ??
+    layoutRepo ??
+    path.join(rootDir, '..', 'Layout-Style-CSS')
+);
 const interactiveSpec =
   options.interactiveSpec ?? process.env.UI_STYLE_KIT_INTERACTIVE_SPEC ?? 'interactive-surface-css@1.5.0';
+const interactiveDocsRepo = path.resolve(
+  options.interactiveDocsRepo ??
+    process.env.UI_STYLE_KIT_INTERACTIVE_DOCS_REPO ??
+    path.join(rootDir, '..', 'Interactive-Surface-CSS')
+);
+
+const documentationGroups = [
+  {
+    name: 'UI Style Kit current setup',
+    root: rootDir,
+    files: [
+      'README.md',
+      'CONTRIBUTING.md',
+      'docs/ECOSYSTEM.md',
+      'docs/NATIVE-ELEMENTS.md',
+      'docs/PUBLISHING.md',
+      'docs/STYLE-GUIDE.md',
+      'docs/TOKENS.md',
+      'wiki/Accessibility.md',
+      'wiki/Class-API.md',
+      'wiki/Ecosystem-Compatibility.md',
+      'wiki/Home.md',
+      'wiki/Installation-and-Setup.md',
+      'wiki/Theming-Model.md',
+      'wiki/UI-Systems.md'
+    ]
+  },
+  {
+    name: 'UI Style Kit supported deprecated setup',
+    root: rootDir,
+    files: ['docs/BRIDGE-MIGRATION.md', 'wiki/Bridge-Migration.md']
+  },
+  {
+    name: 'Interactive Surface current setup',
+    root: interactiveDocsRepo,
+    files: [
+      'README.md',
+      'CONTRIBUTING.md',
+      'wiki/Accessibility.md',
+      'wiki/API-Reference.md',
+      'wiki/Contributing.md',
+      'wiki/FAQ.md',
+      'wiki/Getting-Started.md',
+      'wiki/Home.md',
+      'wiki/Installation-and-Usage.md',
+      'wiki/Publishing-and-Releases.md',
+      'wiki/Roadmap.md',
+      'wiki/Testing-and-Quality.md',
+      'wiki/Token-Reference.md'
+    ]
+  },
+  {
+    name: 'Layout Style current setup',
+    root: layoutDocsRepo,
+    files: [
+      'README.md',
+      'CONTRIBUTING.md',
+      'docs/wiki/Contributing.md',
+      'docs/wiki/Demo-And-GitHub-Pages.md',
+      'docs/wiki/Getting-Started.md',
+      'docs/wiki/Home.md',
+      'docs/wiki/Installation-And-CDN.md',
+      'docs/wiki/Layout-Primitives.md',
+      'docs/wiki/Layout-Recipes.md',
+      'docs/wiki/Layout-Styles.md',
+      'docs/wiki/Release-And-Publishing.md',
+      'docs/wiki/Security-And-Support.md',
+      'docs/wiki/UI-Style-Kit-Compatibility.md'
+    ]
+  }
+];
+
+const historicalDocumentation = [
+  'UI Style Kit CHANGELOG.md',
+  'Interactive Surface CHANGELOG.md',
+  'Layout Style CHANGELOG.md',
+  'Layout Style docs/wiki/Migrating-To-2.0.md',
+  'Layout Style docs/wiki/Migrating-To-3.0.md'
+];
 
 const uiEntrypoints = [
   'ui-style-kit-css',
@@ -129,6 +216,8 @@ try {
   if (!layoutSpec) {
     assertDirectory(layoutRepo, 'Layout Style CSS repo');
   }
+  assertDirectory(layoutDocsRepo, 'Layout Style CSS documentation repo');
+  assertDirectory(interactiveDocsRepo, 'Interactive Surface CSS documentation repo');
 
   console.log(`Using UI Style Kit package: ${uiSpec ?? rootDir}`);
   console.log(`Using Layout Style CSS package: ${layoutSpec ?? layoutRepo}`);
@@ -170,6 +259,8 @@ try {
     entrypoints: allThreeEntrypoints
   });
 
+  validateDocumentedImports(allThreeDir);
+
   if (!options.skipBrowser) {
     await runBrowserSmoke(allThreeDir);
   }
@@ -198,8 +289,12 @@ function parseArgs(args) {
       parsed.layoutRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--layout-spec') {
       parsed.layoutSpec = readValue(args, (index += 1), arg);
+    } else if (arg === '--layout-docs-repo') {
+      parsed.layoutDocsRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--interactive-spec') {
       parsed.interactiveSpec = readValue(args, (index += 1), arg);
+    } else if (arg === '--interactive-docs-repo') {
+      parsed.interactiveDocsRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--keep-temp') {
       parsed.keepTemp = true;
     } else if (arg === '--skip-browser') {
@@ -353,6 +448,42 @@ function validateEntrypoints(scenarioDir, entrypoints, scenarioName) {
       assert.equal(manifest.version, '1.5.0');
     }
   }
+}
+
+function validateDocumentedImports(scenarioDir) {
+  const resolver = createRequire(path.join(scenarioDir, 'package.json'));
+  const failures = [];
+  let importCount = 0;
+
+  for (const group of documentationGroups) {
+    for (const relativePath of group.files) {
+      const documentPath = path.join(group.root, relativePath);
+      if (!fs.existsSync(documentPath)) {
+        failures.push(`${group.name}: maintained document is missing: ${relativePath}`);
+        continue;
+      }
+
+      const imports = extractPackageImports(fs.readFileSync(documentPath, 'utf8'));
+      importCount += imports.length;
+      for (const specifier of imports) {
+        try {
+          const resolved = resolver.resolve(specifier);
+          if (!fs.statSync(resolved).isFile()) {
+            failures.push(`${group.name}/${relativePath}: ${specifier} did not resolve to a file`);
+          }
+        } catch (error) {
+          failures.push(`${group.name}/${relativePath}: ${specifier} did not resolve (${error.code ?? error.message})`);
+        }
+      }
+    }
+  }
+
+  if (failures.length > 0) {
+    throw new Error(`Documented package import validation failed:\n${failures.join('\n')}`);
+  }
+
+  console.log(`PASS documented imports (${importCount} references across current and supported deprecated guides)`);
+  console.log(`INFO historical/migration documents reviewed separately: ${historicalDocumentation.join(', ')}`);
 }
 
 async function runBrowserSmoke(scenarioDir) {

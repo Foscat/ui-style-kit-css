@@ -465,26 +465,22 @@ test('publishing docs expose the packed ecosystem compatibility gate', () => {
   assert.match(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
 });
 
-test('publishing docs preserve the approval-gated ecosystem rollout order', () => {
+test('publishing docs describe current registry proof without re-releasing published versions', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
-  const requiredSequence = [
-    'ui-style-kit-css@2.0.4',
-    'interactive-surface-css@1.5.0',
-    'ui-style-kit-css@2.1.0',
-    'layout-style-css@3.0.0'
-  ];
-
-  let cursor = -1;
-  for (const releaseTarget of requiredSequence) {
-    const next = publishingGuide.indexOf(releaseTarget, cursor + 1);
-    assert.ok(next > cursor, `Publishing guide must order ${releaseTarget} after the previous release target`);
-    cursor = next;
-  }
 
   assert.match(publishingGuide, /No package, tag, or registry release occurs without explicit approval/i);
-  assert.match(publishingGuide, /2\.0\.4[^.\n]*hotfix/i);
-  assert.match(publishingGuide, /2\.0\.4 hotfix release line must pass `npm run release:verify`/i);
-  assert.match(publishingGuide, /final all-three packed compatibility suite/i);
+  assert.match(publishingGuide, /already published[^\n]*ui-style-kit-css@2\.1\.0/i);
+  assert.match(publishingGuide, /registry-only ecosystem proof/i);
+  assert.doesNotMatch(publishingGuide, /Release `ui-style-kit-css@2\.(?:0\.4|1\.0)`/);
+});
+
+test('publishing workflow stages current ecosystem documentation for packed import validation', () => {
+  const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'npm-publish.yml'), 'utf8');
+
+  assert.match(workflow, /repository: Foscat\/Layout-Style-CSS\s+ref: 3\.0\.0/);
+  assert.match(workflow, /repository: Foscat\/Interactive-Surface-CSS\s+ref: 1\.5\.0/);
+  assert.match(workflow, /UI_STYLE_KIT_LAYOUT_DOCS_REPO:/);
+  assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_DOCS_REPO:/);
 });
 
 test('CI workflow shards the UI matrix by engine and preset group', () => {
