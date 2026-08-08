@@ -7,6 +7,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { extractPackageImports } from './documented-imports.mjs';
+import { validateSharedManifest } from './ecosystem-manifest-schema.mjs';
+import { resolveInteractiveSource } from './ecosystem-pack-sources.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, '..');
@@ -27,17 +29,7 @@ const layoutDocsRepo = path.resolve(
     layoutRepo ??
     path.join(rootDir, '..', 'Layout-Style-CSS')
 );
-const interactiveSpec =
-  options.interactiveSpec ??
-  process.env.UI_STYLE_KIT_INTERACTIVE_SPEC ??
-  (options.interactiveRepo ? null : 'interactive-surface-css@1.5.0');
-const interactiveRepo = interactiveSpec
-  ? null
-  : path.resolve(
-      options.interactiveRepo ??
-        process.env.UI_STYLE_KIT_INTERACTIVE_REPO ??
-        path.join(rootDir, '..', 'Interactive-Surface-CSS')
-    );
+const { interactiveSpec, interactiveRepo } = resolveInteractiveSource(options, process.env, rootDir);
 const interactiveDocsRepo = path.resolve(
   options.interactiveDocsRepo ??
     process.env.UI_STYLE_KIT_INTERACTIVE_DOCS_REPO ??
@@ -480,18 +472,9 @@ function validateEcosystemManifest(id, manifest) {
   }[id];
 
   assert.ok(expected, `Unexpected ecosystem manifest entry point: ${id}`);
-  assert.equal(manifest.schemaVersion, 1, `${id} must use ecosystem schema version 1`);
+  validateSharedManifest(manifest);
   assert.equal(manifest.name, expected.name, `${id} must declare its package name`);
   assert.equal(manifest.version, expected.version, `${id} must declare its package version`);
-
-  // UI Style Kit predates the shared policy field, while the new manifests declare it explicitly.
-  if (id !== 'ui-style-kit-css/manifest.json') {
-    assert.equal(manifest.schemaPolicy.compatibility, 'additive-within-major');
-    assert.equal(
-      manifest.schemaPolicy.breakingChange,
-      'increment-schemaVersion-before-removing-or-renaming-fields'
-    );
-  }
 }
 
 function validateDocumentedImports(scenarioDir) {
