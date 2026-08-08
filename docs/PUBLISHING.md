@@ -25,13 +25,13 @@ For this ecosystem upgrade, use the approval-gated rollout order below:
 1. Release `ui-style-kit-css@2.0.4` as the correctness hotfix from the merged hotfix content on `origin/main`. The 2.0.4 hotfix release line must pass `npm run release:verify` before any tag or publish step.
 2. Confirm the already published `interactive-surface-css@1.5.0` companion state engine remains available from npm.
 3. Release `ui-style-kit-css@2.1.0` after the hotfix is live.
-4. Release `layout-style-css@2.1.0` after UI Style Kit 2.1 is live and Layout replaces its temporary GitHub UI fixture with the registry package.
+4. Confirm the published `layout-style-css@3.0.0` companion remains available for the v3 structural contract.
 5. Run the final all-three packed compatibility suite against the published packages.
 
-After `layout-style-css@2.1.0` is published, run the final registry-only ecosystem proof from this repository:
+Run the final registry-only ecosystem proof from this repository:
 
 ```bash
-npm run check:ecosystem:packs -- --ui-spec ui-style-kit-css@2.1.0 --layout-spec layout-style-css@2.1.0 --interactive-spec interactive-surface-css@1.5.0
+npm run check:ecosystem:packs -- --ui-spec ui-style-kit-css@2.1.0 --layout-spec layout-style-css@3.0.0 --interactive-spec interactive-surface-css@1.5.0
 ```
 
 ```bash

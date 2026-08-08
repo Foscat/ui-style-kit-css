@@ -8,9 +8,9 @@ UI Style Kit CSS stays standalone while offering stable integration points for t
 |---|---:|---|
 | `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
+| `layout-style-css@3.0.0` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.1.0` and Interactive Surface `1.5.0` are released companion packages for this upgrade path. Layout Style `2.1.0` remains a staged source target until its separate release approval completes.
+UI Style Kit `2.1.0`, Interactive Surface `1.5.0`, and Layout Style `3.0.0` are released companion packages for this integration contract.
 
 ## Adoption Paths
 

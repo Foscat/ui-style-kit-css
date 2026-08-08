@@ -276,9 +276,8 @@ test('README documents the 2.1 library system and theme override flow', () => {
   assert.match(readme, /Ecosystem compatibility/);
   assert.match(readme, /ui-style-kit-css@2\.1\.0/);
   assert.match(readme, /interactive-surface-css@1\.5\.0/);
-  assert.match(readme, /layout-style-css@2\.1\.0/);
-  assert.match(readme, /UI Style Kit `2\.1\.0` and Interactive Surface `1\.5\.0` are released companion packages/);
-  assert.match(readme, /Layout Style `2\.1\.0` remains a staged source target/);
+  assert.match(readme, /layout-style-css@3\.0\.0/);
+  assert.match(readme, /UI Style Kit `2\.1\.0`, Interactive Surface `1\.5\.0`, and Layout Style `3\.0\.0` are released companion packages/);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
   assert.match(readme, /interactive-surface-theme\.css/);
@@ -338,7 +337,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
     assert.match(contents, /ui-style-kit-css@2\.1\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
-    assert.match(contents, /layout-style-css@2\.1\.0/);
+    assert.match(contents, /layout-style-css@3\.0\.0/);
     assert.match(contents, /Use one/);
     assert.match(contents, /Use two/);
     assert.match(contents, /Use all three/);
@@ -351,6 +350,22 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
+test('deprecated bridge migration guidance preserves the retained public exports', () => {
+  const migrationGuide = fs.readFileSync(path.join(rootDir, 'docs', 'BRIDGE-MIGRATION.md'), 'utf8');
+
+  assert.match(migrationGuide, /deprecated/i);
+  for (const exportPath of [
+    'ui-style-kit-css/interactive-surface-bridge',
+    'ui-style-kit-css/interactive-surface-bridge.css',
+    'ui-style-kit-css/with-bridge',
+    'ui-style-kit-css/with-bridge.css'
+  ]) {
+    const packageExport = `./${exportPath.slice('ui-style-kit-css/'.length)}`;
+    assert.ok(packageJson.exports[packageExport], `${exportPath} must remain a public compatibility export`);
+    assert.match(migrationGuide, new RegExp(escapeRegExp(exportPath)));
+  }
+});
+
 test('canonical ecosystem examples preserve ownership-first import order', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
   const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
@@ -358,11 +373,6 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
     fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8'),
     fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8')
   ];
-  const visualThemeState = [
-    'import "ui-style-kit-css/visual/minimal-saas.css";',
-    'import "ui-style-kit-css/interactive-surface-theme.css";',
-    'import "interactive-surface-css/state-core.css";'
-  ].join('\n');
   const visualThemeStateLayout = [
     'import "ui-style-kit-css/visual.css";',
     'import "ui-style-kit-css/interactive-surface-theme.css";',
@@ -371,14 +381,12 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
   ].join('\n');
   const exactJsBlock = (imports) => new RegExp(escapeRegExp(`\`\`\`js\n${imports}\n\`\`\``));
 
-  assert.match(readme, exactJsBlock(visualThemeState));
-  assert.match(installationWiki, exactJsBlock(visualThemeState));
+  assert.match(readme, exactJsBlock(visualThemeStateLayout));
+  assert.match(installationWiki, exactJsBlock(visualThemeStateLayout));
 
   for (const contents of ecosystemGuides) {
-    assert.match(contents, exactJsBlock(visualThemeState));
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.1\.0` and Interactive Surface `1\.5\.0` are released companion packages/);
-    assert.match(contents, /Layout Style `2\.1\.0` remains a staged source target/);
+    assert.match(contents, /UI Style Kit `2\.1\.0`, Interactive Surface `1\.5\.0`, and Layout Style `3\.0\.0` are released companion packages/);
   }
 });
 
@@ -453,7 +461,7 @@ test('publishing docs expose the packed ecosystem compatibility gate', () => {
   assert.match(publishingGuide, /npm run check:ecosystem:packs/);
   assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
   assert.match(publishingGuide, /--ui-spec ui-style-kit-css@2\.1\.0/);
-  assert.match(publishingGuide, /--layout-spec layout-style-css@2\.1\.0/);
+  assert.match(publishingGuide, /--layout-spec layout-style-css@3\.0\.0/);
   assert.match(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
 });
 
@@ -463,7 +471,7 @@ test('publishing docs preserve the approval-gated ecosystem rollout order', () =
     'ui-style-kit-css@2.0.4',
     'interactive-surface-css@1.5.0',
     'ui-style-kit-css@2.1.0',
-    'layout-style-css@2.1.0'
+    'layout-style-css@3.0.0'
   ];
 
   let cursor = -1;

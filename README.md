@@ -52,9 +52,9 @@ These libraries stay standalone, but the current aligned set is:
 |---|---:|---|
 | `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
+| `layout-style-css@3.0.0` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.1.0` and Interactive Surface `1.5.0` are released companion packages for this upgrade path. Layout Style `2.1.0` remains a staged source target until its separate release approval completes.
+UI Style Kit `2.1.0`, Interactive Surface `1.5.0`, and Layout Style `3.0.0` are released companion packages for this integration contract.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -126,26 +126,16 @@ Use the full bundle when users need to switch `data-ui` systems at runtime:
 import "ui-style-kit-css/dist/ui-style-kit.css";
 ```
 
-For the canonical state-only integration, import visual paint, the token-only theme bridge, and Interactive Surface state mechanics as separate ownership layers:
+For the canonical all-three integration, import visual paint, the token-only theme bridge, Interactive Surface state mechanics, and Layout structure in this order:
 
 ```js
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/visual.css";
 import "ui-style-kit-css/interactive-surface-theme.css";
 import "interactive-surface-css/state-core.css";
+import "layout-style-css";
 ```
 
-The older stateful bridge and combined bundle remain available for compatibility, but they are deprecated and have not been redirected to the token-only behavior:
-
-```js
-import "ui-style-kit-css/with-bridge.css";
-```
-
-Or import the bridge by itself when you are using a single style file:
-
-```js
-import "ui-style-kit-css/minimal-saas.css";
-import "ui-style-kit-css/interactive-surface-bridge";
-```
+The older stateful bridge and combined bundle remain public, deprecated compatibility paths. See the [bridge migration guide](docs/BRIDGE-MIGRATION.md) when upgrading an existing v2 integration.
 
 The default and visual-only bundles do **not** include either bridge. That keeps UI paint independent and prevents accidental duplicate bridge imports.
 

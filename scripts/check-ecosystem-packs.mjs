@@ -59,9 +59,7 @@ const layoutEntrypoints = [
   'layout-style-css/utilities.css',
   'layout-style-css/personalities.css',
   'layout-style-css/personalities/minimal-saas.css',
-  'layout-style-css/personalities/bento.css',
-  'layout-style-css/integrations/ui-style-kit.css',
-  'layout-style-css/legacy.css'
+  'layout-style-css/personalities/bento.css'
 ];
 
 const interactiveEntrypoints = [
@@ -92,9 +90,7 @@ const pairedScenarios = [
     entrypoints: [
       'ui-style-kit-css/visual.css',
       'layout-style-css',
-      'layout-style-css/integrations/ui-style-kit.css',
-      'ui-style-kit-css',
-      'ui-style-kit-css/with-bridge.css'
+      'ui-style-kit-css'
     ]
   },
   {
@@ -117,7 +113,6 @@ const allThreeEntrypoints = [
   'ui-style-kit-css',
   'ui-style-kit-css/with-bridge.css',
   'ui-style-kit-css/interactive-surface-bridge.css',
-  'layout-style-css/integrations/ui-style-kit.css',
   'interactive-surface-css/interactive-surface.css',
   'ui-style-kit-css/manifest.json'
 ];
@@ -375,8 +370,7 @@ async function runBrowserSmoke(scenarioDir) {
       'ui-style-kit-css/with-bridge.css',
       'ui-style-kit-css/interactive-surface-bridge.css',
       'interactive-surface-css/interactive-surface.css',
-      'layout-style-css',
-      'layout-style-css/integrations/ui-style-kit.css'
+      'layout-style-css'
     ]
   };
 
