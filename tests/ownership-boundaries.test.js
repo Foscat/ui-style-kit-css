@@ -24,6 +24,8 @@ test('visual-only rejects page topology while a reviewed component exception is 
   const css = `
     .saas-page { max-width: 72rem; }
     .saas-page-content { width: 100%; }
+    #app { width: 100%; }
+    main { position: absolute; }
     .bento-grid-feature { grid-template-columns: repeat(6, 1fr); }
   `;
   const result = auditOwnership({
@@ -48,6 +50,20 @@ test('visual-only rejects page topology while a reviewed component exception is 
       property: 'width',
       line: 3,
       rule: 'ui-page-topology'
+    },
+    {
+      target: 'ui-visual',
+      selector: '#app',
+      property: 'width',
+      line: 4,
+      rule: 'ui-page-topology'
+    },
+    {
+      target: 'ui-visual',
+      selector: 'main',
+      property: 'position',
+      line: 5,
+      rule: 'ui-page-topology'
     }
   ]);
   assert.equal(result.matchedAllowlistCount, 1);
@@ -56,7 +72,7 @@ test('visual-only rejects page topology while a reviewed component exception is 
 test('visual-only rejects unreviewed grid topology and placement', () => {
   const result = auditOwnership({
     target: 'ui-visual',
-    css: '.bento-tile { grid-area: span 2 / span 4; grid-column: span 2; }',
+    css: '.bento-tile { grid-area: span 2 / span 4; grid-column: span 2; grid: auto / 1fr; }',
     manifest: { classApi: { deprecatedStructuralSuffixes: [] } },
     allowlist: [],
     now: reviewedAt
@@ -76,14 +92,25 @@ test('visual-only rejects unreviewed grid topology and placement', () => {
       property: 'grid-column',
       line: 1,
       rule: 'ui-page-topology'
+    },
+    {
+      target: 'ui-visual',
+      selector: '.bento-tile',
+      property: 'grid',
+      line: 1,
+      rule: 'ui-page-topology'
     }
   ]);
 });
 
 test('interaction theme rejects state mechanics but permits static theme application', () => {
   const css = `
-    .interactive-surface { color: var(--interactive-surface-fg); }
+    .interactive-surface { color: var(--interactive-surface-fg); --Theme-Paint: red; }
     .interactive-surface:hover { translate: 0 -2px; }
+    input:checked { opacity: .8; }
+    .is-selected { color: red; }
+    [data-state="active"] { --State-Paint: red; background: red; }
+    .interactive-surface { TRANSFORM: scale(1.05); }
   `;
   const result = auditOwnership({
     target: 'interaction-theme',
@@ -100,16 +127,56 @@ test('interaction theme rejects state mechanics but permits static theme applica
       property: 'translate',
       line: 3,
       rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: 'input:checked',
+      property: 'opacity',
+      line: 4,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: '.is-selected',
+      property: 'color',
+      line: 5,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: '[data-state="active"]',
+      property: 'background',
+      line: 6,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: '.interactive-surface',
+      property: 'transform',
+      line: 7,
+      rule: 'ui-interaction-mechanics'
     }
   ]);
 });
 
-test('allowlist rejects stale, duplicate, wildcard, unexplained, and unmatched entries', () => {
+test('allowlist rejects every malformed, stale, broad, duplicate, and unmatched mutation', () => {
+  const missingReason = exception();
+  delete missingReason.reason;
   const cases = [
     {
       name: 'stale',
       entries: [exception({ reviewDate: '2025-01-01' })],
       message: /stale reviewDate/
+    },
+    {
+      name: 'future',
+      entries: [exception({ reviewDate: '2026-08-09' })],
+      message: /stale reviewDate/
+    },
+    {
+      name: 'invalid date',
+      entries: [exception({ reviewDate: '2026-02-30' })],
+      message: /ISO date/
     },
     {
       name: 'duplicate',
@@ -122,9 +189,34 @@ test('allowlist rejects stale, duplicate, wildcard, unexplained, and unmatched e
       message: /must not contain wildcards/
     },
     {
+      name: 'property wildcard',
+      entries: [exception({ property: 'grid-*' })],
+      message: /must not contain wildcards/
+    },
+    {
       name: 'unexplained',
       entries: [exception({ reason: 'Needed.' })],
       message: /professional reason/
+    },
+    {
+      name: 'wrong owner',
+      entries: [exception({ owner: 'layout-style-css' })],
+      message: /owner must be ui-style-kit-css/
+    },
+    {
+      name: 'missing field',
+      entries: [missingReason],
+      message: /contain exactly/
+    },
+    {
+      name: 'extra field',
+      entries: [exception({ ticket: 'UI-42' })],
+      message: /contain exactly/
+    },
+    {
+      name: 'non-string field',
+      entries: [exception({ reason: null })],
+      message: /string fields/
     }
   ];
 

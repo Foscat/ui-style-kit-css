@@ -2,11 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { generate, parse, walk } from 'css-tree';
+import { generate, parse, property as describeProperty, walk } from 'css-tree';
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const allowlistFields = ['owner', 'property', 'reason', 'reviewDate', 'selector'];
 const gridTopologyProperties = new Set([
+  'grid',
   'grid-area',
   'grid-column',
   'grid-column-end',
@@ -20,28 +21,99 @@ const gridTopologyProperties = new Set([
   'grid-template-rows',
   'order'
 ]);
-const majorSizingProperties = new Set([
+const pagePlacementProperties = new Set([
+  'block-size',
+  'bottom',
+  'clear',
+  'display',
+  'float',
+  'height',
   'inline-size',
+  'inset',
+  'inset-block',
+  'inset-block-end',
+  'inset-block-start',
+  'inset-inline',
+  'inset-inline-end',
+  'inset-inline-start',
+  'left',
+  'margin',
+  'margin-block',
+  'margin-block-end',
+  'margin-block-start',
+  'margin-inline',
+  'margin-inline-end',
+  'margin-inline-start',
+  'max-block-size',
+  'max-height',
   'max-inline-size',
   'max-width',
+  'min-block-size',
+  'min-height',
   'min-inline-size',
   'min-width',
+  'place-self',
+  'position',
+  'right',
+  'top',
   'width'
 ]);
-const mechanicsProperties = new Set([
-  'animation',
-  'animation-name',
-  'rotate',
-  'scale',
-  'transform',
-  'transition',
-  'transition-delay',
-  'transition-duration',
-  'transition-property',
-  'transition-timing-function',
-  'translate'
+const nativeStatePseudos = new Set([
+  'active',
+  'checked',
+  'disabled',
+  'enabled',
+  'focus',
+  'focus-visible',
+  'focus-within',
+  'hover',
+  'indeterminate',
+  'invalid',
+  'open',
+  'optional',
+  'placeholder-shown',
+  'read-only',
+  'read-write',
+  'required',
+  'target',
+  'user-invalid',
+  'valid'
 ]);
-const stateSelectorPattern = /:(?:active|disabled|focus|focus-visible|hover)|\[aria-(?:busy|current|disabled|pressed|selected)|\.is-(?:active|disabled|loading)/;
+const commonStateClasses = new Set([
+  'is-active',
+  'is-busy',
+  'is-checked',
+  'is-disabled',
+  'is-loading',
+  'is-open',
+  'is-pressed',
+  'is-selected'
+]);
+const stateAttributes = new Set([
+  'aria-busy',
+  'aria-checked',
+  'aria-current',
+  'aria-disabled',
+  'aria-expanded',
+  'aria-invalid',
+  'aria-pressed',
+  'aria-selected',
+  'data-active',
+  'data-checked',
+  'data-disabled',
+  'data-loading',
+  'data-pressed',
+  'data-selected',
+  'data-state'
+]);
+
+function propertyContract(propertyName) {
+  const described = describeProperty(propertyName);
+  return {
+    custom: described.custom,
+    name: described.custom ? propertyName : described.basename
+  };
+}
 
 function entryKey({ selector, property }) {
   return `${selector}\u0000${property}`;
@@ -67,6 +139,9 @@ export function validateAllowlist({ target, entries, expectedOwner, now = new Da
     const fields = Object.keys(entry).sort();
     if (fields.join('\u0000') !== allowlistFields.join('\u0000')) {
       throw new Error(`${target} allowlist entries must contain exactly ${allowlistFields.join(', ')}.`);
+    }
+    if (allowlistFields.some((field) => typeof entry[field] !== 'string')) {
+      throw new Error(`${target} allowlist entries must use string fields.`);
     }
     if (entry.selector.includes('*') || entry.property.includes('*')) {
       throw new Error(`${target} allowlist entries must not contain wildcards.`);
@@ -103,19 +178,44 @@ function selectorOwnsPageTopology(rule, manifest) {
   const structuralNames = new Set([
     ...(manifest.classApi?.deprecatedStructuralSuffixes ?? []),
     'container',
+    'content',
+    'grid',
     'layout',
     'main',
+    'page',
+    'section',
     'shell',
+    'split',
+    'stack',
     'wrapper'
+  ]);
+  const componentSuffixes = new Set([
+    ...(manifest.classApi?.universalVisualSuffixes ?? []),
+    ...Object.values(manifest.classApi?.presetExtras ?? {}).flat()
   ]);
   let ownsPageTopology = false;
 
   walk(rule.prelude, {
     enter(node) {
-      if (node.type === 'TypeSelector' && ['body', 'main'].includes(node.name)) {
+      if (node.type === 'TypeSelector' && ['body', 'html', 'main', 'section'].includes(node.name.toLowerCase())) {
         ownsPageTopology = true;
       }
+      if (node.type === 'IdSelector' && ['app', 'layout', 'main', 'page', 'root', 'shell'].includes(node.name.toLowerCase())) {
+        ownsPageTopology = true;
+      }
+      if (node.type === 'AttributeSelector') {
+        const attributeName = node.name.name.toLowerCase();
+        const attributeValue = node.value?.name?.toLowerCase() ?? node.value?.value?.toLowerCase();
+        if (['data-layout', 'data-page', 'data-shell'].includes(attributeName) ||
+            (attributeName === 'role' && attributeValue === 'main')) {
+          ownsPageTopology = true;
+        }
+      }
       if (node.type !== 'ClassSelector') return;
+
+      if ([...componentSuffixes].some((suffix) => node.name === suffix || node.name.endsWith(`-${suffix}`))) {
+        return;
+      }
 
       const classSegments = node.name.split(/[-_]/);
       if (classSegments.some((segment) => structuralNames.has(segment))) {
@@ -127,18 +227,48 @@ function selectorOwnsPageTopology(rule, manifest) {
   return ownsPageTopology;
 }
 
-function ruleForDeclaration({ target, selector, property, rule, manifest }) {
+function selectorHasState(rule, manifest) {
+  const manifestClasses = manifest.selectors?.stateClasses ?? [];
+  const stateClasses = new Set([
+    ...commonStateClasses,
+    ...manifestClasses.map((selector) => selector.replace(/^\./, '').toLowerCase())
+  ]);
+  let stateful = false;
+
+  // Walking the selector AST also inspects states nested inside :is(), :where(), and :not().
+  walk(rule.prelude, {
+    enter(node) {
+      if (node.type === 'PseudoClassSelector' && nativeStatePseudos.has(node.name.toLowerCase())) {
+        stateful = true;
+      }
+      if (node.type === 'ClassSelector' && stateClasses.has(node.name.toLowerCase())) {
+        stateful = true;
+      }
+      if (node.type === 'AttributeSelector' && stateAttributes.has(node.name.name.toLowerCase())) {
+        stateful = true;
+      }
+    }
+  });
+
+  return stateful;
+}
+
+function isMechanicsProperty(property) {
+  return ['rotate', 'scale', 'transform', 'translate'].includes(property) ||
+    /^(?:animation|transition)(?:-|$)/.test(property);
+}
+
+function ruleForDeclaration({ target, property, rule, manifest }) {
   if (target === 'ui-visual') {
     if (gridTopologyProperties.has(property)) return 'ui-page-topology';
-    if (majorSizingProperties.has(property) && selectorOwnsPageTopology(rule, manifest)) {
+    if (pagePlacementProperties.has(property) && selectorOwnsPageTopology(rule, manifest)) {
       return 'ui-page-topology';
     }
     return null;
   }
 
   if (target === 'interaction-theme') {
-    if (property.startsWith('--')) return null;
-    if (mechanicsProperties.has(property) || stateSelectorPattern.test(selector)) {
+    if (isMechanicsProperty(property) || selectorHasState(rule, manifest)) {
       return 'ui-interaction-mechanics';
     }
     return null;
@@ -169,16 +299,18 @@ export function auditOwnership({ target, css, manifest, allowlist, now = new Dat
         if (node.type !== 'Declaration') return;
         declarationCount += 1;
 
+        const property = propertyContract(node.property);
+        if (property.custom) return;
+
         const violationRule = ruleForDeclaration({
           target,
-          selector,
-          property: node.property,
+          property: property.name,
           rule,
           manifest
         });
         if (!violationRule) return;
 
-        const key = entryKey({ selector, property: node.property });
+        const key = entryKey({ selector, property: property.name });
         if (allowlistByKey.has(key)) {
           matchedKeys.add(key);
           return;
@@ -187,7 +319,7 @@ export function auditOwnership({ target, css, manifest, allowlist, now = new Dat
         violations.push({
           target,
           selector,
-          property: node.property,
+          property: property.name,
           line: node.loc.start.line,
           rule: violationRule
         });
