@@ -8,11 +8,6 @@ import { extractPackageImports } from '../scripts/documented-imports.mjs';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const compatibilityPath = path.join(rootDir, 'ecosystem-compatibility.json');
-const siblingRepositories = new Map([
-  ['interactive-surface-css', path.resolve(rootDir, '..', 'Interactive-Surface-CSS')],
-  ['layout-style-css', path.resolve(rootDir, '..', 'Layout-Style-CSS')],
-  ['ui-style-kit-css', rootDir]
-]);
 
 test('authoritative ecosystem compatibility contract validates supported combinations and exports', async () => {
   assert.ok(fs.existsSync(compatibilityPath), 'ecosystem-compatibility.json must be the checked-in compatibility source');
@@ -49,29 +44,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
     }
   }
 
-  for (const packageDefinition of compatibility.packages) {
-    const repository = siblingRepositories.get(packageDefinition.name);
-    const packageJson = JSON.parse(fs.readFileSync(path.join(repository, 'package.json'), 'utf8'));
-    assert.equal(
-      packageJson.version,
-      compatibility.supportedCombinations.current[packageDefinition.name],
-      `${packageDefinition.name} current combination must match its checked-out package`
-    );
-  }
-
-  for (const importDefinition of compatibility.canonicalImports) {
-    const [packageName, exportPath] = splitPackageSpecifier(importDefinition.specifier);
-    const packageJson = JSON.parse(
-      fs.readFileSync(path.join(siblingRepositories.get(packageName), 'package.json'), 'utf8')
-    );
-    const exportTarget = packageJson.exports[exportPath];
-
-    assert.equal(typeof exportTarget, 'string', `${importDefinition.specifier} must stay publicly exported`);
-    assert.ok(
-      fs.existsSync(path.join(siblingRepositories.get(packageName), exportTarget.replace(/^\.\//, ''))),
-      `${importDefinition.specifier} must point to a checked-in artifact`
-    );
-  }
+  // Packed artifact validation performs cross-repository export checks in its staged CI job.
 });
 
 test('current ecosystem documentation consumes canonical imports from the compatibility contract', () => {
@@ -103,18 +76,6 @@ test('current ecosystem documentation consumes canonical imports from the compat
     }
   }
 });
-
-function splitPackageSpecifier(specifier) {
-  for (const packageName of siblingRepositories.keys()) {
-    if (specifier === packageName) {
-      return [packageName, '.'];
-    }
-    if (specifier.startsWith(`${packageName}/`)) {
-      return [packageName, `./${specifier.slice(packageName.length + 1)}`];
-    }
-  }
-  throw new Error(`Unknown ecosystem package specifier: ${specifier}`);
-}
 
 function satisfiesRange(version, range) {
   const rangeMatch = /^>=(\d+)\.(\d+)\.(\d+) <(\d+)\.0\.0$/.exec(range);

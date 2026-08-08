@@ -15,6 +15,7 @@ const rootDir = path.resolve(scriptDir, '..');
 const ecosystemCompatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
 validateEcosystemCompatibility(ecosystemCompatibility);
 const canonicalEntrypoints = ecosystemCompatibility.canonicalImports.map(({ specifier }) => specifier);
+const expectedPackageVersions = ecosystemCompatibility.supportedCombinations.current;
 const npmRunner = npmInvocation();
 const tempPrefix = 'usk-ecosystem-packs-';
 
@@ -459,19 +460,16 @@ function validateEntrypoints(scenarioDir, entrypoints, scenarioName) {
 
     if (id === 'interactive-surface-css/package.json') {
       const manifest = JSON.parse(text);
-      assert.equal(manifest.version, '1.5.0');
+      assert.equal(manifest.version, expectedPackageVersions['interactive-surface-css']);
     }
   }
 }
 
 function validateEcosystemManifest(id, manifest) {
-  const expected = {
-    'ui-style-kit-css/manifest.json': { name: 'ui-style-kit-css', version: '2.1.0' },
-    'layout-style-css/manifest.json': { name: 'layout-style-css', version: '3.0.0' },
-    'interactive-surface-css/manifest.json': { name: 'interactive-surface-css', version: '1.5.0' }
-  }[id];
+  const name = id.replace('/manifest.json', '');
+  const expected = { name, version: expectedPackageVersions[name] };
 
-  assert.ok(expected, `Unexpected ecosystem manifest entry point: ${id}`);
+  assert.ok(expected.version, `Unexpected ecosystem manifest entry point: ${id}`);
   validateSharedManifest(manifest);
   assert.equal(manifest.name, expected.name, `${id} must declare its package name`);
   assert.equal(manifest.version, expected.version, `${id} must declare its package version`);

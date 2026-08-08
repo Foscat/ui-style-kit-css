@@ -51,18 +51,27 @@ jobs:
       - name: Install UI Style Kit dependencies
         run: npm ci
 
+      # The compatibility contract, rather than a mutable branch or release tag,
+      # selects the exact companion artifacts exercised by this integration job.
+      - name: Resolve immutable ecosystem fixture sources
+        id: ecosystem_sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          node -e 'const fs = require("fs"); const contract = JSON.parse(fs.readFileSync("ecosystem-compatibility.json", "utf8")); const output = process.env.GITHUB_OUTPUT; for (const [key, source] of Object.entries({ layout: contract.packageSources["layout-style-css"], interactive: contract.packageSources["interactive-surface-css"] })) { if (!source || !/^[0-9a-f]{40}$/.test(source.revision)) throw new Error(`Invalid ${key} source revision.`); fs.appendFileSync(output, `${key}_repository=${source.repository}\n${key}_revision=${source.revision}\n`); }'
+
       - name: Checkout Layout Style CSS contract fixture
         uses: actions/checkout@v6
         with:
-          repository: Foscat/Layout-Style-CSS
-          ref: 3.0.0
+          repository: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.layout_revision }}
           path: _ecosystem/Layout-Style-CSS
 
       - name: Checkout Interactive Surface CSS contract fixture
         uses: actions/checkout@v6
         with:
-          repository: Foscat/Interactive-Surface-CSS
-          ref: 1.5.0
+          repository: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
           path: _ecosystem/Interactive-Surface-CSS
 
       - name: Install Layout Style CSS fixture dependencies

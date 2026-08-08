@@ -4,6 +4,8 @@ UI Style Kit CSS is the visual layer in the three-library CSS ecosystem. It can 
 
 `ecosystem-compatibility.json` is the authoritative source for supported ranges, validated combinations, canonical imports, and deprecated bridge metadata. UI Style Kit owns this file temporarily until a dedicated ecosystem fixture repository is introduced.
 
+Its companion source records pin the exact repository revisions used by integration and release verification. Update those immutable pins whenever a later task changes a companion contract; Task 9/final release work replaces the interim Task 4 pins with final heads.
+
 ## Aligned Versions
 
 | Library | Current aligned version | Owns |

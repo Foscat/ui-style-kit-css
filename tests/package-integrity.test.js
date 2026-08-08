@@ -453,33 +453,37 @@ test('release verification script is non-publishing and covers the full release 
   assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
 });
 
-test('publishing docs expose the packed ecosystem compatibility gate', () => {
+test('publishing docs expose the coordinated packed ecosystem compatibility gate', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
   assert.match(packageJson.scripts['check:ecosystem:packs'], /scripts\/check-ecosystem-packs\.mjs/);
   assert.ok(fs.existsSync(path.join(rootDir, 'scripts', 'check-ecosystem-packs.mjs')));
   assert.match(publishingGuide, /npm run check:ecosystem:packs/);
   assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
-  assert.match(publishingGuide, /--ui-spec ui-style-kit-css@2\.1\.0/);
-  assert.match(publishingGuide, /--layout-spec layout-style-css@3\.0\.0/);
-  assert.match(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
+  assert.match(publishingGuide, /--layout-repo \.\.\/Layout-Style-CSS/);
+  assert.match(publishingGuide, /--interactive-repo \.\.\/Interactive-Surface-CSS/);
+  assert.match(publishingGuide, /immutable revision pins from `ecosystem-compatibility\.json`/);
 });
 
-test('publishing docs describe current registry proof without re-releasing published versions', () => {
+test('publishing docs describe coordinated proof without re-releasing packages', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
   assert.match(publishingGuide, /No package, tag, or registry release occurs without explicit approval/i);
-  assert.match(publishingGuide, /already published[^\n]*ui-style-kit-css@2\.1\.0/i);
-  assert.match(publishingGuide, /registry-only ecosystem proof/i);
+  assert.match(publishingGuide, /coordinated checked-out ecosystem proof/i);
+  assert.doesNotMatch(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
   assert.doesNotMatch(publishingGuide, /Release `ui-style-kit-css@2\.(?:0\.4|1\.0)`/);
 });
 
-test('publishing workflow stages current ecosystem documentation for packed import validation', () => {
+test('publishing workflow resolves immutable ecosystem sources for packed import validation', () => {
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'npm-publish.yml'), 'utf8');
 
-  assert.match(workflow, /repository: Foscat\/Layout-Style-CSS\s+ref: 3\.0\.0/);
-  assert.match(workflow, /repository: Foscat\/Interactive-Surface-CSS\s+ref: 1\.5\.0/);
+  assert.match(workflow, /id: ecosystem_sources/);
+  assert.match(workflow, /contract\.packageSources\["layout-style-css"\]/);
+  assert.match(workflow, /contract\.packageSources\["interactive-surface-css"\]/);
+  assert.match(workflow, /ref: \$\{\{ steps\.ecosystem_sources\.outputs\.layout_revision \}\}/);
+  assert.match(workflow, /ref: \$\{\{ steps\.ecosystem_sources\.outputs\.interactive_revision \}\}/);
   assert.match(workflow, /UI_STYLE_KIT_LAYOUT_DOCS_REPO:/);
+  assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_REPO:/);
   assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_DOCS_REPO:/);
 });
 

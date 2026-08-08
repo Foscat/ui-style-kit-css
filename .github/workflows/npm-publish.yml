@@ -122,6 +122,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Release verification packs the immutable Task 4 companion artifacts
+      # selected by the checked-in compatibility contract.
+      - name: Resolve immutable ecosystem fixture sources
+        id: ecosystem_sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          node -e 'const fs = require("fs"); const contract = JSON.parse(fs.readFileSync("ecosystem-compatibility.json", "utf8")); const output = process.env.GITHUB_OUTPUT; for (const [key, source] of Object.entries({ layout: contract.packageSources["layout-style-css"], interactive: contract.packageSources["interactive-surface-css"] })) { if (!source || !/^[0-9a-f]{40}$/.test(source.revision)) throw new Error(`Invalid ${key} source revision.`); fs.appendFileSync(output, `${key}_repository=${source.repository}\n${key}_revision=${source.revision}\n`); }'
+
       - name: Check if version already exists on npm
         id: npm_version_check
         shell: bash
@@ -157,22 +166,22 @@ jobs:
         if: steps.npm_version_check.outputs.already_published != 'true'
         run: npm run test:e2e:install:ci
 
-      # Stage the current companion sources so the prepublish gate can pack Layout
-      # and scan the explicitly maintained documentation from both repositories.
+      # Stage the immutable companion sources so the prepublish gate packs the
+      # coordinated artifacts and scans their explicitly maintained documentation.
       - name: Checkout Layout Style CSS for publish verification
         if: steps.npm_version_check.outputs.already_published != 'true'
         uses: actions/checkout@v6
         with:
-          repository: Foscat/Layout-Style-CSS
-          ref: 3.0.0
+          repository: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.layout_revision }}
           path: _ecosystem/Layout-Style-CSS
 
       - name: Checkout Interactive Surface CSS documentation for publish verification
         if: steps.npm_version_check.outputs.already_published != 'true'
         uses: actions/checkout@v6
         with:
-          repository: Foscat/Interactive-Surface-CSS
-          ref: 1.5.0
+          repository: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
           path: _ecosystem/Interactive-Surface-CSS
 
       # Layout's prepack contract tests inspect its installed UI dependency, so
@@ -189,4 +198,5 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           UI_STYLE_KIT_LAYOUT_REPO: ${{ github.workspace }}/_ecosystem/Layout-Style-CSS
           UI_STYLE_KIT_LAYOUT_DOCS_REPO: ${{ github.workspace }}/_ecosystem/Layout-Style-CSS
+          UI_STYLE_KIT_INTERACTIVE_REPO: ${{ github.workspace }}/_ecosystem/Interactive-Surface-CSS
           UI_STYLE_KIT_INTERACTIVE_DOCS_REPO: ${{ github.workspace }}/_ecosystem/Interactive-Surface-CSS
