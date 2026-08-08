@@ -26,6 +26,11 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.schemaVersion, 1);
   assert.equal(compatibility.ownership.repository, 'ui-style-kit-css');
   assert.equal(compatibility.ownership.status, 'temporary');
+  assert.equal(
+    compatibility.packageSources['layout-style-css'].revision,
+    'a5c5897f11915b61481460fcf2f13e3a4c81cd1a',
+    'The ecosystem fixture must pin the Layout commit that publishes personality metadata.'
+  );
   assert.deepEqual(
     compatibility.packages.map(({ name, supportedRange }) => [name, supportedRange]),
     [

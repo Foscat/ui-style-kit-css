@@ -73,7 +73,7 @@ test('ecosystem compatibility pins immutable companion sources', () => {
     },
     'layout-style-css': {
       repository: 'Foscat/Layout-Style-CSS',
-      revision: '0abd21357f464c2e3b034f7cd42a6c890538148e'
+      revision: 'a5c5897f11915b61481460fcf2f13e3a4c81cd1a'
     }
   });
 

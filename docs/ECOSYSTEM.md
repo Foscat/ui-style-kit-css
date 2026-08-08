@@ -20,6 +20,16 @@ The pinned companion commits are local contract fixtures until they are pushed t
 
 UI Style Kit `2.1.0`, Interactive Surface `1.5.0`, and Layout Style `3.0.0` are released companion packages for this integration contract.
 
+## Layout-to-visual pairing matrix
+
+Pairings are recommendations, never dependencies. `data-ly-layout`, `data-ui`, `data-theme`, and `data-mode` remain independently selectable; `layout-style-css/personalities.json` publishes the machine-readable source.
+
+| Layout personality | Visual guidance |
+| --- | --- |
+| Minimal SaaS, Bento, Maximalist, Bauhaus, Tactile, Neumorphism, Retrofuturism, Brutalism, Cyberpunk, Y2K, Retro Glass | Native UI Style Kit match with the same identifier |
+| F-pattern, Z-pattern, Split Screen, Mondrian | Any UI Style Kit visual preset; these are structure-only layouts |
+| Synthwave | Recommend `cyberpunk` or `retrofuturism`; Layout's rendered demo verifies each preset while keeping the synthwave layout selected |
+
 ## Adoption Paths
 
 ### Use one
