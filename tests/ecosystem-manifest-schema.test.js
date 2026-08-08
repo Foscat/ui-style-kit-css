@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -49,6 +51,19 @@ test('ecosystem compatibility rejects malformed identity and relationship metada
   }
 });
 
+test('ecosystem compatibility rejects duplicate and incomplete ownership metadata', () => {
+  for (const mutate of [
+    (contract) => contract.packages.push(structuredClone(contract.packages[0])),
+    (contract) => contract.deprecatedImports.push({ status: 'deprecated', replacement: 'ui-style-kit-css/visual.css' }),
+    (contract) => delete contract.ownership.note,
+    (contract) => (contract.packages[0].owns = '')
+  ]) {
+    const invalid = structuredClone(ecosystemCompatibility);
+    mutate(invalid);
+    assert.throws(() => validateEcosystemCompatibility(invalid));
+  }
+});
+
 test('ecosystem compatibility pins immutable companion sources', () => {
   assert.deepEqual(ecosystemCompatibility.packageSources, {
     'ui-style-kit-css': { checkout: 'current' },
@@ -65,4 +80,27 @@ test('ecosystem compatibility pins immutable companion sources', () => {
   const mutableRevision = structuredClone(ecosystemCompatibility);
   mutableRevision.packageSources['interactive-surface-css'].revision = 'main';
   assert.throws(() => validateEcosystemCompatibility(mutableRevision), /source metadata/);
+});
+
+test('workflow outputs require pushed companion revisions before UI validation', () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'usk-ecosystem-workflow-contract-'));
+  const outputPath = path.join(tempDir, 'github-output.txt');
+
+  try {
+    execFileSync(process.execPath, ['scripts/write-ecosystem-workflow-outputs.mjs'], {
+      cwd: rootDir,
+      env: { ...process.env, GITHUB_OUTPUT: outputPath },
+      stdio: 'pipe'
+    });
+    const outputs = Object.fromEntries(
+      fs.readFileSync(outputPath, 'utf8').trim().split('\n').map((line) => line.split('='))
+    );
+
+    assert.equal(outputs.requires_companion_remote_push, 'true');
+    assert.equal(outputs.remote_verification_order, 'interactive-surface-css,layout-style-css,ui-style-kit-css');
+    assert.equal(outputs.interactive_revision, ecosystemCompatibility.packageSources['interactive-surface-css'].revision);
+    assert.equal(outputs.layout_revision, ecosystemCompatibility.packageSources['layout-style-css'].revision);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 });

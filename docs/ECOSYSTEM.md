@@ -6,6 +6,10 @@ UI Style Kit CSS is the visual layer in the three-library CSS ecosystem. It can 
 
 Its companion source records pin the exact repository revisions used by integration and release verification. Update those immutable pins whenever a later task changes a companion contract; Task 9/final release work replaces the interim Task 4 pins with final heads.
 
+## Remote Validation Sequence
+
+The pinned companion commits are local contract fixtures until they are pushed to their GitHub repositories. Before a UI branch or pull request is expected to validate, push Interactive Surface first, then Layout Style, and verify each pinned SHA is fetchable as a remote commit object. Only then push the UI branch and verify its CI. The CI and publish workflows perform the same remote-object preflight, so they intentionally fail rather than silently substituting a mutable branch or stale registry artifact when either companion revision is unavailable.
+
 ## Aligned Versions
 
 | Library | Current aligned version | Owns |

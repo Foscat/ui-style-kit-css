@@ -56,9 +56,30 @@ jobs:
       - name: Resolve immutable ecosystem fixture sources
         id: ecosystem_sources
         shell: bash
+        run: node scripts/write-ecosystem-workflow-outputs.mjs
+
+      # The companion commits must be pushed first; checking remote object reachability
+      # makes that sequencing failure explicit before Actions attempts a checkout.
+      - name: Require pushed companion commits before UI validation
+        shell: bash
+        env:
+          INTERACTIVE_REPOSITORY: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          INTERACTIVE_REVISION: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
+          LAYOUT_REPOSITORY: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          LAYOUT_REVISION: ${{ steps.ecosystem_sources.outputs.layout_revision }}
         run: |
           set -euo pipefail
-          node -e 'const fs = require("fs"); const contract = JSON.parse(fs.readFileSync("ecosystem-compatibility.json", "utf8")); const output = process.env.GITHUB_OUTPUT; for (const [key, source] of Object.entries({ layout: contract.packageSources["layout-style-css"], interactive: contract.packageSources["interactive-surface-css"] })) { if (!source || !/^[0-9a-f]{40}$/.test(source.revision)) throw new Error(`Invalid ${key} source revision.`); fs.appendFileSync(output, `${key}_repository=${source.repository}\n${key}_revision=${source.revision}\n`); }'
+          for source in "${INTERACTIVE_REPOSITORY}:${INTERACTIVE_REVISION}" "${LAYOUT_REPOSITORY}:${LAYOUT_REVISION}"; do
+            repository="${source%%:*}"
+            revision="${source##*:}"
+            fixture_dir="$(mktemp -d)"
+            if ! git init --bare "${fixture_dir}" >/dev/null || ! git -C "${fixture_dir}" fetch --no-tags --depth=1 "https://github.com/${repository}.git" "${revision}" >/dev/null 2>&1 || ! git -C "${fixture_dir}" cat-file -e "${revision}^{commit}"; then
+              echo "::error::${repository}@${revision} is unavailable. Push the companion commit, verify its remote object, then push or validate this UI branch."
+              rm -rf "${fixture_dir}"
+              exit 1
+            fi
+            rm -rf "${fixture_dir}"
+          done
 
       - name: Checkout Layout Style CSS contract fixture
         uses: actions/checkout@v6

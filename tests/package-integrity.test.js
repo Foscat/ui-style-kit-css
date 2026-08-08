@@ -478,8 +478,9 @@ test('publishing workflow resolves immutable ecosystem sources for packed import
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'npm-publish.yml'), 'utf8');
 
   assert.match(workflow, /id: ecosystem_sources/);
-  assert.match(workflow, /contract\.packageSources\["layout-style-css"\]/);
-  assert.match(workflow, /contract\.packageSources\["interactive-surface-css"\]/);
+  assert.match(workflow, /node scripts\/write-ecosystem-workflow-outputs\.mjs/);
+  assert.match(workflow, /Require pushed companion commits before publish verification/);
+  assert.match(workflow, /git -C "\$\{fixture_dir\}" fetch --no-tags --depth=1/);
   assert.match(workflow, /ref: \$\{\{ steps\.ecosystem_sources\.outputs\.layout_revision \}\}/);
   assert.match(workflow, /ref: \$\{\{ steps\.ecosystem_sources\.outputs\.interactive_revision \}\}/);
   assert.match(workflow, /UI_STYLE_KIT_LAYOUT_DOCS_REPO:/);

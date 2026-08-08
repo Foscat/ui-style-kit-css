@@ -14,6 +14,8 @@ By default, `npm run check:ecosystem:packs` packs this repository and the siblin
 
 The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated Task 4 artifacts. Advance those pins whenever later work changes a companion contract; Task 9/final release work is responsible for replacing these interim fixture revisions with final heads.
 
+Before expecting a UI pull request or release verification to pass, push the Interactive Surface and Layout Style commits, verify both pinned SHAs as remote commit objects, then push the UI branch and verify its CI. The workflows enforce that order with a remote-object fetch preflight and do not fall back to mutable branches or registry packages.
+
 `npm run build` uses exactly pinned CSS Tree parsing and Lightning CSS formatting/minification. Generated minified bundles retain the release banner while preserving grammar-sensitive selector and `calc()` whitespace.
 
 The npm artifact is library-focused: `dist/`, `styles/`, docs, and metadata. Demo pages, favicon source assets, and social preview images remain checked in for GitHub Pages but are excluded from the tarball to keep package installs small.
