@@ -447,6 +447,9 @@ test('clean-install ecosystem scripts and CI enforce current and minimum rendere
   assert.match(workflow, /npm run check:ecosystem:current/);
   assert.match(workflow, /npm run check:ecosystem:minimum/);
   assert.doesNotMatch(workflow, /check:ecosystem:(?:current|minimum)[^\n]*--skip-browser/);
+  assert.doesNotMatch(workflow, /--update-snapshots/);
+  assert.equal(packageJson.devDependencies.pixelmatch, '7.2.0');
+  assert.equal(packageJson.devDependencies.pngjs, '7.0.0');
 });
 
 test('release verification script is non-publishing and covers the full release gate', () => {

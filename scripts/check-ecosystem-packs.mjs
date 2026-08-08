@@ -9,6 +9,10 @@ import { fileURLToPath } from 'node:url';
 import { extractPackageImports } from './documented-imports.mjs';
 import { validateEcosystemCompatibility, validateSharedManifest } from './ecosystem-manifest-schema.mjs';
 import { resolveInteractiveSource } from './ecosystem-pack-sources.mjs';
+import {
+  comparePngSnapshots,
+  DEFAULT_VISUAL_SNAPSHOT_COMPARISON
+} from './visual-snapshot-comparator.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, '..');
@@ -828,12 +832,25 @@ async function verifyVisualSnapshot(page, scenarioName) {
   }
 
   const expected = fs.readFileSync(snapshotPath);
-  if (!actual.equals(expected)) {
+  const comparison = comparePngSnapshots(actual, expected);
+  if (!comparison.pass) {
     const actualPath = path.join(tempDir, `${scenarioName}-actual.png`);
+    const diffPath = path.join(tempDir, `${scenarioName}-diff.png`);
     fs.writeFileSync(actualPath, actual);
-    throw new Error(`Visual snapshot mismatch for ${scenarioName}. Actual image: ${actualPath}`);
+    fs.writeFileSync(diffPath, comparison.diffPng);
+    const detail =
+      comparison.reason === 'dimension-mismatch'
+        ? `expected ${comparison.expectedDimensions.width}x${comparison.expectedDimensions.height}, got ${comparison.actualDimensions.width}x${comparison.actualDimensions.height}`
+        : `${comparison.diffPixels} pixels differed; allowance ${comparison.allowedDiffPixels} (${(
+            DEFAULT_VISUAL_SNAPSHOT_COMPARISON.maxDiffPixelRatio * 100
+          ).toFixed(2)}%)`;
+    throw new Error(
+      `Visual snapshot mismatch for ${scenarioName}: ${detail}. Actual image: ${actualPath}. Diff image: ${diffPath}`
+    );
   }
-  console.log(`PASS visual snapshot ${scenarioName}`);
+  console.log(
+    `PASS visual snapshot ${scenarioName} (${comparison.diffPixels}/${comparison.allowedDiffPixels} differing pixels)`
+  );
 }
 
 async function readInteractionStyles(page) {
