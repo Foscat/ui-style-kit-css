@@ -34,6 +34,45 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
 
+  ecosystem-packs:
+    name: Packed Ecosystem Contract
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout UI Style Kit
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install UI Style Kit dependencies
+        run: npm ci
+
+      - name: Checkout Layout Style CSS contract fixture
+        uses: actions/checkout@v6
+        with:
+          repository: Foscat/Layout-Style-CSS
+          ref: 3.0.0
+          path: _ecosystem/Layout-Style-CSS
+
+      - name: Checkout Interactive Surface CSS contract fixture
+        uses: actions/checkout@v6
+        with:
+          repository: Foscat/Interactive-Surface-CSS
+          ref: 1.5.0
+          path: _ecosystem/Interactive-Surface-CSS
+
+      - name: Install Layout Style CSS fixture dependencies
+        working-directory: _ecosystem/Layout-Style-CSS
+        run: npm ci
+
+      # This PR-safe gate installs only packed artifacts and never publishes.
+      - name: Resolve documented npm exports from packed artifacts
+        run: npm run check:ecosystem:packs -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --skip-browser
+
   playwright:
     name: Playwright E2E
     needs: quality

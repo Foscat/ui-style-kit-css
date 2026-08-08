@@ -7,11 +7,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { extractPackageImports } from './documented-imports.mjs';
-import { validateSharedManifest } from './ecosystem-manifest-schema.mjs';
+import { validateEcosystemCompatibility, validateSharedManifest } from './ecosystem-manifest-schema.mjs';
 import { resolveInteractiveSource } from './ecosystem-pack-sources.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, '..');
+const ecosystemCompatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
+validateEcosystemCompatibility(ecosystemCompatibility);
+const canonicalEntrypoints = ecosystemCompatibility.canonicalImports.map(({ specifier }) => specifier);
 const npmRunner = npmInvocation();
 const tempPrefix = 'usk-ecosystem-packs-';
 
@@ -197,10 +200,7 @@ const pairedScenarios = [
 ];
 
 const allThreeEntrypoints = [
-  'ui-style-kit-css/visual.css',
-  'ui-style-kit-css/interactive-surface-theme.css',
-  'interactive-surface-css/state-core.css',
-  'layout-style-css',
+  ...canonicalEntrypoints,
   'ui-style-kit-css',
   'ui-style-kit-css/with-bridge.css',
   'ui-style-kit-css/interactive-surface-bridge.css',
