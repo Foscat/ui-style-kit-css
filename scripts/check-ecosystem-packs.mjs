@@ -15,13 +15,19 @@ const rootDir = path.resolve(scriptDir, '..');
 const ecosystemCompatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
 validateEcosystemCompatibility(ecosystemCompatibility);
 const canonicalEntrypoints = ecosystemCompatibility.canonicalImports.map(({ specifier }) => specifier);
-const expectedPackageVersions = ecosystemCompatibility.supportedCombinations.current;
 const npmRunner = npmInvocation();
 const tempPrefix = 'usk-ecosystem-packs-';
+const visualSnapshotDir = path.join(rootDir, 'tests', 'snapshots', 'clean-install');
+const visualSnapshotScenarios = new Set(['ui-interaction', 'ui-layout', 'all-three']);
 
 const options = parseArgs(process.argv.slice(2));
-const uiSpec = options.uiSpec ?? process.env.UI_STYLE_KIT_UI_SPEC;
-const layoutSpec = options.layoutSpec ?? process.env.UI_STYLE_KIT_LAYOUT_SPEC;
+const expectedPackageVersions = ecosystemCompatibility.supportedCombinations[options.matrix];
+const publishedMinimumSpec = (packageName) =>
+  options.matrix === 'minimum' ? `${packageName}@${expectedPackageVersions[packageName]}` : null;
+const uiSpec =
+  options.uiSpec ?? process.env.UI_STYLE_KIT_UI_SPEC ?? publishedMinimumSpec('ui-style-kit-css');
+const layoutSpec =
+  options.layoutSpec ?? process.env.UI_STYLE_KIT_LAYOUT_SPEC ?? publishedMinimumSpec('layout-style-css');
 const layoutRepo = layoutSpec
   ? null
   : path.resolve(
@@ -33,7 +39,14 @@ const layoutDocsRepo = path.resolve(
     layoutRepo ??
     path.join(rootDir, '..', 'Layout-Style-CSS')
 );
-const { interactiveSpec, interactiveRepo } = resolveInteractiveSource(options, process.env, rootDir);
+const interactiveOptions = {
+  ...options,
+  interactiveSpec:
+    options.interactiveSpec ??
+    process.env.UI_STYLE_KIT_INTERACTIVE_SPEC ??
+    publishedMinimumSpec('interactive-surface-css')
+};
+const { interactiveSpec, interactiveRepo } = resolveInteractiveSource(interactiveOptions, process.env, rootDir);
 const interactiveDocsRepo = path.resolve(
   options.interactiveDocsRepo ??
     process.env.UI_STYLE_KIT_INTERACTIVE_DOCS_REPO ??
@@ -166,9 +179,27 @@ const interactiveEntrypoints = [
   'interactive-surface-css/standalone-preset.css'
 ];
 
-const pairedScenarios = [
+const ecosystemScenarios = [
   {
-    name: 'ui-plus-interactive',
+    name: 'ui-only',
+    packages: ['ui'],
+    entrypoints: uiEntrypoints,
+    browserImports: ['ui-style-kit-css/visual.css']
+  },
+  {
+    name: 'interaction-only',
+    packages: ['interactive'],
+    entrypoints: interactiveEntrypoints,
+    browserImports: ['interactive-surface-css/interactive-surface.css']
+  },
+  {
+    name: 'layout-only',
+    packages: ['layout'],
+    entrypoints: layoutEntrypoints,
+    browserImports: ['layout-style-css']
+  },
+  {
+    name: 'ui-interaction',
     packages: ['ui', 'interactive'],
     entrypoints: [
       'ui-style-kit-css/visual.css',
@@ -177,38 +208,49 @@ const pairedScenarios = [
       'ui-style-kit-css/with-bridge.css',
       'ui-style-kit-css/interactive-surface-bridge.css',
       'interactive-surface-css/interactive-surface.css'
+    ],
+    browserImports: [
+      'ui-style-kit-css/visual.css',
+      'ui-style-kit-css/interactive-surface-theme.css',
+      'interactive-surface-css/state-core.css'
     ]
   },
   {
-    name: 'ui-plus-layout',
+    name: 'ui-layout',
     packages: ['ui', 'layout'],
     entrypoints: [
       'ui-style-kit-css/visual.css',
       'layout-style-css',
       'ui-style-kit-css'
-    ]
+    ],
+    browserImports: ['ui-style-kit-css/visual.css', 'layout-style-css']
   },
   {
-    name: 'layout-plus-interactive',
+    name: 'interaction-layout',
     packages: ['layout', 'interactive'],
     entrypoints: [
       'layout-style-css',
       'layout-style-css/core.css',
       'interactive-surface-css/state-core.css',
       'interactive-surface-css/interactive-surface.css'
-    ]
+    ],
+    browserImports: ['interactive-surface-css/interactive-surface.css', 'layout-style-css']
+  },
+  {
+    name: 'all-three',
+    packages: ['ui', 'interactive', 'layout'],
+    entrypoints: [
+      ...canonicalEntrypoints,
+      'ui-style-kit-css',
+      'ui-style-kit-css/with-bridge.css',
+      'ui-style-kit-css/interactive-surface-bridge.css',
+      'interactive-surface-css/interactive-surface.css',
+      'ui-style-kit-css/manifest.json',
+      'layout-style-css/manifest.json',
+      'interactive-surface-css/manifest.json'
+    ],
+    browserImports: canonicalEntrypoints
   }
-];
-
-const allThreeEntrypoints = [
-  ...canonicalEntrypoints,
-  'ui-style-kit-css',
-  'ui-style-kit-css/with-bridge.css',
-  'ui-style-kit-css/interactive-surface-bridge.css',
-  'interactive-surface-css/interactive-surface.css',
-  'ui-style-kit-css/manifest.json',
-  'layout-style-css/manifest.json',
-  'interactive-surface-css/manifest.json'
 ];
 
 const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), tempPrefix));
@@ -216,69 +258,67 @@ const packsDir = path.join(tempDir, 'packs');
 let completed = false;
 
 try {
+  const scenarios = selectScenarios(options.scenarios);
+  const requiredPackages = new Set(scenarios.flatMap(({ packages }) => packages));
   fs.mkdirSync(packsDir, { recursive: true });
-  if (!uiSpec) {
+  if (requiredPackages.has('ui') && !uiSpec) {
     assertDirectory(rootDir, 'UI Style Kit repo');
   }
-  if (!layoutSpec) {
+  if (requiredPackages.has('layout') && !layoutSpec) {
     assertDirectory(layoutRepo, 'Layout Style CSS repo');
   }
-  if (!interactiveSpec) {
+  if (requiredPackages.has('interactive') && !interactiveSpec) {
     assertDirectory(interactiveRepo, 'Interactive Surface CSS repo');
   }
-  assertDirectory(layoutDocsRepo, 'Layout Style CSS documentation repo');
-  assertDirectory(interactiveDocsRepo, 'Interactive Surface CSS documentation repo');
+  if (!options.skipDocs) {
+    assertDirectory(layoutDocsRepo, 'Layout Style CSS documentation repo');
+    assertDirectory(interactiveDocsRepo, 'Interactive Surface CSS documentation repo');
+  }
 
+  console.log(`Compatibility matrix: ${options.matrix}`);
   console.log(`Using UI Style Kit package: ${uiSpec ?? rootDir}`);
   console.log(`Using Layout Style CSS package: ${layoutSpec ?? layoutRepo}`);
   console.log(`Using Interactive Surface package: ${interactiveSpec ?? interactiveRepo}`);
 
-  const tarballs = {
-    ui: uiSpec ? packPackageSpec(uiSpec, packsDir) : packLocalPackage(rootDir, packsDir),
-    layout: layoutSpec ? packPackageSpec(layoutSpec, packsDir) : packLocalPackage(layoutRepo, packsDir),
-    interactive: interactiveSpec
+  const tarballs = {};
+  if (requiredPackages.has('ui')) {
+    tarballs.ui = uiSpec ? packPackageSpec(uiSpec, packsDir) : packLocalPackage(rootDir, packsDir);
+  }
+  if (requiredPackages.has('layout')) {
+    tarballs.layout = layoutSpec ? packPackageSpec(layoutSpec, packsDir) : packLocalPackage(layoutRepo, packsDir);
+  }
+  if (requiredPackages.has('interactive')) {
+    tarballs.interactive = interactiveSpec
       ? packPackageSpec(interactiveSpec, packsDir)
-      : packLocalPackage(interactiveRepo, packsDir)
-  };
-
-  await runScenario({
-    name: 'ui-standalone',
-    packagePaths: [tarballs.ui],
-    entrypoints: uiEntrypoints
-  });
-  await runScenario({
-    name: 'layout-standalone',
-    packagePaths: [tarballs.layout],
-    entrypoints: layoutEntrypoints
-  });
-  await runScenario({
-    name: 'interactive-standalone',
-    packagePaths: [tarballs.interactive],
-    entrypoints: interactiveEntrypoints
-  });
-
-  for (const scenario of pairedScenarios) {
-    await runScenario({
-      name: scenario.name,
-      packagePaths: scenario.packages.map((name) => tarballs[name]),
-      entrypoints: scenario.entrypoints
-    });
+      : packLocalPackage(interactiveRepo, packsDir);
   }
 
-  const allThreeDir = await runScenario({
-    name: 'all-three-canonical-and-legacy',
-    packagePaths: [tarballs.ui, tarballs.layout, tarballs.interactive],
-    entrypoints: allThreeEntrypoints
-  });
+  let allThreeDir;
+  for (const scenario of scenarios) {
+    const scenarioDir = await runScenario({
+      name: scenario.name,
+      packageNames: scenario.packages,
+      packagePaths: scenario.packages.map((name) => tarballs[name]),
+      entrypoints:
+        options.matrix === 'minimum'
+          ? scenario.entrypoints.filter((entrypoint) => !entrypoint.endsWith('/manifest.json'))
+          : scenario.entrypoints
+    });
+    if (scenario.name === 'all-three') {
+      allThreeDir = scenarioDir;
+    }
+    if (!options.skipBrowser) {
+      await runBrowserSmoke(scenarioDir, scenario);
+    }
+  }
 
-  validateDocumentedImports(allThreeDir);
-
-  if (!options.skipBrowser) {
-    await runBrowserSmoke(allThreeDir);
+  if (!options.skipDocs) {
+    assert.ok(allThreeDir, 'Documentation validation requires the all-three scenario.');
+    validateDocumentedImports(allThreeDir);
   }
 
   completed = true;
-  console.log('Packed ecosystem compatibility checks passed.');
+  console.log(`Packed ecosystem compatibility checks passed for the ${options.matrix} matrix.`);
 } finally {
   if (completed && !options.keepTemp) {
     removeSafeTempDir(tempDir);
@@ -290,7 +330,11 @@ try {
 function parseArgs(args) {
   const parsed = {
     keepTemp: false,
-    skipBrowser: false
+    matrix: 'current',
+    scenarios: [],
+    skipBrowser: false,
+    skipDocs: false,
+    updateSnapshots: false
   };
 
   for (let index = 0; index < args.length; index += 1) {
@@ -311,11 +355,23 @@ function parseArgs(args) {
       parsed.interactiveDocsRepo = readValue(args, (index += 1), arg);
     } else if (arg === '--keep-temp') {
       parsed.keepTemp = true;
+    } else if (arg === '--matrix') {
+      parsed.matrix = readValue(args, (index += 1), arg);
+    } else if (arg === '--scenario') {
+      parsed.scenarios.push(readValue(args, (index += 1), arg));
     } else if (arg === '--skip-browser') {
       parsed.skipBrowser = true;
+    } else if (arg === '--skip-docs') {
+      parsed.skipDocs = true;
+    } else if (arg === '--update-snapshots') {
+      parsed.updateSnapshots = true;
     } else {
       throw new Error(`Unknown option: ${arg}`);
     }
+  }
+
+  if (!['current', 'minimum'].includes(parsed.matrix)) {
+    throw new Error(`--matrix must be current or minimum, got ${parsed.matrix}.`);
   }
 
   // Keep source selection explicit so release checks do not accidentally mix a
@@ -328,6 +384,20 @@ function parseArgs(args) {
   }
 
   return parsed;
+}
+
+function selectScenarios(requestedNames) {
+  if (requestedNames.length === 0) {
+    return ecosystemScenarios;
+  }
+
+  const requested = new Set(requestedNames);
+  const selected = ecosystemScenarios.filter(({ name }) => requested.has(name));
+  const unknown = [...requested].filter((name) => !selected.some((scenario) => scenario.name === name));
+  if (unknown.length > 0) {
+    throw new Error(`Unknown scenario: ${unknown.join(', ')}`);
+  }
+  return selected;
 }
 
 function readValue(args, index, optionName) {
@@ -418,7 +488,7 @@ function resolvePackedTarball(output, destination) {
   return tarballPath;
 }
 
-async function runScenario({ name, packagePaths, entrypoints }) {
+async function runScenario({ name, packageNames, packagePaths, entrypoints }) {
   const scenarioDir = path.join(tempDir, name);
   fs.mkdirSync(scenarioDir, { recursive: true });
   fs.writeFileSync(
@@ -429,8 +499,47 @@ async function runScenario({ name, packagePaths, entrypoints }) {
   // Installing the packed artifacts in a fresh consumer catches broken exports and missing files.
   runNpm(['install', '--ignore-scripts', '--silent', ...packagePaths], { cwd: scenarioDir });
   validateEntrypoints(scenarioDir, entrypoints, name);
+  validateInstalledPackageVersions(scenarioDir, packageNames, name);
   console.log(`PASS ${name}`);
   return scenarioDir;
+}
+
+function validateInstalledPackageVersions(scenarioDir, packageNames, scenarioName) {
+  const resolver = createRequire(path.join(scenarioDir, 'package.json'));
+
+  for (const packageKey of packageNames) {
+    const packageName = {
+      ui: 'ui-style-kit-css',
+      interactive: 'interactive-surface-css',
+      layout: 'layout-style-css'
+    }[packageKey];
+    let cursor = path.dirname(resolver.resolve(packageName));
+    let packagePath;
+
+    while (cursor.startsWith(scenarioDir)) {
+      const candidate = path.join(cursor, 'package.json');
+      if (fs.existsSync(candidate)) {
+        const candidateManifest = JSON.parse(fs.readFileSync(candidate, 'utf8'));
+        if (candidateManifest.name === packageName) {
+          packagePath = candidate;
+          break;
+        }
+      }
+      const parent = path.dirname(cursor);
+      if (parent === cursor) {
+        break;
+      }
+      cursor = parent;
+    }
+
+    assert.ok(packagePath, `${scenarioName}: could not locate installed metadata for ${packageName}`);
+    const installed = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+    assert.equal(
+      installed.version,
+      expectedPackageVersions[packageName],
+      `${scenarioName}: installed ${packageName} version drifted`
+    );
+  }
 }
 
 function validateEntrypoints(scenarioDir, entrypoints, scenarioName) {
@@ -511,108 +620,240 @@ function validateDocumentedImports(scenarioDir) {
   console.log(`INFO historical/migration documents reviewed separately: ${historicalDocumentation.join(', ')}`);
 }
 
-async function runBrowserSmoke(scenarioDir) {
+async function runBrowserSmoke(scenarioDir, scenario) {
   const resolver = createRequire(path.join(scenarioDir, 'package.json'));
   const { chromium } = await import('playwright');
-  const suites = {
-    canonical: [
-      'ui-style-kit-css/visual.css',
-      'ui-style-kit-css/interactive-surface-theme.css',
-      'interactive-surface-css/state-core.css',
-      'layout-style-css'
-    ],
-    legacy: [
-      'ui-style-kit-css',
-      'ui-style-kit-css/with-bridge.css',
-      'ui-style-kit-css/interactive-surface-bridge.css',
-      'interactive-surface-css/interactive-surface.css',
-      'layout-style-css'
-    ]
-  };
-
   const browser = await chromium.launch();
   try {
-    for (const [name, imports] of Object.entries(suites)) {
-      const context = await browser.newContext({ reducedMotion: 'no-preference' });
-      const page = await context.newPage();
-      const issues = [];
-      page.on('console', (message) => {
-        if (['error', 'warning'].includes(message.type())) {
-          issues.push(`${message.type()}: ${message.text()}`);
-        }
-      });
-      page.on('pageerror', (error) => issues.push(`pageerror: ${error.message}`));
+    const context = await browser.newContext({
+      reducedMotion: 'no-preference',
+      viewport: { width: 1280, height: 800 }
+    });
+    const page = await context.newPage();
+    const issues = [];
+    const unexpectedRequests = [];
+    page.on('console', (message) => {
+      if (['error', 'warning'].includes(message.type())) {
+        issues.push(`${message.type()}: ${message.text()}`);
+      }
+    });
+    page.on('pageerror', (error) => issues.push(`pageerror: ${error.message}`));
+    await page.route('**/*', async (route) => {
+      unexpectedRequests.push(route.request().url());
+      await route.abort('internetdisconnected');
+    });
 
-      // The smoke fixture exercises the canonical root contracts without relying on demo-only assets.
-      await page.setContent(`<!doctype html>
+    // The consumer supplies only neutral test geometry; package CSS owns every asserted behavior.
+    await page.setContent(`<!doctype html>
 <html>
-<head><meta charset="utf-8"><style>${cssFor(resolver, imports)}</style></head>
-<body class="ly-root" data-ly-layout="minimal-saas" data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
-  <main class="ly-container saas-stack">
-    <button id="button" class="saas-button-pill interactive-surface variant-primary" type="button"><span>Centered action</span></button>
-    <input id="file" class="saas-field interactive-surface variant-subtle" type="file" />
-    <section id="card" class="saas-card ly-stack"><h2>Pack check</h2><p>Published Interactive Surface smoke.</p></section>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; }
+    .contract-stage { min-block-size: 520px; }
+    .contract-cells > * { min-block-size: 72px; }
+    #visual-snapshot { inline-size: 720px; min-block-size: 260px; padding: 24px; overflow: hidden; }
+    #visual-snapshot .snapshot-action { inline-size: 180px; block-size: 56px; }
+    #visual-snapshot .snapshot-cell { min-block-size: 72px; }
+  </style>
+  <style>${cssFor(resolver, scenario.browserImports)}</style>
+</head>
+<body class="ly-root" tabindex="-1" data-ly-layout="minimal-saas" data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
+  <main id="wrapper" class="contract-stage ly-wrapper ly-wrapper--wide">
+    <section id="stack" class="ly-stack">
+      <button id="focus" class="saas-button saas-button-primary interactive-surface variant-primary" type="button">Focused action</button>
+      <button id="disabled" class="saas-button interactive-surface variant-subtle" type="button" disabled>Disabled</button>
+      <button id="loading" class="saas-button interactive-surface variant-primary" type="button" aria-busy="true">Loading</button>
+      <button id="selected" class="saas-button interactive-surface variant-secondary" type="button" role="option" aria-selected="true">Selected</button>
+      <button id="persistent" class="saas-button interactive-surface variant-primary" type="button" aria-pressed="true">Persistent</button>
+      <label class="saas-field">Native field<input id="field" class="saas-input" type="text" value="Packed consumer"></label>
+      <article id="card" class="saas-card interactive-surface level-1 ly-stack">
+        <h2>Clean consumer</h2>
+        <p>Public tarball entry points only.</p>
+      </article>
+      <section id="recipe" class="contract-cells" data-ly-recipe="card-grid">
+        <article>One</article><article>Two</article><article>Three</article>
+      </section>
+      <section id="grid" class="ly-grid ly-cols-3"><article>Grid one</article><article>Grid two</article></section>
+      <section id="visual-snapshot" class="saas-card ly-stack" aria-label="Visual regression fixture">
+        <div class="contract-cells" data-ly-recipe="card-grid">
+          <button class="snapshot-action saas-button saas-button-primary interactive-surface variant-primary" type="button" aria-pressed="true" aria-label="Selected action"></button>
+          <button class="snapshot-action saas-button interactive-surface variant-subtle" type="button" disabled aria-label="Disabled action"></button>
+          <article class="snapshot-cell saas-card interactive-surface level-1" aria-label="Surface"></article>
+        </div>
+      </section>
+    </section>
   </main>
 </body>
 </html>`);
-      await page.waitForLoadState('domcontentloaded');
-      const snapshot = await page.evaluate(() => {
-        const button = document.querySelector('#button');
-        const span = button.querySelector('span');
-        const file = document.querySelector('#file');
-        const card = document.querySelector('#card');
-        const buttonStyle = getComputedStyle(button);
-        const fileButtonStyle = getComputedStyle(file, '::file-selector-button');
-        const cardStyle = getComputedStyle(card);
-        const rect = button.getBoundingClientRect();
-        const textRect = span.getBoundingClientRect();
+    await page.waitForLoadState('domcontentloaded');
 
+    const packages = new Set(scenario.packages);
+    if (packages.has('ui')) {
+      const uiStyles = await page.evaluate(() => {
+        const bodyStyle = getComputedStyle(document.body);
+        const buttonStyle = getComputedStyle(document.querySelector('#focus'));
+        const cardStyle = getComputedStyle(document.querySelector('#card'));
+        const fieldStyle = getComputedStyle(document.querySelector('#field'));
         return {
-          buttonHeight: rect.height,
-          buttonPaddingStart: parseFloat(buttonStyle.paddingInlineStart),
-          buttonPaddingEnd: parseFloat(buttonStyle.paddingInlineEnd),
-          buttonDisplay: buttonStyle.display,
-          buttonJustify: buttonStyle.justifyContent,
-          buttonAlign: buttonStyle.alignItems,
-          textCenterDelta: Math.abs(textRect.left + textRect.width / 2 - (rect.left + rect.width / 2)),
-          buttonBg: buttonStyle.backgroundColor,
-          buttonFg: buttonStyle.color,
-          buttonBorder: buttonStyle.borderColor,
-          focusRingToken: buttonStyle.getPropertyValue('--interactive-surface-focus-ring-color').trim(),
-          transitionProperty: buttonStyle.transitionProperty,
-          transitionDuration: buttonStyle.transitionDuration,
-          transitionTimingFunction: buttonStyle.transitionTimingFunction,
-          fileButtonPaddingStart: parseFloat(fileButtonStyle.paddingInlineStart),
-          fileButtonPaddingEnd: parseFloat(fileButtonStyle.paddingInlineEnd),
-          cardBg: cardStyle.backgroundColor,
-          cardColor: cardStyle.color
+          backgroundToken: bodyStyle.getPropertyValue('--usk-bg-rgb').trim(),
+          primaryToken: bodyStyle.getPropertyValue('--usk-primary-rgb').trim(),
+          buttonBackground: buttonStyle.backgroundColor,
+          buttonColor: buttonStyle.color,
+          buttonHeight: document.querySelector('#focus').getBoundingClientRect().height,
+          cardBackground: cardStyle.backgroundColor,
+          cardColor: cardStyle.color,
+          fieldHeight: document.querySelector('#field').getBoundingClientRect().height,
+          fieldBackground: fieldStyle.backgroundColor
         };
       });
-
-      assert.equal(issues.length, 0, `${name} emitted browser issues: ${issues.join('; ')}`);
-      assert.ok(snapshot.buttonHeight >= 43.5, `${name} button height ${snapshot.buttonHeight}`);
-      assert.ok(snapshot.buttonPaddingStart > 0 && snapshot.buttonPaddingEnd > 0, `${name} button lacks inline padding`);
-      assert.ok(snapshot.textCenterDelta <= 1.5, `${name} button text not centered: ${snapshot.textCenterDelta}`);
-      assert.notEqual(snapshot.buttonBg, 'rgba(0, 0, 0, 0)', `${name} button background is transparent`);
-      assert.notEqual(snapshot.buttonFg, snapshot.buttonBg, `${name} button fg/bg collapsed`);
-      assert.notEqual(snapshot.buttonBorder, 'rgba(0, 0, 0, 0)', `${name} button border is transparent`);
-      assert.ok(snapshot.focusRingToken.length > 0, `${name} interactive focus token missing`);
-      assert.notEqual(snapshot.transitionProperty, 'all', `${name} transition property fell back to all`);
-      assert.notEqual(snapshot.transitionDuration, '0s', `${name} transition duration is zero in normal motion`);
-      assert.notEqual(snapshot.transitionTimingFunction, 'ease', `${name} transition easing fell back to browser default`);
-      assert.ok(
-        snapshot.fileButtonPaddingStart > 0 && snapshot.fileButtonPaddingEnd > 0,
-        `${name} file selector button lacks padding`
-      );
-      assert.notEqual(snapshot.cardBg, 'rgba(0, 0, 0, 0)', `${name} card background is transparent`);
-      assert.notEqual(snapshot.cardColor, snapshot.cardBg, `${name} card fg/bg collapsed`);
-
-      console.log(`PASS browser ${name}`);
-      await context.close();
+      assert.equal(uiStyles.backgroundToken, '241 245 255', `${scenario.name} did not apply the selected theme`);
+      assert.equal(uiStyles.primaryToken, '64 94 184', `${scenario.name} primary token drifted`);
+      const expectedButtonPaint = packages.has('interactive') ? 'rgb(223, 231, 246)' : 'rgb(64, 94, 184)';
+      assert.equal(uiStyles.buttonBackground, expectedButtonPaint, `${scenario.name} primary button paint drifted`);
+      assert.notEqual(uiStyles.buttonColor, uiStyles.buttonBackground, `${scenario.name} button text collapsed into its surface`);
+      assert.ok(uiStyles.buttonHeight >= 44, `${scenario.name} button height ${uiStyles.buttonHeight}`);
+      const expectedCardPaint = packages.has('interactive')
+        ? 'rgb(223, 231, 246)'
+        : 'rgba(255, 255, 255, 0.98)';
+      assert.equal(uiStyles.cardBackground, expectedCardPaint, `${scenario.name} card paint drifted`);
+      assert.notEqual(uiStyles.cardColor, uiStyles.cardBackground, `${scenario.name} card text collapsed into its surface`);
+      assert.ok(uiStyles.fieldHeight >= 46, `${scenario.name} native field height ${uiStyles.fieldHeight}`);
+      assert.notEqual(uiStyles.fieldBackground, 'rgba(0, 0, 0, 0)', `${scenario.name} native field is transparent`);
     }
+
+    if (packages.has('layout')) {
+      const layoutStyles = await page.evaluate(() => {
+        const rootStyle = getComputedStyle(document.body);
+        const wrapperStyle = getComputedStyle(document.querySelector('#wrapper'));
+        const stackStyle = getComputedStyle(document.querySelector('#stack'));
+        const recipeStyle = getComputedStyle(document.querySelector('#recipe'));
+        const gridStyle = getComputedStyle(document.querySelector('#grid'));
+        return {
+          personalityWrapperMax: rootStyle.getPropertyValue('--ly-personality-wrapper-max').trim(),
+          wrapperContainerName: wrapperStyle.containerName,
+          wrapperContainerType: wrapperStyle.containerType,
+          wrapperPadding: parseFloat(wrapperStyle.paddingInlineStart),
+          stackDisplay: stackStyle.display,
+          stackDirection: stackStyle.flexDirection,
+          stackGap: parseFloat(stackStyle.gap),
+          recipeDisplay: recipeStyle.display,
+          recipeColumns: recipeStyle.gridTemplateColumns,
+          gridDisplay: gridStyle.display
+        };
+      });
+      assert.equal(layoutStyles.personalityWrapperMax, '88rem', `${scenario.name} personality token drifted`);
+      assert.equal(layoutStyles.wrapperContainerName, 'ly-scope', `${scenario.name} wrapper container name drifted`);
+      assert.equal(layoutStyles.wrapperContainerType, 'inline-size', `${scenario.name} wrapper container type drifted`);
+      assert.ok(layoutStyles.wrapperPadding >= 16, `${scenario.name} wrapper lost its gutter`);
+      assert.equal(layoutStyles.stackDisplay, 'flex', `${scenario.name} stack is not a flex composition`);
+      assert.equal(layoutStyles.stackDirection, 'column', `${scenario.name} stack direction drifted`);
+      assert.ok(layoutStyles.stackGap > 0, `${scenario.name} stack gap is missing`);
+      assert.equal(layoutStyles.recipeDisplay, 'grid', `${scenario.name} card-grid recipe is not grid`);
+      assert.notEqual(layoutStyles.recipeColumns, 'none', `${scenario.name} card-grid has no columns`);
+      assert.equal(layoutStyles.gridDisplay, 'grid', `${scenario.name} grid primitive is not grid`);
+    }
+
+    if (packages.has('interactive')) {
+      await page.evaluate(() => document.body.focus());
+      await page.keyboard.press('Tab');
+      await page.waitForTimeout(180);
+      const beforeMove = await readInteractionStyles(page);
+      await page.keyboard.press('Tab');
+      await page.waitForTimeout(180);
+      const afterMove = await readInteractionStyles(page);
+
+      assert.equal(beforeMove.activeId, 'focus', `${scenario.name} keyboard focus did not reach the surface`);
+      assert.equal(beforeMove.focusOutlineStyle, 'solid', `${scenario.name} focus outline is not solid`);
+      assert.equal(beforeMove.focusOutlineWidth, '2px', `${scenario.name} focus outline width drifted`);
+      assert.notEqual(beforeMove.focusOutlineColor, 'rgba(0, 0, 0, 0)', `${scenario.name} focus outline is transparent`);
+      assert.equal(beforeMove.disabledPointerEvents, 'none', `${scenario.name} disabled surface still receives pointer events`);
+      assert.ok(
+        beforeMove.disabledOpacity >= 0.5 && beforeMove.disabledOpacity < 1,
+        `${scenario.name} disabled opacity ${beforeMove.disabledOpacity}`
+      );
+      assert.ok(beforeMove.loadingLayerOpacity > 0, `${scenario.name} loading state layer is missing`);
+      assert.ok(beforeMove.selectedLayerOpacity > 0, `${scenario.name} selected state layer is missing`);
+      assert.ok(beforeMove.persistentLayerOpacity > 0, `${scenario.name} persistent state layer is missing`);
+      assert.equal(
+        afterMove.persistentLayerOpacity,
+        beforeMove.persistentLayerOpacity,
+        `${scenario.name} persistent state vanished after keyboard focus moved`
+      );
+      assert.notEqual(beforeMove.transitionProperty, 'all', `${scenario.name} transition fell back to all`);
+      assert.notEqual(beforeMove.transitionDuration, '0s', `${scenario.name} normal motion is disabled`);
+    }
+
+    assert.equal(issues.length, 0, `${scenario.name} emitted browser issues: ${issues.join('; ')}`);
+    assert.deepEqual(
+      unexpectedRequests,
+      [],
+      `${scenario.name} attempted unexpected network requests: ${unexpectedRequests.join(', ')}`
+    );
+    if (visualSnapshotScenarios.has(scenario.name)) {
+      await verifyVisualSnapshot(page, scenario.name);
+    }
+    console.log(`PASS browser ${scenario.name}`);
+    await context.close();
   } finally {
     await browser.close();
   }
+}
+
+async function verifyVisualSnapshot(page, scenarioName) {
+  // Disable transient pixels while keeping package paint, state, and layout geometry intact.
+  await page.addStyleTag({
+    content:
+      '#visual-snapshot *, #visual-snapshot *::before, #visual-snapshot *::after { animation: none !important; caret-color: transparent !important; transition: none !important; }'
+  });
+  const actual = await page.locator('#visual-snapshot').screenshot({
+    animations: 'disabled',
+    caret: 'hide',
+    scale: 'css'
+  });
+  const snapshotPath = path.join(visualSnapshotDir, `${scenarioName}.png`);
+
+  if (options.updateSnapshots) {
+    fs.mkdirSync(visualSnapshotDir, { recursive: true });
+    fs.writeFileSync(snapshotPath, actual);
+    console.log(`UPDATED visual snapshot ${scenarioName}`);
+    return;
+  }
+
+  if (!fs.existsSync(snapshotPath)) {
+    throw new Error(
+      `Missing visual snapshot for ${scenarioName}. Run the current matrix with --update-snapshots and review the image.`
+    );
+  }
+
+  const expected = fs.readFileSync(snapshotPath);
+  if (!actual.equals(expected)) {
+    const actualPath = path.join(tempDir, `${scenarioName}-actual.png`);
+    fs.writeFileSync(actualPath, actual);
+    throw new Error(`Visual snapshot mismatch for ${scenarioName}. Actual image: ${actualPath}`);
+  }
+  console.log(`PASS visual snapshot ${scenarioName}`);
+}
+
+async function readInteractionStyles(page) {
+  return page.evaluate(() => {
+    const focusStyle = getComputedStyle(document.querySelector('#focus'));
+    const disabledStyle = getComputedStyle(document.querySelector('#disabled'));
+    return {
+      activeId: document.activeElement?.id ?? '',
+      focusOutlineStyle: focusStyle.outlineStyle,
+      focusOutlineWidth: focusStyle.outlineWidth,
+      focusOutlineColor: focusStyle.outlineColor,
+      disabledPointerEvents: disabledStyle.pointerEvents,
+      disabledOpacity: Number.parseFloat(disabledStyle.opacity),
+      loadingLayerOpacity: Number.parseFloat(getComputedStyle(document.querySelector('#loading'), '::before').opacity),
+      selectedLayerOpacity: Number.parseFloat(getComputedStyle(document.querySelector('#selected'), '::before').opacity),
+      persistentLayerOpacity: Number.parseFloat(getComputedStyle(document.querySelector('#persistent'), '::before').opacity),
+      transitionProperty: focusStyle.transitionProperty,
+      transitionDuration: focusStyle.transitionDuration
+    };
+  });
 }
 
 function cssFor(resolver, imports) {

@@ -99,9 +99,19 @@ jobs:
         working-directory: _ecosystem/Layout-Style-CSS
         run: npm ci
 
+      - name: Install Interactive Surface CSS fixture dependencies
+        working-directory: _ecosystem/Interactive-Surface-CSS
+        run: npm ci
+
+      - name: Install clean-consumer browser
+        run: npx playwright install --with-deps chromium
+
       # This PR-safe gate installs only packed artifacts and never publishes.
-      - name: Resolve documented npm exports from packed artifacts
-        run: npm run check:ecosystem:packs -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --skip-browser
+      - name: Verify current packed ecosystem matrix
+        run: npm run check:ecosystem:current -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
+
+      - name: Verify minimum published ecosystem matrix
+        run: npm run check:ecosystem:minimum
 
   playwright:
     name: Playwright E2E

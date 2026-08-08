@@ -418,7 +418,10 @@ test('release automation scripts are exposed', () => {
     'test:e2e:install:ci',
     'check:contrast',
     'check:package',
+    'check:ecosystem:current',
+    'check:ecosystem:minimum',
     'check:ecosystem:packs',
+    'test:ecosystem:clean-install',
     'check',
     'pack:dry-run',
     'release:verify'
@@ -428,6 +431,22 @@ test('release automation scripts are exposed', () => {
     assert.equal(typeof packageJson.scripts?.[scriptName], 'string', `Missing script: ${scriptName}`);
     assert.notEqual(packageJson.scripts[scriptName].trim(), '', `Script should not be empty: ${scriptName}`);
   }
+});
+
+test('clean-install ecosystem scripts and CI enforce current and minimum rendered matrices', () => {
+  const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
+  const currentScript = packageJson.scripts['check:ecosystem:current'] ?? '';
+  const minimumScript = packageJson.scripts['check:ecosystem:minimum'] ?? '';
+
+  assert.match(currentScript, /check-ecosystem-packs\.mjs --matrix current/);
+  assert.match(minimumScript, /check-ecosystem-packs\.mjs --matrix minimum/);
+  assert.equal(
+    packageJson.scripts['test:ecosystem:clean-install'],
+    'node --test tests/clean-install-ecosystem-contract.integration.mjs'
+  );
+  assert.match(workflow, /npm run check:ecosystem:current/);
+  assert.match(workflow, /npm run check:ecosystem:minimum/);
+  assert.doesNotMatch(workflow, /check:ecosystem:(?:current|minimum)[^\n]*--skip-browser/);
 });
 
 test('release verification script is non-publishing and covers the full release gate', () => {
@@ -456,7 +475,8 @@ test('release verification script is non-publishing and covers the full release 
 test('publishing docs expose the coordinated packed ecosystem compatibility gate', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
-  assert.match(packageJson.scripts['check:ecosystem:packs'], /scripts\/check-ecosystem-packs\.mjs/);
+  assert.match(packageJson.scripts['check:ecosystem:current'], /scripts\/check-ecosystem-packs\.mjs/);
+  assert.match(packageJson.scripts['check:ecosystem:minimum'], /scripts\/check-ecosystem-packs\.mjs/);
   assert.ok(fs.existsSync(path.join(rootDir, 'scripts', 'check-ecosystem-packs.mjs')));
   assert.match(publishingGuide, /npm run check:ecosystem:packs/);
   assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
