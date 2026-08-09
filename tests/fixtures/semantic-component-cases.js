@@ -16,7 +16,7 @@ export const semanticComponentMarkup = `
   <textarea class="ui-textarea" aria-label="Notes"></textarea>
   <label class="ui-check"><input type="checkbox" /><span class="ui-check-control"></span>Check</label>
   <label class="ui-radio"><input type="radio" name="semantic-radio" /><span class="ui-radio-control"></span>Radio</label>
-  <button class="ui-switch" role="switch" aria-checked="false"><span class="ui-switch-track"><span class="ui-switch-thumb"></span></span></button>
+  <label class="ui-switch"><input type="checkbox" checked /><span class="ui-switch-track"><span class="ui-switch-thumb"></span></span><span>Switch</span></label>
   <span class="ui-badge">Neutral badge</span>
   <span class="ui-badge" data-ui-variant="primary">Primary badge</span>
   <span class="ui-badge" data-ui-variant="secondary">Secondary badge</span>
@@ -29,12 +29,11 @@ export const semanticComponentMarkup = `
   <aside class="ui-alert" data-ui-variant="danger">Danger alert</aside>
   <nav class="ui-nav" aria-label="Contract navigation"><a class="ui-nav-link" href="#semantic-table">Table</a></nav>
   <div class="ui-table-wrap"><table class="ui-table" id="semantic-table"><tbody><tr><td>Cell</td></tr></tbody></table></div>
-  <progress class="ui-progress" value="50" max="100">50%</progress>
-  <span class="ui-progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></span>
+  <div class="ui-progress" role="progressbar" aria-label="Contract progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><div class="ui-progress-bar"></div></div>
   <div class="ui-toolbar" role="toolbar" aria-label="Contract toolbar"></div>
   <span class="ui-spinner" aria-label="Loading"></span>
-  <span class="ui-tooltip" role="tooltip">Tooltip</span>
-  <dialog>Native modal and dialog fallback</dialog>
+  <span class="ui-tooltip">Tooltip</span>
+  <dialog open>Native modal and dialog fallback</dialog>
 </section>`;
 
 // Task 11 can consume these cases directly; only the preset root value changes.

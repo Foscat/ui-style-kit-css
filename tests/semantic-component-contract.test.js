@@ -13,6 +13,37 @@ import {
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
 
+const expectedRetainedSelectors = ['.ui-spinner', '.ui-tooltip'];
+const expectedPendingSelectors = [
+  '.ui-button',
+  '.ui-icon-button',
+  '.ui-card',
+  '.ui-field',
+  '.ui-label',
+  '.ui-help-text',
+  '.ui-input',
+  '.ui-select',
+  '.ui-textarea',
+  '.ui-check',
+  '.ui-check-control',
+  '.ui-radio',
+  '.ui-radio-control',
+  '.ui-switch',
+  '.ui-switch-track',
+  '.ui-switch-thumb',
+  '.ui-badge',
+  '.ui-alert',
+  '.ui-alert-title',
+  '.ui-alert-body',
+  '.ui-nav',
+  '.ui-nav-link',
+  '.ui-table',
+  '.ui-table-wrap',
+  '.ui-progress',
+  '.ui-progress-bar',
+  '.ui-toolbar'
+];
+
 const expectedSemanticComponentApi = {
   presetSwitchAttribute: 'data-ui',
   selectorsByRole: {
@@ -87,6 +118,17 @@ const expectedSemanticComponentApi = {
   presetPrefixedClasses: {
     status: 'supported',
     uses: ['compatibility', 'advanced']
+  },
+  implementationStatus: {
+    retained: {
+      status: 'implemented',
+      selectors: expectedRetainedSelectors
+    },
+    pending: {
+      status: 'pending',
+      targetTask: 11,
+      selectors: expectedPendingSelectors
+    }
   }
 };
 
@@ -127,6 +169,44 @@ function composedClassNames(preset) {
   return classNames;
 }
 
+function selectorFacts(relativeFile) {
+  const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+  const facts = [];
+
+  walk(parse(css, { filename: relativeFile }), {
+    visit: 'Rule',
+    enter(rule) {
+      const classes = new Set();
+      const attributes = [];
+      const declarations = new Map();
+
+      walk(rule.prelude, {
+        enter(node) {
+          if (node.type === 'ClassSelector') classes.add(`.${node.name}`);
+          if (node.type === 'AttributeSelector') {
+            attributes.push({
+              name: node.name?.name,
+              value: node.value?.value ?? node.value?.name ?? null
+            });
+          }
+        }
+      });
+      rule.block.children.forEach((node) => {
+        if (node.type === 'Declaration') declarations.set(node.property, node.value);
+      });
+      facts.push({ classes, attributes, declarations });
+    }
+  });
+
+  return facts;
+}
+
+function ruleHasAttribute(rule, name, value = null) {
+  return rule.attributes.some((attribute) =>
+    attribute.name === name && attribute.value === value
+  );
+}
+
 test('manifest specifies the exact generic semantic component API', () => {
   assert.ok(manifest.semanticComponentApi, 'manifest.json must declare semanticComponentApi');
   assert.deepEqual(manifest.semanticComponentApi, expectedSemanticComponentApi);
@@ -136,6 +216,70 @@ test('manifest specifies the exact generic semantic component API', () => {
   assert.equal(new Set(entries.map(({ selector }) => selector)).size, entries.length);
   assert.equal(new Set(entries.map(({ sourceSuffix }) => sourceSuffix)).size, entries.length);
   assert.equal(entries.every(({ selector }) => /^\.ui-[a-z]+(?:-[a-z]+)*$/.test(selector)), true);
+});
+
+test('manifest distinguishes retained generic hooks from Task 11 selectors', () => {
+  const implementationStatus = manifest.semanticComponentApi.implementationStatus;
+  const declaredSelectors = semanticEntries().map(({ selector }) => selector);
+
+  assert.deepEqual(implementationStatus, expectedSemanticComponentApi.implementationStatus);
+  assert.deepEqual(implementationStatus.retained.selectors, expectedRetainedSelectors);
+  assert.deepEqual(implementationStatus.pending.selectors, expectedPendingSelectors);
+  assert.equal(implementationStatus.pending.targetTask, 11);
+  assert.equal(implementationStatus.retained.selectors.length, 2);
+  assert.equal(implementationStatus.pending.selectors.length, 27);
+  assert.deepEqual(
+    new Set([
+      ...implementationStatus.retained.selectors,
+      ...implementationStatus.pending.selectors
+    ]),
+    new Set(declaredSelectors)
+  );
+});
+
+test('authored CSS retains only the two implemented semantic hooks and all legacy aliases', () => {
+  const authoredSemanticClasses = new Set();
+
+  for (const preset of manifest.presets) {
+    const relativeFile = `styles/${preset.id}.css`;
+    const rules = selectorFacts(relativeFile);
+    const spinnerRule = rules.find((rule) => rule.classes.has('.ui-spinner'));
+    const tooltipRule = rules.find((rule) => rule.classes.has('.ui-tooltip'));
+
+    assert.ok(spinnerRule, `${relativeFile} must retain .ui-spinner`);
+    assert.equal(spinnerRule.classes.has(`.${preset.prefix}-spinner`), true);
+    assert.equal(spinnerRule.classes.has(`.${preset.prefix}-loading-spinner`), true);
+    assert.equal(spinnerRule.classes.has('.loading-spinner'), true);
+    assert.equal(ruleHasAttribute(spinnerRule, 'data-loading-spinner'), true);
+    assert.equal(ruleHasAttribute(spinnerRule, 'data-ui', preset.id), true);
+
+    assert.ok(tooltipRule, `${relativeFile} must retain .ui-tooltip`);
+    assert.equal(tooltipRule.classes.has(`.${preset.prefix}-tooltip`), true);
+    assert.equal(ruleHasAttribute(tooltipRule, 'role', 'tooltip'), true);
+    assert.equal(ruleHasAttribute(tooltipRule, 'data-tooltip'), true);
+    assert.equal(ruleHasAttribute(tooltipRule, 'data-ui', preset.id), true);
+  }
+
+  // Scan every authored stylesheet so pending selectors cannot collide with retained hooks early.
+  const authoredCssFiles = fs.readdirSync(path.join(rootDir, 'styles'))
+    .filter((fileName) => fileName.endsWith('.css'));
+  for (const fileName of authoredCssFiles) {
+    for (const rule of selectorFacts(`styles/${fileName}`)) {
+      for (const className of rule.classes) {
+        if (className.startsWith('.ui-')) authoredSemanticClasses.add(className);
+      }
+    }
+  }
+
+  const anchorRules = selectorFacts('styles/components.css')
+    .filter((rule) => ruleHasAttribute(rule, 'data-ui-tooltip-anchor'));
+  assert.ok(anchorRules.length > 0, 'styles/components.css must retain [data-ui-tooltip-anchor]');
+  assert.equal(
+    anchorRules.some((rule) => rule.declarations.has('position')),
+    true,
+    'the authored anchor hook must continue to establish positioning behavior'
+  );
+  assert.deepEqual(authoredSemanticClasses, new Set(expectedRetainedSelectors));
 });
 
 test('semantic source suffixes and contextual variants exist in every composed preset API', () => {
@@ -224,6 +368,6 @@ test('manifest presets generate unchanged generic markup cases for Task 11 runti
   for (const prefix of presetPrefixes) {
     assert.doesNotMatch(semanticComponentMarkup, new RegExp(`class="[^"]*\\b${prefix}-`));
   }
-  assert.match(semanticComponentMarkup, /<dialog>Native modal and dialog fallback<\/dialog>/);
+  assert.match(semanticComponentMarkup, /<dialog open>Native modal and dialog fallback<\/dialog>/);
   assert.doesNotMatch(semanticComponentMarkup, /\bui-(?:modal|dialog)\b/);
 });

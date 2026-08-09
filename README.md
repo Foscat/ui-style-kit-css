@@ -197,7 +197,7 @@ document.body.dataset.mode = "dark";
 
 `manifest.json#semanticComponentApi` is the authoritative specification for the additive generic component API. The mapped source suffixes already exist in the composed API for all 11 presets, so generic markup can keep the same class names while `data-ui` changes.
 
-This release line currently specifies and validates the contract without adding new semantic CSS declarations. Except for the retained `.ui-spinner` and `.ui-tooltip` hooks, use the supported prefixed classes for production styling until the semantic implementation ships.
+This release line currently specifies and validates the contract without adding new semantic CSS declarations. `manifest.json#semanticComponentApi.implementationStatus` records `.ui-spinner` and `.ui-tooltip` as the two retained, already-implemented hooks and the other 27 selectors as pending Task 11. Use the supported prefixed classes for pending components until the semantic implementation ships.
 
 | Role | Generic selectors | Switching coverage |
 |---|---|---|

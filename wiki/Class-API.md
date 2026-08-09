@@ -16,7 +16,7 @@ Examples:
 
 `manifest.json#semanticComponentApi` specifies the generic component names that can keep unchanged markup while the root `data-ui` value switches across all 11 presets. The mapped prefixed source suffixes are current and physically present in every composed preset API.
 
-The contract is specified before its new CSS declarations are implemented. `.ui-spinner` and `.ui-tooltip` are the existing retained generic hooks; continue using the prefixed classes for the other components in production until the semantic implementation ships.
+The contract is specified before its new CSS declarations are implemented. `manifest.json#semanticComponentApi.implementationStatus` marks `.ui-spinner` and `.ui-tooltip` as the two retained, already-implemented generic hooks and the other 27 selectors as pending Task 11. Continue using the prefixed classes for pending components in production until the semantic implementation ships.
 
 | Role | Generic selectors |
 | --- | --- |

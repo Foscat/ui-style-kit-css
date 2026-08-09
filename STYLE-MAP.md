@@ -69,7 +69,7 @@ The bridge inherits from shared `--usk-*` color roles, then applies `.interactiv
 
 ## Semantic component contract
 
-The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The contract is specified and executable-test-backed here without adding new semantic CSS declarations; `.ui-spinner` and `.ui-tooltip` are the retained generic hooks already implemented.
+The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The `implementationStatus` section records `.ui-spinner` and `.ui-tooltip` as the two retained generic hooks already implemented and the remaining 27 selectors as pending Task 11; this task adds no semantic CSS declarations.
 
 | Role | Generic selector -> current source suffix |
 |---|---|

@@ -12,7 +12,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 ### Changed
 
 - Clarified that all 11 composed preset APIs retain the extended visual utilities, while partial extras and deprecated structural aliases remain prefix-bound compatibility or advanced APIs.
-- Kept the specification separate from semantic CSS implementation; existing preset-prefixed classes and the retained `.ui-spinner` and `.ui-tooltip` hooks remain unchanged.
+- Kept the specification separate from semantic CSS implementation and identified the two retained `.ui-spinner` and `.ui-tooltip` hooks separately from the 27 selectors pending Task 11.
 
 ## [2.1.0] - 2026-07-20
 
