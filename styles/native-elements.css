@@ -47,6 +47,22 @@
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+  --usk-motion-duration: 140ms;
+  --usk-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Shared semantic values are fully typed so optional companion and third-party consumers can use them directly. */
+  --ui-color-bg: rgb(var(--usk-bg-rgb));
+  --ui-color-surface: var(--usk-native-surface-strong);
+  --ui-color-text: var(--usk-native-text);
+  --ui-color-muted: var(--usk-native-text-muted);
+  --ui-color-primary: var(--usk-native-primary);
+  --ui-color-on-primary: var(--usk-native-on-primary);
+  --ui-color-border: var(--usk-native-border);
+  --ui-radius-control: var(--usk-native-radius);
+  --ui-shadow-control: var(--usk-native-shadow);
+  --ui-focus-color: var(--usk-native-focus);
+  --ui-motion-duration: var(--usk-motion-duration);
+  --ui-motion-easing: var(--usk-motion-easing);
 }
 
 [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {

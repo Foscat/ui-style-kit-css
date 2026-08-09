@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.1.0
+ * UI Style Kit CSS v2.2.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -846,6 +846,22 @@
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+  --usk-motion-duration: 140ms;
+  --usk-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Shared semantic values are fully typed so optional companion and third-party consumers can use them directly. */
+  --ui-color-bg: rgb(var(--usk-bg-rgb));
+  --ui-color-surface: var(--usk-native-surface-strong);
+  --ui-color-text: var(--usk-native-text);
+  --ui-color-muted: var(--usk-native-text-muted);
+  --ui-color-primary: var(--usk-native-primary);
+  --ui-color-on-primary: var(--usk-native-on-primary);
+  --ui-color-border: var(--usk-native-border);
+  --ui-radius-control: var(--usk-native-radius);
+  --ui-shadow-control: var(--usk-native-shadow);
+  --ui-focus-color: var(--usk-native-focus);
+  --ui-motion-duration: var(--usk-motion-duration);
+  --ui-motion-easing: var(--usk-motion-easing);
 }
 
 [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {
@@ -1536,7 +1552,7 @@
   [class~="rg-alert"],
   [class~="rg-table-wrap"],
   [class~="rg-nav"]
-) {
+), [data-ui]:where([data-ui="y2k"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
   overflow-wrap: anywhere;
@@ -1587,7 +1603,7 @@
   [class~="rg-icon-button"],
   [class~="rg-badge"],
   [class~="rg-nav-link"]
-) {
+), [data-ui]:where([data-ui="y2k"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
   white-space: normal;
@@ -1627,7 +1643,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), [data-ui]:where([data-ui="y2k"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,13 +1967,13 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="y2k"]) .ui-check, :where([data-ui="y2k"]) .ui-radio, :where([data-ui="y2k"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1981,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="y2k"]) .ui-check-control, :where([data-ui="y2k"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="y2k"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1999,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="y2k"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2018,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="y2k"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2032,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="y2k"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2233,7 +2249,7 @@
     color: var(--y2k-on-primary);
   }
 
-  .y2k-title, .y2k-heading, .y2k-kicker, .y2k-button, .y2k-badge, .y2k-nav-link {
+  .y2k-title, .y2k-heading, .y2k-kicker, .y2k-button, .y2k-badge, .y2k-nav-link, :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-badge, :where([data-ui="y2k"]) .ui-nav-link {
     font-family: var(--y2k-font-heading);
   }
 
@@ -2271,7 +2287,7 @@
     color: var(--y2k-text-muted);
   }
 
-  .y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap {
+  .y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap, :where([data-ui="y2k"]) .ui-card, :where([data-ui="y2k"]) .ui-toolbar, :where([data-ui="y2k"]) .ui-table-wrap {
     background: linear-gradient(145deg,#ffffff6b,#ffffff14),var(--y2k-surface);
     color: var(--y2k-text);
     border: 1px solid #ffffff61;
@@ -2284,7 +2300,7 @@
     overflow: hidden;
   }
 
-  .y2k-card:before, .y2k-panel:before, .y2k-bubble:before {
+  .y2k-card:before, .y2k-panel:before, .y2k-bubble:before, :where([data-ui="y2k"]) .ui-card:before {
     content: "";
     pointer-events: none;
     background: radial-gradient(circle at 20% 0%,#ffffff6b,transparent 22%),linear-gradient(120deg,transparent 0 55%,rgb(var(--y2k-accent-rgb)/.12));
@@ -2292,11 +2308,11 @@
     inset: 0;
   }
 
-  .y2k-card, .y2k-panel, .y2k-bubble {
+  .y2k-card, .y2k-panel, .y2k-bubble, :where([data-ui="y2k"]) .ui-card {
     padding: var(--y2k-space-6);
   }
 
-  .y2k-toolbar {
+  .y2k-toolbar, :where([data-ui="y2k"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--y2k-space-4);
@@ -2322,7 +2338,7 @@
     padding: var(--y2k-space-5);
   }
 
-  .y2k-button, .y2k-icon-button {
+  .y2k-button, .y2k-icon-button, :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2344,56 +2360,56 @@
     display: inline-flex;
   }
 
-  .y2k-button:hover, .y2k-icon-button:hover {
+  .y2k-button:hover, .y2k-icon-button:hover, :where([data-ui="y2k"]) .ui-button:hover, :where([data-ui="y2k"]) .ui-icon-button:hover {
     box-shadow: var(--y2k-shadow-md),0 0 26px var(--y2k-glow-accent);
     transform: translateY(-2px);
   }
 
-  .y2k-button:active, .y2k-icon-button:active, .y2k-button.is-active, .y2k-button[aria-pressed="true"] {
+  .y2k-button:active, .y2k-icon-button:active, .y2k-button.is-active, .y2k-button[aria-pressed="true"], :where([data-ui="y2k"]) .ui-button:active, :where([data-ui="y2k"]) .ui-icon-button:active, :where([data-ui="y2k"]) .ui-button.is-active, :where([data-ui="y2k"]) .ui-button[aria-pressed="true"] {
     transform: translateY(1px) scale(.99);
     box-shadow: inset 0 8px 16px #00000024;
   }
 
-  .y2k-button-primary {
+  .y2k-button-primary, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="primary"]) {
     background: linear-gradient(180deg,#ffffff75,#ffffff14),var(--y2k-primary);
     color: var(--y2k-on-primary);
   }
 
-  .y2k-button-primary:hover {
+  .y2k-button-primary:hover, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: linear-gradient(180deg,#ffffff80,#ffffff1a),var(--y2k-primary-hover);
   }
 
-  .y2k-button-secondary {
+  .y2k-button-secondary, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: linear-gradient(180deg,#ffffff75,#ffffff14),var(--y2k-secondary);
     color: var(--y2k-on-secondary);
   }
 
-  .y2k-button-secondary:hover {
+  .y2k-button-secondary:hover, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--y2k-secondary-hover);
   }
 
-  .y2k-button-danger {
+  .y2k-button-danger, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--y2k-danger);
     color: var(--y2k-on-danger);
   }
 
-  .y2k-icon-button {
+  .y2k-icon-button, :where([data-ui="y2k"]) .ui-icon-button {
     width: 2.85rem;
     padding: 0;
   }
 
-  .y2k-field {
+  .y2k-field, :where([data-ui="y2k"]) .ui-field {
     gap: var(--y2k-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .y2k-label {
+  .y2k-label, :where([data-ui="y2k"]) .ui-label {
     letter-spacing: .04em;
     font-weight: 900;
   }
 
-  .y2k-input, .y2k-textarea, .y2k-select {
+  .y2k-input, .y2k-textarea, .y2k-select, :where([data-ui="y2k"]) .ui-input, :where([data-ui="y2k"]) .ui-textarea, :where([data-ui="y2k"]) .ui-select {
     background: linear-gradient(180deg,#ffffff38,#0000000d),var(--y2k-surface-soft);
     width: 100%;
     min-height: 2.9rem;
@@ -2406,22 +2422,22 @@
     box-shadow: inset 0 6px 14px #0000001f;
   }
 
-  .y2k-textarea {
+  .y2k-textarea, :where([data-ui="y2k"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .y2k-input:focus, .y2k-textarea:focus, .y2k-select:focus {
+  .y2k-input:focus, .y2k-textarea:focus, .y2k-select:focus, :where([data-ui="y2k"]) .ui-input:focus, :where([data-ui="y2k"]) .ui-textarea:focus, :where([data-ui="y2k"]) .ui-select:focus {
     border-color: var(--y2k-focus);
     box-shadow: inset 0 6px 14px #0000001f,0 0 0 3px rgb(var(--y2k-focus-rgb)/.25),0 0 24px rgb(var(--y2k-focus-rgb)/.22);
   }
 
-  .y2k-help-text {
+  .y2k-help-text, :where([data-ui="y2k"]) .ui-help-text {
     color: var(--y2k-text-muted);
     font-size: .9rem;
   }
 
-  .y2k-badge {
+  .y2k-badge, :where([data-ui="y2k"]) .ui-badge {
     background: linear-gradient(180deg,#fff6,#ffffff14),var(--y2k-surface-strong);
     min-height: 1.8rem;
     color: var(--y2k-text);
@@ -2435,32 +2451,32 @@
     display: inline-flex;
   }
 
-  .y2k-badge-primary {
+  .y2k-badge-primary, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--y2k-primary);
     color: var(--y2k-on-primary);
   }
 
-  .y2k-badge-secondary {
+  .y2k-badge-secondary, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--y2k-secondary);
     color: var(--y2k-on-secondary);
   }
 
-  .y2k-badge-success {
+  .y2k-badge-success, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--y2k-success);
     color: var(--y2k-on-success);
   }
 
-  .y2k-badge-warning {
+  .y2k-badge-warning, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--y2k-warning);
     color: var(--y2k-on-warning);
   }
 
-  .y2k-badge-danger {
+  .y2k-badge-danger, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--y2k-danger);
     color: var(--y2k-on-danger);
   }
 
-  .y2k-nav {
+  .y2k-nav, :where([data-ui="y2k"]) .ui-nav {
     gap: var(--y2k-space-2);
     padding: var(--y2k-space-2);
     background: linear-gradient(180deg,#ffffff61,#ffffff14),var(--y2k-surface);
@@ -2471,7 +2487,7 @@
     display: flex;
   }
 
-  .y2k-nav-link {
+  .y2k-nav-link, :where([data-ui="y2k"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--y2k-text-muted);
     border-radius: var(--y2k-radius-pill);
@@ -2482,12 +2498,12 @@
     display: inline-flex;
   }
 
-  .y2k-nav-link:hover {
+  .y2k-nav-link:hover, :where([data-ui="y2k"]) .ui-nav-link:hover {
     color: var(--y2k-text);
     background: #ffffff29;
   }
 
-  .y2k-nav-link.is-active, .y2k-nav-link[aria-current="page"] {
+  .y2k-nav-link.is-active, .y2k-nav-link[aria-current="page"], :where([data-ui="y2k"]) .ui-nav-link.is-active, :where([data-ui="y2k"]) .ui-nav-link[aria-current="page"] {
     background: var(--y2k-primary);
     color: var(--y2k-on-primary);
     box-shadow: 0 0 20px var(--y2k-glow-primary);
@@ -2518,7 +2534,7 @@
     flex: none;
   }
 
-  .y2k-progress {
+  .y2k-progress, :where([data-ui="y2k"]) .ui-progress {
     background: var(--y2k-surface-soft);
     border-radius: var(--y2k-radius-pill);
     width: 100%;
@@ -2527,14 +2543,14 @@
     box-shadow: inset 0 6px 14px #0000001f;
   }
 
-  .y2k-progress-bar {
+  .y2k-progress-bar, :where([data-ui="y2k"]) .ui-progress-bar {
     height: 100%;
     width: var(--y2k-progress-value, 50%);
     background: linear-gradient(90deg,var(--y2k-primary),var(--y2k-accent),var(--y2k-secondary));
     border-radius: inherit;
   }
 
-  .y2k-alert {
+  .y2k-alert, :where([data-ui="y2k"]) .ui-alert {
     padding: var(--y2k-space-4);
     background: var(--y2k-surface);
     border-radius: var(--y2k-radius-xl);
@@ -2542,49 +2558,49 @@
     border: 1px solid #ffffff61;
   }
 
-  .y2k-alert-title {
+  .y2k-alert-title, :where([data-ui="y2k"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .y2k-alert-body {
+  .y2k-alert-body, :where([data-ui="y2k"]) .ui-alert-body {
     color: var(--y2k-text-muted);
     margin: .5rem 0 0;
   }
 
-  .y2k-alert-success {
+  .y2k-alert-success, :where([data-ui="y2k"]) .ui-alert:where([data-ui-variant="success"]) {
     box-shadow: var(--y2k-shadow-md),0 0 22px rgb(var(--y2k-success-rgb)/.2);
   }
 
-  .y2k-alert-warning {
+  .y2k-alert-warning, :where([data-ui="y2k"]) .ui-alert:where([data-ui-variant="warning"]) {
     box-shadow: var(--y2k-shadow-md),0 0 22px rgb(var(--y2k-warning-rgb)/.2);
   }
 
-  .y2k-alert-danger {
+  .y2k-alert-danger, :where([data-ui="y2k"]) .ui-alert:where([data-ui-variant="danger"]) {
     box-shadow: var(--y2k-shadow-md),0 0 22px rgb(var(--y2k-danger-rgb)/.2);
   }
 
-  .y2k-table-wrap {
+  .y2k-table-wrap, :where([data-ui="y2k"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .y2k-table {
+  .y2k-table, :where([data-ui="y2k"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .y2k-table th, .y2k-table td {
+  .y2k-table th, .y2k-table td, :where([data-ui="y2k"]) .ui-table th, :where([data-ui="y2k"]) .ui-table td {
     border-bottom: 1px solid rgb(var(--y2k-border-rgb)/.34);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .y2k-table th {
+  .y2k-table th, :where([data-ui="y2k"]) .ui-table th {
     background: #ffffff29;
     font-weight: 900;
   }
 
-  .y2k-table td {
+  .y2k-table td, :where([data-ui="y2k"]) .ui-table td {
     color: var(--y2k-text-muted);
   }
 
@@ -2624,15 +2640,15 @@
     }
   }
 
-  .y2k-card, .y2k-panel {
+  .y2k-card, .y2k-panel, :where([data-ui="y2k"]) .ui-card {
     background: var(--y2k-card-bg);
   }
 
-  .y2k-toolbar, .y2k-table-wrap, .y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-ghost), .y2k-icon-button {
+  .y2k-toolbar, .y2k-table-wrap, .y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-ghost), .y2k-icon-button, :where([data-ui="y2k"]) .ui-toolbar, :where([data-ui="y2k"]) .ui-table-wrap, :where([data-ui="y2k"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="y2k"]) .ui-icon-button {
     background: var(--y2k-control-bg);
   }
 
-  .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link {
+  .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link, :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-icon-button, :where([data-ui="y2k"]) .ui-badge, :where([data-ui="y2k"]) .ui-nav-link {
     font-family: var(--y2k-font-control);
   }
 
@@ -2662,12 +2678,12 @@
     inline-size: 3rem;
   }
 
-  .y2k-button[aria-busy="true"], .y2k-icon-button[aria-busy="true"], [data-ui="y2k"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .y2k-button[aria-busy="true"], .y2k-icon-button[aria-busy="true"], [data-ui="y2k"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="y2k"]) .ui-button[aria-busy="true"], :where([data-ui="y2k"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .y2k-button[aria-busy="true"]:after, .y2k-icon-button[aria-busy="true"]:after, [data-ui="y2k"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .y2k-button[aria-busy="true"]:after, .y2k-icon-button[aria-busy="true"]:after, [data-ui="y2k"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="y2k"]) .ui-button[aria-busy="true"]:after, :where([data-ui="y2k"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--y2k-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

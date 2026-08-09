@@ -122,6 +122,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Release verification packs the immutable Task 4 companion artifacts
+      # selected by the checked-in compatibility contract.
+      - name: Resolve immutable ecosystem fixture sources
+        id: ecosystem_sources
+        shell: bash
+        run: node scripts/write-ecosystem-workflow-outputs.mjs
+
       - name: Check if version already exists on npm
         id: npm_version_check
         shell: bash
@@ -137,6 +144,30 @@ jobs:
             echo "already_published=false" >> "$GITHUB_OUTPUT"
             echo "${PACKAGE_NAME}@${PACKAGE_VERSION} is not published yet. Proceeding to publish."
           fi
+
+      # Publishing validates the same remote companion objects after they are
+      # pushed, so a release never substitutes a stale registry artifact.
+      - name: Require pushed companion commits before publish verification
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        shell: bash
+        env:
+          INTERACTIVE_REPOSITORY: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          INTERACTIVE_REVISION: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
+          LAYOUT_REPOSITORY: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          LAYOUT_REVISION: ${{ steps.ecosystem_sources.outputs.layout_revision }}
+        run: |
+          set -euo pipefail
+          for source in "${INTERACTIVE_REPOSITORY}:${INTERACTIVE_REVISION}" "${LAYOUT_REPOSITORY}:${LAYOUT_REVISION}"; do
+            repository="${source%%:*}"
+            revision="${source##*:}"
+            fixture_dir="$(mktemp -d)"
+            if ! git init --bare "${fixture_dir}" >/dev/null || ! git -C "${fixture_dir}" fetch --no-tags --depth=1 "https://github.com/${repository}.git" "${revision}" >/dev/null 2>&1 || ! git -C "${fixture_dir}" cat-file -e "${revision}^{commit}"; then
+              echo "::error::${repository}@${revision} is unavailable. Push the companion commit and verify its remote object before publish verification."
+              rm -rf "${fixture_dir}"
+              exit 1
+            fi
+            rm -rf "${fixture_dir}"
+          done
 
       - name: Ensure npm token exists
         if: steps.npm_version_check.outputs.already_published != 'true'
@@ -157,15 +188,23 @@ jobs:
         if: steps.npm_version_check.outputs.already_published != 'true'
         run: npm run test:e2e:install:ci
 
-      # The package prepublish gate runs packed ecosystem checks against the
-      # staged Layout Style CSS 2.1 line before this UI package reaches npm.
+      # Stage the immutable companion sources so the prepublish gate packs the
+      # coordinated artifacts and scans their explicitly maintained documentation.
       - name: Checkout Layout Style CSS for publish verification
         if: steps.npm_version_check.outputs.already_published != 'true'
         uses: actions/checkout@v6
         with:
-          repository: Foscat/Layout-Style-CSS
-          ref: 2.1.0
+          repository: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.layout_revision }}
           path: _ecosystem/Layout-Style-CSS
+
+      - name: Checkout Interactive Surface CSS documentation for publish verification
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
+          path: _ecosystem/Interactive-Surface-CSS
 
       # Layout's prepack contract tests inspect its installed UI dependency, so
       # install its locked dependency graph before packing it as an ecosystem fixture.
@@ -174,9 +213,23 @@ jobs:
         working-directory: _ecosystem/Layout-Style-CSS
         run: npm ci
 
+      - name: Install Interactive Surface CSS dependencies for publish verification
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        working-directory: _ecosystem/Interactive-Surface-CSS
+        run: npm ci
+
+      # Explicit candidate mode exempts only the UI package being published; all
+      # minimum and companion versions must already resolve from npm.
+      - name: Run ecosystem release preflight
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
+
       - name: Publish package
         if: steps.npm_version_check.outputs.already_published != 'true'
-        run: npm publish --access public
+        run: npm publish --access public --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           UI_STYLE_KIT_LAYOUT_REPO: ${{ github.workspace }}/_ecosystem/Layout-Style-CSS
+          UI_STYLE_KIT_LAYOUT_DOCS_REPO: ${{ github.workspace }}/_ecosystem/Layout-Style-CSS
+          UI_STYLE_KIT_INTERACTIVE_REPO: ${{ github.workspace }}/_ecosystem/Interactive-Surface-CSS
+          UI_STYLE_KIT_INTERACTIVE_DOCS_REPO: ${{ github.workspace }}/_ecosystem/Interactive-Surface-CSS

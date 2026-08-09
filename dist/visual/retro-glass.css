@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.1.0
+ * UI Style Kit CSS v2.2.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -846,6 +846,22 @@
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+  --usk-motion-duration: 140ms;
+  --usk-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Shared semantic values are fully typed so optional companion and third-party consumers can use them directly. */
+  --ui-color-bg: rgb(var(--usk-bg-rgb));
+  --ui-color-surface: var(--usk-native-surface-strong);
+  --ui-color-text: var(--usk-native-text);
+  --ui-color-muted: var(--usk-native-text-muted);
+  --ui-color-primary: var(--usk-native-primary);
+  --ui-color-on-primary: var(--usk-native-on-primary);
+  --ui-color-border: var(--usk-native-border);
+  --ui-radius-control: var(--usk-native-radius);
+  --ui-shadow-control: var(--usk-native-shadow);
+  --ui-focus-color: var(--usk-native-focus);
+  --ui-motion-duration: var(--usk-motion-duration);
+  --ui-motion-easing: var(--usk-motion-easing);
 }
 
 [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {
@@ -1536,7 +1552,7 @@
   [class~="rg-alert"],
   [class~="rg-table-wrap"],
   [class~="rg-nav"]
-) {
+), [data-ui]:where([data-ui="retro-glass"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
   overflow-wrap: anywhere;
@@ -1587,7 +1603,7 @@
   [class~="rg-icon-button"],
   [class~="rg-badge"],
   [class~="rg-nav-link"]
-) {
+), [data-ui]:where([data-ui="retro-glass"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
   white-space: normal;
@@ -1627,7 +1643,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), [data-ui]:where([data-ui="retro-glass"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,13 +1967,13 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="retro-glass"]) .ui-check, :where([data-ui="retro-glass"]) .ui-radio, :where([data-ui="retro-glass"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1981,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="retro-glass"]) .ui-check-control, :where([data-ui="retro-glass"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="retro-glass"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1999,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="retro-glass"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2018,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="retro-glass"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2032,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="retro-glass"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2233,7 +2249,7 @@
     color: var(--rg-on-primary);
   }
 
-  .rg-title, .rg-heading, .rg-kicker, .rg-button, .rg-badge, .rg-nav-link {
+  .rg-title, .rg-heading, .rg-kicker, .rg-button, .rg-badge, .rg-nav-link, :where([data-ui="retro-glass"]) .ui-button, :where([data-ui="retro-glass"]) .ui-badge, :where([data-ui="retro-glass"]) .ui-nav-link {
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
   }
@@ -2270,7 +2286,7 @@
     color: var(--rg-text-muted);
   }
 
-  .rg-card, .rg-panel, .rg-console, .rg-toolbar, .rg-table-wrap {
+  .rg-card, .rg-panel, .rg-console, .rg-toolbar, .rg-table-wrap, :where([data-ui="retro-glass"]) .ui-card, :where([data-ui="retro-glass"]) .ui-toolbar, :where([data-ui="retro-glass"]) .ui-table-wrap {
     background: linear-gradient(135deg,#ffffff2e,#ffffff0a),linear-gradient(135deg,rgb(var(--rg-primary-rgb)/.06),transparent 52%),var(--rg-surface);
     color: var(--rg-text);
     border: 1px solid var(--rg-border);
@@ -2284,7 +2300,7 @@
     overflow: hidden;
   }
 
-  .rg-card:before, .rg-panel:before, .rg-console:before {
+  .rg-card:before, .rg-panel:before, .rg-console:before, :where([data-ui="retro-glass"]) .ui-card:before {
     content: "";
     pointer-events: none;
     background: linear-gradient(180deg,#ffffff1a,transparent 30%),linear-gradient(90deg,transparent,rgb(var(--rg-accent-rgb)/.08),transparent);
@@ -2292,7 +2308,7 @@
     inset: 0;
   }
 
-  .rg-card, .rg-panel, .rg-console {
+  .rg-card, .rg-panel, .rg-console, :where([data-ui="retro-glass"]) .ui-card {
     padding: var(--rg-space-6);
   }
 
@@ -2301,7 +2317,7 @@
     box-shadow: var(--rg-shadow-lg),inset 0 0 28px rgb(var(--rg-primary-rgb)/.08),0 0 32px var(--rg-glow-primary);
   }
 
-  .rg-toolbar {
+  .rg-toolbar, :where([data-ui="retro-glass"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--rg-space-4);
@@ -2328,7 +2344,7 @@
     padding: var(--rg-space-5);
   }
 
-  .rg-button, .rg-icon-button {
+  .rg-button, .rg-icon-button, :where([data-ui="retro-glass"]) .ui-button, :where([data-ui="retro-glass"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2352,54 +2368,54 @@
     display: inline-flex;
   }
 
-  .rg-button:hover, .rg-icon-button:hover {
+  .rg-button:hover, .rg-icon-button:hover, :where([data-ui="retro-glass"]) .ui-button:hover, :where([data-ui="retro-glass"]) .ui-icon-button:hover {
     border-color: rgb(var(--rg-primary-rgb)/.68);
     box-shadow: var(--rg-shadow-md),0 0 24px var(--rg-glow-primary);
     transform: translateY(-2px);
   }
 
-  .rg-button:active, .rg-icon-button:active, .rg-button.is-active, .rg-button[aria-pressed="true"] {
+  .rg-button:active, .rg-icon-button:active, .rg-button.is-active, .rg-button[aria-pressed="true"], :where([data-ui="retro-glass"]) .ui-button:active, :where([data-ui="retro-glass"]) .ui-icon-button:active, :where([data-ui="retro-glass"]) .ui-button.is-active, :where([data-ui="retro-glass"]) .ui-button[aria-pressed="true"] {
     box-shadow: inset 0 8px 18px #0000002e,0 0 18px var(--rg-glow-primary);
     transform: translateY(1px);
   }
 
-  .rg-button-primary {
+  .rg-button-primary, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="primary"]) {
     background: linear-gradient(135deg,#ffffff38,#ffffff0a),var(--rg-primary);
     color: var(--rg-on-primary);
     border-color: rgb(var(--rg-primary-rgb)/.72);
   }
 
-  .rg-button-primary:hover {
+  .rg-button-primary:hover, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--rg-primary-hover);
   }
 
-  .rg-button-secondary {
+  .rg-button-secondary, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: linear-gradient(135deg,#ffffff38,#ffffff0a),var(--rg-secondary);
     color: var(--rg-on-secondary);
     border-color: rgb(var(--rg-secondary-rgb)/.72);
   }
 
-  .rg-button-secondary:hover {
+  .rg-button-secondary:hover, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--rg-secondary-hover);
   }
 
-  .rg-button-danger {
+  .rg-button-danger, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--rg-danger);
     color: var(--rg-on-danger);
   }
 
-  .rg-icon-button {
+  .rg-icon-button, :where([data-ui="retro-glass"]) .ui-icon-button {
     width: 2.85rem;
     padding: 0;
   }
 
-  .rg-field {
+  .rg-field, :where([data-ui="retro-glass"]) .ui-field {
     gap: var(--rg-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .rg-label {
+  .rg-label, :where([data-ui="retro-glass"]) .ui-label {
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
     letter-spacing: .12em;
@@ -2407,7 +2423,7 @@
     font-weight: 900;
   }
 
-  .rg-input, .rg-textarea, .rg-select {
+  .rg-input, .rg-textarea, .rg-select, :where([data-ui="retro-glass"]) .ui-input, :where([data-ui="retro-glass"]) .ui-textarea, :where([data-ui="retro-glass"]) .ui-select {
     background: linear-gradient(180deg,#ffffff0f,#00000014),var(--rg-surface-soft);
     width: 100%;
     min-height: 2.9rem;
@@ -2421,22 +2437,22 @@
     box-shadow: inset 0 8px 18px #00000024;
   }
 
-  .rg-textarea {
+  .rg-textarea, :where([data-ui="retro-glass"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .rg-input:focus, .rg-textarea:focus, .rg-select:focus {
+  .rg-input:focus, .rg-textarea:focus, .rg-select:focus, :where([data-ui="retro-glass"]) .ui-input:focus, :where([data-ui="retro-glass"]) .ui-textarea:focus, :where([data-ui="retro-glass"]) .ui-select:focus {
     border-color: var(--rg-focus);
     box-shadow: inset 0 8px 18px #00000024,0 0 0 3px rgb(var(--rg-focus-rgb)/.24),0 0 26px rgb(var(--rg-focus-rgb)/.22);
   }
 
-  .rg-help-text {
+  .rg-help-text, :where([data-ui="retro-glass"]) .ui-help-text {
     color: var(--rg-text-muted);
     font-size: .9rem;
   }
 
-  .rg-badge {
+  .rg-badge, :where([data-ui="retro-glass"]) .ui-badge {
     background: linear-gradient(135deg,#fff3,#ffffff0a),var(--rg-surface);
     min-height: 1.8rem;
     color: var(--rg-text);
@@ -2452,32 +2468,32 @@
     display: inline-flex;
   }
 
-  .rg-badge-primary {
+  .rg-badge-primary, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--rg-primary);
     color: var(--rg-on-primary);
   }
 
-  .rg-badge-secondary {
+  .rg-badge-secondary, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--rg-secondary);
     color: var(--rg-on-secondary);
   }
 
-  .rg-badge-success {
+  .rg-badge-success, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--rg-success);
     color: var(--rg-on-success);
   }
 
-  .rg-badge-warning {
+  .rg-badge-warning, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--rg-warning);
     color: var(--rg-on-warning);
   }
 
-  .rg-badge-danger {
+  .rg-badge-danger, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--rg-danger);
     color: var(--rg-on-danger);
   }
 
-  .rg-nav {
+  .rg-nav, :where([data-ui="retro-glass"]) .ui-nav {
     gap: var(--rg-space-2);
     padding: var(--rg-space-2);
     background: linear-gradient(135deg,#ffffff2e,#ffffff0a),var(--rg-surface);
@@ -2489,7 +2505,7 @@
     display: flex;
   }
 
-  .rg-nav-link {
+  .rg-nav-link, :where([data-ui="retro-glass"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--rg-text-muted);
     border-radius: var(--rg-radius-pill);
@@ -2502,13 +2518,13 @@
     display: inline-flex;
   }
 
-  .rg-nav-link:hover {
+  .rg-nav-link:hover, :where([data-ui="retro-glass"]) .ui-nav-link:hover {
     color: var(--rg-text);
     border-color: rgb(var(--rg-primary-rgb)/.36);
     background: #ffffff1a;
   }
 
-  .rg-nav-link.is-active, .rg-nav-link[aria-current="page"] {
+  .rg-nav-link.is-active, .rg-nav-link[aria-current="page"], :where([data-ui="retro-glass"]) .ui-nav-link.is-active, :where([data-ui="retro-glass"]) .ui-nav-link[aria-current="page"] {
     background: var(--rg-primary);
     color: var(--rg-on-primary);
     box-shadow: 0 0 22px var(--rg-glow-primary);
@@ -2542,7 +2558,7 @@
     transform: rotate(45deg);
   }
 
-  .rg-progress {
+  .rg-progress, :where([data-ui="retro-glass"]) .ui-progress {
     background: var(--rg-surface-soft);
     border: 1px solid rgb(var(--rg-border-rgb)/.4);
     border-radius: var(--rg-radius-pill);
@@ -2552,7 +2568,7 @@
     box-shadow: inset 0 8px 18px #00000024;
   }
 
-  .rg-progress-bar {
+  .rg-progress-bar, :where([data-ui="retro-glass"]) .ui-progress-bar {
     height: 100%;
     width: var(--rg-progress-value, 50%);
     background: linear-gradient(90deg,var(--rg-primary),var(--rg-accent),var(--rg-secondary));
@@ -2560,7 +2576,7 @@
     box-shadow: 0 0 18px var(--rg-glow-primary);
   }
 
-  .rg-alert {
+  .rg-alert, :where([data-ui="retro-glass"]) .ui-alert {
     padding: var(--rg-space-4);
     background: var(--rg-surface);
     border: 1px solid var(--rg-border);
@@ -2569,52 +2585,52 @@
     backdrop-filter: blur(16px);
   }
 
-  .rg-alert-title {
+  .rg-alert-title, :where([data-ui="retro-glass"]) .ui-alert-title {
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
     margin: 0;
   }
 
-  .rg-alert-body {
+  .rg-alert-body, :where([data-ui="retro-glass"]) .ui-alert-body {
     color: var(--rg-text-muted);
     margin: .5rem 0 0;
   }
 
-  .rg-alert-success {
+  .rg-alert-success, :where([data-ui="retro-glass"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left: 4px solid var(--rg-success);
   }
 
-  .rg-alert-warning {
+  .rg-alert-warning, :where([data-ui="retro-glass"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left: 4px solid var(--rg-warning);
   }
 
-  .rg-alert-danger {
+  .rg-alert-danger, :where([data-ui="retro-glass"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left: 4px solid var(--rg-danger);
   }
 
-  .rg-table-wrap {
+  .rg-table-wrap, :where([data-ui="retro-glass"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .rg-table {
+  .rg-table, :where([data-ui="retro-glass"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .rg-table th, .rg-table td {
+  .rg-table th, .rg-table td, :where([data-ui="retro-glass"]) .ui-table th, :where([data-ui="retro-glass"]) .ui-table td {
     border-bottom: 1px solid rgb(var(--rg-border-rgb)/.34);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .rg-table th {
+  .rg-table th, :where([data-ui="retro-glass"]) .ui-table th {
     background: rgb(var(--rg-primary-rgb)/.1);
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
     letter-spacing: .1em;
   }
 
-  .rg-table td {
+  .rg-table td, :where([data-ui="retro-glass"]) .ui-table td {
     color: var(--rg-text-muted);
   }
 
@@ -2662,15 +2678,15 @@
     }
   }
 
-  .rg-card, .rg-panel {
+  .rg-card, .rg-panel, :where([data-ui="retro-glass"]) .ui-card {
     background: var(--rg-card-bg);
   }
 
-  .rg-toolbar, .rg-table-wrap, .rg-button:not(.rg-button-primary):not(.rg-button-secondary):not(.rg-button-danger):not(.rg-button-ghost), .rg-icon-button {
+  .rg-toolbar, .rg-table-wrap, .rg-button:not(.rg-button-primary):not(.rg-button-secondary):not(.rg-button-danger):not(.rg-button-ghost), .rg-icon-button, :where([data-ui="retro-glass"]) .ui-toolbar, :where([data-ui="retro-glass"]) .ui-table-wrap, :where([data-ui="retro-glass"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="retro-glass"]) .ui-icon-button {
     background: var(--rg-control-bg);
   }
 
-  .rg-button, .rg-icon-button, .rg-badge, .rg-nav-link {
+  .rg-button, .rg-icon-button, .rg-badge, .rg-nav-link, :where([data-ui="retro-glass"]) .ui-button, :where([data-ui="retro-glass"]) .ui-icon-button, :where([data-ui="retro-glass"]) .ui-badge, :where([data-ui="retro-glass"]) .ui-nav-link {
     font-family: var(--rg-font-control);
   }
 
@@ -2701,12 +2717,12 @@
     inline-size: 3rem;
   }
 
-  .rg-button[aria-busy="true"], .rg-icon-button[aria-busy="true"], [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .rg-button[aria-busy="true"], .rg-icon-button[aria-busy="true"], [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="retro-glass"]) .ui-button[aria-busy="true"], :where([data-ui="retro-glass"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .rg-button[aria-busy="true"]:after, .rg-icon-button[aria-busy="true"]:after, [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .rg-button[aria-busy="true"]:after, .rg-icon-button[aria-busy="true"]:after, [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="retro-glass"]) .ui-button[aria-busy="true"]:after, :where([data-ui="retro-glass"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--rg-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

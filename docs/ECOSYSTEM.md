@@ -2,15 +2,46 @@
 
 UI Style Kit CSS is the visual layer in the three-library CSS ecosystem. It can run alone, but it also has stable integration points for Interactive Surface CSS and Layout Style CSS.
 
+`ecosystem-compatibility.json` is the authoritative source for supported ranges, validated combinations, canonical imports, and deprecated bridge metadata. UI Style Kit owns this file temporarily until a dedicated ecosystem fixture repository is introduced.
+
+Its companion source records pin the exact published merge revisions used by integration and release verification. Update those immutable pins whenever a later companion release changes the validated contract.
+
+## Remote Validation Sequence
+
+The pinned Interactive Surface and Layout commits are published merge objects. Before a UI branch or pull request is expected to validate, verify each pinned SHA remains fetchable from its GitHub repository. The CI and publish workflows perform the same remote-object preflight, so they intentionally fail rather than silently substituting a mutable branch or stale registry artifact when either companion revision is unavailable.
+
 ## Aligned Versions
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.2.0` | current package version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.6.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.1.0` and Interactive Surface `1.5.0` are released companion packages for this upgrade path. Layout Style `2.1.0` remains a staged source target until its separate release approval completes.
+The current combination is `ui-style-kit-css@2.2.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.2.0` is the current package version, and the release pipeline treats it as the active candidate only while that exact npm version is absent. Interactive Surface `1.6.0` and Layout Style `3.0.1` are published releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+
+## Layout-to-visual pairing matrix
+
+Pairings are recommendations, never dependencies. `data-ly-layout`, `data-ui`, `data-theme`, and `data-mode` remain independently selectable; `layout-style-css/personalities.json` publishes the machine-readable source.
+
+| Layout personality | Visual guidance |
+| --- | --- |
+| Minimal SaaS, Bento, Maximalist, Bauhaus, Tactile, Neumorphism, Retrofuturism, Brutalism, Cyberpunk, Y2K, Retro Glass | Native UI Style Kit match with the same identifier |
+| F-pattern, Z-pattern, Split Screen, Mondrian | Any UI Style Kit visual preset; these are structure-only layouts |
+| Synthwave | Recommend `cyberpunk` or `retrofuturism`; Layout's rendered demo verifies each preset while keeping the synthwave layout selected |
+
+## Shared semantic theming
+
+UI Style Kit's complete, visual, and focused visual entrypoints produce the 12 package-neutral `--ui-*` control tokens under `[data-ui][data-theme][data-mode]`. A third-party theme may produce the same contract under its own scope; consumers do not need UI Style Kit-specific `--usk-*` values. Package-specific values remain first in consumer fallback chains, shared semantic values come second, and legacy values or literals remain last.
+
+A third-party producer can theme Interactive Surface's complete standalone entry point without a package-specific adapter:
+
+```js
+import "third-party-theme/tokens.css";
+import "interactive-surface-css/standalone-preset.css";
+```
+
+UI Style Kit can use the same portable path by loading `ui-style-kit-css/visual.css` before `interactive-surface-css/standalone-preset.css`. That composition provides the semantic control baseline. Use the canonical `interactive-surface-theme.css` plus `state-core.css` path when an application needs UI Style Kit's specialized variant, level, icon-role, and state-opacity mappings.
 
 ## Adoption Paths
 

@@ -48,21 +48,16 @@ import "ui-style-kit-css/visual/minimal-saas.css";
 
 ## Integration with interactive-surface-css
 
-Use the canonical token-and-paint bridge with Interactive Surface's state-only core:
+Use the canonical all-three integration when the application needs UI paint, interaction mechanics, and Layout structure:
 
 ```js
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/visual.css";
 import "ui-style-kit-css/interactive-surface-theme.css";
 import "interactive-surface-css/state-core.css";
+import "layout-style-css";
 ```
 
-The older stateful bridge and combined bundle remain available for compatibility, but they are deprecated and have not been redirected to the canonical token-only behavior:
-
-```js
-import "ui-style-kit-css/minimal-saas.css";
-import "ui-style-kit-css/interactive-surface-bridge";
-import "ui-style-kit-css/with-bridge.css";
-```
+The older stateful bridge and combined bundle remain public, deprecated compatibility paths. Follow the [bridge migration guide](Bridge-Migration) for their retained v2 imports.
 
 All bridges remain opt-in for `v2.1.0`. Use `.interactive-surface` on interactable elements with `data-surface-variant` and `data-surface-level="1"`, `"2"`, or `"3"` when a bridge is attached.
 

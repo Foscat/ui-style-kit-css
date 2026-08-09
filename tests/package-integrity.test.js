@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,6 +11,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const packageJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
 const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.json'), 'utf8'));
+
+// Exact overrides keep the release audit deterministic without promoting transitive tooling to direct dependencies.
+const expectedSecurityOverrides = {
+  'fast-uri': '3.1.5',
+  'js-yaml': '4.3.1',
+  nanoid: '3.3.17',
+  postcss: '8.5.23'
+};
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -119,6 +128,40 @@ function relativeFiles(directory, extension) {
     .filter((file) => file.endsWith(extension))
     .map((file) => path.join(directory, file));
 }
+
+test('package metadata preserves the v2 distribution and demo contracts', () => {
+  const sortedExports = Object.entries(packageJson.exports).sort(([left], [right]) => left.localeCompare(right));
+  const exportDigest = createHash('sha256').update(JSON.stringify(sortedExports)).digest('hex');
+
+  assert.equal(packageJson.homepage, 'https://foscat.github.io/ui-style-kit-css/');
+  assert.equal(sortedExports.length, 89, 'Every existing v2 export must remain available');
+  // This digest protects every public key-to-target mapping while keeping the fixture compact and reviewable.
+  assert.equal(exportDigest, '4d4fc404ef1cbd2c61cae29ef40a743da9beea0221117588b5abf68f07c8cfac');
+  assert.equal(packageJson.exports['.'], './dist/ui-style-kit.css');
+  assert.equal(packageJson.exports['./min.css'], './dist/ui-style-kit.min.css');
+  assert.equal(packageJson.exports['./css'], packageJson.exports['.']);
+  assert.equal(packageJson.exports['./css.css'], packageJson.exports['.']);
+  assert.equal(packageJson.exports['./min'], packageJson.exports['./min.css']);
+});
+
+test('installation guidance keeps the v2 default and alias migration explicit', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const installationStart = readme.indexOf('## Install');
+  const basicUsageStart = readme.indexOf('## Basic usage');
+  const installationGuidance = readme.slice(installationStart, basicUsageStart);
+
+  assert.ok(installationStart !== -1 && basicUsageStart > installationStart);
+  assert.match(installationGuidance, /default bundle remains unchanged for all v2 releases/i);
+  assert.match(installationGuidance, /recommended entrypoint when (?:an application|consumers?) own layout/i);
+  assert.match(installationGuidance, /visual\.css.*package default.*v3 proposal/is);
+  assert.match(installationGuidance, /readable `dist\/ui-style-kit\.css`/);
+  assert.match(installationGuidance, /minified `dist\/ui-style-kit\.min\.css`/);
+  assert.match(installationGuidance, /focused `visual\/<preset>\.css`/);
+  assert.match(installationGuidance, /`\.\/css`/);
+  assert.match(installationGuidance, /`\.\/css\.css`/);
+  assert.match(installationGuidance, /`\.\/min`/);
+  assert.match(installationGuidance, /deprecated compatibility aliases/i);
+});
 
 test('package entry points point to dist output', () => {
   assert.equal(packageJson.main, 'dist/ui-style-kit.css');
@@ -265,20 +308,23 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.1 library system and theme override flow', () => {
+test('README documents the 2.2 library system and published companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.1\.0/);
+  assert.match(readme, /v2\.2\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.1\.0/);
-  assert.match(readme, /interactive-surface-css@1\.5\.0/);
-  assert.match(readme, /layout-style-css@2\.1\.0/);
-  assert.match(readme, /UI Style Kit `2\.1\.0` and Interactive Surface `1\.5\.0` are released companion packages/);
-  assert.match(readme, /Layout Style `2\.1\.0` remains a staged source target/);
+  assert.match(readme, /ui-style-kit-css@2\.2\.0/);
+  assert.match(readme, /interactive-surface-css@1\.6\.0/);
+  assert.match(readme, /layout-style-css@3\.0\.1/);
+  assert.match(readme, /layout-style-css@3\.0\.0/);
+  assert.match(readme, /UI Style Kit `2\.2\.0` is the current package version/);
+  assert.match(readme, /Interactive Surface `1\.6\.0` and Layout Style `3\.0\.1` are published releases/);
+  assert.doesNotMatch(readme, /active staged candidate/i);
+  assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
   assert.match(readme, /interactive-surface-theme\.css/);
@@ -336,9 +382,10 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.1\.0/);
+    assert.match(contents, /ui-style-kit-css@2\.2\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
-    assert.match(contents, /layout-style-css@2\.1\.0/);
+    assert.match(contents, /layout-style-css@3\.0\.1/);
+    assert.match(contents, /layout-style-css@3\.0\.0/);
     assert.match(contents, /Use one/);
     assert.match(contents, /Use two/);
     assert.match(contents, /Use all three/);
@@ -351,6 +398,50 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
+test('ecosystem fixture pins both published companions for the UI 2.2.0 release', () => {
+  const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
+  const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
+  const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
+
+  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b50a60d8ffd804d8227b1a16903c394556b88511');
+  assert.equal(compatibility.packageSources['layout-style-css'].revision, '44c34693554879790c54a6205b37160ff63a1747');
+  assert.deepEqual(compatibility.supportedCombinations, {
+    minimum: {
+      'ui-style-kit-css': '2.1.0',
+      'interactive-surface-css': '1.5.0',
+      'layout-style-css': '3.0.0'
+    },
+    current: {
+      'ui-style-kit-css': '2.2.0',
+      'interactive-surface-css': '1.6.0',
+      'layout-style-css': '3.0.1'
+    }
+  });
+
+  for (const contents of [ecosystemDoc, ecosystemWiki]) {
+    assert.match(contents, /ui-style-kit-css@2\.2\.0[\s\S]{0,120}current package version/i);
+    assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
+    assert.match(contents, /layout-style-css@3\.0\.1[\s\S]{0,120}published/i);
+    assert.doesNotMatch(contents, /active staged candidate/i);
+  }
+});
+
+test('deprecated bridge migration guidance preserves the retained public exports', () => {
+  const migrationGuide = fs.readFileSync(path.join(rootDir, 'docs', 'BRIDGE-MIGRATION.md'), 'utf8');
+
+  assert.match(migrationGuide, /deprecated/i);
+  for (const exportPath of [
+    'ui-style-kit-css/interactive-surface-bridge',
+    'ui-style-kit-css/interactive-surface-bridge.css',
+    'ui-style-kit-css/with-bridge',
+    'ui-style-kit-css/with-bridge.css'
+  ]) {
+    const packageExport = `./${exportPath.slice('ui-style-kit-css/'.length)}`;
+    assert.ok(packageJson.exports[packageExport], `${exportPath} must remain a public compatibility export`);
+    assert.match(migrationGuide, new RegExp(escapeRegExp(exportPath)));
+  }
+});
+
 test('canonical ecosystem examples preserve ownership-first import order', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
   const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
@@ -358,11 +449,6 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
     fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8'),
     fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8')
   ];
-  const visualThemeState = [
-    'import "ui-style-kit-css/visual/minimal-saas.css";',
-    'import "ui-style-kit-css/interactive-surface-theme.css";',
-    'import "interactive-surface-css/state-core.css";'
-  ].join('\n');
   const visualThemeStateLayout = [
     'import "ui-style-kit-css/visual.css";',
     'import "ui-style-kit-css/interactive-surface-theme.css";',
@@ -371,14 +457,14 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
   ].join('\n');
   const exactJsBlock = (imports) => new RegExp(escapeRegExp(`\`\`\`js\n${imports}\n\`\`\``));
 
-  assert.match(readme, exactJsBlock(visualThemeState));
-  assert.match(installationWiki, exactJsBlock(visualThemeState));
+  assert.match(readme, exactJsBlock(visualThemeStateLayout));
+  assert.match(installationWiki, exactJsBlock(visualThemeStateLayout));
 
   for (const contents of ecosystemGuides) {
-    assert.match(contents, exactJsBlock(visualThemeState));
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.1\.0` and Interactive Surface `1\.5\.0` are released companion packages/);
-    assert.match(contents, /Layout Style `2\.1\.0` remains a staged source target/);
+    assert.match(contents, /UI Style Kit `2\.2\.0` is the current package version/);
+    assert.match(contents, /Interactive Surface `1\.6\.0` and Layout Style `3\.0\.1` are published releases/);
+    assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
 });
 
@@ -410,7 +496,11 @@ test('release automation scripts are exposed', () => {
     'test:e2e:install:ci',
     'check:contrast',
     'check:package',
+    'check:ecosystem:current',
+    'check:ecosystem:minimum',
     'check:ecosystem:packs',
+    'test:ecosystem:clean-install',
+    'release:preflight',
     'check',
     'pack:dry-run',
     'release:verify'
@@ -422,6 +512,24 @@ test('release automation scripts are exposed', () => {
   }
 });
 
+test('clean-install ecosystem scripts and CI enforce current and minimum rendered matrices', () => {
+  const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
+  const currentScript = packageJson.scripts['check:ecosystem:current'] ?? '';
+  const minimumScript = packageJson.scripts['check:ecosystem:minimum'] ?? '';
+
+  assert.match(currentScript, /check-ecosystem-packs\.mjs --matrix current/);
+  assert.match(minimumScript, /check-ecosystem-packs\.mjs --matrix minimum/);
+  assert.equal(
+    packageJson.scripts['test:ecosystem:clean-install'],
+    'node --test tests/clean-install-ecosystem-contract.integration.mjs'
+  );
+  assert.match(workflow, /npm run release:preflight/);
+  assert.doesNotMatch(workflow, /check:ecosystem:(?:current|minimum)[^\n]*--skip-browser/);
+  assert.doesNotMatch(workflow, /--update-snapshots/);
+  assert.equal(packageJson.devDependencies.pixelmatch, '7.2.0');
+  assert.equal(packageJson.devDependencies.pngjs, '7.0.0');
+});
+
 test('release verification script is non-publishing and covers the full release gate', () => {
   const releaseVerify = packageJson.scripts['release:verify'] ?? '';
   const requiredCommands = [
@@ -430,7 +538,7 @@ test('release verification script is non-publishing and covers the full release 
     'npm run test:axe',
     'npm run test:visual',
     'npm run test:matrix',
-    'npm run check:ecosystem:packs',
+    'npm run release:preflight -- --candidate-package ui-style-kit-css',
     'npm audit --audit-level=moderate',
     'npm run pack:dry-run'
   ];
@@ -445,38 +553,69 @@ test('release verification script is non-publishing and covers the full release 
   assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
 });
 
-test('publishing docs expose the packed ecosystem compatibility gate', () => {
+test('publishing docs expose the coordinated packed ecosystem compatibility gate', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
-  assert.match(packageJson.scripts['check:ecosystem:packs'], /scripts\/check-ecosystem-packs\.mjs/);
+  assert.match(packageJson.scripts['check:ecosystem:current'], /scripts\/check-ecosystem-packs\.mjs/);
+  assert.match(packageJson.scripts['check:ecosystem:minimum'], /scripts\/check-ecosystem-packs\.mjs/);
   assert.ok(fs.existsSync(path.join(rootDir, 'scripts', 'check-ecosystem-packs.mjs')));
   assert.match(publishingGuide, /npm run check:ecosystem:packs/);
   assert.match(publishingGuide, /standalone, pairwise, and all-three packed package compatibility/i);
-  assert.match(publishingGuide, /--ui-spec ui-style-kit-css@2\.1\.0/);
-  assert.match(publishingGuide, /--layout-spec layout-style-css@2\.1\.0/);
-  assert.match(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
+  assert.match(publishingGuide, /--layout-repo \.\.\/Layout-Style-CSS/);
+  assert.match(publishingGuide, /--interactive-repo \.\.\/Interactive-Surface-CSS/);
+  assert.match(publishingGuide, /immutable revision pins from `ecosystem-compatibility\.json`/);
 });
 
-test('publishing docs preserve the approval-gated ecosystem rollout order', () => {
+test('publishing docs pin published companion merge commits for the UI release', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
-  const requiredSequence = [
-    'ui-style-kit-css@2.0.4',
-    'interactive-surface-css@1.5.0',
-    'ui-style-kit-css@2.1.0',
-    'layout-style-css@2.1.0'
-  ];
 
-  let cursor = -1;
-  for (const releaseTarget of requiredSequence) {
-    const next = publishingGuide.indexOf(releaseTarget, cursor + 1);
-    assert.ok(next > cursor, `Publishing guide must order ${releaseTarget} after the previous release target`);
-    cursor = next;
-  }
+  assert.match(publishingGuide, /b50a60d8ffd804d8227b1a16903c394556b88511/);
+  assert.match(publishingGuide, /44c34693554879790c54a6205b37160ff63a1747/);
+  assert.match(publishingGuide, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
+  assert.match(publishingGuide, /layout-style-css@3\.0\.1[\s\S]{0,120}published/i);
+  assert.match(publishingGuide, /ui-style-kit-css@2\.2\.0[\s\S]{0,160}active candidate only while/i);
+  assert.doesNotMatch(publishingGuide, /active staged candidate/i);
+  assert.match(publishingGuide, /current[^\n]*layout-style-css@3\.0\.1/i);
+  assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
+});
+
+test('publishing docs describe coordinated proof without re-releasing packages', () => {
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
   assert.match(publishingGuide, /No package, tag, or registry release occurs without explicit approval/i);
-  assert.match(publishingGuide, /2\.0\.4[^.\n]*hotfix/i);
-  assert.match(publishingGuide, /2\.0\.4 hotfix release line must pass `npm run release:verify`/i);
-  assert.match(publishingGuide, /final all-three packed compatibility suite/i);
+  assert.match(publishingGuide, /coordinated checked-out ecosystem proof/i);
+  assert.doesNotMatch(publishingGuide, /--interactive-spec interactive-surface-css@1\.5\.0/);
+  assert.doesNotMatch(publishingGuide, /Release `ui-style-kit-css@2\.(?:0\.4|1\.0)`/);
+});
+
+test('publishing workflow resolves immutable ecosystem sources for packed import validation', () => {
+  const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'npm-publish.yml'), 'utf8');
+
+  assert.match(workflow, /id: ecosystem_sources/);
+  assert.match(workflow, /node scripts\/write-ecosystem-workflow-outputs\.mjs/);
+  assert.match(workflow, /Require pushed companion commits before publish verification/);
+  assert.match(workflow, /git -C "\$\{fixture_dir\}" fetch --no-tags --depth=1/);
+  assert.match(workflow, /ref: \$\{\{ steps\.ecosystem_sources\.outputs\.layout_revision \}\}/);
+  assert.match(workflow, /ref: \$\{\{ steps\.ecosystem_sources\.outputs\.interactive_revision \}\}/);
+  assert.match(workflow, /UI_STYLE_KIT_LAYOUT_DOCS_REPO:/);
+  assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_REPO:/);
+  assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_DOCS_REPO:/);
+});
+
+test('every repository release preflight invocation explicitly selects the UI candidate', () => {
+  for (const workflowName of ['ci.yml', 'release-version-alignment.yml', 'npm-publish.yml']) {
+    const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', workflowName), 'utf8');
+    const preflightCommands = workflow.match(/^(?!\s*#).*\bnpm\s+run\s+release:preflight\b[^\r\n]*/gm) ?? [];
+
+    assert.ok(preflightCommands.length > 0, `${workflowName} must execute the release preflight`);
+    for (const command of preflightCommands) {
+      assert.match(
+        command,
+        /--candidate-package\s+ui-style-kit-css(?:\s|$)/,
+        `${workflowName} must exclude only the active UI release candidate from registry checks`
+      );
+    }
+  }
 });
 
 test('CI workflow shards the UI matrix by engine and preset group', () => {
@@ -503,6 +642,20 @@ test('package metadata is aligned for the release version', () => {
 
   const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   assert.match(css, new RegExp(`UI Style Kit CSS v${escapeRegExp(packageJson.version)}`));
+});
+
+test('release security overrides resolve audited transitive tooling', () => {
+  assert.deepEqual(packageJson.overrides, expectedSecurityOverrides);
+  assert.deepEqual(packageJson.dependencies || {}, {});
+  assert.deepEqual(packageLock.packages[''].dependencies || {}, {});
+
+  for (const [packageName, expectedVersion] of Object.entries(expectedSecurityOverrides)) {
+    assert.equal(
+      packageLock.packages[`node_modules/${packageName}`]?.version,
+      expectedVersion,
+      `Expected ${packageName}@${expectedVersion} in the release lockfile`
+    );
+  }
 });
 
 test('exact release tag at HEAD matches package version', () => {
@@ -566,9 +719,18 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
     'retro-glass'
   ];
 
-  assert.match(bridgeCss, /--interactive-surface-bg:\s*rgb\(var\(--usk-surface-strong-rgb,/);
-  assert.match(bridgeCss, /--interactive-surface-fg:\s*rgb\(var\(--usk-text-rgb\)\)/);
-  assert.match(bridgeCss, /--interactive-surface-variant-primary-bg:\s*rgb\(var\(--usk-primary-rgb\)\)/);
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-bg:\s*rgb\(var\(--usk-surface-strong-rgb,\s*var\(--usk-surface-rgb,/
+  );
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-fg:\s*var\(--ui-color-text,\s*rgb\(var\(--usk-text-rgb\)\)\)/
+  );
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-variant-primary-bg:\s*var\(--ui-color-primary,\s*rgb\(var\(--usk-primary-rgb\)\)\)/
+  );
 
   for (const level of [1, 2, 3]) {
     assert.match(

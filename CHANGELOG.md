@@ -2,6 +2,22 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [Unreleased]
+
+## [2.2.0] - 2026-08-09
+
+### Added
+
+- Added the public 12-token shared semantic producer contract and its machine-readable manifest inventory for companion and third-party consumers.
+- Implemented the manifest-backed semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and unchanged-markup runtime switching across all 11 presets.
+- Added a persistent semantic component demo whose DOM nodes and classes remain stable through every preset switch.
+- Documented native `<dialog>` as the neutral modal/dialog fallback without inventing `.ui-modal` or `.ui-dialog` selectors.
+
+### Changed
+
+- Clarified that generated default, visual, with-bridge, and focused entrypoints provide semantic aliases, while raw preset sources, partial extras, and deprecated structural aliases remain prefixed compatibility or advanced APIs.
+- Preserved `.ui-spinner` and `.ui-tooltip` as retained hooks while generating the other 27 selectors from existing preset declarations.
+
 ## [2.1.0] - 2026-07-20
 
 ### Added

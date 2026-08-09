@@ -1,6 +1,6 @@
 {
   "name": "ui-style-kit-css",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "CSS theme and UI style preset library for accessible websites, dashboards, admin interfaces, and client-facing pages.",
   "style": "dist/ui-style-kit.css",
   "main": "dist/ui-style-kit.css",
@@ -150,7 +150,7 @@
   "bugs": {
     "url": "https://github.com/Foscat/ui-style-kit-css/issues"
   },
-  "homepage": "https://github.com/Foscat/ui-style-kit-css#readme",
+  "homepage": "https://foscat.github.io/ui-style-kit-css/",
   "engines": {
     "node": ">=20"
   },
@@ -160,12 +160,21 @@
     "@playwright/test": "~1.61.1",
     "css-tree": "3.2.1",
     "lightningcss": "1.33.0",
+    "pixelmatch": "7.2.0",
+    "pngjs": "7.0.0",
     "stylelint": "~17.14.0"
+  },
+  "overrides": {
+    "fast-uri": "3.1.5",
+    "js-yaml": "4.3.1",
+    "nanoid": "3.3.17",
+    "postcss": "8.5.23"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
     "lint": "stylelint \"styles/**/*.css\" \"demo/**/*.css\"",
     "check:contrast": "node scripts/check-contrast.mjs",
+    "check:ownership": "node scripts/check-css-ownership.mjs",
     "check:package": "node scripts/check-package.mjs",
     "test": "npm run test:unit",
     "test:unit": "node --test tests/*.test.js",
@@ -173,11 +182,15 @@
     "test:axe": "playwright test --config playwright.config.js tests/e2e/accessibility.spec.js",
     "test:matrix": "playwright test --config playwright.matrix.config.js",
     "test:e2e:install:ci": "playwright install --with-deps chromium firefox webkit",
-    "check:ecosystem:packs": "node scripts/check-ecosystem-packs.mjs",
-    "check": "npm run build && npm run lint && npm run test:unit && npm run check:contrast && npm run check:package",
+    "check:ecosystem:current": "node scripts/check-ecosystem-packs.mjs --matrix current",
+    "check:ecosystem:minimum": "node scripts/check-ecosystem-packs.mjs --matrix minimum --skip-docs",
+    "check:ecosystem:packs": "npm run check:ecosystem:current && npm run check:ecosystem:minimum",
+    "test:ecosystem:clean-install": "node --test tests/clean-install-ecosystem-contract.integration.mjs",
+    "release:preflight": "npm run build && node scripts/release-preflight.mjs --layout-repo ../Layout-Style-CSS --interactive-repo ../Interactive-Surface-CSS --layout-docs-repo ../Layout-Style-CSS --interactive-docs-repo ../Interactive-Surface-CSS",
+    "check": "npm run build && npm run lint && npm run test:unit && npm run check:contrast && npm run check:ownership && npm run check:package",
     "pack:dry-run": "npm pack --dry-run",
     "prepack": "npm run check",
-    "release:verify": "npm run check && npm run test:e2e && npm run test:axe && npm run test:visual && npm run test:matrix && npm run check:ecosystem:packs && npm audit --audit-level=moderate && npm run pack:dry-run",
+    "release:verify": "npm run check && npm run test:e2e && npm run test:axe && npm run test:visual && npm run test:matrix && npm run release:preflight -- --candidate-package ui-style-kit-css && npm audit --audit-level=moderate && npm run pack:dry-run",
     "prepublishOnly": "npm run release:verify",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",

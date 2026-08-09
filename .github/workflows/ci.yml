@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   quality:
     name: Lint, Build, Unit Tests
@@ -33,6 +36,82 @@ jobs:
 
       - name: Run unit tests
         run: npm run test:unit
+
+  ecosystem-packs:
+    name: Packed Ecosystem Contract
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout UI Style Kit
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install UI Style Kit dependencies
+        run: npm ci
+
+      # The compatibility contract, rather than a mutable branch or release tag,
+      # selects the exact companion artifacts exercised by this integration job.
+      - name: Resolve immutable ecosystem fixture sources
+        id: ecosystem_sources
+        shell: bash
+        run: node scripts/write-ecosystem-workflow-outputs.mjs
+
+      # The companion commits must be pushed first; checking remote object reachability
+      # makes that sequencing failure explicit before Actions attempts a checkout.
+      - name: Require pushed companion commits before UI validation
+        shell: bash
+        env:
+          INTERACTIVE_REPOSITORY: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          INTERACTIVE_REVISION: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
+          LAYOUT_REPOSITORY: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          LAYOUT_REVISION: ${{ steps.ecosystem_sources.outputs.layout_revision }}
+        run: |
+          set -euo pipefail
+          for source in "${INTERACTIVE_REPOSITORY}:${INTERACTIVE_REVISION}" "${LAYOUT_REPOSITORY}:${LAYOUT_REVISION}"; do
+            repository="${source%%:*}"
+            revision="${source##*:}"
+            fixture_dir="$(mktemp -d)"
+            if ! git init --bare "${fixture_dir}" >/dev/null || ! git -C "${fixture_dir}" fetch --no-tags --depth=1 "https://github.com/${repository}.git" "${revision}" >/dev/null 2>&1 || ! git -C "${fixture_dir}" cat-file -e "${revision}^{commit}"; then
+              echo "::error::${repository}@${revision} is unavailable. Push the companion commit, verify its remote object, then push or validate this UI branch."
+              rm -rf "${fixture_dir}"
+              exit 1
+            fi
+            rm -rf "${fixture_dir}"
+          done
+
+      - name: Checkout Layout Style CSS contract fixture
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ steps.ecosystem_sources.outputs.layout_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.layout_revision }}
+          path: _ecosystem/Layout-Style-CSS
+
+      - name: Checkout Interactive Surface CSS contract fixture
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ steps.ecosystem_sources.outputs.interactive_repository }}
+          ref: ${{ steps.ecosystem_sources.outputs.interactive_revision }}
+          path: _ecosystem/Interactive-Surface-CSS
+
+      - name: Install Layout Style CSS fixture dependencies
+        working-directory: _ecosystem/Layout-Style-CSS
+        run: npm ci
+
+      - name: Install Interactive Surface CSS fixture dependencies
+        working-directory: _ecosystem/Interactive-Surface-CSS
+        run: npm ci
+
+      - name: Install clean-consumer browser
+        run: npx playwright install --with-deps chromium
+
+      # Explicit candidate mode exempts only the unpublished UI version; every companion version still comes from npm.
+      - name: Run PR-safe ecosystem release preflight
+        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
 
   playwright:
     name: Playwright E2E

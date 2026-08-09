@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.1.0
+ * UI Style Kit CSS v2.2.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -846,6 +846,22 @@
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+  --usk-motion-duration: 140ms;
+  --usk-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Shared semantic values are fully typed so optional companion and third-party consumers can use them directly. */
+  --ui-color-bg: rgb(var(--usk-bg-rgb));
+  --ui-color-surface: var(--usk-native-surface-strong);
+  --ui-color-text: var(--usk-native-text);
+  --ui-color-muted: var(--usk-native-text-muted);
+  --ui-color-primary: var(--usk-native-primary);
+  --ui-color-on-primary: var(--usk-native-on-primary);
+  --ui-color-border: var(--usk-native-border);
+  --ui-radius-control: var(--usk-native-radius);
+  --ui-shadow-control: var(--usk-native-shadow);
+  --ui-focus-color: var(--usk-native-focus);
+  --ui-motion-duration: var(--usk-motion-duration);
+  --ui-motion-easing: var(--usk-motion-easing);
 }
 
 [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {
@@ -1536,7 +1552,7 @@
   [class~="rg-alert"],
   [class~="rg-table-wrap"],
   [class~="rg-nav"]
-) {
+), [data-ui]:where([data-ui="brutalism"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
   overflow-wrap: anywhere;
@@ -1587,7 +1603,7 @@
   [class~="rg-icon-button"],
   [class~="rg-badge"],
   [class~="rg-nav-link"]
-) {
+), [data-ui]:where([data-ui="brutalism"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
   white-space: normal;
@@ -1627,7 +1643,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), [data-ui]:where([data-ui="brutalism"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,13 +1967,13 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="brutalism"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="brutalism"]) .ui-check, :where([data-ui="brutalism"]) .ui-radio, :where([data-ui="brutalism"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1981,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="brutalism"]) .ui-check-control, :where([data-ui="brutalism"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="brutalism"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1999,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="brutalism"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2018,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="brutalism"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2032,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="brutalism"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2260,12 +2276,12 @@
     inline-size: 3rem;
   }
 
-  .brutal-button[aria-busy="true"], .brutal-icon-button[aria-busy="true"], [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .brutal-button[aria-busy="true"], .brutal-icon-button[aria-busy="true"], [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="brutalism"]) .ui-button[aria-busy="true"], :where([data-ui="brutalism"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .brutal-button[aria-busy="true"]:after, .brutal-icon-button[aria-busy="true"]:after, [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .brutal-button[aria-busy="true"]:after, .brutal-icon-button[aria-busy="true"]:after, [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="brutalism"]) .ui-button[aria-busy="true"]:after, :where([data-ui="brutalism"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--brutal-primary-text-rgb)/.42);
     border-block-start-color: currentColor;
@@ -2282,7 +2298,7 @@
     }
   }
 
-  .brutal-title, .brutal-heading, .brutal-kicker, .brutal-button, .brutal-badge, .brutal-nav-link {
+  .brutal-title, .brutal-heading, .brutal-kicker, .brutal-button, .brutal-badge, .brutal-nav-link, :where([data-ui="brutalism"]) .ui-button, :where([data-ui="brutalism"]) .ui-badge, :where([data-ui="brutalism"]) .ui-nav-link {
     font-family: var(--brutal-font-heading);
     text-transform: uppercase;
   }
@@ -2321,7 +2337,7 @@
     color: var(--brutal-text-muted);
   }
 
-  .brutal-card, .brutal-panel, .brutal-surface, .brutal-toolbar, .brutal-table-wrap {
+  .brutal-card, .brutal-panel, .brutal-surface, .brutal-toolbar, .brutal-table-wrap, :where([data-ui="brutalism"]) .ui-card, :where([data-ui="brutalism"]) .ui-toolbar, :where([data-ui="brutalism"]) .ui-table-wrap {
     background: var(--brutal-surface-strong);
     color: var(--brutal-text);
     border: 3px solid var(--brutal-border);
@@ -2330,11 +2346,11 @@
     transition: transform var(--brutal-transition-fast),box-shadow var(--brutal-transition-fast),background var(--brutal-transition-fast);
   }
 
-  .brutal-card, .brutal-panel {
+  .brutal-card, .brutal-panel, :where([data-ui="brutalism"]) .ui-card {
     padding: var(--brutal-space-6);
   }
 
-  .brutal-toolbar {
+  .brutal-toolbar, :where([data-ui="brutalism"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--brutal-space-4);
@@ -2365,7 +2381,7 @@
     transform: translate(4px, 4px);
   }
 
-  .brutal-button, .brutal-icon-button {
+  .brutal-button, .brutal-icon-button, :where([data-ui="brutalism"]) .ui-button, :where([data-ui="brutalism"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2388,76 +2404,76 @@
     display: inline-flex;
   }
 
-  .brutal-button:hover, .brutal-icon-button:hover {
+  .brutal-button:hover, .brutal-icon-button:hover, :where([data-ui="brutalism"]) .ui-button:hover, :where([data-ui="brutalism"]) .ui-icon-button:hover {
     box-shadow: 8px 8px 0 var(--brutal-primary);
     transform: translate(-2px, -2px);
   }
 
-  .brutal-button:active, .brutal-icon-button:active, .brutal-button.is-active, .brutal-button[aria-pressed="true"] {
+  .brutal-button:active, .brutal-icon-button:active, .brutal-button.is-active, .brutal-button[aria-pressed="true"], :where([data-ui="brutalism"]) .ui-button:active, :where([data-ui="brutalism"]) .ui-icon-button:active, :where([data-ui="brutalism"]) .ui-button.is-active, :where([data-ui="brutalism"]) .ui-button[aria-pressed="true"] {
     box-shadow: 2px 2px 0 var(--brutal-secondary);
     transform: translate(4px, 4px);
   }
 
-  .brutal-button-primary {
+  .brutal-button-primary, :where([data-ui="brutalism"]) .ui-button:where([data-ui-variant="primary"]) {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
   }
 
-  .brutal-button-primary:hover {
+  .brutal-button-primary:hover, :where([data-ui="brutalism"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--brutal-primary-hover);
   }
 
-  .brutal-button-secondary {
+  .brutal-button-secondary, :where([data-ui="brutalism"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: var(--brutal-secondary);
     color: var(--brutal-on-secondary);
     box-shadow: 6px 6px 0 var(--brutal-primary);
   }
 
-  .brutal-button-secondary:hover {
+  .brutal-button-secondary:hover, :where([data-ui="brutalism"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--brutal-secondary-hover);
   }
 
-  .brutal-button-danger {
+  .brutal-button-danger, :where([data-ui="brutalism"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--brutal-danger);
     color: var(--brutal-on-danger);
   }
 
-  .brutal-icon-button {
+  .brutal-icon-button, :where([data-ui="brutalism"]) .ui-icon-button {
     width: 2.85rem;
     padding: 0;
   }
 
-  .brutal-button:disabled, .brutal-icon-button:disabled, .brutal-disabled {
+  .brutal-button:disabled, .brutal-icon-button:disabled, .brutal-disabled, :where([data-ui="brutalism"]) .ui-button:disabled, :where([data-ui="brutalism"]) .ui-icon-button:disabled {
     opacity: .55;
     cursor: not-allowed;
     transform: none;
   }
 
-  .brutal-card, .brutal-panel {
+  .brutal-card, .brutal-panel, :where([data-ui="brutalism"]) .ui-card {
     background: var(--brutal-card-bg);
   }
 
-  .brutal-toolbar, .brutal-table-wrap, .brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-ghost), .brutal-icon-button {
+  .brutal-toolbar, .brutal-table-wrap, .brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-ghost), .brutal-icon-button, :where([data-ui="brutalism"]) .ui-toolbar, :where([data-ui="brutalism"]) .ui-table-wrap, :where([data-ui="brutalism"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="brutalism"]) .ui-icon-button {
     background: var(--brutal-control-bg);
   }
 
-  .brutal-button, .brutal-icon-button, .brutal-badge, .brutal-nav-link {
+  .brutal-button, .brutal-icon-button, .brutal-badge, .brutal-nav-link, :where([data-ui="brutalism"]) .ui-button, :where([data-ui="brutalism"]) .ui-icon-button, :where([data-ui="brutalism"]) .ui-badge, :where([data-ui="brutalism"]) .ui-nav-link {
     font-family: var(--brutal-font-control);
   }
 
-  .brutal-field {
+  .brutal-field, :where([data-ui="brutalism"]) .ui-field {
     gap: var(--brutal-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .brutal-label {
+  .brutal-label, :where([data-ui="brutalism"]) .ui-label {
     text-transform: uppercase;
     letter-spacing: .05em;
     font-weight: 900;
   }
 
-  .brutal-input, .brutal-textarea, .brutal-select {
+  .brutal-input, .brutal-textarea, .brutal-select, :where([data-ui="brutalism"]) .ui-input, :where([data-ui="brutalism"]) .ui-textarea, :where([data-ui="brutalism"]) .ui-select {
     background: var(--brutal-surface-strong);
     width: 100%;
     min-height: 2.9rem;
@@ -2470,22 +2486,22 @@
     box-shadow: inset 4px 4px #0000001f;
   }
 
-  .brutal-textarea {
+  .brutal-textarea, :where([data-ui="brutalism"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .brutal-input:focus, .brutal-textarea:focus, .brutal-select:focus {
+  .brutal-input:focus, .brutal-textarea:focus, .brutal-select:focus, :where([data-ui="brutalism"]) .ui-input:focus, :where([data-ui="brutalism"]) .ui-textarea:focus, :where([data-ui="brutalism"]) .ui-select:focus {
     border-color: var(--brutal-focus);
     box-shadow: 0 0 0 4px rgb(var(--brutal-focus-rgb)/.28),inset 4px 4px 0 #0000001f;
   }
 
-  .brutal-help-text {
+  .brutal-help-text, :where([data-ui="brutalism"]) .ui-help-text {
     color: var(--brutal-text-muted);
     font-size: .9rem;
   }
 
-  .brutal-badge {
+  .brutal-badge, :where([data-ui="brutalism"]) .ui-badge {
     background: var(--brutal-surface-strong);
     min-height: 1.8rem;
     color: var(--brutal-text);
@@ -2498,32 +2514,32 @@
     display: inline-flex;
   }
 
-  .brutal-badge-primary {
+  .brutal-badge-primary, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
   }
 
-  .brutal-badge-secondary {
+  .brutal-badge-secondary, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--brutal-secondary);
     color: var(--brutal-on-secondary);
   }
 
-  .brutal-badge-success {
+  .brutal-badge-success, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--brutal-success);
     color: var(--brutal-on-success);
   }
 
-  .brutal-badge-warning {
+  .brutal-badge-warning, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--brutal-warning);
     color: var(--brutal-on-warning);
   }
 
-  .brutal-badge-danger {
+  .brutal-badge-danger, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--brutal-danger);
     color: var(--brutal-on-danger);
   }
 
-  .brutal-nav {
+  .brutal-nav, :where([data-ui="brutalism"]) .ui-nav {
     gap: var(--brutal-space-2);
     padding: var(--brutal-space-2);
     background: var(--brutal-surface-strong);
@@ -2533,7 +2549,7 @@
     display: flex;
   }
 
-  .brutal-nav-link {
+  .brutal-nav-link, :where([data-ui="brutalism"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--brutal-text);
     border: 3px solid #0000;
@@ -2544,12 +2560,12 @@
     display: inline-flex;
   }
 
-  .brutal-nav-link:hover {
+  .brutal-nav-link:hover, :where([data-ui="brutalism"]) .ui-nav-link:hover {
     border-color: var(--brutal-border);
     background: var(--brutal-surface-soft);
   }
 
-  .brutal-nav-link.is-active, .brutal-nav-link[aria-current="page"] {
+  .brutal-nav-link.is-active, .brutal-nav-link[aria-current="page"], :where([data-ui="brutalism"]) .ui-nav-link.is-active, :where([data-ui="brutalism"]) .ui-nav-link[aria-current="page"] {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
     border-color: var(--brutal-border);
@@ -2582,66 +2598,66 @@
     transform: rotate(45deg);
   }
 
-  .brutal-progress {
+  .brutal-progress, :where([data-ui="brutalism"]) .ui-progress {
     background: var(--brutal-surface-soft);
     border: 3px solid var(--brutal-border);
     width: 100%;
     height: 1rem;
   }
 
-  .brutal-progress-bar {
+  .brutal-progress-bar, :where([data-ui="brutalism"]) .ui-progress-bar {
     height: 100%;
     width: var(--brutal-progress-value, 50%);
     background: var(--brutal-primary);
   }
 
-  .brutal-alert {
+  .brutal-alert, :where([data-ui="brutalism"]) .ui-alert {
     padding: var(--brutal-space-4);
     background: var(--brutal-surface-strong);
     border: 3px solid var(--brutal-border);
     box-shadow: 8px 8px 0 var(--brutal-accent);
   }
 
-  .brutal-alert-success {
+  .brutal-alert-success, :where([data-ui="brutalism"]) .ui-alert:where([data-ui-variant="success"]) {
     box-shadow: 8px 8px 0 var(--brutal-success);
   }
 
-  .brutal-alert-warning {
+  .brutal-alert-warning, :where([data-ui="brutalism"]) .ui-alert:where([data-ui-variant="warning"]) {
     box-shadow: 8px 8px 0 var(--brutal-warning);
   }
 
-  .brutal-alert-danger {
+  .brutal-alert-danger, :where([data-ui="brutalism"]) .ui-alert:where([data-ui-variant="danger"]) {
     box-shadow: 8px 8px 0 var(--brutal-danger);
   }
 
-  .brutal-alert-title {
+  .brutal-alert-title, :where([data-ui="brutalism"]) .ui-alert-title {
     text-transform: uppercase;
     margin: 0;
     font-weight: 900;
   }
 
-  .brutal-alert-body {
+  .brutal-alert-body, :where([data-ui="brutalism"]) .ui-alert-body {
     color: var(--brutal-text-muted);
     margin: .5rem 0 0;
   }
 
-  .brutal-table-wrap {
+  .brutal-table-wrap, :where([data-ui="brutalism"]) .ui-table-wrap {
     box-shadow: 8px 8px 0 var(--brutal-primary);
     overflow: auto;
   }
 
-  .brutal-table {
+  .brutal-table, :where([data-ui="brutalism"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .brutal-table th, .brutal-table td {
+  .brutal-table th, .brutal-table td, :where([data-ui="brutalism"]) .ui-table th, :where([data-ui="brutalism"]) .ui-table td {
     border: 2px solid var(--brutal-border);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .brutal-table th {
+  .brutal-table th, :where([data-ui="brutalism"]) .ui-table th {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
     text-transform: uppercase;

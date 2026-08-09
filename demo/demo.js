@@ -59,7 +59,7 @@ const uiSelect = document.getElementById("uiSelect");
 const themeSelect = document.getElementById("themeSelect");
 const modeSelect = document.getElementById("modeSelect");
 const styleKitStylesheet = document.getElementById("styleKitStylesheet");
-const main = document.getElementById("main");
+const demoContent = document.getElementById("demoContent");
 const skip = document.getElementById("skip");
 const defaultBundle = styleKitStylesheet.dataset.defaultHref || styleKitStylesheet.getAttribute("href");
 const bridgeAwareBundle =
@@ -618,7 +618,8 @@ function render() {
 
   const activeColorTokens = getActiveColorTokens();
 
-  main.innerHTML = `
+  // The prefixed compatibility showcase remains dynamic while the semantic section keeps stable DOM nodes.
+  demoContent.innerHTML = `
     <section class="${p}-page demo-showcase">
       <div class="${p}-container ${p}-stack">
         <nav class="${p}-nav" aria-label="Primary">

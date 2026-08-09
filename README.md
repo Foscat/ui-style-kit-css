@@ -9,13 +9,13 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## Current Release
 
-`v2.1.0` introduces a visual-only public API, a machine-readable capability manifest, a five-layer build architecture, and a canonical token-only Interactive Surface theme bridge. Existing default and focused entrypoints remain compatible, including their deprecated structural helpers, and parser-based minification remains exactly pinned.
+`v2.2.0` adds the shared 12-token semantic producer contract and a manifest-backed 29-selector `.ui-*` component API across all 11 presets. Existing default and focused entrypoints remain compatible, including their deprecated structural helpers, and parser-based minification remains exactly pinned.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
 ## How the library fits together
 
-UI Style Kit CSS owns visual identity: themes, component paint, native HTML styling, and the prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
+UI Style Kit CSS owns visual identity: themes, semantic `.ui-*` component paint, native HTML styling, and the advanced prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
 
 ```mermaid
 flowchart LR
@@ -50,13 +50,17 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@2.1.0` | staged source target | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.2.0` | current package version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.6.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.1.0` and Interactive Surface `1.5.0` are released companion packages for this upgrade path. Layout Style `2.1.0` remains a staged source target until its separate release approval completes.
+The current combination is `ui-style-kit-css@2.2.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.2.0` is the current package version, and the release pipeline treats it as the active candidate only while that exact npm version is absent. Interactive Surface `1.6.0` and Layout Style `3.0.1` are published releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
+
+Every UI Style Kit visual or preset entrypoint also publishes a small, fully typed `--ui-*` semantic handshake. These tokens let companion libraries and third-party themes share paint, control geometry, focus, and default motion without depending on preset-specific names. They are optional fallbacks for consumers: package-specific tokens still take precedence, and standalone packages keep their existing legacy and literal defaults when the handshake is absent. See the [token contract](docs/TOKENS.md#shared-semantic-token-handshake) for the exact 12-token inventory.
+
+A third-party producer can load its semantic token stylesheet before `interactive-surface-css/standalone-preset.css`. UI Style Kit's visual entrypoints support the same portable composition; keep the canonical theme bridge with `state-core.css` when specialized variant, level, and icon-role mappings are required.
 
 For import order, ownership boundaries, and adoption paths, see the [Ecosystem guide](docs/ECOSYSTEM.md).
 
@@ -77,7 +81,7 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 - Visible tooltip classes and native `[role="tooltip"]` styling inside each UI scope
 - Font-family override variables for body, headings, controls, and mono text
 - Canonical token-and-paint-only theme bridge for `interactive-surface-css/state-core.css`
-- Deprecated stateful bridge exports retained unchanged for backward compatibility
+- Deprecated stateful bridge exports retained for backward compatibility
 - Reduced-motion, high-contrast, forced-colors, and print support
 - Cascade-layered CSS for easier consumer overrides
 - No runtime dependencies
@@ -88,21 +92,41 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 npm install ui-style-kit-css
 ```
 
+### v2 distribution defaults
+
+The default bundle remains unchanged for all v2 releases. The root package and canonical `.` export resolve to the readable `dist/ui-style-kit.css`; the canonical `./min.css` export resolves to the minified `dist/ui-style-kit.min.css`. The focused `visual/<preset>.css` entrypoints remain available for applications fixed to one visual system.
+
+`ui-style-kit-css/visual.css` is the recommended entrypoint when consumers own layout. Making `visual.css` the package default remains only a v3 proposal; no v2 export is redirected as part of that proposal.
+
+The `./css`, `./css.css`, and `./min` exports are redundant deprecated compatibility aliases. They remain available throughout v2 with their existing targets: `./css` and `./css.css` match `.`, while `./min` matches `./min.css`. New integrations should use the canonical exports.
+
 ## Import
 
-Use a single style import for production apps that use one visual system:
+Use the generated default bundle for semantic components that can switch across every preset at runtime:
 
 ```js
-import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css";
 ```
 
-The existing focused entrypoints retain the v2 structural helpers. New integrations that already own layout should use a focused visual-only entrypoint:
+Use `ui-style-kit-css/visual.css` for the same 29-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 11 `data-ui` values.
+
+Applications fixed to one preset can use a generated focused visual entrypoint. It includes semantic aliases scoped to that preset only:
 
 ```js
 import "ui-style-kit-css/visual/minimal-saas.css";
 ```
 
-Use `ui-style-kit-css/visual.css` for runtime preset switching without the deprecated prefixed layout selectors. The exact preset, theme, mode, class, and native-part capability matrix is available from `ui-style-kit-css/manifest.json`.
+The exact preset, theme, mode, class, and native-part capability matrix is available from `ui-style-kit-css/manifest.json`.
+
+### Advanced prefixed and raw imports
+
+The standalone preset exports and longer `styles/*` paths remain advanced compatibility entrypoints. They preserve the prefixed API and do not promise multi-preset semantic switching:
+
+```js
+import "ui-style-kit-css/minimal-saas.css";
+// Equivalent raw source export:
+import "ui-style-kit-css/styles/minimal-saas.css";
+```
 
 In `v2.1.0`, legacy standalone style files continue to import the shared color-scheme, native-element fallback, and content-overflow layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
@@ -113,39 +137,22 @@ import "ui-style-kit-css/content-overflow.css";
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-The longer `styles/*` paths are also exported:
-
-```js
-import "ui-style-kit-css/styles/minimal-saas.css";
-import "ui-style-kit-css/styles/cyberpunk.css";
-```
-
-Use the full bundle when users need to switch `data-ui` systems at runtime:
+The explicit distribution path is also available for runtime switching:
 
 ```js
 import "ui-style-kit-css/dist/ui-style-kit.css";
 ```
 
-For the canonical state-only integration, import visual paint, the token-only theme bridge, and Interactive Surface state mechanics as separate ownership layers:
+For the canonical all-three integration, import visual paint, the token-only theme bridge, Interactive Surface state mechanics, and Layout structure in this order:
 
 ```js
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/visual.css";
 import "ui-style-kit-css/interactive-surface-theme.css";
 import "interactive-surface-css/state-core.css";
+import "layout-style-css";
 ```
 
-The older stateful bridge and combined bundle remain available for compatibility, but they are deprecated and have not been redirected to the token-only behavior:
-
-```js
-import "ui-style-kit-css/with-bridge.css";
-```
-
-Or import the bridge by itself when you are using a single style file:
-
-```js
-import "ui-style-kit-css/minimal-saas.css";
-import "ui-style-kit-css/interactive-surface-bridge";
-```
+The older stateful bridge and combined bundle remain public, deprecated compatibility paths. See the [bridge migration guide](docs/BRIDGE-MIGRATION.md) when upgrading an existing v2 integration.
 
 The default and visual-only bundles do **not** include either bridge. That keeps UI paint independent and prevents accidental duplicate bridge imports.
 
@@ -155,11 +162,11 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~299 KB | ~39 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~290 KB | ~38 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~369 KB | ~44 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~357 KB | ~44 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~348 KB | ~43 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~431 KB | ~52 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~21 KB | ~3 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~22 KB | ~4 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
@@ -175,22 +182,20 @@ Use the latest published NPM package:
 For production, pin the exact approved release rather than relying on `latest`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.1.0/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.2.0/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
 
 ```html
 <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
-  <main class="saas-page">
-    <section class="saas-container saas-stack">
-      <article class="saas-card">
-        <h1 class="saas-title">UI Style Kit CSS</h1>
-        <p class="saas-subtitle">Switch UI systems, themes, and modes with attributes.</p>
-        <button class="saas-button saas-button-primary">Primary Action</button>
-        <span class="saas-spinner" aria-label="Loading"></span>
-      </article>
-    </section>
+  <main>
+    <article class="ui-card">
+      <h1>UI Style Kit CSS</h1>
+      <p>Switch UI systems, themes, and modes without changing component classes.</p>
+      <button class="ui-button" data-ui-variant="primary">Primary Action</button>
+      <span class="ui-spinner" role="status" aria-label="Loading"></span>
+    </article>
   </main>
 </body>
 ```
@@ -202,6 +207,47 @@ document.body.dataset.ui = "cyberpunk";
 document.body.dataset.theme = "midnight-gold";
 document.body.dataset.mode = "dark";
 ```
+
+This changes the semantic components' visual preset without replacing their DOM nodes or rewriting their `.ui-*` classes.
+
+## Semantic component API
+
+`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 29 selectors keep the same class names while `data-ui` changes across all 11 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 27 generated semantic aliases, and an empty pending set.
+
+| Role | Generic selectors | Switching coverage |
+|---|---|---|
+| Buttons | `.ui-button`, `.ui-icon-button` | all 11 presets |
+| Card | `.ui-card` | all 11 presets |
+| Forms | `.ui-field`, `.ui-label`, `.ui-help-text`, `.ui-input`, `.ui-select`, `.ui-textarea` | all 11 presets |
+| Choice controls | `.ui-check`, `.ui-check-control`, `.ui-radio`, `.ui-radio-control`, `.ui-switch`, `.ui-switch-track`, `.ui-switch-thumb` | all 11 presets |
+| Badge | `.ui-badge` | all 11 presets |
+| Alert | `.ui-alert`, `.ui-alert-title`, `.ui-alert-body` | all 11 presets |
+| Navigation | `.ui-nav`, `.ui-nav-link` | all 11 presets |
+| Table | `.ui-table`, `.ui-table-wrap` | all 11 presets |
+| Progress | `.ui-progress`, `.ui-progress-bar` | all 11 presets |
+| Toolbar | `.ui-toolbar` | all 11 presets |
+| Existing generic hooks | `.ui-spinner`, `.ui-tooltip` | all 11 presets |
+
+The only new attribute is context-constrained `data-ui-variant`. Omit it for the neutral treatment.
+
+| Selector | `data-ui-variant` values |
+|---|---|
+| `.ui-button` | `primary`, `secondary`, `danger`, `ghost` |
+| `.ui-badge` | `primary`, `secondary`, `success`, `warning`, `danger` |
+| `.ui-alert` | `success`, `warning`, `danger` |
+
+```html
+<body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
+  <button class="ui-button" data-ui-variant="primary">Save</button>
+  <article class="ui-card">...</article>
+</body>
+```
+
+Modal and dialog roles deliberately use a neutral native `<dialog>` fallback. There is no `.ui-modal` or `.ui-dialog` selector. The semantic API also does not define `data-ui-state`, `data-ui-size`, or `data-ui-placement`; continue to use native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` where supported.
+
+Preset-prefixed classes remain supported compatibility and advanced APIs. Partial preset extras, typography and paint utilities, surface/size/placement helpers, shape and accessibility utilities, and the deprecated `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` structural aliases remain prefix-bound rather than entering the generic contract.
+
+For example, a fixed Minimal SaaS integration may continue to use `<button class="saas-button saas-button-primary">`. Prefer `.ui-button` plus `data-ui-variant="primary"` when markup must survive runtime preset changes.
 
 ## UI systems
 

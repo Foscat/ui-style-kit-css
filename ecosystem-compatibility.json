@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "ownership": {
+    "repository": "ui-style-kit-css",
+    "status": "temporary",
+    "note": "UI Style Kit owns this authoritative contract until a dedicated ecosystem fixture repository is introduced."
+  },
+  "packageSources": {
+    "ui-style-kit-css": { "checkout": "current" },
+    "interactive-surface-css": {
+      "repository": "Foscat/Interactive-Surface-CSS",
+      "revision": "b50a60d8ffd804d8227b1a16903c394556b88511"
+    },
+    "layout-style-css": {
+      "repository": "Foscat/Layout-Style-CSS",
+      "revision": "44c34693554879790c54a6205b37160ff63a1747"
+    }
+  },
+  "packages": [
+    { "name": "ui-style-kit-css", "supportedRange": ">=2.1.0 <3.0.0", "owns": "visual identity, themes, UI paint, and bridge tokens" },
+    { "name": "interactive-surface-css", "supportedRange": ">=1.5.0 <2.0.0", "owns": "interaction-state primitives, state layers, and input affordances" },
+    { "name": "layout-style-css", "supportedRange": ">=3.0.0 <4.0.0", "owns": "structural wrappers, grids, sections, app shells, and layout recipes" }
+  ],
+  "supportedCombinations": {
+    "minimum": { "ui-style-kit-css": "2.1.0", "interactive-surface-css": "1.5.0", "layout-style-css": "3.0.0" },
+    "current": { "ui-style-kit-css": "2.2.0", "interactive-surface-css": "1.6.0", "layout-style-css": "3.0.1" }
+  },
+  "canonicalImports": [
+    { "specifier": "ui-style-kit-css/visual.css", "owner": "ui-style-kit-css" },
+    { "specifier": "ui-style-kit-css/interactive-surface-theme.css", "owner": "ui-style-kit-css" },
+    { "specifier": "interactive-surface-css/state-core.css", "owner": "interactive-surface-css" },
+    { "specifier": "layout-style-css", "owner": "layout-style-css" }
+  ],
+  "deprecatedImports": [
+    { "specifier": "ui-style-kit-css/interactive-surface-bridge.css", "status": "deprecated", "replacement": "ui-style-kit-css/interactive-surface-theme.css" },
+    { "specifier": "ui-style-kit-css/with-bridge.css", "status": "deprecated", "replacement": "ui-style-kit-css/visual.css" }
+  ]
+}

@@ -1,5 +1,18 @@
 # UI Style Kit CSS Style Map
 
+## Recommended runtime API
+
+Lead with stable semantic classes when an interface can switch visual presets:
+
+```html
+<article class="ui-card">
+  <button class="ui-button" data-ui-variant="primary">Continue</button>
+  <span class="ui-badge" data-ui-variant="success">Ready</span>
+</article>
+```
+
+Changing only the ancestor `data-ui` value restyles that markup across all 11 presets in the generated default, visual, and with-bridge bundles. A generated `visual/<preset>.css` focused entrypoint supplies the same semantic aliases for its selected preset only. Raw `styles/*` and standalone preset exports remain advanced prefixed APIs and do not promise multi-preset semantic switching.
+
 ## UI systems
 
 Color schemes are defined once in `styles/theme-colors.css`. Native HTML fallback selectors are defined once in `styles/native-elements.css`. Long-text containment rules are defined once in `styles/content-overflow.css`. Each UI system file imports all shared layers, aliases `--usk-*` RGB roles back to its prefix, and maps `--usk-native-*` tokens into the preset's visual identity.
@@ -66,3 +79,26 @@ The bridge inherits from shared `--usk-*` color roles, then applies `.interactiv
 - `light`
 - `dark`
 - `contrast`
+
+## Semantic component contract
+
+The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 implemented generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The `implementationStatus` section records `.ui-spinner` and `.ui-tooltip` as retained hooks, the other 27 selectors as generated aliases, and no pending selectors.
+
+| Role | Generic selector -> current source suffix |
+|---|---|
+| Button | `.ui-button` -> `button`; `.ui-icon-button` -> `icon-button` |
+| Card | `.ui-card` -> `card` |
+| Form | `.ui-field` -> `field`; `.ui-label` -> `label`; `.ui-help-text` -> `help-text`; `.ui-input` -> `input`; `.ui-select` -> `select`; `.ui-textarea` -> `textarea` |
+| Choice control | `.ui-check` -> `check`; `.ui-check-control` -> `check-control`; `.ui-radio` -> `radio`; `.ui-radio-control` -> `radio-control`; `.ui-switch` -> `switch`; `.ui-switch-track` -> `switch-track`; `.ui-switch-thumb` -> `switch-thumb` |
+| Badge | `.ui-badge` -> `badge` |
+| Alert | `.ui-alert` -> `alert`; `.ui-alert-title` -> `alert-title`; `.ui-alert-body` -> `alert-body` |
+| Navigation | `.ui-nav` -> `nav`; `.ui-nav-link` -> `nav-link` |
+| Table | `.ui-table` -> `table`; `.ui-table-wrap` -> `table-wrap` |
+| Progress | `.ui-progress` -> `progress`; `.ui-progress-bar` -> `progress-bar` |
+| Toolbar | `.ui-toolbar` -> `toolbar` |
+| Loading | `.ui-spinner` -> `spinner` |
+| Tooltip | `.ui-tooltip` -> `tooltip` |
+
+`data-ui-variant` is the only new attribute. Omission means neutral. `.ui-button` accepts `primary`, `secondary`, `danger`, and `ghost`; `.ui-badge` accepts `primary`, `secondary`, `success`, `warning`, and `danger`; `.ui-alert` accepts `success`, `warning`, and `danger`.
+
+Modal and dialog roles retain native `<dialog>` as their one neutral fallback; `.ui-modal` and `.ui-dialog` are not defined. Preset-prefixed classes remain supported for compatibility and advanced use. Partial preset extras and the seven deprecated structural suffixes stay out of the semantic contract.

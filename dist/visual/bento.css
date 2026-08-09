@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.1.0
+ * UI Style Kit CSS v2.2.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -846,6 +846,22 @@
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+  --usk-motion-duration: 140ms;
+  --usk-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Shared semantic values are fully typed so optional companion and third-party consumers can use them directly. */
+  --ui-color-bg: rgb(var(--usk-bg-rgb));
+  --ui-color-surface: var(--usk-native-surface-strong);
+  --ui-color-text: var(--usk-native-text);
+  --ui-color-muted: var(--usk-native-text-muted);
+  --ui-color-primary: var(--usk-native-primary);
+  --ui-color-on-primary: var(--usk-native-on-primary);
+  --ui-color-border: var(--usk-native-border);
+  --ui-radius-control: var(--usk-native-radius);
+  --ui-shadow-control: var(--usk-native-shadow);
+  --ui-focus-color: var(--usk-native-focus);
+  --ui-motion-duration: var(--usk-motion-duration);
+  --ui-motion-easing: var(--usk-motion-easing);
 }
 
 [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {
@@ -1536,7 +1552,7 @@
   [class~="rg-alert"],
   [class~="rg-table-wrap"],
   [class~="rg-nav"]
-) {
+), [data-ui]:where([data-ui="bento"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
   overflow-wrap: anywhere;
@@ -1587,7 +1603,7 @@
   [class~="rg-icon-button"],
   [class~="rg-badge"],
   [class~="rg-nav-link"]
-) {
+), [data-ui]:where([data-ui="bento"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
   white-space: normal;
@@ -1627,7 +1643,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), [data-ui]:where([data-ui="bento"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,13 +1967,13 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="bento"]) .ui-check, :where([data-ui="bento"]) .ui-radio, :where([data-ui="bento"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1981,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="bento"]) .ui-check-control, :where([data-ui="bento"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="bento"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1999,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="bento"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2018,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="bento"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2032,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="bento"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2214,7 +2230,7 @@
     background-size: var(--bento-theme-bg-size);
   }
 
-  .bento-title, .bento-heading, .bento-kicker, .bento-button, .bento-badge, .bento-nav-link {
+  .bento-title, .bento-heading, .bento-kicker, .bento-button, .bento-badge, .bento-nav-link, :where([data-ui="bento"]) .ui-button, :where([data-ui="bento"]) .ui-badge, :where([data-ui="bento"]) .ui-nav-link {
     font-family: var(--bento-font-heading);
   }
 
@@ -2260,7 +2276,7 @@
     height: 1px;
   }
 
-  .bento-surface, .bento-card, .bento-panel, .bento-toolbar, .bento-table-wrap {
+  .bento-surface, .bento-card, .bento-panel, .bento-toolbar, .bento-table-wrap, :where([data-ui="bento"]) .ui-card, :where([data-ui="bento"]) .ui-toolbar, :where([data-ui="bento"]) .ui-table-wrap {
     background: linear-gradient(135deg,rgb(var(--bento-primary-rgb)/.08),transparent 36%),linear-gradient(180deg,#ffffff14,#fff0),var(--bento-surface);
     color: var(--bento-text);
     border: 1px solid var(--bento-border);
@@ -2270,11 +2286,11 @@
     position: relative;
   }
 
-  .bento-card, .bento-panel {
+  .bento-card, .bento-panel, :where([data-ui="bento"]) .ui-card {
     padding: var(--bento-space-6);
   }
 
-  .bento-toolbar {
+  .bento-toolbar, :where([data-ui="bento"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--bento-space-4);
@@ -2307,7 +2323,7 @@
     transform: translateY(-3px) scale(1.005);
   }
 
-  .bento-button, .bento-icon-button {
+  .bento-button, .bento-icon-button, :where([data-ui="bento"]) .ui-button, :where([data-ui="bento"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2331,87 +2347,87 @@
     display: inline-flex;
   }
 
-  .bento-button:hover, .bento-icon-button:hover {
+  .bento-button:hover, .bento-icon-button:hover, :where([data-ui="bento"]) .ui-button:hover, :where([data-ui="bento"]) .ui-icon-button:hover {
     border-color: var(--bento-primary);
     transform: translateY(-1px);
   }
 
-  .bento-button:active, .bento-icon-button:active, .bento-button[aria-pressed="true"], .bento-icon-button[aria-pressed="true"], .bento-button.is-active, .bento-icon-button.is-active {
+  .bento-button:active, .bento-icon-button:active, .bento-button[aria-pressed="true"], .bento-icon-button[aria-pressed="true"], .bento-button.is-active, .bento-icon-button.is-active, :where([data-ui="bento"]) .ui-button:active, :where([data-ui="bento"]) .ui-icon-button:active, :where([data-ui="bento"]) .ui-button[aria-pressed="true"], :where([data-ui="bento"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="bento"]) .ui-button.is-active, :where([data-ui="bento"]) .ui-icon-button.is-active {
     transform: translateY(1px);
     box-shadow: inset 0 3px 10px #0000002e;
   }
 
-  .bento-button-primary {
+  .bento-button-primary, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="primary"]) {
     background: var(--bento-primary);
     color: var(--bento-on-primary);
     border-color: var(--bento-primary);
   }
 
-  .bento-button-primary:hover {
+  .bento-button-primary:hover, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--bento-primary-hover);
     border-color: var(--bento-primary-hover);
   }
 
-  .bento-button-secondary {
+  .bento-button-secondary, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: var(--bento-secondary);
     color: var(--bento-on-secondary);
     border-color: var(--bento-secondary);
   }
 
-  .bento-button-secondary:hover {
+  .bento-button-secondary:hover, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--bento-secondary-hover);
     border-color: var(--bento-secondary-hover);
   }
 
-  .bento-button-danger {
+  .bento-button-danger, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--bento-danger);
     color: var(--bento-on-danger);
     border-color: var(--bento-danger);
   }
 
-  .bento-button-ghost {
+  .bento-button-ghost, :where([data-ui="bento"]) .ui-button:where([data-ui-variant="ghost"]) {
     color: var(--bento-text);
     box-shadow: none;
     background: none;
   }
 
-  .bento-icon-button {
+  .bento-icon-button, :where([data-ui="bento"]) .ui-icon-button {
     border-radius: var(--bento-radius-pill);
     width: 2.75rem;
     padding: 0;
   }
 
-  .bento-button:disabled, .bento-icon-button:disabled, .bento-disabled {
+  .bento-button:disabled, .bento-icon-button:disabled, .bento-disabled, :where([data-ui="bento"]) .ui-button:disabled, :where([data-ui="bento"]) .ui-icon-button:disabled {
     opacity: .55;
     cursor: not-allowed;
     transform: none;
   }
 
-  .bento-card, .bento-panel {
+  .bento-card, .bento-panel, :where([data-ui="bento"]) .ui-card {
     background: var(--bento-card-bg);
   }
 
-  .bento-toolbar, .bento-table-wrap, .bento-button:not(.bento-button-primary):not(.bento-button-secondary):not(.bento-button-danger):not(.bento-button-ghost), .bento-icon-button {
+  .bento-toolbar, .bento-table-wrap, .bento-button:not(.bento-button-primary):not(.bento-button-secondary):not(.bento-button-danger):not(.bento-button-ghost), .bento-icon-button, :where([data-ui="bento"]) .ui-toolbar, :where([data-ui="bento"]) .ui-table-wrap, :where([data-ui="bento"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="bento"]) .ui-icon-button {
     background: var(--bento-control-bg);
   }
 
-  .bento-button, .bento-icon-button, .bento-badge, .bento-nav-link {
+  .bento-button, .bento-icon-button, .bento-badge, .bento-nav-link, :where([data-ui="bento"]) .ui-button, :where([data-ui="bento"]) .ui-icon-button, :where([data-ui="bento"]) .ui-badge, :where([data-ui="bento"]) .ui-nav-link {
     font-family: var(--bento-font-control);
   }
 
-  .bento-field {
+  .bento-field, :where([data-ui="bento"]) .ui-field {
     gap: var(--bento-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .bento-label {
+  .bento-label, :where([data-ui="bento"]) .ui-label {
     color: var(--bento-text);
     font-size: .925rem;
     font-weight: 800;
   }
 
-  .bento-input, .bento-textarea, .bento-select {
+  .bento-input, .bento-textarea, .bento-select, :where([data-ui="bento"]) .ui-input, :where([data-ui="bento"]) .ui-textarea, :where([data-ui="bento"]) .ui-select {
     background: var(--bento-surface-soft);
     width: 100%;
     min-height: 2.875rem;
@@ -2424,32 +2440,32 @@
     padding: .75rem 1rem;
   }
 
-  .bento-textarea {
+  .bento-textarea, :where([data-ui="bento"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .bento-input::placeholder, .bento-textarea::placeholder {
+  .bento-input::placeholder, .bento-textarea::placeholder, :where([data-ui="bento"]) .ui-input::placeholder, :where([data-ui="bento"]) .ui-textarea::placeholder {
     color: var(--bento-text-muted);
     opacity: .82;
   }
 
-  .bento-input:hover, .bento-textarea:hover, .bento-select:hover {
+  .bento-input:hover, .bento-textarea:hover, .bento-select:hover, :where([data-ui="bento"]) .ui-input:hover, :where([data-ui="bento"]) .ui-textarea:hover, :where([data-ui="bento"]) .ui-select:hover {
     border-color: rgb(var(--bento-primary-rgb)/.58);
   }
 
-  .bento-input:focus, .bento-textarea:focus, .bento-select:focus {
+  .bento-input:focus, .bento-textarea:focus, .bento-select:focus, :where([data-ui="bento"]) .ui-input:focus, :where([data-ui="bento"]) .ui-textarea:focus, :where([data-ui="bento"]) .ui-select:focus {
     border-color: var(--bento-focus);
     box-shadow: var(--bento-focus-ring);
   }
 
-  .bento-help-text {
+  .bento-help-text, :where([data-ui="bento"]) .ui-help-text {
     color: var(--bento-text-muted);
     font-size: .875rem;
     line-height: 1.45;
   }
 
-  .bento-check, .bento-radio {
+  .bento-check, .bento-radio, :where([data-ui="bento"]) .ui-check, :where([data-ui="bento"]) .ui-radio {
     align-items: center;
     gap: var(--bento-space-2);
     color: var(--bento-text);
@@ -2457,13 +2473,13 @@
     display: inline-flex;
   }
 
-  .bento-check input, .bento-radio input {
+  .bento-check input, .bento-radio input, :where([data-ui="bento"]) .ui-check input, :where([data-ui="bento"]) .ui-radio input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .bento-check-control, .bento-radio-control {
+  .bento-check-control, .bento-radio-control, :where([data-ui="bento"]) .ui-check-control, :where([data-ui="bento"]) .ui-radio-control {
     background: var(--bento-surface-soft);
     border: 1px solid var(--bento-border);
     width: 1.35rem;
@@ -2473,28 +2489,28 @@
     display: inline-grid;
   }
 
-  .bento-check-control {
+  .bento-check-control, :where([data-ui="bento"]) .ui-check-control {
     border-radius: var(--bento-radius-xs);
   }
 
-  .bento-radio-control {
+  .bento-radio-control, :where([data-ui="bento"]) .ui-radio-control {
     border-radius: 50%;
   }
 
-  .bento-check input:checked + .bento-check-control, .bento-radio input:checked + .bento-radio-control {
+  .bento-check input:checked + .bento-check-control, .bento-radio input:checked + .bento-radio-control, :where([data-ui="bento"]) .ui-check input:checked+.ui-check-control, :where([data-ui="bento"]) .ui-radio input:checked+.ui-radio-control {
     background: var(--bento-primary);
     border-color: var(--bento-primary);
     box-shadow: var(--bento-focus-ring);
   }
 
-  .bento-check input:checked + .bento-check-control:after {
+  .bento-check input:checked + .bento-check-control:after, :where([data-ui="bento"]) .ui-check input:checked+.ui-check-control:after {
     content: "✓";
     color: var(--bento-on-primary);
     font-size: .9rem;
     font-weight: 900;
   }
 
-  .bento-radio input:checked + .bento-radio-control:after {
+  .bento-radio input:checked + .bento-radio-control:after, :where([data-ui="bento"]) .ui-radio input:checked+.ui-radio-control:after {
     content: "";
     background: var(--bento-on-primary);
     border-radius: 50%;
@@ -2502,7 +2518,7 @@
     height: .55rem;
   }
 
-  .bento-switch {
+  .bento-switch, :where([data-ui="bento"]) .ui-switch {
     align-items: center;
     gap: var(--bento-space-3);
     color: var(--bento-text);
@@ -2510,13 +2526,13 @@
     display: inline-flex;
   }
 
-  .bento-switch input {
+  .bento-switch input, :where([data-ui="bento"]) .ui-switch input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .bento-switch-track {
+  .bento-switch-track, :where([data-ui="bento"]) .ui-switch-track {
     background: var(--bento-surface-soft);
     border: 1px solid var(--bento-border);
     border-radius: var(--bento-radius-pill);
@@ -2526,7 +2542,7 @@
     position: relative;
   }
 
-  .bento-switch-thumb {
+  .bento-switch-thumb, :where([data-ui="bento"]) .ui-switch-thumb {
     background: var(--bento-surface-strong);
     border: 1px solid var(--bento-border);
     width: 1.34rem;
@@ -2539,17 +2555,17 @@
     left: .22rem;
   }
 
-  .bento-switch input:checked + .bento-switch-track {
+  .bento-switch input:checked + .bento-switch-track, :where([data-ui="bento"]) .ui-switch input:checked+.ui-switch-track {
     background: var(--bento-primary);
     border-color: var(--bento-primary);
   }
 
-  .bento-switch input:checked + .bento-switch-track .bento-switch-thumb {
+  .bento-switch input:checked + .bento-switch-track .bento-switch-thumb, :where([data-ui="bento"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
     background: var(--bento-on-primary);
     left: calc(100% - 1.56rem);
   }
 
-  .bento-badge {
+  .bento-badge, :where([data-ui="bento"]) .ui-badge {
     align-items: center;
     gap: var(--bento-space-1);
     background: var(--bento-surface-soft);
@@ -2564,37 +2580,37 @@
     display: inline-flex;
   }
 
-  .bento-badge-primary {
+  .bento-badge-primary, :where([data-ui="bento"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--bento-primary);
     color: var(--bento-on-primary);
     border-color: var(--bento-primary);
   }
 
-  .bento-badge-secondary {
+  .bento-badge-secondary, :where([data-ui="bento"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--bento-secondary);
     color: var(--bento-on-secondary);
     border-color: var(--bento-secondary);
   }
 
-  .bento-badge-success {
+  .bento-badge-success, :where([data-ui="bento"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--bento-success);
     color: var(--bento-on-success);
     border-color: var(--bento-success);
   }
 
-  .bento-badge-warning {
+  .bento-badge-warning, :where([data-ui="bento"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--bento-warning);
     color: var(--bento-on-warning);
     border-color: var(--bento-warning);
   }
 
-  .bento-badge-danger {
+  .bento-badge-danger, :where([data-ui="bento"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--bento-danger);
     color: var(--bento-on-danger);
     border-color: var(--bento-danger);
   }
 
-  .bento-nav {
+  .bento-nav, :where([data-ui="bento"]) .ui-nav {
     align-items: center;
     gap: var(--bento-space-2);
     padding: var(--bento-space-2);
@@ -2606,7 +2622,7 @@
     display: flex;
   }
 
-  .bento-nav-link {
+  .bento-nav-link, :where([data-ui="bento"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--bento-text-muted);
     border-radius: var(--bento-radius-pill);
@@ -2619,12 +2635,12 @@
     display: inline-flex;
   }
 
-  .bento-nav-link:hover {
+  .bento-nav-link:hover, :where([data-ui="bento"]) .ui-nav-link:hover {
     color: var(--bento-text);
     background: var(--bento-surface-soft);
   }
 
-  .bento-nav-link[aria-current="page"], .bento-nav-link.is-active {
+  .bento-nav-link[aria-current="page"], .bento-nav-link.is-active, :where([data-ui="bento"]) .ui-nav-link[aria-current="page"], :where([data-ui="bento"]) .ui-nav-link.is-active {
     color: var(--bento-on-primary);
     background: var(--bento-primary);
   }
@@ -2654,7 +2670,7 @@
     transform: rotate(45deg);
   }
 
-  .bento-progress {
+  .bento-progress, :where([data-ui="bento"]) .ui-progress {
     background: var(--bento-surface-soft);
     border: 1px solid var(--bento-border);
     border-radius: var(--bento-radius-pill);
@@ -2663,14 +2679,14 @@
     overflow: hidden;
   }
 
-  .bento-progress-bar {
+  .bento-progress-bar, :where([data-ui="bento"]) .ui-progress-bar {
     height: 100%;
     width: var(--bento-progress-value, 50%);
     background: linear-gradient(90deg,var(--bento-primary),var(--bento-accent));
     border-radius: inherit;
   }
 
-  .bento-alert {
+  .bento-alert, :where([data-ui="bento"]) .ui-alert {
     gap: var(--bento-space-2);
     padding: var(--bento-space-4);
     background: var(--bento-surface);
@@ -2681,45 +2697,45 @@
     display: grid;
   }
 
-  .bento-alert-success {
+  .bento-alert-success, :where([data-ui="bento"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--bento-success);
   }
 
-  .bento-alert-warning {
+  .bento-alert-warning, :where([data-ui="bento"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--bento-warning);
   }
 
-  .bento-alert-danger {
+  .bento-alert-danger, :where([data-ui="bento"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--bento-danger);
   }
 
-  .bento-alert-title {
+  .bento-alert-title, :where([data-ui="bento"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .bento-alert-body {
+  .bento-alert-body, :where([data-ui="bento"]) .ui-alert-body {
     color: var(--bento-text-muted);
     margin: 0;
     line-height: 1.55;
   }
 
-  .bento-table-wrap {
+  .bento-table-wrap, :where([data-ui="bento"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .bento-table {
+  .bento-table, :where([data-ui="bento"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .bento-table th, .bento-table td {
+  .bento-table th, .bento-table td, :where([data-ui="bento"]) .ui-table th, :where([data-ui="bento"]) .ui-table td {
     text-align: left;
     border-bottom: 1px solid var(--bento-border);
     padding: .95rem 1rem;
   }
 
-  .bento-table th {
+  .bento-table th, :where([data-ui="bento"]) .ui-table th {
     color: var(--bento-text);
     text-transform: uppercase;
     letter-spacing: .08em;
@@ -2728,11 +2744,11 @@
     font-weight: 900;
   }
 
-  .bento-table td {
+  .bento-table td, :where([data-ui="bento"]) .ui-table td {
     color: var(--bento-text-muted);
   }
 
-  .bento-table tr:hover td {
+  .bento-table tr:hover td, :where([data-ui="bento"]) .ui-table tr:hover td {
     background: rgb(var(--bento-primary-rgb)/.045);
   }
 
@@ -2900,12 +2916,12 @@
     inline-size: 3rem;
   }
 
-  .bento-button[aria-busy="true"], .bento-icon-button[aria-busy="true"], [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .bento-button[aria-busy="true"], .bento-icon-button[aria-busy="true"], [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="bento"]) .ui-button[aria-busy="true"], :where([data-ui="bento"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .bento-button[aria-busy="true"]:after, .bento-icon-button[aria-busy="true"]:after, [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .bento-button[aria-busy="true"]:after, .bento-icon-button[aria-busy="true"]:after, [data-ui="bento"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="bento"]) .ui-button[aria-busy="true"]:after, :where([data-ui="bento"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--bento-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

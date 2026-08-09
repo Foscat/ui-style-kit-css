@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { generate, parse, walk } from 'css-tree';
+import { clone, generate, parse, walk } from 'css-tree';
 import { transform } from 'lightningcss';
 
 const root = process.cwd();
@@ -18,6 +18,32 @@ const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
   file: `styles/${id}.css`
 }));
 const stylePrefixes = new Map(presetFiles.map(({ file, id, prefix }) => [file, [id, prefix]]));
+const semanticEntries = Object.values(publicManifest.semanticComponentApi.selectorsByRole).flat();
+const implementedSemanticSelectors = new Set(
+  publicManifest.semanticComponentApi.implementationStatus.implemented?.selectors ?? []
+);
+const semanticAliases = semanticEntries
+  .filter(({ selector }) => implementedSemanticSelectors.has(selector))
+  .map(({ selector, sourceSuffix }) => ({
+    selector,
+    sourceSuffix,
+    variants: publicManifest.semanticComponentApi.variantAttribute.valuesBySelector[selector] ?? []
+  }));
+const semanticAliasBySourceClass = new Map();
+for (const preset of presetFiles) {
+  for (const semanticAlias of semanticAliases) {
+    semanticAliasBySourceClass.set(
+      `${preset.prefix}-${semanticAlias.sourceSuffix}`,
+      semanticAlias.selector
+    );
+    for (const variant of semanticAlias.variants) {
+      semanticAliasBySourceClass.set(
+        `${preset.prefix}-${semanticAlias.sourceSuffix}-${variant}`,
+        `${semanticAlias.selector}:where([data-ui-variant="${variant}"])`
+      );
+    }
+  }
+}
 const colorRoles = [
   'bg',
   'surface',
@@ -93,6 +119,111 @@ function formatGeneratedCss(css, filename) {
   }
 
   return result.code.toString().trim();
+}
+
+function selectorNodes(selector) {
+  return parse(selector, { context: 'selector' }).children;
+}
+
+function exactClassToken(node) {
+  if (
+    node.type !== 'AttributeSelector'
+    || node.name?.name !== 'class'
+    || node.matcher !== '~='
+    || node.flags !== null
+  ) return null;
+
+  return node.value?.value ?? node.value?.name ?? null;
+}
+
+function addPresetConstraintToRoot(selector, selectedRoot) {
+  let rootAttributeItem = null;
+  let firstCompoundHasRoot = false;
+  let inFirstCompound = true;
+
+  selector.children.forEach((node, item) => {
+    if (node.type === 'Combinator') {
+      inFirstCompound = false;
+      return;
+    }
+    if (!inFirstCompound) return;
+    if (firstCompoundHasRoot || rootAttributeItem) return;
+
+    walk(node, {
+      visit: 'AttributeSelector',
+      enter(attribute) {
+        if (attribute.name?.name === 'data-ui') firstCompoundHasRoot = true;
+      }
+    });
+    if (node.type === 'AttributeSelector' && node.name?.name === 'data-ui') {
+      rootAttributeItem = item;
+    }
+  });
+
+  if (!firstCompoundHasRoot) return false;
+  if (rootAttributeItem?.data.matcher === null) {
+    // Keep the authored root specificity and constrain that same compound to the selected presets.
+    selector.children.insertData(selectorNodes(selectedRoot).first, rootAttributeItem.next);
+  }
+  return true;
+}
+
+function aliasSemanticSelector(selector, selectedRoot) {
+  const aliased = clone(selector);
+  let changed = false;
+
+  walk(aliased, {
+    enter(node, item, list) {
+      const sourceClass = node.type === 'ClassSelector' ? node.name : exactClassToken(node);
+      const semanticSelector = semanticAliasBySourceClass.get(sourceClass);
+      if (!semanticSelector) return;
+
+      // Replace only complete selector nodes; declarations remain untouched in their source rule.
+      list.replace(item, selectorNodes(semanticSelector));
+      changed = true;
+    }
+  });
+
+  if (!changed) return null;
+  const hasRoot = addPresetConstraintToRoot(aliased, selectedRoot);
+  return hasRoot ? generate(aliased) : `${selectedRoot} ${generate(aliased)}`;
+}
+
+function addSemanticAliases(css, filename, selectedPresets) {
+  if (semanticAliases.length === 0) return css;
+
+  const ast = parse(css, { filename, positions: true });
+  const selectedRoot = `:where(${selectedPresets
+    .map(({ id }) => `[data-ui="${id}"]`)
+    .join(', ')})`;
+  const selectorEdits = [];
+
+  walk(ast, {
+    visit: 'Rule',
+    enter(rule) {
+      const originalSelectorList = generate(rule.prelude);
+      const aliases = rule.prelude.children.toArray()
+        .map((selector) => aliasSemanticSelector(selector, selectedRoot))
+        .filter(Boolean);
+
+      if (aliases.length === 0) return;
+      selectorEdits.push({
+        start: rule.prelude.loc.start.offset,
+        end: rule.prelude.loc.end.offset,
+        value: `${css.slice(rule.prelude.loc.start.offset, rule.prelude.loc.end.offset)}, ${[
+          ...new Set(aliases)
+        ].join(', ')}`
+      });
+    }
+  });
+
+  // Selector-only edits keep every authored declaration byte-for-byte single-sourced.
+  return selectorEdits
+    .sort((first, second) => second.start - first.start)
+    .reduce(
+      (output, edit) => `${output.slice(0, edit.start)}${edit.value}${output.slice(edit.end)}`,
+      css
+    );
 }
 
 function sharedColorAliases(prefix) {
@@ -277,10 +408,17 @@ function syncDemoManifest() {
 
 function visualSections(selectedPresets = presetFiles) {
   return [
-    ...foundationFiles.map((file) => ({ label: file, css: sourceSection(file) })),
+    ...foundationFiles.map((file) => ({
+      label: file,
+      css: addSemanticAliases(sourceSection(file), file, selectedPresets)
+    })),
     ...selectedPresets.map(({ file, id, prefix }) => ({
       label: `${file} (visual paint)`,
-      css: preparedPresetCss(file, id, prefix, 'visual')
+      css: addSemanticAliases(
+        preparedPresetCss(file, id, prefix, 'visual'),
+        file,
+        [{ id, prefix }]
+      )
     }))
   ];
 }

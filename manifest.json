@@ -1,7 +1,11 @@
 {
   "schemaVersion": 1,
+  "schemaPolicy": {
+    "compatibility": "additive-within-major",
+    "breakingChange": "increment-schemaVersion-before-removing-or-renaming-fields"
+  },
   "name": "ui-style-kit-css",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "cascadeLayers": [
     "ui-style-kit.theme_colors",
     "ui-style-kit.native_elements",
@@ -127,6 +131,324 @@
     "dark",
     "contrast"
   ],
+  "tokens": {
+    "sharedSemantic": [
+      {
+        "name": "--ui-color-bg",
+        "type": "<color>",
+        "namespacedSource": "rgb(var(--usk-bg-rgb))",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-color-surface",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-surface-strong)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-color-text",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-text)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-color-muted",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-text-muted)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-color-primary",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-primary)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-color-on-primary",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-on-primary)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-color-border",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-border)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-radius-control",
+        "type": "<length>",
+        "namespacedSource": "var(--usk-native-radius)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-shadow-control",
+        "type": "<shadow-list>",
+        "namespacedSource": "var(--usk-native-shadow)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-focus-color",
+        "type": "<color>",
+        "namespacedSource": "var(--usk-native-focus)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-motion-duration",
+        "type": "<time>",
+        "namespacedSource": "var(--usk-motion-duration)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      },
+      {
+        "name": "--ui-motion-easing",
+        "type": "<easing-function>",
+        "namespacedSource": "var(--usk-motion-easing)",
+        "producerScope": "[data-ui][data-theme][data-mode]",
+        "standaloneExpectation": "available-with-ui-style-kit-entrypoints"
+      }
+    ]
+  },
+  "semanticComponentApi": {
+    "presetSwitchAttribute": "data-ui",
+    "selectorsByRole": {
+      "button": [
+        {
+          "selector": ".ui-button",
+          "sourceSuffix": "button"
+        },
+        {
+          "selector": ".ui-icon-button",
+          "sourceSuffix": "icon-button"
+        }
+      ],
+      "card": [
+        {
+          "selector": ".ui-card",
+          "sourceSuffix": "card"
+        }
+      ],
+      "form": [
+        {
+          "selector": ".ui-field",
+          "sourceSuffix": "field"
+        },
+        {
+          "selector": ".ui-label",
+          "sourceSuffix": "label"
+        },
+        {
+          "selector": ".ui-help-text",
+          "sourceSuffix": "help-text"
+        },
+        {
+          "selector": ".ui-input",
+          "sourceSuffix": "input"
+        },
+        {
+          "selector": ".ui-select",
+          "sourceSuffix": "select"
+        },
+        {
+          "selector": ".ui-textarea",
+          "sourceSuffix": "textarea"
+        },
+        {
+          "selector": ".ui-check",
+          "sourceSuffix": "check"
+        },
+        {
+          "selector": ".ui-check-control",
+          "sourceSuffix": "check-control"
+        },
+        {
+          "selector": ".ui-radio",
+          "sourceSuffix": "radio"
+        },
+        {
+          "selector": ".ui-radio-control",
+          "sourceSuffix": "radio-control"
+        },
+        {
+          "selector": ".ui-switch",
+          "sourceSuffix": "switch"
+        },
+        {
+          "selector": ".ui-switch-track",
+          "sourceSuffix": "switch-track"
+        },
+        {
+          "selector": ".ui-switch-thumb",
+          "sourceSuffix": "switch-thumb"
+        }
+      ],
+      "badge": [
+        {
+          "selector": ".ui-badge",
+          "sourceSuffix": "badge"
+        }
+      ],
+      "alert": [
+        {
+          "selector": ".ui-alert",
+          "sourceSuffix": "alert"
+        },
+        {
+          "selector": ".ui-alert-title",
+          "sourceSuffix": "alert-title"
+        },
+        {
+          "selector": ".ui-alert-body",
+          "sourceSuffix": "alert-body"
+        }
+      ],
+      "navigation": [
+        {
+          "selector": ".ui-nav",
+          "sourceSuffix": "nav"
+        },
+        {
+          "selector": ".ui-nav-link",
+          "sourceSuffix": "nav-link"
+        }
+      ],
+      "table": [
+        {
+          "selector": ".ui-table",
+          "sourceSuffix": "table"
+        },
+        {
+          "selector": ".ui-table-wrap",
+          "sourceSuffix": "table-wrap"
+        }
+      ],
+      "progress": [
+        {
+          "selector": ".ui-progress",
+          "sourceSuffix": "progress"
+        },
+        {
+          "selector": ".ui-progress-bar",
+          "sourceSuffix": "progress-bar"
+        }
+      ],
+      "toolbar": [
+        {
+          "selector": ".ui-toolbar",
+          "sourceSuffix": "toolbar"
+        }
+      ],
+      "loading": [
+        {
+          "selector": ".ui-spinner",
+          "sourceSuffix": "spinner"
+        }
+      ],
+      "tooltip": [
+        {
+          "selector": ".ui-tooltip",
+          "sourceSuffix": "tooltip"
+        }
+      ]
+    },
+    "variantAttribute": {
+      "name": "data-ui-variant",
+      "neutral": "omitted",
+      "valuesBySelector": {
+        ".ui-button": [
+          "primary",
+          "secondary",
+          "danger",
+          "ghost"
+        ],
+        ".ui-badge": [
+          "primary",
+          "secondary",
+          "success",
+          "warning",
+          "danger"
+        ],
+        ".ui-alert": [
+          "success",
+          "warning",
+          "danger"
+        ]
+      }
+    },
+    "nativeFallbacks": [
+      {
+        "roles": [
+          "modal",
+          "dialog"
+        ],
+        "element": "dialog",
+        "genericSelectors": []
+      }
+    ],
+    "presetPrefixedClasses": {
+      "status": "supported",
+      "uses": [
+        "compatibility",
+        "advanced"
+      ]
+    },
+    "implementationStatus": {
+      "retained": {
+        "status": "implemented",
+        "selectors": [
+          ".ui-spinner",
+          ".ui-tooltip"
+        ]
+      },
+      "implemented": {
+        "status": "implemented",
+        "selectors": [
+          ".ui-button",
+          ".ui-icon-button",
+          ".ui-card",
+          ".ui-field",
+          ".ui-label",
+          ".ui-help-text",
+          ".ui-input",
+          ".ui-select",
+          ".ui-textarea",
+          ".ui-check",
+          ".ui-check-control",
+          ".ui-radio",
+          ".ui-radio-control",
+          ".ui-switch",
+          ".ui-switch-track",
+          ".ui-switch-thumb",
+          ".ui-badge",
+          ".ui-alert",
+          ".ui-alert-title",
+          ".ui-alert-body",
+          ".ui-nav",
+          ".ui-nav-link",
+          ".ui-table",
+          ".ui-table-wrap",
+          ".ui-progress",
+          ".ui-progress-bar",
+          ".ui-toolbar"
+        ]
+      },
+      "pending": {
+        "status": "pending",
+        "targetTask": 11,
+        "selectors": []
+      }
+    }
+  },
   "nativeElements": {
     "fullyThemed": [
       "a",

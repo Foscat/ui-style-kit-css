@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.1.0
+ * UI Style Kit CSS v2.2.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -846,6 +846,22 @@
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
+  --usk-motion-duration: 140ms;
+  --usk-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Shared semantic values are fully typed so optional companion and third-party consumers can use them directly. */
+  --ui-color-bg: rgb(var(--usk-bg-rgb));
+  --ui-color-surface: var(--usk-native-surface-strong);
+  --ui-color-text: var(--usk-native-text);
+  --ui-color-muted: var(--usk-native-text-muted);
+  --ui-color-primary: var(--usk-native-primary);
+  --ui-color-on-primary: var(--usk-native-on-primary);
+  --ui-color-border: var(--usk-native-border);
+  --ui-radius-control: var(--usk-native-radius);
+  --ui-shadow-control: var(--usk-native-shadow);
+  --ui-focus-color: var(--usk-native-focus);
+  --ui-motion-duration: var(--usk-motion-duration);
+  --ui-motion-easing: var(--usk-motion-easing);
 }
 
 [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) {
@@ -1536,7 +1552,7 @@
   [class~="rg-alert"],
   [class~="rg-table-wrap"],
   [class~="rg-nav"]
-) {
+), [data-ui]:where([data-ui="cyberpunk"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
   overflow-wrap: anywhere;
@@ -1587,7 +1603,7 @@
   [class~="rg-icon-button"],
   [class~="rg-badge"],
   [class~="rg-nav-link"]
-) {
+), [data-ui]:where([data-ui="cyberpunk"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
   white-space: normal;
@@ -1627,7 +1643,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), [data-ui]:where([data-ui="cyberpunk"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,13 +1967,13 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="cyberpunk"]) .ui-check, :where([data-ui="cyberpunk"]) .ui-radio, :where([data-ui="cyberpunk"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1981,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="cyberpunk"]) .ui-check-control, :where([data-ui="cyberpunk"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="cyberpunk"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1999,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="cyberpunk"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2018,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="cyberpunk"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2032,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="cyberpunk"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2234,7 +2250,7 @@
     color: var(--cyber-on-primary);
   }
 
-  .cyber-title, .cyber-heading, .cyber-kicker, .cyber-button, .cyber-badge, .cyber-nav-link {
+  .cyber-title, .cyber-heading, .cyber-kicker, .cyber-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-badge, :where([data-ui="cyberpunk"]) .ui-nav-link {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
   }
@@ -2272,7 +2288,7 @@
     color: var(--cyber-text-muted);
   }
 
-  .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap {
+  .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap, :where([data-ui="cyberpunk"]) .ui-card, :where([data-ui="cyberpunk"]) .ui-toolbar, :where([data-ui="cyberpunk"]) .ui-table-wrap {
     background: linear-gradient(135deg,#ffffff14,#ffffff05),var(--cyber-surface);
     color: var(--cyber-text);
     border: 1px solid var(--cyber-border);
@@ -2284,7 +2300,7 @@
     overflow: hidden;
   }
 
-  .cyber-card:before, .cyber-panel:before, .cyber-console:before, .cyber-toolbar:before {
+  .cyber-card:before, .cyber-panel:before, .cyber-console:before, .cyber-toolbar:before, :where([data-ui="cyberpunk"]) .ui-card:before, :where([data-ui="cyberpunk"]) .ui-toolbar:before {
     content: "";
     pointer-events: none;
     border-top: 2px solid rgb(var(--cyber-primary-rgb)/.5);
@@ -2293,7 +2309,7 @@
     inset: 0;
   }
 
-  .cyber-card, .cyber-panel, .cyber-console {
+  .cyber-card, .cyber-panel, .cyber-console, :where([data-ui="cyberpunk"]) .ui-card {
     padding: var(--cyber-space-6);
   }
 
@@ -2301,7 +2317,7 @@
     background: linear-gradient(180deg,rgb(var(--cyber-primary-rgb)/.08),transparent),var(--cyber-surface-strong);
   }
 
-  .cyber-toolbar {
+  .cyber-toolbar, :where([data-ui="cyberpunk"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--cyber-space-4);
@@ -2327,7 +2343,7 @@
     padding: var(--cyber-space-5);
   }
 
-  .cyber-button, .cyber-icon-button {
+  .cyber-button, .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2350,52 +2366,52 @@
     display: inline-flex;
   }
 
-  .cyber-button:hover, .cyber-icon-button:hover {
+  .cyber-button:hover, .cyber-icon-button:hover, :where([data-ui="cyberpunk"]) .ui-button:hover, :where([data-ui="cyberpunk"]) .ui-icon-button:hover {
     box-shadow: var(--cyber-shadow-md),0 0 26px var(--cyber-glow-primary);
     transform: translateY(-1px);
   }
 
-  .cyber-button:active, .cyber-icon-button:active, .cyber-button.is-active, .cyber-button[aria-pressed="true"] {
+  .cyber-button:active, .cyber-icon-button:active, .cyber-button.is-active, .cyber-button[aria-pressed="true"], :where([data-ui="cyberpunk"]) .ui-button:active, :where([data-ui="cyberpunk"]) .ui-icon-button:active, :where([data-ui="cyberpunk"]) .ui-button.is-active, :where([data-ui="cyberpunk"]) .ui-button[aria-pressed="true"] {
     box-shadow: inset 0 0 18px #00000038,0 0 18px var(--cyber-glow-primary);
     transform: translateY(1px);
   }
 
-  .cyber-button-primary {
+  .cyber-button-primary, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="primary"]) {
     background: linear-gradient(135deg,#ffffff24,transparent),var(--cyber-primary);
     color: var(--cyber-on-primary);
   }
 
-  .cyber-button-primary:hover {
+  .cyber-button-primary:hover, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--cyber-primary-hover);
   }
 
-  .cyber-button-secondary {
+  .cyber-button-secondary, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: linear-gradient(135deg,#ffffff24,transparent),var(--cyber-secondary);
     color: var(--cyber-on-secondary);
     border-color: rgb(var(--cyber-secondary-rgb)/.7);
   }
 
-  .cyber-button-secondary:hover {
+  .cyber-button-secondary:hover, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--cyber-secondary-hover);
   }
 
-  .cyber-button-danger {
+  .cyber-button-danger, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--cyber-danger);
     color: var(--cyber-on-danger);
   }
 
-  .cyber-icon-button {
+  .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-icon-button {
     width: 2.85rem;
     padding: 0;
   }
 
-  .cyber-field {
+  .cyber-field, :where([data-ui="cyberpunk"]) .ui-field {
     gap: var(--cyber-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .cyber-label {
+  .cyber-label, :where([data-ui="cyberpunk"]) .ui-label {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
     letter-spacing: .14em;
@@ -2403,7 +2419,7 @@
     font-weight: 800;
   }
 
-  .cyber-input, .cyber-textarea, .cyber-select {
+  .cyber-input, .cyber-textarea, .cyber-select, :where([data-ui="cyberpunk"]) .ui-input, :where([data-ui="cyberpunk"]) .ui-textarea, :where([data-ui="cyberpunk"]) .ui-select {
     background: var(--cyber-surface-soft);
     width: 100%;
     min-height: 2.9rem;
@@ -2416,22 +2432,22 @@
     box-shadow: inset 0 0 18px #0003;
   }
 
-  .cyber-textarea {
+  .cyber-textarea, :where([data-ui="cyberpunk"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .cyber-input:focus, .cyber-textarea:focus, .cyber-select:focus {
+  .cyber-input:focus, .cyber-textarea:focus, .cyber-select:focus, :where([data-ui="cyberpunk"]) .ui-input:focus, :where([data-ui="cyberpunk"]) .ui-textarea:focus, :where([data-ui="cyberpunk"]) .ui-select:focus {
     border-color: var(--cyber-focus);
     box-shadow: 0 0 0 2px rgb(var(--cyber-focus-rgb)/.24),0 0 24px rgb(var(--cyber-focus-rgb)/.24),inset 0 0 18px #0003;
   }
 
-  .cyber-help-text {
+  .cyber-help-text, :where([data-ui="cyberpunk"]) .ui-help-text {
     color: var(--cyber-text-muted);
     font-size: .9rem;
   }
 
-  .cyber-badge {
+  .cyber-badge, :where([data-ui="cyberpunk"]) .ui-badge {
     background: var(--cyber-surface);
     min-height: 1.8rem;
     color: var(--cyber-text);
@@ -2446,32 +2462,32 @@
     display: inline-flex;
   }
 
-  .cyber-badge-primary {
+  .cyber-badge-primary, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--cyber-primary);
     color: var(--cyber-on-primary);
   }
 
-  .cyber-badge-secondary {
+  .cyber-badge-secondary, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--cyber-secondary);
     color: var(--cyber-on-secondary);
   }
 
-  .cyber-badge-success {
+  .cyber-badge-success, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--cyber-success);
     color: var(--cyber-on-success);
   }
 
-  .cyber-badge-warning {
+  .cyber-badge-warning, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--cyber-warning);
     color: var(--cyber-on-warning);
   }
 
-  .cyber-badge-danger {
+  .cyber-badge-danger, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--cyber-danger);
     color: var(--cyber-on-danger);
   }
 
-  .cyber-nav {
+  .cyber-nav, :where([data-ui="cyberpunk"]) .ui-nav {
     gap: var(--cyber-space-2);
     padding: var(--cyber-space-2);
     background: var(--cyber-surface);
@@ -2482,7 +2498,7 @@
     display: flex;
   }
 
-  .cyber-nav-link {
+  .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--cyber-text-muted);
     border-radius: var(--cyber-radius-xs);
@@ -2495,12 +2511,12 @@
     display: inline-flex;
   }
 
-  .cyber-nav-link:hover {
+  .cyber-nav-link:hover, :where([data-ui="cyberpunk"]) .ui-nav-link:hover {
     color: var(--cyber-text);
     border-color: rgb(var(--cyber-primary-rgb)/.48);
   }
 
-  .cyber-nav-link.is-active, .cyber-nav-link[aria-current="page"] {
+  .cyber-nav-link.is-active, .cyber-nav-link[aria-current="page"], :where([data-ui="cyberpunk"]) .ui-nav-link.is-active, :where([data-ui="cyberpunk"]) .ui-nav-link[aria-current="page"] {
     background: var(--cyber-primary);
     color: var(--cyber-on-primary);
     border-color: var(--cyber-primary);
@@ -2535,7 +2551,7 @@
     flex: none;
   }
 
-  .cyber-progress {
+  .cyber-progress, :where([data-ui="cyberpunk"]) .ui-progress {
     background: var(--cyber-surface-soft);
     border: 1px solid var(--cyber-border);
     width: 100%;
@@ -2543,14 +2559,14 @@
     box-shadow: inset 0 0 18px #0000002e;
   }
 
-  .cyber-progress-bar {
+  .cyber-progress-bar, :where([data-ui="cyberpunk"]) .ui-progress-bar {
     height: 100%;
     width: var(--cyber-progress-value, 50%);
     background: linear-gradient(90deg,var(--cyber-primary),var(--cyber-accent));
     box-shadow: 0 0 18px var(--cyber-glow-primary);
   }
 
-  .cyber-alert {
+  .cyber-alert, :where([data-ui="cyberpunk"]) .ui-alert {
     padding: var(--cyber-space-4);
     background: var(--cyber-surface);
     border: 1px solid var(--cyber-border);
@@ -2558,56 +2574,56 @@
     box-shadow: var(--cyber-shadow-md),0 0 22px var(--cyber-glow-primary);
   }
 
-  .cyber-alert-success {
+  .cyber-alert-success, :where([data-ui="cyberpunk"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--cyber-success);
   }
 
-  .cyber-alert-warning {
+  .cyber-alert-warning, :where([data-ui="cyberpunk"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--cyber-warning);
   }
 
-  .cyber-alert-danger {
+  .cyber-alert-danger, :where([data-ui="cyberpunk"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--cyber-danger);
   }
 
-  .cyber-alert-title {
+  .cyber-alert-title, :where([data-ui="cyberpunk"]) .ui-alert-title {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
     margin: 0;
   }
 
-  .cyber-alert-body {
+  .cyber-alert-body, :where([data-ui="cyberpunk"]) .ui-alert-body {
     color: var(--cyber-text-muted);
     margin: .5rem 0 0;
   }
 
-  .cyber-table-wrap {
+  .cyber-table-wrap, :where([data-ui="cyberpunk"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .cyber-table {
+  .cyber-table, :where([data-ui="cyberpunk"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .cyber-table th, .cyber-table td {
+  .cyber-table th, .cyber-table td, :where([data-ui="cyberpunk"]) .ui-table th, :where([data-ui="cyberpunk"]) .ui-table td {
     border-bottom: 1px solid rgb(var(--cyber-border-rgb)/.38);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .cyber-table th {
+  .cyber-table th, :where([data-ui="cyberpunk"]) .ui-table th {
     background: rgb(var(--cyber-primary-rgb)/.12);
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
     letter-spacing: .1em;
   }
 
-  .cyber-table td {
+  .cyber-table td, :where([data-ui="cyberpunk"]) .ui-table td {
     color: var(--cyber-text-muted);
   }
 
-  .cyber-table tr:hover td {
+  .cyber-table tr:hover td, :where([data-ui="cyberpunk"]) .ui-table tr:hover td {
     background: rgb(var(--cyber-primary-rgb)/.06);
   }
 
@@ -2640,7 +2656,7 @@
     outline-offset: 3px;
   }
 
-  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible {
+  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible, :where([data-ui="cyberpunk"]) .ui-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-icon-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-input:focus-visible, :where([data-ui="cyberpunk"]) .ui-nav-link:focus-visible {
     box-shadow: 0 0 0 3px rgb(var(--cyber-focus-rgb)/.28),0 0 28px rgb(var(--cyber-focus-rgb)/.28);
   }
 
@@ -2651,15 +2667,15 @@
     }
   }
 
-  .cyber-card, .cyber-panel {
+  .cyber-card, .cyber-panel, :where([data-ui="cyberpunk"]) .ui-card {
     background: var(--cyber-card-bg);
   }
 
-  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button {
+  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-toolbar, :where([data-ui="cyberpunk"]) .ui-table-wrap, :where([data-ui="cyberpunk"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .ui-icon-button {
     background: var(--cyber-control-bg);
   }
 
-  .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link {
+  .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-icon-button, :where([data-ui="cyberpunk"]) .ui-badge, :where([data-ui="cyberpunk"]) .ui-nav-link {
     font-family: var(--cyber-font-control);
   }
 
@@ -2690,12 +2706,12 @@
     inline-size: 3rem;
   }
 
-  .cyber-button[aria-busy="true"], .cyber-icon-button[aria-busy="true"], [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .cyber-button[aria-busy="true"], .cyber-icon-button[aria-busy="true"], [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="cyberpunk"]) .ui-button[aria-busy="true"], :where([data-ui="cyberpunk"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .cyber-button[aria-busy="true"]:after, .cyber-icon-button[aria-busy="true"]:after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .cyber-button[aria-busy="true"]:after, .cyber-icon-button[aria-busy="true"]:after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="cyberpunk"]) .ui-button[aria-busy="true"]:after, :where([data-ui="cyberpunk"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--cyber-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

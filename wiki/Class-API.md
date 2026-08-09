@@ -1,16 +1,48 @@
 # Class API
 
-Class names follow:
+## Generic Semantic API
 
-`<prefix>-<suffix>`
+Lead with `.ui-*` component classes when the root `data-ui` value can switch across presets:
 
-Examples:
+```html
+<article class="ui-card">
+  <button class="ui-button" data-ui-variant="primary">Save</button>
+</article>
+```
 
-- `saas-button`
-- `bento-card`
-- `retro-nav-link`
+`manifest.json#semanticComponentApi` defines the 29 implemented generic component selectors. They preserve unchanged markup across all 11 presets in generated default, visual, and with-bridge bundles. Generated focused `visual/<preset>.css` entrypoints support semantic aliases for their one preset. Raw `styles/*` and standalone preset exports remain prefixed advanced APIs. `implementationStatus` partitions the two retained hooks, 27 generated aliases, and an empty pending set.
 
-`<prefix>` comes from the selected `data-ui` style.
+| Role | Generic selectors |
+| --- | --- |
+| Buttons | `.ui-button`, `.ui-icon-button` |
+| Card | `.ui-card` |
+| Forms | `.ui-field`, `.ui-label`, `.ui-help-text`, `.ui-input`, `.ui-select`, `.ui-textarea` |
+| Choice controls | `.ui-check`, `.ui-check-control`, `.ui-radio`, `.ui-radio-control`, `.ui-switch`, `.ui-switch-track`, `.ui-switch-thumb` |
+| Badge | `.ui-badge` |
+| Alert | `.ui-alert`, `.ui-alert-title`, `.ui-alert-body` |
+| Navigation | `.ui-nav`, `.ui-nav-link` |
+| Table | `.ui-table`, `.ui-table-wrap` |
+| Progress | `.ui-progress`, `.ui-progress-bar` |
+| Toolbar | `.ui-toolbar` |
+| Existing generic hooks | `.ui-spinner`, `.ui-tooltip` |
+
+`data-ui-variant` is the only new semantic component attribute. Omit it for neutral styling.
+
+| Selector | Values |
+| --- | --- |
+| `.ui-button` | `primary`, `secondary`, `danger`, `ghost` |
+| `.ui-badge` | `primary`, `secondary`, `success`, `warning`, `danger` |
+| `.ui-alert` | `success`, `warning`, `danger` |
+
+Native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` remain the state and tooltip-anchor APIs. `data-ui-state`, `data-ui-size`, and `data-ui-placement` are not defined.
+
+Modal and dialog roles use neutral native `<dialog>` styling. The API intentionally has no `.ui-modal` or `.ui-dialog` selector.
+
+## Advanced and compatibility prefixed API
+
+Preset-prefixed classes remain supported compatibility and advanced APIs. Partial preset-only extras, typography and paint utilities, surface/size/placement helpers, shape and accessibility utilities remain prefix-bound.
+
+Prefixed class names follow `<prefix>-<suffix>`, where `<prefix>` comes from the selected `data-ui` style. Examples include `saas-button`, `bento-card`, and `retro-nav-link`.
 
 ## Core Cross-Style API (11/11 styles)
 
@@ -18,12 +50,6 @@ These suffixes exist in every style file.
 
 ### Layout and Structure
 
-- `page`
-- `container`
-- `section`
-- `grid`
-- `stack`
-- `cluster`
 - `panel`
 - `well`
 - `inset`
@@ -123,9 +149,9 @@ Inside a `[data-ui="..."]` scope, generic `.ui-tooltip`, `[role="tooltip"]`, and
 
 The same components also support native state hooks such as `aria-current="page"` and `aria-pressed="true"` where appropriate.
 
-## Extended Utility Bundle (7 styles)
+## Extended Utility Bundle (11 composed presets)
 
-The following suffixes are available in:
+The following suffixes are available across the composed API for all 11 presets:
 
 - `minimal-saas`
 - `bento`
@@ -134,6 +160,10 @@ The following suffixes are available in:
 - `tactile`
 - `neumorphism`
 - `retrofuturism`
+- `brutalism`
+- `cyberpunk`
+- `y2k`
+- `retro-glass`
 
 Suffixes:
 
@@ -157,10 +187,13 @@ Suffixes:
 - `rounded`
 - `rounded-lg`
 - `rounded-xl`
-- `split`
 - `sr-only`
 - `visually-hidden`
 - `skip-link`
+
+## Deprecated Structural Compatibility API
+
+The prefixed `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` suffixes remain available only as deprecated compatibility classes for the v2 line. They are not semantic component selectors and are reserved for removal in v3.
 
 ## Additional Selective Suffixes
 

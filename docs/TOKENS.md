@@ -8,6 +8,46 @@ shared scheme channels -> prefixed aliases -> UI rules
 
 `styles/theme-colors.css` defines the active scheme and mode once as `--usk-*` RGB channels. Each UI style maps those shared channels to its public prefix, then component rules consume prefixed functional variables. `styles/native-elements.css` owns native HTML fallback selectors and consumes `--usk-native-*` tokens that each preset maps back to its own public variables.
 
+## Shared semantic token handshake
+
+The existing `[data-ui][data-theme][data-mode]` native-token root publishes 12 fully typed `--ui-*` values. UI Style Kit is the primary producer, but the names are intentionally package-neutral so a third-party theme can produce the same contract. Consumer libraries treat these values as optional fallbacks: a package-specific override wins first, then the shared semantic value, then the consumer's legacy token and literal default.
+
+| Shared token | CSS type | UI Style Kit source |
+|---|---|---|
+| `--ui-color-bg` | `<color>` | `rgb(var(--usk-bg-rgb))` |
+| `--ui-color-surface` | `<color>` | `var(--usk-native-surface-strong)` |
+| `--ui-color-text` | `<color>` | `var(--usk-native-text)` |
+| `--ui-color-muted` | `<color>` | `var(--usk-native-text-muted)` |
+| `--ui-color-primary` | `<color>` | `var(--usk-native-primary)` |
+| `--ui-color-on-primary` | `<color>` | `var(--usk-native-on-primary)` |
+| `--ui-color-border` | `<color>` | `var(--usk-native-border)` |
+| `--ui-radius-control` | `<length>` | `var(--usk-native-radius)` |
+| `--ui-shadow-control` | `<shadow-list>` | `var(--usk-native-shadow)` |
+| `--ui-focus-color` | `<color>` | `var(--usk-native-focus)` |
+| `--ui-motion-duration` | `<time>` | `var(--usk-motion-duration)` |
+| `--ui-motion-easing` | `<easing-function>` | `var(--usk-motion-easing)` |
+
+The two motion sources are scalar values (`140ms` and `cubic-bezier(0.2, 0, 0.2, 1)`), not values derived from a transition shorthand. That keeps them valid wherever a consumer needs one duration or one easing function.
+
+A third-party theme can provide the same handshake without importing UI Style Kit:
+
+```css
+[data-theme="partner"] {
+  --ui-color-surface: rgb(250 252 255);
+  --ui-color-text: rgb(18 28 45);
+  --ui-color-primary: rgb(20 92 180);
+  --ui-color-on-primary: white;
+  --ui-color-border: rgb(150 165 185);
+  --ui-radius-control: 0.75rem;
+  --ui-shadow-control: 0 8px 24px rgb(20 40 70 / 0.16);
+  --ui-focus-color: rgb(20 92 180);
+  --ui-motion-duration: 140ms;
+  --ui-motion-easing: cubic-bezier(0.2, 0, 0.2, 1);
+}
+```
+
+UI Style Kit entrypoints publish all 12 values. Standalone consumer packages must remain complete when none of them are present.
+
 ## Prefixes
 
 | UI style | Prefix |
