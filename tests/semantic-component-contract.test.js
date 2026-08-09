@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { parse, walk } from 'css-tree';
+import { generate, parse, walk } from 'css-tree';
 
 import {
   semanticComponentMarkup,
@@ -14,10 +14,8 @@ const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
 
 const expectedRetainedSelectors = ['.ui-spinner', '.ui-tooltip'];
+const expectedImplementedSelectors = ['.ui-button', '.ui-icon-button', '.ui-card'];
 const expectedPendingSelectors = [
-  '.ui-button',
-  '.ui-icon-button',
-  '.ui-card',
   '.ui-field',
   '.ui-label',
   '.ui-help-text',
@@ -124,6 +122,10 @@ const expectedSemanticComponentApi = {
       status: 'implemented',
       selectors: expectedRetainedSelectors
     },
+    implemented: {
+      status: 'implemented',
+      selectors: expectedImplementedSelectors
+    },
     pending: {
       status: 'pending',
       targetTask: 11,
@@ -201,6 +203,24 @@ function selectorFacts(relativeFile) {
   return facts;
 }
 
+function selectorTexts(relativeFile) {
+  const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+  const selectors = [];
+
+  walk(parse(css, { filename: relativeFile }), {
+    visit: 'Rule',
+    enter(rule) {
+      selectors.push(generate(rule.prelude));
+    }
+  });
+
+  return selectors;
+}
+
+function selectorHasAttributeValue(selector, name, value) {
+  return new RegExp(`\\[${name}=(?:"${value}"|${value})\\]`).test(selector);
+}
+
 function ruleHasAttribute(rule, name, value = null) {
   return rule.attributes.some((attribute) =>
     attribute.name === name && attribute.value === value
@@ -218,19 +238,22 @@ test('manifest specifies the exact generic semantic component API', () => {
   assert.equal(entries.every(({ selector }) => /^\.ui-[a-z]+(?:-[a-z]+)*$/.test(selector)), true);
 });
 
-test('manifest distinguishes retained generic hooks from Task 11 selectors', () => {
+test('manifest partitions retained, implemented, and pending Task 11 selectors', () => {
   const implementationStatus = manifest.semanticComponentApi.implementationStatus;
   const declaredSelectors = semanticEntries().map(({ selector }) => selector);
 
   assert.deepEqual(implementationStatus, expectedSemanticComponentApi.implementationStatus);
   assert.deepEqual(implementationStatus.retained.selectors, expectedRetainedSelectors);
+  assert.deepEqual(implementationStatus.implemented.selectors, expectedImplementedSelectors);
   assert.deepEqual(implementationStatus.pending.selectors, expectedPendingSelectors);
   assert.equal(implementationStatus.pending.targetTask, 11);
   assert.equal(implementationStatus.retained.selectors.length, 2);
-  assert.equal(implementationStatus.pending.selectors.length, 27);
+  assert.equal(implementationStatus.implemented.selectors.length, 3);
+  assert.equal(implementationStatus.pending.selectors.length, 24);
   assert.deepEqual(
     new Set([
       ...implementationStatus.retained.selectors,
+      ...implementationStatus.implemented.selectors,
       ...implementationStatus.pending.selectors
     ]),
     new Set(declaredSelectors)
@@ -280,6 +303,53 @@ test('authored CSS retains only the two implemented semantic hooks and all legac
     'the authored anchor hook must continue to establish positioning behavior'
   );
   assert.deepEqual(authoredSemanticClasses, new Set(expectedRetainedSelectors));
+});
+
+test('generated entrypoints scope implemented aliases while raw preset exports stay advanced', () => {
+  const aggregateEntrypoints = [
+    'dist/ui-style-kit.css',
+    'dist/ui-style-kit.min.css',
+    'dist/ui-style-kit.visual.css',
+    'dist/ui-style-kit.visual.min.css',
+    'dist/ui-style-kit.with-bridge.css',
+    'dist/ui-style-kit.with-bridge.min.css'
+  ];
+
+  for (const relativeFile of aggregateEntrypoints) {
+    const selectors = selectorTexts(relativeFile);
+    for (const selector of expectedImplementedSelectors) {
+      const owningRules = selectors.filter((candidate) => candidate.includes(selector));
+      assert.ok(owningRules.length > 0, `${relativeFile} must implement ${selector}`);
+      assert.equal(
+        owningRules.every((candidate) => candidate.includes(':where([data-ui=')),
+        true,
+        `${relativeFile} must scope ${selector} beneath a specificity-safe preset root`
+      );
+    }
+    for (const variant of expectedSemanticComponentApi.variantAttribute.valuesBySelector['.ui-button']) {
+      assert.equal(
+        selectors.some((selector) =>
+          selector.includes('.ui-button') && selectorHasAttributeValue(selector, 'data-ui-variant', variant)
+        ),
+        true,
+        `${relativeFile} must implement the ${variant} button variant`
+      );
+    }
+  }
+
+  for (const preset of manifest.presets) {
+    const relativeFile = `dist/visual/${preset.id}.css`;
+    const selectors = selectorTexts(relativeFile);
+    for (const selector of expectedImplementedSelectors) {
+      const owningRules = selectors.filter((candidate) => candidate.includes(selector));
+      assert.ok(owningRules.length > 0, `${relativeFile} must implement ${selector}`);
+      assert.equal(
+        owningRules.every((candidate) => selectorHasAttributeValue(candidate, 'data-ui', preset.id)),
+        true,
+        `${relativeFile} must scope ${selector} to its focused preset`
+      );
+    }
+  }
 });
 
 test('semantic source suffixes and contextual variants exist in every composed preset API', () => {

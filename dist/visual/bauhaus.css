@@ -1627,7 +1627,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), :where([data-ui="bauhaus"]) [data-ui][data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,7 +1951,7 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
@@ -2215,7 +2215,7 @@
     background-size: var(--bau-theme-bg-size);
   }
 
-  .bau-title, .bau-heading, .bau-kicker, .bau-button, .bau-badge, .bau-nav-link {
+  .bau-title, .bau-heading, .bau-kicker, .bau-button, .bau-badge, .bau-nav-link, :where([data-ui="bauhaus"]) .ui-button {
     font-family: var(--bau-font-heading);
   }
 
@@ -2262,7 +2262,7 @@
     height: 2px;
   }
 
-  .bau-surface, .bau-card, .bau-panel, .bau-toolbar, .bau-table-wrap {
+  .bau-surface, .bau-card, .bau-panel, .bau-toolbar, .bau-table-wrap, :where([data-ui="bauhaus"]) .ui-card {
     background: linear-gradient(90deg,rgb(var(--bau-primary-rgb)/.1)0 .5rem,transparent .5rem),var(--bau-surface);
     color: var(--bau-text);
     border: 2px solid var(--bau-border);
@@ -2272,7 +2272,7 @@
     position: relative;
   }
 
-  .bau-card, .bau-panel {
+  .bau-card, .bau-panel, :where([data-ui="bauhaus"]) .ui-card {
     padding: var(--bau-space-6);
   }
 
@@ -2309,7 +2309,7 @@
     transform: translate(-3px, -3px);
   }
 
-  .bau-button, .bau-icon-button {
+  .bau-button, .bau-icon-button, :where([data-ui="bauhaus"]) .ui-button, :where([data-ui="bauhaus"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2333,71 +2333,71 @@
     display: inline-flex;
   }
 
-  .bau-button:hover, .bau-icon-button:hover {
+  .bau-button:hover, .bau-icon-button:hover, :where([data-ui="bauhaus"]) .ui-button:hover, :where([data-ui="bauhaus"]) .ui-icon-button:hover {
     border-color: var(--bau-primary);
     transform: translateY(-1px);
   }
 
-  .bau-button:active, .bau-icon-button:active, .bau-button[aria-pressed="true"], .bau-icon-button[aria-pressed="true"], .bau-button.is-active, .bau-icon-button.is-active {
+  .bau-button:active, .bau-icon-button:active, .bau-button[aria-pressed="true"], .bau-icon-button[aria-pressed="true"], .bau-button.is-active, .bau-icon-button.is-active, :where([data-ui="bauhaus"]) .ui-button:active, :where([data-ui="bauhaus"]) .ui-icon-button:active, :where([data-ui="bauhaus"]) .ui-button[aria-pressed="true"], :where([data-ui="bauhaus"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="bauhaus"]) .ui-button.is-active, :where([data-ui="bauhaus"]) .ui-icon-button.is-active {
     transform: translateY(1px);
     box-shadow: inset 0 3px 10px #0000002e;
   }
 
-  .bau-button-primary {
+  .bau-button-primary, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="primary"]) {
     background: var(--bau-primary);
     color: var(--bau-on-primary);
     border-color: var(--bau-primary);
   }
 
-  .bau-button-primary:hover {
+  .bau-button-primary:hover, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--bau-primary-hover);
     border-color: var(--bau-primary-hover);
   }
 
-  .bau-button-secondary {
+  .bau-button-secondary, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: var(--bau-secondary);
     color: var(--bau-on-secondary);
     border-color: var(--bau-secondary);
   }
 
-  .bau-button-secondary:hover {
+  .bau-button-secondary:hover, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--bau-secondary-hover);
     border-color: var(--bau-secondary-hover);
   }
 
-  .bau-button-danger {
+  .bau-button-danger, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--bau-danger);
     color: var(--bau-on-danger);
     border-color: var(--bau-danger);
   }
 
-  .bau-button-ghost {
+  .bau-button-ghost, :where([data-ui="bauhaus"]) .ui-button:where([data-ui-variant="ghost"]) {
     color: var(--bau-text);
     box-shadow: none;
     background: none;
   }
 
-  .bau-icon-button {
+  .bau-icon-button, :where([data-ui="bauhaus"]) .ui-icon-button {
     border-radius: var(--bau-radius-pill);
     width: 2.75rem;
     padding: 0;
   }
 
-  .bau-button:disabled, .bau-icon-button:disabled, .bau-disabled {
+  .bau-button:disabled, .bau-icon-button:disabled, .bau-disabled, :where([data-ui="bauhaus"]) .ui-button:disabled, :where([data-ui="bauhaus"]) .ui-icon-button:disabled {
     opacity: .55;
     cursor: not-allowed;
     transform: none;
   }
 
-  .bau-card, .bau-panel {
+  .bau-card, .bau-panel, :where([data-ui="bauhaus"]) .ui-card {
     background: var(--bau-card-bg);
   }
 
-  .bau-toolbar, .bau-table-wrap, .bau-button:not(.bau-button-primary):not(.bau-button-secondary):not(.bau-button-danger):not(.bau-button-ghost), .bau-icon-button {
+  .bau-toolbar, .bau-table-wrap, .bau-button:not(.bau-button-primary):not(.bau-button-secondary):not(.bau-button-danger):not(.bau-button-ghost), .bau-icon-button, :where([data-ui="bauhaus"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="bauhaus"]) .ui-icon-button {
     background: var(--bau-control-bg);
   }
 
-  .bau-button, .bau-icon-button, .bau-badge, .bau-nav-link {
+  .bau-button, .bau-icon-button, .bau-badge, .bau-nav-link, :where([data-ui="bauhaus"]) .ui-button, :where([data-ui="bauhaus"]) .ui-icon-button {
     font-family: var(--bau-font-control);
   }
 
@@ -2881,12 +2881,12 @@
     inline-size: 3rem;
   }
 
-  .bau-button[aria-busy="true"], .bau-icon-button[aria-busy="true"], [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .bau-button[aria-busy="true"], .bau-icon-button[aria-busy="true"], [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="bauhaus"]) .ui-button[aria-busy="true"], :where([data-ui="bauhaus"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .bau-button[aria-busy="true"]:after, .bau-icon-button[aria-busy="true"]:after, [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .bau-button[aria-busy="true"]:after, .bau-icon-button[aria-busy="true"]:after, [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="bauhaus"]) .ui-button[aria-busy="true"]:after, :where([data-ui="bauhaus"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--bau-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

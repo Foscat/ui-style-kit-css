@@ -1627,7 +1627,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), :where([data-ui="neumorphism"]) [data-ui][data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,7 +1951,7 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
@@ -2214,7 +2214,7 @@
     background-size: var(--neo-theme-bg-size);
   }
 
-  .neo-title, .neo-heading, .neo-kicker, .neo-button, .neo-badge, .neo-nav-link {
+  .neo-title, .neo-heading, .neo-kicker, .neo-button, .neo-badge, .neo-nav-link, :where([data-ui="neumorphism"]) .ui-button {
     font-family: var(--neo-font-heading);
   }
 
@@ -2260,7 +2260,7 @@
     height: 1px;
   }
 
-  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap {
+  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card {
     background: linear-gradient(180deg,#ffffff2e,#ffffff08),linear-gradient(135deg,rgb(var(--neo-primary-rgb)/.07),transparent 46%),var(--neo-surface);
     color: var(--neo-text);
     border: 1px solid var(--neo-border);
@@ -2270,7 +2270,7 @@
     position: relative;
   }
 
-  .neo-card, .neo-panel {
+  .neo-card, .neo-panel, :where([data-ui="neumorphism"]) .ui-card {
     padding: var(--neo-space-6);
   }
 
@@ -2307,7 +2307,7 @@
     transform: translateY(-2px);
   }
 
-  .neo-button, .neo-icon-button {
+  .neo-button, .neo-icon-button, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2331,71 +2331,71 @@
     display: inline-flex;
   }
 
-  .neo-button:hover, .neo-icon-button:hover {
+  .neo-button:hover, .neo-icon-button:hover, :where([data-ui="neumorphism"]) .ui-button:hover, :where([data-ui="neumorphism"]) .ui-icon-button:hover {
     border-color: var(--neo-primary);
     transform: translateY(-1px);
   }
 
-  .neo-button:active, .neo-icon-button:active, .neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"], .neo-button.is-active, .neo-icon-button.is-active {
+  .neo-button:active, .neo-icon-button:active, .neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"], .neo-button.is-active, .neo-icon-button.is-active, :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-button.is-active, :where([data-ui="neumorphism"]) .ui-icon-button.is-active {
     transform: translateY(1px);
     box-shadow: inset 0 3px 10px #0000002e;
   }
 
-  .neo-button-primary {
+  .neo-button-primary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"]) {
     background: var(--neo-primary);
     color: var(--neo-on-primary);
     border-color: var(--neo-primary);
   }
 
-  .neo-button-primary:hover {
+  .neo-button-primary:hover, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--neo-primary-hover);
     border-color: var(--neo-primary-hover);
   }
 
-  .neo-button-secondary {
+  .neo-button-secondary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: var(--neo-secondary);
     color: var(--neo-on-secondary);
     border-color: var(--neo-secondary);
   }
 
-  .neo-button-secondary:hover {
+  .neo-button-secondary:hover, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--neo-secondary-hover);
     border-color: var(--neo-secondary-hover);
   }
 
-  .neo-button-danger {
+  .neo-button-danger, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--neo-danger);
     color: var(--neo-on-danger);
     border-color: var(--neo-danger);
   }
 
-  .neo-button-ghost {
+  .neo-button-ghost, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="ghost"]) {
     color: var(--neo-text);
     box-shadow: none;
     background: none;
   }
 
-  .neo-icon-button {
+  .neo-icon-button, :where([data-ui="neumorphism"]) .ui-icon-button {
     border-radius: var(--neo-radius-pill);
     width: 2.75rem;
     padding: 0;
   }
 
-  .neo-button:disabled, .neo-icon-button:disabled, .neo-disabled {
+  .neo-button:disabled, .neo-icon-button:disabled, .neo-disabled, :where([data-ui="neumorphism"]) .ui-button:disabled, :where([data-ui="neumorphism"]) .ui-icon-button:disabled {
     opacity: .55;
     cursor: not-allowed;
     transform: none;
   }
 
-  .neo-card, .neo-panel {
+  .neo-card, .neo-panel, :where([data-ui="neumorphism"]) .ui-card {
     background: var(--neo-card-bg);
   }
 
-  .neo-toolbar, .neo-table-wrap, .neo-button:not(.neo-button-primary):not(.neo-button-secondary):not(.neo-button-danger):not(.neo-button-ghost), .neo-icon-button {
+  .neo-toolbar, .neo-table-wrap, .neo-button:not(.neo-button-primary):not(.neo-button-secondary):not(.neo-button-danger):not(.neo-button-ghost), .neo-icon-button, :where([data-ui="neumorphism"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="neumorphism"]) .ui-icon-button {
     background: var(--neo-control-bg);
   }
 
-  .neo-button, .neo-icon-button, .neo-badge, .neo-nav-link {
+  .neo-button, .neo-icon-button, .neo-badge, .neo-nav-link, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
     font-family: var(--neo-font-control);
   }
 
@@ -2838,7 +2838,7 @@
     background: var(--neo-bg);
   }
 
-  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap {
+  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card {
     border-color: rgb(var(--neo-border-rgb)/.14);
     box-shadow: 10px 10px 22px var(--neo-nm-dark),-10px -10px 22px var(--neo-nm-light);
   }
@@ -2851,11 +2851,11 @@
     box-shadow: inset 5px 5px 11px var(--neo-nm-dark),inset -5px -5px 11px var(--neo-nm-light);
   }
 
-  .neo-button, .neo-icon-button, .neo-badge, .neo-nav {
+  .neo-button, .neo-icon-button, .neo-badge, .neo-nav, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
     box-shadow: 5px 5px 11px var(--neo-nm-dark),-5px -5px 11px var(--neo-nm-light);
   }
 
-  .neo-button:active, .neo-icon-button:active, .neo-button.is-active, .neo-icon-button.is-active, .neo-nav-link.is-active {
+  .neo-button:active, .neo-icon-button:active, .neo-button.is-active, .neo-icon-button.is-active, .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button.is-active, :where([data-ui="neumorphism"]) .ui-icon-button.is-active {
     box-shadow: inset 4px 4px 9px var(--neo-nm-dark),inset -4px -4px 9px var(--neo-nm-light);
   }
 
@@ -2885,12 +2885,12 @@
     inline-size: 3rem;
   }
 
-  .neo-button[aria-busy="true"], .neo-icon-button[aria-busy="true"], [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .neo-button[aria-busy="true"], .neo-icon-button[aria-busy="true"], [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="neumorphism"]) .ui-button[aria-busy="true"], :where([data-ui="neumorphism"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .neo-button[aria-busy="true"]:after, .neo-icon-button[aria-busy="true"]:after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .neo-button[aria-busy="true"]:after, .neo-icon-button[aria-busy="true"]:after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="neumorphism"]) .ui-button[aria-busy="true"]:after, :where([data-ui="neumorphism"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--neo-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

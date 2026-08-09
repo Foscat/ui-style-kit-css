@@ -1627,7 +1627,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), :where([data-ui="cyberpunk"]) [data-ui][data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,7 +1951,7 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
@@ -2234,7 +2234,7 @@
     color: var(--cyber-on-primary);
   }
 
-  .cyber-title, .cyber-heading, .cyber-kicker, .cyber-button, .cyber-badge, .cyber-nav-link {
+  .cyber-title, .cyber-heading, .cyber-kicker, .cyber-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
   }
@@ -2272,7 +2272,7 @@
     color: var(--cyber-text-muted);
   }
 
-  .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap {
+  .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap, :where([data-ui="cyberpunk"]) .ui-card {
     background: linear-gradient(135deg,#ffffff14,#ffffff05),var(--cyber-surface);
     color: var(--cyber-text);
     border: 1px solid var(--cyber-border);
@@ -2284,7 +2284,7 @@
     overflow: hidden;
   }
 
-  .cyber-card:before, .cyber-panel:before, .cyber-console:before, .cyber-toolbar:before {
+  .cyber-card:before, .cyber-panel:before, .cyber-console:before, .cyber-toolbar:before, :where([data-ui="cyberpunk"]) .ui-card:before {
     content: "";
     pointer-events: none;
     border-top: 2px solid rgb(var(--cyber-primary-rgb)/.5);
@@ -2293,7 +2293,7 @@
     inset: 0;
   }
 
-  .cyber-card, .cyber-panel, .cyber-console {
+  .cyber-card, .cyber-panel, .cyber-console, :where([data-ui="cyberpunk"]) .ui-card {
     padding: var(--cyber-space-6);
   }
 
@@ -2327,7 +2327,7 @@
     padding: var(--cyber-space-5);
   }
 
-  .cyber-button, .cyber-icon-button {
+  .cyber-button, .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2350,41 +2350,41 @@
     display: inline-flex;
   }
 
-  .cyber-button:hover, .cyber-icon-button:hover {
+  .cyber-button:hover, .cyber-icon-button:hover, :where([data-ui="cyberpunk"]) .ui-button:hover, :where([data-ui="cyberpunk"]) .ui-icon-button:hover {
     box-shadow: var(--cyber-shadow-md),0 0 26px var(--cyber-glow-primary);
     transform: translateY(-1px);
   }
 
-  .cyber-button:active, .cyber-icon-button:active, .cyber-button.is-active, .cyber-button[aria-pressed="true"] {
+  .cyber-button:active, .cyber-icon-button:active, .cyber-button.is-active, .cyber-button[aria-pressed="true"], :where([data-ui="cyberpunk"]) .ui-button:active, :where([data-ui="cyberpunk"]) .ui-icon-button:active, :where([data-ui="cyberpunk"]) .ui-button.is-active, :where([data-ui="cyberpunk"]) .ui-button[aria-pressed="true"] {
     box-shadow: inset 0 0 18px #00000038,0 0 18px var(--cyber-glow-primary);
     transform: translateY(1px);
   }
 
-  .cyber-button-primary {
+  .cyber-button-primary, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="primary"]) {
     background: linear-gradient(135deg,#ffffff24,transparent),var(--cyber-primary);
     color: var(--cyber-on-primary);
   }
 
-  .cyber-button-primary:hover {
+  .cyber-button-primary:hover, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--cyber-primary-hover);
   }
 
-  .cyber-button-secondary {
+  .cyber-button-secondary, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: linear-gradient(135deg,#ffffff24,transparent),var(--cyber-secondary);
     color: var(--cyber-on-secondary);
     border-color: rgb(var(--cyber-secondary-rgb)/.7);
   }
 
-  .cyber-button-secondary:hover {
+  .cyber-button-secondary:hover, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--cyber-secondary-hover);
   }
 
-  .cyber-button-danger {
+  .cyber-button-danger, :where([data-ui="cyberpunk"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--cyber-danger);
     color: var(--cyber-on-danger);
   }
 
-  .cyber-icon-button {
+  .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-icon-button {
     width: 2.85rem;
     padding: 0;
   }
@@ -2640,7 +2640,7 @@
     outline-offset: 3px;
   }
 
-  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible {
+  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible, :where([data-ui="cyberpunk"]) .ui-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-icon-button:focus-visible {
     box-shadow: 0 0 0 3px rgb(var(--cyber-focus-rgb)/.28),0 0 28px rgb(var(--cyber-focus-rgb)/.28);
   }
 
@@ -2651,15 +2651,15 @@
     }
   }
 
-  .cyber-card, .cyber-panel {
+  .cyber-card, .cyber-panel, :where([data-ui="cyberpunk"]) .ui-card {
     background: var(--cyber-card-bg);
   }
 
-  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button {
+  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .ui-icon-button {
     background: var(--cyber-control-bg);
   }
 
-  .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link {
+  .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-icon-button {
     font-family: var(--cyber-font-control);
   }
 
@@ -2690,12 +2690,12 @@
     inline-size: 3rem;
   }
 
-  .cyber-button[aria-busy="true"], .cyber-icon-button[aria-busy="true"], [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .cyber-button[aria-busy="true"], .cyber-icon-button[aria-busy="true"], [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="cyberpunk"]) .ui-button[aria-busy="true"], :where([data-ui="cyberpunk"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .cyber-button[aria-busy="true"]:after, .cyber-icon-button[aria-busy="true"]:after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .cyber-button[aria-busy="true"]:after, .cyber-icon-button[aria-busy="true"]:after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="cyberpunk"]) .ui-button[aria-busy="true"]:after, :where([data-ui="cyberpunk"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--cyber-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

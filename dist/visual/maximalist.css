@@ -1627,7 +1627,7 @@
   .rg-button,
   .rg-icon-button,
   .rg-button-pill
-) {
+), :where([data-ui="maximalist"]) [data-ui][data-theme][data-mode] :where(.ui-button,.ui-icon-button,.saas-button-pill,.ui-button,.ui-icon-button,.bento-button-pill,.ui-button,.ui-icon-button,.max-button-pill,.ui-button,.ui-icon-button,.bau-button-pill,.ui-button,.ui-icon-button,.tactile-button-pill,.ui-button,.ui-icon-button,.neo-button-pill,.ui-button,.ui-icon-button,.retro-button-pill,.ui-button,.ui-icon-button,.brutal-button-pill,.ui-button,.ui-icon-button,.cyber-button-pill,.ui-button,.ui-icon-button,.y2k-button-pill,.ui-button,.ui-icon-button,.rg-button-pill) {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1951,7 +1951,7 @@
 .saas-divider, .bento-divider, .max-divider, .bau-divider, .tactile-divider, .neo-divider, .retro-divider, .brutal-divider, .cyber-divider, .y2k-divider, .rg-divider { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost {
+.saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="ghost"]) {
   color: var(--usk-native-primary);
   background: transparent;
   border-color: var(--usk-native-border);
@@ -2214,7 +2214,7 @@
     background-size: var(--max-theme-bg-size);
   }
 
-  .max-title, .max-heading, .max-kicker, .max-button, .max-badge, .max-nav-link {
+  .max-title, .max-heading, .max-kicker, .max-button, .max-badge, .max-nav-link, :where([data-ui="maximalist"]) .ui-button {
     font-family: var(--max-font-heading);
   }
 
@@ -2261,7 +2261,7 @@
     height: 3px;
   }
 
-  .max-surface, .max-card, .max-panel, .max-toolbar, .max-table-wrap {
+  .max-surface, .max-card, .max-panel, .max-toolbar, .max-table-wrap, :where([data-ui="maximalist"]) .ui-card {
     background: linear-gradient(135deg,rgb(var(--max-accent-rgb)/.18),transparent 42%),var(--max-surface);
     color: var(--max-text);
     border: 3px solid var(--max-border);
@@ -2271,7 +2271,7 @@
     position: relative;
   }
 
-  .max-card, .max-panel {
+  .max-card, .max-panel, :where([data-ui="maximalist"]) .ui-card {
     padding: var(--max-space-6);
   }
 
@@ -2308,7 +2308,7 @@
     transform: translate(-2px, -2px);
   }
 
-  .max-button, .max-icon-button {
+  .max-button, .max-icon-button, :where([data-ui="maximalist"]) .ui-button, :where([data-ui="maximalist"]) .ui-icon-button {
     appearance: none;
     justify-content: center;
     align-items: center;
@@ -2332,71 +2332,71 @@
     display: inline-flex;
   }
 
-  .max-button:hover, .max-icon-button:hover {
+  .max-button:hover, .max-icon-button:hover, :where([data-ui="maximalist"]) .ui-button:hover, :where([data-ui="maximalist"]) .ui-icon-button:hover {
     border-color: var(--max-primary);
     transform: translateY(-1px);
   }
 
-  .max-button:active, .max-icon-button:active, .max-button[aria-pressed="true"], .max-icon-button[aria-pressed="true"], .max-button.is-active, .max-icon-button.is-active {
+  .max-button:active, .max-icon-button:active, .max-button[aria-pressed="true"], .max-icon-button[aria-pressed="true"], .max-button.is-active, .max-icon-button.is-active, :where([data-ui="maximalist"]) .ui-button:active, :where([data-ui="maximalist"]) .ui-icon-button:active, :where([data-ui="maximalist"]) .ui-button[aria-pressed="true"], :where([data-ui="maximalist"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="maximalist"]) .ui-button.is-active, :where([data-ui="maximalist"]) .ui-icon-button.is-active {
     transform: translateY(1px);
     box-shadow: inset 0 3px 10px #0000002e;
   }
 
-  .max-button-primary {
+  .max-button-primary, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="primary"]) {
     background: var(--max-primary);
     color: var(--max-on-primary);
     border-color: var(--max-primary);
   }
 
-  .max-button-primary:hover {
+  .max-button-primary:hover, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="primary"]):hover {
     background: var(--max-primary-hover);
     border-color: var(--max-primary-hover);
   }
 
-  .max-button-secondary {
+  .max-button-secondary, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="secondary"]) {
     background: var(--max-secondary);
     color: var(--max-on-secondary);
     border-color: var(--max-secondary);
   }
 
-  .max-button-secondary:hover {
+  .max-button-secondary:hover, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="secondary"]):hover {
     background: var(--max-secondary-hover);
     border-color: var(--max-secondary-hover);
   }
 
-  .max-button-danger {
+  .max-button-danger, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="danger"]) {
     background: var(--max-danger);
     color: var(--max-on-danger);
     border-color: var(--max-danger);
   }
 
-  .max-button-ghost {
+  .max-button-ghost, :where([data-ui="maximalist"]) .ui-button:where([data-ui-variant="ghost"]) {
     color: var(--max-text);
     box-shadow: none;
     background: none;
   }
 
-  .max-icon-button {
+  .max-icon-button, :where([data-ui="maximalist"]) .ui-icon-button {
     border-radius: var(--max-radius-pill);
     width: 2.75rem;
     padding: 0;
   }
 
-  .max-button:disabled, .max-icon-button:disabled, .max-disabled {
+  .max-button:disabled, .max-icon-button:disabled, .max-disabled, :where([data-ui="maximalist"]) .ui-button:disabled, :where([data-ui="maximalist"]) .ui-icon-button:disabled {
     opacity: .55;
     cursor: not-allowed;
     transform: none;
   }
 
-  .max-card, .max-panel {
+  .max-card, .max-panel, :where([data-ui="maximalist"]) .ui-card {
     background: var(--max-card-bg);
   }
 
-  .max-toolbar, .max-table-wrap, .max-button:not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-ghost), .max-icon-button {
+  .max-toolbar, .max-table-wrap, .max-button:not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-ghost), .max-icon-button, :where([data-ui="maximalist"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="maximalist"]) .ui-icon-button {
     background: var(--max-control-bg);
   }
 
-  .max-button, .max-icon-button, .max-badge, .max-nav-link {
+  .max-button, .max-icon-button, .max-badge, .max-nav-link, :where([data-ui="maximalist"]) .ui-button, :where([data-ui="maximalist"]) .ui-icon-button {
     font-family: var(--max-font-control);
   }
 
@@ -2888,12 +2888,12 @@
     inline-size: 3rem;
   }
 
-  .max-button[aria-busy="true"], .max-icon-button[aria-busy="true"], [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  .max-button[aria-busy="true"], .max-icon-button[aria-busy="true"], [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]), :where([data-ui="maximalist"]) .ui-button[aria-busy="true"], :where([data-ui="maximalist"]) .ui-icon-button[aria-busy="true"] {
     cursor: progress;
     gap: .55rem;
   }
 
-  .max-button[aria-busy="true"]:after, .max-icon-button[aria-busy="true"]:after, [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after {
+  .max-button[aria-busy="true"]:after, .max-icon-button[aria-busy="true"]:after, [data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="maximalist"]) .ui-button[aria-busy="true"]:after, :where([data-ui="maximalist"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
     border: .16em solid rgb(var(--max-primary-text-rgb)/.42);
     border-block-start-color: currentColor;

@@ -18,6 +18,17 @@ const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
   file: `styles/${id}.css`
 }));
 const stylePrefixes = new Map(presetFiles.map(({ file, id, prefix }) => [file, [id, prefix]]));
+const semanticEntries = Object.values(publicManifest.semanticComponentApi.selectorsByRole).flat();
+const implementedSemanticSelectors = new Set(
+  publicManifest.semanticComponentApi.implementationStatus.implemented?.selectors ?? []
+);
+const semanticAliases = semanticEntries
+  .filter(({ selector }) => implementedSemanticSelectors.has(selector))
+  .map(({ selector, sourceSuffix }) => ({
+    selector,
+    sourceSuffix,
+    variants: publicManifest.semanticComponentApi.variantAttribute.valuesBySelector[selector] ?? []
+  }));
 const colorRoles = [
   'bg',
   'surface',
@@ -93,6 +104,79 @@ function formatGeneratedCss(css, filename) {
   }
 
   return result.code.toString().trim();
+}
+
+function escapeRegularExpression(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function aliasSemanticSelector(selector) {
+  let aliased = selector;
+
+  for (const preset of presetFiles) {
+    for (const semanticAlias of semanticAliases) {
+      for (const variant of semanticAlias.variants) {
+        const sourceClass = `${preset.prefix}-${semanticAlias.sourceSuffix}-${variant}`;
+        const semanticClass = `${semanticAlias.selector}:where([data-ui-variant="${variant}"])`;
+        aliased = aliased.replace(
+          new RegExp(`\\.${escapeRegularExpression(sourceClass)}(?![a-zA-Z0-9_-])`, 'g'),
+          semanticClass
+        );
+      }
+
+      const sourceClass = `${preset.prefix}-${semanticAlias.sourceSuffix}`;
+      aliased = aliased.replace(
+        new RegExp(`\\.${escapeRegularExpression(sourceClass)}(?![a-zA-Z0-9_-])`, 'g'),
+        semanticAlias.selector
+      );
+    }
+  }
+
+  return aliased === selector ? null : aliased;
+}
+
+function addSemanticAliases(css, filename, selectedPresets) {
+  if (semanticAliases.length === 0) return css;
+
+  const ast = parse(css, { filename, positions: true });
+  const selectedRoot = `:where(${selectedPresets
+    .map(({ id }) => `[data-ui="${id}"]`)
+    .join(', ')})`;
+  const selectorEdits = [];
+
+  walk(ast, {
+    visit: 'Rule',
+    enter(rule) {
+      const originalSelectorList = generate(rule.prelude);
+      const aliases = rule.prelude.children.toArray()
+        .map((selector) => aliasSemanticSelector(generate(selector)))
+        .filter(Boolean)
+        .map((selector) => {
+          // Preset-authored selectors sometimes carry their own exact root already.
+          const hasSelectedRoot = selectedPresets.some(({ id }) =>
+            selector.includes(`[data-ui="${id}"]`)
+          );
+          return hasSelectedRoot ? selector : `${selectedRoot} ${selector}`;
+        });
+
+      if (aliases.length === 0) return;
+      selectorEdits.push({
+        start: rule.prelude.loc.start.offset,
+        end: rule.prelude.loc.end.offset,
+        value: `${css.slice(rule.prelude.loc.start.offset, rule.prelude.loc.end.offset)}, ${[
+          ...new Set(aliases)
+        ].join(', ')}`
+      });
+    }
+  });
+
+  // Selector-only edits keep every authored declaration byte-for-byte single-sourced.
+  return selectorEdits
+    .sort((first, second) => second.start - first.start)
+    .reduce(
+      (output, edit) => `${output.slice(0, edit.start)}${edit.value}${output.slice(edit.end)}`,
+      css
+    );
 }
 
 function sharedColorAliases(prefix) {
@@ -277,10 +361,17 @@ function syncDemoManifest() {
 
 function visualSections(selectedPresets = presetFiles) {
   return [
-    ...foundationFiles.map((file) => ({ label: file, css: sourceSection(file) })),
+    ...foundationFiles.map((file) => ({
+      label: file,
+      css: addSemanticAliases(sourceSection(file), file, selectedPresets)
+    })),
     ...selectedPresets.map(({ file, id, prefix }) => ({
       label: `${file} (visual paint)`,
-      css: preparedPresetCss(file, id, prefix, 'visual')
+      css: addSemanticAliases(
+        preparedPresetCss(file, id, prefix, 'visual'),
+        file,
+        [{ id, prefix }]
+      )
     }))
   ];
 }

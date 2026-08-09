@@ -145,9 +145,9 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~299 KB | ~39 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~290 KB | ~38 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~369 KB | ~44 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~319 KB | ~41 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~311 KB | ~40 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~391 KB | ~46 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~21 KB | ~3 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
