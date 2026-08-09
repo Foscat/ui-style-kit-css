@@ -60,6 +60,7 @@ const pagePlacementProperties = new Set([
 ]);
 const nativeStatePseudos = new Set([
   'active',
+  'any-link',
   'checked',
   'disabled',
   'enabled',
@@ -91,8 +92,15 @@ const commonStateClasses = new Set([
   'is-pressed',
   'is-selected'
 ]);
+// Reflected native attributes are state selectors even when no pseudo-class is used.
 const stateAttributes = new Set([
+  'checked',
   'disabled',
+  'hidden',
+  'open',
+  'readonly',
+  'required',
+  'selected',
   'aria-busy',
   'aria-checked',
   'aria-current',

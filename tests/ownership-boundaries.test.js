@@ -128,6 +128,12 @@ test('interaction theme rejects state mechanics but permits static theme applica
     [data-state="active"] { --State-Paint: red; background: red; }
     :is(a:visited, button:popover-open) { color: purple; }
     :where(button[disabled], .saas-disabled) { --State-Opacity: .5; opacity: .5; }
+    :is(.surface, a:any-link) { opacity: .8; }
+    :where(.surface, details[open]) { opacity: .8; }
+    :not(input[checked]) { opacity: .8; }
+    :is(input[required]) { opacity: .8; }
+    :where(option[selected]) { opacity: .8; }
+    :is(textarea[readonly], [hidden]) { opacity: .8; }
     .interactive-surface { TRANSFORM: scale(1.05); }
   `;
   const result = auditOwnership({
@@ -189,12 +195,79 @@ test('interaction theme rejects state mechanics but permits static theme applica
     },
     {
       target: 'interaction-theme',
+      selector: ':is(.surface,a:any-link)',
+      property: 'opacity',
+      line: 9,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: ':where(.surface,details[open])',
+      property: 'opacity',
+      line: 10,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: ':not(input[checked])',
+      property: 'opacity',
+      line: 11,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: ':is(input[required])',
+      property: 'opacity',
+      line: 12,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: ':where(option[selected])',
+      property: 'opacity',
+      line: 13,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: ':is(textarea[readonly],[hidden])',
+      property: 'opacity',
+      line: 14,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
       selector: '.interactive-surface',
       property: 'transform',
-      line: 9,
+      line: 15,
       rule: 'ui-interaction-mechanics'
     }
   ]);
+});
+
+test('interaction theme recognizes every reflected native state inside functional selectors', () => {
+  const selectors = [
+    ':is(.surface,a:any-link)',
+    ':where(.surface,details[open])',
+    ':not(input[checked])',
+    ':is(.surface,input[required])',
+    ':where(.surface,option[selected])',
+    ':is(.surface,textarea[readonly])',
+    ':where(.surface,[hidden])'
+  ];
+
+  for (const selector of selectors) {
+    const result = auditOwnership({
+      target: 'interaction-theme',
+      css: `${selector} { opacity: .8; }`,
+      manifest: {},
+      allowlist: [],
+      now: reviewedAt
+    });
+
+    assert.equal(result.violations.length, 1, selector);
+    assert.equal(result.violations[0].selector, selector);
+  }
 });
 
 test('allowlist rejects every malformed, stale, broad, duplicate, and unmatched mutation', () => {
