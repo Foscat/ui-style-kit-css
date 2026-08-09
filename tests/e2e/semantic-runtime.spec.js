@@ -89,6 +89,31 @@ const indicatorProperties = [
   'opacity',
   'transform'
 ];
+const surfaceProperties = [
+  'backgroundColor',
+  'backgroundImage',
+  'borderBottomColor',
+  'borderBottomStyle',
+  'borderBottomWidth',
+  'borderLeftColor',
+  'borderLeftWidth',
+  'borderRadius',
+  'boxShadow',
+  'color',
+  'display',
+  'fontFamily',
+  'fontSize',
+  'fontWeight',
+  'gap',
+  'marginBottom',
+  'marginTop',
+  'overflow',
+  'paddingBottom',
+  'paddingLeft',
+  'paddingRight',
+  'paddingTop',
+  'textTransform'
+];
 
 function buttonMarkup(prefix, variant, kind) {
   const variantAttribute = variant ? ` data-ui-variant="${variant}"` : '';
@@ -182,6 +207,72 @@ function formFixture(preset) {
             </span>
             Prefixed switch
           </label>
+        </main>
+      </body>
+    </html>`;
+}
+
+function remainingRolesFixture(preset, { disableMotion = true } = {}) {
+  const badgeVariants = [null, 'primary', 'secondary', 'success', 'warning', 'danger'];
+  const alertVariants = [null, 'success', 'warning', 'danger'];
+  const badges = badgeVariants.map((variant) => {
+    const name = variant ?? 'neutral';
+    const semanticVariant = variant ? ` data-ui-variant="${variant}"` : '';
+    const prefixedVariant = variant ? ` ${preset.prefix}-badge-${variant}` : '';
+    return `
+      <span id="semantic-badge-${name}" class="ui-badge"${semanticVariant}>Semantic ${name}</span>
+      <span id="prefixed-badge-${name}" class="${preset.prefix}-badge${prefixedVariant}">Prefixed ${name}</span>`;
+  }).join('');
+  const alerts = alertVariants.map((variant) => {
+    const name = variant ?? 'neutral';
+    const semanticVariant = variant ? ` data-ui-variant="${variant}"` : '';
+    const prefixedVariant = variant ? ` ${preset.prefix}-alert-${variant}` : '';
+    return `
+      <aside id="semantic-alert-${name}" class="ui-alert"${semanticVariant}>
+        <strong id="semantic-alert-title-${name}" class="ui-alert-title">Semantic ${name}</strong>
+        <span id="semantic-alert-body-${name}" class="ui-alert-body">Semantic body</span>
+      </aside>
+      <aside id="prefixed-alert-${name}" class="${preset.prefix}-alert${prefixedVariant}">
+        <strong id="prefixed-alert-title-${name}" class="${preset.prefix}-alert-title">Prefixed ${name}</strong>
+        <span id="prefixed-alert-body-${name}" class="${preset.prefix}-alert-body">Prefixed body</span>
+      </aside>`;
+  }).join('');
+
+  return `<!doctype html>
+    <html lang="en">
+      <head>
+        ${disableMotion
+    ? '<style>*, *::before, *::after { animation: none !important; transition: none !important; }</style>'
+    : ''}
+      </head>
+      <body data-ui="${preset.id}" data-theme="arctic-indigo" data-mode="light">
+        <main>
+          ${badges}
+          ${alerts}
+          <nav id="semantic-nav" class="ui-nav" aria-label="Semantic navigation">
+            <a id="semantic-nav-link" class="ui-nav-link is-active" href="#semantic-table" aria-current="page">Semantic table</a>
+          </nav>
+          <nav id="prefixed-nav" class="${preset.prefix}-nav" aria-label="Prefixed navigation">
+            <a id="prefixed-nav-link" class="${preset.prefix}-nav-link is-active" href="#prefixed-table" aria-current="page">Prefixed table</a>
+          </nav>
+          <div id="semantic-table-wrap" class="ui-table-wrap">
+            <table id="semantic-table" class="ui-table"><tbody><tr><td id="semantic-cell">Semantic cell</td></tr></tbody></table>
+          </div>
+          <div id="prefixed-table-wrap" class="${preset.prefix}-table-wrap">
+            <table id="prefixed-table" class="${preset.prefix}-table"><tbody><tr><td id="prefixed-cell">Prefixed cell</td></tr></tbody></table>
+          </div>
+          <div id="semantic-progress" class="ui-progress" role="progressbar" aria-label="Semantic progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+            <div id="semantic-progress-bar" class="ui-progress-bar"></div>
+          </div>
+          <div id="prefixed-progress" class="${preset.prefix}-progress" role="progressbar" aria-label="Prefixed progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+            <div id="prefixed-progress-bar" class="${preset.prefix}-progress-bar"></div>
+          </div>
+          <div id="semantic-toolbar" class="ui-toolbar" role="toolbar" aria-label="Semantic toolbar"></div>
+          <div id="prefixed-toolbar" class="${preset.prefix}-toolbar" role="toolbar" aria-label="Prefixed toolbar"></div>
+          <span id="semantic-spinner" class="ui-spinner" role="status" aria-label="Semantic loading"></span>
+          <span id="prefixed-spinner" class="${preset.prefix}-spinner" role="status" aria-label="Prefixed loading"></span>
+          <span id="semantic-tooltip" class="ui-tooltip">Semantic tooltip</span>
+          <span id="prefixed-tooltip" class="${preset.prefix}-tooltip">Prefixed tooltip</span>
         </main>
       </body>
     </html>`;
@@ -422,5 +513,123 @@ test('semantic forms retain focus, disabled, checked, axe, and forced-colors beh
       .disableRules(['color-contrast'])
       .analyze();
     expect(results.violations, `${preset.id} semantic form axe scan`).toEqual([]);
+  }
+});
+
+test('remaining semantic roles and variants match prefixed twins across every preset', async ({ page }) => {
+  const badgeVariants = ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger'];
+  const alertVariants = ['neutral', 'success', 'warning', 'danger'];
+  const pairs = [
+    ['nav', surfaceProperties],
+    ['nav-link', surfaceProperties],
+    ['table-wrap', surfaceProperties],
+    ['table', surfaceProperties],
+    ['cell', surfaceProperties],
+    ['progress', surfaceProperties],
+    ['progress-bar', surfaceProperties],
+    ['toolbar', surfaceProperties],
+    ['spinner', surfaceProperties],
+    ['tooltip', surfaceProperties]
+  ];
+
+  for (const preset of manifest.presets) {
+    await page.setContent(remainingRolesFixture(preset));
+    await page.addStyleTag({ path: visualBundlePath });
+
+    for (const variant of badgeVariants) {
+      expect(
+        await computedSnapshot(page, `#semantic-badge-${variant}`, surfaceProperties),
+        `${preset.id} ${variant} badge`
+      ).toEqual(await computedSnapshot(page, `#prefixed-badge-${variant}`, surfaceProperties));
+    }
+    for (const variant of alertVariants) {
+      for (const part of ['alert', 'alert-title', 'alert-body']) {
+        expect(
+          await computedSnapshot(page, `#semantic-${part}-${variant}`, surfaceProperties),
+          `${preset.id} ${variant} ${part}`
+        ).toEqual(await computedSnapshot(page, `#prefixed-${part}-${variant}`, surfaceProperties));
+      }
+    }
+    for (const [name, properties] of pairs) {
+      expect(
+        await computedSnapshot(page, `#semantic-${name}`, properties),
+        `${preset.id} ${name}`
+      ).toEqual(await computedSnapshot(page, `#prefixed-${name}`, properties));
+    }
+
+    await expect(page.locator('#semantic-progress')).toHaveRole('progressbar');
+    await expect(page.locator('#semantic-toolbar')).toHaveRole('toolbar');
+    await expect(page.locator('#semantic-nav-link')).toHaveAttribute('aria-current', 'page');
+  }
+});
+
+test('remaining semantic nodes and classes stay stable through all preset switches', async ({ page }) => {
+  await page.setContent(remainingRolesFixture(manifest.presets[0]));
+  await page.addStyleTag({ path: visualBundlePath });
+  const semanticClassSnapshot = await page.evaluate(() => Object.fromEntries(
+    [...document.querySelectorAll('[class^="ui-"]')].map((element) => [element.id, element.className])
+  ));
+  const fingerprints = [];
+
+  for (const preset of manifest.presets) {
+    await page.evaluate(({ id, prefix }) => {
+      document.body.dataset.ui = id;
+      for (const element of document.querySelectorAll('[id^="prefixed-"]')) {
+        const semanticId = element.id.replace('prefixed-', 'semantic-');
+        const semantic = document.getElementById(semanticId);
+        if (!semantic?.className.startsWith('ui-')) continue;
+
+        const semanticBase = semantic.className.split(' ')[0].slice(3);
+        const variant = semantic.dataset.uiVariant;
+        element.className = `${prefix}-${semanticBase}${variant ? ` ${prefix}-${semanticBase}-${variant}` : ''}`;
+        if (semantic.classList.contains('is-active')) element.classList.add('is-active');
+      }
+    }, preset);
+
+    const semanticAlert = await computedSnapshot(page, '#semantic-alert-warning', surfaceProperties);
+    const prefixedAlert = await computedSnapshot(page, '#prefixed-alert-warning', surfaceProperties);
+    const semanticProgress = await computedSnapshot(page, '#semantic-progress-bar', surfaceProperties);
+    const prefixedProgress = await computedSnapshot(page, '#prefixed-progress-bar', surfaceProperties);
+    expect(semanticAlert, `${preset.id} stable warning alert`).toEqual(prefixedAlert);
+    expect(semanticProgress, `${preset.id} stable progress bar`).toEqual(prefixedProgress);
+    fingerprints.push(JSON.stringify({ semanticAlert, semanticProgress }));
+    expect(await page.evaluate(() => Object.fromEntries(
+      [...document.querySelectorAll('[class^="ui-"]')].map((element) => [element.id, element.className])
+    ))).toEqual(semanticClassSnapshot);
+  }
+
+  expect(new Set(fingerprints).size, 'remaining semantic roles must restyle by preset').toBeGreaterThan(1);
+});
+
+test('remaining roles retain focus, reduced-motion, forced-colors, and axe semantics', async ({ page, browserName }) => {
+  test.skip(browserName !== 'chromium', 'Chromium provides the media emulation used by this contract.');
+
+  for (const preset of manifest.presets) {
+    await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
+    await page.setContent(remainingRolesFixture(preset, { disableMotion: false }));
+    await page.addStyleTag({ path: visualBundlePath });
+    await page.locator('#semantic-nav-link').focus();
+
+    const focusStyles = await computedSnapshot(page, '#semantic-nav-link', [
+      'animationDuration',
+      'forcedColorAdjust',
+      'outlineStyle',
+      'outlineWidth',
+      'transitionDuration'
+    ]);
+    expect(focusStyles.forcedColorAdjust, `${preset.id} remaining forced colors`).toBe('auto');
+    expect(focusStyles.outlineStyle, `${preset.id} nav focus`).not.toBe('none');
+    expect(Number.parseFloat(focusStyles.outlineWidth), `${preset.id} nav focus width`).toBeGreaterThanOrEqual(2);
+    expect(Number.parseFloat(focusStyles.transitionDuration), `${preset.id} reduced transition`).toBeLessThanOrEqual(0.001);
+    expect(Number.parseFloat(focusStyles.animationDuration), `${preset.id} reduced animation`).toBeLessThanOrEqual(0.001);
+
+    await page.emulateMedia({ forcedColors: 'none', reducedMotion: 'no-preference' });
+    const results = await new AxeBuilder({ page })
+      .include('main')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      // Dedicated contrast verification owns palette ratios; this fixture checks semantics.
+      .disableRules(['color-contrast'])
+      .analyze();
+    expect(results.violations, `${preset.id} remaining semantic axe scan`).toEqual([]);
   }
 });

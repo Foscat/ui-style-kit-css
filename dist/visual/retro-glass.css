@@ -2233,7 +2233,7 @@
     color: var(--rg-on-primary);
   }
 
-  .rg-title, .rg-heading, .rg-kicker, .rg-button, .rg-badge, .rg-nav-link, :where([data-ui="retro-glass"]) .ui-button {
+  .rg-title, .rg-heading, .rg-kicker, .rg-button, .rg-badge, .rg-nav-link, :where([data-ui="retro-glass"]) .ui-button, :where([data-ui="retro-glass"]) .ui-badge, :where([data-ui="retro-glass"]) .ui-nav-link {
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
   }
@@ -2270,7 +2270,7 @@
     color: var(--rg-text-muted);
   }
 
-  .rg-card, .rg-panel, .rg-console, .rg-toolbar, .rg-table-wrap, :where([data-ui="retro-glass"]) .ui-card {
+  .rg-card, .rg-panel, .rg-console, .rg-toolbar, .rg-table-wrap, :where([data-ui="retro-glass"]) .ui-card, :where([data-ui="retro-glass"]) .ui-toolbar, :where([data-ui="retro-glass"]) .ui-table-wrap {
     background: linear-gradient(135deg,#ffffff2e,#ffffff0a),linear-gradient(135deg,rgb(var(--rg-primary-rgb)/.06),transparent 52%),var(--rg-surface);
     color: var(--rg-text);
     border: 1px solid var(--rg-border);
@@ -2301,7 +2301,7 @@
     box-shadow: var(--rg-shadow-lg),inset 0 0 28px rgb(var(--rg-primary-rgb)/.08),0 0 32px var(--rg-glow-primary);
   }
 
-  .rg-toolbar {
+  .rg-toolbar, :where([data-ui="retro-glass"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--rg-space-4);
@@ -2436,7 +2436,7 @@
     font-size: .9rem;
   }
 
-  .rg-badge {
+  .rg-badge, :where([data-ui="retro-glass"]) .ui-badge {
     background: linear-gradient(135deg,#fff3,#ffffff0a),var(--rg-surface);
     min-height: 1.8rem;
     color: var(--rg-text);
@@ -2452,32 +2452,32 @@
     display: inline-flex;
   }
 
-  .rg-badge-primary {
+  .rg-badge-primary, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--rg-primary);
     color: var(--rg-on-primary);
   }
 
-  .rg-badge-secondary {
+  .rg-badge-secondary, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--rg-secondary);
     color: var(--rg-on-secondary);
   }
 
-  .rg-badge-success {
+  .rg-badge-success, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--rg-success);
     color: var(--rg-on-success);
   }
 
-  .rg-badge-warning {
+  .rg-badge-warning, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--rg-warning);
     color: var(--rg-on-warning);
   }
 
-  .rg-badge-danger {
+  .rg-badge-danger, :where([data-ui="retro-glass"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--rg-danger);
     color: var(--rg-on-danger);
   }
 
-  .rg-nav {
+  .rg-nav, :where([data-ui="retro-glass"]) .ui-nav {
     gap: var(--rg-space-2);
     padding: var(--rg-space-2);
     background: linear-gradient(135deg,#ffffff2e,#ffffff0a),var(--rg-surface);
@@ -2489,7 +2489,7 @@
     display: flex;
   }
 
-  .rg-nav-link {
+  .rg-nav-link, :where([data-ui="retro-glass"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--rg-text-muted);
     border-radius: var(--rg-radius-pill);
@@ -2502,13 +2502,13 @@
     display: inline-flex;
   }
 
-  .rg-nav-link:hover {
+  .rg-nav-link:hover, :where([data-ui="retro-glass"]) .ui-nav-link:hover {
     color: var(--rg-text);
     border-color: rgb(var(--rg-primary-rgb)/.36);
     background: #ffffff1a;
   }
 
-  .rg-nav-link.is-active, .rg-nav-link[aria-current="page"] {
+  .rg-nav-link.is-active, .rg-nav-link[aria-current="page"], :where([data-ui="retro-glass"]) .ui-nav-link.is-active, :where([data-ui="retro-glass"]) .ui-nav-link[aria-current="page"] {
     background: var(--rg-primary);
     color: var(--rg-on-primary);
     box-shadow: 0 0 22px var(--rg-glow-primary);
@@ -2542,7 +2542,7 @@
     transform: rotate(45deg);
   }
 
-  .rg-progress {
+  .rg-progress, :where([data-ui="retro-glass"]) .ui-progress {
     background: var(--rg-surface-soft);
     border: 1px solid rgb(var(--rg-border-rgb)/.4);
     border-radius: var(--rg-radius-pill);
@@ -2552,7 +2552,7 @@
     box-shadow: inset 0 8px 18px #00000024;
   }
 
-  .rg-progress-bar {
+  .rg-progress-bar, :where([data-ui="retro-glass"]) .ui-progress-bar {
     height: 100%;
     width: var(--rg-progress-value, 50%);
     background: linear-gradient(90deg,var(--rg-primary),var(--rg-accent),var(--rg-secondary));
@@ -2560,7 +2560,7 @@
     box-shadow: 0 0 18px var(--rg-glow-primary);
   }
 
-  .rg-alert {
+  .rg-alert, :where([data-ui="retro-glass"]) .ui-alert {
     padding: var(--rg-space-4);
     background: var(--rg-surface);
     border: 1px solid var(--rg-border);
@@ -2569,52 +2569,52 @@
     backdrop-filter: blur(16px);
   }
 
-  .rg-alert-title {
+  .rg-alert-title, :where([data-ui="retro-glass"]) .ui-alert-title {
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
     margin: 0;
   }
 
-  .rg-alert-body {
+  .rg-alert-body, :where([data-ui="retro-glass"]) .ui-alert-body {
     color: var(--rg-text-muted);
     margin: .5rem 0 0;
   }
 
-  .rg-alert-success {
+  .rg-alert-success, :where([data-ui="retro-glass"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left: 4px solid var(--rg-success);
   }
 
-  .rg-alert-warning {
+  .rg-alert-warning, :where([data-ui="retro-glass"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left: 4px solid var(--rg-warning);
   }
 
-  .rg-alert-danger {
+  .rg-alert-danger, :where([data-ui="retro-glass"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left: 4px solid var(--rg-danger);
   }
 
-  .rg-table-wrap {
+  .rg-table-wrap, :where([data-ui="retro-glass"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .rg-table {
+  .rg-table, :where([data-ui="retro-glass"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .rg-table th, .rg-table td {
+  .rg-table th, .rg-table td, :where([data-ui="retro-glass"]) .ui-table th, :where([data-ui="retro-glass"]) .ui-table td {
     border-bottom: 1px solid rgb(var(--rg-border-rgb)/.34);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .rg-table th {
+  .rg-table th, :where([data-ui="retro-glass"]) .ui-table th {
     background: rgb(var(--rg-primary-rgb)/.1);
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
     letter-spacing: .1em;
   }
 
-  .rg-table td {
+  .rg-table td, :where([data-ui="retro-glass"]) .ui-table td {
     color: var(--rg-text-muted);
   }
 
@@ -2666,11 +2666,11 @@
     background: var(--rg-card-bg);
   }
 
-  .rg-toolbar, .rg-table-wrap, .rg-button:not(.rg-button-primary):not(.rg-button-secondary):not(.rg-button-danger):not(.rg-button-ghost), .rg-icon-button, :where([data-ui="retro-glass"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="retro-glass"]) .ui-icon-button {
+  .rg-toolbar, .rg-table-wrap, .rg-button:not(.rg-button-primary):not(.rg-button-secondary):not(.rg-button-danger):not(.rg-button-ghost), .rg-icon-button, :where([data-ui="retro-glass"]) .ui-toolbar, :where([data-ui="retro-glass"]) .ui-table-wrap, :where([data-ui="retro-glass"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="retro-glass"]) .ui-icon-button {
     background: var(--rg-control-bg);
   }
 
-  .rg-button, .rg-icon-button, .rg-badge, .rg-nav-link, :where([data-ui="retro-glass"]) .ui-button, :where([data-ui="retro-glass"]) .ui-icon-button {
+  .rg-button, .rg-icon-button, .rg-badge, .rg-nav-link, :where([data-ui="retro-glass"]) .ui-button, :where([data-ui="retro-glass"]) .ui-icon-button, :where([data-ui="retro-glass"]) .ui-badge, :where([data-ui="retro-glass"]) .ui-nav-link {
     font-family: var(--rg-font-control);
   }
 

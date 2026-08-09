@@ -2282,7 +2282,7 @@
     }
   }
 
-  .brutal-title, .brutal-heading, .brutal-kicker, .brutal-button, .brutal-badge, .brutal-nav-link, :where([data-ui="brutalism"]) .ui-button {
+  .brutal-title, .brutal-heading, .brutal-kicker, .brutal-button, .brutal-badge, .brutal-nav-link, :where([data-ui="brutalism"]) .ui-button, :where([data-ui="brutalism"]) .ui-badge, :where([data-ui="brutalism"]) .ui-nav-link {
     font-family: var(--brutal-font-heading);
     text-transform: uppercase;
   }
@@ -2321,7 +2321,7 @@
     color: var(--brutal-text-muted);
   }
 
-  .brutal-card, .brutal-panel, .brutal-surface, .brutal-toolbar, .brutal-table-wrap, :where([data-ui="brutalism"]) .ui-card {
+  .brutal-card, .brutal-panel, .brutal-surface, .brutal-toolbar, .brutal-table-wrap, :where([data-ui="brutalism"]) .ui-card, :where([data-ui="brutalism"]) .ui-toolbar, :where([data-ui="brutalism"]) .ui-table-wrap {
     background: var(--brutal-surface-strong);
     color: var(--brutal-text);
     border: 3px solid var(--brutal-border);
@@ -2334,7 +2334,7 @@
     padding: var(--brutal-space-6);
   }
 
-  .brutal-toolbar {
+  .brutal-toolbar, :where([data-ui="brutalism"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--brutal-space-4);
@@ -2437,11 +2437,11 @@
     background: var(--brutal-card-bg);
   }
 
-  .brutal-toolbar, .brutal-table-wrap, .brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-ghost), .brutal-icon-button, :where([data-ui="brutalism"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="brutalism"]) .ui-icon-button {
+  .brutal-toolbar, .brutal-table-wrap, .brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-ghost), .brutal-icon-button, :where([data-ui="brutalism"]) .ui-toolbar, :where([data-ui="brutalism"]) .ui-table-wrap, :where([data-ui="brutalism"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="brutalism"]) .ui-icon-button {
     background: var(--brutal-control-bg);
   }
 
-  .brutal-button, .brutal-icon-button, .brutal-badge, .brutal-nav-link, :where([data-ui="brutalism"]) .ui-button, :where([data-ui="brutalism"]) .ui-icon-button {
+  .brutal-button, .brutal-icon-button, .brutal-badge, .brutal-nav-link, :where([data-ui="brutalism"]) .ui-button, :where([data-ui="brutalism"]) .ui-icon-button, :where([data-ui="brutalism"]) .ui-badge, :where([data-ui="brutalism"]) .ui-nav-link {
     font-family: var(--brutal-font-control);
   }
 
@@ -2485,7 +2485,7 @@
     font-size: .9rem;
   }
 
-  .brutal-badge {
+  .brutal-badge, :where([data-ui="brutalism"]) .ui-badge {
     background: var(--brutal-surface-strong);
     min-height: 1.8rem;
     color: var(--brutal-text);
@@ -2498,32 +2498,32 @@
     display: inline-flex;
   }
 
-  .brutal-badge-primary {
+  .brutal-badge-primary, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
   }
 
-  .brutal-badge-secondary {
+  .brutal-badge-secondary, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--brutal-secondary);
     color: var(--brutal-on-secondary);
   }
 
-  .brutal-badge-success {
+  .brutal-badge-success, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--brutal-success);
     color: var(--brutal-on-success);
   }
 
-  .brutal-badge-warning {
+  .brutal-badge-warning, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--brutal-warning);
     color: var(--brutal-on-warning);
   }
 
-  .brutal-badge-danger {
+  .brutal-badge-danger, :where([data-ui="brutalism"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--brutal-danger);
     color: var(--brutal-on-danger);
   }
 
-  .brutal-nav {
+  .brutal-nav, :where([data-ui="brutalism"]) .ui-nav {
     gap: var(--brutal-space-2);
     padding: var(--brutal-space-2);
     background: var(--brutal-surface-strong);
@@ -2533,7 +2533,7 @@
     display: flex;
   }
 
-  .brutal-nav-link {
+  .brutal-nav-link, :where([data-ui="brutalism"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--brutal-text);
     border: 3px solid #0000;
@@ -2544,12 +2544,12 @@
     display: inline-flex;
   }
 
-  .brutal-nav-link:hover {
+  .brutal-nav-link:hover, :where([data-ui="brutalism"]) .ui-nav-link:hover {
     border-color: var(--brutal-border);
     background: var(--brutal-surface-soft);
   }
 
-  .brutal-nav-link.is-active, .brutal-nav-link[aria-current="page"] {
+  .brutal-nav-link.is-active, .brutal-nav-link[aria-current="page"], :where([data-ui="brutalism"]) .ui-nav-link.is-active, :where([data-ui="brutalism"]) .ui-nav-link[aria-current="page"] {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
     border-color: var(--brutal-border);
@@ -2582,66 +2582,66 @@
     transform: rotate(45deg);
   }
 
-  .brutal-progress {
+  .brutal-progress, :where([data-ui="brutalism"]) .ui-progress {
     background: var(--brutal-surface-soft);
     border: 3px solid var(--brutal-border);
     width: 100%;
     height: 1rem;
   }
 
-  .brutal-progress-bar {
+  .brutal-progress-bar, :where([data-ui="brutalism"]) .ui-progress-bar {
     height: 100%;
     width: var(--brutal-progress-value, 50%);
     background: var(--brutal-primary);
   }
 
-  .brutal-alert {
+  .brutal-alert, :where([data-ui="brutalism"]) .ui-alert {
     padding: var(--brutal-space-4);
     background: var(--brutal-surface-strong);
     border: 3px solid var(--brutal-border);
     box-shadow: 8px 8px 0 var(--brutal-accent);
   }
 
-  .brutal-alert-success {
+  .brutal-alert-success, :where([data-ui="brutalism"]) .ui-alert:where([data-ui-variant="success"]) {
     box-shadow: 8px 8px 0 var(--brutal-success);
   }
 
-  .brutal-alert-warning {
+  .brutal-alert-warning, :where([data-ui="brutalism"]) .ui-alert:where([data-ui-variant="warning"]) {
     box-shadow: 8px 8px 0 var(--brutal-warning);
   }
 
-  .brutal-alert-danger {
+  .brutal-alert-danger, :where([data-ui="brutalism"]) .ui-alert:where([data-ui-variant="danger"]) {
     box-shadow: 8px 8px 0 var(--brutal-danger);
   }
 
-  .brutal-alert-title {
+  .brutal-alert-title, :where([data-ui="brutalism"]) .ui-alert-title {
     text-transform: uppercase;
     margin: 0;
     font-weight: 900;
   }
 
-  .brutal-alert-body {
+  .brutal-alert-body, :where([data-ui="brutalism"]) .ui-alert-body {
     color: var(--brutal-text-muted);
     margin: .5rem 0 0;
   }
 
-  .brutal-table-wrap {
+  .brutal-table-wrap, :where([data-ui="brutalism"]) .ui-table-wrap {
     box-shadow: 8px 8px 0 var(--brutal-primary);
     overflow: auto;
   }
 
-  .brutal-table {
+  .brutal-table, :where([data-ui="brutalism"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .brutal-table th, .brutal-table td {
+  .brutal-table th, .brutal-table td, :where([data-ui="brutalism"]) .ui-table th, :where([data-ui="brutalism"]) .ui-table td {
     border: 2px solid var(--brutal-border);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .brutal-table th {
+  .brutal-table th, :where([data-ui="brutalism"]) .ui-table th {
     background: var(--brutal-primary);
     color: var(--brutal-on-primary);
     text-transform: uppercase;

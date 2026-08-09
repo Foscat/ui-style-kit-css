@@ -2214,7 +2214,7 @@
     background-size: var(--saas-theme-bg-size);
   }
 
-  .saas-title, .saas-heading, .saas-kicker, .saas-button, .saas-badge, .saas-nav-link, :where([data-ui="minimal-saas"]) .ui-button {
+  .saas-title, .saas-heading, .saas-kicker, .saas-button, .saas-badge, .saas-nav-link, :where([data-ui="minimal-saas"]) .ui-button, :where([data-ui="minimal-saas"]) .ui-badge, :where([data-ui="minimal-saas"]) .ui-nav-link {
     font-family: var(--saas-font-heading);
   }
 
@@ -2260,7 +2260,7 @@
     height: 1px;
   }
 
-  .saas-surface, .saas-card, .saas-panel, .saas-toolbar, .saas-table-wrap, :where([data-ui="minimal-saas"]) .ui-card {
+  .saas-surface, .saas-card, .saas-panel, .saas-toolbar, .saas-table-wrap, :where([data-ui="minimal-saas"]) .ui-card, :where([data-ui="minimal-saas"]) .ui-toolbar, :where([data-ui="minimal-saas"]) .ui-table-wrap {
     background: linear-gradient(180deg,#ffffff0d,#fff0),var(--saas-surface);
     color: var(--saas-text);
     border: 1px solid var(--saas-border);
@@ -2274,7 +2274,7 @@
     padding: var(--saas-space-6);
   }
 
-  .saas-toolbar {
+  .saas-toolbar, :where([data-ui="minimal-saas"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--saas-space-4);
@@ -2391,11 +2391,11 @@
     background: var(--saas-card-bg);
   }
 
-  .saas-toolbar, .saas-table-wrap, .saas-button:not(.saas-button-primary):not(.saas-button-secondary):not(.saas-button-danger):not(.saas-button-ghost), .saas-icon-button, :where([data-ui="minimal-saas"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="minimal-saas"]) .ui-icon-button {
+  .saas-toolbar, .saas-table-wrap, .saas-button:not(.saas-button-primary):not(.saas-button-secondary):not(.saas-button-danger):not(.saas-button-ghost), .saas-icon-button, :where([data-ui="minimal-saas"]) .ui-toolbar, :where([data-ui="minimal-saas"]) .ui-table-wrap, :where([data-ui="minimal-saas"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="minimal-saas"]) .ui-icon-button {
     background: var(--saas-control-bg);
   }
 
-  .saas-button, .saas-icon-button, .saas-badge, .saas-nav-link, :where([data-ui="minimal-saas"]) .ui-button, :where([data-ui="minimal-saas"]) .ui-icon-button {
+  .saas-button, .saas-icon-button, .saas-badge, .saas-nav-link, :where([data-ui="minimal-saas"]) .ui-button, :where([data-ui="minimal-saas"]) .ui-icon-button, :where([data-ui="minimal-saas"]) .ui-badge, :where([data-ui="minimal-saas"]) .ui-nav-link {
     font-family: var(--saas-font-control);
   }
 
@@ -2549,7 +2549,7 @@
     left: calc(100% - 1.56rem);
   }
 
-  .saas-badge {
+  .saas-badge, :where([data-ui="minimal-saas"]) .ui-badge {
     align-items: center;
     gap: var(--saas-space-1);
     background: var(--saas-surface-soft);
@@ -2564,37 +2564,37 @@
     display: inline-flex;
   }
 
-  .saas-badge-primary {
+  .saas-badge-primary, :where([data-ui="minimal-saas"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--saas-primary);
     color: var(--saas-on-primary);
     border-color: var(--saas-primary);
   }
 
-  .saas-badge-secondary {
+  .saas-badge-secondary, :where([data-ui="minimal-saas"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--saas-secondary);
     color: var(--saas-on-secondary);
     border-color: var(--saas-secondary);
   }
 
-  .saas-badge-success {
+  .saas-badge-success, :where([data-ui="minimal-saas"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--saas-success);
     color: var(--saas-on-success);
     border-color: var(--saas-success);
   }
 
-  .saas-badge-warning {
+  .saas-badge-warning, :where([data-ui="minimal-saas"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--saas-warning);
     color: var(--saas-on-warning);
     border-color: var(--saas-warning);
   }
 
-  .saas-badge-danger {
+  .saas-badge-danger, :where([data-ui="minimal-saas"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--saas-danger);
     color: var(--saas-on-danger);
     border-color: var(--saas-danger);
   }
 
-  .saas-nav {
+  .saas-nav, :where([data-ui="minimal-saas"]) .ui-nav {
     align-items: center;
     gap: var(--saas-space-2);
     padding: var(--saas-space-2);
@@ -2606,7 +2606,7 @@
     display: flex;
   }
 
-  .saas-nav-link {
+  .saas-nav-link, :where([data-ui="minimal-saas"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--saas-text-muted);
     border-radius: var(--saas-radius-pill);
@@ -2619,12 +2619,12 @@
     display: inline-flex;
   }
 
-  .saas-nav-link:hover {
+  .saas-nav-link:hover, :where([data-ui="minimal-saas"]) .ui-nav-link:hover {
     color: var(--saas-text);
     background: var(--saas-surface-soft);
   }
 
-  .saas-nav-link[aria-current="page"], .saas-nav-link.is-active {
+  .saas-nav-link[aria-current="page"], .saas-nav-link.is-active, :where([data-ui="minimal-saas"]) .ui-nav-link[aria-current="page"], :where([data-ui="minimal-saas"]) .ui-nav-link.is-active {
     color: var(--saas-on-primary);
     background: var(--saas-primary);
   }
@@ -2655,7 +2655,7 @@
     transform: rotate(45deg);
   }
 
-  .saas-progress {
+  .saas-progress, :where([data-ui="minimal-saas"]) .ui-progress {
     background: var(--saas-surface-soft);
     border: 1px solid var(--saas-border);
     border-radius: var(--saas-radius-pill);
@@ -2664,14 +2664,14 @@
     overflow: hidden;
   }
 
-  .saas-progress-bar {
+  .saas-progress-bar, :where([data-ui="minimal-saas"]) .ui-progress-bar {
     height: 100%;
     width: var(--saas-progress-value, 50%);
     background: linear-gradient(90deg,var(--saas-primary),var(--saas-accent));
     border-radius: inherit;
   }
 
-  .saas-alert {
+  .saas-alert, :where([data-ui="minimal-saas"]) .ui-alert {
     gap: var(--saas-space-2);
     padding: var(--saas-space-4);
     background: var(--saas-surface);
@@ -2682,45 +2682,45 @@
     display: grid;
   }
 
-  .saas-alert-success {
+  .saas-alert-success, :where([data-ui="minimal-saas"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--saas-success);
   }
 
-  .saas-alert-warning {
+  .saas-alert-warning, :where([data-ui="minimal-saas"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--saas-warning);
   }
 
-  .saas-alert-danger {
+  .saas-alert-danger, :where([data-ui="minimal-saas"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--saas-danger);
   }
 
-  .saas-alert-title {
+  .saas-alert-title, :where([data-ui="minimal-saas"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .saas-alert-body {
+  .saas-alert-body, :where([data-ui="minimal-saas"]) .ui-alert-body {
     color: var(--saas-text-muted);
     margin: 0;
     line-height: 1.55;
   }
 
-  .saas-table-wrap {
+  .saas-table-wrap, :where([data-ui="minimal-saas"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .saas-table {
+  .saas-table, :where([data-ui="minimal-saas"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .saas-table th, .saas-table td {
+  .saas-table th, .saas-table td, :where([data-ui="minimal-saas"]) .ui-table th, :where([data-ui="minimal-saas"]) .ui-table td {
     text-align: left;
     border-bottom: 1px solid var(--saas-border);
     padding: .95rem 1rem;
   }
 
-  .saas-table th {
+  .saas-table th, :where([data-ui="minimal-saas"]) .ui-table th {
     color: var(--saas-text);
     text-transform: uppercase;
     letter-spacing: .08em;
@@ -2729,11 +2729,11 @@
     font-weight: 900;
   }
 
-  .saas-table td {
+  .saas-table td, :where([data-ui="minimal-saas"]) .ui-table td {
     color: var(--saas-text-muted);
   }
 
-  .saas-table tr:hover td {
+  .saas-table tr:hover td, :where([data-ui="minimal-saas"]) .ui-table tr:hover td {
     background: rgb(var(--saas-primary-rgb)/.045);
   }
 

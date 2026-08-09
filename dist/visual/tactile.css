@@ -2214,7 +2214,7 @@
     background-size: var(--tactile-theme-bg-size);
   }
 
-  .tactile-title, .tactile-heading, .tactile-kicker, .tactile-button, .tactile-badge, .tactile-nav-link, :where([data-ui="tactile"]) .ui-button {
+  .tactile-title, .tactile-heading, .tactile-kicker, .tactile-button, .tactile-badge, .tactile-nav-link, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-badge, :where([data-ui="tactile"]) .ui-nav-link {
     font-family: var(--tactile-font-heading);
   }
 
@@ -2260,7 +2260,7 @@
     height: 1px;
   }
 
-  .tactile-surface, .tactile-card, .tactile-panel, .tactile-toolbar, .tactile-table-wrap, :where([data-ui="tactile"]) .ui-card {
+  .tactile-surface, .tactile-card, .tactile-panel, .tactile-toolbar, .tactile-table-wrap, :where([data-ui="tactile"]) .ui-card, :where([data-ui="tactile"]) .ui-toolbar, :where([data-ui="tactile"]) .ui-table-wrap {
     background: linear-gradient(180deg,#ffffff2e,#ffffff08),linear-gradient(135deg,rgb(var(--tactile-primary-rgb)/.07),transparent 46%),var(--tactile-surface);
     color: var(--tactile-text);
     border: 1px solid var(--tactile-border);
@@ -2274,7 +2274,7 @@
     padding: var(--tactile-space-6);
   }
 
-  .tactile-toolbar {
+  .tactile-toolbar, :where([data-ui="tactile"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--tactile-space-4);
@@ -2391,11 +2391,11 @@
     background: var(--tactile-card-bg);
   }
 
-  .tactile-toolbar, .tactile-table-wrap, .tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-ghost), .tactile-icon-button, :where([data-ui="tactile"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="tactile"]) .ui-icon-button {
+  .tactile-toolbar, .tactile-table-wrap, .tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-ghost), .tactile-icon-button, :where([data-ui="tactile"]) .ui-toolbar, :where([data-ui="tactile"]) .ui-table-wrap, :where([data-ui="tactile"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="tactile"]) .ui-icon-button {
     background: var(--tactile-control-bg);
   }
 
-  .tactile-button, .tactile-icon-button, .tactile-badge, .tactile-nav-link, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-icon-button {
+  .tactile-button, .tactile-icon-button, .tactile-badge, .tactile-nav-link, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-icon-button, :where([data-ui="tactile"]) .ui-badge, :where([data-ui="tactile"]) .ui-nav-link {
     font-family: var(--tactile-font-control);
   }
 
@@ -2549,7 +2549,7 @@
     left: calc(100% - 1.56rem);
   }
 
-  .tactile-badge {
+  .tactile-badge, :where([data-ui="tactile"]) .ui-badge {
     align-items: center;
     gap: var(--tactile-space-1);
     background: var(--tactile-surface-soft);
@@ -2564,37 +2564,37 @@
     display: inline-flex;
   }
 
-  .tactile-badge-primary {
+  .tactile-badge-primary, :where([data-ui="tactile"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--tactile-primary);
     color: var(--tactile-on-primary);
     border-color: var(--tactile-primary);
   }
 
-  .tactile-badge-secondary {
+  .tactile-badge-secondary, :where([data-ui="tactile"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--tactile-secondary);
     color: var(--tactile-on-secondary);
     border-color: var(--tactile-secondary);
   }
 
-  .tactile-badge-success {
+  .tactile-badge-success, :where([data-ui="tactile"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--tactile-success);
     color: var(--tactile-on-success);
     border-color: var(--tactile-success);
   }
 
-  .tactile-badge-warning {
+  .tactile-badge-warning, :where([data-ui="tactile"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--tactile-warning);
     color: var(--tactile-on-warning);
     border-color: var(--tactile-warning);
   }
 
-  .tactile-badge-danger {
+  .tactile-badge-danger, :where([data-ui="tactile"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--tactile-danger);
     color: var(--tactile-on-danger);
     border-color: var(--tactile-danger);
   }
 
-  .tactile-nav {
+  .tactile-nav, :where([data-ui="tactile"]) .ui-nav {
     align-items: center;
     gap: var(--tactile-space-2);
     padding: var(--tactile-space-2);
@@ -2606,7 +2606,7 @@
     display: flex;
   }
 
-  .tactile-nav-link {
+  .tactile-nav-link, :where([data-ui="tactile"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--tactile-text-muted);
     border-radius: var(--tactile-radius-pill);
@@ -2619,12 +2619,12 @@
     display: inline-flex;
   }
 
-  .tactile-nav-link:hover {
+  .tactile-nav-link:hover, :where([data-ui="tactile"]) .ui-nav-link:hover {
     color: var(--tactile-text);
     background: var(--tactile-surface-soft);
   }
 
-  .tactile-nav-link[aria-current="page"], .tactile-nav-link.is-active {
+  .tactile-nav-link[aria-current="page"], .tactile-nav-link.is-active, :where([data-ui="tactile"]) .ui-nav-link[aria-current="page"], :where([data-ui="tactile"]) .ui-nav-link.is-active {
     color: var(--tactile-on-primary);
     background: var(--tactile-primary);
   }
@@ -2655,7 +2655,7 @@
     transform: rotate(45deg);
   }
 
-  .tactile-progress {
+  .tactile-progress, :where([data-ui="tactile"]) .ui-progress {
     background: var(--tactile-surface-soft);
     border: 1px solid var(--tactile-border);
     border-radius: var(--tactile-radius-pill);
@@ -2664,14 +2664,14 @@
     overflow: hidden;
   }
 
-  .tactile-progress-bar {
+  .tactile-progress-bar, :where([data-ui="tactile"]) .ui-progress-bar {
     height: 100%;
     width: var(--tactile-progress-value, 50%);
     background: linear-gradient(90deg,var(--tactile-primary),var(--tactile-accent));
     border-radius: inherit;
   }
 
-  .tactile-alert {
+  .tactile-alert, :where([data-ui="tactile"]) .ui-alert {
     gap: var(--tactile-space-2);
     padding: var(--tactile-space-4);
     background: var(--tactile-surface);
@@ -2682,45 +2682,45 @@
     display: grid;
   }
 
-  .tactile-alert-success {
+  .tactile-alert-success, :where([data-ui="tactile"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--tactile-success);
   }
 
-  .tactile-alert-warning {
+  .tactile-alert-warning, :where([data-ui="tactile"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--tactile-warning);
   }
 
-  .tactile-alert-danger {
+  .tactile-alert-danger, :where([data-ui="tactile"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--tactile-danger);
   }
 
-  .tactile-alert-title {
+  .tactile-alert-title, :where([data-ui="tactile"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .tactile-alert-body {
+  .tactile-alert-body, :where([data-ui="tactile"]) .ui-alert-body {
     color: var(--tactile-text-muted);
     margin: 0;
     line-height: 1.55;
   }
 
-  .tactile-table-wrap {
+  .tactile-table-wrap, :where([data-ui="tactile"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .tactile-table {
+  .tactile-table, :where([data-ui="tactile"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .tactile-table th, .tactile-table td {
+  .tactile-table th, .tactile-table td, :where([data-ui="tactile"]) .ui-table th, :where([data-ui="tactile"]) .ui-table td {
     text-align: left;
     border-bottom: 1px solid var(--tactile-border);
     padding: .95rem 1rem;
   }
 
-  .tactile-table th {
+  .tactile-table th, :where([data-ui="tactile"]) .ui-table th {
     color: var(--tactile-text);
     text-transform: uppercase;
     letter-spacing: .08em;
@@ -2729,11 +2729,11 @@
     font-weight: 900;
   }
 
-  .tactile-table td {
+  .tactile-table td, :where([data-ui="tactile"]) .ui-table td {
     color: var(--tactile-text-muted);
   }
 
-  .tactile-table tr:hover td {
+  .tactile-table tr:hover td, :where([data-ui="tactile"]) .ui-table tr:hover td {
     background: rgb(var(--tactile-primary-rgb)/.045);
   }
 

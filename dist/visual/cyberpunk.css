@@ -2234,7 +2234,7 @@
     color: var(--cyber-on-primary);
   }
 
-  .cyber-title, .cyber-heading, .cyber-kicker, .cyber-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button {
+  .cyber-title, .cyber-heading, .cyber-kicker, .cyber-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-badge, :where([data-ui="cyberpunk"]) .ui-nav-link {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
   }
@@ -2272,7 +2272,7 @@
     color: var(--cyber-text-muted);
   }
 
-  .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap, :where([data-ui="cyberpunk"]) .ui-card {
+  .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap, :where([data-ui="cyberpunk"]) .ui-card, :where([data-ui="cyberpunk"]) .ui-toolbar, :where([data-ui="cyberpunk"]) .ui-table-wrap {
     background: linear-gradient(135deg,#ffffff14,#ffffff05),var(--cyber-surface);
     color: var(--cyber-text);
     border: 1px solid var(--cyber-border);
@@ -2284,7 +2284,7 @@
     overflow: hidden;
   }
 
-  .cyber-card:before, .cyber-panel:before, .cyber-console:before, .cyber-toolbar:before, :where([data-ui="cyberpunk"]) .ui-card:before {
+  .cyber-card:before, .cyber-panel:before, .cyber-console:before, .cyber-toolbar:before, :where([data-ui="cyberpunk"]) .ui-card:before, :where([data-ui="cyberpunk"]) .ui-toolbar:before {
     content: "";
     pointer-events: none;
     border-top: 2px solid rgb(var(--cyber-primary-rgb)/.5);
@@ -2301,7 +2301,7 @@
     background: linear-gradient(180deg,rgb(var(--cyber-primary-rgb)/.08),transparent),var(--cyber-surface-strong);
   }
 
-  .cyber-toolbar {
+  .cyber-toolbar, :where([data-ui="cyberpunk"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--cyber-space-4);
@@ -2431,7 +2431,7 @@
     font-size: .9rem;
   }
 
-  .cyber-badge {
+  .cyber-badge, :where([data-ui="cyberpunk"]) .ui-badge {
     background: var(--cyber-surface);
     min-height: 1.8rem;
     color: var(--cyber-text);
@@ -2446,32 +2446,32 @@
     display: inline-flex;
   }
 
-  .cyber-badge-primary {
+  .cyber-badge-primary, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--cyber-primary);
     color: var(--cyber-on-primary);
   }
 
-  .cyber-badge-secondary {
+  .cyber-badge-secondary, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--cyber-secondary);
     color: var(--cyber-on-secondary);
   }
 
-  .cyber-badge-success {
+  .cyber-badge-success, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--cyber-success);
     color: var(--cyber-on-success);
   }
 
-  .cyber-badge-warning {
+  .cyber-badge-warning, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--cyber-warning);
     color: var(--cyber-on-warning);
   }
 
-  .cyber-badge-danger {
+  .cyber-badge-danger, :where([data-ui="cyberpunk"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--cyber-danger);
     color: var(--cyber-on-danger);
   }
 
-  .cyber-nav {
+  .cyber-nav, :where([data-ui="cyberpunk"]) .ui-nav {
     gap: var(--cyber-space-2);
     padding: var(--cyber-space-2);
     background: var(--cyber-surface);
@@ -2482,7 +2482,7 @@
     display: flex;
   }
 
-  .cyber-nav-link {
+  .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--cyber-text-muted);
     border-radius: var(--cyber-radius-xs);
@@ -2495,12 +2495,12 @@
     display: inline-flex;
   }
 
-  .cyber-nav-link:hover {
+  .cyber-nav-link:hover, :where([data-ui="cyberpunk"]) .ui-nav-link:hover {
     color: var(--cyber-text);
     border-color: rgb(var(--cyber-primary-rgb)/.48);
   }
 
-  .cyber-nav-link.is-active, .cyber-nav-link[aria-current="page"] {
+  .cyber-nav-link.is-active, .cyber-nav-link[aria-current="page"], :where([data-ui="cyberpunk"]) .ui-nav-link.is-active, :where([data-ui="cyberpunk"]) .ui-nav-link[aria-current="page"] {
     background: var(--cyber-primary);
     color: var(--cyber-on-primary);
     border-color: var(--cyber-primary);
@@ -2535,7 +2535,7 @@
     flex: none;
   }
 
-  .cyber-progress {
+  .cyber-progress, :where([data-ui="cyberpunk"]) .ui-progress {
     background: var(--cyber-surface-soft);
     border: 1px solid var(--cyber-border);
     width: 100%;
@@ -2543,14 +2543,14 @@
     box-shadow: inset 0 0 18px #0000002e;
   }
 
-  .cyber-progress-bar {
+  .cyber-progress-bar, :where([data-ui="cyberpunk"]) .ui-progress-bar {
     height: 100%;
     width: var(--cyber-progress-value, 50%);
     background: linear-gradient(90deg,var(--cyber-primary),var(--cyber-accent));
     box-shadow: 0 0 18px var(--cyber-glow-primary);
   }
 
-  .cyber-alert {
+  .cyber-alert, :where([data-ui="cyberpunk"]) .ui-alert {
     padding: var(--cyber-space-4);
     background: var(--cyber-surface);
     border: 1px solid var(--cyber-border);
@@ -2558,56 +2558,56 @@
     box-shadow: var(--cyber-shadow-md),0 0 22px var(--cyber-glow-primary);
   }
 
-  .cyber-alert-success {
+  .cyber-alert-success, :where([data-ui="cyberpunk"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--cyber-success);
   }
 
-  .cyber-alert-warning {
+  .cyber-alert-warning, :where([data-ui="cyberpunk"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--cyber-warning);
   }
 
-  .cyber-alert-danger {
+  .cyber-alert-danger, :where([data-ui="cyberpunk"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--cyber-danger);
   }
 
-  .cyber-alert-title {
+  .cyber-alert-title, :where([data-ui="cyberpunk"]) .ui-alert-title {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
     margin: 0;
   }
 
-  .cyber-alert-body {
+  .cyber-alert-body, :where([data-ui="cyberpunk"]) .ui-alert-body {
     color: var(--cyber-text-muted);
     margin: .5rem 0 0;
   }
 
-  .cyber-table-wrap {
+  .cyber-table-wrap, :where([data-ui="cyberpunk"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .cyber-table {
+  .cyber-table, :where([data-ui="cyberpunk"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .cyber-table th, .cyber-table td {
+  .cyber-table th, .cyber-table td, :where([data-ui="cyberpunk"]) .ui-table th, :where([data-ui="cyberpunk"]) .ui-table td {
     border-bottom: 1px solid rgb(var(--cyber-border-rgb)/.38);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .cyber-table th {
+  .cyber-table th, :where([data-ui="cyberpunk"]) .ui-table th {
     background: rgb(var(--cyber-primary-rgb)/.12);
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
     letter-spacing: .1em;
   }
 
-  .cyber-table td {
+  .cyber-table td, :where([data-ui="cyberpunk"]) .ui-table td {
     color: var(--cyber-text-muted);
   }
 
-  .cyber-table tr:hover td {
+  .cyber-table tr:hover td, :where([data-ui="cyberpunk"]) .ui-table tr:hover td {
     background: rgb(var(--cyber-primary-rgb)/.06);
   }
 
@@ -2640,7 +2640,7 @@
     outline-offset: 3px;
   }
 
-  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible, :where([data-ui="cyberpunk"]) .ui-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-icon-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-input:focus-visible {
+  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible, :where([data-ui="cyberpunk"]) .ui-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-icon-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-input:focus-visible, :where([data-ui="cyberpunk"]) .ui-nav-link:focus-visible {
     box-shadow: 0 0 0 3px rgb(var(--cyber-focus-rgb)/.28),0 0 28px rgb(var(--cyber-focus-rgb)/.28);
   }
 
@@ -2655,11 +2655,11 @@
     background: var(--cyber-card-bg);
   }
 
-  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .ui-icon-button {
+  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-ghost), .cyber-icon-button, :where([data-ui="cyberpunk"]) .ui-toolbar, :where([data-ui="cyberpunk"]) .ui-table-wrap, :where([data-ui="cyberpunk"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .ui-icon-button {
     background: var(--cyber-control-bg);
   }
 
-  .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-icon-button {
+  .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link, :where([data-ui="cyberpunk"]) .ui-button, :where([data-ui="cyberpunk"]) .ui-icon-button, :where([data-ui="cyberpunk"]) .ui-badge, :where([data-ui="cyberpunk"]) .ui-nav-link {
     font-family: var(--cyber-font-control);
   }
 

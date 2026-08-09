@@ -2214,7 +2214,7 @@
     background-size: var(--neo-theme-bg-size);
   }
 
-  .neo-title, .neo-heading, .neo-kicker, .neo-button, .neo-badge, .neo-nav-link, :where([data-ui="neumorphism"]) .ui-button {
+  .neo-title, .neo-heading, .neo-kicker, .neo-button, .neo-badge, .neo-nav-link, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-badge, :where([data-ui="neumorphism"]) .ui-nav-link {
     font-family: var(--neo-font-heading);
   }
 
@@ -2260,7 +2260,7 @@
     height: 1px;
   }
 
-  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card {
+  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card, :where([data-ui="neumorphism"]) .ui-toolbar, :where([data-ui="neumorphism"]) .ui-table-wrap {
     background: linear-gradient(180deg,#ffffff2e,#ffffff08),linear-gradient(135deg,rgb(var(--neo-primary-rgb)/.07),transparent 46%),var(--neo-surface);
     color: var(--neo-text);
     border: 1px solid var(--neo-border);
@@ -2274,7 +2274,7 @@
     padding: var(--neo-space-6);
   }
 
-  .neo-toolbar {
+  .neo-toolbar, :where([data-ui="neumorphism"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--neo-space-4);
@@ -2391,11 +2391,11 @@
     background: var(--neo-card-bg);
   }
 
-  .neo-toolbar, .neo-table-wrap, .neo-button:not(.neo-button-primary):not(.neo-button-secondary):not(.neo-button-danger):not(.neo-button-ghost), .neo-icon-button, :where([data-ui="neumorphism"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="neumorphism"]) .ui-icon-button {
+  .neo-toolbar, .neo-table-wrap, .neo-button:not(.neo-button-primary):not(.neo-button-secondary):not(.neo-button-danger):not(.neo-button-ghost), .neo-icon-button, :where([data-ui="neumorphism"]) .ui-toolbar, :where([data-ui="neumorphism"]) .ui-table-wrap, :where([data-ui="neumorphism"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="neumorphism"]) .ui-icon-button {
     background: var(--neo-control-bg);
   }
 
-  .neo-button, .neo-icon-button, .neo-badge, .neo-nav-link, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
+  .neo-button, .neo-icon-button, .neo-badge, .neo-nav-link, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button, :where([data-ui="neumorphism"]) .ui-badge, :where([data-ui="neumorphism"]) .ui-nav-link {
     font-family: var(--neo-font-control);
   }
 
@@ -2549,7 +2549,7 @@
     left: calc(100% - 1.56rem);
   }
 
-  .neo-badge {
+  .neo-badge, :where([data-ui="neumorphism"]) .ui-badge {
     align-items: center;
     gap: var(--neo-space-1);
     background: var(--neo-surface-soft);
@@ -2564,37 +2564,37 @@
     display: inline-flex;
   }
 
-  .neo-badge-primary {
+  .neo-badge-primary, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--neo-primary);
     color: var(--neo-on-primary);
     border-color: var(--neo-primary);
   }
 
-  .neo-badge-secondary {
+  .neo-badge-secondary, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--neo-secondary);
     color: var(--neo-on-secondary);
     border-color: var(--neo-secondary);
   }
 
-  .neo-badge-success {
+  .neo-badge-success, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--neo-success);
     color: var(--neo-on-success);
     border-color: var(--neo-success);
   }
 
-  .neo-badge-warning {
+  .neo-badge-warning, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--neo-warning);
     color: var(--neo-on-warning);
     border-color: var(--neo-warning);
   }
 
-  .neo-badge-danger {
+  .neo-badge-danger, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--neo-danger);
     color: var(--neo-on-danger);
     border-color: var(--neo-danger);
   }
 
-  .neo-nav {
+  .neo-nav, :where([data-ui="neumorphism"]) .ui-nav {
     align-items: center;
     gap: var(--neo-space-2);
     padding: var(--neo-space-2);
@@ -2606,7 +2606,7 @@
     display: flex;
   }
 
-  .neo-nav-link {
+  .neo-nav-link, :where([data-ui="neumorphism"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--neo-text-muted);
     border-radius: var(--neo-radius-pill);
@@ -2619,12 +2619,12 @@
     display: inline-flex;
   }
 
-  .neo-nav-link:hover {
+  .neo-nav-link:hover, :where([data-ui="neumorphism"]) .ui-nav-link:hover {
     color: var(--neo-text);
     background: var(--neo-surface-soft);
   }
 
-  .neo-nav-link[aria-current="page"], .neo-nav-link.is-active {
+  .neo-nav-link[aria-current="page"], .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-nav-link[aria-current="page"], :where([data-ui="neumorphism"]) .ui-nav-link.is-active {
     color: var(--neo-on-primary);
     background: var(--neo-primary);
   }
@@ -2654,7 +2654,7 @@
     box-shadow: inset .12rem .12rem .24rem #0000001f;
   }
 
-  .neo-progress {
+  .neo-progress, :where([data-ui="neumorphism"]) .ui-progress {
     background: var(--neo-surface-soft);
     border: 1px solid var(--neo-border);
     border-radius: var(--neo-radius-pill);
@@ -2663,14 +2663,14 @@
     overflow: hidden;
   }
 
-  .neo-progress-bar {
+  .neo-progress-bar, :where([data-ui="neumorphism"]) .ui-progress-bar {
     height: 100%;
     width: var(--neo-progress-value, 50%);
     background: linear-gradient(90deg,var(--neo-primary),var(--neo-accent));
     border-radius: inherit;
   }
 
-  .neo-alert {
+  .neo-alert, :where([data-ui="neumorphism"]) .ui-alert {
     gap: var(--neo-space-2);
     padding: var(--neo-space-4);
     background: var(--neo-surface);
@@ -2681,45 +2681,45 @@
     display: grid;
   }
 
-  .neo-alert-success {
+  .neo-alert-success, :where([data-ui="neumorphism"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--neo-success);
   }
 
-  .neo-alert-warning {
+  .neo-alert-warning, :where([data-ui="neumorphism"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--neo-warning);
   }
 
-  .neo-alert-danger {
+  .neo-alert-danger, :where([data-ui="neumorphism"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--neo-danger);
   }
 
-  .neo-alert-title {
+  .neo-alert-title, :where([data-ui="neumorphism"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .neo-alert-body {
+  .neo-alert-body, :where([data-ui="neumorphism"]) .ui-alert-body {
     color: var(--neo-text-muted);
     margin: 0;
     line-height: 1.55;
   }
 
-  .neo-table-wrap {
+  .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .neo-table {
+  .neo-table, :where([data-ui="neumorphism"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .neo-table th, .neo-table td {
+  .neo-table th, .neo-table td, :where([data-ui="neumorphism"]) .ui-table th, :where([data-ui="neumorphism"]) .ui-table td {
     text-align: left;
     border-bottom: 1px solid var(--neo-border);
     padding: .95rem 1rem;
   }
 
-  .neo-table th {
+  .neo-table th, :where([data-ui="neumorphism"]) .ui-table th {
     color: var(--neo-text);
     text-transform: uppercase;
     letter-spacing: .08em;
@@ -2728,11 +2728,11 @@
     font-weight: 900;
   }
 
-  .neo-table td {
+  .neo-table td, :where([data-ui="neumorphism"]) .ui-table td {
     color: var(--neo-text-muted);
   }
 
-  .neo-table tr:hover td {
+  .neo-table tr:hover td, :where([data-ui="neumorphism"]) .ui-table tr:hover td {
     background: rgb(var(--neo-primary-rgb)/.045);
   }
 
@@ -2838,7 +2838,7 @@
     background: var(--neo-bg);
   }
 
-  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card {
+  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card, :where([data-ui="neumorphism"]) .ui-toolbar, :where([data-ui="neumorphism"]) .ui-table-wrap {
     border-color: rgb(var(--neo-border-rgb)/.14);
     box-shadow: 10px 10px 22px var(--neo-nm-dark),-10px -10px 22px var(--neo-nm-light);
   }
@@ -2847,15 +2847,15 @@
     box-shadow: 16px 16px 32px var(--neo-nm-dark),-16px -16px 32px var(--neo-nm-light);
   }
 
-  .neo-well, .neo-inset, .neo-input, .neo-textarea, .neo-select, .neo-progress, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select {
+  .neo-well, .neo-inset, .neo-input, .neo-textarea, .neo-select, .neo-progress, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select, :where([data-ui="neumorphism"]) .ui-progress {
     box-shadow: inset 5px 5px 11px var(--neo-nm-dark),inset -5px -5px 11px var(--neo-nm-light);
   }
 
-  .neo-button, .neo-icon-button, .neo-badge, .neo-nav, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
+  .neo-button, .neo-icon-button, .neo-badge, .neo-nav, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button, :where([data-ui="neumorphism"]) .ui-badge, :where([data-ui="neumorphism"]) .ui-nav {
     box-shadow: 5px 5px 11px var(--neo-nm-dark),-5px -5px 11px var(--neo-nm-light);
   }
 
-  .neo-button:active, .neo-icon-button:active, .neo-button.is-active, .neo-icon-button.is-active, .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button.is-active, :where([data-ui="neumorphism"]) .ui-icon-button.is-active {
+  .neo-button:active, .neo-icon-button:active, .neo-button.is-active, .neo-icon-button.is-active, .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button.is-active, :where([data-ui="neumorphism"]) .ui-icon-button.is-active, :where([data-ui="neumorphism"]) .ui-nav-link.is-active {
     box-shadow: inset 4px 4px 9px var(--neo-nm-dark),inset -4px -4px 9px var(--neo-nm-light);
   }
 

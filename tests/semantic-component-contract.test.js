@@ -30,9 +30,7 @@ const expectedImplementedSelectors = [
   '.ui-radio-control',
   '.ui-switch',
   '.ui-switch-track',
-  '.ui-switch-thumb'
-];
-const expectedPendingSelectors = [
+  '.ui-switch-thumb',
   '.ui-badge',
   '.ui-alert',
   '.ui-alert-title',
@@ -45,6 +43,7 @@ const expectedPendingSelectors = [
   '.ui-progress-bar',
   '.ui-toolbar'
 ];
+const expectedPendingSelectors = [];
 
 const expectedSemanticComponentApi = {
   presetSwitchAttribute: 'data-ui',
@@ -252,8 +251,8 @@ test('manifest partitions retained, implemented, and pending Task 11 selectors',
   assert.deepEqual(implementationStatus.pending.selectors, expectedPendingSelectors);
   assert.equal(implementationStatus.pending.targetTask, 11);
   assert.equal(implementationStatus.retained.selectors.length, 2);
-  assert.equal(implementationStatus.implemented.selectors.length, 16);
-  assert.equal(implementationStatus.pending.selectors.length, 11);
+  assert.equal(implementationStatus.implemented.selectors.length, 27);
+  assert.equal(implementationStatus.pending.selectors.length, 0);
   assert.deepEqual(
     new Set([
       ...implementationStatus.retained.selectors,
@@ -330,14 +329,19 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
         `${relativeFile} must scope ${selector} beneath a specificity-safe preset root`
       );
     }
-    for (const variant of expectedSemanticComponentApi.variantAttribute.valuesBySelector['.ui-button']) {
-      assert.equal(
-        selectors.some((selector) =>
-          selector.includes('.ui-button') && selectorHasAttributeValue(selector, 'data-ui-variant', variant)
-        ),
-        true,
-        `${relativeFile} must implement the ${variant} button variant`
-      );
+    for (const [selector, variants] of Object.entries(
+      expectedSemanticComponentApi.variantAttribute.valuesBySelector
+    )) {
+      for (const variant of variants) {
+        assert.equal(
+          selectors.some((candidate) =>
+            candidate.includes(selector)
+            && selectorHasAttributeValue(candidate, 'data-ui-variant', variant)
+          ),
+          true,
+          `${relativeFile} must implement the ${selector} ${variant} variant`
+        );
+      }
     }
   }
 

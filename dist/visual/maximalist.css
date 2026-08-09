@@ -2214,7 +2214,7 @@
     background-size: var(--max-theme-bg-size);
   }
 
-  .max-title, .max-heading, .max-kicker, .max-button, .max-badge, .max-nav-link, :where([data-ui="maximalist"]) .ui-button {
+  .max-title, .max-heading, .max-kicker, .max-button, .max-badge, .max-nav-link, :where([data-ui="maximalist"]) .ui-button, :where([data-ui="maximalist"]) .ui-badge, :where([data-ui="maximalist"]) .ui-nav-link {
     font-family: var(--max-font-heading);
   }
 
@@ -2261,7 +2261,7 @@
     height: 3px;
   }
 
-  .max-surface, .max-card, .max-panel, .max-toolbar, .max-table-wrap, :where([data-ui="maximalist"]) .ui-card {
+  .max-surface, .max-card, .max-panel, .max-toolbar, .max-table-wrap, :where([data-ui="maximalist"]) .ui-card, :where([data-ui="maximalist"]) .ui-toolbar, :where([data-ui="maximalist"]) .ui-table-wrap {
     background: linear-gradient(135deg,rgb(var(--max-accent-rgb)/.18),transparent 42%),var(--max-surface);
     color: var(--max-text);
     border: 3px solid var(--max-border);
@@ -2275,7 +2275,7 @@
     padding: var(--max-space-6);
   }
 
-  .max-toolbar {
+  .max-toolbar, :where([data-ui="maximalist"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--max-space-4);
@@ -2392,11 +2392,11 @@
     background: var(--max-card-bg);
   }
 
-  .max-toolbar, .max-table-wrap, .max-button:not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-ghost), .max-icon-button, :where([data-ui="maximalist"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="maximalist"]) .ui-icon-button {
+  .max-toolbar, .max-table-wrap, .max-button:not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-ghost), .max-icon-button, :where([data-ui="maximalist"]) .ui-toolbar, :where([data-ui="maximalist"]) .ui-table-wrap, :where([data-ui="maximalist"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="maximalist"]) .ui-icon-button {
     background: var(--max-control-bg);
   }
 
-  .max-button, .max-icon-button, .max-badge, .max-nav-link, :where([data-ui="maximalist"]) .ui-button, :where([data-ui="maximalist"]) .ui-icon-button {
+  .max-button, .max-icon-button, .max-badge, .max-nav-link, :where([data-ui="maximalist"]) .ui-button, :where([data-ui="maximalist"]) .ui-icon-button, :where([data-ui="maximalist"]) .ui-badge, :where([data-ui="maximalist"]) .ui-nav-link {
     font-family: var(--max-font-control);
   }
 
@@ -2550,7 +2550,7 @@
     left: calc(100% - 1.56rem);
   }
 
-  .max-badge {
+  .max-badge, :where([data-ui="maximalist"]) .ui-badge {
     align-items: center;
     gap: var(--max-space-1);
     background: var(--max-surface-soft);
@@ -2565,37 +2565,37 @@
     display: inline-flex;
   }
 
-  .max-badge-primary {
+  .max-badge-primary, :where([data-ui="maximalist"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--max-primary);
     color: var(--max-on-primary);
     border-color: var(--max-primary);
   }
 
-  .max-badge-secondary {
+  .max-badge-secondary, :where([data-ui="maximalist"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--max-secondary);
     color: var(--max-on-secondary);
     border-color: var(--max-secondary);
   }
 
-  .max-badge-success {
+  .max-badge-success, :where([data-ui="maximalist"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--max-success);
     color: var(--max-on-success);
     border-color: var(--max-success);
   }
 
-  .max-badge-warning {
+  .max-badge-warning, :where([data-ui="maximalist"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--max-warning);
     color: var(--max-on-warning);
     border-color: var(--max-warning);
   }
 
-  .max-badge-danger {
+  .max-badge-danger, :where([data-ui="maximalist"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--max-danger);
     color: var(--max-on-danger);
     border-color: var(--max-danger);
   }
 
-  .max-nav {
+  .max-nav, :where([data-ui="maximalist"]) .ui-nav {
     align-items: center;
     gap: var(--max-space-2);
     padding: var(--max-space-2);
@@ -2607,7 +2607,7 @@
     display: flex;
   }
 
-  .max-nav-link {
+  .max-nav-link, :where([data-ui="maximalist"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--max-text-muted);
     border-radius: var(--max-radius-pill);
@@ -2620,12 +2620,12 @@
     display: inline-flex;
   }
 
-  .max-nav-link:hover {
+  .max-nav-link:hover, :where([data-ui="maximalist"]) .ui-nav-link:hover {
     color: var(--max-text);
     background: var(--max-surface-soft);
   }
 
-  .max-nav-link[aria-current="page"], .max-nav-link.is-active {
+  .max-nav-link[aria-current="page"], .max-nav-link.is-active, :where([data-ui="maximalist"]) .ui-nav-link[aria-current="page"], :where([data-ui="maximalist"]) .ui-nav-link.is-active {
     color: var(--max-on-primary);
     background: var(--max-primary);
   }
@@ -2657,7 +2657,7 @@
     transform: rotate(45deg);
   }
 
-  .max-progress {
+  .max-progress, :where([data-ui="maximalist"]) .ui-progress {
     background: var(--max-surface-soft);
     border: 3px solid var(--max-border);
     border-radius: var(--max-radius-pill);
@@ -2666,14 +2666,14 @@
     overflow: hidden;
   }
 
-  .max-progress-bar {
+  .max-progress-bar, :where([data-ui="maximalist"]) .ui-progress-bar {
     height: 100%;
     width: var(--max-progress-value, 50%);
     background: linear-gradient(90deg,var(--max-primary),var(--max-accent));
     border-radius: inherit;
   }
 
-  .max-alert {
+  .max-alert, :where([data-ui="maximalist"]) .ui-alert {
     gap: var(--max-space-2);
     padding: var(--max-space-4);
     background: var(--max-surface);
@@ -2684,45 +2684,45 @@
     display: grid;
   }
 
-  .max-alert-success {
+  .max-alert-success, :where([data-ui="maximalist"]) .ui-alert:where([data-ui-variant="success"]) {
     border-left-color: var(--max-success);
   }
 
-  .max-alert-warning {
+  .max-alert-warning, :where([data-ui="maximalist"]) .ui-alert:where([data-ui-variant="warning"]) {
     border-left-color: var(--max-warning);
   }
 
-  .max-alert-danger {
+  .max-alert-danger, :where([data-ui="maximalist"]) .ui-alert:where([data-ui-variant="danger"]) {
     border-left-color: var(--max-danger);
   }
 
-  .max-alert-title {
+  .max-alert-title, :where([data-ui="maximalist"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .max-alert-body {
+  .max-alert-body, :where([data-ui="maximalist"]) .ui-alert-body {
     color: var(--max-text-muted);
     margin: 0;
     line-height: 1.55;
   }
 
-  .max-table-wrap {
+  .max-table-wrap, :where([data-ui="maximalist"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .max-table {
+  .max-table, :where([data-ui="maximalist"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .max-table th, .max-table td {
+  .max-table th, .max-table td, :where([data-ui="maximalist"]) .ui-table th, :where([data-ui="maximalist"]) .ui-table td {
     text-align: left;
     border-bottom: 3px solid var(--max-border);
     padding: .95rem 1rem;
   }
 
-  .max-table th {
+  .max-table th, :where([data-ui="maximalist"]) .ui-table th {
     color: var(--max-text);
     text-transform: uppercase;
     letter-spacing: .08em;
@@ -2731,11 +2731,11 @@
     font-weight: 900;
   }
 
-  .max-table td {
+  .max-table td, :where([data-ui="maximalist"]) .ui-table td {
     color: var(--max-text-muted);
   }
 
-  .max-table tr:hover td {
+  .max-table tr:hover td, :where([data-ui="maximalist"]) .ui-table tr:hover td {
     background: rgb(var(--max-primary-rgb)/.045);
   }
 

@@ -2233,7 +2233,7 @@
     color: var(--y2k-on-primary);
   }
 
-  .y2k-title, .y2k-heading, .y2k-kicker, .y2k-button, .y2k-badge, .y2k-nav-link, :where([data-ui="y2k"]) .ui-button {
+  .y2k-title, .y2k-heading, .y2k-kicker, .y2k-button, .y2k-badge, .y2k-nav-link, :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-badge, :where([data-ui="y2k"]) .ui-nav-link {
     font-family: var(--y2k-font-heading);
   }
 
@@ -2271,7 +2271,7 @@
     color: var(--y2k-text-muted);
   }
 
-  .y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap, :where([data-ui="y2k"]) .ui-card {
+  .y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap, :where([data-ui="y2k"]) .ui-card, :where([data-ui="y2k"]) .ui-toolbar, :where([data-ui="y2k"]) .ui-table-wrap {
     background: linear-gradient(145deg,#ffffff6b,#ffffff14),var(--y2k-surface);
     color: var(--y2k-text);
     border: 1px solid #ffffff61;
@@ -2296,7 +2296,7 @@
     padding: var(--y2k-space-6);
   }
 
-  .y2k-toolbar {
+  .y2k-toolbar, :where([data-ui="y2k"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: var(--y2k-space-4);
@@ -2421,7 +2421,7 @@
     font-size: .9rem;
   }
 
-  .y2k-badge {
+  .y2k-badge, :where([data-ui="y2k"]) .ui-badge {
     background: linear-gradient(180deg,#fff6,#ffffff14),var(--y2k-surface-strong);
     min-height: 1.8rem;
     color: var(--y2k-text);
@@ -2435,32 +2435,32 @@
     display: inline-flex;
   }
 
-  .y2k-badge-primary {
+  .y2k-badge-primary, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="primary"]) {
     background: var(--y2k-primary);
     color: var(--y2k-on-primary);
   }
 
-  .y2k-badge-secondary {
+  .y2k-badge-secondary, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="secondary"]) {
     background: var(--y2k-secondary);
     color: var(--y2k-on-secondary);
   }
 
-  .y2k-badge-success {
+  .y2k-badge-success, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="success"]) {
     background: var(--y2k-success);
     color: var(--y2k-on-success);
   }
 
-  .y2k-badge-warning {
+  .y2k-badge-warning, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="warning"]) {
     background: var(--y2k-warning);
     color: var(--y2k-on-warning);
   }
 
-  .y2k-badge-danger {
+  .y2k-badge-danger, :where([data-ui="y2k"]) .ui-badge:where([data-ui-variant="danger"]) {
     background: var(--y2k-danger);
     color: var(--y2k-on-danger);
   }
 
-  .y2k-nav {
+  .y2k-nav, :where([data-ui="y2k"]) .ui-nav {
     gap: var(--y2k-space-2);
     padding: var(--y2k-space-2);
     background: linear-gradient(180deg,#ffffff61,#ffffff14),var(--y2k-surface);
@@ -2471,7 +2471,7 @@
     display: flex;
   }
 
-  .y2k-nav-link {
+  .y2k-nav-link, :where([data-ui="y2k"]) .ui-nav-link {
     min-height: 2.5rem;
     color: var(--y2k-text-muted);
     border-radius: var(--y2k-radius-pill);
@@ -2482,12 +2482,12 @@
     display: inline-flex;
   }
 
-  .y2k-nav-link:hover {
+  .y2k-nav-link:hover, :where([data-ui="y2k"]) .ui-nav-link:hover {
     color: var(--y2k-text);
     background: #ffffff29;
   }
 
-  .y2k-nav-link.is-active, .y2k-nav-link[aria-current="page"] {
+  .y2k-nav-link.is-active, .y2k-nav-link[aria-current="page"], :where([data-ui="y2k"]) .ui-nav-link.is-active, :where([data-ui="y2k"]) .ui-nav-link[aria-current="page"] {
     background: var(--y2k-primary);
     color: var(--y2k-on-primary);
     box-shadow: 0 0 20px var(--y2k-glow-primary);
@@ -2518,7 +2518,7 @@
     flex: none;
   }
 
-  .y2k-progress {
+  .y2k-progress, :where([data-ui="y2k"]) .ui-progress {
     background: var(--y2k-surface-soft);
     border-radius: var(--y2k-radius-pill);
     width: 100%;
@@ -2527,14 +2527,14 @@
     box-shadow: inset 0 6px 14px #0000001f;
   }
 
-  .y2k-progress-bar {
+  .y2k-progress-bar, :where([data-ui="y2k"]) .ui-progress-bar {
     height: 100%;
     width: var(--y2k-progress-value, 50%);
     background: linear-gradient(90deg,var(--y2k-primary),var(--y2k-accent),var(--y2k-secondary));
     border-radius: inherit;
   }
 
-  .y2k-alert {
+  .y2k-alert, :where([data-ui="y2k"]) .ui-alert {
     padding: var(--y2k-space-4);
     background: var(--y2k-surface);
     border-radius: var(--y2k-radius-xl);
@@ -2542,49 +2542,49 @@
     border: 1px solid #ffffff61;
   }
 
-  .y2k-alert-title {
+  .y2k-alert-title, :where([data-ui="y2k"]) .ui-alert-title {
     margin: 0;
     font-weight: 900;
   }
 
-  .y2k-alert-body {
+  .y2k-alert-body, :where([data-ui="y2k"]) .ui-alert-body {
     color: var(--y2k-text-muted);
     margin: .5rem 0 0;
   }
 
-  .y2k-alert-success {
+  .y2k-alert-success, :where([data-ui="y2k"]) .ui-alert:where([data-ui-variant="success"]) {
     box-shadow: var(--y2k-shadow-md),0 0 22px rgb(var(--y2k-success-rgb)/.2);
   }
 
-  .y2k-alert-warning {
+  .y2k-alert-warning, :where([data-ui="y2k"]) .ui-alert:where([data-ui-variant="warning"]) {
     box-shadow: var(--y2k-shadow-md),0 0 22px rgb(var(--y2k-warning-rgb)/.2);
   }
 
-  .y2k-alert-danger {
+  .y2k-alert-danger, :where([data-ui="y2k"]) .ui-alert:where([data-ui-variant="danger"]) {
     box-shadow: var(--y2k-shadow-md),0 0 22px rgb(var(--y2k-danger-rgb)/.2);
   }
 
-  .y2k-table-wrap {
+  .y2k-table-wrap, :where([data-ui="y2k"]) .ui-table-wrap {
     overflow: auto;
   }
 
-  .y2k-table {
+  .y2k-table, :where([data-ui="y2k"]) .ui-table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  .y2k-table th, .y2k-table td {
+  .y2k-table th, .y2k-table td, :where([data-ui="y2k"]) .ui-table th, :where([data-ui="y2k"]) .ui-table td {
     border-bottom: 1px solid rgb(var(--y2k-border-rgb)/.34);
     text-align: left;
     padding: .9rem 1rem;
   }
 
-  .y2k-table th {
+  .y2k-table th, :where([data-ui="y2k"]) .ui-table th {
     background: #ffffff29;
     font-weight: 900;
   }
 
-  .y2k-table td {
+  .y2k-table td, :where([data-ui="y2k"]) .ui-table td {
     color: var(--y2k-text-muted);
   }
 
@@ -2628,11 +2628,11 @@
     background: var(--y2k-card-bg);
   }
 
-  .y2k-toolbar, .y2k-table-wrap, .y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-ghost), .y2k-icon-button, :where([data-ui="y2k"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="y2k"]) .ui-icon-button {
+  .y2k-toolbar, .y2k-table-wrap, .y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-ghost), .y2k-icon-button, :where([data-ui="y2k"]) .ui-toolbar, :where([data-ui="y2k"]) .ui-table-wrap, :where([data-ui="y2k"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="y2k"]) .ui-icon-button {
     background: var(--y2k-control-bg);
   }
 
-  .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link, :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-icon-button {
+  .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link, :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-icon-button, :where([data-ui="y2k"]) .ui-badge, :where([data-ui="y2k"]) .ui-nav-link {
     font-family: var(--y2k-font-control);
   }
 
