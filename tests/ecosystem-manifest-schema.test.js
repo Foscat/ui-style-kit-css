@@ -12,6 +12,8 @@ import { resolveInteractiveSource } from '../scripts/ecosystem-pack-sources.mjs'
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const uiManifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
 const ecosystemCompatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
+const ecosystemGuide = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
+const bridgeMigrationGuide = fs.readFileSync(path.join(rootDir, 'docs', 'BRIDGE-MIGRATION.md'), 'utf8');
 
 test('shared ecosystem manifest policy is required for every package manifest', () => {
   assert.doesNotThrow(() => validateSharedManifest(uiManifest));
@@ -69,7 +71,7 @@ test('ecosystem compatibility pins immutable companion sources', () => {
     'ui-style-kit-css': { checkout: 'current' },
     'interactive-surface-css': {
       repository: 'Foscat/Interactive-Surface-CSS',
-      revision: '102f2e73dac538414779978f656bf7169352ee95'
+      revision: '7979ce349cde198e2a7ef0c6eab57654d6505f5a'
     },
     'layout-style-css': {
       repository: 'Foscat/Layout-Style-CSS',
@@ -80,6 +82,24 @@ test('ecosystem compatibility pins immutable companion sources', () => {
   const mutableRevision = structuredClone(ecosystemCompatibility);
   mutableRevision.packageSources['interactive-surface-css'].revision = 'main';
   assert.throws(() => validateEcosystemCompatibility(mutableRevision), /source metadata/);
+});
+
+test('ecosystem docs distinguish portable semantic theming from specialized bridge integration', () => {
+  for (const value of [
+    '[data-ui][data-theme][data-mode]',
+    'import "third-party-theme/tokens.css";',
+    'import "interactive-surface-css/standalone-preset.css";',
+    'import "ui-style-kit-css/interactive-surface-theme.css";',
+    'import "interactive-surface-css/state-core.css";'
+  ]) {
+    assert.ok(ecosystemGuide.includes(value), `Ecosystem guide is missing: ${value}`);
+  }
+
+  assert.match(ecosystemGuide, /package-specific[\s\S]*shared semantic[\s\S]*legacy/i);
+  assert.match(ecosystemGuide, /specialized[\s\S]*variant[\s\S]*level/i);
+
+  const javascriptFences = bridgeMigrationGuide.match(/```js/g) ?? [];
+  assert.equal(javascriptFences.length, 1, 'Deprecated bridge imports should share one equivalent example');
 });
 
 test('workflow outputs require pushed companion revisions before UI validation', () => {

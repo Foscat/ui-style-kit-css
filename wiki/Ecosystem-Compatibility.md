@@ -22,6 +22,17 @@ The pairings in `layout-style-css/personalities.json` are recommendations, never
 | F-pattern, Z-pattern, Split Screen, Mondrian | Any UI Style Kit visual preset; these are structure-only layouts |
 | Synthwave | Recommend `cyberpunk` or `retrofuturism`; rendered computed-style verification preserves the independent synthwave layout selector |
 
+## Shared semantic theming
+
+UI Style Kit's complete, visual, and focused visual entrypoints produce the 12 package-neutral `--ui-*` control tokens under `[data-ui][data-theme][data-mode]`. A third-party theme may publish the same contract under its own scope. Consumer precedence remains package-specific first, shared semantic second, and legacy fallback or literal last.
+
+```js
+import "third-party-theme/tokens.css";
+import "interactive-surface-css/standalone-preset.css";
+```
+
+This portable path supplies a complete semantic control baseline. UI Style Kit integrations should keep `interactive-surface-theme.css` with `state-core.css` when they need specialized variant, level, icon-role, and state-opacity mappings.
+
 ## Adoption Paths
 
 ### Use one

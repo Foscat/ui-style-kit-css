@@ -30,6 +30,19 @@ Pairings are recommendations, never dependencies. `data-ly-layout`, `data-ui`, `
 | F-pattern, Z-pattern, Split Screen, Mondrian | Any UI Style Kit visual preset; these are structure-only layouts |
 | Synthwave | Recommend `cyberpunk` or `retrofuturism`; Layout's rendered demo verifies each preset while keeping the synthwave layout selected |
 
+## Shared semantic theming
+
+UI Style Kit's complete, visual, and focused visual entrypoints produce the 12 package-neutral `--ui-*` control tokens under `[data-ui][data-theme][data-mode]`. A third-party theme may produce the same contract under its own scope; consumers do not need UI Style Kit-specific `--usk-*` values. Package-specific values remain first in consumer fallback chains, shared semantic values come second, and legacy values or literals remain last.
+
+A third-party producer can theme Interactive Surface's complete standalone entry point without a package-specific adapter:
+
+```js
+import "third-party-theme/tokens.css";
+import "interactive-surface-css/standalone-preset.css";
+```
+
+UI Style Kit can use the same portable path by loading `ui-style-kit-css/visual.css` before `interactive-surface-css/standalone-preset.css`. That composition provides the semantic control baseline. Use the canonical `interactive-surface-theme.css` plus `state-core.css` path when an application needs UI Style Kit's specialized variant, level, icon-role, and state-opacity mappings.
+
 ## Adoption Paths
 
 ### Use one

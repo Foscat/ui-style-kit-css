@@ -60,6 +60,8 @@ Use one, two, or all three depending on the project. UI Style Kit does not requi
 
 Every UI Style Kit visual or preset entrypoint also publishes a small, fully typed `--ui-*` semantic handshake. These tokens let companion libraries and third-party themes share paint, control geometry, focus, and default motion without depending on preset-specific names. They are optional fallbacks for consumers: package-specific tokens still take precedence, and standalone packages keep their existing legacy and literal defaults when the handshake is absent. See the [token contract](docs/TOKENS.md#shared-semantic-token-handshake) for the exact 12-token inventory.
 
+A third-party producer can load its semantic token stylesheet before `interactive-surface-css/standalone-preset.css`. UI Style Kit's visual entrypoints support the same portable composition; keep the canonical theme bridge with `state-core.css` when specialized variant, level, and icon-role mappings are required.
+
 For import order, ownership boundaries, and adoption paths, see the [Ecosystem guide](docs/ECOSYSTEM.md).
 
 ## Features
