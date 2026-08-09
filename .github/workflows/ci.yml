@@ -107,11 +107,8 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       # This PR-safe gate installs only packed artifacts and never publishes.
-      - name: Verify current packed ecosystem matrix
-        run: npm run check:ecosystem:current -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
-
-      - name: Verify minimum published ecosystem matrix
-        run: npm run check:ecosystem:minimum
+      - name: Run PR-safe ecosystem release preflight
+        run: npm run release:preflight -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
 
   playwright:
     name: Playwright E2E

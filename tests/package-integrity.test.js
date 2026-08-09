@@ -422,6 +422,7 @@ test('release automation scripts are exposed', () => {
     'check:ecosystem:minimum',
     'check:ecosystem:packs',
     'test:ecosystem:clean-install',
+    'release:preflight',
     'check',
     'pack:dry-run',
     'release:verify'
@@ -444,8 +445,7 @@ test('clean-install ecosystem scripts and CI enforce current and minimum rendere
     packageJson.scripts['test:ecosystem:clean-install'],
     'node --test tests/clean-install-ecosystem-contract.integration.mjs'
   );
-  assert.match(workflow, /npm run check:ecosystem:current/);
-  assert.match(workflow, /npm run check:ecosystem:minimum/);
+  assert.match(workflow, /npm run release:preflight/);
   assert.doesNotMatch(workflow, /check:ecosystem:(?:current|minimum)[^\n]*--skip-browser/);
   assert.doesNotMatch(workflow, /--update-snapshots/);
   assert.equal(packageJson.devDependencies.pixelmatch, '7.2.0');
@@ -460,7 +460,7 @@ test('release verification script is non-publishing and covers the full release 
     'npm run test:axe',
     'npm run test:visual',
     'npm run test:matrix',
-    'npm run check:ecosystem:packs',
+    'npm run release:preflight',
     'npm audit --audit-level=moderate',
     'npm run pack:dry-run'
   ];
