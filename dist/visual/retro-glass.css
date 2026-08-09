@@ -1957,7 +1957,7 @@
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="retro-glass"]) .ui-check, :where([data-ui="retro-glass"]) .ui-radio, :where([data-ui="retro-glass"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1965,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="retro-glass"]) .ui-check-control, :where([data-ui="retro-glass"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="retro-glass"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1983,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="retro-glass"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2002,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="retro-glass"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2016,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="retro-glass"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2393,13 +2393,13 @@
     padding: 0;
   }
 
-  .rg-field {
+  .rg-field, :where([data-ui="retro-glass"]) .ui-field {
     gap: var(--rg-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .rg-label {
+  .rg-label, :where([data-ui="retro-glass"]) .ui-label {
     font-family: var(--rg-font-heading);
     text-transform: uppercase;
     letter-spacing: .12em;
@@ -2407,7 +2407,7 @@
     font-weight: 900;
   }
 
-  .rg-input, .rg-textarea, .rg-select {
+  .rg-input, .rg-textarea, .rg-select, :where([data-ui="retro-glass"]) .ui-input, :where([data-ui="retro-glass"]) .ui-textarea, :where([data-ui="retro-glass"]) .ui-select {
     background: linear-gradient(180deg,#ffffff0f,#00000014),var(--rg-surface-soft);
     width: 100%;
     min-height: 2.9rem;
@@ -2421,17 +2421,17 @@
     box-shadow: inset 0 8px 18px #00000024;
   }
 
-  .rg-textarea {
+  .rg-textarea, :where([data-ui="retro-glass"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .rg-input:focus, .rg-textarea:focus, .rg-select:focus {
+  .rg-input:focus, .rg-textarea:focus, .rg-select:focus, :where([data-ui="retro-glass"]) .ui-input:focus, :where([data-ui="retro-glass"]) .ui-textarea:focus, :where([data-ui="retro-glass"]) .ui-select:focus {
     border-color: var(--rg-focus);
     box-shadow: inset 0 8px 18px #00000024,0 0 0 3px rgb(var(--rg-focus-rgb)/.24),0 0 26px rgb(var(--rg-focus-rgb)/.22);
   }
 
-  .rg-help-text {
+  .rg-help-text, :where([data-ui="retro-glass"]) .ui-help-text {
     color: var(--rg-text-muted);
     font-size: .9rem;
   }

@@ -1957,7 +1957,7 @@
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="cyberpunk"]) .ui-check, :where([data-ui="cyberpunk"]) .ui-radio, :where([data-ui="cyberpunk"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1965,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="cyberpunk"]) .ui-check-control, :where([data-ui="cyberpunk"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="cyberpunk"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1983,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="cyberpunk"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2002,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="cyberpunk"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2016,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="cyberpunk"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2389,13 +2389,13 @@
     padding: 0;
   }
 
-  .cyber-field {
+  .cyber-field, :where([data-ui="cyberpunk"]) .ui-field {
     gap: var(--cyber-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .cyber-label {
+  .cyber-label, :where([data-ui="cyberpunk"]) .ui-label {
     font-family: var(--cyber-font-heading);
     text-transform: uppercase;
     letter-spacing: .14em;
@@ -2403,7 +2403,7 @@
     font-weight: 800;
   }
 
-  .cyber-input, .cyber-textarea, .cyber-select {
+  .cyber-input, .cyber-textarea, .cyber-select, :where([data-ui="cyberpunk"]) .ui-input, :where([data-ui="cyberpunk"]) .ui-textarea, :where([data-ui="cyberpunk"]) .ui-select {
     background: var(--cyber-surface-soft);
     width: 100%;
     min-height: 2.9rem;
@@ -2416,17 +2416,17 @@
     box-shadow: inset 0 0 18px #0003;
   }
 
-  .cyber-textarea {
+  .cyber-textarea, :where([data-ui="cyberpunk"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .cyber-input:focus, .cyber-textarea:focus, .cyber-select:focus {
+  .cyber-input:focus, .cyber-textarea:focus, .cyber-select:focus, :where([data-ui="cyberpunk"]) .ui-input:focus, :where([data-ui="cyberpunk"]) .ui-textarea:focus, :where([data-ui="cyberpunk"]) .ui-select:focus {
     border-color: var(--cyber-focus);
     box-shadow: 0 0 0 2px rgb(var(--cyber-focus-rgb)/.24),0 0 24px rgb(var(--cyber-focus-rgb)/.24),inset 0 0 18px #0003;
   }
 
-  .cyber-help-text {
+  .cyber-help-text, :where([data-ui="cyberpunk"]) .ui-help-text {
     color: var(--cyber-text-muted);
     font-size: .9rem;
   }
@@ -2640,7 +2640,7 @@
     outline-offset: 3px;
   }
 
-  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible, :where([data-ui="cyberpunk"]) .ui-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-icon-button:focus-visible {
+  .cyber-button:focus-visible, .cyber-icon-button:focus-visible, .cyber-input:focus-visible, .cyber-nav-link:focus-visible, :where([data-ui="cyberpunk"]) .ui-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-icon-button:focus-visible, :where([data-ui="cyberpunk"]) .ui-input:focus-visible {
     box-shadow: 0 0 0 3px rgb(var(--cyber-focus-rgb)/.28),0 0 28px rgb(var(--cyber-focus-rgb)/.28);
   }
 

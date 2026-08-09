@@ -1957,7 +1957,7 @@
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="neumorphism"]) .ui-check, :where([data-ui="neumorphism"]) .ui-radio, :where([data-ui="neumorphism"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1965,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="neumorphism"]) .ui-check-control, :where([data-ui="neumorphism"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="neumorphism"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1983,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="neumorphism"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2002,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="neumorphism"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2016,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="neumorphism"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2399,19 +2399,19 @@
     font-family: var(--neo-font-control);
   }
 
-  .neo-field {
+  .neo-field, :where([data-ui="neumorphism"]) .ui-field {
     gap: var(--neo-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .neo-label {
+  .neo-label, :where([data-ui="neumorphism"]) .ui-label {
     color: var(--neo-text);
     font-size: .925rem;
     font-weight: 800;
   }
 
-  .neo-input, .neo-textarea, .neo-select {
+  .neo-input, .neo-textarea, .neo-select, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select {
     background: var(--neo-surface-soft);
     width: 100%;
     min-height: 2.875rem;
@@ -2424,32 +2424,32 @@
     padding: .75rem 1rem;
   }
 
-  .neo-textarea {
+  .neo-textarea, :where([data-ui="neumorphism"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .neo-input::placeholder, .neo-textarea::placeholder {
+  .neo-input::placeholder, .neo-textarea::placeholder, :where([data-ui="neumorphism"]) .ui-input::placeholder, :where([data-ui="neumorphism"]) .ui-textarea::placeholder {
     color: var(--neo-text-muted);
     opacity: .82;
   }
 
-  .neo-input:hover, .neo-textarea:hover, .neo-select:hover {
+  .neo-input:hover, .neo-textarea:hover, .neo-select:hover, :where([data-ui="neumorphism"]) .ui-input:hover, :where([data-ui="neumorphism"]) .ui-textarea:hover, :where([data-ui="neumorphism"]) .ui-select:hover {
     border-color: rgb(var(--neo-primary-rgb)/.58);
   }
 
-  .neo-input:focus, .neo-textarea:focus, .neo-select:focus {
+  .neo-input:focus, .neo-textarea:focus, .neo-select:focus, :where([data-ui="neumorphism"]) .ui-input:focus, :where([data-ui="neumorphism"]) .ui-textarea:focus, :where([data-ui="neumorphism"]) .ui-select:focus {
     border-color: var(--neo-focus);
     box-shadow: var(--neo-focus-ring);
   }
 
-  .neo-help-text {
+  .neo-help-text, :where([data-ui="neumorphism"]) .ui-help-text {
     color: var(--neo-text-muted);
     font-size: .875rem;
     line-height: 1.45;
   }
 
-  .neo-check, .neo-radio {
+  .neo-check, .neo-radio, :where([data-ui="neumorphism"]) .ui-check, :where([data-ui="neumorphism"]) .ui-radio {
     align-items: center;
     gap: var(--neo-space-2);
     color: var(--neo-text);
@@ -2457,13 +2457,13 @@
     display: inline-flex;
   }
 
-  .neo-check input, .neo-radio input {
+  .neo-check input, .neo-radio input, :where([data-ui="neumorphism"]) .ui-check input, :where([data-ui="neumorphism"]) .ui-radio input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .neo-check-control, .neo-radio-control {
+  .neo-check-control, .neo-radio-control, :where([data-ui="neumorphism"]) .ui-check-control, :where([data-ui="neumorphism"]) .ui-radio-control {
     background: var(--neo-surface-soft);
     border: 1px solid var(--neo-border);
     width: 1.35rem;
@@ -2473,28 +2473,28 @@
     display: inline-grid;
   }
 
-  .neo-check-control {
+  .neo-check-control, :where([data-ui="neumorphism"]) .ui-check-control {
     border-radius: var(--neo-radius-xs);
   }
 
-  .neo-radio-control {
+  .neo-radio-control, :where([data-ui="neumorphism"]) .ui-radio-control {
     border-radius: 50%;
   }
 
-  .neo-check input:checked + .neo-check-control, .neo-radio input:checked + .neo-radio-control {
+  .neo-check input:checked + .neo-check-control, .neo-radio input:checked + .neo-radio-control, :where([data-ui="neumorphism"]) .ui-check input:checked+.ui-check-control, :where([data-ui="neumorphism"]) .ui-radio input:checked+.ui-radio-control {
     background: var(--neo-primary);
     border-color: var(--neo-primary);
     box-shadow: var(--neo-focus-ring);
   }
 
-  .neo-check input:checked + .neo-check-control:after {
+  .neo-check input:checked + .neo-check-control:after, :where([data-ui="neumorphism"]) .ui-check input:checked+.ui-check-control:after {
     content: "✓";
     color: var(--neo-on-primary);
     font-size: .9rem;
     font-weight: 900;
   }
 
-  .neo-radio input:checked + .neo-radio-control:after {
+  .neo-radio input:checked + .neo-radio-control:after, :where([data-ui="neumorphism"]) .ui-radio input:checked+.ui-radio-control:after {
     content: "";
     background: var(--neo-on-primary);
     border-radius: 50%;
@@ -2502,7 +2502,7 @@
     height: .55rem;
   }
 
-  .neo-switch {
+  .neo-switch, :where([data-ui="neumorphism"]) .ui-switch {
     align-items: center;
     gap: var(--neo-space-3);
     color: var(--neo-text);
@@ -2510,13 +2510,13 @@
     display: inline-flex;
   }
 
-  .neo-switch input {
+  .neo-switch input, :where([data-ui="neumorphism"]) .ui-switch input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .neo-switch-track {
+  .neo-switch-track, :where([data-ui="neumorphism"]) .ui-switch-track {
     background: var(--neo-surface-soft);
     border: 1px solid var(--neo-border);
     border-radius: var(--neo-radius-pill);
@@ -2526,7 +2526,7 @@
     position: relative;
   }
 
-  .neo-switch-thumb {
+  .neo-switch-thumb, :where([data-ui="neumorphism"]) .ui-switch-thumb {
     background: var(--neo-surface-strong);
     border: 1px solid var(--neo-border);
     width: 1.34rem;
@@ -2539,12 +2539,12 @@
     left: .22rem;
   }
 
-  .neo-switch input:checked + .neo-switch-track {
+  .neo-switch input:checked + .neo-switch-track, :where([data-ui="neumorphism"]) .ui-switch input:checked+.ui-switch-track {
     background: var(--neo-primary);
     border-color: var(--neo-primary);
   }
 
-  .neo-switch input:checked + .neo-switch-track .neo-switch-thumb {
+  .neo-switch input:checked + .neo-switch-track .neo-switch-thumb, :where([data-ui="neumorphism"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
     background: var(--neo-on-primary);
     left: calc(100% - 1.56rem);
   }
@@ -2847,7 +2847,7 @@
     box-shadow: 16px 16px 32px var(--neo-nm-dark),-16px -16px 32px var(--neo-nm-light);
   }
 
-  .neo-well, .neo-inset, .neo-input, .neo-textarea, .neo-select, .neo-progress {
+  .neo-well, .neo-inset, .neo-input, .neo-textarea, .neo-select, .neo-progress, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select {
     box-shadow: inset 5px 5px 11px var(--neo-nm-dark),inset -5px -5px 11px var(--neo-nm-light);
   }
 

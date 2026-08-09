@@ -1957,7 +1957,7 @@
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="minimal-saas"]) .ui-check, :where([data-ui="minimal-saas"]) .ui-radio, :where([data-ui="minimal-saas"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1965,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="minimal-saas"]) .ui-check-control, :where([data-ui="minimal-saas"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="minimal-saas"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1983,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="minimal-saas"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2002,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="minimal-saas"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2016,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="minimal-saas"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2399,19 +2399,19 @@
     font-family: var(--saas-font-control);
   }
 
-  .saas-field {
+  .saas-field, :where([data-ui="minimal-saas"]) .ui-field {
     gap: var(--saas-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .saas-label {
+  .saas-label, :where([data-ui="minimal-saas"]) .ui-label {
     color: var(--saas-text);
     font-size: .925rem;
     font-weight: 800;
   }
 
-  .saas-input, .saas-textarea, .saas-select {
+  .saas-input, .saas-textarea, .saas-select, :where([data-ui="minimal-saas"]) .ui-input, :where([data-ui="minimal-saas"]) .ui-textarea, :where([data-ui="minimal-saas"]) .ui-select {
     background: var(--saas-surface-soft);
     width: 100%;
     min-height: 2.875rem;
@@ -2424,32 +2424,32 @@
     padding: .75rem 1rem;
   }
 
-  .saas-textarea {
+  .saas-textarea, :where([data-ui="minimal-saas"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .saas-input::placeholder, .saas-textarea::placeholder {
+  .saas-input::placeholder, .saas-textarea::placeholder, :where([data-ui="minimal-saas"]) .ui-input::placeholder, :where([data-ui="minimal-saas"]) .ui-textarea::placeholder {
     color: var(--saas-text-muted);
     opacity: .82;
   }
 
-  .saas-input:hover, .saas-textarea:hover, .saas-select:hover {
+  .saas-input:hover, .saas-textarea:hover, .saas-select:hover, :where([data-ui="minimal-saas"]) .ui-input:hover, :where([data-ui="minimal-saas"]) .ui-textarea:hover, :where([data-ui="minimal-saas"]) .ui-select:hover {
     border-color: rgb(var(--saas-primary-rgb)/.58);
   }
 
-  .saas-input:focus, .saas-textarea:focus, .saas-select:focus {
+  .saas-input:focus, .saas-textarea:focus, .saas-select:focus, :where([data-ui="minimal-saas"]) .ui-input:focus, :where([data-ui="minimal-saas"]) .ui-textarea:focus, :where([data-ui="minimal-saas"]) .ui-select:focus {
     border-color: var(--saas-focus);
     box-shadow: var(--saas-focus-ring);
   }
 
-  .saas-help-text {
+  .saas-help-text, :where([data-ui="minimal-saas"]) .ui-help-text {
     color: var(--saas-text-muted);
     font-size: .875rem;
     line-height: 1.45;
   }
 
-  .saas-check, .saas-radio {
+  .saas-check, .saas-radio, :where([data-ui="minimal-saas"]) .ui-check, :where([data-ui="minimal-saas"]) .ui-radio {
     align-items: center;
     gap: var(--saas-space-2);
     color: var(--saas-text);
@@ -2457,13 +2457,13 @@
     display: inline-flex;
   }
 
-  .saas-check input, .saas-radio input {
+  .saas-check input, .saas-radio input, :where([data-ui="minimal-saas"]) .ui-check input, :where([data-ui="minimal-saas"]) .ui-radio input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .saas-check-control, .saas-radio-control {
+  .saas-check-control, .saas-radio-control, :where([data-ui="minimal-saas"]) .ui-check-control, :where([data-ui="minimal-saas"]) .ui-radio-control {
     background: var(--saas-surface-soft);
     border: 1px solid var(--saas-border);
     width: 1.35rem;
@@ -2473,28 +2473,28 @@
     display: inline-grid;
   }
 
-  .saas-check-control {
+  .saas-check-control, :where([data-ui="minimal-saas"]) .ui-check-control {
     border-radius: var(--saas-radius-xs);
   }
 
-  .saas-radio-control {
+  .saas-radio-control, :where([data-ui="minimal-saas"]) .ui-radio-control {
     border-radius: 50%;
   }
 
-  .saas-check input:checked + .saas-check-control, .saas-radio input:checked + .saas-radio-control {
+  .saas-check input:checked + .saas-check-control, .saas-radio input:checked + .saas-radio-control, :where([data-ui="minimal-saas"]) .ui-check input:checked+.ui-check-control, :where([data-ui="minimal-saas"]) .ui-radio input:checked+.ui-radio-control {
     background: var(--saas-primary);
     border-color: var(--saas-primary);
     box-shadow: var(--saas-focus-ring);
   }
 
-  .saas-check input:checked + .saas-check-control:after {
+  .saas-check input:checked + .saas-check-control:after, :where([data-ui="minimal-saas"]) .ui-check input:checked+.ui-check-control:after {
     content: "✓";
     color: var(--saas-on-primary);
     font-size: .9rem;
     font-weight: 900;
   }
 
-  .saas-radio input:checked + .saas-radio-control:after {
+  .saas-radio input:checked + .saas-radio-control:after, :where([data-ui="minimal-saas"]) .ui-radio input:checked+.ui-radio-control:after {
     content: "";
     background: var(--saas-on-primary);
     border-radius: 50%;
@@ -2502,7 +2502,7 @@
     height: .55rem;
   }
 
-  .saas-switch {
+  .saas-switch, :where([data-ui="minimal-saas"]) .ui-switch {
     align-items: center;
     gap: var(--saas-space-3);
     color: var(--saas-text);
@@ -2510,13 +2510,13 @@
     display: inline-flex;
   }
 
-  .saas-switch input {
+  .saas-switch input, :where([data-ui="minimal-saas"]) .ui-switch input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .saas-switch-track {
+  .saas-switch-track, :where([data-ui="minimal-saas"]) .ui-switch-track {
     background: var(--saas-surface-soft);
     border: 1px solid var(--saas-border);
     border-radius: var(--saas-radius-pill);
@@ -2526,7 +2526,7 @@
     position: relative;
   }
 
-  .saas-switch-thumb {
+  .saas-switch-thumb, :where([data-ui="minimal-saas"]) .ui-switch-thumb {
     background: var(--saas-surface-strong);
     border: 1px solid var(--saas-border);
     width: 1.34rem;
@@ -2539,12 +2539,12 @@
     left: .22rem;
   }
 
-  .saas-switch input:checked + .saas-switch-track {
+  .saas-switch input:checked + .saas-switch-track, :where([data-ui="minimal-saas"]) .ui-switch input:checked+.ui-switch-track {
     background: var(--saas-primary);
     border-color: var(--saas-primary);
   }
 
-  .saas-switch input:checked + .saas-switch-track .saas-switch-thumb {
+  .saas-switch input:checked + .saas-switch-track .saas-switch-thumb, :where([data-ui="minimal-saas"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
     background: var(--saas-on-primary);
     left: calc(100% - 1.56rem);
   }

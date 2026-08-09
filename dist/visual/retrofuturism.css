@@ -1957,7 +1957,7 @@
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="retrofuturism"]) .ui-check, :where([data-ui="retrofuturism"]) .ui-radio, :where([data-ui="retrofuturism"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1965,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="retrofuturism"]) .ui-check-control, :where([data-ui="retrofuturism"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="retrofuturism"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1983,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="retrofuturism"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2002,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="retrofuturism"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2016,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="retrofuturism"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2399,19 +2399,19 @@
     font-family: var(--retro-font-control);
   }
 
-  .retro-field {
+  .retro-field, :where([data-ui="retrofuturism"]) .ui-field {
     gap: var(--retro-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .retro-label {
+  .retro-label, :where([data-ui="retrofuturism"]) .ui-label {
     color: var(--retro-text);
     font-size: .925rem;
     font-weight: 800;
   }
 
-  .retro-input, .retro-textarea, .retro-select {
+  .retro-input, .retro-textarea, .retro-select, :where([data-ui="retrofuturism"]) .ui-input, :where([data-ui="retrofuturism"]) .ui-textarea, :where([data-ui="retrofuturism"]) .ui-select {
     background: var(--retro-surface-soft);
     width: 100%;
     min-height: 2.875rem;
@@ -2424,32 +2424,32 @@
     padding: .75rem 1rem;
   }
 
-  .retro-textarea {
+  .retro-textarea, :where([data-ui="retrofuturism"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .retro-input::placeholder, .retro-textarea::placeholder {
+  .retro-input::placeholder, .retro-textarea::placeholder, :where([data-ui="retrofuturism"]) .ui-input::placeholder, :where([data-ui="retrofuturism"]) .ui-textarea::placeholder {
     color: var(--retro-text-muted);
     opacity: .82;
   }
 
-  .retro-input:hover, .retro-textarea:hover, .retro-select:hover {
+  .retro-input:hover, .retro-textarea:hover, .retro-select:hover, :where([data-ui="retrofuturism"]) .ui-input:hover, :where([data-ui="retrofuturism"]) .ui-textarea:hover, :where([data-ui="retrofuturism"]) .ui-select:hover {
     border-color: rgb(var(--retro-primary-rgb)/.58);
   }
 
-  .retro-input:focus, .retro-textarea:focus, .retro-select:focus {
+  .retro-input:focus, .retro-textarea:focus, .retro-select:focus, :where([data-ui="retrofuturism"]) .ui-input:focus, :where([data-ui="retrofuturism"]) .ui-textarea:focus, :where([data-ui="retrofuturism"]) .ui-select:focus {
     border-color: var(--retro-focus);
     box-shadow: var(--retro-focus-ring);
   }
 
-  .retro-help-text {
+  .retro-help-text, :where([data-ui="retrofuturism"]) .ui-help-text {
     color: var(--retro-text-muted);
     font-size: .875rem;
     line-height: 1.45;
   }
 
-  .retro-check, .retro-radio {
+  .retro-check, .retro-radio, :where([data-ui="retrofuturism"]) .ui-check, :where([data-ui="retrofuturism"]) .ui-radio {
     align-items: center;
     gap: var(--retro-space-2);
     color: var(--retro-text);
@@ -2457,13 +2457,13 @@
     display: inline-flex;
   }
 
-  .retro-check input, .retro-radio input {
+  .retro-check input, .retro-radio input, :where([data-ui="retrofuturism"]) .ui-check input, :where([data-ui="retrofuturism"]) .ui-radio input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .retro-check-control, .retro-radio-control {
+  .retro-check-control, .retro-radio-control, :where([data-ui="retrofuturism"]) .ui-check-control, :where([data-ui="retrofuturism"]) .ui-radio-control {
     background: var(--retro-surface-soft);
     border: 1px solid var(--retro-border);
     width: 1.35rem;
@@ -2473,28 +2473,28 @@
     display: inline-grid;
   }
 
-  .retro-check-control {
+  .retro-check-control, :where([data-ui="retrofuturism"]) .ui-check-control {
     border-radius: var(--retro-radius-xs);
   }
 
-  .retro-radio-control {
+  .retro-radio-control, :where([data-ui="retrofuturism"]) .ui-radio-control {
     border-radius: 50%;
   }
 
-  .retro-check input:checked + .retro-check-control, .retro-radio input:checked + .retro-radio-control {
+  .retro-check input:checked + .retro-check-control, .retro-radio input:checked + .retro-radio-control, :where([data-ui="retrofuturism"]) .ui-check input:checked+.ui-check-control, :where([data-ui="retrofuturism"]) .ui-radio input:checked+.ui-radio-control {
     background: var(--retro-primary);
     border-color: var(--retro-primary);
     box-shadow: var(--retro-focus-ring);
   }
 
-  .retro-check input:checked + .retro-check-control:after {
+  .retro-check input:checked + .retro-check-control:after, :where([data-ui="retrofuturism"]) .ui-check input:checked+.ui-check-control:after {
     content: "✓";
     color: var(--retro-on-primary);
     font-size: .9rem;
     font-weight: 900;
   }
 
-  .retro-radio input:checked + .retro-radio-control:after {
+  .retro-radio input:checked + .retro-radio-control:after, :where([data-ui="retrofuturism"]) .ui-radio input:checked+.ui-radio-control:after {
     content: "";
     background: var(--retro-on-primary);
     border-radius: 50%;
@@ -2502,7 +2502,7 @@
     height: .55rem;
   }
 
-  .retro-switch {
+  .retro-switch, :where([data-ui="retrofuturism"]) .ui-switch {
     align-items: center;
     gap: var(--retro-space-3);
     color: var(--retro-text);
@@ -2510,13 +2510,13 @@
     display: inline-flex;
   }
 
-  .retro-switch input {
+  .retro-switch input, :where([data-ui="retrofuturism"]) .ui-switch input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .retro-switch-track {
+  .retro-switch-track, :where([data-ui="retrofuturism"]) .ui-switch-track {
     background: var(--retro-surface-soft);
     border: 1px solid var(--retro-border);
     border-radius: var(--retro-radius-pill);
@@ -2526,7 +2526,7 @@
     position: relative;
   }
 
-  .retro-switch-thumb {
+  .retro-switch-thumb, :where([data-ui="retrofuturism"]) .ui-switch-thumb {
     background: var(--retro-surface-strong);
     border: 1px solid var(--retro-border);
     width: 1.34rem;
@@ -2539,12 +2539,12 @@
     left: .22rem;
   }
 
-  .retro-switch input:checked + .retro-switch-track {
+  .retro-switch input:checked + .retro-switch-track, :where([data-ui="retrofuturism"]) .ui-switch input:checked+.ui-switch-track {
     background: var(--retro-primary);
     border-color: var(--retro-primary);
   }
 
-  .retro-switch input:checked + .retro-switch-track .retro-switch-thumb {
+  .retro-switch input:checked + .retro-switch-track .retro-switch-thumb, :where([data-ui="retrofuturism"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
     background: var(--retro-on-primary);
     left: calc(100% - 1.56rem);
   }

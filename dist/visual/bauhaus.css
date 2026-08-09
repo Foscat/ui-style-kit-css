@@ -1957,7 +1957,7 @@
   border-color: var(--usk-native-border);
 }
 
-.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch {
+.saas-check, .saas-radio, .saas-switch, .bento-check, .bento-radio, .bento-switch, .max-check, .max-radio, .max-switch, .bau-check, .bau-radio, .bau-switch, .tactile-check, .tactile-radio, .tactile-switch, .neo-check, .neo-radio, .neo-switch, .retro-check, .retro-radio, .retro-switch, .brutal-check, .brutal-radio, .brutal-switch, .cyber-check, .cyber-radio, .cyber-switch, .y2k-check, .y2k-radio, .y2k-switch, .rg-check, .rg-radio, .rg-switch, :where([data-ui="bauhaus"]) .ui-check, :where([data-ui="bauhaus"]) .ui-radio, :where([data-ui="bauhaus"]) .ui-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--usk-native-field-gap);
@@ -1965,13 +1965,13 @@
   color: var(--usk-native-text);
 }
 
-.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control {
+.saas-check-control, .saas-radio-control, .bento-check-control, .bento-radio-control, .max-check-control, .max-radio-control, .bau-check-control, .bau-radio-control, .tactile-check-control, .tactile-radio-control, .neo-check-control, .neo-radio-control, .retro-check-control, .retro-radio-control, .brutal-check-control, .brutal-radio-control, .cyber-check-control, .cyber-radio-control, .y2k-check-control, .y2k-radio-control, .rg-check-control, .rg-radio-control, :where([data-ui="bauhaus"]) .ui-check-control, :where([data-ui="bauhaus"]) .ui-radio-control {
   inline-size: 1.5rem;
   block-size: 1.5rem;
   accent-color: var(--usk-native-primary);
 }
 
-.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track {
+.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, :where([data-ui="bauhaus"]) .ui-switch-track {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1983,7 +1983,7 @@
   border-radius: 999px;
 }
 
-.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb {
+.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, :where([data-ui="bauhaus"]) .ui-switch-thumb {
   inline-size: 1rem;
   block-size: 1rem;
   background: var(--usk-native-thumb);
@@ -2002,7 +2002,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-track,
 .cyber-switch:has(input:checked) .cyber-switch-track,
 .y2k-switch:has(input:checked) .y2k-switch-track,
-.rg-switch:has(input:checked) .rg-switch-track {
+.rg-switch:has(input:checked) .rg-switch-track, :where([data-ui="bauhaus"]) .ui-switch:has(input:checked) .ui-switch-track {
   background: var(--usk-native-track-fill);
 }
 
@@ -2016,7 +2016,7 @@
 .brutal-switch:has(input:checked) .brutal-switch-thumb,
 .cyber-switch:has(input:checked) .cyber-switch-thumb,
 .y2k-switch:has(input:checked) .y2k-switch-thumb,
-.rg-switch:has(input:checked) .rg-switch-thumb {
+.rg-switch:has(input:checked) .rg-switch-thumb, :where([data-ui="bauhaus"]) .ui-switch:has(input:checked) .ui-switch-thumb {
   transform: translateX(1.25rem);
 }
 
@@ -2401,19 +2401,19 @@
     font-family: var(--bau-font-control);
   }
 
-  .bau-field {
+  .bau-field, :where([data-ui="bauhaus"]) .ui-field {
     gap: var(--bau-space-2);
     flex-direction: column;
     display: flex;
   }
 
-  .bau-label {
+  .bau-label, :where([data-ui="bauhaus"]) .ui-label {
     color: var(--bau-text);
     font-size: .925rem;
     font-weight: 800;
   }
 
-  .bau-input, .bau-textarea, .bau-select {
+  .bau-input, .bau-textarea, .bau-select, :where([data-ui="bauhaus"]) .ui-input, :where([data-ui="bauhaus"]) .ui-textarea, :where([data-ui="bauhaus"]) .ui-select {
     background: var(--bau-surface-soft);
     width: 100%;
     min-height: 2.875rem;
@@ -2426,32 +2426,32 @@
     padding: .75rem 1rem;
   }
 
-  .bau-textarea {
+  .bau-textarea, :where([data-ui="bauhaus"]) .ui-textarea {
     resize: vertical;
     min-height: 8rem;
   }
 
-  .bau-input::placeholder, .bau-textarea::placeholder {
+  .bau-input::placeholder, .bau-textarea::placeholder, :where([data-ui="bauhaus"]) .ui-input::placeholder, :where([data-ui="bauhaus"]) .ui-textarea::placeholder {
     color: var(--bau-text-muted);
     opacity: .82;
   }
 
-  .bau-input:hover, .bau-textarea:hover, .bau-select:hover {
+  .bau-input:hover, .bau-textarea:hover, .bau-select:hover, :where([data-ui="bauhaus"]) .ui-input:hover, :where([data-ui="bauhaus"]) .ui-textarea:hover, :where([data-ui="bauhaus"]) .ui-select:hover {
     border-color: rgb(var(--bau-primary-rgb)/.58);
   }
 
-  .bau-input:focus, .bau-textarea:focus, .bau-select:focus {
+  .bau-input:focus, .bau-textarea:focus, .bau-select:focus, :where([data-ui="bauhaus"]) .ui-input:focus, :where([data-ui="bauhaus"]) .ui-textarea:focus, :where([data-ui="bauhaus"]) .ui-select:focus {
     border-color: var(--bau-focus);
     box-shadow: var(--bau-focus-ring);
   }
 
-  .bau-help-text {
+  .bau-help-text, :where([data-ui="bauhaus"]) .ui-help-text {
     color: var(--bau-text-muted);
     font-size: .875rem;
     line-height: 1.45;
   }
 
-  .bau-check, .bau-radio {
+  .bau-check, .bau-radio, :where([data-ui="bauhaus"]) .ui-check, :where([data-ui="bauhaus"]) .ui-radio {
     align-items: center;
     gap: var(--bau-space-2);
     color: var(--bau-text);
@@ -2459,13 +2459,13 @@
     display: inline-flex;
   }
 
-  .bau-check input, .bau-radio input {
+  .bau-check input, .bau-radio input, :where([data-ui="bauhaus"]) .ui-check input, :where([data-ui="bauhaus"]) .ui-radio input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .bau-check-control, .bau-radio-control {
+  .bau-check-control, .bau-radio-control, :where([data-ui="bauhaus"]) .ui-check-control, :where([data-ui="bauhaus"]) .ui-radio-control {
     background: var(--bau-surface-soft);
     border: 2px solid var(--bau-border);
     width: 1.35rem;
@@ -2475,28 +2475,28 @@
     display: inline-grid;
   }
 
-  .bau-check-control {
+  .bau-check-control, :where([data-ui="bauhaus"]) .ui-check-control {
     border-radius: var(--bau-radius-xs);
   }
 
-  .bau-radio-control {
+  .bau-radio-control, :where([data-ui="bauhaus"]) .ui-radio-control {
     border-radius: 50%;
   }
 
-  .bau-check input:checked + .bau-check-control, .bau-radio input:checked + .bau-radio-control {
+  .bau-check input:checked + .bau-check-control, .bau-radio input:checked + .bau-radio-control, :where([data-ui="bauhaus"]) .ui-check input:checked+.ui-check-control, :where([data-ui="bauhaus"]) .ui-radio input:checked+.ui-radio-control {
     background: var(--bau-primary);
     border-color: var(--bau-primary);
     box-shadow: var(--bau-focus-ring);
   }
 
-  .bau-check input:checked + .bau-check-control:after {
+  .bau-check input:checked + .bau-check-control:after, :where([data-ui="bauhaus"]) .ui-check input:checked+.ui-check-control:after {
     content: "✓";
     color: var(--bau-on-primary);
     font-size: .9rem;
     font-weight: 900;
   }
 
-  .bau-radio input:checked + .bau-radio-control:after {
+  .bau-radio input:checked + .bau-radio-control:after, :where([data-ui="bauhaus"]) .ui-radio input:checked+.ui-radio-control:after {
     content: "";
     background: var(--bau-on-primary);
     border-radius: 50%;
@@ -2504,7 +2504,7 @@
     height: .55rem;
   }
 
-  .bau-switch {
+  .bau-switch, :where([data-ui="bauhaus"]) .ui-switch {
     align-items: center;
     gap: var(--bau-space-3);
     color: var(--bau-text);
@@ -2512,13 +2512,13 @@
     display: inline-flex;
   }
 
-  .bau-switch input {
+  .bau-switch input, :where([data-ui="bauhaus"]) .ui-switch input {
     opacity: 0;
     pointer-events: none;
     position: absolute;
   }
 
-  .bau-switch-track {
+  .bau-switch-track, :where([data-ui="bauhaus"]) .ui-switch-track {
     background: var(--bau-surface-soft);
     border: 2px solid var(--bau-border);
     border-radius: var(--bau-radius-pill);
@@ -2528,7 +2528,7 @@
     position: relative;
   }
 
-  .bau-switch-thumb {
+  .bau-switch-thumb, :where([data-ui="bauhaus"]) .ui-switch-thumb {
     background: var(--bau-surface-strong);
     border: 2px solid var(--bau-border);
     width: 1.34rem;
@@ -2541,12 +2541,12 @@
     left: .22rem;
   }
 
-  .bau-switch input:checked + .bau-switch-track {
+  .bau-switch input:checked + .bau-switch-track, :where([data-ui="bauhaus"]) .ui-switch input:checked+.ui-switch-track {
     background: var(--bau-primary);
     border-color: var(--bau-primary);
   }
 
-  .bau-switch input:checked + .bau-switch-track .bau-switch-thumb {
+  .bau-switch input:checked + .bau-switch-track .bau-switch-thumb, :where([data-ui="bauhaus"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
     background: var(--bau-on-primary);
     left: calc(100% - 1.56rem);
   }

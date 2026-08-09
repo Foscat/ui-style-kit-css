@@ -14,8 +14,10 @@ const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
 
 const expectedRetainedSelectors = ['.ui-spinner', '.ui-tooltip'];
-const expectedImplementedSelectors = ['.ui-button', '.ui-icon-button', '.ui-card'];
-const expectedPendingSelectors = [
+const expectedImplementedSelectors = [
+  '.ui-button',
+  '.ui-icon-button',
+  '.ui-card',
   '.ui-field',
   '.ui-label',
   '.ui-help-text',
@@ -28,7 +30,9 @@ const expectedPendingSelectors = [
   '.ui-radio-control',
   '.ui-switch',
   '.ui-switch-track',
-  '.ui-switch-thumb',
+  '.ui-switch-thumb'
+];
+const expectedPendingSelectors = [
   '.ui-badge',
   '.ui-alert',
   '.ui-alert-title',
@@ -248,8 +252,8 @@ test('manifest partitions retained, implemented, and pending Task 11 selectors',
   assert.deepEqual(implementationStatus.pending.selectors, expectedPendingSelectors);
   assert.equal(implementationStatus.pending.targetTask, 11);
   assert.equal(implementationStatus.retained.selectors.length, 2);
-  assert.equal(implementationStatus.implemented.selectors.length, 3);
-  assert.equal(implementationStatus.pending.selectors.length, 24);
+  assert.equal(implementationStatus.implemented.selectors.length, 16);
+  assert.equal(implementationStatus.pending.selectors.length, 11);
   assert.deepEqual(
     new Set([
       ...implementationStatus.retained.selectors,
