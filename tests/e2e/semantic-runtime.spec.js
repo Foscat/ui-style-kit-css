@@ -114,6 +114,42 @@ const surfaceProperties = [
   'paddingTop',
   'textTransform'
 ];
+const semanticSafetyContracts = [
+  [
+    'button',
+    'button',
+    [
+      'boxSizing',
+      'gap',
+      'lineHeight',
+      'maxInlineSize',
+      'minInlineSize',
+      'verticalAlign',
+      'whiteSpace'
+    ]
+  ],
+  [
+    'icon-button',
+    'button',
+    [
+      'boxSizing',
+      'gap',
+      'lineHeight',
+      'maxInlineSize',
+      'minInlineSize',
+      'verticalAlign',
+      'whiteSpace'
+    ]
+  ],
+  ['card', 'article', ['maxInlineSize', 'minInlineSize', 'overflowWrap']],
+  ['field', 'div', ['maxInlineSize', 'minInlineSize', 'overflowWrap']],
+  ['badge', 'span', ['maxInlineSize', 'minInlineSize', 'whiteSpace']],
+  ['alert', 'aside', ['maxInlineSize', 'minInlineSize', 'overflowWrap']],
+  ['nav', 'nav', ['maxInlineSize', 'minInlineSize', 'overflowWrap']],
+  ['nav-link', 'a', ['maxInlineSize', 'minInlineSize', 'whiteSpace']],
+  ['table-wrap', 'div', ['maxInlineSize', 'minInlineSize', 'overflowWrap']],
+  ['toolbar', 'div', ['maxInlineSize', 'minInlineSize', 'overflowWrap']]
+];
 
 function buttonMarkup(prefix, variant, kind) {
   const variantAttribute = variant ? ` data-ui-variant="${variant}"` : '';
@@ -284,6 +320,36 @@ async function computedSnapshot(page, selector, properties) {
     return Object.fromEntries(propertyNames.map((property) => [property, styles[property]]));
   }, properties);
 }
+
+function semanticSafetyFixture(preset) {
+  const pairs = semanticSafetyContracts.map(([suffix, element]) => {
+    const attributes = suffix === 'nav-link' ? ' href="#"' : '';
+    return `
+      <${element} id="semantic-safety-${suffix}" class="ui-${suffix}"${attributes}>Semantic ${suffix}</${element}>
+      <${element} id="prefixed-safety-${suffix}" class="${preset.prefix}-${suffix}"${attributes}>Prefixed ${suffix}</${element}>`;
+  }).join('');
+
+  return `<!doctype html>
+    <html lang="en">
+      <body data-ui="${preset.id}" data-theme="arctic-indigo" data-mode="light">
+        <main>${pairs}</main>
+      </body>
+    </html>`;
+}
+
+test('semantic aliases preserve every shared safety property across all presets', async ({ page }) => {
+  for (const preset of manifest.presets) {
+    await page.setContent(semanticSafetyFixture(preset));
+    await page.addStyleTag({ path: visualBundlePath });
+
+    for (const [suffix, , properties] of semanticSafetyContracts) {
+      expect(
+        await computedSnapshot(page, `#semantic-safety-${suffix}`, properties),
+        `${preset.id} ${suffix} shared safety declarations`
+      ).toEqual(await computedSnapshot(page, `#prefixed-safety-${suffix}`, properties));
+    }
+  }
+});
 
 test('semantic buttons and cards match prefixed twins across every preset', async ({ page }) => {
   for (const preset of manifest.presets) {

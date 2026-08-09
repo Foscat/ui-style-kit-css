@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
@@ -220,6 +221,68 @@ function selectorTexts(relativeFile) {
   return selectors;
 }
 
+function generatedSelectorRules(relativeFile) {
+  const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+  const rules = [];
+
+  walk(parse(css, { filename: relativeFile }), {
+    visit: 'Rule',
+    enter(rule) {
+      const declarations = new Set();
+      rule.block.children.forEach((node) => {
+        if (node.type === 'Declaration') declarations.add(node.property);
+      });
+      rule.prelude.children.forEach((selector) => {
+        rules.push({ selector, text: generate(selector), declarations });
+      });
+    }
+  });
+
+  return rules;
+}
+
+function dataUiRootCompounds(selector) {
+  const compounds = new Set();
+  let compoundIndex = 0;
+
+  selector.children.forEach((node) => {
+    if (node.type === 'Combinator') {
+      compoundIndex += 1;
+      return;
+    }
+
+    walk(node, {
+      visit: 'AttributeSelector',
+      enter(attribute) {
+        if (attribute.name?.name === 'data-ui') compounds.add(compoundIndex);
+      }
+    });
+  });
+
+  return compounds;
+}
+
+function declarationArtifactFacts(relativeFile) {
+  const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+  const declarationBlocks = [];
+  let count = 0;
+
+  walk(parse(css, { filename: relativeFile, positions: true }), {
+    visit: 'Rule',
+    enter(rule) {
+      declarationBlocks.push(css.slice(rule.block.loc.start.offset, rule.block.loc.end.offset));
+      rule.block.children.forEach((node) => {
+        if (node.type === 'Declaration') count += 1;
+      });
+    }
+  });
+
+  return {
+    count,
+    sha256: crypto.createHash('sha256').update(declarationBlocks.join('\n')).digest('hex')
+  };
+}
+
 function selectorHasAttributeValue(selector, name, value) {
   return new RegExp(`\\[${name}=(?:"${value}"|${value})\\]`).test(selector);
 }
@@ -358,6 +421,65 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
       );
     }
   }
+});
+
+test('generated semantic aliases preserve exact class-token safety declarations', () => {
+  const safetyPropertiesBySelector = {
+    '.ui-button': ['max-inline-size', 'min-inline-size', 'white-space'],
+    '.ui-icon-button': ['max-inline-size', 'min-inline-size', 'white-space'],
+    '.ui-card': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
+    '.ui-field': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
+    '.ui-badge': ['max-inline-size', 'min-inline-size', 'white-space'],
+    '.ui-alert': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
+    '.ui-nav': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
+    '.ui-nav-link': ['max-inline-size', 'min-inline-size', 'white-space'],
+    '.ui-table-wrap': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
+    '.ui-toolbar': ['max-inline-size', 'min-inline-size', 'overflow-wrap']
+  };
+
+  for (const relativeFile of [
+    'dist/ui-style-kit.visual.css',
+    ...manifest.presets.map(({ id }) => `dist/visual/${id}.css`)
+  ]) {
+    const rules = generatedSelectorRules(relativeFile);
+    for (const [selector, properties] of Object.entries(safetyPropertiesBySelector)) {
+      for (const property of properties) {
+        assert.equal(
+          rules.some((rule) => rule.text.includes(selector) && rule.declarations.has(property)),
+          true,
+          `${relativeFile} must carry ${property} from exact class-token sources into ${selector}`
+        );
+      }
+    }
+  }
+});
+
+test('generated semantic aliases never require descendant data-ui roots', () => {
+  for (const relativeFile of [
+    'dist/ui-style-kit.visual.css',
+    ...manifest.presets.map(({ id }) => `dist/visual/${id}.css`)
+  ]) {
+    for (const rule of generatedSelectorRules(relativeFile)) {
+      if (!expectedImplementedSelectors.some((selector) => rule.text.includes(selector))) continue;
+
+      assert.ok(
+        dataUiRootCompounds(rule.selector).size <= 1,
+        `${relativeFile} generated an impossible double-root alias: ${rule.text}`
+      );
+    }
+  }
+});
+
+test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
+  // These fingerprints cover declaration blocks only, so selector-only changes do not affect them.
+  assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
+    count: 6656,
+    sha256: '2f1a39c9c975956b24a7aeb7afe284e94faddafcf053dd932bdbb4d5425f69d0'
+  });
+  assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
+    count: 6889,
+    sha256: '1f59cfc8429eaf83e2d23d188ad8fc086d269605ea9b48a68cc647b38732745e'
+  });
 });
 
 test('semantic source suffixes and contextual variants exist in every composed preset API', () => {
