@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { extractPackageImports } from './documented-imports.mjs';
+import { assertPackageImportsResolve, extractPackageImports } from './documented-imports.mjs';
 import { validateEcosystemCompatibility, validateSharedManifest } from './ecosystem-manifest-schema.mjs';
 import { resolveInteractiveSource } from './ecosystem-pack-sources.mjs';
 import {
@@ -601,17 +601,13 @@ function validateDocumentedImports(scenarioDir) {
         continue;
       }
 
-      const imports = extractPackageImports(fs.readFileSync(documentPath, 'utf8'));
+      const markdown = fs.readFileSync(documentPath, 'utf8');
+      const imports = extractPackageImports(markdown);
       importCount += imports.length;
-      for (const specifier of imports) {
-        try {
-          const resolved = resolver.resolve(specifier);
-          if (!fs.statSync(resolved).isFile()) {
-            failures.push(`${group.name}/${relativePath}: ${specifier} did not resolve to a file`);
-          }
-        } catch (error) {
-          failures.push(`${group.name}/${relativePath}: ${specifier} did not resolve (${error.code ?? error.message})`);
-        }
+      try {
+        assertPackageImportsResolve(markdown, resolver, `${group.name}/${relativePath}`);
+      } catch (error) {
+        failures.push(error.message);
       }
     }
   }

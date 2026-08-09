@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { createServer } from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -121,7 +122,7 @@ jobs:
   publish:
     steps:
       - run: npm run release:preflight
-      - run: npm publish
+      - run: npm publish --access public --ignore-scripts
 `;
 
   assert.doesNotThrow(() =>
@@ -148,6 +149,50 @@ jobs:
         }
       ]),
     /npm-publish\.yml must run release:preflight before npm publish/
+  );
+});
+
+test('repository CI is explicitly read-only and staged publishing cannot re-enter prepublishOnly', () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+  const ciWorkflow = fs.readFileSync(path.join(repositoryRoot, '.github', 'workflows', 'ci.yml'), 'utf8');
+  const publishWorkflow = fs.readFileSync(
+    path.join(repositoryRoot, '.github', 'workflows', 'npm-publish.yml'),
+    'utf8'
+  );
+  const packageManifest = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'package.json'), 'utf8'));
+
+  assert.match(ciWorkflow, /^permissions:\r?\n\s+contents:\s+read\s*$/m);
+  const preflightIndex = publishWorkflow.search(/\bnpm\s+run\s+release:preflight\b/);
+  const publishIndex = publishWorkflow.search(/\bnpm\s+publish\s+--access\s+public\s+--ignore-scripts\b/);
+  assert.ok(preflightIndex >= 0 && preflightIndex < publishIndex);
+  assert.equal(
+    packageManifest.scripts.prepublishOnly,
+    'npm run release:verify',
+    'Direct local npm publish must retain the complete lifecycle guard.'
+  );
+
+  assertPublishIgnoreScriptsSkipsLifecycle();
+});
+
+test('workflow policy rejects publishing that could re-enter prepublishOnly', () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  assert.throws(
+    () =>
+      releasePreflight.validateWorkflowSources([
+        {
+          name: 'ci.yml',
+          source: 'on:\n  pull_request:\njobs:\n  verify:\n    steps:\n      - run: npm run release:preflight\n'
+        },
+        {
+          name: 'npm-publish.yml',
+          source:
+            'on:\n  release:\njobs:\n  publish:\n    steps:\n      - run: npm run release:preflight\n      - run: npm publish --access public\n'
+        }
+      ]),
+    /npm-publish\.yml must publish with --ignore-scripts after the explicit release preflight/
   );
 });
 
@@ -183,4 +228,56 @@ function fixtureCompatibility() {
       }
     }
   };
+}
+
+function assertPublishIgnoreScriptsSkipsLifecycle() {
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'release-lifecycle-contract-'));
+  const lifecycleMarker = path.join(fixtureRoot, 'prepublish-only-ran');
+  fs.writeFileSync(
+    path.join(fixtureRoot, 'package.json'),
+    `${JSON.stringify(
+      {
+        name: 'release-lifecycle-contract',
+        version: '1.0.0',
+        private: false,
+        files: ['index.css'],
+        scripts: { prepublishOnly: 'node lifecycle-guard.mjs' }
+      },
+      null,
+      2
+    )}\n`
+  );
+  fs.writeFileSync(path.join(fixtureRoot, 'index.css'), '.release-lifecycle-contract { display: block; }\n');
+  fs.writeFileSync(
+    path.join(fixtureRoot, 'lifecycle-guard.mjs'),
+    `import fs from 'node:fs';\nfs.writeFileSync(${JSON.stringify(lifecycleMarker)}, 'ran');\nprocess.exit(23);\n`
+  );
+
+  try {
+    const npmExecPath = process.env.npm_execpath;
+    const command =
+      npmExecPath && fs.existsSync(npmExecPath)
+        ? process.execPath
+        : process.platform === 'win32'
+          ? 'npm.cmd'
+          : 'npm';
+    const baseArgs = npmExecPath && fs.existsSync(npmExecPath) ? [npmExecPath] : [];
+    const result = spawnSync(
+      command,
+      [...baseArgs, 'publish', '--dry-run', '--access', 'public', '--ignore-scripts', '--loglevel', 'error'],
+      {
+        cwd: fixtureRoot,
+        encoding: 'utf8',
+        shell: process.platform === 'win32' && baseArgs.length === 0
+      }
+    );
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.equal(
+      fs.existsSync(lifecycleMarker),
+      false,
+      'prepublishOnly must not run after the staged preflight.'
+    );
+  } finally {
+    fs.rmSync(fixtureRoot, { recursive: true, force: true });
+  }
 }

@@ -94,10 +94,17 @@ export function validateWorkflowSources(workflows) {
 
   const mutationPatterns = [
     { label: 'npm publish', pattern: /^(?!\s*(?:name:|#)).*\bnpm\s+publish\b/m },
-    { label: 'git push', pattern: /^(?!\s*(?:name:|#)).*\bgit\s+push\b/m },
-    { label: 'git tag', pattern: /^(?!\s*(?:name:|#)).*\bgit\s+tag\b/m },
-    { label: 'GitHub release', pattern: /(?:action-gh-release|\bgh\s+release\s+create\b)/ },
-    { label: 'deployment', pattern: /actions\/(?:deploy-pages|upload-pages-artifact)@/ }
+    { label: 'npm version', pattern: /^(?!\s*(?:name:|#)).*\bnpm\s+version(?:\s|$)/m },
+    { label: 'git push', pattern: /^(?!\s*(?:name:|#)).*\bgit\s+push(?:\s|$)/m },
+    { label: 'git tag', pattern: /^(?!\s*(?:name:|#)).*\bgit\s+tag(?:\s|$)/m },
+    {
+      label: 'GitHub release',
+      pattern: /(?:^\s*(?:-\s*)?uses:\s*(?:softprops\/action-gh-release|ncipollo\/release-action|actions\/create-release)@|^(?!\s*(?:name:|#)).*\bgh\s+release\b)/m
+    },
+    {
+      label: 'deployment',
+      pattern: /(?:^\s*(?:-\s*)?uses:\s*(?:actions\/(?:deploy-pages|upload-pages-artifact)|peaceiris\/actions-gh-pages|cloudflare\/wrangler-action|azure\/webapps-deploy)@|^(?!\s*(?:name:|#)).*\b(?:wrangler\s+(?:deploy|publish)|netlify\s+deploy|firebase\s+deploy|vercel(?:\s+deploy)?)\b)/m
+    }
   ];
 
   for (const workflow of pullRequestWorkflows) {
@@ -121,6 +128,13 @@ export function validateWorkflowSources(workflows) {
       if (mutationIndex >= 0 && (preflightIndex < 0 || preflightIndex > mutationIndex)) {
         throw new Error(`${workflow.name} must run release:preflight before ${mutation.label}`);
       }
+    }
+    if (/npm-publish\.ya?ml$/i.test(workflow.name) && /\bnpm\s+publish\b/.test(workflow.source)) {
+      assert.match(
+        workflow.source,
+        /^(?!\s*(?:name:|#)).*\bnpm\s+publish\b[^\r\n]*--ignore-scripts(?:\s|$)/m,
+        `${workflow.name} must publish with --ignore-scripts after the explicit release preflight.`
+      );
     }
   }
 }

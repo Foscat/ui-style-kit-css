@@ -22,7 +22,15 @@ Snapshot verification decodes PNG pixels, requires exact dimensions, ignores pix
 
 The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever later work changes a companion contract; the current values include the Task 9 release-preflight commits.
 
-Before expecting a UI pull request or release verification to pass, push the Interactive Surface and Layout Style commits, verify both pinned SHAs as remote commit objects, then push the UI branch and verify its CI. The workflows enforce that order with a remote-object fetch preflight and do not fall back to mutable branches or registry packages.
+Use this exact bootstrap and merge sequence:
+
+1. Push a stable UI bootstrap ref containing `72286fc27e4c3664ab05598a34c4dcf7e8267821`.
+2. Push and merge Interactive Surface CSS and Layout Style CSS with merge commits so their reviewed commit SHAs remain reachable.
+3. Update and verify the final UI companion pins against those merged companion commits.
+4. Push the final UI branch, rerun its ecosystem preflight, and merge UI with a merge commit.
+5. Do not squash, rebase, or delete the only remote refs until every pinned commit is reachable through merged ancestry.
+
+The workflows enforce immutable remote-object reachability and do not fall back to mutable branches or registry packages. The stable bootstrap ref lets companion workflows load the reviewed preflight implementation before the final UI commit references their heads.
 
 `npm run build` uses exactly pinned CSS Tree parsing and Lightning CSS formatting/minification. Generated minified bundles retain the release banner while preserving grammar-sensitive selector and `calc()` whitespace.
 
