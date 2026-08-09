@@ -16,15 +16,17 @@ npm run release:verify
 
 `npm run check:ecosystem:minimum` downloads and repacks the declared minimum published runtime versions: `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`. Those tarballs predate the additive shared-manifest policy introduced on the coordinated branches, so the minimum matrix validates their exact installed versions and published CSS entry points; current packed heads retain the stricter manifest-schema and current-documentation checks. `npm run check:ecosystem:packs` runs current first and minimum second.
 
+The current staged matrix checks `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and the `layout-style-css@3.0.1` patch candidate. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+
 Both matrices install fresh tarball consumers for UI only, Interaction only, Layout only, every pair, and all three. Chromium then checks selected theme paint, native and prefixed components, interaction focus/disabled/loading/selected/persistent states, Layout wrappers/primitives/recipes/personalities, console cleanliness, and an empty external-request log. Three text-free baselines under `tests/snapshots/clean-install/` cover the highest-risk integrated combinations.
 
 Snapshot verification decodes PNG pixels, requires exact dimensions, ignores pixelmatch-classified antialias noise, uses a `0.1` color threshold, and permits at most `0.25%` differing pixels. The committed fixtures render at 720-721 by 261 pixels and therefore allow 469-470 changed pixels while rejecting the tested 42% meaningful change. A mismatch retains both `SCENARIO-actual.png` and `SCENARIO-diff.png` in the reported safe temporary directory. CI only validates committed baselines and never passes the generation flag. To intentionally refresh them locally, run the current checker with `--update-snapshots`, inspect all three images, and rerun without that flag.
 
-The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever later work changes a companion contract; the current values include the Task 9 release-preflight commits.
+The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever later work changes a companion contract. The staged values pin Interactive Surface CSS at `dfe3844f3d5c3c00b3b42fa03485a63baffc17bb` and Layout Style CSS at `d28cb0ac23ab74d380bd17fc1033db6761afbe78`.
 
 Use this exact bootstrap and merge sequence:
 
-1. Push a stable UI bootstrap ref containing `0080528295e485a340959c602f35b47ff5b8fea3`.
+1. Push a stable UI bootstrap ref containing this commit.
 2. Push and merge Interactive Surface CSS and Layout Style CSS with merge commits so their reviewed commit SHAs remain reachable.
 3. Update and verify the final UI companion pins against those merged companion commits.
 4. Push the final UI branch, rerun its ecosystem preflight, and merge UI with a merge commit.

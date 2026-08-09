@@ -28,14 +28,26 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.ownership.status, 'temporary');
   assert.equal(
     compatibility.packageSources['interactive-surface-css'].revision,
-    '7979ce349cde198e2a7ef0c6eab57654d6505f5a',
+    'dfe3844f3d5c3c00b3b42fa03485a63baffc17bb',
     'The ecosystem fixture must pin the Interactive commit with the reviewed release preflight.'
   );
   assert.equal(
     compatibility.packageSources['layout-style-css'].revision,
-    '443a36a8af5581f271897d8d96a2f46b7283ea69',
+    'd28cb0ac23ab74d380bd17fc1033db6761afbe78',
     'The ecosystem fixture must pin the Layout commit with the reviewed release preflight.'
   );
+  assert.deepEqual(compatibility.supportedCombinations, {
+    minimum: {
+      'ui-style-kit-css': '2.1.0',
+      'interactive-surface-css': '1.5.0',
+      'layout-style-css': '3.0.0'
+    },
+    current: {
+      'ui-style-kit-css': '2.1.0',
+      'interactive-surface-css': '1.5.0',
+      'layout-style-css': '3.0.1'
+    }
+  });
   assert.deepEqual(
     compatibility.packages.map(({ name, supportedRange }) => [name, supportedRange]),
     [
@@ -83,6 +95,12 @@ test('current ecosystem documentation consumes canonical imports from the compat
       if (!documentPath.endsWith('Installation-and-Setup.md')) {
         assert.match(document, new RegExp(`${escapeRegExp(packageDefinition.name)}@${escapeRegExp(currentVersion)}`));
       }
+    }
+
+    if (!documentPath.endsWith('Installation-and-Setup.md')) {
+      assert.match(document, /layout-style-css@3\.0\.1/);
+      assert.match(document, /layout-style-css@3\.0\.0/);
+      assert.match(document, /staged (?:patch )?candidate/i);
     }
   }
 });

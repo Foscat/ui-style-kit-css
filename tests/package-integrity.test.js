@@ -319,8 +319,10 @@ test('README documents the 2.1 library system and theme override flow', () => {
   assert.match(readme, /Ecosystem compatibility/);
   assert.match(readme, /ui-style-kit-css@2\.1\.0/);
   assert.match(readme, /interactive-surface-css@1\.5\.0/);
+  assert.match(readme, /layout-style-css@3\.0\.1/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /UI Style Kit `2\.1\.0`, Interactive Surface `1\.5\.0`, and Layout Style `3\.0\.0` are released companion packages/);
+  assert.match(readme, /Layout Style `3\.0\.1` remains a staged patch candidate/);
+  assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
   assert.match(readme, /interactive-surface-theme\.css/);
@@ -380,6 +382,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
     assert.match(contents, /ui-style-kit-css@2\.1\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
+    assert.match(contents, /layout-style-css@3\.0\.1/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
     assert.match(contents, /Use one/);
     assert.match(contents, /Use two/);
@@ -429,7 +432,8 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.1\.0`, Interactive Surface `1\.5\.0`, and Layout Style `3\.0\.0` are released companion packages/);
+    assert.match(contents, /Layout Style `3\.0\.1` remains a staged patch candidate/);
+    assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
 });
 
@@ -531,11 +535,14 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
   assert.match(publishingGuide, /immutable revision pins from `ecosystem-compatibility\.json`/);
 });
 
-test('publishing docs require the reviewed UI workflow bootstrap foundation', () => {
+test('publishing docs require the staged Layout bootstrap contract', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
-  // Companion release workflows must bootstrap from the immutable Gate C foundation.
-  assert.match(publishingGuide, /0080528295e485a340959c602f35b47ff5b8fea3/);
+  assert.match(publishingGuide, /stable UI bootstrap ref containing this commit/i);
+  assert.match(publishingGuide, /dfe3844f3d5c3c00b3b42fa03485a63baffc17bb/);
+  assert.match(publishingGuide, /d28cb0ac23ab74d380bd17fc1033db6761afbe78/);
+  assert.match(publishingGuide, /current[^\n]*layout-style-css@3\.0\.1/i);
+  assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
 });
 
 test('publishing docs describe coordinated proof without re-releasing packages', () => {
