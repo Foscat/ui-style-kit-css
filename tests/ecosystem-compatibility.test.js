@@ -28,12 +28,12 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.ownership.status, 'temporary');
   assert.equal(
     compatibility.packageSources['interactive-surface-css'].revision,
-    'ebca9c53faefe64d6f599e350e7de3622d90784c',
+    '102f2e73dac538414779978f656bf7169352ee95',
     'The ecosystem fixture must pin the Interactive commit with the reviewed release preflight.'
   );
   assert.equal(
     compatibility.packageSources['layout-style-css'].revision,
-    '0e8f4cbbfe84a99004bdd0c9c95e7a79fdbe9868',
+    '443a36a8af5581f271897d8d96a2f46b7283ea69',
     'The ecosystem fixture must pin the Layout commit with the reviewed release preflight.'
   );
   assert.deepEqual(
