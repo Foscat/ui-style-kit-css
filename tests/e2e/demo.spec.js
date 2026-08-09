@@ -1,9 +1,13 @@
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'index.html')).href;
+const semanticSelectors = Object.values(JSON.parse(
+  readFileSync(path.resolve(__dirname, '..', '..', 'manifest.json'), 'utf8')
+).semanticComponentApi.selectorsByRole).flat().map(({ selector }) => selector);
 
 // Keep the smoke-test expectations aligned with the demo's checked-in default controls.
 const defaultDemoState = {
@@ -217,6 +221,53 @@ test('switching demo controls updates body attributes and rendered classes', asy
 
   await expect(page.locator('#main .cyber-title')).toBeVisible();
   await expect(page.locator('#main .cyber-button.cyber-button-primary').first()).toBeVisible();
+});
+
+test('semantic demo nodes and classes remain unchanged through every preset switch', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const semanticSection = page.getByTestId('semantic-runtime-components');
+  await expect(semanticSection).toBeVisible();
+  for (const selector of semanticSelectors) {
+    await expect(semanticSection.locator(selector), `${selector} should appear in the static demo`).not.toHaveCount(0);
+  }
+
+  const initialSnapshot = await semanticSection.evaluate((section) => {
+    const nodes = [...section.querySelectorAll('[data-semantic-node]')];
+    window.__semanticDemoSection = section;
+    window.__semanticDemoNodes = nodes;
+
+    return nodes.map((node) => ({
+      key: node.dataset.semanticNode,
+      className: node.className,
+      variant: node.getAttribute('data-ui-variant')
+    }));
+  });
+
+  expect(initialSnapshot.length).toBeGreaterThan(10);
+  expect(initialSnapshot.some(({ className }) => className.includes('ui-button'))).toBe(true);
+  expect(initialSnapshot.some(({ className }) => className.includes('ui-input'))).toBe(true);
+  expect(initialSnapshot.some(({ className }) => className.includes('ui-alert'))).toBe(true);
+
+  for (const [ui] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+    await expect(page.locator('body')).toHaveAttribute('data-ui', ui);
+
+    const switchSnapshot = await semanticSection.evaluate((section) => ({
+      sameSection: section === window.__semanticDemoSection,
+      sameNodes: window.__semanticDemoNodes.every((node, index) =>
+        node === section.querySelectorAll('[data-semantic-node]')[index]),
+      nodes: [...section.querySelectorAll('[data-semantic-node]')].map((node) => ({
+        key: node.dataset.semanticNode,
+        className: node.className,
+        variant: node.getAttribute('data-ui-variant')
+      }))
+    }));
+
+    expect(switchSnapshot.sameSection).toBe(true);
+    expect(switchSnapshot.sameNodes).toBe(true);
+    expect(switchSnapshot.nodes).toEqual(initialSnapshot);
+  }
 });
 
 test('demo starts with the interactive surface bridge detached and can attach it', async ({ page }) => {
@@ -836,8 +887,9 @@ test('neutral demo buttons keep theme text color across styles and modes', async
       await page.selectOption('#modeSelect', mode);
 
       const colors = await page.evaluate((tokenPrefix) => {
-        const neutralButton = [...document.querySelectorAll('button')]
-          .find((button) => button.textContent.trim() === 'Neutral');
+        const neutralButton = [...document.querySelectorAll('#demoContent button')]
+          .find((button) => button.classList.contains(`${tokenPrefix}-button`)
+            && button.textContent.trim() === 'Neutral');
         const probe = document.createElement('span');
 
         // Resolve the CSS custom property through computed styles, matching browser cascade behavior.

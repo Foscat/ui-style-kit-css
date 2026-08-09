@@ -1,22 +1,16 @@
 # Class API
 
-Class names follow:
-
-`<prefix>-<suffix>`
-
-Examples:
-
-- `saas-button`
-- `bento-card`
-- `retro-nav-link`
-
-`<prefix>` comes from the selected `data-ui` style.
-
 ## Generic Semantic API
 
-`manifest.json#semanticComponentApi` specifies the generic component names that can keep unchanged markup while the root `data-ui` value switches across all 11 presets. The mapped prefixed source suffixes are current and physically present in every composed preset API.
+Lead with `.ui-*` component classes when the root `data-ui` value can switch across presets:
 
-The contract is specified before its new CSS declarations are implemented. `manifest.json#semanticComponentApi.implementationStatus` marks `.ui-spinner` and `.ui-tooltip` as the two retained, already-implemented generic hooks and the other 27 selectors as pending Task 11. Continue using the prefixed classes for pending components in production until the semantic implementation ships.
+```html
+<article class="ui-card">
+  <button class="ui-button" data-ui-variant="primary">Save</button>
+</article>
+```
+
+`manifest.json#semanticComponentApi` defines the 29 implemented generic component selectors. They preserve unchanged markup across all 11 presets in generated default, visual, and with-bridge bundles. Generated focused `visual/<preset>.css` entrypoints support semantic aliases for their one preset. Raw `styles/*` and standalone preset exports remain prefixed advanced APIs. `implementationStatus` partitions the two retained hooks, 27 generated aliases, and an empty pending set.
 
 | Role | Generic selectors |
 | --- | --- |
@@ -44,7 +38,11 @@ Native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` remain
 
 Modal and dialog roles use neutral native `<dialog>` styling. The API intentionally has no `.ui-modal` or `.ui-dialog` selector.
 
+## Advanced and compatibility prefixed API
+
 Preset-prefixed classes remain supported compatibility and advanced APIs. Partial preset-only extras, typography and paint utilities, surface/size/placement helpers, shape and accessibility utilities remain prefix-bound.
+
+Prefixed class names follow `<prefix>-<suffix>`, where `<prefix>` comes from the selected `data-ui` style. Examples include `saas-button`, `bento-card`, and `retro-nav-link`.
 
 ## Core Cross-Style API (11/11 styles)
 

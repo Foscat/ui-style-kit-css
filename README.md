@@ -15,7 +15,7 @@ It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI
 
 ## How the library fits together
 
-UI Style Kit CSS owns visual identity: themes, component paint, native HTML styling, and the prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
+UI Style Kit CSS owns visual identity: themes, semantic `.ui-*` component paint, native HTML styling, and the advanced prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
 
 ```mermaid
 flowchart LR
@@ -90,19 +90,31 @@ npm install ui-style-kit-css
 
 ## Import
 
-Use a single style import for production apps that use one visual system:
+Use the generated default bundle for semantic components that can switch across every preset at runtime:
 
 ```js
-import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css";
 ```
 
-The existing focused entrypoints retain the v2 structural helpers. New integrations that already own layout should use a focused visual-only entrypoint:
+Use `ui-style-kit-css/visual.css` for the same 29-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 11 `data-ui` values.
+
+Applications fixed to one preset can use a generated focused visual entrypoint. It includes semantic aliases scoped to that preset only:
 
 ```js
 import "ui-style-kit-css/visual/minimal-saas.css";
 ```
 
-Use `ui-style-kit-css/visual.css` for runtime preset switching without the deprecated prefixed layout selectors. The exact preset, theme, mode, class, and native-part capability matrix is available from `ui-style-kit-css/manifest.json`.
+The exact preset, theme, mode, class, and native-part capability matrix is available from `ui-style-kit-css/manifest.json`.
+
+### Advanced prefixed and raw imports
+
+The standalone preset exports and longer `styles/*` paths remain advanced compatibility entrypoints. They preserve the prefixed API and do not promise multi-preset semantic switching:
+
+```js
+import "ui-style-kit-css/minimal-saas.css";
+// Equivalent raw source export:
+import "ui-style-kit-css/styles/minimal-saas.css";
+```
 
 In `v2.1.0`, legacy standalone style files continue to import the shared color-scheme, native-element fallback, and content-overflow layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
@@ -113,14 +125,7 @@ import "ui-style-kit-css/content-overflow.css";
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-The longer `styles/*` paths are also exported:
-
-```js
-import "ui-style-kit-css/styles/minimal-saas.css";
-import "ui-style-kit-css/styles/cyberpunk.css";
-```
-
-Use the full bundle when users need to switch `data-ui` systems at runtime:
+The explicit distribution path is also available for runtime switching:
 
 ```js
 import "ui-style-kit-css/dist/ui-style-kit.css";
@@ -172,15 +177,13 @@ For production, pin the exact approved release rather than relying on `latest`:
 
 ```html
 <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
-  <main class="saas-page">
-    <section class="saas-container saas-stack">
-      <article class="saas-card">
-        <h1 class="saas-title">UI Style Kit CSS</h1>
-        <p class="saas-subtitle">Switch UI systems, themes, and modes with attributes.</p>
-        <button class="saas-button saas-button-primary">Primary Action</button>
-        <span class="saas-spinner" aria-label="Loading"></span>
-      </article>
-    </section>
+  <main>
+    <article class="ui-card">
+      <h1>UI Style Kit CSS</h1>
+      <p>Switch UI systems, themes, and modes without changing component classes.</p>
+      <button class="ui-button" data-ui-variant="primary">Primary Action</button>
+      <span class="ui-spinner" role="status" aria-label="Loading"></span>
+    </article>
   </main>
 </body>
 ```
@@ -193,11 +196,11 @@ document.body.dataset.theme = "midnight-gold";
 document.body.dataset.mode = "dark";
 ```
 
+This changes the semantic components' visual preset without replacing their DOM nodes or rewriting their `.ui-*` classes.
+
 ## Semantic component API
 
-`manifest.json#semanticComponentApi` is the authoritative specification for the additive generic component API. The mapped source suffixes already exist in the composed API for all 11 presets, so generic markup can keep the same class names while `data-ui` changes.
-
-This release line currently specifies and validates the contract without adding new semantic CSS declarations. `manifest.json#semanticComponentApi.implementationStatus` records `.ui-spinner` and `.ui-tooltip` as the two retained, already-implemented hooks and the other 27 selectors as pending Task 11. Use the supported prefixed classes for pending components until the semantic implementation ships.
+`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 29 selectors keep the same class names while `data-ui` changes across all 11 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 27 generated semantic aliases, and an empty pending set.
 
 | Role | Generic selectors | Switching coverage |
 |---|---|---|
@@ -231,6 +234,8 @@ The only new attribute is context-constrained `data-ui-variant`. Omit it for the
 Modal and dialog roles deliberately use a neutral native `<dialog>` fallback. There is no `.ui-modal` or `.ui-dialog` selector. The semantic API also does not define `data-ui-state`, `data-ui-size`, or `data-ui-placement`; continue to use native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` where supported.
 
 Preset-prefixed classes remain supported compatibility and advanced APIs. Partial preset extras, typography and paint utilities, surface/size/placement helpers, shape and accessibility utilities, and the deprecated `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` structural aliases remain prefix-bound rather than entering the generic contract.
+
+For example, a fixed Minimal SaaS integration may continue to use `<button class="saas-button saas-button-primary">`. Prefer `.ui-button` plus `data-ui-variant="primary"` when markup must survive runtime preset changes.
 
 ## UI systems
 

@@ -1,5 +1,18 @@
 # UI Style Kit CSS Style Map
 
+## Recommended runtime API
+
+Lead with stable semantic classes when an interface can switch visual presets:
+
+```html
+<article class="ui-card">
+  <button class="ui-button" data-ui-variant="primary">Continue</button>
+  <span class="ui-badge" data-ui-variant="success">Ready</span>
+</article>
+```
+
+Changing only the ancestor `data-ui` value restyles that markup across all 11 presets in the generated default, visual, and with-bridge bundles. A generated `visual/<preset>.css` focused entrypoint supplies the same semantic aliases for its selected preset only. Raw `styles/*` and standalone preset exports remain advanced prefixed APIs and do not promise multi-preset semantic switching.
+
 ## UI systems
 
 Color schemes are defined once in `styles/theme-colors.css`. Native HTML fallback selectors are defined once in `styles/native-elements.css`. Long-text containment rules are defined once in `styles/content-overflow.css`. Each UI system file imports all shared layers, aliases `--usk-*` RGB roles back to its prefix, and maps `--usk-native-*` tokens into the preset's visual identity.
@@ -69,7 +82,7 @@ The bridge inherits from shared `--usk-*` color roles, then applies `.interactiv
 
 ## Semantic component contract
 
-The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The `implementationStatus` section records `.ui-spinner` and `.ui-tooltip` as the two retained generic hooks already implemented and the remaining 27 selectors as pending Task 11; this task adds no semantic CSS declarations.
+The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 implemented generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The `implementationStatus` section records `.ui-spinner` and `.ui-tooltip` as retained hooks, the other 27 selectors as generated aliases, and no pending selectors.
 
 | Role | Generic selector -> current source suffix |
 |---|---|

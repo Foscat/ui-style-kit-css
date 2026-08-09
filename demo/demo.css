@@ -107,6 +107,85 @@
   min-height: 100vh;
 }
 
+.demo-semantic-section {
+  display: grid;
+  gap: 1.25rem;
+  width: min(calc(100% - 2rem), 90rem);
+  margin: 1.5rem auto;
+}
+
+.demo-semantic-heading {
+  max-width: 72rem;
+}
+
+.demo-semantic-heading > * {
+  margin-block: 0;
+}
+
+.demo-semantic-heading > * + * {
+  margin-block-start: .65rem;
+}
+
+.demo-semantic-heading h1 {
+  font-size: clamp(1.8rem, 4vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+
+.demo-semantic-kicker {
+  font-size: .78rem;
+  font-weight: 850;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.demo-semantic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.demo-semantic-grid > .ui-card {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.demo-semantic-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.demo-semantic-dialog-note {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Keep the persistent semantic cards readable without borrowing preset-prefixed layout helpers. */
+@media (max-width: 979.98px) {
+  .demo-semantic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .demo-semantic-grid > .ui-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 719.98px) {
+  .demo-semantic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-semantic-grid > .ui-card:last-child {
+    grid-column: auto;
+  }
+}
+
 .demo-section-lede {
   max-width: 72rem;
 }

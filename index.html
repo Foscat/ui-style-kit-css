@@ -131,6 +131,73 @@
   </aside>
 
   <main id="main">
+    <section id="semantic-runtime" class="demo-semantic-section" data-testid="semantic-runtime-components" aria-labelledby="semantic-runtime-title">
+      <div class="demo-semantic-heading">
+        <p class="demo-semantic-kicker">Runtime semantic API</p>
+        <h1 id="semantic-runtime-title">Switch presets without changing component classes</h1>
+        <p>Every component below keeps its <code>.ui-*</code> class while the UI Style control changes only the root <code>data-ui</code> value.</p>
+      </div>
+      <div class="demo-semantic-grid">
+        <article class="ui-card" data-semantic-node="actions-card">
+          <nav class="ui-nav" data-semantic-node="nav" aria-label="Semantic component preview">
+            <a class="ui-nav-link is-active" data-semantic-node="nav-current" href="#semantic-runtime" aria-current="page">Semantic API</a>
+            <a class="ui-nav-link" data-semantic-node="nav-docs" href="#demoContent">Advanced showcase</a>
+          </nav>
+          <div class="ui-toolbar" data-semantic-node="toolbar" role="toolbar" aria-label="Semantic actions">
+            <button class="ui-button" data-semantic-node="button-neutral">Neutral</button>
+            <button class="ui-button" data-semantic-node="button-primary" data-ui-variant="primary">Primary</button>
+            <button class="ui-button" data-semantic-node="button-secondary" data-ui-variant="secondary">Secondary</button>
+            <button class="ui-button" data-semantic-node="button-danger" data-ui-variant="danger">Danger</button>
+            <button class="ui-button" data-semantic-node="button-ghost" data-ui-variant="ghost">Ghost</button>
+            <button class="ui-icon-button" data-semantic-node="icon-button" aria-label="Semantic settings">&#9881;</button>
+          </div>
+          <div class="demo-semantic-row" aria-label="Semantic status badges">
+            <span class="ui-badge" data-semantic-node="badge-neutral">Neutral</span>
+            <span class="ui-badge" data-semantic-node="badge-success" data-ui-variant="success">Ready</span>
+            <span class="ui-badge" data-semantic-node="badge-warning" data-ui-variant="warning">Review</span>
+          </div>
+          <aside class="ui-alert" data-semantic-node="alert" data-ui-variant="success">
+            <strong class="ui-alert-title" data-semantic-node="alert-title">Markup stays stable</strong>
+            <span class="ui-alert-body" data-semantic-node="alert-body">Only the selected preset changes.</span>
+          </aside>
+        </article>
+
+        <article class="ui-card" data-semantic-node="form-card">
+          <div class="ui-field" data-semantic-node="field">
+            <label class="ui-label" data-semantic-node="label" for="semantic-name">Project name</label>
+            <input id="semantic-name" class="ui-input" data-semantic-node="input" value="Runtime-ready UI">
+            <span class="ui-help-text" data-semantic-node="help-text">Native labels and controls keep their semantics.</span>
+          </div>
+          <label class="ui-field" data-semantic-node="select-field">
+            <span class="ui-label" data-semantic-node="select-label">Release channel</span>
+            <select class="ui-select" data-semantic-node="select"><option>Stable</option><option>Preview</option></select>
+          </label>
+          <label class="ui-field" data-semantic-node="textarea-field">
+            <span class="ui-label" data-semantic-node="textarea-label">Notes</span>
+            <textarea class="ui-textarea" data-semantic-node="textarea">Semantic component markup.</textarea>
+          </label>
+          <div class="demo-semantic-row">
+            <label class="ui-check" data-semantic-node="check"><input type="checkbox" checked><span class="ui-check-control" data-semantic-node="check-control" aria-hidden="true"></span><span>Checked</span></label>
+            <label class="ui-radio" data-semantic-node="radio"><input type="radio" name="semantic-choice" checked><span class="ui-radio-control" data-semantic-node="radio-control" aria-hidden="true"></span><span>Selected</span></label>
+            <label class="ui-switch" data-semantic-node="switch"><input type="checkbox" checked><span class="ui-switch-track" data-semantic-node="switch-track" aria-hidden="true"><span class="ui-switch-thumb" data-semantic-node="switch-thumb"></span></span><span>Enabled</span></label>
+          </div>
+        </article>
+
+        <article class="ui-card" data-semantic-node="data-card">
+          <div class="ui-table-wrap" data-semantic-node="table-wrap">
+            <table class="ui-table" data-semantic-node="table"><caption>Stable semantic markup</caption><thead><tr><th>Contract</th><th>Status</th></tr></thead><tbody><tr><td>29 selectors</td><td>Implemented</td></tr></tbody></table>
+          </div>
+          <div class="ui-progress" data-semantic-node="progress" role="progressbar" aria-label="Semantic API coverage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div class="ui-progress-bar" data-semantic-node="progress-bar"></div></div>
+          <div class="demo-semantic-row">
+            <span class="ui-spinner" data-semantic-node="spinner" role="status" aria-label="Loading preview"></span>
+            <span class="ui-tooltip" data-semantic-node="tooltip" role="tooltip">Same class, new preset</span>
+          </div>
+          <p class="demo-semantic-dialog-note">Modal surfaces use the styled native <code>&lt;dialog&gt;</code> fallback; the API intentionally has no <code>.ui-modal</code> or <code>.ui-dialog</code>.</p>
+        </article>
+      </div>
+    </section>
+
+    <div id="demoContent">
     <section class="saas-page">
       <div class="saas-container saas-stack">
         <article class="saas-card">
@@ -145,6 +212,7 @@
         </article>
       </div>
     </section>
+    </div>
   </main>
 
   <script src="demo/demo-manifest.js"></script>
