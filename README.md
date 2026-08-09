@@ -51,10 +51,10 @@ These libraries stay standalone, but the current aligned set is:
 | Library | Aligned version | Owns |
 |---|---:|---|
 | `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.5.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@3.0.1` | staged patch candidate | structural wrappers, grids, sections, app shells, and layout recipes |
+| `interactive-surface-css@1.6.0` | active staged candidate | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The staged current combination is `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.1`. UI Style Kit and Interactive Surface remain published releases; Layout Style `3.0.1` remains a staged patch candidate until separately approved and published. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The staged current combination is `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.1.0` and Layout Style `3.0.1` are published releases; Interactive Surface `1.6.0` is the active staged candidate until separately approved and published. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 

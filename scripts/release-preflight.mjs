@@ -159,6 +159,8 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
   const fixtureRoot = path.resolve(options.fixtureRoot ?? defaultRoot);
   const candidateRoot = path.resolve(options.candidateRoot ?? defaultRoot);
   const candidatePackage = options.candidatePackage ?? readJson(path.join(candidateRoot, 'package.json')).name;
+  // Packaging may infer its local package, but registry exemption requires explicit active-candidate mode.
+  const activeCandidatePackage = options.candidatePackage ?? null;
   const candidateKey = packageKeys[candidatePackage];
   assert.ok(candidateKey, `Unsupported ecosystem candidate package: ${candidatePackage}`);
 
@@ -188,8 +190,8 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
   validateRepositoryWorkflows(candidateRoot);
   await verifyPublishedVersions(contract, {
     registryUrl: options.registryUrl,
-    candidatePackage,
-    candidateVersion: candidatePackageJson.version
+    candidatePackage: activeCandidatePackage,
+    candidateVersion: activeCandidatePackage ? candidatePackageJson.version : null
   });
 
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), tempPrefix));

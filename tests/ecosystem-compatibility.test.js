@@ -28,12 +28,12 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.ownership.status, 'temporary');
   assert.equal(
     compatibility.packageSources['interactive-surface-css'].revision,
-    'dfe3844f3d5c3c00b3b42fa03485a63baffc17bb',
+    'b34d1dbb9bdecc1a8c655538849188bf551163b3',
     'The ecosystem fixture must pin the Interactive commit with the reviewed release preflight.'
   );
   assert.equal(
     compatibility.packageSources['layout-style-css'].revision,
-    'd28cb0ac23ab74d380bd17fc1033db6761afbe78',
+    '44c34693554879790c54a6205b37160ff63a1747',
     'The ecosystem fixture must pin the Layout commit with the reviewed release preflight.'
   );
   assert.deepEqual(compatibility.supportedCombinations, {
@@ -44,7 +44,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
     },
     current: {
       'ui-style-kit-css': '2.1.0',
-      'interactive-surface-css': '1.5.0',
+      'interactive-surface-css': '1.6.0',
       'layout-style-css': '3.0.1'
     }
   });

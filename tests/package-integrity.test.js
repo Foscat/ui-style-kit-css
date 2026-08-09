@@ -318,10 +318,10 @@ test('README documents the 2.1 library system and theme override flow', () => {
   assert.match(readme, /v2\.1\.0/);
   assert.match(readme, /Ecosystem compatibility/);
   assert.match(readme, /ui-style-kit-css@2\.1\.0/);
-  assert.match(readme, /interactive-surface-css@1\.5\.0/);
+  assert.match(readme, /interactive-surface-css@1\.6\.0/);
   assert.match(readme, /layout-style-css@3\.0\.1/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /Layout Style `3\.0\.1` remains a staged patch candidate/);
+  assert.match(readme, /Interactive Surface `1\.6\.0` is the active staged candidate/);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
@@ -396,6 +396,32 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
+test('ecosystem fixture stages the immutable Interactive 1.6.0 candidate without changing UI 2.1.0', () => {
+  const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
+  const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
+  const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
+
+  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b34d1dbb9bdecc1a8c655538849188bf551163b3');
+  assert.equal(compatibility.packageSources['layout-style-css'].revision, '44c34693554879790c54a6205b37160ff63a1747');
+  assert.deepEqual(compatibility.supportedCombinations, {
+    minimum: {
+      'ui-style-kit-css': '2.1.0',
+      'interactive-surface-css': '1.5.0',
+      'layout-style-css': '3.0.0'
+    },
+    current: {
+      'ui-style-kit-css': '2.1.0',
+      'interactive-surface-css': '1.6.0',
+      'layout-style-css': '3.0.1'
+    }
+  });
+
+  for (const contents of [ecosystemDoc, ecosystemWiki]) {
+    assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}active staged candidate/i);
+    assert.match(contents, /layout-style-css@3\.0\.1[\s\S]{0,120}published/i);
+  }
+});
+
 test('deprecated bridge migration guidance preserves the retained public exports', () => {
   const migrationGuide = fs.readFileSync(path.join(rootDir, 'docs', 'BRIDGE-MIGRATION.md'), 'utf8');
 
@@ -432,7 +458,7 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /Layout Style `3\.0\.1` remains a staged patch candidate/);
+    assert.match(contents, /Interactive Surface `1\.6\.0` is the active staged candidate/);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
 });
@@ -535,12 +561,14 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
   assert.match(publishingGuide, /immutable revision pins from `ecosystem-compatibility\.json`/);
 });
 
-test('publishing docs require the staged Layout bootstrap contract', () => {
+test('publishing docs require the staged Interactive bootstrap contract', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
   assert.match(publishingGuide, /stable UI bootstrap ref containing this commit/i);
-  assert.match(publishingGuide, /dfe3844f3d5c3c00b3b42fa03485a63baffc17bb/);
-  assert.match(publishingGuide, /d28cb0ac23ab74d380bd17fc1033db6761afbe78/);
+  assert.match(publishingGuide, /b34d1dbb9bdecc1a8c655538849188bf551163b3/);
+  assert.match(publishingGuide, /44c34693554879790c54a6205b37160ff63a1747/);
+  assert.match(publishingGuide, /active staged candidate[\s\S]{0,120}interactive-surface-css@1\.6\.0/i);
+  assert.match(publishingGuide, /layout-style-css@3\.0\.1[\s\S]{0,120}published/i);
   assert.match(publishingGuide, /current[^\n]*layout-style-css@3\.0\.1/i);
   assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
 });

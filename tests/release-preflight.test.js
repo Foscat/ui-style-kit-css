@@ -44,6 +44,39 @@ test('queries every exact minimum and current package version from the configure
   ]);
 });
 
+test('normal UI preflight queries all five exact ecosystem versions before packaging', async () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const requested = [];
+  const server = createServer((request, response) => {
+    requested.push(request.url);
+    const [, packageName, version] = request.url.split('/');
+    response.setHeader('content-type', 'application/json');
+    response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+
+  try {
+    const { port } = server.address();
+    // Exercise the executable default path so an implicitly selected UI package cannot receive a candidate exemption.
+    await releasePreflight.runReleasePreflight([
+      '--registry-url',
+      `http://127.0.0.1:${port}`,
+      '--skip-clean-install'
+    ]);
+  } finally {
+    await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+  }
+
+  assert.deepEqual(requested.sort(), [
+    '/interactive-surface-css/1.5.0',
+    '/interactive-surface-css/1.6.0',
+    '/layout-style-css/3.0.0',
+    '/layout-style-css/3.0.1',
+    '/ui-style-kit-css/2.1.0'
+  ]);
+});
+
 test('excludes only the staged Layout 3.0.1 candidate while retaining published minimum checks', async () => {
   assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
 
@@ -70,6 +103,38 @@ test('excludes only the staged Layout 3.0.1 candidate while retaining published 
   assert.deepEqual(requested.sort(), [
     '/interactive-surface-css/1.5.0',
     '/layout-style-css/3.0.0',
+    '/ui-style-kit-css/2.1.0'
+  ]);
+});
+
+test('Interactive candidate preflight excludes only unpublished 1.6.0 while checking every published floor and companion', async () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const requested = [];
+  const server = createServer((request, response) => {
+    requested.push(request.url);
+    const [, packageName, version] = request.url.split('/');
+    response.setHeader('content-type', 'application/json');
+    response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+
+  try {
+    const { port } = server.address();
+    // The candidate exemption is intentionally exact: published minimums and Layout current still hit npm.
+    await releasePreflight.verifyPublishedVersions(interactiveCandidateCompatibility(), {
+      registryUrl: `http://127.0.0.1:${port}`,
+      candidatePackage: 'interactive-surface-css',
+      candidateVersion: '1.6.0'
+    });
+  } finally {
+    await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+  }
+
+  assert.deepEqual(requested.sort(), [
+    '/interactive-surface-css/1.5.0',
+    '/layout-style-css/3.0.0',
+    '/layout-style-css/3.0.1',
     '/ui-style-kit-css/2.1.0'
   ]);
 });
@@ -347,6 +412,23 @@ function fixtureCompatibility() {
       current: {
         'ui-style-kit-css': '2.1.0',
         'interactive-surface-css': '1.5.0',
+        'layout-style-css': '3.0.1'
+      }
+    }
+  };
+}
+
+function interactiveCandidateCompatibility() {
+  return {
+    supportedCombinations: {
+      minimum: {
+        'ui-style-kit-css': '2.1.0',
+        'interactive-surface-css': '1.5.0',
+        'layout-style-css': '3.0.0'
+      },
+      current: {
+        'ui-style-kit-css': '2.1.0',
+        'interactive-surface-css': '1.6.0',
         'layout-style-css': '3.0.1'
       }
     }
