@@ -58,6 +58,8 @@ UI Style Kit `2.1.0`, Interactive Surface `1.5.0`, and Layout Style `3.0.0` are 
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
+Every UI Style Kit visual or preset entrypoint also publishes a small, fully typed `--ui-*` semantic handshake. These tokens let companion libraries and third-party themes share paint, control geometry, focus, and default motion without depending on preset-specific names. They are optional fallbacks for consumers: package-specific tokens still take precedence, and standalone packages keep their existing legacy and literal defaults when the handshake is absent. See the [token contract](docs/TOKENS.md#shared-semantic-token-handshake) for the exact 12-token inventory.
+
 For import order, ownership boundaries, and adoption paths, see the [Ecosystem guide](docs/ECOSYSTEM.md).
 
 ## Features
@@ -77,7 +79,7 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 - Visible tooltip classes and native `[role="tooltip"]` styling inside each UI scope
 - Font-family override variables for body, headings, controls, and mono text
 - Canonical token-and-paint-only theme bridge for `interactive-surface-css/state-core.css`
-- Deprecated stateful bridge exports retained unchanged for backward compatibility
+- Deprecated stateful bridge exports retained for backward compatibility
 - Reduced-motion, high-contrast, forced-colors, and print support
 - Cascade-layered CSS for easier consumer overrides
 - No runtime dependencies
@@ -150,11 +152,11 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~356 KB | ~44 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~347 KB | ~43 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~430 KB | ~52 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~357 KB | ~44 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~348 KB | ~43 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~431 KB | ~52 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~21 KB | ~3 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~22 KB | ~4 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |

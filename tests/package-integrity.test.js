@@ -605,9 +605,18 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
     'retro-glass'
   ];
 
-  assert.match(bridgeCss, /--interactive-surface-bg:\s*rgb\(var\(--usk-surface-strong-rgb,/);
-  assert.match(bridgeCss, /--interactive-surface-fg:\s*rgb\(var\(--usk-text-rgb\)\)/);
-  assert.match(bridgeCss, /--interactive-surface-variant-primary-bg:\s*rgb\(var\(--usk-primary-rgb\)\)/);
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-bg:\s*var\(--ui-color-surface,\s*rgb\(var\(--usk-surface-strong-rgb,/
+  );
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-fg:\s*var\(--ui-color-text,\s*rgb\(var\(--usk-text-rgb\)\)\)/
+  );
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-variant-primary-bg:\s*var\(--ui-color-primary,\s*rgb\(var\(--usk-primary-rgb\)\)\)/
+  );
 
   for (const level of [1, 2, 3]) {
     assert.match(

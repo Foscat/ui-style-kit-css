@@ -11,10 +11,10 @@
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface {
   --interactive-surface-border-width: 1px;
-  --interactive-surface-bg: rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255)));
-  --interactive-surface-fg: rgb(var(--usk-text-rgb));
+  --interactive-surface-bg: var(--ui-color-surface, rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255))));
+  --interactive-surface-fg: var(--ui-color-text, rgb(var(--usk-text-rgb)));
   --interactive-surface-border-color: rgb(var(--usk-border-rgb, 128 128 128) / .72);
-  --interactive-surface-focus-ring-color: rgb(var(--usk-focus-rgb, var(--usk-primary-rgb, 72 120 255)));
+  --interactive-surface-focus-ring-color: var(--ui-focus-color, rgb(var(--usk-focus-rgb, var(--usk-primary-rgb, 72 120 255))));
   --interactive-surface-radius: .85rem;
   --interactive-surface-state-layer-color: currentColor;
   --interactive-surface-state-layer-opacity: 0;
@@ -27,8 +27,8 @@
   --interactive-surface-light-icon-color-dark: var(--interactive-surface-light-icon-color);
   --interactive-surface-dark-icon-color-dark: var(--interactive-surface-dark-icon-color);
   --interactive-surface-accessibility-icon-color-dark: var(--interactive-surface-accessibility-icon-color);
-  --interactive-surface-variant-primary-bg: rgb(var(--usk-primary-rgb));
-  --interactive-surface-variant-primary-fg: rgb(var(--usk-primary-text-rgb, var(--usk-bg-rgb, 255 255 255)));
+  --interactive-surface-variant-primary-bg: var(--ui-color-primary, rgb(var(--usk-primary-rgb)));
+  --interactive-surface-variant-primary-fg: var(--ui-color-on-primary, rgb(var(--usk-primary-text-rgb, var(--usk-bg-rgb, 255 255 255))));
   --interactive-surface-variant-primary-border-color: rgb(var(--usk-primary-rgb, 72 120 255));
   --interactive-surface-variant-secondary-bg: rgb(var(--usk-secondary-rgb, var(--usk-surface-soft-rgb, 96 112 128)));
   --interactive-surface-variant-secondary-fg: rgb(var(--usk-secondary-text-rgb, var(--usk-text-rgb, 18 18 18)));
@@ -37,7 +37,7 @@
   --interactive-surface-variant-accent-fg: rgb(var(--usk-accent-text-rgb, var(--usk-bg-rgb, 255 255 255)));
   --interactive-surface-variant-accent-border-color: rgb(var(--usk-accent-rgb, var(--usk-primary-rgb, 72 120 255)));
   --interactive-surface-variant-subtle-bg: rgb(var(--usk-surface-soft-rgb, var(--usk-surface-rgb, 244 244 244)));
-  --interactive-surface-variant-subtle-fg: rgb(var(--usk-text-rgb, 18 18 18));
+  --interactive-surface-variant-subtle-fg: var(--ui-color-text, rgb(var(--usk-text-rgb, 18 18 18)));
   --interactive-surface-variant-subtle-border-color: rgb(var(--usk-border-rgb, 128 128 128) / .64);
   --interactive-surface-variant-warning-bg: rgb(var(--usk-warning-rgb, 255 190 72));
   --interactive-surface-variant-warning-fg: rgb(var(--usk-warning-text-rgb, var(--usk-bg-rgb, 18 18 18)));
