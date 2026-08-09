@@ -47,7 +47,7 @@ jobs:
           ref: refs/tags/${{ steps.release_ref.outputs.release_tag }}
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -114,7 +114,7 @@ jobs:
           ref: refs/tags/${{ needs.verify.outputs.release_tag }}
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
