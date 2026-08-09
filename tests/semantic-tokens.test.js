@@ -174,11 +174,14 @@ test('canonical and deprecated adapters prefer only behavior-equivalent semantic
   assert.doesNotMatch(deprecatedCss, /--ui-motion-(?:duration|easing)/);
 });
 
-test('unreleased changelog announces the shared semantic producer and manifest contract', () => {
-  const unreleased = read('CHANGELOG.md').match(/## \[Unreleased\]([\s\S]*?)(?=\n## \[|$)/)?.[1] ?? '';
+test('2.2.0 changelog records the shipped semantic producer and manifest contract', () => {
+  const changelog = read('CHANGELOG.md');
+  const unreleased = changelog.match(/## \[Unreleased\]([\s\S]*?)(?=\n## \[|$)/)?.[1] ?? '';
+  const releaseNotes = changelog.match(/## \[2\.2\.0\][\s\S]*?(?=\n## \[|$)/)?.[0] ?? '';
 
-  assert.match(unreleased, /### Added[\s\S]*12-token[\s\S]*semantic/i);
-  assert.match(unreleased, /### Added[\s\S]*machine-readable[\s\S]*manifest/i);
+  assert.equal(unreleased.trim(), '');
+  assert.match(releaseNotes, /### Added[\s\S]*12-token[\s\S]*semantic/i);
+  assert.match(releaseNotes, /### Added[\s\S]*machine-readable[\s\S]*manifest/i);
 });
 
 test('core producer documentation defines third-party and standalone expectations', () => {

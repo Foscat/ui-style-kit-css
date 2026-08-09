@@ -1,6 +1,6 @@
 {
   "name": "ui-style-kit-css",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "CSS theme and UI style preset library for accessible websites, dashboards, admin interfaces, and client-facing pages.",
   "style": "dist/ui-style-kit.css",
   "main": "dist/ui-style-kit.css",
@@ -190,7 +190,7 @@
     "check": "npm run build && npm run lint && npm run test:unit && npm run check:contrast && npm run check:ownership && npm run check:package",
     "pack:dry-run": "npm pack --dry-run",
     "prepack": "npm run check",
-    "release:verify": "npm run check && npm run test:e2e && npm run test:axe && npm run test:visual && npm run test:matrix && npm run release:preflight && npm audit --audit-level=moderate && npm run pack:dry-run",
+    "release:verify": "npm run check && npm run test:e2e && npm run test:axe && npm run test:visual && npm run test:matrix && npm run release:preflight -- --candidate-package ui-style-kit-css && npm audit --audit-level=moderate && npm run pack:dry-run",
     "prepublishOnly": "npm run release:verify",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",

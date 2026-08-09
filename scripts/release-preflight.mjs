@@ -103,9 +103,23 @@ export function validateInstalledExports(consumerRoot, packageName) {
   return [...specifiers].sort();
 }
 
-export function validateWorkflowSources(workflows) {
+export function validateWorkflowSources(workflows, { candidatePackage = 'ui-style-kit-css' } = {}) {
   const pullRequestWorkflows = workflows.filter(({ source }) => /^\s*pull_request\s*:/m.test(source));
   assert.ok(pullRequestWorkflows.length > 0, 'At least one workflow must validate pull requests.');
+
+  if (candidatePackage === 'ui-style-kit-css') {
+    for (const workflow of workflows) {
+      const preflightCommands = workflow.source.match(/^(?!\s*#).*\bnpm\s+run\s+release:preflight\b[^\r\n]*/gm) ?? [];
+      for (const command of preflightCommands) {
+        // UI release workflows must explicitly exempt only the staged UI version; companion workflows use their own package scripts.
+        assert.match(
+          command,
+          /--candidate-package\s+ui-style-kit-css(?:\s|$)/,
+          `${workflow.name} release:preflight must pass --candidate-package ui-style-kit-css.`
+        );
+      }
+    }
+  }
 
   const mutationPatterns = [
     { label: 'npm publish', pattern: /^(?!\s*(?:name:|#)).*\bnpm\s+publish\b/m },
@@ -187,7 +201,7 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
     `${candidatePackage} candidate version must equal the documented current version.`
   );
 
-  validateRepositoryWorkflows(candidateRoot);
+  validateRepositoryWorkflows(candidateRoot, candidatePackage);
   await verifyPublishedVersions(contract, {
     registryUrl: options.registryUrl,
     candidatePackage: activeCandidatePackage,
@@ -201,7 +215,10 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
     const consumerRoot = path.join(tempRoot, 'consumer');
     fs.mkdirSync(consumerRoot, { recursive: true });
     fs.writeFileSync(path.join(consumerRoot, 'package.json'), '{"name":"release-preflight-consumer","private":true}\n');
-    runNpm(['install', '--ignore-scripts', '--no-audit', '--no-fund', '--silent', tarball], { cwd: consumerRoot });
+    runNpm(['install', '--ignore-scripts', '--no-audit', '--no-fund', '--silent', tarball], {
+      cwd: consumerRoot,
+      env: { ...process.env, npm_config_dry_run: 'false' }
+    });
     const exports = validateInstalledExports(consumerRoot, candidatePackage);
     console.log(`PASS packed exports ${candidatePackage} (${exports.length})`);
 
@@ -252,20 +269,24 @@ function parseArgs(args) {
   return parsed;
 }
 
-function validateRepositoryWorkflows(root) {
+function validateRepositoryWorkflows(root, candidatePackage) {
   const workflowRoot = path.join(root, '.github', 'workflows');
   const workflows = fs
     .readdirSync(workflowRoot)
     .filter((name) => /\.ya?ml$/i.test(name))
     .map((name) => ({ name, source: fs.readFileSync(path.join(workflowRoot, name), 'utf8') }));
-  validateWorkflowSources(workflows);
+  validateWorkflowSources(workflows, { candidatePackage });
   console.log(`PASS workflow policy (${workflows.length} files)`);
 }
 
 function packCandidate(candidateRoot, tempRoot) {
   const packRoot = path.join(tempRoot, 'pack');
   fs.mkdirSync(packRoot, { recursive: true });
-  const output = runNpm(['pack', '--ignore-scripts', '--json', '--pack-destination', packRoot], { cwd: candidateRoot });
+  const output = runNpm(['pack', '--ignore-scripts', '--json', '--pack-destination', packRoot], {
+    cwd: candidateRoot,
+    // An outer npm pack --dry-run propagates this flag; verification must still materialize its isolated tarball.
+    env: { ...process.env, npm_config_dry_run: 'false' }
+  });
   const details = JSON.parse(output);
   assert.equal(details.length, 1, 'npm pack must produce exactly one candidate tarball.');
   const tarball = path.join(packRoot, path.basename(details[0].filename));
@@ -360,8 +381,8 @@ function runNpm(args, options) {
   return run(npm.command, [...npm.baseArgs, ...args], { ...options, shell: npm.shell });
 }
 
-function run(command, args, { cwd, shell = false }) {
-  const result = spawnSync(command, args, { cwd, encoding: 'utf8', shell });
+function run(command, args, { cwd, shell = false, env = process.env }) {
+  const result = spawnSync(command, args, { cwd, encoding: 'utf8', shell, env });
   if (result.status !== 0) {
     throw new Error(
       [`Command failed: ${command} ${args.join(' ')}`, `cwd: ${cwd}`, result.error?.message, result.stdout, result.stderr]

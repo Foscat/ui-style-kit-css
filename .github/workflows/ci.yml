@@ -109,9 +109,9 @@ jobs:
       - name: Install clean-consumer browser
         run: npx playwright install --with-deps chromium
 
-      # This PR-safe gate installs only packed artifacts and never publishes.
+      # Explicit candidate mode exempts only the unpublished UI version; every companion version still comes from npm.
       - name: Run PR-safe ecosystem release preflight
-        run: npm run release:preflight -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
+        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
 
   playwright:
     name: Playwright E2E

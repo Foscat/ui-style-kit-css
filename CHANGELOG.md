@@ -4,6 +4,8 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-08-09
+
 ### Added
 
 - Added the public 12-token shared semantic producer contract and its machine-readable manifest inventory for companion and third-party consumers.

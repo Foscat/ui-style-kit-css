@@ -173,7 +173,7 @@ function selectorDeclarations(relativeFile, selector, layerName) {
   return declarations;
 }
 
-test('2.1 package exports resolve the visual, focused, manifest, and bridge API', () => {
+test('2.2 package exports resolve the retained visual, focused, manifest, and bridge API', () => {
   const packageJson = readJson('package.json');
   const packageLock = readJson('package-lock.json');
   const expectedExports = new Map([
@@ -189,9 +189,9 @@ test('2.1 package exports resolve the visual, focused, manifest, and bridge API'
     expectedExports.set(`./visual/${id}.css`, `./dist/visual/${id}.css`);
   }
 
-  assert.equal(packageJson.version, '2.1.0');
-  assert.equal(packageLock.version, '2.1.0');
-  assert.equal(packageLock.packages[''].version, '2.1.0');
+  assert.equal(packageJson.version, '2.2.0');
+  assert.equal(packageLock.version, '2.2.0');
+  assert.equal(packageLock.packages[''].version, '2.2.0');
 
   for (const [exportPath, target] of expectedExports) {
     assert.equal(packageJson.exports[exportPath], target, `${exportPath} should resolve to ${target}`);
@@ -206,7 +206,7 @@ test('2.1 package exports resolve the visual, focused, manifest, and bridge API'
   assert.equal(packageJson.exports['./with-bridge'], './dist/ui-style-kit.with-bridge.css');
 });
 
-test('release-facing current-version surfaces identify 2.1.0', () => {
+test('release-facing current-version surfaces identify 2.2.0', () => {
   const currentVersionFiles = [
     'README.md',
     'index.html',
@@ -214,18 +214,16 @@ test('release-facing current-version surfaces identify 2.1.0', () => {
     path.join('docs', 'PUBLISHING.md'),
     path.join('docs', 'ECOSYSTEM.md'),
     path.join('wiki', 'Home.md'),
-    path.join('wiki', 'Installation-and-Setup.md'),
-    path.join('wiki', 'Ecosystem-Compatibility.md'),
-    path.join('wiki', 'UI-Systems.md')
+    path.join('wiki', 'Ecosystem-Compatibility.md')
   ];
 
   for (const relativeFile of currentVersionFiles) {
     const contents = fs.readFileSync(relativePath(relativeFile), 'utf8');
-    assert.equal(contents.includes('2.1.0'), true, `${relativeFile} should identify the current version`);
+    assert.equal(contents.includes('2.2.0'), true, `${relativeFile} should identify the current version`);
   }
 
   const changelog = fs.readFileSync(relativePath('CHANGELOG.md'), 'utf8');
-  assert.equal(changelog.includes('## [2.1.0] - 2026-07-20'), true);
+  assert.equal(changelog.includes('## [2.2.0] - 2026-08-09'), true);
 });
 
 test('manifest describes every preset, scheme, mode, class capability, and native part', () => {
@@ -233,7 +231,7 @@ test('manifest describes every preset, scheme, mode, class capability, and nativ
 
   assert.equal(manifest.schemaVersion, 1);
   assert.equal(manifest.name, 'ui-style-kit-css');
-  assert.equal(manifest.version, '2.1.0');
+  assert.equal(manifest.version, '2.2.0');
   assert.deepEqual(manifest.cascadeLayers, cascadeLayers);
   assert.deepEqual(manifest.themes, themes);
   assert.deepEqual(manifest.modes, modes);

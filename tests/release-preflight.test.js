@@ -26,7 +26,6 @@ test('queries every exact minimum and current package version from the configure
     response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-
   try {
     const { port } = server.address();
     await releasePreflight.verifyPublishedVersions(fixtureCompatibility(), {
@@ -44,7 +43,7 @@ test('queries every exact minimum and current package version from the configure
   ]);
 });
 
-test('normal UI preflight queries all five exact ecosystem versions before packaging', async () => {
+test('normal UI preflight queries all six exact minimum and current ecosystem versions before packaging', async () => {
   assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
 
   const requested = [];
@@ -55,6 +54,8 @@ test('normal UI preflight queries all five exact ecosystem versions before packa
     response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const previousDryRun = process.env.npm_config_dry_run;
+  process.env.npm_config_dry_run = 'true';
 
   try {
     const { port } = server.address();
@@ -65,6 +66,8 @@ test('normal UI preflight queries all five exact ecosystem versions before packa
       '--skip-clean-install'
     ]);
   } finally {
+    if (previousDryRun === undefined) delete process.env.npm_config_dry_run;
+    else process.env.npm_config_dry_run = previousDryRun;
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
   }
 
@@ -73,7 +76,8 @@ test('normal UI preflight queries all five exact ecosystem versions before packa
     '/interactive-surface-css/1.6.0',
     '/layout-style-css/3.0.0',
     '/layout-style-css/3.0.1',
-    '/ui-style-kit-css/2.1.0'
+    '/ui-style-kit-css/2.1.0',
+    '/ui-style-kit-css/2.2.0'
   ]);
 });
 
@@ -166,7 +170,7 @@ test('excludes only the unpublished candidate current version from registry chec
     '/interactive-surface-css/1.5.0',
     '/interactive-surface-css/1.6.0',
     '/layout-style-css/3.0.0',
-    '/layout-style-css/3.1.0',
+    '/layout-style-css/3.0.1',
     '/ui-style-kit-css/2.1.0'
   ]);
 });
@@ -300,7 +304,7 @@ on:
 jobs:
   verify:
     steps:
-      - run: npm run release:preflight
+      - run: npm run release:preflight -- --candidate-package ui-style-kit-css
 `;
   const safeRelease = `
 name: npm publish
@@ -309,7 +313,7 @@ on:
 jobs:
   publish:
     steps:
-      - run: npm run release:preflight
+      - run: npm run release:preflight -- --candidate-package ui-style-kit-css
       - run: npm publish --access public --ignore-scripts
 `;
 
@@ -333,11 +337,60 @@ jobs:
         { name: 'ci.yml', source: safePullRequest },
         {
           name: 'npm-publish.yml',
-          source: safeRelease.replace('- run: npm run release:preflight\n      - run: npm publish', '- run: npm publish')
+          source: safeRelease.replace(
+            '- run: npm run release:preflight -- --candidate-package ui-style-kit-css\n      - run: npm publish',
+            '- run: npm publish'
+          )
         }
       ]),
     /npm-publish\.yml must run release:preflight before npm publish/
   );
+
+  assert.throws(
+    () =>
+      releasePreflight.validateWorkflowSources([
+        {
+          name: 'ci.yml',
+          source: safePullRequest.replace(' -- --candidate-package ui-style-kit-css', '')
+        },
+        { name: 'npm-publish.yml', source: safeRelease }
+      ]),
+    /ci\.yml release:preflight must pass --candidate-package ui-style-kit-css/
+  );
+});
+
+test('companion candidate workflows retain shared safety policy without the UI-only candidate flag', () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const companionPullRequest = `
+name: Release preflight
+on:
+  pull_request:
+jobs:
+  verify:
+    steps:
+      - run: npm run release:preflight
+`;
+  const companionRelease = `
+name: npm publish
+on:
+  release:
+jobs:
+  publish:
+    steps:
+      - run: npm run release:preflight
+      - run: npm publish --access public --ignore-scripts
+`;
+  const workflows = [
+    { name: 'ci.yml', source: companionPullRequest },
+    { name: 'npm-publish.yml', source: companionRelease }
+  ];
+
+  for (const candidatePackage of ['interactive-surface-css', 'layout-style-css']) {
+    assert.doesNotThrow(() =>
+      releasePreflight.validateWorkflowSources(workflows, { candidatePackage })
+    );
+  }
 });
 
 test('repository CI is explicitly read-only and staged publishing cannot re-enter prepublishOnly', () => {
@@ -372,12 +425,12 @@ test('workflow policy rejects publishing that could re-enter prepublishOnly', ()
       releasePreflight.validateWorkflowSources([
         {
           name: 'ci.yml',
-          source: 'on:\n  pull_request:\njobs:\n  verify:\n    steps:\n      - run: npm run release:preflight\n'
+          source: 'on:\n  pull_request:\njobs:\n  verify:\n    steps:\n      - run: npm run release:preflight -- --candidate-package ui-style-kit-css\n'
         },
         {
           name: 'npm-publish.yml',
           source:
-            'on:\n  release:\njobs:\n  publish:\n    steps:\n      - run: npm run release:preflight\n      - run: npm publish --access public\n'
+            'on:\n  release:\njobs:\n  publish:\n    steps:\n      - run: npm run release:preflight -- --candidate-package ui-style-kit-css\n      - run: npm publish --access public\n'
         }
       ]),
     /npm-publish\.yml must publish with --ignore-scripts after the explicit release preflight/
@@ -446,7 +499,7 @@ function futureCandidateCompatibility() {
       current: {
         'ui-style-kit-css': '2.2.0',
         'interactive-surface-css': '1.6.0',
-        'layout-style-css': '3.1.0'
+        'layout-style-css': '3.0.1'
       }
     }
   };

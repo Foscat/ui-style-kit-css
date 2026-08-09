@@ -308,20 +308,22 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.1 library system and theme override flow', () => {
+test('README documents the 2.2 library system and published companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.1\.0/);
+  assert.match(readme, /v2\.2\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.1\.0/);
+  assert.match(readme, /ui-style-kit-css@2\.2\.0/);
   assert.match(readme, /interactive-surface-css@1\.6\.0/);
   assert.match(readme, /layout-style-css@3\.0\.1/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /Interactive Surface `1\.6\.0` is the active staged candidate/);
+  assert.match(readme, /UI Style Kit `2\.2\.0` is the current package version/);
+  assert.match(readme, /Interactive Surface `1\.6\.0` and Layout Style `3\.0\.1` are published releases/);
+  assert.doesNotMatch(readme, /active staged candidate/i);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
@@ -380,7 +382,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.1\.0/);
+    assert.match(contents, /ui-style-kit-css@2\.2\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
     assert.match(contents, /layout-style-css@3\.0\.1/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
@@ -396,12 +398,12 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
-test('ecosystem fixture stages the immutable Interactive 1.6.0 candidate without changing UI 2.1.0', () => {
+test('ecosystem fixture pins both published companions for the UI 2.2.0 release', () => {
   const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
 
-  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b34d1dbb9bdecc1a8c655538849188bf551163b3');
+  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b50a60d8ffd804d8227b1a16903c394556b88511');
   assert.equal(compatibility.packageSources['layout-style-css'].revision, '44c34693554879790c54a6205b37160ff63a1747');
   assert.deepEqual(compatibility.supportedCombinations, {
     minimum: {
@@ -410,15 +412,17 @@ test('ecosystem fixture stages the immutable Interactive 1.6.0 candidate without
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.1.0',
+      'ui-style-kit-css': '2.2.0',
       'interactive-surface-css': '1.6.0',
       'layout-style-css': '3.0.1'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}active staged candidate/i);
+    assert.match(contents, /ui-style-kit-css@2\.2\.0[\s\S]{0,120}current package version/i);
+    assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
     assert.match(contents, /layout-style-css@3\.0\.1[\s\S]{0,120}published/i);
+    assert.doesNotMatch(contents, /active staged candidate/i);
   }
 });
 
@@ -458,7 +462,8 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /Interactive Surface `1\.6\.0` is the active staged candidate/);
+    assert.match(contents, /UI Style Kit `2\.2\.0` is the current package version/);
+    assert.match(contents, /Interactive Surface `1\.6\.0` and Layout Style `3\.0\.1` are published releases/);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
 });
@@ -533,7 +538,7 @@ test('release verification script is non-publishing and covers the full release 
     'npm run test:axe',
     'npm run test:visual',
     'npm run test:matrix',
-    'npm run release:preflight',
+    'npm run release:preflight -- --candidate-package ui-style-kit-css',
     'npm audit --audit-level=moderate',
     'npm run pack:dry-run'
   ];
@@ -561,14 +566,15 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
   assert.match(publishingGuide, /immutable revision pins from `ecosystem-compatibility\.json`/);
 });
 
-test('publishing docs require the staged Interactive bootstrap contract', () => {
+test('publishing docs pin published companion merge commits for the UI release', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
-  assert.match(publishingGuide, /stable UI bootstrap ref containing this commit/i);
-  assert.match(publishingGuide, /b34d1dbb9bdecc1a8c655538849188bf551163b3/);
+  assert.match(publishingGuide, /b50a60d8ffd804d8227b1a16903c394556b88511/);
   assert.match(publishingGuide, /44c34693554879790c54a6205b37160ff63a1747/);
-  assert.match(publishingGuide, /active staged candidate[\s\S]{0,120}interactive-surface-css@1\.6\.0/i);
+  assert.match(publishingGuide, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
   assert.match(publishingGuide, /layout-style-css@3\.0\.1[\s\S]{0,120}published/i);
+  assert.match(publishingGuide, /ui-style-kit-css@2\.2\.0[\s\S]{0,160}active candidate only while/i);
+  assert.doesNotMatch(publishingGuide, /active staged candidate/i);
   assert.match(publishingGuide, /current[^\n]*layout-style-css@3\.0\.1/i);
   assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
 });
@@ -594,6 +600,22 @@ test('publishing workflow resolves immutable ecosystem sources for packed import
   assert.match(workflow, /UI_STYLE_KIT_LAYOUT_DOCS_REPO:/);
   assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_REPO:/);
   assert.match(workflow, /UI_STYLE_KIT_INTERACTIVE_DOCS_REPO:/);
+});
+
+test('every repository release preflight invocation explicitly selects the UI candidate', () => {
+  for (const workflowName of ['ci.yml', 'release-version-alignment.yml', 'npm-publish.yml']) {
+    const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', workflowName), 'utf8');
+    const preflightCommands = workflow.match(/^(?!\s*#).*\bnpm\s+run\s+release:preflight\b[^\r\n]*/gm) ?? [];
+
+    assert.ok(preflightCommands.length > 0, `${workflowName} must execute the release preflight`);
+    for (const command of preflightCommands) {
+      assert.match(
+        command,
+        /--candidate-package\s+ui-style-kit-css(?:\s|$)/,
+        `${workflowName} must exclude only the active UI release candidate from registry checks`
+      );
+    }
+  }
 });
 
 test('CI workflow shards the UI matrix by engine and preset group', () => {

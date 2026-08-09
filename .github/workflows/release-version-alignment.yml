@@ -76,9 +76,9 @@ jobs:
         working-directory: _ecosystem/Interactive-Surface-CSS
         run: npm ci
 
-      # Tag and release creation remain downstream of the same read-only gate used by pull requests.
+      # Explicit candidate mode exempts only the UI tag under review while retaining every published companion check.
       - name: Run ecosystem release preflight
-        run: npm run release:preflight -- --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
+        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
 
       - name: Restrict manual runs to main
         if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'

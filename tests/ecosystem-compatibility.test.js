@@ -28,7 +28,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.ownership.status, 'temporary');
   assert.equal(
     compatibility.packageSources['interactive-surface-css'].revision,
-    'b34d1dbb9bdecc1a8c655538849188bf551163b3',
+    'b50a60d8ffd804d8227b1a16903c394556b88511',
     'The ecosystem fixture must pin the Interactive commit with the reviewed release preflight.'
   );
   assert.equal(
@@ -43,7 +43,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.1.0',
+      'ui-style-kit-css': '2.2.0',
       'interactive-surface-css': '1.6.0',
       'layout-style-css': '3.0.1'
     }
@@ -100,7 +100,8 @@ test('current ecosystem documentation consumes canonical imports from the compat
     if (!documentPath.endsWith('Installation-and-Setup.md')) {
       assert.match(document, /layout-style-css@3\.0\.1/);
       assert.match(document, /layout-style-css@3\.0\.0/);
-      assert.match(document, /staged (?:patch )?candidate/i);
+      assert.match(document, /current package version/i);
+      assert.match(document, /Interactive Surface `1\.6\.0` and Layout Style `3\.0\.1` are published releases/i);
     }
   }
 });

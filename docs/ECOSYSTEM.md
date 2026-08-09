@@ -4,21 +4,21 @@ UI Style Kit CSS is the visual layer in the three-library CSS ecosystem. It can 
 
 `ecosystem-compatibility.json` is the authoritative source for supported ranges, validated combinations, canonical imports, and deprecated bridge metadata. UI Style Kit owns this file temporarily until a dedicated ecosystem fixture repository is introduced.
 
-Its companion source records pin the exact repository revisions used by integration and release verification. Update those immutable pins whenever a later task changes a companion contract; Task 9/final release work replaces the interim Task 4 pins with final heads.
+Its companion source records pin the exact published merge revisions used by integration and release verification. Update those immutable pins whenever a later companion release changes the validated contract.
 
 ## Remote Validation Sequence
 
-The pinned companion commits are local contract fixtures until they are pushed to their GitHub repositories. Before a UI branch or pull request is expected to validate, push Interactive Surface first, then Layout Style, and verify each pinned SHA is fetchable as a remote commit object. Only then push the UI branch and verify its CI. The CI and publish workflows perform the same remote-object preflight, so they intentionally fail rather than silently substituting a mutable branch or stale registry artifact when either companion revision is unavailable.
+The pinned Interactive Surface and Layout commits are published merge objects. Before a UI branch or pull request is expected to validate, verify each pinned SHA remains fetchable from its GitHub repository. The CI and publish workflows perform the same remote-object preflight, so they intentionally fail rather than silently substituting a mutable branch or stale registry artifact when either companion revision is unavailable.
 
 ## Aligned Versions
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.6.0` | active staged candidate | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `ui-style-kit-css@2.2.0` | current package version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.6.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The staged current combination is `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.1.0` and Layout Style `3.0.1` are published releases; Interactive Surface `1.6.0` is the active staged candidate until separately approved and published. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.2.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.2.0` is the current package version, and the release pipeline treats it as the active candidate only while that exact npm version is absent. Interactive Surface `1.6.0` and Layout Style `3.0.1` are published releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 

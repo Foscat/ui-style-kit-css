@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 11 UI systems, 10 shared color themes, and 3 display modes.
 
-Version `v2.1.0` adds visual-only full and focused entrypoints, a machine-readable `manifest.json`, a five-layer build architecture, and a token-and-paint-only Interactive Surface theme bridge. Existing entrypoints retain their v2 behavior, including deprecated prefixed structural helpers.
+Version `v2.2.0` adds a shared 12-token semantic producer contract and a manifest-backed 29-selector `.ui-*` component API across all 11 presets. Existing entrypoints retain their v2 behavior, including deprecated prefixed structural helpers.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 

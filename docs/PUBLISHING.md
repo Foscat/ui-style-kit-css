@@ -6,9 +6,9 @@
 npm run release:verify
 ```
 
-`npm run release:verify` is the non-publishing release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:axe`, `npm run test:visual`, `npm run test:matrix`, `npm run release:preflight`, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
+`npm run release:verify` is the non-publishing release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:axe`, `npm run test:visual`, `npm run test:matrix`, the explicit UI-candidate release preflight, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
 
-`npm run release:preflight` validates the shared manifests and compatibility contract, queries npm for every exact minimum/current version, resolves every export from the candidate tarball, checks maintained documentation against installed packages, and reuses the current/minimum clean-install browser matrix. An active candidate preflight excludes only its exact unpublished current version; normal UI preflight still queries every documented exact version and therefore rejects unpublished `interactive-surface-css@1.6.0`. It performs no publish, tag, release, or deployment mutation and is therefore the release contract executed on pull requests.
+`npm run release:preflight` validates the shared manifests and compatibility contract, queries npm for every exact minimum/current version, resolves every export from the candidate tarball, checks maintained documentation against installed packages, and reuses the current/minimum clean-install browser matrix. Normal UI preflight remains strict and queries `ui-style-kit-css@2.2.0` alongside every other documented exact version. The release workflows pass `--candidate-package ui-style-kit-css`, which excludes only that exact current version while it is absent from npm and still requires every published minimum and companion version. The gate performs no publish, tag, release, or deployment mutation and is therefore safe to execute on pull requests.
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package, class API, shared theme-color, and vendor-prefix unit checks, validates core text/link contrast pairs and filled component `on-*` contrast pairs, and confirms package metadata. Browser gates cover regular demo flows, representative Axe scans, curated visual smoke checks, and the sharded 990-combination matrix. `npm run check:ecosystem:packs` verifies standalone, pairwise, and all-three packed package compatibility for the canonical visual/theme/state/layout imports and the deprecated bridge imports in both supported matrices. `npm run pack:dry-run` shows the exact files that would publish.
 
@@ -16,21 +16,20 @@ npm run release:verify
 
 `npm run check:ecosystem:minimum` downloads and repacks the declared minimum published runtime versions: `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`. Those tarballs predate the additive shared-manifest policy introduced on the coordinated branches, so the minimum matrix validates their exact installed versions and published CSS entry points; current packed heads retain the stricter manifest-schema and current-documentation checks. `npm run check:ecosystem:packs` runs current first and minimum second.
 
-The current staged matrix checks `ui-style-kit-css@2.1.0`, the active staged candidate `interactive-surface-css@1.6.0`, and published `layout-style-css@3.0.1`. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current matrix checks `ui-style-kit-css@2.2.0` as the active candidate only while its exact npm version is absent, `interactive-surface-css@1.6.0` as a published release, and `layout-style-css@3.0.1` as a published release. UI Style Kit `2.2.0` remains the current package version. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Both matrices install fresh tarball consumers for UI only, Interaction only, Layout only, every pair, and all three. Chromium then checks selected theme paint, native and prefixed components, interaction focus/disabled/loading/selected/persistent states, Layout wrappers/primitives/recipes/personalities, console cleanliness, and an empty external-request log. Three text-free baselines under `tests/snapshots/clean-install/` cover the highest-risk integrated combinations.
 
 Snapshot verification decodes PNG pixels, requires exact dimensions, ignores pixelmatch-classified antialias noise, uses a `0.1` color threshold, and permits at most `0.25%` differing pixels. The committed fixtures render at 720-721 by 261 pixels and therefore allow 469-470 changed pixels while rejecting the tested 42% meaningful change. A mismatch retains both `SCENARIO-actual.png` and `SCENARIO-diff.png` in the reported safe temporary directory. CI only validates committed baselines and never passes the generation flag. To intentionally refresh them locally, run the current checker with `--update-snapshots`, inspect all three images, and rerun without that flag.
 
-The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever later work changes a companion contract. The staged values pin Interactive Surface CSS at `b34d1dbb9bdecc1a8c655538849188bf551163b3` and Layout Style CSS at `44c34693554879790c54a6205b37160ff63a1747`.
+The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever a later release changes a companion contract. The current values pin the published Interactive Surface CSS merge at `b50a60d8ffd804d8227b1a16903c394556b88511` and the published Layout Style CSS merge at `44c34693554879790c54a6205b37160ff63a1747`.
 
 Use this exact bootstrap and merge sequence:
 
-1. Push a stable UI bootstrap ref containing this commit.
-2. Push and merge Interactive Surface CSS and Layout Style CSS with merge commits so their reviewed commit SHAs remain reachable.
-3. Update and verify the final UI companion pins against those merged companion commits.
-4. Push the final UI branch, rerun its ecosystem preflight, and merge UI with a merge commit.
-5. Do not squash, rebase, or delete the only remote refs until every pinned commit is reachable through merged ancestry.
+1. Verify the published Interactive Surface CSS and Layout Style CSS merge commits remain remotely reachable.
+2. Update and review the final UI companion pins against those immutable merge commits.
+3. Push the final UI branch, rerun its explicit UI-candidate ecosystem preflight, and merge UI with a merge commit.
+4. Do not squash or rebase away reviewed release commits that remain part of the pinned verification history.
 
 The workflows enforce immutable remote-object reachability and do not fall back to mutable branches or registry packages. The stable bootstrap ref lets companion workflows load the reviewed preflight implementation before the final UI commit references their heads.
 
@@ -54,7 +53,7 @@ npm run check:ecosystem:packs -- --layout-repo ../Layout-Style-CSS --interactive
 npm publish
 ```
 
-`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.1.0`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, create or dispatch a release for the matching package tag, such as `v2.2.0`. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, and generated dist banners are aligned before publishing.
 
 ## Versioning
 

@@ -6,11 +6,11 @@ UI Style Kit CSS stays standalone while offering stable integration points for t
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.1.0` | published release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.6.0` | active staged candidate | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `ui-style-kit-css@2.2.0` | current package version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.6.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The staged current combination is `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.1.0` and Layout Style `3.0.1` are published releases; Interactive Surface `1.6.0` is the active staged candidate until separately approved and published. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.2.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.2.0` is the current package version, and the release pipeline treats it as the active candidate only while that exact npm version is absent. Interactive Surface `1.6.0` and Layout Style `3.0.1` are published releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 
