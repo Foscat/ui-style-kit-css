@@ -253,7 +253,16 @@ test('interaction theme recognizes every reflected native state inside functiona
     ':is(.surface,input[required])',
     ':where(.surface,option[selected])',
     ':is(.surface,textarea[readonly])',
-    ':where(.surface,[hidden])'
+    ':where(.surface,[hidden])',
+    ':is(.surface,[aria-busy="true"])',
+    ':is(.surface,[aria-checked="true"])',
+    ':is(.surface,[aria-current="true"])',
+    ':is(.surface,[aria-disabled="true"])',
+    ':is(.surface,[aria-expanded="true"])',
+    ':is(.surface,[aria-hidden="true"])',
+    ':is(.surface,[aria-invalid="true"])',
+    ':is(.surface,[aria-pressed="true"])',
+    ':is(.surface,[aria-selected="true"])'
   ];
 
   for (const selector of selectors) {
@@ -268,6 +277,78 @@ test('interaction theme recognizes every reflected native state inside functiona
     assert.equal(result.violations.length, 1, selector);
     assert.equal(result.violations[0].selector, selector);
   }
+});
+
+test('interaction theme recognizes exact and boundary-delimited state class vocabulary', () => {
+  const commonStates = [
+    'active',
+    'any-link',
+    'busy',
+    'busy-loading',
+    'checked',
+    'current',
+    'disabled',
+    'enabled',
+    'expanded',
+    'focus',
+    'focus-visible',
+    'focus-within',
+    'hidden',
+    'hover',
+    'indeterminate',
+    'invalid',
+    'loading',
+    'open',
+    'optional',
+    'persistent',
+    'placeholder-shown',
+    'popover-open',
+    'pressed',
+    'read-only',
+    'read-write',
+    'readonly',
+    'required',
+    'selected',
+    'target',
+    'user-invalid',
+    'valid',
+    'visited'
+  ];
+
+  for (const state of commonStates) {
+    for (const selector of [`.${state}`, `.navigation-${state}`, `.navigation_${state}`]) {
+      const result = auditOwnership({
+        target: 'interaction-theme',
+        css: `${selector} { --State-Opacity: .8; opacity: .8; }`,
+        manifest: {},
+        allowlist: [],
+        now: reviewedAt
+      });
+
+      assert.equal(result.violations.length, 1, selector);
+      assert.equal(result.violations[0].property, 'opacity', selector);
+    }
+  }
+
+  for (const selector of ['.custom-state', '.navigation-custom-state', '.navigation_custom-state']) {
+    const result = auditOwnership({
+      target: 'interaction-theme',
+      css: `${selector} { opacity: .8; }`,
+      manifest: { selectors: { stateClasses: ['.custom-state'] } },
+      allowlist: [],
+      now: reviewedAt
+    });
+    assert.equal(result.violations.length, 1, selector);
+  }
+
+  const controls = auditOwnership({
+    target: 'interaction-theme',
+    css: '.card-static { opacity: .8; } .proactive { opacity: .8; } .undisabled { opacity: .8; } .selectedness { opacity: .8; }',
+    manifest: {},
+    allowlist: [],
+    now: reviewedAt
+  });
+  assert.deepEqual(controls.violations, []);
 });
 
 test('allowlist rejects every malformed, stale, broad, duplicate, and unmatched mutation', () => {

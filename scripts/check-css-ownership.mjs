@@ -92,6 +92,9 @@ const commonStateClasses = new Set([
   'is-pressed',
   'is-selected'
 ]);
+const commonStateSuffixes = new Set(
+  [...commonStateClasses].map((name) => name.replace(/^is-/, ''))
+);
 // Reflected native attributes are state selectors even when no pseudo-class is used.
 const stateAttributes = new Set([
   'checked',
@@ -106,6 +109,7 @@ const stateAttributes = new Set([
   'aria-current',
   'aria-disabled',
   'aria-expanded',
+  'aria-hidden',
   'aria-invalid',
   'aria-pressed',
   'aria-selected',
@@ -116,6 +120,40 @@ const stateAttributes = new Set([
   'data-pressed',
   'data-selected',
   'data-state'
+]);
+const sharedStateClassVocabulary = new Set([
+  'active',
+  'any-link',
+  'busy',
+  'busy-loading',
+  'checked',
+  'current',
+  'disabled',
+  'enabled',
+  'expanded',
+  'focus',
+  'focus-visible',
+  'focus-within',
+  'hidden',
+  'hover',
+  'indeterminate',
+  'invalid',
+  'loading',
+  'open',
+  'optional',
+  'persistent',
+  'placeholder-shown',
+  'popover-open',
+  'pressed',
+  'read-only',
+  'read-write',
+  'readonly',
+  'required',
+  'selected',
+  'target',
+  'user-invalid',
+  'valid',
+  'visited'
 ]);
 
 function propertyContract(propertyName) {
@@ -266,7 +304,6 @@ function selectorOwnsPageTopology(rule, manifest) {
 }
 
 function manifestStateClasses(manifest) {
-  const stateSuffixes = new Set([...commonStateClasses].map((name) => name.replace(/^is-/, '')));
   const manifestClasses = new Set([
     ...(manifest.selectors?.stateClasses ?? []),
     ...(manifest.classApi?.stateClasses ?? [])
@@ -278,8 +315,8 @@ function manifestStateClasses(manifest) {
       ...(manifest.classApi?.presetExtras?.[preset.id] ?? [])
     ];
     for (const suffix of suffixes) {
-      if (stateSuffixes.has(suffix) ||
-          [...stateSuffixes].some((state) => suffix.endsWith(`-${state}`))) {
+      if (commonStateSuffixes.has(suffix) ||
+          [...commonStateSuffixes].some((state) => suffix.endsWith(`-${state}`))) {
         manifestClasses.add(`${preset.prefix}-${suffix}`.toLowerCase());
       }
     }
@@ -289,9 +326,15 @@ function manifestStateClasses(manifest) {
 }
 
 function selectorHasState(rule, manifest) {
-  const stateClasses = new Set([
+  const manifestClasses = manifestStateClasses(manifest);
+  const exactStateClasses = new Set([
     ...commonStateClasses,
-    ...manifestStateClasses(manifest)
+    ...sharedStateClassVocabulary,
+    ...manifestClasses
+  ]);
+  const stateVocabulary = new Set([
+    ...sharedStateClassVocabulary,
+    ...manifestClasses
   ]);
   let stateful = false;
 
@@ -301,8 +344,12 @@ function selectorHasState(rule, manifest) {
       if (node.type === 'PseudoClassSelector' && nativeStatePseudos.has(node.name.toLowerCase())) {
         stateful = true;
       }
-      if (node.type === 'ClassSelector' && stateClasses.has(node.name.toLowerCase())) {
-        stateful = true;
+      if (node.type === 'ClassSelector') {
+        const className = node.name.toLowerCase();
+        const hasBoundarySuffix = [...stateVocabulary].some(
+          (state) => className.endsWith(`-${state}`) || className.endsWith(`_${state}`)
+        );
+        if (exactStateClasses.has(className) || hasBoundarySuffix) stateful = true;
       }
       if (node.type === 'AttributeSelector' && stateAttributes.has(node.name.name.toLowerCase())) {
         stateful = true;

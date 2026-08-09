@@ -28,7 +28,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.ownership.status, 'temporary');
   assert.equal(
     compatibility.packageSources['layout-style-css'].revision,
-    '7b09f0d9090e8101b6772c21365caf0be3ddda4b',
+    '6a55f76a4e7e7826c42ff8ce2e53d26c46fda544',
     'The ecosystem fixture must pin the Layout commit with the reviewed public geometry inventory.'
   );
   assert.deepEqual(
