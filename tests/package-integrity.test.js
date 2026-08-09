@@ -12,6 +12,14 @@ const rootDir = path.resolve(__dirname, '..');
 const packageJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
 const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.json'), 'utf8'));
 
+// Exact overrides keep the release audit deterministic without promoting transitive tooling to direct dependencies.
+const expectedSecurityOverrides = {
+  'fast-uri': '3.1.5',
+  'js-yaml': '4.3.1',
+  nanoid: '3.3.17',
+  postcss: '8.5.23'
+};
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -577,6 +585,20 @@ test('package metadata is aligned for the release version', () => {
 
   const css = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.css'), 'utf8');
   assert.match(css, new RegExp(`UI Style Kit CSS v${escapeRegExp(packageJson.version)}`));
+});
+
+test('release security overrides resolve audited transitive tooling', () => {
+  assert.deepEqual(packageJson.overrides, expectedSecurityOverrides);
+  assert.deepEqual(packageJson.dependencies || {}, {});
+  assert.deepEqual(packageLock.packages[''].dependencies || {}, {});
+
+  for (const [packageName, expectedVersion] of Object.entries(expectedSecurityOverrides)) {
+    assert.equal(
+      packageLock.packages[`node_modules/${packageName}`]?.version,
+      expectedVersion,
+      `Expected ${packageName}@${expectedVersion} in the release lockfile`
+    );
+  }
 });
 
 test('exact release tag at HEAD matches package version', () => {
