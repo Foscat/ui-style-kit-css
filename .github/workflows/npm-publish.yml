@@ -42,7 +42,7 @@ jobs:
           echo "release_tag=${RELEASE_TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout release tag
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: refs/tags/${{ steps.release_ref.outputs.release_tag }}
 
@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout release tag
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: refs/tags/${{ needs.verify.outputs.release_tag }}
 
@@ -192,7 +192,7 @@ jobs:
       # coordinated artifacts and scans their explicitly maintained documentation.
       - name: Checkout Layout Style CSS for publish verification
         if: steps.npm_version_check.outputs.already_published != 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ${{ steps.ecosystem_sources.outputs.layout_repository }}
           ref: ${{ steps.ecosystem_sources.outputs.layout_revision }}
