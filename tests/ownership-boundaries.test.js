@@ -119,6 +119,59 @@ test('visual-only rejects unreviewed grid topology and placement', () => {
   ]);
 });
 
+test('visual-only rejects structural flex topology and preserves manifest component flex', () => {
+  const css = `
+    html { flex: 1; }
+    body { flex-flow: row wrap; }
+    #app { flex-direction: column; }
+    #root { flex-wrap: wrap; }
+    .page-shell { gap: 2rem; }
+    .page { row-gap: 1rem; }
+    main { column-gap: 3rem; }
+    [data-layout] { align-content: start; }
+    [data-page] { align-items: center; }
+    [data-shell] { align-self: stretch; }
+    [role=main] { justify-content: space-between; }
+    .main { justify-items: center; }
+    section { justify-self: stretch; }
+    .saas-card { display: flex; flex-flow: column wrap; gap: 1rem; align-items: center; justify-content: center; }
+    .page-shell .saas-card { flex-direction: column; }
+  `;
+  const result = auditOwnership({
+    target: 'ui-visual',
+    css,
+    manifest: {
+      presets: [{ id: 'minimal-saas', prefix: 'saas' }],
+      classApi: {
+        deprecatedStructuralSuffixes: [],
+        universalVisualSuffixes: ['card'],
+        presetExtras: { 'minimal-saas': [] }
+      }
+    },
+    allowlist: [],
+    now: reviewedAt
+  });
+
+  assert.deepEqual(
+    result.violations.map(({ selector, property, rule }) => ({ selector, property, rule })),
+    [
+      { selector: 'html', property: 'flex', rule: 'ui-page-topology' },
+      { selector: 'body', property: 'flex-flow', rule: 'ui-page-topology' },
+      { selector: '#app', property: 'flex-direction', rule: 'ui-page-topology' },
+      { selector: '#root', property: 'flex-wrap', rule: 'ui-page-topology' },
+      { selector: '.page-shell', property: 'gap', rule: 'ui-page-topology' },
+      { selector: '.page', property: 'row-gap', rule: 'ui-page-topology' },
+      { selector: 'main', property: 'column-gap', rule: 'ui-page-topology' },
+      { selector: '[data-layout]', property: 'align-content', rule: 'ui-page-topology' },
+      { selector: '[data-page]', property: 'align-items', rule: 'ui-page-topology' },
+      { selector: '[data-shell]', property: 'align-self', rule: 'ui-page-topology' },
+      { selector: '[role=main]', property: 'justify-content', rule: 'ui-page-topology' },
+      { selector: '.main', property: 'justify-items', rule: 'ui-page-topology' },
+      { selector: 'section', property: 'justify-self', rule: 'ui-page-topology' }
+    ]
+  );
+});
+
 test('interaction theme rejects state mechanics but permits static theme application', () => {
   const css = `
     .interactive-surface { color: var(--interactive-surface-fg); --Theme-Paint: red; }

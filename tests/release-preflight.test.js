@@ -43,6 +43,98 @@ test('queries every exact minimum and current package version from the configure
   ]);
 });
 
+test('excludes only the unpublished candidate current version from registry checks', async () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const requested = [];
+  const server = createServer((request, response) => {
+    requested.push(request.url);
+    const [, packageName, version] = request.url.split('/');
+    response.setHeader('content-type', 'application/json');
+    response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+
+  try {
+    const { port } = server.address();
+    await releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
+      registryUrl: `http://127.0.0.1:${port}`,
+      candidatePackage: 'ui-style-kit-css',
+      candidateVersion: '2.2.0'
+    });
+  } finally {
+    await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+  }
+
+  assert.deepEqual(requested.sort(), [
+    '/interactive-surface-css/1.5.0',
+    '/interactive-surface-css/1.6.0',
+    '/layout-style-css/3.0.0',
+    '/layout-style-css/3.1.0',
+    '/ui-style-kit-css/2.1.0'
+  ]);
+});
+
+test('still rejects a nonexistent companion current version for an unpublished candidate', async () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const server = createServer((request, response) => {
+    const [, packageName, version] = request.url.split('/');
+    response.setHeader('content-type', 'application/json');
+    if (decodeURIComponent(packageName) === 'interactive-surface-css' && version === '1.6.0') {
+      response.statusCode = 404;
+      response.end(JSON.stringify({ error: 'version not found' }));
+      return;
+    }
+    response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+
+  try {
+    const { port } = server.address();
+    await assert.rejects(
+      releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
+        registryUrl: `http://127.0.0.1:${port}`,
+        candidatePackage: 'ui-style-kit-css',
+        candidateVersion: '2.2.0'
+      }),
+      /interactive-surface-css@1\.6\.0 does not exist exactly/
+    );
+  } finally {
+    await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+  }
+});
+
+test('still rejects a candidate minimum distinct from its unpublished current version', async () => {
+  assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
+
+  const server = createServer((request, response) => {
+    const [, packageName, version] = request.url.split('/');
+    response.setHeader('content-type', 'application/json');
+    if (decodeURIComponent(packageName) === 'ui-style-kit-css' && version === '2.1.0') {
+      response.statusCode = 404;
+      response.end(JSON.stringify({ error: 'version not found' }));
+      return;
+    }
+    response.end(JSON.stringify({ name: decodeURIComponent(packageName), version }));
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+
+  try {
+    const { port } = server.address();
+    await assert.rejects(
+      releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
+        registryUrl: `http://127.0.0.1:${port}`,
+        candidatePackage: 'ui-style-kit-css',
+        candidateVersion: '2.2.0'
+      }),
+      /ui-style-kit-css@2\.1\.0 does not exist exactly/
+    );
+  } finally {
+    await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+  }
+});
+
 test('rejects a documented version when the registry does not return that exact release', async () => {
   assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
 
@@ -225,6 +317,23 @@ function fixtureCompatibility() {
         'ui-style-kit-css': '2.1.0',
         'interactive-surface-css': '1.5.0',
         'layout-style-css': '3.0.0'
+      }
+    }
+  };
+}
+
+function futureCandidateCompatibility() {
+  return {
+    supportedCombinations: {
+      minimum: {
+        'ui-style-kit-css': '2.1.0',
+        'interactive-surface-css': '1.5.0',
+        'layout-style-css': '3.0.0'
+      },
+      current: {
+        'ui-style-kit-css': '2.2.0',
+        'interactive-surface-css': '1.6.0',
+        'layout-style-css': '3.1.0'
       }
     }
   };

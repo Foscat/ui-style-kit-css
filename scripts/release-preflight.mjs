@@ -15,11 +15,26 @@ const packageKeys = {
   'layout-style-css': 'layout'
 };
 
-export async function verifyPublishedVersions(contract, { registryUrl = 'https://registry.npmjs.org' } = {}) {
+export async function verifyPublishedVersions(
+  contract,
+  {
+    registryUrl = 'https://registry.npmjs.org',
+    candidatePackage = null,
+    candidateVersion = null
+  } = {}
+) {
   const queries = new Map();
+  const documentedCandidateCurrent = contract.supportedCombinations?.current?.[candidatePackage];
+  // Only the exact release candidate may be absent before its first publish.
+  const excludedCandidate = candidateVersion === documentedCandidateCurrent
+    ? `${candidatePackage}@${candidateVersion}`
+    : null;
   for (const combination of Object.values(contract.supportedCombinations ?? {})) {
     for (const [packageName, version] of Object.entries(combination)) {
-      queries.set(`${packageName}@${version}`, { packageName, version });
+      const packageVersion = `${packageName}@${version}`;
+      if (packageVersion !== excludedCandidate) {
+        queries.set(packageVersion, { packageName, version });
+      }
     }
   }
 
@@ -171,7 +186,11 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
   );
 
   validateRepositoryWorkflows(candidateRoot);
-  await verifyPublishedVersions(contract, { registryUrl: options.registryUrl });
+  await verifyPublishedVersions(contract, {
+    registryUrl: options.registryUrl,
+    candidatePackage,
+    candidateVersion: candidatePackageJson.version
+  });
 
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), tempPrefix));
   let completed = false;

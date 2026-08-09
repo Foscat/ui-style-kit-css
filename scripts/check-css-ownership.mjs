@@ -21,6 +21,15 @@ const gridTopologyProperties = new Set([
   'grid-template-rows',
   'order'
 ]);
+const flexTopologyProperties = new Set([
+  'column-gap',
+  'flex',
+  'flex-direction',
+  'flex-flow',
+  'flex-wrap',
+  'gap',
+  'row-gap'
+]);
 const pagePlacementProperties = new Set([
   'block-size',
   'bottom',
@@ -365,10 +374,17 @@ function isMechanicsProperty(property) {
     /^(?:animation|transition)(?:-|$)/.test(property);
 }
 
+function isFlexTopologyProperty(property) {
+  return flexTopologyProperties.has(property) || /^(?:align|justify)-/.test(property);
+}
+
 function ruleForDeclaration({ target, property, rule, manifest }) {
   if (target === 'ui-visual') {
     if (gridTopologyProperties.has(property)) return 'ui-page-topology';
-    if (pagePlacementProperties.has(property) && selectorOwnsPageTopology(rule, manifest)) {
+    if (
+      (pagePlacementProperties.has(property) || isFlexTopologyProperty(property)) &&
+      selectorOwnsPageTopology(rule, manifest)
+    ) {
       return 'ui-page-topology';
     }
     return null;
