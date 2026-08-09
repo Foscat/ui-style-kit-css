@@ -7,6 +7,8 @@ import { generate, parse, walk } from 'css-tree';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const producerScope = '[data-ui][data-theme][data-mode]';
+const directSurfaceBackground =
+  'rgb(var(--usk-surface-strong-rgb,var(--usk-surface-rgb,255 255 255)))';
 
 // This literal contract keeps the CSS producer, manifest inventory, and public documentation aligned.
 const sharedSemanticTokens = [
@@ -56,6 +58,12 @@ function declarationsFor(relativeFile, selector) {
   return declarations;
 }
 
+function semanticReferences(declarations) {
+  return [...declarations.values()]
+    .flatMap((value) => [...value.matchAll(/var\((--ui-[a-z-]+)/g)].map((match) => match[1]))
+    .sort();
+}
+
 test('native token root publishes the exact typed shared semantic producer contract', () => {
   const declarations = declarationsFor('styles/native-elements.css', producerScope);
 
@@ -103,10 +111,7 @@ test('canonical and deprecated adapters prefer only behavior-equivalent semantic
     ':where([data-ui][data-theme][data-mode]) .interactive-surface'
   );
   const canonicalSharedValues = new Map([
-    [
-      '--interactive-surface-bg',
-      'var(--ui-color-surface,rgb(var(--usk-surface-strong-rgb,var(--usk-surface-rgb,255 255 255))))'
-    ],
+    ['--interactive-surface-bg', directSurfaceBackground],
     ['--interactive-surface-fg', 'var(--ui-color-text,rgb(var(--usk-text-rgb,18 18 18)))'],
     [
       '--interactive-surface-focus-ring-color',
@@ -150,12 +155,30 @@ test('canonical and deprecated adapters prefer only behavior-equivalent semantic
       declarations.get('--interactive-surface-level-3-shadow'),
       '0 14px 34px rgb(var(--usk-bg-rgb,0 0 0)/.3),0 0 0 1px color-mix(in srgb,var(--interactive-surface-variant-primary-border-color) 34%,transparent)'
     );
+    assert.deepEqual(
+      semanticReferences(declarations),
+      [
+        '--ui-color-on-primary',
+        '--ui-color-primary',
+        '--ui-color-text',
+        '--ui-color-text',
+        '--ui-focus-color'
+      ],
+      'Each adapter should retain five exact-equivalent references across four semantic tokens.'
+    );
   }
 
   const deprecatedCss = read('styles/interactive-surface-bridge.css');
   assert.match(deprecatedCss, /background-color 160ms ease,/);
   assert.match(deprecatedCss, /transition:\s*opacity 160ms ease;/);
   assert.doesNotMatch(deprecatedCss, /--ui-motion-(?:duration|easing)/);
+});
+
+test('unreleased changelog announces the shared semantic producer and manifest contract', () => {
+  const unreleased = read('CHANGELOG.md').match(/## \[Unreleased\]([\s\S]*?)(?=\n## \[|$)/)?.[1] ?? '';
+
+  assert.match(unreleased, /### Added[\s\S]*12-token[\s\S]*semantic/i);
+  assert.match(unreleased, /### Added[\s\S]*machine-readable[\s\S]*manifest/i);
 });
 
 test('core producer documentation defines third-party and standalone expectations', () => {

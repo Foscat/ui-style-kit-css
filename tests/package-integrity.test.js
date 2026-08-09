@@ -607,7 +607,7 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
 
   assert.match(
     bridgeCss,
-    /--interactive-surface-bg:\s*var\(--ui-color-surface,\s*rgb\(var\(--usk-surface-strong-rgb,/
+    /--interactive-surface-bg:\s*rgb\(var\(--usk-surface-strong-rgb,\s*var\(--usk-surface-rgb,/
   );
   assert.match(
     bridgeCss,

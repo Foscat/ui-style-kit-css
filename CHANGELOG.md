@@ -6,6 +6,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ### Added
 
+- Added the public 12-token shared semantic producer contract and its machine-readable manifest inventory for companion and third-party consumers.
 - Implemented the manifest-backed semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and unchanged-markup runtime switching across all 11 presets.
 - Added a persistent semantic component demo whose DOM nodes and classes remain stable through every preset switch.
 - Documented native `<dialog>` as the neutral modal/dialog fallback without inventing `.ui-modal` or `.ui-dialog` selectors.

@@ -11777,7 +11777,8 @@
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface {
   --interactive-surface-border-width: 1px;
-  --interactive-surface-bg: var(--ui-color-surface, rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255))));
+  /* Preserve the adapter's opaque paint while semantic surfaces may retain preset alpha. */
+  --interactive-surface-bg: rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255)));
   --interactive-surface-fg: var(--ui-color-text, rgb(var(--usk-text-rgb)));
   --interactive-surface-border-color: rgb(var(--usk-border-rgb, 128 128 128) / .72);
   --interactive-surface-focus-ring-color: var(--ui-focus-color, rgb(var(--usk-focus-rgb, var(--usk-primary-rgb, 72 120 255))));
