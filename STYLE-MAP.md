@@ -66,3 +66,26 @@ The bridge inherits from shared `--usk-*` color roles, then applies `.interactiv
 - `light`
 - `dark`
 - `contrast`
+
+## Semantic component contract
+
+The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The contract is specified and executable-test-backed here without adding new semantic CSS declarations; `.ui-spinner` and `.ui-tooltip` are the retained generic hooks already implemented.
+
+| Role | Generic selector -> current source suffix |
+|---|---|
+| Button | `.ui-button` -> `button`; `.ui-icon-button` -> `icon-button` |
+| Card | `.ui-card` -> `card` |
+| Form | `.ui-field` -> `field`; `.ui-label` -> `label`; `.ui-help-text` -> `help-text`; `.ui-input` -> `input`; `.ui-select` -> `select`; `.ui-textarea` -> `textarea` |
+| Choice control | `.ui-check` -> `check`; `.ui-check-control` -> `check-control`; `.ui-radio` -> `radio`; `.ui-radio-control` -> `radio-control`; `.ui-switch` -> `switch`; `.ui-switch-track` -> `switch-track`; `.ui-switch-thumb` -> `switch-thumb` |
+| Badge | `.ui-badge` -> `badge` |
+| Alert | `.ui-alert` -> `alert`; `.ui-alert-title` -> `alert-title`; `.ui-alert-body` -> `alert-body` |
+| Navigation | `.ui-nav` -> `nav`; `.ui-nav-link` -> `nav-link` |
+| Table | `.ui-table` -> `table`; `.ui-table-wrap` -> `table-wrap` |
+| Progress | `.ui-progress` -> `progress`; `.ui-progress-bar` -> `progress-bar` |
+| Toolbar | `.ui-toolbar` -> `toolbar` |
+| Loading | `.ui-spinner` -> `spinner` |
+| Tooltip | `.ui-tooltip` -> `tooltip` |
+
+`data-ui-variant` is the only new attribute. Omission means neutral. `.ui-button` accepts `primary`, `secondary`, `danger`, and `ghost`; `.ui-badge` accepts `primary`, `secondary`, `success`, `warning`, and `danger`; `.ui-alert` accepts `success`, `warning`, and `danger`.
+
+Modal and dialog roles retain native `<dialog>` as their one neutral fallback; `.ui-modal` and `.ui-dialog` are not defined. Preset-prefixed classes remain supported for compatibility and advanced use. Partial preset extras and the seven deprecated structural suffixes stay out of the semantic contract.

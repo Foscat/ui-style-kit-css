@@ -193,6 +193,45 @@ document.body.dataset.theme = "midnight-gold";
 document.body.dataset.mode = "dark";
 ```
 
+## Semantic component API
+
+`manifest.json#semanticComponentApi` is the authoritative specification for the additive generic component API. The mapped source suffixes already exist in the composed API for all 11 presets, so generic markup can keep the same class names while `data-ui` changes.
+
+This release line currently specifies and validates the contract without adding new semantic CSS declarations. Except for the retained `.ui-spinner` and `.ui-tooltip` hooks, use the supported prefixed classes for production styling until the semantic implementation ships.
+
+| Role | Generic selectors | Switching coverage |
+|---|---|---|
+| Buttons | `.ui-button`, `.ui-icon-button` | all 11 presets |
+| Card | `.ui-card` | all 11 presets |
+| Forms | `.ui-field`, `.ui-label`, `.ui-help-text`, `.ui-input`, `.ui-select`, `.ui-textarea` | all 11 presets |
+| Choice controls | `.ui-check`, `.ui-check-control`, `.ui-radio`, `.ui-radio-control`, `.ui-switch`, `.ui-switch-track`, `.ui-switch-thumb` | all 11 presets |
+| Badge | `.ui-badge` | all 11 presets |
+| Alert | `.ui-alert`, `.ui-alert-title`, `.ui-alert-body` | all 11 presets |
+| Navigation | `.ui-nav`, `.ui-nav-link` | all 11 presets |
+| Table | `.ui-table`, `.ui-table-wrap` | all 11 presets |
+| Progress | `.ui-progress`, `.ui-progress-bar` | all 11 presets |
+| Toolbar | `.ui-toolbar` | all 11 presets |
+| Existing generic hooks | `.ui-spinner`, `.ui-tooltip` | all 11 presets |
+
+The only new attribute is context-constrained `data-ui-variant`. Omit it for the neutral treatment.
+
+| Selector | `data-ui-variant` values |
+|---|---|
+| `.ui-button` | `primary`, `secondary`, `danger`, `ghost` |
+| `.ui-badge` | `primary`, `secondary`, `success`, `warning`, `danger` |
+| `.ui-alert` | `success`, `warning`, `danger` |
+
+```html
+<body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
+  <button class="ui-button" data-ui-variant="primary">Save</button>
+  <article class="ui-card">...</article>
+</body>
+```
+
+Modal and dialog roles deliberately use a neutral native `<dialog>` fallback. There is no `.ui-modal` or `.ui-dialog` selector. The semantic API also does not define `data-ui-state`, `data-ui-size`, or `data-ui-placement`; continue to use native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` where supported.
+
+Preset-prefixed classes remain supported compatibility and advanced APIs. Partial preset extras, typography and paint utilities, surface/size/placement helpers, shape and accessibility utilities, and the deprecated `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` structural aliases remain prefix-bound rather than entering the generic contract.
+
 ## UI systems
 
 | UI style | `data-ui` | Class prefix | Best for |

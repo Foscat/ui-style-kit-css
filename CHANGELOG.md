@@ -2,6 +2,18 @@
 
 All notable changes to **UI Style Kit CSS** will be documented here.
 
+## [Unreleased]
+
+### Added
+
+- Specified a manifest-backed generic semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and an unchanged-markup runtime case matrix across all 11 presets.
+- Documented native `<dialog>` as the neutral modal/dialog fallback without inventing `.ui-modal` or `.ui-dialog` selectors.
+
+### Changed
+
+- Clarified that all 11 composed preset APIs retain the extended visual utilities, while partial extras and deprecated structural aliases remain prefix-bound compatibility or advanced APIs.
+- Kept the specification separate from semantic CSS implementation; existing preset-prefixed classes and the retained `.ui-spinner` and `.ui-tooltip` hooks remain unchanged.
+
 ## [2.1.0] - 2026-07-20
 
 ### Added
