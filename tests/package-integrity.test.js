@@ -488,6 +488,13 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
   assert.match(publishingGuide, /immutable revision pins from `ecosystem-compatibility\.json`/);
 });
 
+test('publishing docs require the reviewed UI workflow bootstrap foundation', () => {
+  const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
+
+  // Companion release workflows must bootstrap from the immutable Gate C foundation.
+  assert.match(publishingGuide, /0080528295e485a340959c602f35b47ff5b8fea3/);
+});
+
 test('publishing docs describe coordinated proof without re-releasing packages', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
