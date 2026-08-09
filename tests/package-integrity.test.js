@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -119,6 +120,40 @@ function relativeFiles(directory, extension) {
     .filter((file) => file.endsWith(extension))
     .map((file) => path.join(directory, file));
 }
+
+test('package metadata preserves the v2 distribution and demo contracts', () => {
+  const sortedExports = Object.entries(packageJson.exports).sort(([left], [right]) => left.localeCompare(right));
+  const exportDigest = createHash('sha256').update(JSON.stringify(sortedExports)).digest('hex');
+
+  assert.equal(packageJson.homepage, 'https://foscat.github.io/ui-style-kit-css/');
+  assert.equal(sortedExports.length, 89, 'Every existing v2 export must remain available');
+  // This digest protects every public key-to-target mapping while keeping the fixture compact and reviewable.
+  assert.equal(exportDigest, '4d4fc404ef1cbd2c61cae29ef40a743da9beea0221117588b5abf68f07c8cfac');
+  assert.equal(packageJson.exports['.'], './dist/ui-style-kit.css');
+  assert.equal(packageJson.exports['./min.css'], './dist/ui-style-kit.min.css');
+  assert.equal(packageJson.exports['./css'], packageJson.exports['.']);
+  assert.equal(packageJson.exports['./css.css'], packageJson.exports['.']);
+  assert.equal(packageJson.exports['./min'], packageJson.exports['./min.css']);
+});
+
+test('installation guidance keeps the v2 default and alias migration explicit', () => {
+  const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
+  const installationStart = readme.indexOf('## Install');
+  const basicUsageStart = readme.indexOf('## Basic usage');
+  const installationGuidance = readme.slice(installationStart, basicUsageStart);
+
+  assert.ok(installationStart !== -1 && basicUsageStart > installationStart);
+  assert.match(installationGuidance, /default bundle remains unchanged for all v2 releases/i);
+  assert.match(installationGuidance, /recommended entrypoint when (?:an application|consumers?) own layout/i);
+  assert.match(installationGuidance, /visual\.css.*package default.*v3 proposal/is);
+  assert.match(installationGuidance, /readable `dist\/ui-style-kit\.css`/);
+  assert.match(installationGuidance, /minified `dist\/ui-style-kit\.min\.css`/);
+  assert.match(installationGuidance, /focused `visual\/<preset>\.css`/);
+  assert.match(installationGuidance, /`\.\/css`/);
+  assert.match(installationGuidance, /`\.\/css\.css`/);
+  assert.match(installationGuidance, /`\.\/min`/);
+  assert.match(installationGuidance, /deprecated compatibility aliases/i);
+});
 
 test('package entry points point to dist output', () => {
   assert.equal(packageJson.main, 'dist/ui-style-kit.css');

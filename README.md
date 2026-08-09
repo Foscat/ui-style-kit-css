@@ -92,6 +92,14 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 npm install ui-style-kit-css
 ```
 
+### v2 distribution defaults
+
+The default bundle remains unchanged for all v2 releases. The root package and canonical `.` export resolve to the readable `dist/ui-style-kit.css`; the canonical `./min.css` export resolves to the minified `dist/ui-style-kit.min.css`. The focused `visual/<preset>.css` entrypoints remain available for applications fixed to one visual system.
+
+`ui-style-kit-css/visual.css` is the recommended entrypoint when consumers own layout. Making `visual.css` the package default remains only a v3 proposal; no v2 export is redirected as part of that proposal.
+
+The `./css`, `./css.css`, and `./min` exports are redundant deprecated compatibility aliases. They remain available throughout v2 with their existing targets: `./css` and `./css.css` match `.`, while `./min` matches `./min.css`. New integrations should use the canonical exports.
+
 ## Import
 
 Use the generated default bundle for semantic components that can switch across every preset at runtime:
