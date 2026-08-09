@@ -72,12 +72,14 @@ const nativeStatePseudos = new Set([
   'open',
   'optional',
   'placeholder-shown',
+  'popover-open',
   'read-only',
   'read-write',
   'required',
   'target',
   'user-invalid',
-  'valid'
+  'valid',
+  'visited'
 ]);
 const commonStateClasses = new Set([
   'is-active',
@@ -90,6 +92,7 @@ const commonStateClasses = new Set([
   'is-selected'
 ]);
 const stateAttributes = new Set([
+  'disabled',
   'aria-busy',
   'aria-checked',
   'aria-current',
@@ -173,6 +176,65 @@ export function validateAllowlist({ target, entries, expectedOwner, now = new Da
   }
 }
 
+function manifestComponentClasses(manifest) {
+  const componentClasses = new Set();
+  const universalSuffixes = manifest.classApi?.universalVisualSuffixes ?? [];
+
+  for (const preset of manifest.presets ?? []) {
+    for (const suffix of universalSuffixes) {
+      componentClasses.add(`${preset.prefix}-${suffix}`);
+    }
+    for (const suffix of manifest.classApi?.presetExtras?.[preset.id] ?? []) {
+      componentClasses.add(`${preset.prefix}-${suffix}`);
+    }
+  }
+
+  return componentClasses;
+}
+
+function rightmostCompound(selector) {
+  const nodes = [...selector.children];
+  let subjectStart = 0;
+  nodes.forEach((node, index) => {
+    if (node.type === 'Combinator') subjectStart = index + 1;
+  });
+  return nodes.slice(subjectStart);
+}
+
+function selectorListHasPageSubject(selectorList, context) {
+  for (const selector of selectorList.children) {
+    if (rightmostCompound(selector).some((node) => subjectNodeOwnsPageTopology(node, context))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function subjectNodeOwnsPageTopology(node, context) {
+  if (node.type === 'TypeSelector') {
+    return ['body', 'html', 'main', 'section'].includes(node.name.toLowerCase());
+  }
+  if (node.type === 'IdSelector') {
+    return ['app', 'layout', 'main', 'page', 'root', 'shell'].includes(node.name.toLowerCase());
+  }
+  if (node.type === 'AttributeSelector') {
+    const attributeName = node.name.name.toLowerCase();
+    const attributeValue = node.value?.name?.toLowerCase() ?? node.value?.value?.toLowerCase();
+    return ['data-layout', 'data-page', 'data-shell'].includes(attributeName) ||
+      (attributeName === 'role' && attributeValue === 'main');
+  }
+  if (node.type === 'ClassSelector') {
+    if (context.componentClasses.has(node.name)) return false;
+    return node.name.split(/[-_]/).some((segment) => context.structuralNames.has(segment));
+  }
+  if (node.type === 'PseudoClassSelector' && ['is', 'where'].includes(node.name.toLowerCase())) {
+    for (const child of node.children ?? []) {
+      if (child.type === 'SelectorList' && selectorListHasPageSubject(child, context)) return true;
+    }
+  }
+  return false;
+}
+
 function selectorOwnsPageTopology(rule, manifest) {
   // Manifest-owned legacy suffixes remain the authoritative structural vocabulary.
   const structuralNames = new Set([
@@ -189,49 +251,39 @@ function selectorOwnsPageTopology(rule, manifest) {
     'stack',
     'wrapper'
   ]);
-  const componentSuffixes = new Set([
-    ...(manifest.classApi?.universalVisualSuffixes ?? []),
-    ...Object.values(manifest.classApi?.presetExtras ?? {}).flat()
-  ]);
-  let ownsPageTopology = false;
+  return selectorListHasPageSubject(rule.prelude, {
+    componentClasses: manifestComponentClasses(manifest),
+    structuralNames
+  });
+}
 
-  walk(rule.prelude, {
-    enter(node) {
-      if (node.type === 'TypeSelector' && ['body', 'html', 'main', 'section'].includes(node.name.toLowerCase())) {
-        ownsPageTopology = true;
-      }
-      if (node.type === 'IdSelector' && ['app', 'layout', 'main', 'page', 'root', 'shell'].includes(node.name.toLowerCase())) {
-        ownsPageTopology = true;
-      }
-      if (node.type === 'AttributeSelector') {
-        const attributeName = node.name.name.toLowerCase();
-        const attributeValue = node.value?.name?.toLowerCase() ?? node.value?.value?.toLowerCase();
-        if (['data-layout', 'data-page', 'data-shell'].includes(attributeName) ||
-            (attributeName === 'role' && attributeValue === 'main')) {
-          ownsPageTopology = true;
-        }
-      }
-      if (node.type !== 'ClassSelector') return;
+function manifestStateClasses(manifest) {
+  const stateSuffixes = new Set([...commonStateClasses].map((name) => name.replace(/^is-/, '')));
+  const manifestClasses = new Set([
+    ...(manifest.selectors?.stateClasses ?? []),
+    ...(manifest.classApi?.stateClasses ?? [])
+  ].map((selector) => selector.replace(/^\./, '').toLowerCase()));
 
-      if ([...componentSuffixes].some((suffix) => node.name === suffix || node.name.endsWith(`-${suffix}`))) {
-        return;
-      }
-
-      const classSegments = node.name.split(/[-_]/);
-      if (classSegments.some((segment) => structuralNames.has(segment))) {
-        ownsPageTopology = true;
+  for (const preset of manifest.presets ?? []) {
+    const suffixes = [
+      ...(manifest.classApi?.universalVisualSuffixes ?? []),
+      ...(manifest.classApi?.presetExtras?.[preset.id] ?? [])
+    ];
+    for (const suffix of suffixes) {
+      if (stateSuffixes.has(suffix) ||
+          [...stateSuffixes].some((state) => suffix.endsWith(`-${state}`))) {
+        manifestClasses.add(`${preset.prefix}-${suffix}`.toLowerCase());
       }
     }
-  });
+  }
 
-  return ownsPageTopology;
+  return manifestClasses;
 }
 
 function selectorHasState(rule, manifest) {
-  const manifestClasses = manifest.selectors?.stateClasses ?? [];
   const stateClasses = new Set([
     ...commonStateClasses,
-    ...manifestClasses.map((selector) => selector.replace(/^\./, '').toLowerCase())
+    ...manifestStateClasses(manifest)
   ]);
   let stateful = false;
 

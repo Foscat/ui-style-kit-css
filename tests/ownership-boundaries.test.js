@@ -24,6 +24,8 @@ test('visual-only rejects page topology while a reviewed component exception is 
   const css = `
     .saas-page { max-width: 72rem; }
     .saas-page-content { width: 100%; }
+    .saas-page-card { width: 72rem; }
+    .page .saas-card { width: 100%; }
     #app { width: 100%; }
     main { position: absolute; }
     .bento-grid-feature { grid-template-columns: repeat(6, 1fr); }
@@ -31,7 +33,14 @@ test('visual-only rejects page topology while a reviewed component exception is 
   const result = auditOwnership({
     target: 'ui-visual',
     css,
-    manifest: { classApi: { deprecatedStructuralSuffixes: ['page'] } },
+    manifest: {
+      presets: [{ id: 'minimal-saas', prefix: 'saas' }],
+      classApi: {
+        deprecatedStructuralSuffixes: ['page'],
+        universalVisualSuffixes: ['card'],
+        presetExtras: { 'minimal-saas': [] }
+      }
+    },
     allowlist: [exception()],
     now: reviewedAt
   });
@@ -53,16 +62,23 @@ test('visual-only rejects page topology while a reviewed component exception is 
     },
     {
       target: 'ui-visual',
-      selector: '#app',
+      selector: '.saas-page-card',
       property: 'width',
       line: 4,
       rule: 'ui-page-topology'
     },
     {
       target: 'ui-visual',
+      selector: '#app',
+      property: 'width',
+      line: 6,
+      rule: 'ui-page-topology'
+    },
+    {
+      target: 'ui-visual',
       selector: 'main',
       property: 'position',
-      line: 5,
+      line: 7,
       rule: 'ui-page-topology'
     }
   ]);
@@ -110,12 +126,20 @@ test('interaction theme rejects state mechanics but permits static theme applica
     input:checked { opacity: .8; }
     .is-selected { color: red; }
     [data-state="active"] { --State-Paint: red; background: red; }
+    :is(a:visited, button:popover-open) { color: purple; }
+    :where(button[disabled], .saas-disabled) { --State-Opacity: .5; opacity: .5; }
     .interactive-surface { TRANSFORM: scale(1.05); }
   `;
   const result = auditOwnership({
     target: 'interaction-theme',
     css,
-    manifest: {},
+    manifest: {
+      presets: [{ id: 'minimal-saas', prefix: 'saas' }],
+      classApi: {
+        universalVisualSuffixes: ['disabled'],
+        presetExtras: { 'minimal-saas': [] }
+      }
+    },
     allowlist: [],
     now: reviewedAt
   });
@@ -151,9 +175,23 @@ test('interaction theme rejects state mechanics but permits static theme applica
     },
     {
       target: 'interaction-theme',
+      selector: ':is(a:visited,button:popover-open)',
+      property: 'color',
+      line: 7,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
+      selector: ':where(button[disabled],.saas-disabled)',
+      property: 'opacity',
+      line: 8,
+      rule: 'ui-interaction-mechanics'
+    },
+    {
+      target: 'interaction-theme',
       selector: '.interactive-surface',
       property: 'transform',
-      line: 7,
+      line: 9,
       rule: 'ui-interaction-mechanics'
     }
   ]);
