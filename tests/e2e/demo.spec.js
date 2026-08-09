@@ -526,6 +526,9 @@ test('native form samples provide padded block layout for unclassed controls', a
 });
 
 test('native dialog demo opens a real modal with a themed backdrop', async ({ page }) => {
+  // Contended WebKit startup can consume most of the generic budget before this focused dialog flow completes.
+  test.setTimeout(60_000);
+
   await page.goto(demoUrl);
   await page.selectOption('#uiSelect', 'cyberpunk');
   await page.selectOption('#modeSelect', 'dark');

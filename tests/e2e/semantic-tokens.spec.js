@@ -89,6 +89,9 @@ async function resolvedValues(page) {
 }
 
 test('all presets, themes, and modes publish the same typed semantic values as their namespaced sources', async ({ page }) => {
+  // Exhaustive verification covers 330 preset, theme, and mode states and needs headroom on contended WebKit runners.
+  test.setTimeout(60_000);
+
   await page.setContent(`<style>${visualCss}</style><body></body>`);
 
   for (const { id } of manifest.presets) {
