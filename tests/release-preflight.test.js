@@ -43,6 +43,21 @@ test('queries every exact minimum and current package version from the configure
   ]);
 });
 
+test('an explicit later Interactive source overrides the release default', () => {
+  assert.deepEqual(
+    releasePreflight.parseArgs([
+      '--interactive-spec',
+      'interactive-surface-css@1.6.0',
+      '--interactive-repo',
+      '../Interactive-Surface-CSS'
+    ]),
+    {
+      skipCleanInstall: false,
+      interactiveRepo: '../Interactive-Surface-CSS'
+    }
+  );
+});
+
 test('normal UI preflight queries all six exact minimum and current ecosystem versions before packaging', async () => {
   assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
 

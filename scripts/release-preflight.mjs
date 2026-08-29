@@ -248,7 +248,7 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
  * @param {string[]} args - Command-line arguments following the script name.
  * @returns {Record<string, string | boolean>} Normalized release-preflight options.
  */
-function parseArgs(args) {
+export function parseArgs(args) {
   const parsed = { skipCleanInstall: false };
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
@@ -266,7 +266,10 @@ function parseArgs(args) {
     if (optionNames[arg]) {
       const value = args[(index += 1)];
       if (!value || value.startsWith('--')) throw new Error(`${arg} requires a value.`);
-      parsed[optionNames[arg]] = value;
+      const optionName = optionNames[arg];
+      parsed[optionName] = value;
+      if (optionName === 'interactiveRepo') delete parsed.interactiveSpec;
+      if (optionName === 'interactiveSpec') delete parsed.interactiveRepo;
     } else if (arg === '--skip-clean-install') {
       parsed.skipCleanInstall = true;
     } else {
