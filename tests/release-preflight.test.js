@@ -38,7 +38,7 @@ test('queries every exact minimum and current package version from the configure
   assert.deepEqual(requested.sort(), [
     '/interactive-surface-css/1.5.0',
     '/layout-style-css/3.0.0',
-    '/layout-style-css/3.0.1',
+    '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0'
   ]);
 });
@@ -75,13 +75,13 @@ test('normal UI preflight queries all six exact minimum and current ecosystem ve
     '/interactive-surface-css/1.5.0',
     '/interactive-surface-css/1.6.0',
     '/layout-style-css/3.0.0',
-    '/layout-style-css/3.0.1',
+    '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0',
-    '/ui-style-kit-css/2.2.0'
+    '/ui-style-kit-css/2.3.0'
   ]);
 });
 
-test('excludes only the staged Layout 3.0.1 candidate while retaining published minimum checks', async () => {
+test('excludes only the staged Layout 3.1.0 candidate while retaining published minimum checks', async () => {
   assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
 
   const requested = [];
@@ -98,7 +98,7 @@ test('excludes only the staged Layout 3.0.1 candidate while retaining published 
     await releasePreflight.verifyPublishedVersions(fixtureCompatibility(), {
       registryUrl: `http://127.0.0.1:${port}`,
       candidatePackage: 'layout-style-css',
-      candidateVersion: '3.0.1'
+      candidateVersion: '3.1.0'
     });
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
@@ -138,7 +138,7 @@ test('Interactive candidate preflight excludes only unpublished 1.6.0 while chec
   assert.deepEqual(requested.sort(), [
     '/interactive-surface-css/1.5.0',
     '/layout-style-css/3.0.0',
-    '/layout-style-css/3.0.1',
+    '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0'
   ]);
 });
@@ -160,7 +160,7 @@ test('excludes only the unpublished candidate current version from registry chec
     await releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
       registryUrl: `http://127.0.0.1:${port}`,
       candidatePackage: 'ui-style-kit-css',
-      candidateVersion: '2.2.0'
+      candidateVersion: '2.3.0'
     });
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
@@ -170,7 +170,7 @@ test('excludes only the unpublished candidate current version from registry chec
     '/interactive-surface-css/1.5.0',
     '/interactive-surface-css/1.6.0',
     '/layout-style-css/3.0.0',
-    '/layout-style-css/3.0.1',
+    '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0'
   ]);
 });
@@ -196,7 +196,7 @@ test('still rejects a nonexistent companion current version for an unpublished c
       releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
         registryUrl: `http://127.0.0.1:${port}`,
         candidatePackage: 'ui-style-kit-css',
-        candidateVersion: '2.2.0'
+        candidateVersion: '2.3.0'
       }),
       /interactive-surface-css@1\.6\.0 does not exist exactly/
     );
@@ -226,7 +226,7 @@ test('still rejects a candidate minimum distinct from its unpublished current ve
       releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
         registryUrl: `http://127.0.0.1:${port}`,
         candidatePackage: 'ui-style-kit-css',
-        candidateVersion: '2.2.0'
+        candidateVersion: '2.3.0'
       }),
       /ui-style-kit-css@2\.1\.0 does not exist exactly/
     );
@@ -465,7 +465,7 @@ function fixtureCompatibility() {
       current: {
         'ui-style-kit-css': '2.1.0',
         'interactive-surface-css': '1.5.0',
-        'layout-style-css': '3.0.1'
+        'layout-style-css': '3.1.0'
       }
     }
   };
@@ -482,7 +482,7 @@ function interactiveCandidateCompatibility() {
       current: {
         'ui-style-kit-css': '2.1.0',
         'interactive-surface-css': '1.6.0',
-        'layout-style-css': '3.0.1'
+        'layout-style-css': '3.1.0'
       }
     }
   };
@@ -497,9 +497,9 @@ function futureCandidateCompatibility() {
         'layout-style-css': '3.0.0'
       },
       current: {
-        'ui-style-kit-css': '2.2.0',
+        'ui-style-kit-css': '2.3.0',
         'interactive-surface-css': '1.6.0',
-        'layout-style-css': '3.0.1'
+        'layout-style-css': '3.1.0'
       }
     }
   };

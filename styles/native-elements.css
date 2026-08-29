@@ -39,7 +39,7 @@
   --usk-native-control-padding-inline: .95rem;
   --usk-native-subcontrol-padding-block: .55rem;
   --usk-native-subcontrol-padding-inline: .8rem;
-  --usk-native-track: color-mix(in srgb, var(--usk-native-border) 50%, transparent);
+  --usk-native-track: var(--usk-native-border);
   --usk-native-track-fill: var(--usk-native-primary);
   --usk-native-thumb: var(--usk-native-surface-strong);
   --usk-native-thumb-border: var(--usk-native-primary);
@@ -70,7 +70,10 @@
   font-family: var(--usk-native-font-heading);
   line-height: 1.15;
   margin: 0 0 .65em;
-  text-wrap: balance;
+}
+
+@supports (text-wrap: balance) {
+  [data-ui][data-theme][data-mode] :where(h1, h2, h3, h4, h5, h6) { text-wrap: balance; }
 }
 
 [data-ui][data-theme][data-mode] :where(hgroup) {
@@ -118,7 +121,7 @@
   padding: .15em .35em;
   color: var(--usk-native-text);
   background: var(--usk-native-surface-soft);
-  border: var(--usk-native-border-width) solid color-mix(in srgb, var(--usk-native-border) 62%, transparent);
+  border: var(--usk-native-border-width) solid var(--usk-native-border);
   border-radius: var(--usk-native-radius-sm);
   font-family: var(--usk-native-font-mono);
   font-size: .92em;
@@ -151,7 +154,7 @@
 [data-ui][data-theme][data-mode] :where(mark) {
   padding-inline: .15em;
   color: var(--usk-native-text);
-  background: color-mix(in srgb, var(--usk-native-warning) 32%, transparent);
+  background: rgb(var(--usk-warning-rgb) / .32);
   border-radius: .2em;
 }
 
@@ -190,7 +193,7 @@
   min-inline-size: 0;
   margin: 0 0 1rem;
   padding: var(--usk-native-panel-padding);
-  background: color-mix(in srgb, var(--usk-native-card-bg) 88%, transparent);
+  background: var(--usk-native-card-bg);
   border: var(--usk-native-border-width) solid var(--usk-native-border);
   border-radius: var(--usk-native-radius);
 }
@@ -218,7 +221,7 @@
   align-items: center;
 }
 
-[data-ui][data-theme][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) {
+[data-ui][data-theme][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea, select) {
   width: 100%;
   min-block-size: var(--usk-native-control-min-block-size);
   padding: var(--usk-native-control-padding-block) var(--usk-native-control-padding-inline);
@@ -246,9 +249,16 @@
 
 [data-ui][data-theme][data-mode] :where(input, textarea, select, button) { font: inherit; }
 
-[data-ui][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui][data-theme][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
   min-block-size: var(--usk-native-control-min-block-size);
   padding: .7rem 1rem;
+  font: inherit;
+}
+
+[data-ui][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   color: var(--usk-native-on-primary);
   background: var(--usk-native-primary);
   border: var(--usk-native-border-width) solid var(--usk-native-primary);
@@ -256,6 +266,18 @@
   font-family: var(--usk-native-font-control);
   font-weight: 850;
   cursor: pointer;
+}
+
+/* Busy controls reserve a stable lane for the preset-owned spinner glyph. */
+[data-ui][data-theme][data-mode] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+}
+
+[data-ui][data-theme][data-mode] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  flex: 0 0 1em;
 }
 
 [data-ui][data-theme][data-mode] :where(button:not([class]):hover, input[type="button"]:not([class]):hover, input[type="submit"]:not([class]):hover, input[type="reset"]:not([class]):hover) {
@@ -373,7 +395,7 @@
   cursor: not-allowed;
 }
 
-[data-ui][data-theme][data-mode] :where(input:read-only, textarea:read-only) {
+[data-ui][data-theme][data-mode] :where(input:read-only:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea:read-only) {
   background: var(--usk-native-surface-soft);
 }
 
@@ -399,7 +421,7 @@
 
 [data-ui][data-theme][data-mode] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) {
   color: var(--usk-native-text-muted);
-  background: color-mix(in srgb, var(--usk-native-surface-soft) 72%, transparent);
+  background: var(--usk-native-surface-soft);
   border-color: var(--usk-native-border);
   box-shadow: none;
   opacity: .55;
@@ -431,7 +453,7 @@
 
 [data-ui][data-theme][data-mode] :where(th) {
   color: var(--usk-native-text);
-  background: color-mix(in srgb, var(--usk-native-primary) 10%, transparent);
+  background: var(--usk-native-surface-soft);
 }
 
 [data-ui][data-theme][data-mode] :where(td) { color: var(--usk-native-text-muted); }
@@ -460,6 +482,8 @@
   border-radius: var(--usk-native-radius-lg);
   box-shadow: var(--usk-native-shadow-md), 0 30px 80px rgb(0 0 0 / .42);
 }
+
+[data-ui][data-theme][data-mode] :where(dialog p) { color: inherit; }
 
 [data-ui][data-theme][data-mode] :where(dialog)::backdrop { background: rgb(0 0 0 / .62); }
 
@@ -574,6 +598,32 @@
 [data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-track); }
 [data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-thumb-border); border-radius: 999px; }
 
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui][data-theme][data-mode] {
+    --usk-native-track: color-mix(in srgb, var(--usk-native-border) 50%, transparent);
+  }
+
+  [data-ui][data-theme][data-mode] :where(code, kbd, samp) {
+    border-color: color-mix(in srgb, var(--usk-native-border) 62%, transparent);
+  }
+
+  [data-ui][data-theme][data-mode] :where(mark) {
+    background: color-mix(in srgb, var(--usk-native-warning) 32%, transparent);
+  }
+
+  [data-ui][data-theme][data-mode] :where(fieldset) {
+    background: color-mix(in srgb, var(--usk-native-card-bg) 88%, transparent);
+  }
+
+  [data-ui][data-theme][data-mode] :where(input:disabled, textarea:disabled, select:disabled, button:disabled, [aria-disabled="true"]) {
+    background: color-mix(in srgb, var(--usk-native-surface-soft) 72%, transparent);
+  }
+
+  [data-ui][data-theme][data-mode] :where(th) {
+    background: color-mix(in srgb, var(--usk-native-primary) 10%, transparent);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui][data-theme][data-mode] :where(input[type="file"])::file-selector-button,
   [data-ui][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
@@ -582,8 +632,10 @@
 }
 
 @media (forced-colors: active) {
-  [data-ui][data-theme][data-mode] :where(input, textarea, select, button, progress, meter) {
-    forced-color-adjust: auto;
+  @supports (forced-color-adjust: auto) {
+    [data-ui][data-theme][data-mode] :where(input, textarea, select, button, progress, meter) {
+      forced-color-adjust: auto;
+    }
   }
 
   [data-ui][data-theme][data-mode] :where(input:user-invalid, textarea:user-invalid, select:user-invalid, [aria-invalid="true"], .is-invalid) {

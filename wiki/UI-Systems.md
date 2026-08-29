@@ -1,6 +1,6 @@
 # UI Systems
 
-This library ships 11 style systems with a shared theme and mode model.
+UI Style Kit CSS `v2.3.0` ships 20 style systems with a shared theme and mode model.
 
 All UI systems use the same color scheme layer: `styles/theme-colors.css`. Individual UI files define structure, texture, typography, component treatment, and prefixed aliases for the shared `--usk-*` roles.
 
@@ -28,6 +28,15 @@ In `v2.1.0`, the combined builds use five ordered layers: `theme_colors`, `nativ
 | Cyberpunk | `cyberpunk` | `cyber` | Lean | Includes `console`; no ghost/switch/radio utility bundle |
 | Y2K | `y2k` | `y2k` | Lean | Includes `bubble`; no ghost/switch/radio utility bundle |
 | Retro Glass | `retro-glass` | `rg` | Lean | Includes `console`; no ghost/switch/radio utility bundle |
+| Editorial Luxe | `editorial-luxe` | `luxe` | Full utility | Serif-led editorial hierarchy, hairline framing and restrained premium surfaces |
+| Organic Modern | `organic-modern` | `organic` | Full utility | Biomorphic radii, pill controls and soft natural layering |
+| Industrial Utility | `industrial-utility` | `utility` | Full utility | Dense framed operations panels, condensed labels and status-first treatment |
+| Technical Blueprint | `technical-blueprint` | `blueprint` | Full utility | Drafting grid, technical framing and diagram-like precision |
+| Art Deco | `art-deco` | `deco` | Full utility | Symmetrical double borders, stepped geometry and ornamental framing |
+| Clay | `clay` | `clay` | Full utility | Sculpted rounded elevation and friendly dimensional controls |
+| Data Terminal | `data-terminal` | `terminal` | Full utility | Monospace telemetry, dense readouts and operator-console geometry |
+| Paper Editorial | `paper-editorial` | `paper` | Full utility | Print-inspired serif hierarchy, paper cues and stamped editorial details |
+| Neo-Noir | `neo-noir` | `noir` | Full utility | Cinematic media framing, sharp contrast and restrained glow |
 
 ## Core Class Contract
 
@@ -122,11 +131,19 @@ Full utility tier styles also expose the denser helper suffixes:
 <prefix>-skip-link
 ```
 
+## Commercial Component Contract
+
+All presets expose the same marketing suffixes: `card-media`, `card-service`, `card-feature`, `card-accent-edge`, `icon-medallion`, `button-cut`, `button-outline-heavy`, `badge-seal`, `feature-strip`, `feature-item`, `callout-bar`, `eyebrow`, and `media-scrim`.
+
+Compose a filled service action from `<prefix>-button`, `<prefix>-button-primary`, and `<prefix>-button-cut`. Compose a framed callout action from `<prefix>-button` and `<prefix>-button-outline-heavy`. The two modifiers own independent geometry; there is no `button-cta` class. Service cards, scrims, strips, callouts, native actions, and dialogs repeat the active preset's geometry and material while inheriting color from the shared theme roles.
+
+The shared containment layer keeps these components shrinkable inside consumer grids. Preset-owned feature helpers must also respond to their own container; Bento's intrinsic tiles are the reference pattern for avoiding narrow metric columns.
+
 ## Shared Themes and Modes
 
-All 11 styles implement:
+All 20 styles implement:
 
-- 10 themes (`midnight-gold`, `ocean-steel`, `forest-moss`, `sunset-ember`, `royal-plum`, `graphite-cyan`, `desert-sage`, `rose-quartz`, `cyber-lime`, `arctic-indigo`)
+- 20 themes (`midnight-gold`, `ocean-steel`, `forest-moss`, `sunset-ember`, `royal-plum`, `graphite-cyan`, `desert-sage`, `rose-quartz`, `cyber-lime`, `arctic-indigo`, `chrome-navy`, `recycled-emerald`, `industrial-orange`, `performance-red`, `heritage-brass`, `service-blue-red`, `newsprint-crimson`, `foundry-amber`, `soft-orchid`, `electric-noir`)
 - 3 modes (`light`, `dark`, `contrast`)
 
 ## Generic Hooks
@@ -167,5 +184,14 @@ The older `styles/interactive-surface-bridge.css` and `with-bridge` bundles are 
 - `styles/cyberpunk.css`
 - `styles/y2k.css`
 - `styles/retro-glass.css`
+- `styles/editorial-luxe.css`
+- `styles/organic-modern.css`
+- `styles/industrial-utility.css`
+- `styles/technical-blueprint.css`
+- `styles/art-deco.css`
+- `styles/clay.css`
+- `styles/data-terminal.css`
+- `styles/paper-editorial.css`
+- `styles/neo-noir.css`
 - `styles/interactive-surface-theme.css`
 - `styles/interactive-surface-bridge.css` (deprecated)

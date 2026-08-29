@@ -6,8 +6,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const demoUrl = pathToFileURL(path.resolve(__dirname, '../demo/index.html')).href;
 
 const styles = [
-  'minimal-saas', 'bento', 'maximalist', 'bauhaus', 'tactile', 'neumorphism',
-  'retrofuturism', 'brutalism', 'cyberpunk', 'y2k', 'retro-glass'
+  'minimal-saas', 'bento', 'maximalist', 'bauhaus', 'tactile', 'neumorphism', 'retrofuturism',
+  'brutalism', 'cyberpunk', 'y2k', 'retro-glass', 'editorial-luxe', 'organic-modern',
+  'industrial-utility', 'technical-blueprint', 'art-deco', 'clay', 'data-terminal',
+  'paper-editorial', 'neo-noir'
 ];
 const modes = ['light', 'dark', 'contrast'];
 

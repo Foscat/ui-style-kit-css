@@ -27,7 +27,16 @@ const stylePresets = [
   ['brutalism', 'brutal'],
   ['cyberpunk', 'cyber'],
   ['y2k', 'y2k'],
-  ['retro-glass', 'rg']
+  ['retro-glass', 'rg'],
+  ['editorial-luxe', 'luxe'],
+  ['organic-modern', 'organic'],
+  ['industrial-utility', 'utility'],
+  ['technical-blueprint', 'blueprint'],
+  ['art-deco', 'deco'],
+  ['clay', 'clay'],
+  ['data-terminal', 'terminal'],
+  ['paper-editorial', 'paper'],
+  ['neo-noir', 'noir']
 ];
 
 const displayModes = ['light', 'dark', 'contrast'];
@@ -616,6 +625,237 @@ test('spinner treatments are structurally distinct across UI styles', async ({ p
   expect(uniqueSignatures.size, JSON.stringify(spinnerSignatures, null, 2)).toBeGreaterThanOrEqual(9);
 });
 
+test('marketing components keep balanced geometry across all UI styles', async ({ page }) => {
+  test.setTimeout(90_000);
+
+  for (const viewport of [
+    { width: 1440, height: 1000, columns: 2 },
+    { width: 1024, height: 900, columns: 2 },
+    { width: 390, height: 844, columns: 1 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto(demoUrl);
+
+    for (const [ui] of stylePresets) {
+      await page.selectOption('#uiSelect', ui);
+
+      const metrics = await page.getByTestId('marketing-components').evaluate((card) => {
+        const grid = card.querySelector('.demo-showcase-grid, .demo-marketing-grid');
+        const service = grid.querySelector('article');
+        const media = grid.querySelector('figure');
+        const actions = [...card.querySelectorAll('a')];
+        const rect = (element) => element.getBoundingClientRect();
+
+        return {
+          columnCount: getComputedStyle(grid).gridTemplateColumns.split(' ').length,
+          gridWidth: rect(grid).width,
+          serviceWidth: rect(service).width,
+          mediaWidth: rect(media).width,
+          actions: actions.map((action) => ({
+            width: rect(action).width,
+            height: rect(action).height,
+            contained: action.scrollWidth <= action.clientWidth + 1
+          })),
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth
+        };
+      });
+
+      expect(metrics.columnCount, `${ui} columns at ${viewport.width}px`).toBe(viewport.columns);
+      expect(metrics.overflow, `${ui} overflow at ${viewport.width}px`).toBeLessThanOrEqual(1);
+      expect(metrics.actions.every(({ width, height, contained }) => width >= 96 && height <= 96 && contained)).toBe(true);
+
+      if (viewport.columns === 2) {
+        expect(metrics.serviceWidth, `${ui} service width at ${viewport.width}px`).toBeGreaterThanOrEqual(metrics.gridWidth * .42);
+        expect(metrics.mediaWidth, `${ui} media width at ${viewport.width}px`).toBeGreaterThanOrEqual(metrics.gridWidth * .42);
+      } else {
+        expect(metrics.serviceWidth, `${ui} mobile service width`).toBeGreaterThanOrEqual(metrics.gridWidth - 2);
+        expect(metrics.mediaWidth, `${ui} mobile media width`).toBeGreaterThanOrEqual(metrics.gridWidth - 2);
+      }
+    }
+  }
+});
+
+test('Bento metrics use container-sized tiles without narrow text columns', async ({ page }) => {
+  for (const viewport of [
+    { width: 1024, height: 900 },
+    { width: 390, height: 844 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto(demoUrl);
+    await page.selectOption('#uiSelect', 'bento');
+
+    const geometry = await page.getByTestId('utility-layout-sample').evaluate((sample) => {
+      const grid = sample.querySelector('.bento-grid-feature');
+      const tiles = [...grid.querySelectorAll('.bento-tile')];
+      const labels = [...grid.querySelectorAll('.bento-stat-label')];
+
+      return {
+        pageOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        gridContained: grid.scrollWidth <= grid.clientWidth + 1,
+        tileWidths: tiles.map((tile) => tile.getBoundingClientRect().width),
+        labels: labels.map((label) => {
+          const styles = getComputedStyle(label);
+          const rect = label.getBoundingClientRect();
+
+          return {
+            height: rect.height,
+            lineHeight: Number.parseFloat(styles.lineHeight),
+            overflowWrap: styles.overflowWrap,
+            width: rect.width,
+            wordBreak: styles.wordBreak
+          };
+        })
+      };
+    });
+
+    expect(geometry.pageOverflow, `Bento overflow at ${viewport.width}px`).toBeLessThanOrEqual(1);
+    expect(geometry.gridContained, `Bento grid containment at ${viewport.width}px`).toBe(true);
+    expect(Math.min(...geometry.tileWidths), `Bento tile width at ${viewport.width}px`).toBeGreaterThanOrEqual(140);
+    for (const label of geometry.labels) {
+      expect(label.overflowWrap).toBe('normal');
+      expect(label.wordBreak).toBe('normal');
+      expect(label.width).toBeGreaterThanOrEqual(48);
+      expect(label.height).toBeLessThanOrEqual(label.lineHeight * 1.5);
+    }
+  }
+});
+
+test('CTA geometry is distinctive for every UI style', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(demoUrl);
+
+  const primarySignatures = [];
+  const outlineSignatures = [];
+
+  for (const [ui] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+
+    const signatures = await page.getByTestId('marketing-components').evaluate((card) => {
+      const signature = (element) => {
+        const styles = getComputedStyle(element);
+
+        return [
+          styles.clipPath,
+          styles.borderRadius,
+          styles.borderStyle,
+          styles.borderWidth,
+          styles.boxShadow,
+          styles.backgroundImage,
+          styles.inlineSize,
+          styles.justifySelf,
+          styles.textTransform,
+          styles.letterSpacing
+        ].join('|');
+      };
+      const primary = card.querySelector('[data-testid="marketing-primary-cta"]');
+      const secondary = card.querySelector('[data-testid="marketing-secondary-cta"]');
+
+      return {
+        primary: signature(primary),
+        secondary: signature(secondary)
+      };
+    });
+
+    expect(signatures.primary, `${ui} primary and secondary CTA identities`).not.toBe(signatures.secondary);
+    primarySignatures.push([ui, signatures.primary]);
+    outlineSignatures.push([ui, signatures.secondary]);
+  }
+
+  expect(new Set(primarySignatures.map(([, signature]) => signature)).size, JSON.stringify(primarySignatures, null, 2)).toBe(20);
+  expect(new Set(outlineSignatures.map(([, signature]) => signature)).size, JSON.stringify(outlineSignatures, null, 2)).toBe(20);
+});
+
+test('clipped CTA controls preserve focus visibility and target sizing', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(demoUrl);
+
+  for (const [ui] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+    const action = page.getByTestId('marketing-components').locator('a').first();
+    await action.focus();
+
+    const focus = await action.evaluate((element) => {
+      const styles = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+
+      return {
+        focusVisible: element.matches(':focus-visible'),
+        outlineStyle: styles.outlineStyle,
+        outlineWidth: parseFloat(styles.outlineWidth),
+        width: rect.width,
+        height: rect.height
+      };
+    });
+
+    expect(focus.focusVisible, `${ui} focus-visible state`).toBe(true);
+    expect(focus.outlineStyle, `${ui} focus outline style`).not.toBe('none');
+    expect(focus.outlineWidth, `${ui} focus outline width`).toBeGreaterThanOrEqual(2);
+    expect(focus.width, `${ui} target width`).toBeGreaterThanOrEqual(44);
+    expect(focus.height, `${ui} target height`).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test('preset CTA motion respects reduced-motion preferences', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(demoUrl);
+
+  for (const [ui] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+    const durations = await page.getByTestId('marketing-components').locator('a').first()
+      .evaluate((element) => {
+        const styles = getComputedStyle(element);
+        return {
+          animation: styles.animationDuration.split(',').map((value) => parseFloat(value)),
+          transition: styles.transitionDuration.split(',').map((value) => parseFloat(value))
+        };
+      });
+
+    expect(Math.max(...durations.animation), `${ui} reduced animation duration`).toBeLessThanOrEqual(.001);
+    expect(Math.max(...durations.transition), `${ui} reduced transition duration`).toBeLessThanOrEqual(.001);
+  }
+});
+
+test('busy native buttons reserve spinner space across all UI styles', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  for (const [ui] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+
+    const geometry = await page.getByTestId('native-buttons').locator('button[aria-busy="true"]').evaluate((button) => {
+      const styles = getComputedStyle(button);
+      const spinner = getComputedStyle(button, '::after');
+
+      return {
+        display: styles.display,
+        alignItems: styles.alignItems,
+        gap: parseFloat(styles.columnGap),
+        contained: button.scrollWidth <= button.clientWidth + 1,
+        spinnerInlineSize: parseFloat(spinner.inlineSize),
+        spinnerFlexShrink: spinner.flexShrink
+      };
+    });
+
+    expect(['flex', 'inline-flex'], `${ui} busy display`).toContain(geometry.display);
+    expect(geometry.alignItems, `${ui} busy alignment`).toBe('center');
+    expect(geometry.gap, `${ui} busy gap`).toBeGreaterThanOrEqual(8);
+    expect(geometry.contained, `${ui} busy containment`).toBe(true);
+    expect(geometry.spinnerInlineSize, `${ui} busy spinner size`).toBeGreaterThan(0);
+    expect(geometry.spinnerFlexShrink, `${ui} busy spinner shrink`).toBe('0');
+  }
+});
+
+test('marketing artwork follows active theme tokens', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const artwork = page.getByTestId('marketing-components').locator('img').first();
+  const initialBackground = await artwork.evaluate((element) => getComputedStyle(element).backgroundImage);
+  await page.selectOption('#themeSelect', 'service-blue-red');
+  const updatedBackground = await artwork.evaluate((element) => getComputedStyle(element).backgroundImage);
+
+  expect(initialBackground).not.toBe('none');
+  expect(updatedBackground).not.toBe(initialBackground);
+});
+
 test('demo component cards keep balanced rows at square and tablet widths', async ({ page }) => {
   for (const viewport of [
     { width: 900, height: 900 },
@@ -878,9 +1118,26 @@ test('utility showcase demonstrates distinct utility jobs', async ({ page }) => 
   expect(utilityText).toContain('Action emphasis');
   expect(utilityText).toContain('Inset content');
   expect(utilityText).toContain('Pill shape');
+  expect(utilityText).toContain('.saas-pill');
+  expect(utilityText).toContain('.saas-rounded');
+  expect(utilityText).toContain('.saas-border');
+
+  const shapeJobs = await page.getByTestId('utility-layout-sample').locator('.demo-utility-shape')
+    .evaluateAll((elements) => elements.map((element) => {
+      const styles = getComputedStyle(element);
+      return {
+        borderRadius: parseFloat(styles.borderStartStartRadius),
+        borderWidth: parseFloat(styles.borderTopWidth)
+      };
+    }));
+
+  expect(shapeJobs).toHaveLength(3);
+  expect(shapeJobs[0].borderRadius).toBeGreaterThan(shapeJobs[1].borderRadius);
+  expect(shapeJobs[2].borderWidth).toBeGreaterThan(0);
 });
 
 test('neutral demo buttons keep theme text color across styles and modes', async ({ page }) => {
+  test.setTimeout(90_000);
   await page.goto(demoUrl);
 
   for (const [ui, prefix] of stylePresets) {

@@ -1,7 +1,7 @@
 /* =========================================================
    Brutalism Theme System
    Includes:
-   - 10 color schemes
+   - 20 color schemes
    - light / dark / contrast modes
    - themed UI components and utilities
 
@@ -146,7 +146,7 @@
   --brutal-fg: var(--brutal-text);
   --brutal-surface-fg: var(--brutal-text);
   --brutal-muted: var(--brutal-text-muted);
-  --brutal-border: rgb(var(--brutal-border-rgb) / var(--brutal-border-alpha));
+  --brutal-border: rgb(var(--brutal-border-rgb) / max(var(--brutal-border-alpha), var(--usk-border-min-alpha)));
   --brutal-control-fg: var(--brutal-text);
   --brutal-primary: rgb(var(--brutal-primary-rgb));
   --brutal-primary-hover: rgb(var(--brutal-primary-hover-rgb));
@@ -179,6 +179,10 @@
   --brutal-spinner-track: rgb(var(--brutal-border-rgb) / max(.28, calc(var(--brutal-border-alpha) * .7)));
   --brutal-spinner-stroke: var(--brutal-primary);
   --brutal-spinner-accent: var(--brutal-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="brutalism"][data-theme][data-mode] { --brutal-border: color-mix(in srgb, rgb(var(--brutal-border-rgb) / max(var(--brutal-border-alpha), var(--usk-border-min-alpha))), var(--brutal-text) var(--usk-border-text-mix)); }
 }
 
 /* =========================================================
@@ -410,6 +414,234 @@
 [data-ui="brutalism"] :focus-visible { outline: 4px solid var(--brutal-focus); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { [data-ui="brutalism"] *, [data-ui="brutalism"] *::before, [data-ui="brutalism"] *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }
 
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.brutal-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--brutal-border-rgb) / .72);
+  border-radius: var(--brutal-radius-lg);
+}
+
+.brutal-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--brutal-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.brutal-card-service > .brutal-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.brutal-card-service > .brutal-card-media + .brutal-icon-medallion { margin-block-start: -2.15rem; }
+
+.brutal-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--brutal-space-4);
+  align-items: start;
+}
+
+.brutal-card-accent-edge {
+  border-inline-start: .35rem solid var(--brutal-primary);
+}
+
+.brutal-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--brutal-primary);
+  color: var(--brutal-on-primary);
+  border: 2px solid rgb(var(--brutal-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.brutal-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.brutal-button.brutal-button-cut,
+.brutal-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.brutal-button.brutal-button-cut:focus-visible,
+.brutal-button-cut:focus-visible { outline-offset: -3px; }
+
+.brutal-button.brutal-button-outline-heavy,
+.brutal-button-outline-heavy {
+  background: transparent;
+  color: var(--brutal-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--brutal-primary);
+  box-shadow: none;
+}
+.brutal-button.brutal-button-outline-heavy:hover,
+.brutal-button-outline-heavy:hover {
+  background: var(--brutal-primary);
+  color: var(--brutal-on-primary);
+  border-color: var(--brutal-primary-hover);
+}
+
+.brutal-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--brutal-surface-strong);
+  color: var(--brutal-text);
+  border: 2px solid var(--brutal-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--brutal-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.brutal-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--brutal-card-bg);
+  color: var(--brutal-text);
+  border: 1px solid var(--brutal-border);
+  border-radius: var(--brutal-radius-lg);
+}
+
+.brutal-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--brutal-space-3);
+  min-inline-size: 0;
+  padding: var(--brutal-space-4);
+  border-inline-end: 1px solid rgb(var(--brutal-border-rgb) / .62);
+}
+.brutal-feature-item:last-child { border-inline-end: 0; }
+.brutal-feature-item > :where(p, small) { margin: 0; color: var(--brutal-text-muted); }
+
+.brutal-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--brutal-space-4);
+  padding: var(--brutal-space-4) var(--brutal-space-5);
+  background: var(--brutal-card-bg);
+  color: var(--brutal-text);
+  border: 1px solid var(--brutal-border);
+  border-radius: var(--brutal-radius-lg);
+}
+.brutal-callout-bar > :where(p, div) { min-inline-size: 0; }
+.brutal-callout-bar > :where(.brutal-button, a, button):last-child { justify-self: end; }
+
+.brutal-eyebrow {
+  margin: 0;
+  color: var(--brutal-primary);
+  font-family: var(--brutal-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.brutal-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--brutal-surface-soft);
+  border: 1px solid var(--brutal-border);
+  border-radius: var(--brutal-radius-lg);
+}
+.brutal-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.brutal-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.brutal-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .brutal-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .brutal-callout-bar > :where(.brutal-button, a, button):last-child { justify-self: stretch; }
+  .brutal-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--brutal-border-rgb) / .62); }
+  .brutal-feature-item:last-child { border-block-end: 0; }
+}
+
+.brutal-card-service, .brutal-card-feature, .brutal-feature-strip, .brutal-callout-bar, .brutal-media-scrim { border-radius: 0; border: 3px solid var(--brutal-text); box-shadow: .45rem .45rem 0 var(--brutal-primary); }
+.brutal-icon-medallion, .brutal-badge-seal { border-radius: 0; border: 3px solid var(--brutal-text); box-shadow: .3rem .3rem 0 var(--brutal-secondary); }
+.brutal-card-accent-edge { border-inline-start: .6rem solid var(--brutal-primary); }
+.brutal-button-outline-heavy { border-width: 3px; box-shadow: .22rem .22rem 0 var(--brutal-text); }
+.brutal-button-cut { clip-path: polygon(.5rem 0, 100% 0, 100% calc(100% - .5rem), calc(100% - .5rem) 100%, 0 100%, 0 .5rem); }
+
+/* Filled and framed actions keep blunt cuts, heavy borders, and hard displacement. */
+.brutal-button.brutal-button-cut, .brutal-button-cut {
+  inline-size: min(100%, 14rem);
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: start;
+  justify-content: center;
+  clip-path: polygon(.52rem 0, 100% 0, 100% calc(100% - .52rem), calc(100% - .52rem) 100%, 0 100%, 0 .52rem);
+}
+.brutal-button.brutal-button-outline-heavy, .brutal-button-outline-heavy {
+  border-width: 3px;
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - .52rem) 0, 100% .52rem, 100% 100%, .52rem 100%, 0 calc(100% - .52rem));
+  box-shadow: .28rem .28rem 0 var(--brutal-text);
+}
+
+/* Marketing and native surfaces repeat the blunt border and hard displacement. */
+.brutal-card-service, .brutal-media-scrim, .brutal-feature-strip, .brutal-callout-bar, .brutal-well {
+  border: 3px solid var(--brutal-text);
+  border-radius: 0;
+  box-shadow: .38rem .38rem 0 var(--brutal-text);
+}
+[data-ui="brutalism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 3px solid var(--brutal-text);
+  border-radius: 0;
+  box-shadow: .26rem .26rem 0 var(--brutal-text);
+}
+[data-ui="brutalism"][data-theme][data-mode] :where(dialog) {
+  border: 3px solid var(--brutal-text);
+  border-radius: 0;
+  box-shadow: .48rem .48rem 0 var(--brutal-text);
+}
+
+/* Busy indicators use a blunt square and an unapologetic offset shadow. */
+.brutal-button[aria-busy="true"]::after, .brutal-icon-button[aria-busy="true"]::after, [data-ui="brutalism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .18em solid currentColor; border-block-start-color: transparent; border-radius: 0; background: transparent; box-shadow: .12em .12em 0 currentColor; clip-path: inset(0); animation: brutal-spin .64s steps(4, end) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="brutalism"] *, [data-ui="brutalism"] *::before, [data-ui="brutalism"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -417,7 +649,7 @@
   [data-ui="brutalism"] { --brutal-border-alpha: 1; }
 }
 @media (forced-colors: active) {
-  [data-ui="brutalism"] * { forced-color-adjust: auto; }
+  @supports (forced-color-adjust: auto) { [data-ui="brutalism"] * { forced-color-adjust: auto; } }
   [data-ui="brutalism"] :where(:focus-visible) { outline: 3px solid CanvasText; box-shadow: none; }
 }
 @media print {

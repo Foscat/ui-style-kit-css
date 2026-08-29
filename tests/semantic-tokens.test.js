@@ -169,8 +169,24 @@ test('canonical and deprecated adapters prefer only behavior-equivalent semantic
   }
 
   const deprecatedCss = read('styles/interactive-surface-bridge.css');
-  assert.match(deprecatedCss, /background-color 160ms ease,/);
+  const deprecatedTransition = deprecatedCss.match(/transition:\s*([\s\S]*?);/)?.[1] ?? '';
+  assert.doesNotMatch(
+    deprecatedTransition,
+    /^\s*(?:background-color|color)\b/m,
+    'Foreground and background paint must change atomically to preserve contrast.'
+  );
   assert.match(deprecatedCss, /transition:\s*opacity 160ms ease;/);
+  assert.match(deprecatedCss, /@supports \(color: color-mix\(in srgb, black, white\)\)/);
+  assert.match(
+    deprecatedCss,
+    /--interactive-surface-level-3-shadow:\s*0 14px 34px rgb\(var\(--usk-bg-rgb, 0 0 0\) \/ \.3\);/,
+    'The unguarded bridge foundation must retain a stable fallback shadow.'
+  );
+  assert.match(
+    deprecatedCss,
+    /--interactive-surface-level-3-shadow:[^;]*color-mix\(in srgb,[^;]+;/,
+    'The guarded bridge enhancement should retain its color-mixed edge.'
+  );
   assert.doesNotMatch(deprecatedCss, /--ui-motion-(?:duration|easing)/);
 });
 

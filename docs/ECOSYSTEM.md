@@ -14,11 +14,11 @@ The pinned Interactive Surface and Layout commits are published merge objects. B
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.2.0` | current package version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.6.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.3.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.6.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.1.0` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The current combination is `ui-style-kit-css@2.2.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.2.0` is the current package version, and the release pipeline treats it as the active candidate only while that exact npm version is absent. Interactive Surface `1.6.0` and Layout Style `3.0.1` are published releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.3.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.1.0`. UI Style Kit `2.3.0` is the current release target; the companion versions are published releases. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 
@@ -88,3 +88,7 @@ import "layout-style-css";
 - Layout Style CSS owns structural wrappers, layout recipes, grids, app shells, and section composition.
 
 The canonical theme bridge does not make Interactive Surface a dependency of UI Style Kit. It only maps shared `--usk-*` roles to `--interactive-surface-*` tokens and provides paint; `state-core.css` continues to own interaction mechanics. The older `interactive-surface-bridge` and `with-bridge` exports are deprecated compatibility paths whose stateful behavior remains unchanged.
+
+## Canonical ownership order
+
+Load UI visual CSS first, UI interaction-theme paint second, Interactive Surface state core third, Layout CSS fourth, and application overrides last. Layout `3.1.0` no longer exports `integrations/ui-style-kit.css` or `legacy.css`; use its root or supported `foundation.css`, wrapper, primitive, recipe, utility, and personality entrypoints.

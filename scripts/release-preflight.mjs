@@ -242,6 +242,12 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
   console.log(`Release preflight passed for ${candidatePackage}@${candidatePackageJson.version}.`);
 }
 
+/**
+ * Parses release-preflight command-line options without inferring companion sources.
+ *
+ * @param {string[]} args - Command-line arguments following the script name.
+ * @returns {Record<string, string | boolean>} Normalized release-preflight options.
+ */
 function parseArgs(args) {
   const parsed = { skipCleanInstall: false };
   for (let index = 0; index < args.length; index += 1) {
@@ -252,6 +258,7 @@ function parseArgs(args) {
       '--candidate-package': 'candidatePackage',
       '--layout-repo': 'layoutRepo',
       '--interactive-repo': 'interactiveRepo',
+      '--interactive-spec': 'interactiveSpec',
       '--layout-docs-repo': 'layoutDocsRepo',
       '--interactive-docs-repo': 'interactiveDocsRepo',
       '--registry-url': 'registryUrl'
@@ -294,11 +301,25 @@ function packCandidate(candidateRoot, tempRoot) {
   return tarball;
 }
 
+/**
+ * Runs the current and minimum clean-install matrices for a packed release candidate.
+ *
+ * @param {object} parameters - Matrix invocation parameters.
+ * @param {string} parameters.candidateKey - Ecosystem key for the candidate package.
+ * @param {string} parameters.checkerPath - Absolute path to the ecosystem checker.
+ * @param {string} parameters.fixtureRoot - Repository root used for the checker process.
+ * @param {string} parameters.tarball - Absolute path to the packed candidate tarball.
+ * @param {Record<string, string | boolean>} parameters.options - Parsed preflight options.
+ * @returns {void}
+ */
 function runCleanInstallMatrix({ candidateKey, checkerPath, fixtureRoot, tarball, options }) {
   const currentArgs = [checkerPath, '--matrix', 'current', `--${candidateKey}-spec`, tarball];
   if (candidateKey !== 'layout' && options.layoutRepo) currentArgs.push('--layout-repo', path.resolve(options.layoutRepo));
   if (candidateKey !== 'interactive' && options.interactiveRepo) {
     currentArgs.push('--interactive-repo', path.resolve(options.interactiveRepo));
+  }
+  if (candidateKey !== 'interactive' && options.interactiveSpec) {
+    currentArgs.push('--interactive-spec', options.interactiveSpec);
   }
   if (options.layoutDocsRepo) currentArgs.push('--layout-docs-repo', path.resolve(options.layoutDocsRepo));
   if (options.interactiveDocsRepo) currentArgs.push('--interactive-docs-repo', path.resolve(options.interactiveDocsRepo));

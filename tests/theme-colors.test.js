@@ -18,7 +18,16 @@ const styles = [
   ['brutalism', 'brutal'],
   ['cyberpunk', 'cyber'],
   ['y2k', 'y2k'],
-  ['retro-glass', 'rg']
+  ['retro-glass', 'rg'],
+  ['editorial-luxe', 'luxe'],
+  ['organic-modern', 'organic'],
+  ['industrial-utility', 'utility'],
+  ['technical-blueprint', 'blueprint'],
+  ['art-deco', 'deco'],
+  ['clay', 'clay'],
+  ['data-terminal', 'terminal'],
+  ['paper-editorial', 'paper'],
+  ['neo-noir', 'noir']
 ];
 
 const themes = [
@@ -31,7 +40,17 @@ const themes = [
   'desert-sage',
   'rose-quartz',
   'cyber-lime',
-  'arctic-indigo'
+  'arctic-indigo',
+  'chrome-navy',
+  'recycled-emerald',
+  'industrial-orange',
+  'performance-red',
+  'heritage-brass',
+  'service-blue-red',
+  'newsprint-crimson',
+  'foundry-amber',
+  'soft-orchid',
+  'electric-noir'
 ];
 
 const modes = ['light', 'dark', 'contrast'];

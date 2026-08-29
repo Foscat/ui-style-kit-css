@@ -5,6 +5,16 @@
 
 @layer ui-style-kit.theme_colors {
 /* Shared RGB roles keep visual presets focused on layout, texture, and component treatment. */
+:where([data-ui][data-theme][data-mode="light"]) {
+  --usk-border-text-mix: 45%;
+  --usk-border-min-alpha: 1;
+}
+
+:where([data-ui][data-theme][data-mode="dark"], [data-ui][data-theme][data-mode="contrast"]) {
+  --usk-border-text-mix: 0%;
+  --usk-border-min-alpha: 0;
+}
+
 :where([data-ui][data-theme="midnight-gold"][data-mode="light"]) {
   --usk-bg-rgb: 246 243 234;
   --usk-surface-rgb: 255 250 240;
@@ -14,7 +24,7 @@
   --usk-text-muted-rgb: 95 104 121;
   --usk-border-rgb: 214 200 165;
   --usk-primary-rgb: 184 135 47;
-  --usk-primary-hover-rgb: 148 104 31;
+  --usk-primary-hover-rgb: 162 118 38;
   --usk-primary-text-rgb: 16 16 16;
   --usk-secondary-rgb: 34 49 79;
   --usk-secondary-hover-rgb: 23 36 60;
@@ -23,7 +33,7 @@
   --usk-success-rgb: 47 125 84;
   --usk-warning-rgb: 167 106 0;
   --usk-danger-rgb: 185 63 63;
-  --usk-link-rgb: 138 100 31;
+  --usk-link-rgb: 132 94 27;
   --usk-accent-text-rgb: 0 0 0;
   --usk-success-text-rgb: 255 255 255;
   --usk-warning-text-rgb: 0 0 0;
@@ -479,7 +489,7 @@
   --usk-surface-strong-rgb: 255 250 241;
   --usk-surface-soft-rgb: 234 223 205;
   --usk-text-rgb: 43 36 25;
-  --usk-text-muted-rgb: 113 103 84;
+  --usk-text-muted-rgb: 107 97 78;
   --usk-border-rgb: 215 198 167;
   --usk-primary-rgb: 140 106 61;
   --usk-primary-hover-rgb: 112 83 47;
@@ -638,7 +648,7 @@
   --usk-text-muted-rgb: 89 105 82;
   --usk-border-rgb: 198 216 179;
   --usk-primary-rgb: 95 159 31;
-  --usk-primary-hover-rgb: 73 125 23;
+  --usk-primary-hover-rgb: 86 145 26;
   --usk-primary-text-rgb: 16 16 16;
   --usk-secondary-rgb: 20 127 134;
   --usk-secondary-hover-rgb: 14 98 104;
@@ -647,7 +657,7 @@
   --usk-success-rgb: 47 125 84;
   --usk-warning-rgb: 156 104 0;
   --usk-danger-rgb: 179 65 65;
-  --usk-link-rgb: 73 125 23;
+  --usk-link-rgb: 65 112 19;
   --usk-accent-text-rgb: 0 0 0;
   --usk-success-text-rgb: 255 255 255;
   --usk-warning-text-rgb: 255 255 255;
@@ -778,6 +788,787 @@
   --usk-warning-rgb: 255 225 0;
   --usk-danger-rgb: 255 63 95;
   --usk-link-rgb: 159 178 255;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+
+:where([data-ui][data-theme="chrome-navy"][data-mode="light"]) {
+  --usk-bg-rgb: 245 247 250;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 253 254 255;
+  --usk-surface-soft-rgb: 230 234 240;
+  --usk-text-rgb: 13 27 42;
+  --usk-text-muted-rgb: 78 90 105;
+  --usk-border-rgb: 192 198 207;
+  --usk-primary-rgb: 31 58 95;
+  --usk-primary-hover-rgb: 22 44 72;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 62 107 142;
+  --usk-secondary-hover-rgb: 50 87 118;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 90 127 166;
+  --usk-success-rgb: 31 107 83;
+  --usk-warning-rgb: 164 106 0;
+  --usk-danger-rgb: 178 60 60;
+  --usk-link-rgb: 26 53 86;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 90 127 166;
+}
+
+:where([data-ui][data-theme="chrome-navy"][data-mode="dark"]) {
+  --usk-bg-rgb: 8 17 28;
+  --usk-surface-rgb: 16 33 49;
+  --usk-surface-strong-rgb: 23 48 66;
+  --usk-surface-soft-rgb: 12 26 39;
+  --usk-text-rgb: 239 244 250;
+  --usk-text-muted-rgb: 181 192 205;
+  --usk-border-rgb: 69 87 107;
+  --usk-primary-rgb: 126 169 211;
+  --usk-primary-hover-rgb: 165 194 225;
+  --usk-primary-text-rgb: 8 17 28;
+  --usk-secondary-rgb: 168 193 220;
+  --usk-secondary-hover-rgb: 199 216 234;
+  --usk-secondary-text-rgb: 8 17 28;
+  --usk-accent-rgb: 199 213 229;
+  --usk-success-rgb: 120 216 181;
+  --usk-warning-rgb: 255 209 122;
+  --usk-danger-rgb: 255 144 144;
+  --usk-link-rgb: 199 213 229;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 159 188 224;
+}
+
+:where([data-ui][data-theme="chrome-navy"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 5 8 12;
+  --usk-surface-strong-rgb: 10 19 32;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 242 247 255;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 156 197 240;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 0 230 255;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 230 240 255;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 92 92;
+  --usk-link-rgb: 156 197 240;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="recycled-emerald"][data-mode="light"]) {
+  --usk-bg-rgb: 246 251 249;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 252 255 254;
+  --usk-surface-soft-rgb: 232 242 239;
+  --usk-text-rgb: 14 44 41;
+  --usk-text-muted-rgb: 88 112 109;
+  --usk-border-rgb: 199 216 212;
+  --usk-primary-rgb: 14 91 79;
+  --usk-primary-hover-rgb: 10 72 63;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 15 118 110;
+  --usk-secondary-hover-rgb: 12 95 89;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 52 211 153;
+  --usk-success-rgb: 21 115 71;
+  --usk-warning-rgb: 150 99 0;
+  --usk-danger-rgb: 185 63 79;
+  --usk-link-rgb: 12 81 71;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 52 211 153;
+}
+
+:where([data-ui][data-theme="recycled-emerald"][data-mode="dark"]) {
+  --usk-bg-rgb: 7 22 20;
+  --usk-surface-rgb: 16 38 34;
+  --usk-surface-strong-rgb: 22 54 47;
+  --usk-surface-soft-rgb: 11 29 26;
+  --usk-text-rgb: 236 251 247;
+  --usk-text-muted-rgb: 183 208 203;
+  --usk-border-rgb: 65 97 92;
+  --usk-primary-rgb: 69 209 175;
+  --usk-primary-hover-rgb: 114 227 197;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 103 221 209;
+  --usk-secondary-hover-rgb: 141 236 227;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 139 255 214;
+  --usk-success-rgb: 141 229 184;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 154 168;
+  --usk-link-rgb: 139 255 214;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 103 221 209;
+}
+
+:where([data-ui][data-theme="recycled-emerald"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 3 16 13;
+  --usk-surface-strong-rgb: 8 33 28;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 239 255 248;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 56 240 185;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 0 240 255;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 160 255 217;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 102 128;
+  --usk-link-rgb: 56 240 185;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="industrial-orange"][data-mode="light"]) {
+  --usk-bg-rgb: 245 243 239;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 251 250 248;
+  --usk-surface-soft-rgb: 228 224 218;
+  --usk-text-rgb: 24 21 18;
+  --usk-text-muted-rgb: 98 91 84;
+  --usk-border-rgb: 184 178 169;
+  --usk-primary-rgb: 183 78 22;
+  --usk-primary-hover-rgb: 142 63 18;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 43 43 43;
+  --usk-secondary-hover-rgb: 27 27 27;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 225 139 61;
+  --usk-success-rgb: 47 125 84;
+  --usk-warning-rgb: 164 106 0;
+  --usk-danger-rgb: 178 60 60;
+  --usk-link-rgb: 142 63 18;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 225 139 61;
+}
+
+:where([data-ui][data-theme="industrial-orange"][data-mode="dark"]) {
+  --usk-bg-rgb: 13 12 11;
+  --usk-surface-rgb: 26 26 26;
+  --usk-surface-strong-rgb: 43 43 43;
+  --usk-surface-soft-rgb: 18 17 16;
+  --usk-text-rgb: 247 242 235;
+  --usk-text-muted-rgb: 197 188 177;
+  --usk-border-rgb: 89 81 73;
+  --usk-primary-rgb: 255 138 61;
+  --usk-primary-hover-rgb: 255 174 113;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 198 191 182;
+  --usk-secondary-hover-rgb: 227 222 215;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 179 107;
+  --usk-success-rgb: 139 223 178;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 152 152;
+  --usk-link-rgb: 255 179 107;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 154 66;
+}
+
+:where([data-ui][data-theme="industrial-orange"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 10 9 8;
+  --usk-surface-strong-rgb: 23 19 17;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 247 241 234;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 154 66;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 244 241 236;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 195 111;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 92 92;
+  --usk-link-rgb: 255 179 107;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="performance-red"][data-mode="light"]) {
+  --usk-bg-rgb: 246 246 247;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 252 252 253;
+  --usk-surface-soft-rgb: 230 231 234;
+  --usk-text-rgb: 18 19 23;
+  --usk-text-muted-rgb: 92 97 107;
+  --usk-border-rgb: 199 203 210;
+  --usk-primary-rgb: 200 16 46;
+  --usk-primary-hover-rgb: 163 14 37;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 31 31 31;
+  --usk-secondary-hover-rgb: 17 17 17;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 232 76 97;
+  --usk-success-rgb: 47 125 84;
+  --usk-warning-rgb: 164 106 0;
+  --usk-danger-rgb: 168 15 41;
+  --usk-link-rgb: 163 14 37;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 232 76 97;
+}
+
+:where([data-ui][data-theme="performance-red"][data-mode="dark"]) {
+  --usk-bg-rgb: 9 9 10;
+  --usk-surface-rgb: 20 20 22;
+  --usk-surface-strong-rgb: 31 31 34;
+  --usk-surface-soft-rgb: 15 16 18;
+  --usk-text-rgb: 249 249 250;
+  --usk-text-muted-rgb: 192 197 207;
+  --usk-border-rgb: 76 79 86;
+  --usk-primary-rgb: 255 76 102;
+  --usk-primary-hover-rgb: 255 112 133;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 209 211 216;
+  --usk-secondary-hover-rgb: 232 233 236;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 131 148;
+  --usk-success-rgb: 143 223 182;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 127 144;
+  --usk-link-rgb: 255 131 148;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 76 102;
+}
+
+:where([data-ui][data-theme="performance-red"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 7 7 7;
+  --usk-surface-strong-rgb: 18 18 18;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 245 245 245;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 54 86;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 242 242 242;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 149 163;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 106 125;
+  --usk-link-rgb: 255 149 163;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="heritage-brass"][data-mode="light"]) {
+  --usk-bg-rgb: 250 244 234;
+  --usk-surface-rgb: 255 253 249;
+  --usk-surface-strong-rgb: 255 255 255;
+  --usk-surface-soft-rgb: 239 228 207;
+  --usk-text-rgb: 42 31 26;
+  --usk-text-muted-rgb: 109 92 84;
+  --usk-border-rgb: 212 192 166;
+  --usk-primary-rgb: 107 15 26;
+  --usk-primary-hover-rgb: 91 13 22;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 17 17 17;
+  --usk-secondary-hover-rgb: 0 0 0;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 201 154 70;
+  --usk-success-rgb: 47 125 84;
+  --usk-warning-rgb: 160 107 19;
+  --usk-danger-rgb: 178 60 60;
+  --usk-link-rgb: 91 13 22;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 201 154 70;
+}
+
+:where([data-ui][data-theme="heritage-brass"][data-mode="dark"]) {
+  --usk-bg-rgb: 19 13 10;
+  --usk-surface-rgb: 33 24 20;
+  --usk-surface-strong-rgb: 50 36 30;
+  --usk-surface-soft-rgb: 25 18 15;
+  --usk-text-rgb: 251 245 236;
+  --usk-text-muted-rgb: 211 195 183;
+  --usk-border-rgb: 106 82 62;
+  --usk-primary-rgb: 201 138 93;
+  --usk-primary-hover-rgb: 224 169 126;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 246 235 215;
+  --usk-secondary-hover-rgb: 255 248 235;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 231 184 95;
+  --usk-success-rgb: 152 224 182;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 160 154;
+  --usk-link-rgb: 240 200 125;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 231 184 95;
+}
+
+:where([data-ui][data-theme="heritage-brass"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 15 10 7;
+  --usk-surface-strong-rgb: 28 18 13;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 255 245 232;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 200 138 54;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 243 217;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 211 107;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 107 107;
+  --usk-link-rgb: 255 211 107;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="service-blue-red"][data-mode="light"]) {
+  --usk-bg-rgb: 245 247 250;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 252 252 253;
+  --usk-surface-soft-rgb: 232 235 240;
+  --usk-text-rgb: 17 36 59;
+  --usk-text-muted-rgb: 90 104 119;
+  --usk-border-rgb: 200 207 217;
+  --usk-primary-rgb: 13 59 102;
+  --usk-primary-hover-rgb: 11 49 85;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 214 43 43;
+  --usk-secondary-hover-rgb: 178 35 35;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 233 90 90;
+  --usk-success-rgb: 47 125 84;
+  --usk-warning-rgb: 164 106 0;
+  --usk-danger-rgb: 198 40 40;
+  --usk-link-rgb: 11 49 85;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 214 43 43;
+}
+
+:where([data-ui][data-theme="service-blue-red"][data-mode="dark"]) {
+  --usk-bg-rgb: 8 17 28;
+  --usk-surface-rgb: 16 32 48;
+  --usk-surface-strong-rgb: 24 49 73;
+  --usk-surface-soft-rgb: 11 23 36;
+  --usk-text-rgb: 243 247 251;
+  --usk-text-muted-rgb: 188 200 213;
+  --usk-border-rgb: 71 96 121;
+  --usk-primary-rgb: 108 169 227;
+  --usk-primary-hover-rgb: 147 193 237;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 106 106;
+  --usk-secondary-hover-rgb: 255 146 146;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 154 154;
+  --usk-success-rgb: 143 223 182;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 143 143;
+  --usk-link-rgb: 165 203 241;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 106 106;
+}
+
+:where([data-ui][data-theme="service-blue-red"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 6 16 26;
+  --usk-surface-strong-rgb: 10 29 48;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 238 244 255;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 102 181 255;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 102 102;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 170 170;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 92 92;
+  --usk-link-rgb: 140 198 255;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="newsprint-crimson"][data-mode="light"]) {
+  --usk-bg-rgb: 238 229 212;
+  --usk-surface-rgb: 248 241 229;
+  --usk-surface-strong-rgb: 255 249 238;
+  --usk-surface-soft-rgb: 222 209 188;
+  --usk-text-rgb: 44 38 34;
+  --usk-text-muted-rgb: 99 88 80;
+  --usk-border-rgb: 184 170 152;
+  --usk-primary-rgb: 122 35 41;
+  --usk-primary-hover-rgb: 92 24 29;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 64 58 54;
+  --usk-secondary-hover-rgb: 45 41 38;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 199 137 114;
+  --usk-success-rgb: 47 114 82;
+  --usk-warning-rgb: 154 101 0;
+  --usk-danger-rgb: 165 42 50;
+  --usk-link-rgb: 106 30 36;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 165 42 50;
+}
+
+:where([data-ui][data-theme="newsprint-crimson"][data-mode="dark"]) {
+  --usk-bg-rgb: 22 16 13;
+  --usk-surface-rgb: 33 24 20;
+  --usk-surface-strong-rgb: 48 35 30;
+  --usk-surface-soft-rgb: 26 18 15;
+  --usk-text-rgb: 244 235 221;
+  --usk-text-muted-rgb: 198 184 168;
+  --usk-border-rgb: 106 90 76;
+  --usk-primary-rgb: 216 124 131;
+  --usk-primary-hover-rgb: 238 160 166;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 200 185 166;
+  --usk-secondary-hover-rgb: 229 214 194;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 240 165 151;
+  --usk-success-rgb: 138 214 175;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 154 154;
+  --usk-link-rgb: 240 165 151;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 240 165 151;
+}
+
+:where([data-ui][data-theme="newsprint-crimson"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 13 8 6;
+  --usk-surface-strong-rgb: 26 16 12;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 255 245 232;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 122 132;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 243 218;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 179 167;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 102 102;
+  --usk-link-rgb: 255 154 163;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="foundry-amber"][data-mode="light"]) {
+  --usk-bg-rgb: 241 240 237;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 250 250 248;
+  --usk-surface-soft-rgb: 223 221 216;
+  --usk-text-rgb: 29 28 26;
+  --usk-text-muted-rgb: 96 93 88;
+  --usk-border-rgb: 167 163 155;
+  --usk-primary-rgb: 169 87 0;
+  --usk-primary-hover-rgb: 134 70 0;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 58 58 60;
+  --usk-secondary-hover-rgb: 39 39 41;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 232 154 45;
+  --usk-success-rgb: 47 114 82;
+  --usk-warning-rgb: 154 101 0;
+  --usk-danger-rgb: 173 54 54;
+  --usk-link-rgb: 134 70 0;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 232 154 45;
+}
+
+:where([data-ui][data-theme="foundry-amber"][data-mode="dark"]) {
+  --usk-bg-rgb: 17 17 19;
+  --usk-surface-rgb: 27 28 31;
+  --usk-surface-strong-rgb: 39 40 44;
+  --usk-surface-soft-rgb: 22 23 26;
+  --usk-text-rgb: 244 242 237;
+  --usk-text-muted-rgb: 187 184 177;
+  --usk-border-rgb: 88 90 95;
+  --usk-primary-rgb: 240 160 58;
+  --usk-primary-hover-rgb: 255 183 95;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 174 179 184;
+  --usk-secondary-hover-rgb: 208 211 214;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 209 122;
+  --usk-success-rgb: 138 214 175;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 153 153;
+  --usk-link-rgb: 255 209 122;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 240 160 58;
+}
+
+:where([data-ui][data-theme="foundry-amber"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 9 9 9;
+  --usk-surface-strong-rgb: 21 21 21;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 244 244 242;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 176 0;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 242 242 242;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 211 107;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 102 102;
+  --usk-link-rgb: 255 194 71;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="soft-orchid"][data-mode="light"]) {
+  --usk-bg-rgb: 247 244 252;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 252 250 255;
+  --usk-surface-soft-rgb: 233 226 246;
+  --usk-text-rgb: 36 26 58;
+  --usk-text-muted-rgb: 103 92 121;
+  --usk-border-rgb: 207 197 227;
+  --usk-primary-rgb: 101 82 184;
+  --usk-primary-hover-rgb: 75 59 152;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 105 82 163;
+  --usk-secondary-hover-rgb: 81 63 129;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 196 156 232;
+  --usk-success-rgb: 62 122 98;
+  --usk-warning-rgb: 152 100 0;
+  --usk-danger-rgb: 168 58 96;
+  --usk-link-rgb: 75 59 152;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 141 117 209;
+}
+
+:where([data-ui][data-theme="soft-orchid"][data-mode="dark"]) {
+  --usk-bg-rgb: 18 13 29;
+  --usk-surface-rgb: 28 21 43;
+  --usk-surface-strong-rgb: 42 32 64;
+  --usk-surface-soft-rgb: 23 17 34;
+  --usk-text-rgb: 245 240 255;
+  --usk-text-muted-rgb: 196 184 217;
+  --usk-border-rgb: 93 79 120;
+  --usk-primary-rgb: 169 148 242;
+  --usk-primary-hover-rgb: 196 181 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 209 183 245;
+  --usk-secondary-hover-rgb: 229 213 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 231 198 255;
+  --usk-success-rgb: 145 223 184;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 153 183;
+  --usk-link-rgb: 209 183 245;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 209 183 245;
+}
+
+:where([data-ui][data-theme="soft-orchid"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 12 7 20;
+  --usk-surface-strong-rgb: 26 16 40;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 247 240 255;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 184 156 255;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 113 255 226;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 208 242;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 102 139;
+  --usk-link-rgb: 201 181 255;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="electric-noir"][data-mode="light"]) {
+  --usk-bg-rgb: 244 245 248;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 251 252 255;
+  --usk-surface-soft-rgb: 230 232 240;
+  --usk-text-rgb: 20 17 28;
+  --usk-text-muted-rgb: 95 90 104;
+  --usk-border-rgb: 198 199 209;
+  --usk-primary-rgb: 140 26 120;
+  --usk-primary-hover-rgb: 114 21 98;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 33 58 85;
+  --usk-secondary-hover-rgb: 23 42 62;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 46 117 144;
+  --usk-success-rgb: 47 114 82;
+  --usk-warning-rgb: 152 100 0;
+  --usk-danger-rgb: 168 40 90;
+  --usk-link-rgb: 114 21 98;
+  --usk-accent-text-rgb: 255 255 255;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 168 48 160;
+}
+
+:where([data-ui][data-theme="electric-noir"][data-mode="dark"]) {
+  --usk-bg-rgb: 9 7 20;
+  --usk-surface-rgb: 17 11 27;
+  --usk-surface-strong-rgb: 27 16 43;
+  --usk-surface-soft-rgb: 13 9 22;
+  --usk-text-rgb: 246 244 250;
+  --usk-text-muted-rgb: 188 179 199;
+  --usk-border-rgb: 75 50 92;
+  --usk-primary-rgb: 226 74 196;
+  --usk-primary-hover-rgb: 255 114 223;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 75 166 201;
+  --usk-secondary-hover-rgb: 120 197 226;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 122 225;
+  --usk-success-rgb: 138 214 175;
+  --usk-warning-rgb: 255 210 122;
+  --usk-danger-rgb: 255 122 159;
+  --usk-link-rgb: 255 122 225;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 122 225;
+}
+
+:where([data-ui][data-theme="electric-noir"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 9 5 18;
+  --usk-surface-strong-rgb: 22 10 36;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 248 242 255;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 89 215;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 0 215 255;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 146 230;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 102 139;
+  --usk-link-rgb: 255 123 224;
   --usk-accent-text-rgb: 0 0 0;
   --usk-success-text-rgb: 0 0 0;
   --usk-warning-text-rgb: 0 0 0;

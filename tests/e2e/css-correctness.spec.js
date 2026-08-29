@@ -18,7 +18,16 @@ const presets = [
   ['brutalism', 'brutal'],
   ['cyberpunk', 'cyber'],
   ['y2k', 'y2k'],
-  ['retro-glass', 'rg']
+  ['retro-glass', 'rg'],
+  ['editorial-luxe', 'luxe'],
+  ['organic-modern', 'organic'],
+  ['industrial-utility', 'utility'],
+  ['technical-blueprint', 'blueprint'],
+  ['art-deco', 'deco'],
+  ['clay', 'clay'],
+  ['data-terminal', 'terminal'],
+  ['paper-editorial', 'paper'],
+  ['neo-noir', 'noir']
 ];
 
 async function installNativeFixture(page, stylesheetPath) {

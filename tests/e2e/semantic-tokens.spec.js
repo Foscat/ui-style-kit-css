@@ -71,51 +71,62 @@ const tokenProbes = [
   ['--ui-motion-easing', '--usk-motion-easing', 'transition-timing-function']
 ];
 
-async function resolvedValues(page) {
-  return page.evaluate((probes) => probes.map(([semanticToken, sourceToken, propertyName, wrapRgb]) => {
-    const semanticProbe = document.createElement('span');
-    const sourceProbe = document.createElement('span');
-    semanticProbe.style.setProperty(propertyName, `var(${semanticToken})`);
-    sourceProbe.style.setProperty(propertyName, wrapRgb ? `rgb(var(${sourceToken}))` : `var(${sourceToken})`);
-    document.body.append(semanticProbe, sourceProbe);
-    const result = {
-      semantic: getComputedStyle(semanticProbe).getPropertyValue(propertyName),
-      source: getComputedStyle(sourceProbe).getPropertyValue(propertyName)
-    };
-    semanticProbe.remove();
-    sourceProbe.remove();
-    return result;
-  }), tokenProbes);
+/** @type {{id: string, theme: string, mode: string}[]} */
+const semanticConfigurations = manifest.presets.flatMap(({ id }) =>
+  manifest.themes.flatMap((theme) =>
+    manifest.modes.map((mode) => ({ id, theme, mode }))
+  )
+);
+
+/**
+ * Audits typed semantic tokens across the complete configuration matrix in one browser call.
+ *
+ * @param {import('@playwright/test').Page} page Active Playwright page.
+ * @returns {Promise<{failureCount: number, samples: object[]}>} Failure total and bounded diagnostics.
+ */
+async function auditResolvedValues(page) {
+  return page.evaluate(({ configurations, probes }) => {
+    const pairs = probes.map(([semanticToken, sourceToken, propertyName, wrapRgb]) => {
+      const semanticProbe = document.createElement('span');
+      const sourceProbe = document.createElement('span');
+      semanticProbe.style.setProperty(propertyName, `var(${semanticToken})`);
+      sourceProbe.style.setProperty(propertyName, wrapRgb ? `rgb(var(${sourceToken}))` : `var(${sourceToken})`);
+      document.body.append(semanticProbe, sourceProbe);
+      return { semanticProbe, semanticToken, sourceProbe, propertyName };
+    });
+    const samples = [];
+    let failureCount = 0;
+
+    for (const configuration of configurations) {
+      document.body.dataset.ui = configuration.id;
+      document.body.dataset.theme = configuration.theme;
+      document.body.dataset.mode = configuration.mode;
+
+      for (const { semanticProbe, semanticToken, sourceProbe, propertyName } of pairs) {
+        const semantic = getComputedStyle(semanticProbe).getPropertyValue(propertyName);
+        const source = getComputedStyle(sourceProbe).getPropertyValue(propertyName);
+        if (semantic === source && semantic !== '') continue;
+
+        failureCount += 1;
+        if (samples.length < 8) samples.push({ ...configuration, semanticToken, semantic, source });
+      }
+    }
+
+    return { failureCount, samples };
+  }, { configurations: semanticConfigurations, probes: tokenProbes });
 }
 
 test('all presets, themes, and modes publish the same typed semantic values as their namespaced sources', async ({ page }) => {
-  // Exhaustive verification covers 330 preset, theme, and mode states and needs headroom on contended WebKit runners.
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
 
   await page.setContent(`<style>${visualCss}</style><body></body>`);
+  const audit = await auditResolvedValues(page);
 
-  for (const { id } of manifest.presets) {
-    for (const theme of manifest.themes) {
-      for (const mode of manifest.modes) {
-        await page.locator('body').evaluate((body, attributes) => {
-          body.dataset.ui = attributes.id;
-          body.dataset.theme = attributes.theme;
-          body.dataset.mode = attributes.mode;
-        }, { id, theme, mode });
-
-        const resolved = await resolvedValues(page);
-        for (const [index, [semantic]] of tokenProbes.entries()) {
-          const values = resolved[index];
-          expect(values.semantic, `${id}/${theme}/${mode} ${semantic}`).toBe(values.source);
-          expect(values.semantic, `${id}/${theme}/${mode} ${semantic} should resolve`).not.toBe('');
-        }
-      }
-    }
-  }
+  expect(audit.failureCount, JSON.stringify(audit.samples, null, 2)).toBe(0);
 });
 
 test('canonical and deprecated adapter backgrounds preserve direct source behavior across all configurations', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
 
   const mismatchCounts = { canonical: 0, deprecated: 0 };
   const mismatchSamples = [];
@@ -142,47 +153,47 @@ test('canonical and deprecated adapter backgrounds preserve direct source behavi
       </body>
     `);
 
-    for (const { id } of manifest.presets) {
-      for (const theme of manifest.themes) {
-        for (const mode of manifest.modes) {
-          await page.locator('body').evaluate((body, attributes) => {
-            body.dataset.ui = attributes.id;
-            body.dataset.theme = attributes.theme;
-            body.dataset.mode = attributes.mode;
-          }, { id, theme, mode });
+    const audit = await page.locator('body').evaluate((body, configurations) => {
+      const background = (selector) => getComputedStyle(
+        document.querySelector(selector)
+      ).backgroundColor;
+      const levels = ['base', 'level-1', 'level-2', 'level-3', 'token'];
+      const alphaModes = new Set();
+      const samples = [];
+      let mismatchCount = 0;
 
-          const backgrounds = await page.evaluate(() => {
-            const background = (selector) => getComputedStyle(
-              document.querySelector(selector)
-            ).backgroundColor;
-            const levels = ['base', 'level-1', 'level-2', 'level-3', 'token'];
+      for (const configuration of configurations) {
+        body.dataset.ui = configuration.id;
+        body.dataset.theme = configuration.theme;
+        body.dataset.mode = configuration.mode;
+        const backgrounds = {
+          adapter: levels.map((level) => background(`#adapter-${level}`)),
+          direct: levels.map((level) => background(`#source-${level}`)),
+          semantic: background('#semantic-source')
+        };
 
-            return {
-              adapter: levels.map((level) => background(`#adapter-${level}`)),
-              direct: levels.map((level) => background(`#source-${level}`)),
-              semantic: background('#semantic-source')
-            };
-          });
-
-          if (adapterName === 'canonical') configurationCount += 1;
-          if (
-            ['light', 'dark'].includes(mode)
-            && backgrounds.semantic !== backgrounds.direct.at(-1)
-          ) {
-            alphaExampleModes.add(mode);
-          }
-          if (JSON.stringify(backgrounds.adapter) !== JSON.stringify(backgrounds.direct)) {
-            mismatchCounts[adapterName] += 1;
-            if (mismatchSamples.length < 4) {
-              mismatchSamples.push({ adapterName, id, theme, mode, ...backgrounds });
-            }
-          }
+        if (
+          ['light', 'dark'].includes(configuration.mode)
+          && backgrounds.semantic !== backgrounds.direct.at(-1)
+        ) {
+          alphaModes.add(configuration.mode);
+        }
+        if (JSON.stringify(backgrounds.adapter) !== JSON.stringify(backgrounds.direct)) {
+          mismatchCount += 1;
+          if (samples.length < 4) samples.push({ ...configuration, ...backgrounds });
         }
       }
-    }
+
+      return { mismatchCount, samples, alphaModes: [...alphaModes] };
+    }, semanticConfigurations);
+
+    if (adapterName === 'canonical') configurationCount += semanticConfigurations.length;
+    mismatchCounts[adapterName] = audit.mismatchCount;
+    audit.alphaModes.forEach((mode) => alphaExampleModes.add(mode));
+    mismatchSamples.push(...audit.samples.map((sample) => ({ adapterName, ...sample })));
   }
 
-  expect(configurationCount).toBe(330);
+  expect(configurationCount).toBe(1200);
   expect([...alphaExampleModes].sort(), 'matrix should exercise light and dark alpha sources')
     .toEqual(['dark', 'light']);
   expect(mismatchCounts, JSON.stringify(mismatchSamples, null, 2)).toEqual({

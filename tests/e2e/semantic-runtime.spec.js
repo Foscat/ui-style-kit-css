@@ -9,6 +9,9 @@ const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'),
 const visualBundlePath = path.join(rootDir, 'dist', 'ui-style-kit.visual.css');
 const buttonVariants = [null, 'primary', 'secondary', 'danger', 'ghost'];
 
+// Every runtime contract iterates the complete 20-preset registry and needs WebKit contention headroom.
+test.describe.configure({ timeout: 90_000 });
+
 const buttonProperties = [
   'alignItems',
   'backgroundColor',
@@ -583,6 +586,7 @@ test('semantic forms retain focus, disabled, checked, axe, and forced-colors beh
 });
 
 test('remaining semantic roles and variants match prefixed twins across every preset', async ({ page }) => {
+  test.setTimeout(90_000);
   const badgeVariants = ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger'];
   const alertVariants = ['neutral', 'success', 'warning', 'danger'];
   const pairs = [

@@ -4,6 +4,44 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-08-29
+
+### Added
+
+- Added nine new first-class UI systems: `editorial-luxe`, `organic-modern`, `industrial-utility`, `technical-blueprint`, `art-deco`, `clay`, `data-terminal`, `paper-editorial`, and `neo-noir`, bringing the library to 20 presets.
+- Added ten shared color themes—`chrome-navy`, `recycled-emerald`, `industrial-orange`, `performance-red`, `heritage-brass`, `service-blue-red`, `newsprint-crimson`, `foundry-amber`, `soft-orchid`, and `electric-noir`—with light, dark, and contrast modes, bringing the shared theme set to 20.
+- Added a universal commercial/marketing component vocabulary across all 20 UI systems: service and feature cards, card media and accent edges, icon medallions, clipped and heavy-outline buttons, seal badges, feature strips/items, callout bars, eyebrow text, and media scrims.
+- Added a live demo showcase and contract tests for the new cross-style component suffixes and published bundles.
+- Expanded the manifest-driven browser matrix to 20 presets × 20 themes × 3 modes × 3 engines (3,600 combinations).
+- Added manifest-generated shared containment and expanded-component inventories so all 20 presets stay synchronized with the public registry.
+- Added distinct preset-owned loader geometry for all 20 spinner utilities and native or component busy-button indicators.
+- Added a declared modern-browser support floor, exactly pinned Browserslist resolution, and a CSS Tree-backed `check:compat` release gate for every generated entrypoint.
+
+### Changed
+
+- Gave all 20 presets distinct CTA, card, medallion, strip, scrim, and callout identities while preserving the existing class names and theme color roles.
+- Separated filled service actions from framed callout actions so `button-cut` and `button-outline-heavy` express independent, preset-coherent roles instead of sharing one generic CTA silhouette.
+- Reworked the commercial and utility demo specimens to use active theme tokens, explicit utility composition, and container-aware native typography.
+- Aligned ecosystem verification and documentation with `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`, including the current exported manifests and `foundation.css`.
+- Expanded the commercial component documentation with composition, accessibility, and responsive-behavior guidance.
+- Routed every Lightning CSS formatting and minification pass through the shared package Browserslist targets, with stable fallbacks and guarded progressive enhancements.
+
+### Fixed
+
+- Prevented the outer showcase grid from leaking its twelve-column rules into the nested commercial component grid.
+- Kept busy indicators separated from labels and contained inside native busy buttons.
+- Removed the CTA modifier specificity conflict so `button-cut` geometry can express each preset instead of falling back to a generic shape.
+- Removed obsolete Layout `integrations/ui-style-kit.css` and `legacy.css` expectations from packed ecosystem verification.
+- Prevented shared switch foundations from shrinking the track or applying a second thumb translation over the preset-owned checked position.
+- Replaced the stretched faceted Clay CTA with a compact, softly clipped inflated pill that matches Clay controls.
+- Strengthened light-mode component edges to a verified 3:1 non-text contrast minimum without changing semantic theme colors.
+- Prevented editable-field background paint from leaking onto button, submit, and reset inputs when the Interactive Surface bridge adds its hook class.
+- Corrected the remaining light-mode soft-surface and primary-hover contrast failures and expanded the manifest-driven audit to all 1,200 preset, theme, and mode states.
+- Kept preset eyebrow and native strong-text rules from overriding the high-contrast foreground inside media-scrim captions.
+- Replaced Bento's fixed six-column feature helper with intrinsic, container-aware tiles so metric labels do not collapse into narrow vertical text columns.
+- Normalized semantic action inputs independently of bridge hook classes, stopped read-only field paint from overriding action controls, and kept deprecated bridge foreground/background swaps atomic so transient states remain readable.
+- Restored prefixed Retro Glass `backdrop-filter` output, removed obsolete intrinsic CTA sizing diagnostics, and guarded `color-mix()`, `text-wrap`, and `forced-color-adjust` enhancements for the declared support floor.
+
 ## [2.2.0] - 2026-08-09
 
 ### Added

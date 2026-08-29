@@ -10,7 +10,7 @@ Lead with `.ui-*` component classes when the root `data-ui` value can switch acr
 </article>
 ```
 
-`manifest.json#semanticComponentApi` defines the 29 implemented generic component selectors. They preserve unchanged markup across all 11 presets in generated default, visual, and with-bridge bundles. Generated focused `visual/<preset>.css` entrypoints support semantic aliases for their one preset. Raw `styles/*` and standalone preset exports remain prefixed advanced APIs. `implementationStatus` partitions the two retained hooks, 27 generated aliases, and an empty pending set.
+`manifest.json#semanticComponentApi` defines the 29 implemented generic component selectors. They preserve unchanged markup across all 20 presets in generated default, visual, and with-bridge bundles. Generated focused `visual/<preset>.css` entrypoints support semantic aliases for their one preset. Raw `styles/*` and standalone preset exports remain prefixed advanced APIs. `implementationStatus` partitions the two retained hooks, 27 generated aliases, and an empty pending set.
 
 | Role | Generic selectors |
 | --- | --- |
@@ -44,7 +44,7 @@ Preset-prefixed classes remain supported compatibility and advanced APIs. Partia
 
 Prefixed class names follow `<prefix>-<suffix>`, where `<prefix>` comes from the selected `data-ui` style. Examples include `saas-button`, `bento-card`, and `retro-nav-link`.
 
-## Core Cross-Style API (11/11 styles)
+## Core Cross-Style API (20/20 styles)
 
 These suffixes exist in every style file.
 
@@ -113,6 +113,47 @@ These suffixes exist in every style file.
 - `tooltip`
 - `tooltip-arrow`
 
+## Commercial / Marketing Components (20/20 styles)
+
+These visual modifiers provide reusable service-card, trust-strip, media, CTA, and badge patterns without encoding a specific business domain.
+
+- `card-media`
+- `card-service`
+- `card-feature`
+- `card-accent-edge`
+- `icon-medallion`
+- `button-cut`
+- `button-outline-heavy`
+- `badge-seal`
+- `feature-strip`
+- `feature-item`
+- `callout-bar`
+- `eyebrow`
+- `media-scrim`
+
+Example:
+
+```html
+<aside class="cyber-callout-bar">
+  <span class="cyber-icon-medallion" aria-hidden="true">!</span>
+  <div>
+    <p class="cyber-eyebrow">Need help?</p>
+    <strong>Talk with the team.</strong>
+  </div>
+  <a class="cyber-button cyber-button-outline-heavy cyber-button-cut" href="#">Contact</a>
+</aside>
+```
+
+### Composition guidance
+
+- Build service cards from `card` + `card-service`, then add optional `card-media`, `icon-medallion`, and existing action modifiers.
+- Use `media-scrim` around real media and a caption; the class supplies readable token-driven paint, while applications own media selection and alternative text.
+- Put `feature-item` children inside `feature-strip`; the strip reflows at narrow widths without additional responsive class names.
+- Use `callout-bar` as a dedicated action lane and compose its real link or button with `button-cut` or `button-outline-heavy`. No `button-cta` class exists.
+- Treat medallions as decorative with `aria-hidden="true"` unless they convey information, and always preserve visible focus and an accessible name on clipped controls.
+
+These classes consume only the active theme and mode roles. The shared containment contract keeps long labels, captions, and URLs inside consumer-owned grids without taking ownership of the outer page layout.
+
 ## Loading API
 
 Every style has prefixed spinner utilities:
@@ -123,7 +164,7 @@ Every style has prefixed spinner utilities:
 <button class="saas-button saas-button-primary" aria-busy="true">Saving</button>
 ```
 
-Inside a `[data-ui="..."]` scope, generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` elements also receive theme-aware spinner styling.
+Inside a `[data-ui="..."]` scope, generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` elements receive both theme-aware colors and the active preset's loader identity. Busy buttons use the same visual language without changing their accessible label.
 
 ## Tooltip API
 
@@ -149,21 +190,9 @@ Inside a `[data-ui="..."]` scope, generic `.ui-tooltip`, `[role="tooltip"]`, and
 
 The same components also support native state hooks such as `aria-current="page"` and `aria-pressed="true"` where appropriate.
 
-## Extended Utility Bundle (11 composed presets)
+## Extended Utility Bundle (20 styles)
 
-The following suffixes are available across the composed API for all 11 presets:
-
-- `minimal-saas`
-- `bento`
-- `maximalist`
-- `bauhaus`
-- `tactile`
-- `neumorphism`
-- `retrofuturism`
-- `brutalism`
-- `cyberpunk`
-- `y2k`
-- `retro-glass`
+The following suffixes are available in every manifest preset through the shared component foundation:
 
 Suffixes:
 

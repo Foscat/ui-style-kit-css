@@ -53,7 +53,16 @@ const stylesWithCustomChoices = new Set([
   "bauhaus",
   "tactile",
   "neumorphism",
-  "retrofuturism"
+  "retrofuturism",
+  "editorial-luxe",
+  "organic-modern",
+  "industrial-utility",
+  "technical-blueprint",
+  "art-deco",
+  "clay",
+  "data-terminal",
+  "paper-editorial",
+  "neo-noir"
 ]);
 const uiSelect = document.getElementById("uiSelect");
 const themeSelect = document.getElementById("themeSelect");
@@ -493,7 +502,34 @@ function renderStyleSpecificSurface(ui, p) {
     y2k: `
       <div class="${p}-bubble">Bubble surface</div>`,
     "retro-glass": `
-      <div class="${p}-console"><code>glass.surface.ready()</code></div>`
+      <div class="${p}-console"><code>glass.surface.ready()</code></div>`,
+    "editorial-luxe": `
+      <div class="${p}-metric"><span class="${p}-metric-value">01</span><span class="${p}-metric-label">Editorial measure</span></div>
+      <div class="${p}-well">Hairline framing and serif-led hierarchy.</div>`,
+    "organic-modern": `
+      <div class="${p}-metric"><span class="${p}-metric-value">84%</span><span class="${p}-metric-label">Natural balance</span></div>
+      <div class="${p}-well">Biomorphic surfaces with soft layered depth.</div>`,
+    "industrial-utility": `
+      <div class="${p}-metric"><span class="${p}-metric-value">READY</span><span class="${p}-metric-label">System status</span></div>
+      <div class="${p}-well">Operational framing and compact equipment-style controls.</div>`,
+    "technical-blueprint": `
+      <div class="${p}-metric"><span class="${p}-metric-value">A-04</span><span class="${p}-metric-label">Drawing reference</span></div>
+      <div class="${p}-well">Drafting-grid precision and technical annotations.</div>`,
+    "art-deco": `
+      <div class="${p}-metric"><span class="${p}-metric-value">◆</span><span class="${p}-metric-label">Deco detail</span></div>
+      <div class="${p}-well">Symmetry, double framing, and geometric ornament.</div>`,
+    clay: `
+      <div class="${p}-metric"><span class="${p}-metric-value">3D</span><span class="${p}-metric-label">Sculpted surface</span></div>
+      <div class="${p}-well">Rounded dimensional controls with friendly elevation.</div>`,
+    "data-terminal": `
+      <div class="${p}-metric"><span class="${p}-metric-value">42ms</span><span class="${p}-metric-label">Telemetry</span></div>
+      <div class="${p}-well"><code>monitor.status = nominal;</code></div>`,
+    "paper-editorial": `
+      <div class="${p}-metric"><span class="${p}-metric-value">A1</span><span class="${p}-metric-label">Edition</span></div>
+      <div class="${p}-well">Print-inspired rules, paper cues, and editorial hierarchy.</div>`,
+    "neo-noir": `
+      <div class="${p}-metric"><span class="${p}-metric-value">20:45</span><span class="${p}-metric-label">After dark</span></div>
+      <div class="${p}-well">Cinematic framing with restrained atmospheric glow.</div>`
   };
 
   return extras[ui] || `<div class="${p}-well">Core surfaces carry this style preset.</div>`;
@@ -634,7 +670,7 @@ function render() {
         <header id="overview" class="${p}-card ${p}-hover-lift">
           <p class="${p}-kicker">${title}</p>
           <h1 class="${p}-title">UI Style Kit CSS</h1>
-          <p class="${p}-subtitle demo-section-lede">A CSS-only style kit with 11 UI systems, 10 shared color themes, light/dark/contrast modes, component classes, native HTML coverage, and an optional Interactive Surface bridge.</p>
+          <p class="${p}-subtitle demo-section-lede">A CSS-only style kit with 20 UI systems, 20 shared color themes, light/dark/contrast modes, component classes, native HTML coverage, and an optional Interactive Surface bridge.</p>
           <div class="${p}-cluster">
             <button class="${p}-button ${p}-button-primary">Primary</button>
             <button class="${p}-button ${p}-button-secondary">Secondary</button>
@@ -656,7 +692,7 @@ function render() {
             <p class="${p}-copy">Each style preset uses the same component API with a style-specific prefix such as <code>${p}-button</code>, <code>${p}-card</code>, and <code>${p}-alert</code>.</p>
           </div>
 
-          <div class="demo-showcase-grid">
+          <div class="demo-showcase-grid demo-component-grid">
             <article class="${p}-card demo-control-card" data-testid="component-controls">
               <p class="${p}-kicker">Controls</p>
               <h3 class="${p}-heading">Buttons, progress, loading, and tooltips</h3>
@@ -780,6 +816,38 @@ function render() {
               </table>
             </article>
           </div>
+
+          <article class="${p}-card" data-testid="marketing-components">
+            <p class="${p}-eyebrow">Commercial components</p>
+            <h3 class="${p}-heading">Service cards, trust strips, media, and CTA treatments</h3>
+            <div class="demo-marketing-grid">
+              <article class="${p}-card ${p}-card-service">
+                <img class="${p}-card-media demo-theme-art demo-theme-art-service" style="--demo-art-primary: var(--${p}-primary); --demo-art-secondary: var(--${p}-secondary); --demo-art-accent: var(--${p}-accent); --demo-art-surface: var(--${p}-surface-strong)" alt="Abstract service preview using the active theme" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'%3E%3Cpath d='M0 290L220 120l120 82 128-110 172 150v118H0z' fill='%23ffffff' fill-opacity='.24'/%3E%3Ccircle cx='510' cy='95' r='58' fill='%23ffffff' fill-opacity='.68'/%3E%3C/svg%3E">
+                <span class="${p}-icon-medallion" aria-hidden="true">★</span>
+                <p class="${p}-eyebrow">Service category</p>
+                <h4 class="${p}-heading">Reusable service card</h4>
+                <p class="${p}-copy">Media, an overlapping icon, clear hierarchy, and a focused action.</p>
+                <a data-testid="marketing-primary-cta" class="${p}-button ${p}-button-primary ${p}-button-cut" href="#components">Explore</a>
+              </article>
+
+              <figure class="${p}-media-scrim">
+                <img class="demo-theme-art demo-theme-art-feature" style="--demo-art-primary: var(--${p}-primary); --demo-art-secondary: var(--${p}-secondary); --demo-art-accent: var(--${p}-accent); --demo-art-surface: var(--${p}-surface-strong)" alt="Abstract media treatment using the active theme" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 420'%3E%3Ccircle cx='170' cy='220' r='118' fill='%23ffffff' fill-opacity='.24'/%3E%3Crect x='310' y='88' width='240' height='244' rx='28' fill='%23ffffff' fill-opacity='.42'/%3E%3C/svg%3E">
+                <figcaption><p class="${p}-eyebrow">Media scrim</p><strong>Readable content over photography</strong></figcaption>
+              </figure>
+            </div>
+
+            <div class="${p}-feature-strip">
+              <div class="${p}-feature-item"><span class="${p}-icon-medallion" aria-hidden="true">✓</span><div><strong>Trusted</strong><p>Compact proof point.</p></div></div>
+              <div class="${p}-feature-item"><span class="${p}-icon-medallion" aria-hidden="true">◆</span><div><strong>Quality</strong><p>Theme-aware treatment.</p></div></div>
+              <div class="${p}-feature-item"><span class="${p}-badge-seal"><strong>15</strong><small>YEARS</small></span><div><strong>Established</strong><p>Seal-style trust mark.</p></div></div>
+            </div>
+
+            <aside class="${p}-callout-bar">
+              <span class="${p}-icon-medallion" aria-hidden="true">→</span>
+              <div><p class="${p}-eyebrow">Call to action</p><strong>Give important next steps a dedicated visual lane.</strong></div>
+              <a data-testid="marketing-secondary-cta" class="${p}-button ${p}-button-outline-heavy" href="#usage">View Usage</a>
+            </aside>
+          </article>
         </section>
 
         <section class="${p}-card" data-testid="utility-classes">
@@ -807,12 +875,12 @@ function render() {
             </div>
             <div class="demo-token-sample" data-testid="utility-layout-sample">
               <p class="demo-utility-label">Shape and layout utilities</p>
-              <div class="demo-utility-layout-sample">
-                <span class="${p}-badge ${p}-pill">Pill shape</span>
-                <span class="${p}-badge ${p}-rounded">Rounded</span>
-                <span class="${p}-badge ${p}-border">Border utility</span>
-                <span class="${p}-text-muted">Muted annotation</span>
+              <div class="demo-utility-shape-grid">
+                <div class="${p}-pill demo-utility-shape"><code>.${p}-pill</code><span>Pill shape</span></div>
+                <div class="${p}-rounded demo-utility-shape"><code>.${p}-rounded</code><span>Rounded corners</span></div>
+                <div class="${p}-border demo-utility-shape"><code>.${p}-border</code><span>Border utility</span></div>
               </div>
+              <span class="${p}-text-muted">Muted annotation</span>
               <hr class="${p}-divider">
               ${renderStyleSpecificSurface(ui, p)}
             </div>

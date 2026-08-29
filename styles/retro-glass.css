@@ -1,7 +1,7 @@
 /* =========================================================
    Glassmorphism + Retrofuturism Hybrid Theme System
    Includes:
-   - 10 color schemes
+   - 20 color schemes
    - light / dark / contrast modes
    - themed UI components and utilities
 
@@ -143,7 +143,7 @@
   --rg-fg: var(--rg-text);
   --rg-surface-fg: var(--rg-text);
   --rg-muted: var(--rg-text-muted);
-  --rg-border: rgb(var(--rg-border-rgb) / var(--rg-border-alpha));
+  --rg-border: rgb(var(--rg-border-rgb) / max(var(--rg-border-alpha), var(--usk-border-min-alpha)));
   --rg-control-fg: var(--rg-text);
   --rg-primary: rgb(var(--rg-primary-rgb));
   --rg-primary-hover: rgb(var(--rg-primary-hover-rgb));
@@ -176,6 +176,10 @@
   --rg-spinner-track: rgb(var(--rg-border-rgb) / max(.28, calc(var(--rg-border-alpha) * .7)));
   --rg-spinner-stroke: var(--rg-primary);
   --rg-spinner-accent: var(--rg-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="retro-glass"][data-theme][data-mode] { --rg-border: color-mix(in srgb, rgb(var(--rg-border-rgb) / max(var(--rg-border-alpha), var(--usk-border-min-alpha))), var(--rg-text) var(--usk-border-text-mix)); }
 }
 
 /* =========================================================
@@ -333,6 +337,241 @@
 @keyframes rg-spin { to { transform: rotate(360deg); } }
 
 
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.rg-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--rg-border-rgb) / .72);
+  border-radius: var(--rg-radius-lg);
+}
+
+.rg-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--rg-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.rg-card-service > .rg-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.rg-card-service > .rg-card-media + .rg-icon-medallion { margin-block-start: -2.15rem; }
+
+.rg-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--rg-space-4);
+  align-items: start;
+}
+
+.rg-card-accent-edge {
+  border-inline-start: .35rem solid var(--rg-primary);
+}
+
+.rg-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--rg-primary);
+  color: var(--rg-on-primary);
+  border: 2px solid rgb(var(--rg-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.rg-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.rg-button.rg-button-cut,
+.rg-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.rg-button.rg-button-cut:focus-visible,
+.rg-button-cut:focus-visible { outline-offset: -3px; }
+
+.rg-button.rg-button-outline-heavy,
+.rg-button-outline-heavy {
+  background: transparent;
+  color: var(--rg-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--rg-primary);
+  box-shadow: none;
+}
+.rg-button.rg-button-outline-heavy:hover,
+.rg-button-outline-heavy:hover {
+  background: var(--rg-primary);
+  color: var(--rg-on-primary);
+  border-color: var(--rg-primary-hover);
+}
+
+.rg-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--rg-surface-strong);
+  color: var(--rg-text);
+  border: 2px solid var(--rg-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--rg-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.rg-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--rg-card-bg);
+  color: var(--rg-text);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--rg-radius-lg);
+}
+
+.rg-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--rg-space-3);
+  min-inline-size: 0;
+  padding: var(--rg-space-4);
+  border-inline-end: 1px solid rgb(var(--rg-border-rgb) / .62);
+}
+.rg-feature-item:last-child { border-inline-end: 0; }
+.rg-feature-item > :where(p, small) { margin: 0; color: var(--rg-text-muted); }
+
+.rg-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--rg-space-4);
+  padding: var(--rg-space-4) var(--rg-space-5);
+  background: var(--rg-card-bg);
+  color: var(--rg-text);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--rg-radius-lg);
+}
+.rg-callout-bar > :where(p, div) { min-inline-size: 0; }
+.rg-callout-bar > :where(.rg-button, a, button):last-child { justify-self: end; }
+
+.rg-eyebrow {
+  margin: 0;
+  color: var(--rg-primary);
+  font-family: var(--rg-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.rg-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--rg-surface-soft);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--rg-radius-lg);
+}
+.rg-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.rg-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.rg-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .rg-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .rg-callout-bar > :where(.rg-button, a, button):last-child { justify-self: stretch; }
+  .rg-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--rg-border-rgb) / .62); }
+  .rg-feature-item:last-child { border-block-end: 0; }
+}
+
+.rg-card-service, .rg-card-feature, .rg-feature-strip, .rg-callout-bar { background: linear-gradient(135deg, rgb(255 255 255 / .16), rgb(255 255 255 / .03)), var(--rg-card-bg); -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%); box-shadow: var(--rg-shadow-md), 0 0 1.8rem rgb(var(--rg-primary-rgb) / .18); }
+.rg-icon-medallion, .rg-badge-seal { background: linear-gradient(145deg, rgb(255 255 255 / .3), rgb(255 255 255 / .05)), rgb(var(--rg-primary-rgb) / .72); border-color: rgb(255 255 255 / .32); -webkit-backdrop-filter: blur(12px) saturate(150%); backdrop-filter: blur(12px) saturate(150%); box-shadow: 0 0 1.35rem rgb(var(--rg-primary-rgb) / .28); }
+.rg-button-outline-heavy { background: rgb(255 255 255 / .06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+/* Filled and framed actions use complementary frosted tabs and inner highlights. */
+.rg-button.rg-button-cut, .rg-button-cut {
+  inline-size: min(100%, 16rem);
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: center;
+  justify-content: center;
+  clip-path: polygon(.8rem 0, 100% 0, 100% calc(100% - .35rem), calc(100% - .8rem) 100%, 0 100%, 0 .35rem);
+}
+.rg-button.rg-button-outline-heavy, .rg-button-outline-heavy {
+  border-width: 1px;
+  border-radius: 0;
+  background: rgb(var(--rg-surface-strong-rgb) / .2);
+  clip-path: polygon(0 0, calc(100% - .8rem) 0, 100% .35rem, 100% 100%, .8rem 100%, 0 calc(100% - .35rem));
+  box-shadow: inset 0 1px 0 rgb(var(--rg-surface-strong-rgb) / .78), 0 .45rem 1rem rgb(var(--rg-primary-rgb) / .14);
+}
+
+/* Marketing and native surfaces repeat the frosted shell and inner highlight. */
+.rg-card-service, .rg-media-scrim, .rg-feature-strip, .rg-callout-bar, .rg-well {
+  background: rgb(var(--rg-surface-strong-rgb) / .34);
+  border: 1px solid rgb(var(--rg-border-rgb) / .72);
+  border-radius: .75rem 1.35rem .75rem 1.15rem;
+  box-shadow: inset 0 1px 0 rgb(var(--rg-surface-strong-rgb) / .78), 0 .8rem 1.6rem rgb(var(--rg-primary-rgb) / .14);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+[data-ui="retro-glass"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  color: var(--rg-text);
+  background: rgb(var(--rg-surface-strong-rgb) / .24);
+  border: 1px solid var(--rg-primary);
+  border-radius: .55rem .9rem .55rem .78rem;
+  box-shadow: inset 0 1px 0 rgb(var(--rg-surface-strong-rgb) / .78), 0 .35rem .85rem rgb(var(--rg-primary-rgb) / .14);
+}
+[data-ui="retro-glass"][data-theme][data-mode] :where(dialog) {
+  background: rgb(var(--rg-surface-strong-rgb) / .72);
+  border: 1px solid rgb(var(--rg-border-rgb) / .78);
+  border-radius: .85rem 1.45rem .85rem 1.2rem;
+  box-shadow: inset 0 1px 0 rgb(var(--rg-surface-strong-rgb) / .8), 0 1rem 2.2rem rgb(var(--rg-primary-rgb) / .18);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+/* Busy indicators retain the irregular frosted-glass tab silhouette. */
+.rg-button[aria-busy="true"]::after, .rg-icon-button[aria-busy="true"]::after, [data-ui="retro-glass"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .09em solid rgb(255 255 255 / .45); border-block-start-color: currentColor; border-radius: 38% 62% 48% 52%; background: linear-gradient(135deg, rgb(255 255 255 / .35), transparent 45%), conic-gradient(currentColor, transparent 44%, currentColor); box-shadow: 0 0 .42em currentColor, inset 0 0 .2em rgb(255 255 255 / .26); clip-path: none; animation: rg-spin .96s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="retro-glass"] *, [data-ui="retro-glass"] *::before, [data-ui="retro-glass"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -340,7 +579,7 @@
   [data-ui="retro-glass"] { --rg-border-alpha: 1; }
 }
 @media (forced-colors: active) {
-  [data-ui="retro-glass"] * { forced-color-adjust: auto; }
+  @supports (forced-color-adjust: auto) { [data-ui="retro-glass"] * { forced-color-adjust: auto; } }
   [data-ui="retro-glass"] :where(:focus-visible) { outline: 3px solid CanvasText; box-shadow: none; }
 }
 @media print {

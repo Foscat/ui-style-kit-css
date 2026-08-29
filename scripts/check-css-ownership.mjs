@@ -312,6 +312,26 @@ function selectorOwnsPageTopology(rule, manifest) {
   });
 }
 
+/**
+ * Determines whether every selector subject belongs to the manifest-declared component vocabulary.
+ *
+ * @param {object} rule - CSS Tree rule node containing a selector list.
+ * @param {object} manifest - Public package manifest defining preset component classes.
+ * @returns {boolean} True when grid geometry is scoped exclusively to declared components.
+ */
+function selectorOwnsComponentTopology(rule, manifest) {
+  const componentClasses = manifestComponentClasses(manifest);
+
+  for (const selector of rule.prelude.children) {
+    const ownsComponent = rightmostCompound(selector).some((node) =>
+      node.type === 'ClassSelector' && componentClasses.has(node.name)
+    );
+    if (!ownsComponent) return false;
+  }
+
+  return rule.prelude.children.size > 0;
+}
+
 function manifestStateClasses(manifest) {
   const manifestClasses = new Set([
     ...(manifest.selectors?.stateClasses ?? []),
@@ -380,7 +400,9 @@ function isFlexTopologyProperty(property) {
 
 function ruleForDeclaration({ target, property, rule, manifest }) {
   if (target === 'ui-visual') {
-    if (gridTopologyProperties.has(property)) return 'ui-page-topology';
+    if (gridTopologyProperties.has(property)) {
+      return selectorOwnsComponentTopology(rule, manifest) ? null : 'ui-page-topology';
+    }
     if (
       (pagePlacementProperties.has(property) || isFlexTopologyProperty(property)) &&
       selectorOwnsPageTopology(rule, manifest)

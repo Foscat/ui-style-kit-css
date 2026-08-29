@@ -33,7 +33,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
   );
   assert.equal(
     compatibility.packageSources['layout-style-css'].revision,
-    '44c34693554879790c54a6205b37160ff63a1747',
+    'afcb1fdf70d4635e35739e621ee1598400fed103',
     'The ecosystem fixture must pin the Layout commit with the reviewed release preflight.'
   );
   assert.deepEqual(compatibility.supportedCombinations, {
@@ -43,9 +43,9 @@ test('authoritative ecosystem compatibility contract validates supported combina
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.2.0',
+      'ui-style-kit-css': '2.3.0',
       'interactive-surface-css': '1.6.0',
-      'layout-style-css': '3.0.1'
+      'layout-style-css': '3.1.0'
     }
   });
   assert.deepEqual(
@@ -98,10 +98,10 @@ test('current ecosystem documentation consumes canonical imports from the compat
     }
 
     if (!documentPath.endsWith('Installation-and-Setup.md')) {
-      assert.match(document, /layout-style-css@3\.0\.1/);
+      assert.match(document, /layout-style-css@3\.1\.0/);
       assert.match(document, /layout-style-css@3\.0\.0/);
-      assert.match(document, /current package version/i);
-      assert.match(document, /Interactive Surface `1\.6\.0` and Layout Style `3\.0\.1` are published releases/i);
+      assert.match(document, /current release target/i);
+      assert.match(document, /Layout Style `3\.1\.0` is the compatible structural release/i);
     }
   }
 });
