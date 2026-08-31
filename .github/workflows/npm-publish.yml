@@ -170,7 +170,14 @@ jobs:
         run: |
           set -euo pipefail
           PACKAGE_NAME="$(node -p "require('./package.json').name")"
-          NPM_USER="$(npm whoami --registry https://registry.npmjs.org/)"
+          NPM_AUTH_LOG="$(mktemp)"
+          if ! NPM_USER="$(npm whoami --registry https://registry.npmjs.org/ 2>"${NPM_AUTH_LOG}")"; then
+            cat "${NPM_AUTH_LOG}" >&2
+            rm -f "${NPM_AUTH_LOG}"
+            echo "::error::Unable to authenticate with npm using NPM_TOKEN. Replace the repository secret with a valid npm automation or granular access token for an owner of '${PACKAGE_NAME}'."
+            exit 1
+          fi
+          rm -f "${NPM_AUTH_LOG}"
           echo "Authenticated to npm as ${NPM_USER}."
 
           if ! npm owner ls "${PACKAGE_NAME}" --registry https://registry.npmjs.org/ | awk '{print $1}' | grep -Fx "${NPM_USER}" >/dev/null; then
