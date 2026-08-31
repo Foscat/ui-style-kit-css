@@ -82,34 +82,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run lint checks
-        run: npm run lint
-
-      - name: Build dist assets
-        run: npm run build
-
-      - name: Run unit tests
-        run: npm run test:unit
-
-      - name: Install Playwright browser
-        run: npm run test:e2e:install:ci
-
-      - name: Run Playwright tests
-        run: npm run test:e2e
-
-      - name: Run curated visual checks
-        run: npm run test:visual
-
-      - name: Run sharded UI matrix
-        shell: bash
-        run: |
-          set -euo pipefail
-          for engine in chromium firefox webkit; do
-            for preset_shard in 1 2 3 4; do
-              echo "Running UI matrix for ${engine}, preset shard ${preset_shard}/4."
-              UI_MATRIX_PRESET_SHARD="${preset_shard}" UI_MATRIX_PRESET_SHARDS=4 npm run test:matrix -- --project="${engine}"
-            done
-          done
+      - name: Run publish readiness checks
+        run: npm run check
 
   publish-npm:
     name: Publish Package
@@ -188,16 +162,8 @@ jobs:
             exit 1
           fi
 
-      # npm runs prepublishOnly before publishing, and this package's release gate
-      # exercises Playwright coverage. Install browsers in the publish job too so
-      # manual recovery runs validate the same tagged package instead of failing
-      # before the registry write.
-      - name: Install Playwright browser for publish verification
-        if: steps.npm_version_check.outputs.already_published != 'true'
-        run: npm run test:e2e:install:ci
-
-      # Stage the immutable companion sources so the prepublish gate packs the
-      # coordinated artifacts and scans their explicitly maintained documentation.
+      # Stage the immutable companion sources so the explicit publish preflight
+      # packs the coordinated artifacts and scans their maintained documentation.
       - name: Checkout Layout Style CSS for publish verification
         if: steps.npm_version_check.outputs.already_published != 'true'
         uses: actions/checkout@v6
@@ -226,11 +192,12 @@ jobs:
         working-directory: _ecosystem/Interactive-Surface-CSS
         run: npm ci
 
-      # Explicit candidate mode exempts only the UI package being published; all
-      # minimum and companion versions must already resolve from npm.
+      # Explicit candidate mode exempts only the UI package being published. The
+      # release-alignment workflow owns browser and clean-install matrix proof,
+      # so publish recovery stays focused on deterministic package readiness.
       - name: Run ecosystem release preflight
         if: steps.npm_version_check.outputs.already_published != 'true'
-        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
+        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --skip-clean-install
 
       - name: Publish package
         if: steps.npm_version_check.outputs.already_published != 'true'

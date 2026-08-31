@@ -634,10 +634,11 @@ test('CI workflow shards the UI matrix by engine and preset group', () => {
 });
 
 /**
- * Verifies that release workflows do not run the 3,600-case matrix in a single
- * Playwright process, which is prone to WebKit setup timeouts late in the run.
+ * Verifies that the release-alignment gate shards the full UI matrix before a
+ * release is created.
  *
  * @param {string} workflowName GitHub Actions workflow filename.
+ * @returns {void}
  */
 function assertReleaseWorkflowShardsUiMatrix(workflowName) {
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', workflowName), 'utf8');
@@ -651,9 +652,22 @@ function assertReleaseWorkflowShardsUiMatrix(workflowName) {
   assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix\s*$/m);
 }
 
-test('release workflows shard the UI matrix to avoid long WebKit publish flakes', () => {
+test('release version alignment shards the UI matrix before creating releases', () => {
   assertReleaseWorkflowShardsUiMatrix('release-version-alignment.yml');
-  assertReleaseWorkflowShardsUiMatrix('npm-publish.yml');
+});
+
+test('npm publish workflow skips duplicate browser gates after release verification', () => {
+  const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'npm-publish.yml'), 'utf8');
+
+  assert.match(workflow, /Run publish readiness checks/);
+  assert.match(workflow, /npm run check/);
+  assert.match(workflow, /npm run release:preflight[\s\S]*--candidate-package ui-style-kit-css[\s\S]*--skip-clean-install/);
+  assert.doesNotMatch(workflow, /Run sharded UI matrix/);
+  assert.doesNotMatch(workflow, /\bnpm run test:e2e(?:\s|$)/);
+  assert.doesNotMatch(workflow, /\bnpm run test:visual(?:\s|$)/);
+  assert.doesNotMatch(workflow, /\bnpm run test:matrix(?:\s|$)/);
+  assert.doesNotMatch(workflow, /\bnpm run test:e2e:install:ci(?:\s|$)/);
+  assert.doesNotMatch(workflow, /Playwright/i);
 });
 
 test('package metadata is aligned for the release version', () => {

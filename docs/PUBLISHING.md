@@ -6,6 +6,8 @@ Prepare `ui-style-kit-css@2.3.0` on its release branch, open a pull request agai
 
 Do not push `v2.3.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
 
+Release Version Alignment owns the expensive browser release gate: Playwright demo coverage, curated visual checks, the sharded UI matrix, and the full clean-install ecosystem matrix. The protected npm workflow intentionally does not rerun those browser gates; it revalidates the immutable tag, package contracts, browser-free compatibility checks, companion commit reachability, the explicit release preflight with `--skip-clean-install`, npm token presence, and registry state before publishing.
+
 ## Dry run
 
 ```bash
@@ -57,7 +59,7 @@ npm run check:ecosystem:packs -- --layout-repo ../Layout-Style-CSS --interactive
 npm publish
 ```
 
-`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.3.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.3.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
 
 ## Versioning
 
