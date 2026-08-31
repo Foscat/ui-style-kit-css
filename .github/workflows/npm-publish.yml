@@ -100,8 +100,16 @@ jobs:
       - name: Run curated visual checks
         run: npm run test:visual
 
-      - name: Run full UI matrix
-        run: npm run test:matrix
+      - name: Run sharded UI matrix
+        shell: bash
+        run: |
+          set -euo pipefail
+          for engine in chromium firefox webkit; do
+            for preset_shard in 1 2 3 4; do
+              echo "Running UI matrix for ${engine}, preset shard ${preset_shard}/4."
+              UI_MATRIX_PRESET_SHARD="${preset_shard}" UI_MATRIX_PRESET_SHARDS=4 npm run test:matrix -- --project="${engine}"
+            done
+          done
 
   publish-npm:
     name: Publish Package

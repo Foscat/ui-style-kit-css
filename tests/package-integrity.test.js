@@ -633,6 +633,29 @@ test('CI workflow shards the UI matrix by engine and preset group', () => {
   assert.match(ciWorkflow, /test-results/);
 });
 
+/**
+ * Verifies that release workflows do not run the 3,600-case matrix in a single
+ * Playwright process, which is prone to WebKit setup timeouts late in the run.
+ *
+ * @param {string} workflowName GitHub Actions workflow filename.
+ */
+function assertReleaseWorkflowShardsUiMatrix(workflowName) {
+  const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', workflowName), 'utf8');
+
+  assert.match(workflow, /Run sharded UI matrix/);
+  assert.match(workflow, /for engine in chromium firefox webkit/);
+  assert.match(workflow, /for preset_shard in 1 2 3 4/);
+  assert.match(workflow, /UI_MATRIX_PRESET_SHARD="\$\{preset_shard\}"/);
+  assert.match(workflow, /UI_MATRIX_PRESET_SHARDS=4/);
+  assert.match(workflow, /npm run test:matrix -- --project="\$\{engine\}"/);
+  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix\s*$/m);
+}
+
+test('release workflows shard the UI matrix to avoid long WebKit publish flakes', () => {
+  assertReleaseWorkflowShardsUiMatrix('release-version-alignment.yml');
+  assertReleaseWorkflowShardsUiMatrix('npm-publish.yml');
+});
+
 test('package metadata is aligned for the release version', () => {
   assert.equal(packageLock.version, packageJson.version);
   assert.equal(packageLock.packages[''].version, packageJson.version);
