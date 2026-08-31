@@ -162,6 +162,23 @@ jobs:
             exit 1
           fi
 
+      - name: Verify npm token can publish package
+        if: steps.npm_version_check.outputs.already_published != 'true'
+        shell: bash
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
+          NPM_USER="$(npm whoami --registry https://registry.npmjs.org/)"
+          echo "Authenticated to npm as ${NPM_USER}."
+
+          if ! npm owner ls "${PACKAGE_NAME}" --registry https://registry.npmjs.org/ | awk '{print $1}' | grep -Fx "${NPM_USER}" >/dev/null; then
+            echo "::error::NPM_TOKEN authenticates as '${NPM_USER}', which is not an npm owner of '${PACKAGE_NAME}'."
+            echo "::error::Replace the repository NPM_TOKEN secret with an automation or granular token for a package owner with publish access, or add '${NPM_USER}' as an owner before rerunning this workflow."
+            exit 1
+          fi
+
       # Stage the immutable companion sources so the explicit publish preflight
       # packs the coordinated artifacts and scans their maintained documentation.
       - name: Checkout Layout Style CSS for publish verification
@@ -201,7 +218,7 @@ jobs:
 
       - name: Publish package
         if: steps.npm_version_check.outputs.already_published != 'true'
-        run: npm publish --access public --ignore-scripts
+        run: npm publish --access public --ignore-scripts --registry https://registry.npmjs.org/
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           UI_STYLE_KIT_LAYOUT_REPO: ${{ github.workspace }}/_ecosystem/Layout-Style-CSS

@@ -661,6 +661,9 @@ test('npm publish workflow skips duplicate browser gates after release verificat
 
   assert.match(workflow, /Run publish readiness checks/);
   assert.match(workflow, /npm run check/);
+  assert.match(workflow, /Verify npm token can publish package/);
+  assert.match(workflow, /npm whoami --registry https:\/\/registry\.npmjs\.org\//);
+  assert.match(workflow, /npm owner ls "\$\{PACKAGE_NAME\}" --registry https:\/\/registry\.npmjs\.org\//);
   assert.match(workflow, /npm run release:preflight[\s\S]*--candidate-package ui-style-kit-css[\s\S]*--skip-clean-install/);
   assert.doesNotMatch(workflow, /Run sharded UI matrix/);
   assert.doesNotMatch(workflow, /\bnpm run test:e2e(?:\s|$)/);
