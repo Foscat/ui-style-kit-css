@@ -119,6 +119,25 @@ test('visual-only rejects unreviewed grid topology and placement', () => {
   ]);
 });
 
+test('visual-only permits component-internal grids declared by the public manifest', () => {
+  const result = auditOwnership({
+    target: 'ui-visual',
+    css: '.saas-feature-strip { grid-template-columns: repeat(3, 1fr); }',
+    manifest: {
+      presets: [{ id: 'minimal-saas', prefix: 'saas' }],
+      classApi: {
+        deprecatedStructuralSuffixes: [],
+        universalVisualSuffixes: ['feature-strip'],
+        presetExtras: { 'minimal-saas': [] }
+      }
+    },
+    allowlist: [],
+    now: reviewedAt
+  });
+
+  assert.deepEqual(result.violations, []);
+});
+
 test('visual-only rejects structural flex topology and preserves manifest component flex', () => {
   const css = `
     html { flex: 1; }

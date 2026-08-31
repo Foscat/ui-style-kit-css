@@ -17,6 +17,7 @@ import {
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, '..');
 const ecosystemCompatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
+const publicManifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
 validateEcosystemCompatibility(ecosystemCompatibility);
 const canonicalEntrypoints = ecosystemCompatibility.canonicalImports.map(({ specifier }) => specifier);
 const npmRunner = npmInvocation();
@@ -51,12 +52,11 @@ const interactiveOptions = {
     publishedMinimumSpec('interactive-surface-css')
 };
 const { interactiveSpec, interactiveRepo } = resolveInteractiveSource(interactiveOptions, process.env, rootDir);
-const interactiveDocsRepo = path.resolve(
-  options.interactiveDocsRepo ??
-    process.env.UI_STYLE_KIT_INTERACTIVE_DOCS_REPO ??
-    interactiveRepo ??
-    path.join(rootDir, '..', 'Interactive-Surface-CSS')
-);
+// Source-only companion docs are authoritative only when their repository is
+// the selected package source or an explicit matching docs root is supplied.
+const interactiveDocsSource =
+  options.interactiveDocsRepo ?? process.env.UI_STYLE_KIT_INTERACTIVE_DOCS_REPO ?? interactiveRepo;
+const interactiveDocsRepo = interactiveDocsSource ? path.resolve(interactiveDocsSource) : null;
 
 const documentationGroups = [
   {
@@ -84,25 +84,29 @@ const documentationGroups = [
     root: rootDir,
     files: ['docs/BRIDGE-MIGRATION.md', 'wiki/Bridge-Migration.md']
   },
-  {
-    name: 'Interactive Surface current setup',
-    root: interactiveDocsRepo,
-    files: [
-      'README.md',
-      'CONTRIBUTING.md',
-      'wiki/Accessibility.md',
-      'wiki/API-Reference.md',
-      'wiki/Contributing.md',
-      'wiki/FAQ.md',
-      'wiki/Getting-Started.md',
-      'wiki/Home.md',
-      'wiki/Installation-and-Usage.md',
-      'wiki/Publishing-and-Releases.md',
-      'wiki/Roadmap.md',
-      'wiki/Testing-and-Quality.md',
-      'wiki/Token-Reference.md'
-    ]
-  },
+  ...(interactiveDocsRepo
+    ? [
+        {
+          name: 'Interactive Surface current setup',
+          root: interactiveDocsRepo,
+          files: [
+            'README.md',
+            'CONTRIBUTING.md',
+            'wiki/Accessibility.md',
+            'wiki/API-Reference.md',
+            'wiki/Contributing.md',
+            'wiki/FAQ.md',
+            'wiki/Getting-Started.md',
+            'wiki/Home.md',
+            'wiki/Installation-and-Usage.md',
+            'wiki/Publishing-and-Releases.md',
+            'wiki/Roadmap.md',
+            'wiki/Testing-and-Quality.md',
+            'wiki/Token-Reference.md'
+          ]
+        }
+      ]
+    : []),
   {
     name: 'Layout Style current setup',
     root: layoutDocsRepo,
@@ -132,24 +136,35 @@ const historicalDocumentation = [
   'Layout Style docs/wiki/Migrating-To-3.0.md'
 ];
 
+// The minimum supported UI release predates the nine presets added in 2.3.0.
+// Its focused-export proof must therefore use the historical 2.1.0 surface.
+const minimumUiPresetIds = new Set([
+  'minimal-saas',
+  'bento',
+  'maximalist',
+  'bauhaus',
+  'tactile',
+  'neumorphism',
+  'retrofuturism',
+  'brutalism',
+  'cyberpunk',
+  'y2k',
+  'retro-glass'
+]);
+const matrixUiPresets =
+  options.matrix === 'minimum'
+    ? publicManifest.presets.filter(({ id }) => minimumUiPresetIds.has(id))
+    : publicManifest.presets;
+
 const uiEntrypoints = [
   'ui-style-kit-css',
+  'ui-style-kit-css/package.json',
   'ui-style-kit-css/css',
   'ui-style-kit-css/min.css',
   'ui-style-kit-css/visual',
   'ui-style-kit-css/visual.css',
   'ui-style-kit-css/visual.min.css',
-  'ui-style-kit-css/visual/minimal-saas.css',
-  'ui-style-kit-css/visual/bento.css',
-  'ui-style-kit-css/visual/maximalist.css',
-  'ui-style-kit-css/visual/bauhaus.css',
-  'ui-style-kit-css/visual/tactile.css',
-  'ui-style-kit-css/visual/neumorphism.css',
-  'ui-style-kit-css/visual/retrofuturism.css',
-  'ui-style-kit-css/visual/brutalism.css',
-  'ui-style-kit-css/visual/cyberpunk.css',
-  'ui-style-kit-css/visual/y2k.css',
-  'ui-style-kit-css/visual/retro-glass.css',
+  ...matrixUiPresets.map(({ id }) => `ui-style-kit-css/visual/${id}.css`),
   'ui-style-kit-css/interactive-surface-theme',
   'ui-style-kit-css/interactive-surface-theme.css',
   'ui-style-kit-css/interactive-surface-bridge',
@@ -161,9 +176,12 @@ const uiEntrypoints = [
 
 const layoutEntrypoints = [
   'layout-style-css',
+  'layout-style-css/package.json',
   'layout-style-css/manifest.json',
+  ...(options.matrix === 'current' ? ['layout-style-css/personalities.json'] : []),
   'layout-style-css/min.css',
   'layout-style-css/core.css',
+  'layout-style-css/foundation.css',
   'layout-style-css/wrappers.css',
   'layout-style-css/primitives.css',
   'layout-style-css/recipes.css',
@@ -276,7 +294,9 @@ try {
   }
   if (!options.skipDocs) {
     assertDirectory(layoutDocsRepo, 'Layout Style CSS documentation repo');
-    assertDirectory(interactiveDocsRepo, 'Interactive Surface CSS documentation repo');
+    if (interactiveDocsRepo) {
+      assertDirectory(interactiveDocsRepo, 'Interactive Surface CSS documentation repo');
+    }
   }
 
   console.log(`Compatibility matrix: ${options.matrix}`);
@@ -546,6 +566,14 @@ function validateInstalledPackageVersions(scenarioDir, packageNames, scenarioNam
   }
 }
 
+/**
+ * Validates that every declared package entrypoint resolves to the expected artifact and version.
+ *
+ * @param {string} scenarioDir - Fresh consumer directory containing installed package tarballs.
+ * @param {string[]} entrypoints - Public package specifiers that must resolve.
+ * @param {string} scenarioName - Human-readable scenario name used in assertion messages.
+ * @returns {void}
+ */
 function validateEntrypoints(scenarioDir, entrypoints, scenarioName) {
   const resolver = createRequire(path.join(scenarioDir, 'package.json'));
 
@@ -571,9 +599,14 @@ function validateEntrypoints(scenarioDir, entrypoints, scenarioName) {
       validateEcosystemManifest(id, JSON.parse(text));
     }
 
-    if (id === 'interactive-surface-css/package.json') {
-      const manifest = JSON.parse(text);
-      assert.equal(manifest.version, expectedPackageVersions['interactive-surface-css']);
+    if (id.endsWith('/package.json')) {
+      const packageName = id.replace('/package.json', '');
+      const packageMetadata = JSON.parse(text);
+      assert.equal(
+        packageMetadata.version,
+        expectedPackageVersions[packageName],
+        `${scenarioName}: ${id} version drifted`
+      );
     }
   }
 }
@@ -620,6 +653,13 @@ function validateDocumentedImports(scenarioDir) {
   console.log(`INFO historical/migration documents reviewed separately: ${historicalDocumentation.join(', ')}`);
 }
 
+/**
+ * Exercises an installed ecosystem scenario in Chromium and verifies current visual baselines.
+ *
+ * @param {string} scenarioDir - Fresh consumer directory containing the scenario packages.
+ * @param {object} scenario - Scenario definition with package and import metadata.
+ * @returns {Promise<void>} Resolves after browser behavior and applicable snapshots pass.
+ */
 async function runBrowserSmoke(scenarioDir, scenario) {
   const resolver = createRequire(path.join(scenarioDir, 'package.json'));
   const { chromium } = await import('playwright');
@@ -791,7 +831,9 @@ async function runBrowserSmoke(scenarioDir, scenario) {
       [],
       `${scenario.name} attempted unexpected network requests: ${unexpectedRequests.join(', ')}`
     );
-    if (visualSnapshotScenarios.has(scenario.name)) {
+    // Minimum releases prove compatibility, while current releases own the
+    // evolving visual baseline used for pixel-level regression detection.
+    if (options.matrix === 'current' && visualSnapshotScenarios.has(scenario.name)) {
       await verifyVisualSnapshot(page, scenario.name);
     }
     console.log(`PASS browser ${scenario.name}`);

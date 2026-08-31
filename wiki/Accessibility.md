@@ -2,18 +2,16 @@
 
 UI Style Kit CSS provides presentation-level accessibility helpers. Semantic structure and interaction behavior are still application responsibilities.
 
-## Included in All 11 Styles
+## Included in All 20 Styles
 
 - Visible focus treatment (`:focus-visible`)
 - Reduced motion support (`@media (prefers-reduced-motion: reduce)`)
 - Native HTML coverage for common typography/form/table elements
 - Visible tooltip surfaces through prefixed utilities and generic `[role="tooltip"]` hooks
-- Theme-aware text utilities, filled-surface `on-*` colors, and contrast checks for base text, links, and filled UI
-- Shared `--usk-*` color-scheme roles so contrast validation happens once per active scheme/mode
+- Theme-aware text utilities, filled-surface `on-*` colors, 4.5:1 text contrast checks, and 3:1 light-mode component-edge checks
+- Shared `--usk-*` color-scheme roles with a manifest-driven audit of all 20 presets, 20 schemes, and three modes
 
-## Included in Full Utility Styles (7 Styles)
-
-The following are present in `minimal-saas`, `bento`, `maximalist`, `bauhaus`, `tactile`, `neumorphism`, and `retrofuturism`:
+The following are also present in every preset:
 
 - `prefers-contrast: more` media support
 - `forced-colors: active` media support
@@ -52,7 +50,7 @@ Spinner utilities are visual indicators only. Use accessible names or status tex
 <span class="saas-spinner" role="status" aria-label="Loading"></span>
 ```
 
-`aria-busy="true"` on themed buttons adds an inline spinner automatically. Remove the attribute when the action completes.
+`aria-busy="true"` on themed buttons adds an inline spinner automatically. Its shape follows the active UI preset, remains separated from the label, and does not replace readable status copy. Remove the attribute when the action completes.
 
 ## Tooltip surfaces
 

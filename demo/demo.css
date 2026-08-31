@@ -191,6 +191,7 @@
 }
 
 .demo-showcase-grid,
+.demo-marketing-grid,
 .demo-native-grid,
 .demo-state-grid,
 .demo-token-grid,
@@ -211,22 +212,44 @@
 }
 
 /* The component showcase needs a tighter tablet grid than the wider native-element samples. */
-#components .demo-showcase-grid {
+#components .demo-component-grid {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
 }
 
-#components .demo-showcase-grid > article {
+#components .demo-component-grid > article {
   display: grid;
   align-content: start;
 }
 
-#components .demo-showcase-grid h3 {
+#components .demo-component-grid h3 {
   font-size: clamp(1.08rem, 1.4vw, 1.55rem);
   line-height: 1.18;
 }
 
-#components .demo-showcase-grid > [data-testid="component-table"] {
+#components .demo-component-grid > [data-testid="component-table"] {
   align-content: stretch;
+}
+
+.demo-marketing-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.demo-theme-art {
+  background-color: var(--demo-art-surface);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.demo-theme-art-service {
+  background-image:
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--demo-art-accent) 86%, white), transparent 18%),
+    linear-gradient(135deg, var(--demo-art-primary), var(--demo-art-secondary) 58%, var(--demo-art-surface));
+}
+
+.demo-theme-art-feature {
+  background-image:
+    radial-gradient(circle at 24% 62%, color-mix(in srgb, var(--demo-art-primary) 82%, transparent), transparent 34%),
+    linear-gradient(145deg, var(--demo-art-surface), var(--demo-art-secondary) 55%, var(--demo-art-accent));
 }
 
 .demo-control-card {
@@ -324,44 +347,44 @@
 }
 
 @media (min-width: 720px) and (max-width: 979.98px) {
-  #components .demo-showcase-grid {
+  #components .demo-component-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  #components .demo-showcase-grid > [data-testid="component-controls"],
-  #components .demo-showcase-grid > [data-testid="component-buttons-states"],
-  #components .demo-showcase-grid > [data-testid="component-fields"],
-  #components .demo-showcase-grid > [data-testid="component-table"] {
+  #components .demo-component-grid > [data-testid="component-controls"],
+  #components .demo-component-grid > [data-testid="component-buttons-states"],
+  #components .demo-component-grid > [data-testid="component-fields"],
+  #components .demo-component-grid > [data-testid="component-table"] {
     grid-column: 1 / -1;
   }
 }
 
 @media (min-width: 980px) {
-  #components .demo-showcase-grid {
+  #components .demo-component-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
-  #components .demo-showcase-grid > [data-testid="component-controls"] {
+  #components .demo-component-grid > [data-testid="component-controls"] {
     grid-column: span 7;
   }
 
-  #components .demo-showcase-grid > [data-testid="component-buttons-states"] {
+  #components .demo-component-grid > [data-testid="component-buttons-states"] {
     grid-column: span 5;
   }
 
-  #components .demo-showcase-grid > [data-testid="component-fields"] {
+  #components .demo-component-grid > [data-testid="component-fields"] {
     grid-column: span 5;
   }
 
-  #components .demo-showcase-grid > [data-testid="component-badges"] {
+  #components .demo-component-grid > [data-testid="component-badges"] {
     grid-column: span 3;
   }
 
-  #components .demo-showcase-grid > [data-testid="component-alerts"] {
+  #components .demo-component-grid > [data-testid="component-alerts"] {
     grid-column: span 4;
   }
 
-  #components .demo-showcase-grid > [data-testid="component-table"] {
+  #components .demo-component-grid > [data-testid="component-table"] {
     grid-column: 1 / -1;
   }
 }
@@ -386,6 +409,43 @@
   display: grid;
   gap: .65rem;
   min-width: 0;
+}
+
+.demo-token-sample,
+.demo-token-sample > :where(
+  [class*="-grid-feature"],
+  [class*="-metric"],
+  [class*="-well"],
+  [class*="-composition"],
+  [class*="-callout"],
+  [class*="-console"]
+) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.demo-native-sample {
+  container-type: inline-size;
+}
+
+@container (max-width: 32rem) {
+  .demo-native-sample > h1 {
+    font-size: clamp(2.25rem, 12cqi, 4rem);
+    line-height: 1.04;
+    overflow-wrap: anywhere;
+  }
+
+  .demo-native-sample > h2 {
+    font-size: clamp(1.7rem, 8.5cqi, 2.75rem);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .demo-native-sample > h3 {
+    font-size: clamp(1.25rem, 6.5cqi, 2rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+  }
 }
 
 .demo-state-sample > p,
@@ -449,11 +509,29 @@
   line-height: 1.35;
 }
 
-.demo-utility-layout-sample {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  align-items: center;
+.demo-utility-shape-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .65rem;
+}
+
+.demo-utility-shape {
+  display: grid;
+  gap: .35rem;
+  align-content: center;
+  min-width: 0;
+  min-block-size: 5.5rem;
+  padding: .75rem;
+  background: color-mix(in srgb, var(--usk-native-surface-soft) 88%, transparent);
+}
+
+.demo-utility-shape code {
+  overflow-wrap: anywhere;
+  font-size: .72rem;
+}
+
+.demo-utility-shape span {
+  font-weight: 800;
 }
 
 .demo-utility-label {
@@ -641,6 +719,11 @@
 }
 
 @media (max-width: 760px) {
+  .demo-marketing-grid,
+  .demo-utility-shape-grid {
+    grid-template-columns: 1fr;
+  }
+
   .demo-control-showcase {
     grid-template-areas:
       "buttons"

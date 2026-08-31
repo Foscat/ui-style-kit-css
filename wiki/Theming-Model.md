@@ -3,7 +3,7 @@
 UI Style Kit CSS uses three root-level attributes:
 
 - `data-ui` selects the style system.
-- `data-theme` selects one of the 10 color schemes.
+- `data-theme` selects one of the 20 color schemes.
 - `data-mode` selects `light`, `dark`, or `contrast`.
 
 ## Attribute Pattern
@@ -68,7 +68,7 @@ Example from the `saas` prefix model:
 
 ## Shared Theme Set
 
-All 11 styles define the same themes:
+All 20 styles define the same themes:
 
 - `midnight-gold`
 - `ocean-steel`
@@ -80,6 +80,17 @@ All 11 styles define the same themes:
 - `rose-quartz`
 - `cyber-lime`
 - `arctic-indigo`
+- `chrome-navy`
+- `recycled-emerald`
+- `industrial-orange`
+- `performance-red`
+- `heritage-brass`
+- `service-blue-red`
+- `newsprint-crimson`
+- `foundry-amber`
+- `soft-orchid`
+- `electric-noir`
+
 
 ## Modes
 

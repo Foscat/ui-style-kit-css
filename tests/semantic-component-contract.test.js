@@ -471,14 +471,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  // These fingerprints cover declaration blocks only, so selector-only changes do not affect them.
+  // These fingerprints include the manifest-generated containment foundation and all authored declarations.
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 6670,
-    sha256: 'ff59da0c6442529210584836a8f62faf8e5eedf8850a9b2465a8fdee8f345b69'
+    count: 16204,
+    sha256: '50b756124a8e4cf037b8325fe6a7060bd8e61325287bf4e21fdb97cab83e180a'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 6903,
-    sha256: '1f965d7f22eaef86ddcb31c339125a616723604f073bd2a714b195539e99dc03'
+    count: 16635,
+    sha256: 'ae8cbad77450c12912b434d38e36705151b26068b3c401a0dc262f6931ad2e2d'
   });
 });
 
@@ -486,7 +486,7 @@ test('semantic source suffixes and contextual variants exist in every composed p
   const currentSuffixes = new Set(manifest.classApi.universalVisualSuffixes);
   const requiredSuffixes = semanticRequiredSuffixes();
 
-  assert.equal(manifest.classApi.universalVisualSuffixes.length, 81);
+  assert.equal(manifest.classApi.universalVisualSuffixes.length, 94);
   for (const suffix of requiredSuffixes) {
     assert.equal(currentSuffixes.has(suffix), true, `${suffix} must remain a current universal visual suffix`);
   }
@@ -556,7 +556,7 @@ test('manifest presets generate unchanged generic markup cases for Task 11 runti
   const declaredSelectors = semanticEntries().map(({ selector }) => selector);
   const presetPrefixes = manifest.presets.map(({ prefix }) => prefix);
 
-  assert.equal(cases.length, 11);
+  assert.equal(cases.length, 20);
   assert.deepEqual(cases.map(({ preset }) => preset), manifest.presets.map(({ id }) => id));
   assert.equal(new Set(cases.map(({ markup }) => markup)).size, 1, 'generic markup must not change by preset');
   for (const runtimeCase of cases) {

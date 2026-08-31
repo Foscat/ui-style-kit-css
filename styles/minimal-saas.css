@@ -1,6 +1,6 @@
 /* =========================================================
    UI Style Kit CSS — Minimal SaaS Theme System
-   Includes 10 color schemes, light/dark/contrast modes,
+   Includes 20 color schemes, light/dark/contrast modes,
    component classes, native element coverage, and CSS-only
    accessibility presentation helpers.
 
@@ -131,7 +131,7 @@
   --saas-fg: var(--saas-text);
   --saas-surface-fg: var(--saas-text);
   --saas-muted: var(--saas-text-muted);
-  --saas-border: rgb(var(--saas-border-rgb) / var(--saas-border-alpha));
+  --saas-border: rgb(var(--saas-border-rgb) / max(var(--saas-border-alpha), var(--usk-border-min-alpha)));
   --saas-control-fg: var(--saas-text);
   --saas-primary: rgb(var(--saas-primary-rgb));
   --saas-primary-hover: rgb(var(--saas-primary-hover-rgb));
@@ -159,6 +159,10 @@
   --saas-spinner-track: rgb(var(--saas-border-rgb) / max(.28, calc(var(--saas-border-alpha) * .7)));
   --saas-spinner-stroke: var(--saas-primary);
   --saas-spinner-accent: var(--saas-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="minimal-saas"][data-theme][data-mode] { --saas-border: color-mix(in srgb, rgb(var(--saas-border-rgb) / max(var(--saas-border-alpha), var(--usk-border-min-alpha))), var(--saas-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -401,6 +405,233 @@
 @keyframes saas-spin { to { transform: rotate(360deg); } }
 
 
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.saas-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--saas-border-rgb) / .72);
+  border-radius: var(--saas-radius-lg);
+}
+
+.saas-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--saas-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.saas-card-service > .saas-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.saas-card-service > .saas-card-media + .saas-icon-medallion { margin-block-start: -2.15rem; }
+
+.saas-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--saas-space-4);
+  align-items: start;
+}
+
+.saas-card-accent-edge {
+  border-inline-start: .35rem solid var(--saas-primary);
+}
+
+.saas-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--saas-primary);
+  color: var(--saas-on-primary);
+  border: 2px solid rgb(var(--saas-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.saas-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.saas-button.saas-button-cut,
+.saas-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.saas-button.saas-button-cut:focus-visible,
+.saas-button-cut:focus-visible { outline-offset: -3px; }
+
+.saas-button.saas-button-outline-heavy,
+.saas-button-outline-heavy {
+  background: transparent;
+  color: var(--saas-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--saas-primary);
+  box-shadow: none;
+}
+.saas-button.saas-button-outline-heavy:hover,
+.saas-button-outline-heavy:hover {
+  background: var(--saas-primary);
+  color: var(--saas-on-primary);
+  border-color: var(--saas-primary-hover);
+}
+
+.saas-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--saas-surface-strong);
+  color: var(--saas-text);
+  border: 2px solid var(--saas-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--saas-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.saas-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--saas-card-bg);
+  color: var(--saas-text);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--saas-radius-lg);
+}
+
+.saas-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--saas-space-3);
+  min-inline-size: 0;
+  padding: var(--saas-space-4);
+  border-inline-end: 1px solid rgb(var(--saas-border-rgb) / .62);
+}
+.saas-feature-item:last-child { border-inline-end: 0; }
+.saas-feature-item > :where(p, small) { margin: 0; color: var(--saas-text-muted); }
+
+.saas-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--saas-space-4);
+  padding: var(--saas-space-4) var(--saas-space-5);
+  background: var(--saas-card-bg);
+  color: var(--saas-text);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--saas-radius-lg);
+}
+.saas-callout-bar > :where(p, div) { min-inline-size: 0; }
+.saas-callout-bar > :where(.saas-button, a, button):last-child { justify-self: end; }
+
+.saas-eyebrow {
+  margin: 0;
+  color: var(--saas-primary);
+  font-family: var(--saas-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.saas-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--saas-surface-soft);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--saas-radius-lg);
+}
+.saas-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.saas-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.saas-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .saas-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .saas-callout-bar > :where(.saas-button, a, button):last-child { justify-self: stretch; }
+  .saas-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--saas-border-rgb) / .62); }
+  .saas-feature-item:last-child { border-block-end: 0; }
+}
+
+.saas-card-service, .saas-card-feature, .saas-feature-strip, .saas-callout-bar { box-shadow: 0 .9rem 2rem rgb(15 23 42 / calc(var(--saas-shadow-alpha) + .03)); }
+.saas-card-accent-edge { border-inline-start-width: .3rem; }
+.saas-icon-medallion { box-shadow: 0 .55rem 1.2rem rgb(15 23 42 / calc(var(--saas-shadow-alpha) + .05)); }
+
+/* Filled and framed actions share one precise fold without becoming the same control. */
+.saas-button.saas-button-cut, .saas-button-cut {
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: start;
+  justify-content: center;
+  clip-path: polygon(0 0, calc(100% - .55rem) 0, 100% .55rem, 100% 100%, 0 100%);
+}
+.saas-button.saas-button-outline-heavy, .saas-button-outline-heavy {
+  border-width: 1px;
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - .42rem) 0, 100% .42rem, 100% 100%, 0 100%);
+  box-shadow: 0 .25rem .6rem rgb(var(--saas-text-rgb) / .08);
+}
+
+/* Marketing and native surfaces repeat the fold through a precise leading rule. */
+.saas-card-service, .saas-media-scrim, .saas-feature-strip, .saas-callout-bar, .saas-metric {
+  border: 1px solid var(--saas-border);
+  border-inline-start-width: .22rem;
+  border-inline-start-color: var(--saas-primary);
+  box-shadow: 0 .6rem 1.4rem rgb(var(--saas-text-rgb) / .1);
+}
+[data-ui="minimal-saas"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 1px solid var(--saas-primary);
+  border-radius: var(--saas-radius-md);
+  box-shadow: 0 .25rem .6rem rgb(var(--saas-text-rgb) / .1);
+}
+[data-ui="minimal-saas"][data-theme][data-mode] :where(dialog) {
+  border: 1px solid var(--saas-border);
+  border-inline-start-width: .22rem;
+  border-radius: var(--saas-radius-lg);
+  box-shadow: 0 1rem 2.2rem rgb(var(--saas-text-rgb) / .18);
+}
+
+/* Busy indicators retain the restrained circular progress language of Minimal SaaS. */
+.saas-button[aria-busy="true"]::after, .saas-icon-button[aria-busy="true"]::after, [data-ui="minimal-saas"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .14em solid rgb(var(--saas-primary-text-rgb) / .38); border-block-start-color: currentColor; border-radius: 50%; background: transparent; box-shadow: none; clip-path: circle(50%); animation: saas-spin .7s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="minimal-saas"] *, [data-ui="minimal-saas"] *::before, [data-ui="minimal-saas"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -408,7 +639,7 @@
   [data-ui="minimal-saas"] { --saas-border-alpha: 1; --saas-focus-alpha: .75; }
 }
 @media (forced-colors: active) {
-  [data-ui="minimal-saas"] * { forced-color-adjust: auto; }
+  @supports (forced-color-adjust: auto) { [data-ui="minimal-saas"] * { forced-color-adjust: auto; } }
   [data-ui="minimal-saas"] :where(:focus-visible) { outline: 3px solid CanvasText; }
 }
 @media print {

@@ -1,7 +1,7 @@
 /* =========================================================
    Cyberpunk Theme System
    Includes:
-   - 10 color schemes
+   - 20 color schemes
    - light / dark / contrast modes
    - themed UI components and utilities
 
@@ -144,7 +144,7 @@
   --cyber-fg: var(--cyber-text);
   --cyber-surface-fg: var(--cyber-text);
   --cyber-muted: var(--cyber-text-muted);
-  --cyber-border: rgb(var(--cyber-border-rgb) / var(--cyber-border-alpha));
+  --cyber-border: rgb(var(--cyber-border-rgb) / max(var(--cyber-border-alpha), var(--usk-border-min-alpha)));
   --cyber-control-fg: var(--cyber-text);
   --cyber-primary: rgb(var(--cyber-primary-rgb));
   --cyber-primary-hover: rgb(var(--cyber-primary-hover-rgb));
@@ -177,6 +177,10 @@
   --cyber-spinner-track: rgb(var(--cyber-border-rgb) / max(.28, calc(var(--cyber-border-alpha) * .7)));
   --cyber-spinner-stroke: var(--cyber-primary);
   --cyber-spinner-accent: var(--cyber-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="cyberpunk"][data-theme][data-mode] { --cyber-border: color-mix(in srgb, rgb(var(--cyber-border-rgb) / max(var(--cyber-border-alpha), var(--usk-border-min-alpha))), var(--cyber-text) var(--usk-border-text-mix)); }
 }
 
 /* =========================================================
@@ -351,6 +355,233 @@
 @keyframes cyber-spin { to { transform: rotate(360deg); } }
 
 
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.cyber-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--cyber-border-rgb) / .72);
+  border-radius: var(--cyber-radius-lg);
+}
+
+.cyber-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--cyber-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.cyber-card-service > .cyber-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.cyber-card-service > .cyber-card-media + .cyber-icon-medallion { margin-block-start: -2.15rem; }
+
+.cyber-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--cyber-space-4);
+  align-items: start;
+}
+
+.cyber-card-accent-edge {
+  border-inline-start: .35rem solid var(--cyber-primary);
+}
+
+.cyber-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--cyber-primary);
+  color: var(--cyber-on-primary);
+  border: 2px solid rgb(var(--cyber-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.cyber-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.cyber-button.cyber-button-cut,
+.cyber-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.cyber-button.cyber-button-cut:focus-visible,
+.cyber-button-cut:focus-visible { outline-offset: -3px; }
+
+.cyber-button.cyber-button-outline-heavy,
+.cyber-button-outline-heavy {
+  background: transparent;
+  color: var(--cyber-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--cyber-primary);
+  box-shadow: none;
+}
+.cyber-button.cyber-button-outline-heavy:hover,
+.cyber-button-outline-heavy:hover {
+  background: var(--cyber-primary);
+  color: var(--cyber-on-primary);
+  border-color: var(--cyber-primary-hover);
+}
+
+.cyber-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--cyber-surface-strong);
+  color: var(--cyber-text);
+  border: 2px solid var(--cyber-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--cyber-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.cyber-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--cyber-card-bg);
+  color: var(--cyber-text);
+  border: 1px solid var(--cyber-border);
+  border-radius: var(--cyber-radius-lg);
+}
+
+.cyber-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--cyber-space-3);
+  min-inline-size: 0;
+  padding: var(--cyber-space-4);
+  border-inline-end: 1px solid rgb(var(--cyber-border-rgb) / .62);
+}
+.cyber-feature-item:last-child { border-inline-end: 0; }
+.cyber-feature-item > :where(p, small) { margin: 0; color: var(--cyber-text-muted); }
+
+.cyber-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--cyber-space-4);
+  padding: var(--cyber-space-4) var(--cyber-space-5);
+  background: var(--cyber-card-bg);
+  color: var(--cyber-text);
+  border: 1px solid var(--cyber-border);
+  border-radius: var(--cyber-radius-lg);
+}
+.cyber-callout-bar > :where(p, div) { min-inline-size: 0; }
+.cyber-callout-bar > :where(.cyber-button, a, button):last-child { justify-self: end; }
+
+.cyber-eyebrow {
+  margin: 0;
+  color: var(--cyber-primary);
+  font-family: var(--cyber-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.cyber-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--cyber-surface-soft);
+  border: 1px solid var(--cyber-border);
+  border-radius: var(--cyber-radius-lg);
+}
+.cyber-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.cyber-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.cyber-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .cyber-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .cyber-callout-bar > :where(.cyber-button, a, button):last-child { justify-self: stretch; }
+  .cyber-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--cyber-border-rgb) / .62); }
+  .cyber-feature-item:last-child { border-block-end: 0; }
+}
+
+.cyber-card-service, .cyber-card-feature, .cyber-feature-strip, .cyber-callout-bar { box-shadow: 0 0 1.5rem rgb(var(--cyber-primary-rgb) / .2), inset 0 0 1.5rem rgb(var(--cyber-primary-rgb) / .05); }
+.cyber-icon-medallion, .cyber-badge-seal { border-radius: 0; clip-path: polygon(24% 0, 76% 0, 100% 24%, 100% 76%, 76% 100%, 24% 100%, 0 76%, 0 24%); box-shadow: 0 0 1.2rem rgb(var(--cyber-primary-rgb) / .42); }
+.cyber-button-cut { clip-path: polygon(.75rem 0, 100% 0, 100% calc(100% - .75rem), calc(100% - .75rem) 100%, 0 100%, 0 .75rem); }
+.cyber-card-accent-edge { border-inline-start-width: .25rem; box-shadow: inset .35rem 0 1rem rgb(var(--cyber-primary-rgb) / .12); }
+
+/* Filled and framed actions use complementary technical notches and neon edges. */
+.cyber-button.cyber-button-cut, .cyber-button-cut {
+  inline-size: min(100%, 18rem);
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: end;
+  justify-content: center;
+  clip-path: polygon(.75rem 0, 78% 0, calc(78% + .35rem) .35rem, 100% .35rem, 100% calc(100% - .75rem), calc(100% - .75rem) 100%, 0 100%, 0 .75rem);
+}
+.cyber-button.cyber-button-outline-heavy, .cyber-button-outline-heavy {
+  border-width: 2px;
+  border-radius: 0;
+  clip-path: polygon(0 .4rem, 22% .4rem, calc(22% + .35rem) 0, calc(100% - .75rem) 0, 100% .75rem, 100% 100%, .75rem 100%, 0 calc(100% - .75rem));
+  box-shadow: 0 0 .85rem rgb(var(--cyber-primary-rgb) / .38), inset 0 0 .45rem rgb(var(--cyber-accent-rgb) / .18);
+}
+
+/* Marketing and native surfaces repeat the technical edge and token-driven glow. */
+.cyber-card-service, .cyber-media-scrim, .cyber-feature-strip, .cyber-callout-bar, .cyber-well {
+  border: 2px solid var(--cyber-primary);
+  border-radius: 0;
+  box-shadow: 0 0 1rem rgb(var(--cyber-primary-rgb) / .28), inset 0 0 .6rem rgb(var(--cyber-accent-rgb) / .12);
+}
+[data-ui="cyberpunk"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 2px solid var(--cyber-primary);
+  border-radius: 0;
+  box-shadow: 0 0 .75rem rgb(var(--cyber-primary-rgb) / .36), inset 0 0 .4rem rgb(var(--cyber-accent-rgb) / .14);
+}
+[data-ui="cyberpunk"][data-theme][data-mode] :where(dialog) {
+  border: 2px solid var(--cyber-primary);
+  border-radius: 0;
+  box-shadow: 0 0 1.2rem rgb(var(--cyber-primary-rgb) / .34), 0 1rem 2.4rem rgb(var(--cyber-text-rgb) / .28);
+}
+
+/* Busy indicators use a notched neon hexagon. */
+.cyber-button[aria-busy="true"]::after, .cyber-icon-button[aria-busy="true"]::after, [data-ui="cyberpunk"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .1em solid currentColor; border-radius: 0; background: conic-gradient(from 90deg, transparent 0 22%, currentColor 0 46%, transparent 0 62%, currentColor 0 84%, transparent 0); box-shadow: 0 0 .45em currentColor; clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%); animation: cyber-spin .7s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="cyberpunk"] *, [data-ui="cyberpunk"] *::before, [data-ui="cyberpunk"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -358,7 +589,7 @@
   [data-ui="cyberpunk"] { --cyber-border-alpha: 1; }
 }
 @media (forced-colors: active) {
-  [data-ui="cyberpunk"] * { forced-color-adjust: auto; }
+  @supports (forced-color-adjust: auto) { [data-ui="cyberpunk"] * { forced-color-adjust: auto; } }
   [data-ui="cyberpunk"] :where(:focus-visible) { outline: 3px solid CanvasText; box-shadow: none; }
 }
 @media print {

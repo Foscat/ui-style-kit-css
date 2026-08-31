@@ -52,9 +52,9 @@
   --interactive-surface-level-2-bg: var(--interactive-surface-bg);
   --interactive-surface-level-2-border-color: var(--interactive-surface-border-color);
   --interactive-surface-level-2-shadow: 0 8px 20px rgb(var(--usk-bg-rgb, 0 0 0) / .22);
-  --interactive-surface-level-3-bg: color-mix(in srgb, var(--interactive-surface-bg) 82%, var(--interactive-surface-variant-primary-bg));
-  --interactive-surface-level-3-border-color: color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 72%, var(--interactive-surface-border-color));
-  --interactive-surface-level-3-shadow: 0 14px 34px rgb(var(--usk-bg-rgb, 0 0 0) / .3), 0 0 0 1px color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 34%, transparent);
+  --interactive-surface-level-3-bg: var(--interactive-surface-bg);
+  --interactive-surface-level-3-border-color: var(--interactive-surface-variant-primary-border-color);
+  --interactive-surface-level-3-shadow: 0 14px 34px rgb(var(--usk-bg-rgb, 0 0 0) / .3);
   --interactive-surface-level-bg: var(--interactive-surface-level-1-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-1-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-1-shadow);
@@ -69,11 +69,17 @@
   border-radius: var(--interactive-surface-radius);
   box-shadow: var(--interactive-surface-level-shadow, none);
   transition:
-    background-color 160ms ease,
     border-color 160ms ease,
     box-shadow 160ms ease,
-    color 160ms ease,
     transform 160ms ease;
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  :where([data-ui][data-theme][data-mode]) .interactive-surface {
+    --interactive-surface-level-3-bg: color-mix(in srgb, var(--interactive-surface-bg) 82%, var(--interactive-surface-variant-primary-bg));
+    --interactive-surface-level-3-border-color: color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 72%, var(--interactive-surface-border-color));
+    --interactive-surface-level-3-shadow: 0 14px 34px rgb(var(--usk-bg-rgb, 0 0 0) / .3), 0 0 0 1px color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 34%, transparent);
+  }
 }
 
 :where([data-ui][data-theme][data-mode]) .interactive-surface::before {

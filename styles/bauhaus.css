@@ -1,6 +1,6 @@
 /* =========================================================
    UI Style Kit CSS — Bauhaus / Swiss Modern Theme System
-   Includes 10 color schemes, light/dark/contrast modes,
+   Includes 20 color schemes, light/dark/contrast modes,
    component classes, native element coverage, and CSS-only
    accessibility presentation helpers.
 
@@ -131,7 +131,7 @@
   --bau-fg: var(--bau-text);
   --bau-surface-fg: var(--bau-text);
   --bau-muted: var(--bau-text-muted);
-  --bau-border: rgb(var(--bau-border-rgb) / var(--bau-border-alpha));
+  --bau-border: rgb(var(--bau-border-rgb) / max(var(--bau-border-alpha), var(--usk-border-min-alpha)));
   --bau-control-fg: var(--bau-text);
   --bau-primary: rgb(var(--bau-primary-rgb));
   --bau-primary-hover: rgb(var(--bau-primary-hover-rgb));
@@ -159,6 +159,10 @@
   --bau-spinner-track: rgb(var(--bau-border-rgb) / max(.28, calc(var(--bau-border-alpha) * .7)));
   --bau-spinner-stroke: var(--bau-primary);
   --bau-spinner-accent: var(--bau-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="bauhaus"][data-theme][data-mode] { --bau-border: color-mix(in srgb, rgb(var(--bau-border-rgb) / max(var(--bau-border-alpha), var(--usk-border-min-alpha))), var(--bau-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -404,6 +408,236 @@
 @keyframes bau-spin { to { transform: rotate(360deg); } }
 
 
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.bau-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--bau-border-rgb) / .72);
+  border-radius: var(--bau-radius-lg);
+}
+
+.bau-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--bau-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.bau-card-service > .bau-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.bau-card-service > .bau-card-media + .bau-icon-medallion { margin-block-start: -2.15rem; }
+
+.bau-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--bau-space-4);
+  align-items: start;
+}
+
+.bau-card-accent-edge {
+  border-inline-start: .35rem solid var(--bau-primary);
+}
+
+.bau-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--bau-primary);
+  color: var(--bau-on-primary);
+  border: 2px solid rgb(var(--bau-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.bau-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.bau-button.bau-button-cut,
+.bau-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.bau-button.bau-button-cut:focus-visible,
+.bau-button-cut:focus-visible { outline-offset: -3px; }
+
+.bau-button.bau-button-outline-heavy,
+.bau-button-outline-heavy {
+  background: transparent;
+  color: var(--bau-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--bau-primary);
+  box-shadow: none;
+}
+.bau-button.bau-button-outline-heavy:hover,
+.bau-button-outline-heavy:hover {
+  background: var(--bau-primary);
+  color: var(--bau-on-primary);
+  border-color: var(--bau-primary-hover);
+}
+
+.bau-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--bau-surface-strong);
+  color: var(--bau-text);
+  border: 2px solid var(--bau-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--bau-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.bau-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--bau-card-bg);
+  color: var(--bau-text);
+  border: 1px solid var(--bau-border);
+  border-radius: var(--bau-radius-lg);
+}
+
+.bau-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--bau-space-3);
+  min-inline-size: 0;
+  padding: var(--bau-space-4);
+  border-inline-end: 1px solid rgb(var(--bau-border-rgb) / .62);
+}
+.bau-feature-item:last-child { border-inline-end: 0; }
+.bau-feature-item > :where(p, small) { margin: 0; color: var(--bau-text-muted); }
+
+.bau-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--bau-space-4);
+  padding: var(--bau-space-4) var(--bau-space-5);
+  background: var(--bau-card-bg);
+  color: var(--bau-text);
+  border: 1px solid var(--bau-border);
+  border-radius: var(--bau-radius-lg);
+}
+.bau-callout-bar > :where(p, div) { min-inline-size: 0; }
+.bau-callout-bar > :where(.bau-button, a, button):last-child { justify-self: end; }
+
+.bau-eyebrow {
+  margin: 0;
+  color: var(--bau-primary);
+  font-family: var(--bau-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.bau-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--bau-surface-soft);
+  border: 1px solid var(--bau-border);
+  border-radius: var(--bau-radius-lg);
+}
+.bau-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.bau-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.bau-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .bau-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .bau-callout-bar > :where(.bau-button, a, button):last-child { justify-self: stretch; }
+  .bau-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--bau-border-rgb) / .62); }
+  .bau-feature-item:last-child { border-block-end: 0; }
+}
+
+.bau-card-service, .bau-card-feature, .bau-feature-strip, .bau-callout-bar, .bau-media-scrim { border-radius: 0; border-width: 2px; }
+.bau-icon-medallion, .bau-badge-seal { border-radius: 0; border-width: 2px; box-shadow: .3rem .3rem 0 var(--bau-text); }
+.bau-card-accent-edge { border-inline-start-width: .5rem; }
+.bau-button-cut { clip-path: polygon(.55rem 0, 100% 0, calc(100% - .55rem) 100%, 0 100%); }
+
+/* Filled and framed actions oppose their cuts to preserve asymmetric composition. */
+.bau-button.bau-button-cut, .bau-button-cut {
+  inline-size: min(100%, 12rem);
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: start;
+  justify-content: center;
+  clip-path: polygon(.7rem 0, 100% 0, calc(100% - .45rem) 100%, 0 100%);
+}
+.bau-button.bau-button-outline-heavy, .bau-button-outline-heavy {
+  border-width: 2px;
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - .7rem) 0, 100% 100%, .45rem 100%);
+  box-shadow: inset .32rem 0 0 rgb(var(--bau-primary-rgb) / .24);
+}
+
+/* Marketing and native surfaces keep hard edges and one asymmetric primary rail. */
+.bau-card-service, .bau-media-scrim, .bau-feature-strip, .bau-callout-bar, .bau-well {
+  border: 2px solid var(--bau-border);
+  border-inline-start-width: .48rem;
+  border-inline-start-color: var(--bau-primary);
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-ui="bauhaus"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 2px solid var(--bau-primary);
+  border-radius: 0;
+  box-shadow: .22rem .22rem 0 rgb(var(--bau-text-rgb) / .72);
+}
+[data-ui="bauhaus"][data-theme][data-mode] :where(dialog) {
+  border: 2px solid var(--bau-border);
+  border-inline-start-width: .48rem;
+  border-radius: 0;
+  box-shadow: .4rem .4rem 0 rgb(var(--bau-text-rgb) / .32);
+}
+
+/* Busy indicators use a hard-edged four-field Bauhaus composition. */
+.bau-button[aria-busy="true"]::after, .bau-icon-button[aria-busy="true"]::after, [data-ui="bauhaus"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .12em double currentColor; border-radius: 0; background: conic-gradient(currentColor 0 25%, transparent 0 50%, currentColor 0 75%, transparent 0); box-shadow: none; clip-path: inset(0); animation: bau-spin .78s steps(4, end) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="bauhaus"] *, [data-ui="bauhaus"] *::before, [data-ui="bauhaus"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -411,7 +645,7 @@
   [data-ui="bauhaus"] { --bau-border-alpha: 1; --bau-focus-alpha: .75; }
 }
 @media (forced-colors: active) {
-  [data-ui="bauhaus"] * { forced-color-adjust: auto; }
+  @supports (forced-color-adjust: auto) { [data-ui="bauhaus"] * { forced-color-adjust: auto; } }
   [data-ui="bauhaus"] :where(:focus-visible) { outline: 3px solid CanvasText; }
 }
 @media print {

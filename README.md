@@ -5,11 +5,11 @@
 
 **UI Style Kit CSS** is a CSS-only theme and UI style preset library for accessible websites, dashboards, admin interfaces, and customer-facing pages.
 
-It is separate from, but complementary to, **Interactive Surface CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior.
+It is separate from, but complementary to, **Interactive Surface CSS** and **Layout Style CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior. Use **Layout Style CSS** for responsive layout wrappers, grid systems, macro-structure positioning, and container scaffolding.
 
 ## Current Release
 
-`v2.2.0` adds the shared 12-token semantic producer contract and a manifest-backed 29-selector `.ui-*` component API across all 11 presets. Existing default and focused entrypoints remain compatible, including their deprecated structural helpers, and parser-based minification remains exactly pinned.
+`v2.3.0` expands the library to 20 UI style systems and 20 shared color schemes, adds a universal commercial component vocabulary and a declared modern-browser support floor, and grows the browser matrix to 3,600 preset/theme/mode/engine combinations. Existing default, focused, visual-only, and bridge entrypoints remain compatible, and parser-based minification remains exactly pinned.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -50,11 +50,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.2.0` | current package version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.6.0` | published release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@3.0.1` | published release | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.3.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.6.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.1.0` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The current combination is `ui-style-kit-css@2.2.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.0.1`. UI Style Kit `2.2.0` is the current package version, and the release pipeline treats it as the active candidate only while that exact npm version is absent. Interactive Surface `1.6.0` and Layout Style `3.0.1` are published releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.3.0` is the current release target and is verified with Interactive Surface `1.6.0`. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -66,8 +66,8 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 
 ## Features
 
-- 11 UI style systems
-- 10 shared color schemes
+- 20 UI style systems
+- 20 shared color schemes
 - `light`, `dark`, and `contrast` modes
 - Combined CSS bundle and per-style production imports
 - Visual-only full and focused entrypoints for consumer-owned layouts
@@ -108,7 +108,7 @@ Use the generated default bundle for semantic components that can switch across 
 import "ui-style-kit-css";
 ```
 
-Use `ui-style-kit-css/visual.css` for the same 29-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 11 `data-ui` values.
+Use `ui-style-kit-css/visual.css` for the same 29-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 20 `data-ui` values.
 
 Applications fixed to one preset can use a generated focused visual entrypoint. It includes semantic aliases scoped to that preset only:
 
@@ -128,7 +128,7 @@ import "ui-style-kit-css/minimal-saas.css";
 import "ui-style-kit-css/styles/minimal-saas.css";
 ```
 
-In `v2.1.0`, legacy standalone style files continue to import the shared color-scheme, native-element fallback, and content-overflow layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+Compatible standalone style files continue to import the shared color-scheme, native-element fallback, and content-overflow layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -162,12 +162,12 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~357 KB | ~44 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~348 KB | ~43 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~431 KB | ~52 KB | Deprecated runtime switcher plus stateful bridge |
-| `ui-style-kit-css/theme-colors.css` | ~25 KB | ~3 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~22 KB | ~4 KB | Shared native HTML fallback styling |
-| `ui-style-kit-css/content-overflow.css` | ~7 KB | ~1 KB | Shared long-text containment for standalone style imports |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~855 KB | ~125 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~841 KB | ~123 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~1015 KB | ~143 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
+| `ui-style-kit-css/native-elements.css` | ~24 KB | ~4 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
 
@@ -182,7 +182,7 @@ Use the latest published NPM package:
 For production, pin the exact approved release rather than relying on `latest`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.2.0/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.3.0/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -212,21 +212,21 @@ This changes the semantic components' visual preset without replacing their DOM 
 
 ## Semantic component API
 
-`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 29 selectors keep the same class names while `data-ui` changes across all 11 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 27 generated semantic aliases, and an empty pending set.
+`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 29 selectors keep the same class names while `data-ui` changes across all 20 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 27 generated semantic aliases, and an empty pending set.
 
 | Role | Generic selectors | Switching coverage |
 |---|---|---|
-| Buttons | `.ui-button`, `.ui-icon-button` | all 11 presets |
-| Card | `.ui-card` | all 11 presets |
-| Forms | `.ui-field`, `.ui-label`, `.ui-help-text`, `.ui-input`, `.ui-select`, `.ui-textarea` | all 11 presets |
-| Choice controls | `.ui-check`, `.ui-check-control`, `.ui-radio`, `.ui-radio-control`, `.ui-switch`, `.ui-switch-track`, `.ui-switch-thumb` | all 11 presets |
-| Badge | `.ui-badge` | all 11 presets |
-| Alert | `.ui-alert`, `.ui-alert-title`, `.ui-alert-body` | all 11 presets |
-| Navigation | `.ui-nav`, `.ui-nav-link` | all 11 presets |
-| Table | `.ui-table`, `.ui-table-wrap` | all 11 presets |
-| Progress | `.ui-progress`, `.ui-progress-bar` | all 11 presets |
-| Toolbar | `.ui-toolbar` | all 11 presets |
-| Existing generic hooks | `.ui-spinner`, `.ui-tooltip` | all 11 presets |
+| Buttons | `.ui-button`, `.ui-icon-button` | all 20 presets |
+| Card | `.ui-card` | all 20 presets |
+| Forms | `.ui-field`, `.ui-label`, `.ui-help-text`, `.ui-input`, `.ui-select`, `.ui-textarea` | all 20 presets |
+| Choice controls | `.ui-check`, `.ui-check-control`, `.ui-radio`, `.ui-radio-control`, `.ui-switch`, `.ui-switch-track`, `.ui-switch-thumb` | all 20 presets |
+| Badge | `.ui-badge` | all 20 presets |
+| Alert | `.ui-alert`, `.ui-alert-title`, `.ui-alert-body` | all 20 presets |
+| Navigation | `.ui-nav`, `.ui-nav-link` | all 20 presets |
+| Table | `.ui-table`, `.ui-table-wrap` | all 20 presets |
+| Progress | `.ui-progress`, `.ui-progress-bar` | all 20 presets |
+| Toolbar | `.ui-toolbar` | all 20 presets |
+| Existing generic hooks | `.ui-spinner`, `.ui-tooltip` | all 20 presets |
 
 The only new attribute is context-constrained `data-ui-variant`. Omit it for the neutral treatment.
 
@@ -264,6 +264,15 @@ For example, a fixed Minimal SaaS integration may continue to use `<button class
 | Cyberpunk | `cyberpunk` | `cyber` | security, gaming, encryption, tech demos |
 | Y2K | `y2k` | `y2k` | nostalgic, playful, fashion/music/event sites |
 | Retro Glass | `retro-glass` | `rg` | futuristic glass dashboards and hero sections |
+| Editorial Luxe | `editorial-luxe` | `luxe` | luxury brands, architecture, hospitality, premium editorial sites |
+| Organic Modern | `organic-modern` | `organic` | wellness, sustainability, hospitality, natural product brands |
+| Industrial Utility | `industrial-utility` | `utility` | operations software, manufacturing, logistics, fleet and equipment systems |
+| Technical Blueprint | `technical-blueprint` | `blueprint` | engineering, architecture, technical documentation, scientific tools |
+| Art Deco | `art-deco` | `deco` | luxury, hospitality, heritage brands, events and distinctive showcases |
+| Clay | `clay` | `clay` | friendly SaaS, collaborative tools, education and approachable product sites |
+| Data Terminal | `data-terminal` | `terminal` | operator consoles, telemetry, infrastructure, monitoring and developer tools |
+| Paper Editorial | `paper-editorial` | `paper` | news, magazines, journals, cultural sites and story-led publishing |
+| Neo-Noir | `neo-noir` | `noir` | cinematic portfolios, nightlife, premium creative studios and dramatic product sites |
 
 ## Color themes
 
@@ -278,9 +287,66 @@ desert-sage
 rose-quartz
 cyber-lime
 arctic-indigo
+chrome-navy
+recycled-emerald
+industrial-orange
+performance-red
+heritage-brass
+service-blue-red
+newsprint-crimson
+foundry-amber
+soft-orchid
+electric-noir
 ```
 
 Color schemes are defined once in `styles/theme-colors.css` as shared `--usk-*` RGB roles. Each UI style maps those shared roles back to its public prefix, so existing component rules still consume variables such as `--saas-primary`, `--bau-surface`, and `--rg-on-primary`.
+
+## Commercial component modifiers
+
+The cross-style API also includes reusable marketing and service-site patterns. These suffixes are available for all 20 UI systems and inherit the active `data-theme` / `data-mode` palette:
+
+```txt
+card-media
+card-service
+card-feature
+card-accent-edge
+icon-medallion
+button-cut
+button-outline-heavy
+badge-seal
+feature-strip
+feature-item
+callout-bar
+eyebrow
+media-scrim
+```
+
+Combine them with the preset prefix and existing base components:
+
+```html
+<article class="saas-card saas-card-service">
+  <img class="saas-card-media" src="service.jpg" alt="">
+  <span class="saas-icon-medallion" aria-hidden="true">★</span>
+  <p class="saas-eyebrow">Professional Service</p>
+  <h3 class="saas-heading">A reusable service card</h3>
+  <p class="saas-copy">The visual treatment changes with the selected UI system.</p>
+  <a class="saas-button saas-button-primary saas-button-cut" href="#">Learn More</a>
+</article>
+```
+
+The components intentionally contain no domain-specific content. Icons, media, labels, and copy remain consumer-owned.
+
+### Component composition
+
+- Service cards combine the base `card` with `card-service`; add `card-media` for responsive media, `icon-medallion` for an overlapping symbol, and `button-primary button-cut` for the filled service action.
+- Feature cards use `card-feature` or `card-accent-edge` when information needs a stronger preset-specific edge treatment without changing the semantic element.
+- Media treatments place an image and its caption inside `media-scrim`. The scrim supplies readable theme-token paint; the image and alternative text remain application content.
+- Feature strips contain one or more `feature-item` children. They use balanced columns when space permits and collapse without requiring a new class.
+- Callout bars use `callout-bar` as the visual lane and `button-outline-heavy` for the framed supporting action. There is no separate `button-cta` API.
+
+`button-cut` and `button-outline-heavy` are independent modifiers: the first supplies the preset's filled-action silhouette and the second supplies its framed-action geometry and material. Do not combine them unless a deliberate hybrid is required. The same preset identity continues through service cards, media scrims, feature strips, callout bars, native action controls, and dialogs; color still comes only from the active theme and mode tokens.
+
+All modifiers consume the active theme and mode tokens. Keep controls as real links or buttons, provide useful accessible names, mark decorative medallions with `aria-hidden="true"`, and avoid placing essential text in CSS artwork. The shared containment layer allows cards, strips, scrims, callouts, controls, and preset-specific specimens to shrink inside consumer-owned grids; application layout remains responsible for choosing the outer column count.
 
 ## Modes
 
@@ -325,7 +391,7 @@ Every style includes theme-driven spinner utilities:
 <button class="saas-button saas-button-primary" aria-busy="true">Saving</button>
 ```
 
-Spinner track, stroke, and accent colors come from the active `data-theme` and `data-mode`. The generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks are also themed inside any `[data-ui="..."]` scope.
+Spinner track, stroke, and accent colors come from the active `data-theme` and `data-mode`, while geometry, motion cadence, depth, and busy-button indicators follow the active UI preset. The generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks receive the same preset identity inside any `[data-ui="..."]` scope.
 
 ## Tooltip surfaces
 
@@ -433,6 +499,7 @@ The checked-in demo, favicon pack, and social preview image stay in the reposito
 
 ```bash
 npm run check
+npm run check:compat
 npm run test:e2e
 npm run test:axe
 npm run test:visual
@@ -440,7 +507,9 @@ npm run test:matrix
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata, checks the documented class API, and validates contrast for base text/link pairs and filled component `on-*` pairs. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `11 presets x 10 themes x 3 modes x 3 engines` matrix.
+`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata and the documented class API, validates 4.5:1 text/link/filled-component contrast plus 3:1 light-mode component-edge contrast, and invokes `check:compat` for every generated entrypoint. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `20 presets x 20 themes x 3 modes x 3 engines` matrix.
+
+The package browser policy is the last two major Chrome, Edge, and Firefox releases plus Safari and iOS 16 or newer, excluding dead browsers. The build resolves that single `package.json` policy into Lightning CSS targets, while `check:compat` verifies required prefix pairs, stable fallbacks, guarded `color-mix()`, `text-wrap`, and `forced-color-adjust` enhancements, and the absence of obsolete intrinsic CTA sizing declarations.
 
 ## v2.1.0 Architecture Notes
 

@@ -1,10 +1,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import browserslist from 'browserslist';
 import { clone, generate, parse, walk } from 'css-tree';
-import { transform } from 'lightningcss';
+import { browserslistToTargets, transform } from 'lightningcss';
+import { syncContentOverflowCss } from './generate-content-overflow.mjs';
+import { syncExpandedComponents } from './generate-expanded-components.mjs';
+import { validatePresetIdentities } from './preset-identities.mjs';
+import { syncReadmeBundleSizes } from './sync-readme-sizes.mjs';
 
 const root = process.cwd();
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+const browserTargets = resolveBrowserTargets(packageJson.browserslist);
 const publicManifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 const themeColorFile = 'styles/theme-colors.css';
 const nativeElementsFile = 'styles/native-elements.css';
@@ -72,9 +78,27 @@ const colorRoles = [
 const compatibilitySuffixes = new Set(publicManifest.classApi.deprecatedStructuralSuffixes);
 const layerOrder = publicManifest.cascadeLayers.join(', ');
 
+/**
+ * Resolve the package browser policy into Lightning CSS compilation targets.
+ *
+ * @param {string[]} queries Browserslist queries from package metadata.
+ * @returns {import('lightningcss').Targets} Lightning CSS target map.
+ */
+function resolveBrowserTargets(queries) {
+  if (!Array.isArray(queries) || queries.length === 0) {
+    throw new Error('package.json must declare a non-empty Browserslist policy.');
+  }
+
+  return browserslistToTargets(browserslist(queries));
+}
+
 if (publicManifest.version !== packageJson.version) {
   throw new Error(`manifest.json version must match package.json version ${packageJson.version}.`);
 }
+
+validatePresetIdentities(publicManifest);
+syncContentOverflowCss(root, publicManifest);
+syncExpandedComponents(root, publicManifest);
 
 const banner = `/*!
  * UI Style Kit CSS v${packageJson.version}
@@ -97,6 +121,7 @@ function minifyCss(css, filename) {
   const minified = transform({
     filename,
     code: Buffer.from(css),
+    targets: browserTargets,
     minify: true
   }).code.toString();
   const bannerEnd = minified.indexOf('*/') + 2;
@@ -111,6 +136,7 @@ function formatGeneratedCss(css, filename) {
   const result = transform({
     filename,
     code: Buffer.from(css),
+    targets: browserTargets,
     minify: false
   });
 
@@ -136,6 +162,13 @@ function exactClassToken(node) {
   return node.value?.value ?? node.value?.name ?? null;
 }
 
+/**
+ * Constrains a generated semantic alias to the selected presets without increasing root specificity.
+ *
+ * @param {object} selector - CSS Tree selector node being aliased.
+ * @param {string} selectedRoot - Specificity-safe selector for the active preset set.
+ * @returns {boolean} Whether the selector already contained a data-ui root.
+ */
 function addPresetConstraintToRoot(selector, selectedRoot) {
   let rootAttributeItem = null;
   let firstCompoundHasRoot = false;
@@ -164,6 +197,10 @@ function addPresetConstraintToRoot(selector, selectedRoot) {
   if (rootAttributeItem?.data.matcher === null) {
     // Keep the authored root specificity and constrain that same compound to the selected presets.
     selector.children.insertData(selectorNodes(selectedRoot).first, rootAttributeItem.next);
+  } else if (rootAttributeItem) {
+    // Exact preset roots become zero-specificity scopes in generated semantic aliases.
+    selector.children.insertData(selectorNodes(selectedRoot).first, rootAttributeItem);
+    selector.children.remove(rootAttributeItem);
   }
   return true;
 }
@@ -460,6 +497,7 @@ for (const preset of presetFiles) {
 }
 
 syncDemoManifest();
+syncReadmeBundleSizes(root);
 
 console.log(
   'Built default, visual-only, focused visual, and deprecated with-bridge distribution entrypoints.'

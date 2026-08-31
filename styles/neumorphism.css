@@ -1,6 +1,6 @@
 /* =========================================================
    UI Style Kit CSS — Neumorphism Theme System
-   Includes 10 color schemes, light/dark/contrast modes,
+   Includes 20 color schemes, light/dark/contrast modes,
    component classes, native element coverage, and CSS-only
    accessibility presentation helpers.
 
@@ -133,7 +133,7 @@
   --neo-fg: var(--neo-text);
   --neo-surface-fg: var(--neo-text);
   --neo-muted: var(--neo-text-muted);
-  --neo-border: rgb(var(--neo-border-rgb) / var(--neo-border-alpha));
+  --neo-border: rgb(var(--neo-border-rgb) / max(var(--neo-border-alpha), var(--usk-border-min-alpha)));
   --neo-control-fg: var(--neo-text);
   --neo-primary: rgb(var(--neo-primary-rgb));
   --neo-primary-hover: rgb(var(--neo-primary-hover-rgb));
@@ -161,6 +161,10 @@
   --neo-spinner-track: rgb(var(--neo-border-rgb) / max(.28, calc(var(--neo-border-alpha) * .7)));
   --neo-spinner-stroke: var(--neo-primary);
   --neo-spinner-accent: var(--neo-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="neumorphism"][data-theme][data-mode] { --neo-border: color-mix(in srgb, rgb(var(--neo-border-rgb) / max(var(--neo-border-alpha), var(--usk-border-min-alpha))), var(--neo-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -435,6 +439,233 @@
 @keyframes neo-spin { to { transform: rotate(360deg); } }
 
 
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.neo-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--neo-border-rgb) / .72);
+  border-radius: var(--neo-radius-lg);
+}
+
+.neo-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--neo-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.neo-card-service > .neo-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.neo-card-service > .neo-card-media + .neo-icon-medallion { margin-block-start: -2.15rem; }
+
+.neo-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--neo-space-4);
+  align-items: start;
+}
+
+.neo-card-accent-edge {
+  border-inline-start: .35rem solid var(--neo-primary);
+}
+
+.neo-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--neo-primary);
+  color: var(--neo-on-primary);
+  border: 2px solid rgb(var(--neo-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.neo-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.neo-button.neo-button-cut,
+.neo-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.neo-button.neo-button-cut:focus-visible,
+.neo-button-cut:focus-visible { outline-offset: -3px; }
+
+.neo-button.neo-button-outline-heavy,
+.neo-button-outline-heavy {
+  background: transparent;
+  color: var(--neo-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--neo-primary);
+  box-shadow: none;
+}
+.neo-button.neo-button-outline-heavy:hover,
+.neo-button-outline-heavy:hover {
+  background: var(--neo-primary);
+  color: var(--neo-on-primary);
+  border-color: var(--neo-primary-hover);
+}
+
+.neo-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--neo-surface-strong);
+  color: var(--neo-text);
+  border: 2px solid var(--neo-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--neo-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.neo-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--neo-card-bg);
+  color: var(--neo-text);
+  border: 1px solid var(--neo-border);
+  border-radius: var(--neo-radius-lg);
+}
+
+.neo-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--neo-space-3);
+  min-inline-size: 0;
+  padding: var(--neo-space-4);
+  border-inline-end: 1px solid rgb(var(--neo-border-rgb) / .62);
+}
+.neo-feature-item:last-child { border-inline-end: 0; }
+.neo-feature-item > :where(p, small) { margin: 0; color: var(--neo-text-muted); }
+
+.neo-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--neo-space-4);
+  padding: var(--neo-space-4) var(--neo-space-5);
+  background: var(--neo-card-bg);
+  color: var(--neo-text);
+  border: 1px solid var(--neo-border);
+  border-radius: var(--neo-radius-lg);
+}
+.neo-callout-bar > :where(p, div) { min-inline-size: 0; }
+.neo-callout-bar > :where(.neo-button, a, button):last-child { justify-self: end; }
+
+.neo-eyebrow {
+  margin: 0;
+  color: var(--neo-primary);
+  font-family: var(--neo-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.neo-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--neo-surface-soft);
+  border: 1px solid var(--neo-border);
+  border-radius: var(--neo-radius-lg);
+}
+.neo-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.neo-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.neo-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .neo-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .neo-callout-bar > :where(.neo-button, a, button):last-child { justify-self: stretch; }
+  .neo-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--neo-border-rgb) / .62); }
+  .neo-feature-item:last-child { border-block-end: 0; }
+}
+
+.neo-card-service, .neo-card-feature, .neo-feature-strip, .neo-callout-bar { border-color: transparent; box-shadow: .65rem .65rem 1.35rem rgb(0 0 0 / .16), -.55rem -.55rem 1.25rem rgb(255 255 255 / .08); }
+.neo-icon-medallion, .neo-badge-seal { border-color: transparent; box-shadow: .38rem .38rem .8rem rgb(0 0 0 / .18), -.3rem -.3rem .7rem rgb(255 255 255 / .1); }
+.neo-button-outline-heavy { border-color: var(--neo-primary); box-shadow: inset .18rem .18rem .45rem rgb(0 0 0 / .12); }
+
+/* Filled and framed actions remain softly clipped while changing elevation state. */
+.neo-button.neo-button-cut, .neo-button-cut {
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: center;
+  justify-content: center;
+  border-radius: var(--neo-radius-pill);
+  clip-path: inset(0 round var(--neo-radius-pill));
+}
+.neo-button.neo-button-outline-heavy, .neo-button-outline-heavy {
+  border-width: 1px;
+  border-radius: var(--neo-radius-pill);
+  clip-path: inset(.08rem round var(--neo-radius-pill));
+  box-shadow: -.28rem -.28rem .65rem rgb(var(--neo-surface-strong-rgb) / .72), .32rem .32rem .72rem rgb(var(--neo-text-rgb) / .16);
+}
+
+/* Marketing and native surfaces pair raised shells with inset metric depth. */
+.neo-card-service, .neo-media-scrim, .neo-feature-strip, .neo-callout-bar, .neo-well {
+  border: 1px solid rgb(var(--neo-border-rgb) / .36);
+  border-radius: var(--neo-radius-xl);
+  box-shadow: -.55rem -.55rem 1.15rem rgb(var(--neo-surface-strong-rgb) / .74), .58rem .58rem 1.2rem rgb(var(--neo-text-rgb) / .14);
+}
+.neo-well { box-shadow: inset .3rem .3rem .7rem rgb(var(--neo-text-rgb) / .12), inset -.3rem -.3rem .7rem rgb(var(--neo-surface-strong-rgb) / .68); }
+[data-ui="neumorphism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 1px solid rgb(var(--neo-border-rgb) / .42);
+  border-radius: var(--neo-radius-pill);
+  box-shadow: -.28rem -.28rem .65rem rgb(var(--neo-surface-strong-rgb) / .72), .32rem .32rem .72rem rgb(var(--neo-text-rgb) / .16);
+}
+[data-ui="neumorphism"][data-theme][data-mode] :where(dialog) {
+  border: 1px solid rgb(var(--neo-border-rgb) / .38);
+  border-radius: var(--neo-radius-xl);
+  box-shadow: -.65rem -.65rem 1.3rem rgb(var(--neo-surface-strong-rgb) / .72), .72rem .72rem 1.45rem rgb(var(--neo-text-rgb) / .2);
+}
+
+/* Busy indicators read as a softly raised and inset Neumorphic dial. */
+.neo-button[aria-busy="true"]::after, .neo-icon-button[aria-busy="true"]::after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .12em solid transparent; border-block-start-color: currentColor; border-radius: 50%; background: conic-gradient(currentColor, transparent 42%, currentColor); box-shadow: -.09em -.09em .18em rgb(255 255 255 / .38), .09em .09em .2em rgb(0 0 0 / .22), inset 0 0 0 .18em rgb(var(--neo-surface-rgb) / .6); clip-path: circle(50%); animation: neo-spin 1.04s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="neumorphism"] *, [data-ui="neumorphism"] *::before, [data-ui="neumorphism"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -442,7 +673,7 @@
   [data-ui="neumorphism"] { --neo-border-alpha: 1; --neo-focus-alpha: .75; }
 }
 @media (forced-colors: active) {
-  [data-ui="neumorphism"] * { forced-color-adjust: auto; }
+  @supports (forced-color-adjust: auto) { [data-ui="neumorphism"] * { forced-color-adjust: auto; } }
   [data-ui="neumorphism"] :where(:focus-visible) { outline: 3px solid CanvasText; }
 }
 @media print {

@@ -1,0 +1,686 @@
+/* =========================================================
+   UI Style Kit CSS — Technical Blueprint Theme System
+   Includes 20 color schemes, light/dark/contrast modes,
+   component classes, native element coverage, and CSS-only
+   accessibility presentation helpers.
+
+   Usage:
+   <body data-ui="technical-blueprint" data-theme="midnight-gold" data-mode="light">
+   <body data-ui="technical-blueprint" data-theme="arctic-indigo" data-mode="dark">
+   <body data-ui="technical-blueprint" data-theme="cyber-lime" data-mode="contrast">
+========================================================= */
+
+
+@import url("./theme-colors.css");
+@import url("./native-elements.css");
+@import url("./content-overflow.css");
+
+@layer ui-style-kit.technical_blueprint {
+:root {
+  --blueprint-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --blueprint-font-display: Inter, ui-sans-serif, system-ui, sans-serif;
+  --blueprint-font-body: var(--blueprint-font-sans);
+  --blueprint-font-heading: var(--blueprint-font-display);
+  --blueprint-font-control: var(--blueprint-font-display);
+  --blueprint-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --blueprint-radius-xs: .25rem;
+  --blueprint-radius-sm: .5rem;
+  --blueprint-radius-md: 0.75rem;
+  --blueprint-radius-lg: 1.125rem;
+  --blueprint-radius-xl: calc(1.125rem + .5rem);
+  --blueprint-radius-pill: 999px;
+  --blueprint-space-1: .25rem;
+  --blueprint-space-2: .5rem;
+  --blueprint-space-3: .75rem;
+  --blueprint-space-4: 1rem;
+  --blueprint-space-5: 1.25rem;
+  --blueprint-space-6: 1.5rem;
+  --blueprint-space-8: 2rem;
+  --blueprint-transition-fast: 150ms ease;
+  --blueprint-transition-base: 240ms ease;
+}
+
+[data-ui="technical-blueprint"][data-mode="light"] {
+  color-scheme: light;
+  --blueprint-panel-alpha: .98;
+  --blueprint-panel-soft-alpha: .78;
+  --blueprint-border-alpha: .58;
+  --blueprint-shadow-alpha: .12;
+  --blueprint-focus-alpha: .34;
+}
+
+[data-ui="technical-blueprint"][data-mode="dark"] {
+  color-scheme: dark;
+  --blueprint-panel-alpha: .92;
+  --blueprint-panel-soft-alpha: .64;
+  --blueprint-border-alpha: .52;
+  --blueprint-shadow-alpha: .34;
+  --blueprint-focus-alpha: .42;
+}
+
+[data-ui="technical-blueprint"][data-mode="contrast"] {
+  color-scheme: dark;
+  --blueprint-panel-alpha: 1;
+  --blueprint-panel-soft-alpha: .92;
+  --blueprint-border-alpha: 1;
+  --blueprint-shadow-alpha: .5;
+  --blueprint-focus-alpha: .72;
+}
+
+[data-ui="technical-blueprint"][data-theme][data-mode] {
+  /* Shared scheme aliases preserve the existing prefixed token API. */
+  --blueprint-bg-rgb: var(--usk-bg-rgb);
+  --blueprint-surface-rgb: var(--usk-surface-rgb);
+  --blueprint-surface-strong-rgb: var(--usk-surface-strong-rgb);
+  --blueprint-surface-soft-rgb: var(--usk-surface-soft-rgb);
+  --blueprint-text-rgb: var(--usk-text-rgb);
+  --blueprint-text-muted-rgb: var(--usk-text-muted-rgb);
+  --blueprint-border-rgb: var(--usk-border-rgb);
+  --blueprint-primary-rgb: var(--usk-primary-rgb);
+  --blueprint-primary-hover-rgb: var(--usk-primary-hover-rgb);
+  --blueprint-primary-text-rgb: var(--usk-primary-text-rgb);
+  --blueprint-secondary-rgb: var(--usk-secondary-rgb);
+  --blueprint-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
+  --blueprint-secondary-text-rgb: var(--usk-secondary-text-rgb);
+  --blueprint-accent-rgb: var(--usk-accent-rgb);
+  --blueprint-success-rgb: var(--usk-success-rgb);
+  --blueprint-warning-rgb: var(--usk-warning-rgb);
+  --blueprint-danger-rgb: var(--usk-danger-rgb);
+  --blueprint-link-rgb: var(--usk-link-rgb);
+  --blueprint-accent-text-rgb: var(--usk-accent-text-rgb);
+  --blueprint-success-text-rgb: var(--usk-success-text-rgb);
+  --blueprint-warning-text-rgb: var(--usk-warning-text-rgb);
+  --blueprint-danger-text-rgb: var(--usk-danger-text-rgb);
+  --blueprint-focus-rgb: var(--usk-focus-rgb);
+  /* Native fallback selectors inherit visual identity through shared tokens. */
+  --usk-native-surface: var(--blueprint-surface);
+  --usk-native-surface-strong: var(--blueprint-surface-strong);
+  --usk-native-surface-soft: var(--blueprint-surface-soft);
+  --usk-native-card-bg: var(--blueprint-card-bg);
+  --usk-native-control-bg: var(--blueprint-control-bg);
+  --usk-native-text: var(--blueprint-text);
+  --usk-native-text-muted: var(--blueprint-text-muted);
+  --usk-native-border: var(--blueprint-border);
+  --usk-native-primary: var(--blueprint-primary);
+  --usk-native-primary-hover: var(--blueprint-primary-hover);
+  --usk-native-on-primary: var(--blueprint-on-primary);
+  --usk-native-focus: var(--blueprint-focus);
+  --usk-native-success: var(--blueprint-success);
+  --usk-native-warning: var(--blueprint-warning);
+  --usk-native-danger: var(--blueprint-danger);
+  --usk-native-link: var(--blueprint-link);
+  --usk-native-font-body: var(--blueprint-font-body);
+  --usk-native-font-heading: var(--blueprint-font-heading);
+  --usk-native-font-control: var(--blueprint-font-control);
+  --usk-native-font-mono: var(--blueprint-font-mono);
+  --usk-native-radius-sm: var(--blueprint-radius-sm);
+  --usk-native-radius: var(--blueprint-radius-md);
+  --usk-native-radius-lg: var(--blueprint-radius-lg);
+  --usk-native-shadow: var(--blueprint-shadow-sm, none);
+  --usk-native-shadow-md: var(--blueprint-shadow-md, var(--usk-native-shadow));
+  --usk-native-focus-ring: var(--blueprint-focus-ring, 0 0 0 3px rgb(var(--blueprint-focus-rgb) / .28));
+  --usk-native-border-width: 1px;
+  --usk-native-field-gap: .5rem;
+  --usk-native-panel-padding: var(--blueprint-space-5);
+  --blueprint-bg: rgb(var(--blueprint-bg-rgb));
+  --blueprint-surface: rgb(var(--blueprint-surface-rgb) / var(--blueprint-panel-alpha));
+  --blueprint-surface-strong: rgb(var(--blueprint-surface-strong-rgb) / var(--blueprint-panel-alpha));
+  --blueprint-surface-soft: rgb(var(--blueprint-surface-soft-rgb) / var(--blueprint-panel-soft-alpha));
+  --blueprint-text: rgb(var(--blueprint-text-rgb));
+  --blueprint-text-muted: rgb(var(--blueprint-text-muted-rgb));
+  --blueprint-fg: var(--blueprint-text);
+  --blueprint-surface-fg: var(--blueprint-text);
+  --blueprint-muted: var(--blueprint-text-muted);
+  --blueprint-border: rgb(var(--blueprint-border-rgb) / max(var(--blueprint-border-alpha), var(--usk-border-min-alpha)));
+  --blueprint-control-fg: var(--blueprint-text);
+  --blueprint-primary: rgb(var(--blueprint-primary-rgb));
+  --blueprint-primary-hover: rgb(var(--blueprint-primary-hover-rgb));
+  --blueprint-primary-text: rgb(var(--blueprint-primary-text-rgb));
+  --blueprint-secondary: rgb(var(--blueprint-secondary-rgb));
+  --blueprint-secondary-hover: rgb(var(--blueprint-secondary-hover-rgb));
+  --blueprint-secondary-text: rgb(var(--blueprint-secondary-text-rgb));
+  --blueprint-on-primary: var(--blueprint-primary-text);
+  --blueprint-on-secondary: var(--blueprint-secondary-text);
+  --blueprint-on-accent: rgb(var(--blueprint-accent-text-rgb));
+  --blueprint-on-success: rgb(var(--blueprint-success-text-rgb));
+  --blueprint-on-warning: rgb(var(--blueprint-warning-text-rgb));
+  --blueprint-on-danger: rgb(var(--blueprint-danger-text-rgb));
+  --blueprint-accent: rgb(var(--blueprint-accent-rgb));
+  --blueprint-success: rgb(var(--blueprint-success-rgb));
+  --blueprint-warning: rgb(var(--blueprint-warning-rgb));
+  --blueprint-danger: rgb(var(--blueprint-danger-rgb));
+  --blueprint-link: rgb(var(--blueprint-link-rgb));
+  --blueprint-focus: rgb(var(--blueprint-focus-rgb));
+  --blueprint-focus-ring: 0 0 0 3px rgb(var(--blueprint-focus-rgb) / var(--blueprint-focus-alpha));
+  --blueprint-theme-bg-size: auto;
+  --blueprint-theme-bg: radial-gradient(circle at 0% 0%, rgb(var(--blueprint-primary-rgb) / .16), transparent 32rem), radial-gradient(circle at 100% 0%, rgb(var(--blueprint-accent-rgb) / .12), transparent 30rem), radial-gradient(circle at 50% 100%, rgb(var(--blueprint-secondary-rgb) / .10), transparent 34rem), var(--blueprint-bg);
+  --blueprint-card-bg: linear-gradient(135deg, rgb(var(--blueprint-primary-rgb) / .10), rgb(var(--blueprint-accent-rgb) / .055) 42%, rgb(var(--blueprint-surface-strong-rgb) / var(--blueprint-panel-alpha)) 100%), var(--blueprint-surface);
+  --blueprint-control-bg: linear-gradient(180deg, rgb(var(--blueprint-surface-strong-rgb) / var(--blueprint-panel-alpha)), rgb(var(--blueprint-surface-soft-rgb) / var(--blueprint-panel-soft-alpha)));
+  --blueprint-spinner-track: rgb(var(--blueprint-border-rgb) / max(.28, calc(var(--blueprint-border-alpha) * .7)));
+  --blueprint-spinner-stroke: var(--blueprint-primary);
+  --blueprint-spinner-accent: var(--blueprint-accent);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="technical-blueprint"][data-theme][data-mode] { --blueprint-border: color-mix(in srgb, rgb(var(--blueprint-border-rgb) / max(var(--blueprint-border-alpha), var(--usk-border-min-alpha))), var(--blueprint-text) var(--usk-border-text-mix)); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   Base Page + Layout
+========================================================= */
+
+[data-ui="technical-blueprint"] {
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgb(var(--blueprint-primary-rgb) / .04), transparent 22rem), var(--blueprint-bg);
+  color: var(--blueprint-text);
+  font-family: var(--blueprint-font-body);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-ui="technical-blueprint"] *,
+[data-ui="technical-blueprint"] *::before,
+[data-ui="technical-blueprint"] *::after { box-sizing: border-box; }
+
+[data-ui="technical-blueprint"][data-theme][data-mode] { background: var(--blueprint-theme-bg); background-size: var(--blueprint-theme-bg-size); }
+
+.blueprint-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
+.blueprint-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
+.blueprint-section { display: grid; gap: var(--blueprint-space-5); padding: clamp(1rem, 3vw, 2rem); }
+.blueprint-stack { display: flex; flex-direction: column; gap: var(--blueprint-space-4); }
+.blueprint-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--blueprint-space-3); }
+.blueprint-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--blueprint-space-5); }
+.blueprint-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--blueprint-space-6); align-items: start; }
+
+/* =========================================================
+   Typography
+========================================================= */
+
+.blueprint-title, .blueprint-heading, .blueprint-kicker, .blueprint-button, .blueprint-badge, .blueprint-nav-link { font-family: var(--blueprint-font-heading); }
+.blueprint-title { margin: 0; color: var(--blueprint-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.045em; }
+.blueprint-heading { margin: 0; color: var(--blueprint-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
+.blueprint-kicker { margin: 0; color: var(--blueprint-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.blueprint-subtitle, .blueprint-copy { margin: 0; color: var(--blueprint-text-muted); line-height: 1.65; }
+.blueprint-text-muted { color: var(--blueprint-text-muted); }
+.blueprint-divider { width: 100%; height: 1px; border: 0; background: var(--blueprint-border); }
+
+/* =========================================================
+   Surfaces
+========================================================= */
+
+.blueprint-surface, .blueprint-card, .blueprint-panel, .blueprint-toolbar, .blueprint-table-wrap {
+  position: relative;
+  background: linear-gradient(180deg, rgb(255 255 255 / .05), rgb(255 255 255 / 0)), var(--blueprint-surface);
+  color: var(--blueprint-text);
+  border: 1px solid var(--blueprint-border);
+  border-radius: var(--blueprint-radius-lg);
+  box-shadow: 0 10px 30px rgb(15 23 42 / var(--blueprint-shadow-alpha));
+  transition: transform var(--blueprint-transition-base), box-shadow var(--blueprint-transition-base), border-color var(--blueprint-transition-base), background var(--blueprint-transition-base);
+}
+.blueprint-card, .blueprint-panel { padding: var(--blueprint-space-6); }
+.blueprint-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--blueprint-space-4); padding: var(--blueprint-space-4); }
+.blueprint-surface-sm { border-radius: var(--blueprint-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / calc(var(--blueprint-shadow-alpha) * .72)); }
+.blueprint-surface-lg { border-radius: var(--blueprint-radius-xl); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--blueprint-shadow-alpha) + .08)); }
+.blueprint-well, .blueprint-inset { background: var(--blueprint-surface-soft); color: var(--blueprint-text); border: 1px solid rgb(var(--blueprint-border-rgb) / calc(var(--blueprint-border-alpha) * .7)); border-radius: var(--blueprint-radius-md); padding: var(--blueprint-space-5); box-shadow: inset 0 1px 3px rgb(0 0 0 / .08); }
+.blueprint-hover-lift:hover { transform: translateY(-2px); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--blueprint-shadow-alpha) + .12)); }
+
+/* =========================================================
+   Buttons
+========================================================= */
+
+.blueprint-button, .blueprint-icon-button {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--blueprint-space-2);
+  min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--blueprint-surface); color: var(--blueprint-text);
+  border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--blueprint-shadow-alpha));
+  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
+  transition: color var(--blueprint-transition-fast), background var(--blueprint-transition-fast), border-color var(--blueprint-transition-fast), box-shadow var(--blueprint-transition-fast), transform var(--blueprint-transition-fast);
+}
+.blueprint-button:hover, .blueprint-icon-button:hover { transform: translateY(-1px); border-color: var(--blueprint-primary); }
+.blueprint-button:active, .blueprint-icon-button:active, .blueprint-button[aria-pressed="true"], .blueprint-icon-button[aria-pressed="true"], .blueprint-button.is-active, .blueprint-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 3px 10px rgb(0 0 0 / .18); }
+.blueprint-button-primary { background: var(--blueprint-primary); color: var(--blueprint-on-primary); border-color: var(--blueprint-primary); }
+.blueprint-button-primary:hover { background: var(--blueprint-primary-hover); border-color: var(--blueprint-primary-hover); }
+.blueprint-button-secondary { background: var(--blueprint-secondary); color: var(--blueprint-on-secondary); border-color: var(--blueprint-secondary); }
+.blueprint-button-secondary:hover { background: var(--blueprint-secondary-hover); border-color: var(--blueprint-secondary-hover); }
+.blueprint-button-danger { background: var(--blueprint-danger); color: var(--blueprint-on-danger); border-color: var(--blueprint-danger); }
+.blueprint-button-ghost { background: transparent; color: var(--blueprint-text); box-shadow: none; }
+.blueprint-icon-button { width: 2.75rem; padding: 0; border-radius: var(--blueprint-radius-pill); }
+.blueprint-button:disabled, .blueprint-icon-button:disabled, .blueprint-disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+/* Theme-responsive component defaults */
+.blueprint-card, .blueprint-panel { background: var(--blueprint-card-bg); }
+.blueprint-toolbar, .blueprint-table-wrap { background: var(--blueprint-control-bg); }
+.blueprint-button:not(.blueprint-button-primary):not(.blueprint-button-secondary):not(.blueprint-button-danger):not(.blueprint-button-ghost), .blueprint-icon-button { background: var(--blueprint-control-bg); }
+.blueprint-button, .blueprint-icon-button, .blueprint-badge, .blueprint-nav-link { font-family: var(--blueprint-font-control); }
+
+
+/* =========================================================
+   Forms
+========================================================= */
+
+.blueprint-field { display: flex; flex-direction: column; gap: var(--blueprint-space-2); }
+.blueprint-label { color: var(--blueprint-text); font-size: .925rem; font-weight: 800; }
+.blueprint-input, .blueprint-textarea, .blueprint-select {
+  width: 100%; min-height: 2.875rem; padding: .75rem 1rem; background: var(--blueprint-surface-soft); color: var(--blueprint-text);
+  border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-md); font: inherit; outline: none;
+  transition: background var(--blueprint-transition-fast), border-color var(--blueprint-transition-fast), box-shadow var(--blueprint-transition-fast);
+}
+.blueprint-textarea { min-height: 8rem; resize: vertical; }
+.blueprint-input::placeholder, .blueprint-textarea::placeholder { color: var(--blueprint-text-muted); opacity: .82; }
+.blueprint-input:hover, .blueprint-textarea:hover, .blueprint-select:hover { border-color: rgb(var(--blueprint-primary-rgb) / .58); }
+.blueprint-input:focus, .blueprint-textarea:focus, .blueprint-select:focus { border-color: var(--blueprint-focus); box-shadow: var(--blueprint-focus-ring); }
+.blueprint-help-text { color: var(--blueprint-text-muted); font-size: .875rem; line-height: 1.45; }
+
+/* Checkbox / Radio */
+.blueprint-check, .blueprint-radio { display: inline-flex; align-items: center; gap: var(--blueprint-space-2); color: var(--blueprint-text); cursor: pointer; }
+.blueprint-check input, .blueprint-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.blueprint-check-control, .blueprint-radio-control { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; background: var(--blueprint-surface-soft); border: 1px solid var(--blueprint-border); transition: background var(--blueprint-transition-fast), box-shadow var(--blueprint-transition-fast); }
+.blueprint-check-control { border-radius: var(--blueprint-radius-xs); }
+.blueprint-radio-control { border-radius: 50%; }
+.blueprint-check input:checked + .blueprint-check-control, .blueprint-radio input:checked + .blueprint-radio-control { background: var(--blueprint-primary); border-color: var(--blueprint-primary); box-shadow: var(--blueprint-focus-ring); }
+.blueprint-check input:checked + .blueprint-check-control::after { content: "✓"; color: var(--blueprint-on-primary); font-size: .9rem; font-weight: 900; }
+.blueprint-radio input:checked + .blueprint-radio-control::after { content: ""; width: .55rem; height: .55rem; background: var(--blueprint-on-primary); border-radius: 50%; }
+
+/* Switch */
+.blueprint-switch { display: inline-flex; align-items: center; gap: var(--blueprint-space-3); color: var(--blueprint-text); cursor: pointer; }
+.blueprint-switch input { position: absolute; opacity: 0; pointer-events: none; }
+.blueprint-switch-track { position: relative; width: 3.5rem; height: 1.9rem; background: var(--blueprint-surface-soft); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-pill); transition: background var(--blueprint-transition-fast), box-shadow var(--blueprint-transition-fast); }
+.blueprint-switch-thumb { position: absolute; top: .22rem; left: .22rem; width: 1.34rem; height: 1.34rem; background: var(--blueprint-surface-strong); border: 1px solid var(--blueprint-border); border-radius: 50%; box-shadow: 0 4px 12px rgb(0 0 0 / var(--blueprint-shadow-alpha)); transition: left var(--blueprint-transition-fast), background var(--blueprint-transition-fast); }
+.blueprint-switch input:checked + .blueprint-switch-track { background: var(--blueprint-primary); border-color: var(--blueprint-primary); }
+.blueprint-switch input:checked + .blueprint-switch-track .blueprint-switch-thumb { left: calc(100% - 1.34rem - .22rem); background: var(--blueprint-on-primary); }
+
+/* =========================================================
+   Badges / Nav / Progress / Alerts / Tables
+========================================================= */
+
+.blueprint-badge { display: inline-flex; align-items: center; gap: var(--blueprint-space-1); min-height: 1.75rem; padding: .35rem .7rem; background: var(--blueprint-surface-soft); color: var(--blueprint-text); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-pill); font-size: .8125rem; font-weight: 850; line-height: 1; }
+.blueprint-badge-primary { background: var(--blueprint-primary); color: var(--blueprint-on-primary); border-color: var(--blueprint-primary); }
+.blueprint-badge-secondary { background: var(--blueprint-secondary); color: var(--blueprint-on-secondary); border-color: var(--blueprint-secondary); }
+.blueprint-badge-success { background: var(--blueprint-success); color: var(--blueprint-on-success); border-color: var(--blueprint-success); }
+.blueprint-badge-warning { background: var(--blueprint-warning); color: var(--blueprint-on-warning); border-color: var(--blueprint-warning); }
+.blueprint-badge-danger { background: var(--blueprint-danger); color: var(--blueprint-on-danger); border-color: var(--blueprint-danger); }
+
+.blueprint-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--blueprint-space-2); padding: var(--blueprint-space-2); background: var(--blueprint-surface); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-xl); box-shadow: 0 10px 30px rgb(0 0 0 / var(--blueprint-shadow-alpha)); }
+.blueprint-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.5rem; padding: .65rem 1rem; color: var(--blueprint-text-muted); border-radius: var(--blueprint-radius-pill); text-decoration: none; font-weight: 850; transition: color var(--blueprint-transition-fast), background var(--blueprint-transition-fast), box-shadow var(--blueprint-transition-fast); }
+.blueprint-nav-link:hover { color: var(--blueprint-text); background: var(--blueprint-surface-soft); }
+.blueprint-nav-link[aria-current="page"], .blueprint-nav-link.is-active { color: var(--blueprint-on-primary); background: var(--blueprint-primary); }
+
+/* Tooltips use compact contrast surfaces that stay readable across theme modes. */
+.blueprint-tooltip, [data-ui="technical-blueprint"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  display: inline-flex; align-items: center; gap: .45rem; max-inline-size: 16rem; padding: .55rem .75rem;
+  background: var(--blueprint-text); color: var(--blueprint-bg); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-md);
+  box-shadow: 0 .75rem 1.6rem rgb(15 23 42 / .24); font-size: .82rem; font-weight: 850; line-height: 1.35;
+}
+.blueprint-tooltip-arrow { inline-size: .55rem; block-size: .55rem; flex: 0 0 auto; background: currentColor; border-radius: .12rem; opacity: .9; transform: rotate(45deg); }
+
+.blueprint-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--blueprint-surface-soft); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-pill); }
+.blueprint-progress-bar { height: 100%; width: var(--blueprint-progress-value, 50%); background: linear-gradient(90deg, var(--blueprint-primary), var(--blueprint-accent)); border-radius: inherit; }
+
+.blueprint-alert { display: grid; gap: var(--blueprint-space-2); padding: var(--blueprint-space-4); background: var(--blueprint-surface); color: var(--blueprint-text); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-lg); box-shadow: 0 10px 30px rgb(0 0 0 / var(--blueprint-shadow-alpha)); }
+.blueprint-alert-success { border-left-color: var(--blueprint-success); }
+.blueprint-alert-warning { border-left-color: var(--blueprint-warning); }
+.blueprint-alert-danger { border-left-color: var(--blueprint-danger); }
+.blueprint-alert-title { margin: 0; font-weight: 900; }
+.blueprint-alert-body { margin: 0; color: var(--blueprint-text-muted); line-height: 1.55; }
+
+.blueprint-table-wrap { overflow: auto; }
+.blueprint-table { width: 100%; border-collapse: collapse; }
+.blueprint-table th, .blueprint-table td { padding: .95rem 1rem; text-align: left; border-bottom: 1px solid var(--blueprint-border); }
+.blueprint-table th { color: var(--blueprint-text); font-size: .82rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; background: rgb(var(--blueprint-primary-rgb) / .08); }
+.blueprint-table td { color: var(--blueprint-text-muted); }
+.blueprint-table tr:hover td { background: rgb(var(--blueprint-primary-rgb) / .045); }
+
+/* =========================================================
+   Utilities
+========================================================= */
+
+.blueprint-text-primary { color: var(--blueprint-primary); } .blueprint-text-secondary { color: var(--blueprint-secondary); } .blueprint-text-accent { color: var(--blueprint-accent); } .blueprint-text-success { color: var(--blueprint-success); } .blueprint-text-warning { color: var(--blueprint-warning); } .blueprint-text-danger { color: var(--blueprint-danger); }
+.blueprint-bg-primary { background: var(--blueprint-primary); color: var(--blueprint-on-primary); } .blueprint-bg-secondary { background: var(--blueprint-secondary); color: var(--blueprint-on-secondary); }
+.blueprint-border { border: 1px solid var(--blueprint-border); } .blueprint-rounded { border-radius: var(--blueprint-radius-md); } .blueprint-rounded-lg { border-radius: var(--blueprint-radius-lg); } .blueprint-rounded-xl { border-radius: var(--blueprint-radius-xl); } .blueprint-pill { border-radius: var(--blueprint-radius-pill); }
+.blueprint-sr-only, .blueprint-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.blueprint-skip-link { position: absolute; left: 1rem; top: 1rem; z-index: 9999; transform: translateY(-150%); padding: .75rem 1rem; background: var(--blueprint-primary); color: var(--blueprint-on-primary); border-radius: var(--blueprint-radius-md); font-weight: 900; }
+.blueprint-skip-link:focus { transform: translateY(0); }
+
+/* Minimal SaaS-specific product helpers */
+.blueprint-metric { display: grid; gap: .25rem; padding: var(--blueprint-space-5); background: var(--blueprint-surface); border: 1px solid var(--blueprint-border); border-radius: var(--blueprint-radius-lg); }
+.blueprint-metric-value { color: var(--blueprint-text); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 850; line-height: 1; letter-spacing: -.04em; }
+.blueprint-metric-label { color: var(--blueprint-text-muted); font-size: .9rem; font-weight: 700; }
+.blueprint-empty-state { display: grid; place-items: center; gap: var(--blueprint-space-3); min-height: 14rem; padding: var(--blueprint-space-6); text-align: center; background: var(--blueprint-surface-soft); border: 1px dashed var(--blueprint-border); border-radius: var(--blueprint-radius-lg); }
+
+.blueprint-spinner, .blueprint-loading-spinner, [data-ui="technical-blueprint"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  display: inline-block;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: .25rem solid var(--blueprint-spinner-track);
+  border-block-start-color: var(--blueprint-spinner-stroke);
+  border-inline-end-color: var(--blueprint-spinner-accent);
+  border-radius: 50%;
+  vertical-align: -.2em;
+  animation: blueprint-spin .75s linear infinite;
+}
+.blueprint-spinner-sm { inline-size: 1rem; block-size: 1rem; border-width: .16rem; }
+.blueprint-spinner-lg { inline-size: 3rem; block-size: 3rem; border-width: .32rem; }
+.blueprint-button[aria-busy="true"], .blueprint-icon-button[aria-busy="true"], [data-ui="technical-blueprint"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]) { gap: .55rem; cursor: progress; }
+.blueprint-button[aria-busy="true"]::after, .blueprint-icon-button[aria-busy="true"]::after, [data-ui="technical-blueprint"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  content: "";
+  display: inline-block;
+  inline-size: 1em;
+  block-size: 1em;
+  border: .16em solid rgb(var(--blueprint-primary-text-rgb) / .42);
+  border-block-start-color: currentColor;
+  border-radius: 50%;
+  animation: blueprint-spin .75s linear infinite;
+}
+@keyframes blueprint-spin { to { transform: rotate(360deg); } }
+
+
+
+/* =========================================================
+   Marketing / Commercial Component Modifiers
+   Reusable visual patterns derived from service-oriented brand systems.
+========================================================= */
+
+.blueprint-card-media {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgb(var(--blueprint-border-rgb) / .72);
+  border-radius: var(--blueprint-radius-lg);
+}
+
+.blueprint-card-service {
+  position: relative;
+  display: grid;
+  gap: var(--blueprint-space-3);
+  align-content: start;
+  text-align: center;
+  overflow: visible;
+}
+.blueprint-card-service > .blueprint-icon-medallion {
+  justify-self: center;
+  margin-block-start: -2.15rem;
+  position: relative;
+  z-index: 2;
+}
+.blueprint-card-service > .blueprint-card-media + .blueprint-icon-medallion { margin-block-start: -2.15rem; }
+
+.blueprint-card-feature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--blueprint-space-4);
+  align-items: start;
+}
+
+.blueprint-card-accent-edge {
+  border-inline-start: .35rem solid var(--blueprint-primary);
+}
+
+.blueprint-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+  flex: 0 0 auto;
+  padding: .7rem;
+  background: var(--blueprint-primary);
+  color: var(--blueprint-on-primary);
+  border: 2px solid rgb(var(--blueprint-border-rgb) / .82);
+  border-radius: 50%;
+  line-height: 1;
+}
+.blueprint-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.blueprint-button.blueprint-button-cut,
+.blueprint-button-cut {
+  border-radius: 0;
+  clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem);
+}
+.blueprint-button.blueprint-button-cut:focus-visible,
+.blueprint-button-cut:focus-visible { outline-offset: -3px; }
+
+.blueprint-button.blueprint-button-outline-heavy,
+.blueprint-button-outline-heavy {
+  background: transparent;
+  color: var(--blueprint-primary);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--blueprint-primary);
+  box-shadow: none;
+}
+.blueprint-button.blueprint-button-outline-heavy:hover,
+.blueprint-button-outline-heavy:hover {
+  background: var(--blueprint-primary);
+  color: var(--blueprint-on-primary);
+  border-color: var(--blueprint-primary-hover);
+}
+
+.blueprint-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  inline-size: 5rem;
+  min-inline-size: 5rem;
+  aspect-ratio: 1;
+  padding: .65rem;
+  background: var(--blueprint-surface-strong);
+  color: var(--blueprint-text);
+  border: 2px solid var(--blueprint-primary);
+  border-radius: 50%;
+  text-align: center;
+  font-family: var(--blueprint-font-heading);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: .04em;
+}
+
+.blueprint-feature-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  overflow: hidden;
+  background: var(--blueprint-card-bg);
+  color: var(--blueprint-text);
+  border: 1px solid var(--blueprint-border);
+  border-radius: var(--blueprint-radius-lg);
+}
+
+.blueprint-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--blueprint-space-3);
+  min-inline-size: 0;
+  padding: var(--blueprint-space-4);
+  border-inline-end: 1px solid rgb(var(--blueprint-border-rgb) / .62);
+}
+.blueprint-feature-item:last-child { border-inline-end: 0; }
+.blueprint-feature-item > :where(p, small) { margin: 0; color: var(--blueprint-text-muted); }
+
+.blueprint-callout-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--blueprint-space-4);
+  padding: var(--blueprint-space-4) var(--blueprint-space-5);
+  background: var(--blueprint-card-bg);
+  color: var(--blueprint-text);
+  border: 1px solid var(--blueprint-border);
+  border-radius: var(--blueprint-radius-lg);
+}
+.blueprint-callout-bar > :where(p, div) { min-inline-size: 0; }
+.blueprint-callout-bar > :where(.blueprint-button, a, button):last-child { justify-self: end; }
+
+.blueprint-eyebrow {
+  margin: 0;
+  color: var(--blueprint-primary);
+  font-family: var(--blueprint-font-heading);
+  font-size: .76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.blueprint-media-scrim {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-block-size: 12rem;
+  background: var(--blueprint-surface-soft);
+  border: 1px solid var(--blueprint-border);
+  border-radius: var(--blueprint-radius-lg);
+}
+.blueprint-media-scrim > :where(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: inherit;
+  object-fit: cover;
+}
+.blueprint-media-scrim > :where(figcaption, [data-media-caption]) {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+}
+.blueprint-media-scrim > :where(figcaption, [data-media-caption]) * {
+  color: inherit;
+}
+
+@media (max-width: 42rem) {
+  .blueprint-callout-bar { grid-template-columns: 1fr; align-items: start; }
+  .blueprint-callout-bar > :where(.blueprint-button, a, button):last-child { justify-self: stretch; }
+  .blueprint-feature-item { border-inline-end: 0; border-block-end: 1px solid rgb(var(--blueprint-border-rgb) / .62); }
+  .blueprint-feature-item:last-child { border-block-end: 0; }
+}
+
+.blueprint-card-service, .blueprint-card-feature, .blueprint-feature-strip, .blueprint-callout-bar { box-shadow: 0 .9rem 2rem rgb(15 23 42 / calc(var(--blueprint-shadow-alpha) + .03)); }
+.blueprint-card-accent-edge { border-inline-start-width: .3rem; }
+.blueprint-icon-medallion { box-shadow: 0 .55rem 1.2rem rgb(15 23 42 / calc(var(--blueprint-shadow-alpha) + .05)); }
+
+/* =========================================================
+   Technical Blueprint Identity
+========================================================= */
+:root {
+  --blueprint-font-display: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+  --blueprint-font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+  --blueprint-font-heading: var(--blueprint-font-display);
+  --blueprint-font-control: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --blueprint-radius-xs: 0;
+  --blueprint-radius-sm: .08rem;
+  --blueprint-radius-md: .12rem;
+  --blueprint-radius-lg: .18rem;
+  --blueprint-radius-xl: .24rem;
+}
+[data-ui="technical-blueprint"][data-theme][data-mode] {
+  --blueprint-theme-bg: linear-gradient(90deg, rgb(var(--blueprint-border-rgb) / .13) 1px, transparent 1px), linear-gradient(rgb(var(--blueprint-border-rgb) / .13) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--blueprint-primary-rgb) / .09) 1px, transparent 1px), linear-gradient(rgb(var(--blueprint-primary-rgb) / .09) 1px, transparent 1px), var(--blueprint-bg);
+  --blueprint-theme-bg-size: 1.5rem 1.5rem, 1.5rem 1.5rem, .3rem .3rem, .3rem .3rem, auto;
+  --blueprint-card-bg: rgb(var(--blueprint-surface-rgb) / calc(var(--blueprint-panel-alpha) * .86));
+}
+.blueprint-title, .blueprint-heading { font-family: var(--blueprint-font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .025em; }
+.blueprint-title { font-size: clamp(2.3rem, 5.8vw, 4.7rem); line-height: .94; }
+.blueprint-kicker, .blueprint-eyebrow, .blueprint-label, .blueprint-table th, .blueprint-badge { font-family: var(--blueprint-font-control); text-transform: uppercase; letter-spacing: .08em; }
+.blueprint-surface, .blueprint-card, .blueprint-panel, .blueprint-toolbar, .blueprint-table-wrap { border-radius: 0; box-shadow: inset 0 0 0 1px rgb(var(--blueprint-primary-rgb) / .12); }
+.blueprint-card, .blueprint-panel, .blueprint-toolbar { background-image: linear-gradient(90deg, transparent calc(100% - .55rem), rgb(var(--blueprint-primary-rgb) / .3) calc(100% - .55rem), rgb(var(--blueprint-primary-rgb) / .3) calc(100% - .48rem), transparent calc(100% - .48rem)); }
+.blueprint-button, .blueprint-icon-button { border-radius: 0; box-shadow: none; font-family: var(--blueprint-font-control); text-transform: uppercase; letter-spacing: .06em; }
+.blueprint-button:not(.blueprint-button-primary):not(.blueprint-button-secondary):not(.blueprint-button-danger) { background: transparent; }
+.blueprint-nav { border-radius: 0; box-shadow: none; }
+.blueprint-nav-link { border-radius: 0; font-family: var(--blueprint-font-control); font-size: .75rem; text-transform: uppercase; }
+.blueprint-input, .blueprint-textarea, .blueprint-select, .blueprint-badge, .blueprint-alert, .blueprint-metric, .blueprint-well, .blueprint-inset { border-radius: 0; }
+.blueprint-table { font-family: var(--blueprint-font-control); font-size: .82rem; }
+.blueprint-card-media, .blueprint-media-scrim, .blueprint-feature-strip, .blueprint-callout-bar { border-radius: 0; }
+.blueprint-icon-medallion { border-radius: 0; background: transparent; color: var(--blueprint-primary); box-shadow: inset 0 0 0 1px rgb(var(--blueprint-primary-rgb) / .35); }
+.blueprint-badge-seal { border-radius: 0; background: transparent; font-family: var(--blueprint-font-control); }
+.blueprint-card-accent-edge { border-inline-start-width: 1px; box-shadow: inset .35rem 0 0 rgb(var(--blueprint-primary-rgb) / .12); }
+
+/* Filled and framed actions share drafting corners and measured center notches. */
+.blueprint-button.blueprint-button-cut, .blueprint-button-cut {
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: start;
+  justify-content: center;
+  clip-path: polygon(.55rem 0, 42% 0, 42% .18rem, 58% .18rem, 58% 0, calc(100% - .55rem) 0, 100% .55rem, 100% calc(100% - .55rem), calc(100% - .55rem) 100%, .55rem 100%, 0 calc(100% - .55rem), 0 .55rem);
+}
+.blueprint-button.blueprint-button-outline-heavy, .blueprint-button-outline-heavy {
+  border-width: 1px;
+  border-radius: 0;
+  clip-path: polygon(.4rem 0, 38% 0, 38% .14rem, 62% .14rem, 62% 0, calc(100% - .4rem) 0, 100% .4rem, 100% calc(100% - .4rem), calc(100% - .4rem) 100%, .4rem 100%, 0 calc(100% - .4rem), 0 .4rem);
+  box-shadow: inset 0 0 0 1px rgb(var(--blueprint-surface-strong-rgb) / .72), .2rem .2rem 0 rgb(var(--blueprint-primary-rgb) / .28);
+}
+
+/* Marketing and native surfaces use drafting frames and measured inset rules. */
+.blueprint-card-service, .blueprint-media-scrim, .blueprint-feature-strip, .blueprint-callout-bar, .blueprint-metric {
+  border: 1px solid var(--blueprint-primary);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgb(var(--blueprint-surface-strong-rgb) / .72), .2rem .2rem 0 rgb(var(--blueprint-primary-rgb) / .24);
+}
+[data-ui="technical-blueprint"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 1px solid var(--blueprint-primary);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgb(var(--blueprint-surface-strong-rgb) / .72), .18rem .18rem 0 rgb(var(--blueprint-primary-rgb) / .24);
+}
+[data-ui="technical-blueprint"][data-theme][data-mode] :where(dialog) {
+  border: 1px solid var(--blueprint-primary);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgb(var(--blueprint-surface-strong-rgb) / .72), .28rem .28rem 0 rgb(var(--blueprint-primary-rgb) / .26), 0 1rem 2rem rgb(var(--blueprint-text-rgb) / .16);
+}
+
+/* Technical Blueprint loaders use drafting corners and measured ticks. */
+.blueprint-spinner, .blueprint-loading-spinner, [data-ui="technical-blueprint"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  border-style: double; border-radius: 0; background: repeating-conic-gradient(var(--blueprint-spinner-stroke) 0 8deg, transparent 8deg 22deg); box-shadow: inset 0 0 0 .2rem var(--blueprint-surface); clip-path: polygon(0 0, 42% 0, 42% 10%, 58% 10%, 58% 0, 100% 0, 100% 42%, 90% 42%, 90% 58%, 100% 58%, 100% 100%, 0 100%); animation: blueprint-spin 1s steps(12, end) infinite;
+}
+.blueprint-button[aria-busy="true"]::after, .blueprint-icon-button[aria-busy="true"]::after, [data-ui="technical-blueprint"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  border: .08em double currentColor; border-radius: 0; background: repeating-conic-gradient(currentColor 0 8deg, transparent 8deg 24deg); box-shadow: inset 0 0 0 .1em rgb(var(--blueprint-surface-rgb) / .45); clip-path: polygon(0 0, 42% 0, 42% 12%, 58% 12%, 58% 0, 100% 0, 100% 42%, 88% 42%, 88% 58%, 100% 58%, 100% 100%, 0 100%); animation: blueprint-spin 1s steps(12, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ui="technical-blueprint"] *, [data-ui="technical-blueprint"] *::before, [data-ui="technical-blueprint"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+}
+@media (prefers-contrast: more) {
+  [data-ui="technical-blueprint"] { --blueprint-border-alpha: 1; --blueprint-focus-alpha: .75; }
+}
+@media (forced-colors: active) {
+  @supports (forced-color-adjust: auto) { [data-ui="technical-blueprint"] * { forced-color-adjust: auto; } }
+  [data-ui="technical-blueprint"] :where(:focus-visible) { outline: 3px solid CanvasText; }
+}
+@media print {
+  [data-ui="technical-blueprint"] { background: #fff !important; color: #000 !important; }
+  [data-ui="technical-blueprint"] * { box-shadow: none !important; text-shadow: none !important; }
+  [data-ui="technical-blueprint"] a { color: #000 !important; text-decoration: underline; }
+}
+}

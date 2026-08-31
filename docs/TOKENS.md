@@ -63,6 +63,15 @@ UI Style Kit entrypoints publish all 12 values. Standalone consumer packages mus
 | Cyberpunk | `cyber` |
 | Y2K | `y2k` |
 | Retro Glass | `rg` |
+| Editorial Luxe | `luxe` |
+| Organic Modern | `organic` |
+| Industrial Utility | `utility` |
+| Technical Blueprint | `blueprint` |
+| Art Deco | `deco` |
+| Clay | `clay` |
+| Data Terminal | `terminal` |
+| Paper Editorial | `paper` |
+| Neo-Noir | `noir` |
 
 ## Stable functional tokens
 
@@ -243,7 +252,7 @@ Loading indicators use theme variables by default:
 --<prefix>-spinner-accent
 ```
 
-The class utilities are `<prefix>-spinner`, `<prefix>-loading-spinner`, `<prefix>-spinner-sm`, and `<prefix>-spinner-lg`. Native buttons and prefixed buttons also render an inline spinner when `aria-busy="true"` is present.
+The class utilities are `<prefix>-spinner`, `<prefix>-loading-spinner`, `<prefix>-spinner-sm`, and `<prefix>-spinner-lg`. Each preset owns its loader silhouette, cadence, and depth while consuming only these active theme roles. Native buttons and prefixed buttons render the matching preset-owned indicator when `aria-busy="true"` is present.
 
 ## Interactive Surface bridge tokens
 

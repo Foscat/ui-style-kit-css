@@ -1,8 +1,8 @@
 # UI Style Kit CSS Wiki
 
-UI Style Kit CSS is a CSS-only visual style library with 11 UI systems, 10 shared color themes, and 3 display modes.
+UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 20 shared color themes, and 3 display modes.
 
-Version `v2.2.0` adds a shared 12-token semantic producer contract and a manifest-backed 29-selector `.ui-*` component API across all 11 presets. Existing entrypoints retain their v2 behavior, including deprecated prefixed structural helpers.
+Version `v2.3.0` expands the library to 20 UI systems and 20 shared color themes, adds universal commercial component modifiers and a modern-browser support contract, and preserves the existing v2 entrypoint and bridge contracts.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
@@ -61,6 +61,15 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 | Cyberpunk | `cyberpunk` | `cyber` | `styles/cyberpunk.css` |
 | Y2K | `y2k` | `y2k` | `styles/y2k.css` |
 | Retro Glass | `retro-glass` | `rg` | `styles/retro-glass.css` |
+| Editorial Luxe | `editorial-luxe` | `luxe` | `styles/editorial-luxe.css` |
+| Organic Modern | `organic-modern` | `organic` | `styles/organic-modern.css` |
+| Industrial Utility | `industrial-utility` | `utility` | `styles/industrial-utility.css` |
+| Technical Blueprint | `technical-blueprint` | `blueprint` | `styles/technical-blueprint.css` |
+| Art Deco | `art-deco` | `deco` | `styles/art-deco.css` |
+| Clay | `clay` | `clay` | `styles/clay.css` |
+| Data Terminal | `data-terminal` | `terminal` | `styles/data-terminal.css` |
+| Paper Editorial | `paper-editorial` | `paper` | `styles/paper-editorial.css` |
+| Neo-Noir | `neo-noir` | `noir` | `styles/neo-noir.css` |
 
 ## Color Themes
 
@@ -74,3 +83,13 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 - `rose-quartz`
 - `cyber-lime`
 - `arctic-indigo`
+- `chrome-navy`
+- `recycled-emerald`
+- `industrial-orange`
+- `performance-red`
+- `heritage-brass`
+- `service-blue-red`
+- `newsprint-crimson`
+- `foundry-amber`
+- `soft-orchid`
+- `electric-noir`

@@ -99,6 +99,87 @@ window.UI_STYLE_KIT_MANIFEST = {
         "default": "./retro-glass.css",
         "visual": "./visual/retro-glass.css"
       }
+    },
+    {
+      "id": "editorial-luxe",
+      "label": "Editorial Luxe",
+      "prefix": "luxe",
+      "entrypoints": {
+        "default": "./editorial-luxe.css",
+        "visual": "./visual/editorial-luxe.css"
+      }
+    },
+    {
+      "id": "organic-modern",
+      "label": "Organic Modern",
+      "prefix": "organic",
+      "entrypoints": {
+        "default": "./organic-modern.css",
+        "visual": "./visual/organic-modern.css"
+      }
+    },
+    {
+      "id": "industrial-utility",
+      "label": "Industrial Utility",
+      "prefix": "utility",
+      "entrypoints": {
+        "default": "./industrial-utility.css",
+        "visual": "./visual/industrial-utility.css"
+      }
+    },
+    {
+      "id": "technical-blueprint",
+      "label": "Technical Blueprint",
+      "prefix": "blueprint",
+      "entrypoints": {
+        "default": "./technical-blueprint.css",
+        "visual": "./visual/technical-blueprint.css"
+      }
+    },
+    {
+      "id": "art-deco",
+      "label": "Art Deco",
+      "prefix": "deco",
+      "entrypoints": {
+        "default": "./art-deco.css",
+        "visual": "./visual/art-deco.css"
+      }
+    },
+    {
+      "id": "clay",
+      "label": "Clay",
+      "prefix": "clay",
+      "entrypoints": {
+        "default": "./clay.css",
+        "visual": "./visual/clay.css"
+      }
+    },
+    {
+      "id": "data-terminal",
+      "label": "Data Terminal",
+      "prefix": "terminal",
+      "entrypoints": {
+        "default": "./data-terminal.css",
+        "visual": "./visual/data-terminal.css"
+      }
+    },
+    {
+      "id": "paper-editorial",
+      "label": "Paper Editorial",
+      "prefix": "paper",
+      "entrypoints": {
+        "default": "./paper-editorial.css",
+        "visual": "./visual/paper-editorial.css"
+      }
+    },
+    {
+      "id": "neo-noir",
+      "label": "Neo-Noir",
+      "prefix": "noir",
+      "entrypoints": {
+        "default": "./neo-noir.css",
+        "visual": "./visual/neo-noir.css"
+      }
     }
   ],
   "themes": [
@@ -111,7 +192,17 @@ window.UI_STYLE_KIT_MANIFEST = {
     "desert-sage",
     "rose-quartz",
     "cyber-lime",
-    "arctic-indigo"
+    "arctic-indigo",
+    "chrome-navy",
+    "recycled-emerald",
+    "industrial-orange",
+    "performance-red",
+    "heritage-brass",
+    "service-blue-red",
+    "newsprint-crimson",
+    "foundry-amber",
+    "soft-orchid",
+    "electric-noir"
   ],
   "modes": [
     "light",
