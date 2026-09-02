@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.3.0
+ * UI Style Kit CSS v2.4.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -1634,6 +1634,52 @@
   --usk-native-thumb: var(--usk-native-surface-strong);
   --usk-native-thumb-border: var(--usk-native-primary);
   --usk-native-indicator: var(--usk-native-primary);
+  --usk-native-choice-size: 1.5rem;
+  --usk-native-choice-background: var(--usk-native-control-bg);
+  --usk-native-choice-border: var(--usk-native-border-width) solid var(--usk-native-border);
+  --usk-native-checkbox-radius: .3rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: none;
+  --usk-native-choice-checked-background: var(--usk-native-primary);
+  --usk-native-choice-mark-color: var(--usk-native-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .85rem) 50%;
+  --usk-native-select-padding-inline-end: 2.5rem;
+  --usk-native-range-track-size: .45rem;
+  --usk-native-range-track-background: var(--usk-native-track);
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 999px;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: var(--usk-native-track-fill);
+  --usk-native-range-thumb-size: 1.2rem;
+  --usk-native-range-thumb-background: var(--usk-native-thumb);
+  --usk-native-range-thumb-border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: var(--usk-native-shadow);
+  --usk-native-progress-size: .9rem;
+  --usk-native-progress-track-background: var(--usk-native-track);
+  --usk-native-progress-track-border: 0 solid transparent;
+  --usk-native-progress-track-radius: 999px;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: var(--usk-native-track-fill);
+  --usk-native-progress-value-radius: inherit;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-meter-optimum-background: var(--usk-native-success);
+  --usk-native-meter-suboptimum-background: var(--usk-native-warning);
+  --usk-native-meter-critical-background: var(--usk-native-danger);
+  --usk-native-file-button-background: var(--usk-native-primary);
+  --usk-native-file-button-border: var(--usk-native-border-width) solid var(--usk-native-primary);
+  --usk-native-file-button-radius: var(--usk-native-radius-sm);
+  --usk-native-file-button-shadow: var(--usk-native-shadow);
+  --usk-native-color-swatch-border: 0 solid transparent;
+  --usk-native-color-swatch-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  --usk-native-indicator-opacity: .78;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .75rem;
+  --usk-native-scrollbar-track: var(--usk-native-track);
+  --usk-native-scrollbar-thumb: var(--usk-native-thumb-border);
+  --usk-native-scrollbar-radius: 999px;
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
@@ -1839,6 +1885,24 @@
 
 [data-ui][data-theme][data-mode] :where(input, textarea, select, button) { font: inherit; }
 
+[data-ui][data-theme][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+[data-ui][data-theme][data-mode] :where(select[multiple]) {
+  padding-inline-end: var(--usk-native-control-padding-inline);
+  background-image: none;
+}
+
+[dir="rtl"] [data-ui][data-theme][data-mode] :where(select:not([multiple])),
+[data-ui][data-theme][data-mode][dir="rtl"] :where(select:not([multiple])) {
+  --usk-native-select-indicator-position: 1.15rem 50%, .85rem 50%;
+}
+
 [data-ui][data-theme][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
   -webkit-appearance: none;
   appearance: none;
@@ -1876,9 +1940,36 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
-  inline-size: 1.5rem;
-  block-size: 1.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: var(--usk-native-choice-size);
+  block-size: var(--usk-native-choice-size);
+  background: var(--usk-native-choice-background);
+  border: var(--usk-native-choice-border);
+  box-shadow: var(--usk-native-choice-shadow);
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]) { border-radius: var(--usk-native-checkbox-radius); }
+[data-ui][data-theme][data-mode] :where(input[type="radio"]) { border-radius: var(--usk-native-radio-radius); }
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:checked) {
+  background-color: var(--usk-native-choice-checked-background);
+  background-image: linear-gradient(135deg, transparent 42%, var(--usk-native-choice-mark-color) 42% 56%, transparent 56%), linear-gradient(45deg, transparent 54%, var(--usk-native-choice-mark-color) 54% 68%, transparent 68%);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:hover:not(:disabled), input[type="radio"]:hover:not(:disabled)) {
+  border-color: var(--usk-native-primary);
+  filter: brightness(1.04);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:active:not(:disabled), input[type="radio"]:active:not(:disabled)) {
+  filter: brightness(.94);
+  transform: scale(.94);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="radio"]:checked) {
+  background: radial-gradient(circle, var(--usk-native-choice-mark-color) 0 31%, transparent 34%), var(--usk-native-choice-checked-background);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"]) {
@@ -1891,36 +1982,46 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-runnable-track {
-  block-size: .45rem;
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-track-background);
+  border: var(--usk-native-range-track-border);
+  border-radius: var(--usk-native-range-track-radius);
+  box-shadow: var(--usk-native-range-track-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-track {
-  block-size: .45rem;
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-track-background);
+  border: var(--usk-native-range-track-border);
+  border-radius: var(--usk-native-range-track-radius);
+  box-shadow: var(--usk-native-range-track-shadow);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-progress {
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-progress-background);
+  border-radius: var(--usk-native-range-track-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  inline-size: 1.2rem;
-  block-size: 1.2rem;
-  margin-block-start: -.38rem;
-  background: var(--usk-native-thumb);
-  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
-  border-radius: 999px;
-  box-shadow: var(--usk-native-shadow);
+  inline-size: var(--usk-native-range-thumb-size);
+  block-size: var(--usk-native-range-thumb-size);
+  margin-block-start: calc((var(--usk-native-range-track-size) - var(--usk-native-range-thumb-size)) / 2);
+  background: var(--usk-native-range-thumb-background);
+  border: var(--usk-native-range-thumb-border);
+  border-radius: var(--usk-native-range-thumb-radius);
+  box-shadow: var(--usk-native-range-thumb-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-thumb {
-  inline-size: 1.2rem;
-  block-size: 1.2rem;
-  background: var(--usk-native-thumb);
-  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
-  border-radius: 999px;
-  box-shadow: var(--usk-native-shadow);
+  inline-size: var(--usk-native-range-thumb-size);
+  block-size: var(--usk-native-range-thumb-size);
+  background: var(--usk-native-range-thumb-background);
+  border: var(--usk-native-range-thumb-border);
+  border-radius: var(--usk-native-range-thumb-radius);
+  box-shadow: var(--usk-native-range-thumb-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"]) {
@@ -1937,13 +2038,13 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"])::-webkit-color-swatch {
-  border: 0;
-  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  border: var(--usk-native-color-swatch-border);
+  border-radius: var(--usk-native-color-swatch-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"])::-moz-color-swatch {
-  border: 0;
-  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  border: var(--usk-native-color-swatch-border);
+  border-radius: var(--usk-native-color-swatch-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="file"]) { color: var(--usk-native-text-muted); }
@@ -1954,9 +2055,10 @@
   margin-inline-end: .75rem;
   padding: var(--usk-native-subcontrol-padding-block) var(--usk-native-subcontrol-padding-inline);
   color: var(--usk-native-on-primary);
-  background: var(--usk-native-primary);
-  border: var(--usk-native-border-width) solid var(--usk-native-primary);
-  border-radius: var(--usk-native-radius-sm);
+  background: var(--usk-native-file-button-background);
+  border: var(--usk-native-file-button-border);
+  border-radius: var(--usk-native-file-button-radius);
+  box-shadow: var(--usk-native-file-button-shadow);
   font-weight: 800;
   cursor: pointer;
 }
@@ -2002,6 +2104,7 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"]:indeterminate, input[type="radio"]:indeterminate) {
+  background: linear-gradient(var(--usk-native-choice-mark-color), var(--usk-native-choice-mark-color)) center / 58% .15rem no-repeat var(--usk-native-choice-checked-background);
   accent-color: var(--usk-native-warning);
 }
 
@@ -2078,35 +2181,56 @@
 [data-ui][data-theme][data-mode] :where(dialog)::backdrop { background: rgb(0 0 0 / .62); }
 
 [data-ui][data-theme][data-mode] :where(progress, meter) {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
-  min-height: .9rem;
+  min-height: var(--usk-native-progress-size);
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(progress:not([value])) {
+  background: repeating-linear-gradient(115deg, var(--usk-native-progress-track-background) 0 .5rem, var(--usk-native-progress-value-background) .5rem 1rem);
+  background-size: 200% 100%;
+  border: var(--usk-native-progress-track-border);
+  border-radius: var(--usk-native-progress-track-radius);
+  box-shadow: var(--usk-native-progress-track-shadow);
+  animation: usk-native-progress-indeterminate 1.2s linear infinite;
+}
+
+@keyframes usk-native-progress-indeterminate {
+  to { background-position: -2rem 0; }
 }
 
 [data-ui][data-theme][data-mode] :where(progress, meter)::-webkit-progress-bar,
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-bar {
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  background: var(--usk-native-progress-track-background);
+  border: var(--usk-native-progress-track-border);
+  border-radius: var(--usk-native-progress-track-radius);
+  box-shadow: var(--usk-native-progress-track-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(progress)::-webkit-progress-value,
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value {
-  background: var(--usk-native-track-fill);
-  border-radius: inherit;
+  background: var(--usk-native-progress-value-background);
+  border-radius: var(--usk-native-progress-value-radius);
+  box-shadow: var(--usk-native-progress-value-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(progress)::-moz-progress-bar,
 [data-ui][data-theme][data-mode] :where(meter)::-moz-meter-bar {
-  background: var(--usk-native-track-fill);
-  border-radius: 999px;
+  background: var(--usk-native-progress-value-background);
+  border-radius: var(--usk-native-progress-value-radius);
+  box-shadow: var(--usk-native-progress-value-shadow);
 }
 
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value { background: var(--usk-native-meter-optimum-background); }
+
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-suboptimum-value {
-  background: var(--usk-native-warning);
+  background: var(--usk-native-meter-suboptimum-background);
 }
 
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-even-less-good-value {
-  background: var(--usk-native-danger);
+  background: var(--usk-native-meter-critical-background);
 }
 
 [data-ui][data-theme][data-mode] :where(main, section, header, footer, nav, article, aside, address) {
@@ -2151,7 +2275,8 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="date"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"])::-webkit-calendar-picker-indicator {
-  opacity: .78;
+  opacity: var(--usk-native-indicator-opacity);
+  filter: var(--usk-native-indicator-filter);
   accent-color: var(--usk-native-indicator);
 }
 
@@ -2166,6 +2291,8 @@
 
 [data-ui][data-theme][data-mode] :where(select)::picker-icon {
   color: var(--usk-native-indicator);
+  opacity: var(--usk-native-indicator-opacity);
+  filter: var(--usk-native-indicator-filter);
 }
 
 [data-ui][data-theme][data-mode] :where(:focus-visible) {
@@ -2184,9 +2311,9 @@
 [data-ui][data-theme][data-mode] :where([aria-busy="true"]) { cursor: progress; }
 [data-ui][data-theme][data-mode] :where([hidden]) { display: none !important; }
 [data-ui][data-theme][data-mode] ::selection { color: var(--usk-native-on-primary); background: var(--usk-native-primary); }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: .75rem; block-size: .75rem; }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-track); }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-thumb-border); border-radius: 999px; }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: var(--usk-native-scrollbar-size); block-size: var(--usk-native-scrollbar-size); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-scrollbar-track); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-scrollbar-thumb); border-radius: var(--usk-native-scrollbar-radius); }
 
 @supports (color: color-mix(in srgb, black, white)) {
   [data-ui][data-theme][data-mode] {
@@ -2219,6 +2346,22 @@
   [data-ui][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
     transition-duration: 1ms !important;
   }
+
+  [data-ui][data-theme][data-mode] :where(progress:not([value])) {
+    animation: none;
+  }
+}
+
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-webkit-slider-runnable-track,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-webkit-slider-thumb,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-moz-range-track,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-moz-range-thumb,
+[data-ui][data-theme][data-mode="contrast"] :where(progress, meter),
+[data-ui][data-theme][data-mode="contrast"] :where(progress, meter)::-webkit-progress-bar,
+[data-ui][data-theme][data-mode="contrast"] :where(progress)::-webkit-progress-value,
+[data-ui][data-theme][data-mode="contrast"] :where(progress)::-moz-progress-bar {
+  box-shadow: none;
+  filter: none;
 }
 
 @media (forced-colors: active) {
@@ -3615,6 +3758,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--saas-space-5);
+    --usk-native-control-min-block-size: 2.625rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.35rem;
+    --usk-native-choice-background: var(--saas-control-bg);
+    --usk-native-choice-border: 1px solid var(--saas-border);
+    --usk-native-checkbox-radius: .2rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: none;
+    --usk-native-choice-checked-background: var(--saas-primary);
+    --usk-native-choice-mark-color: var(--saas-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(27deg, transparent 50%, var(--saas-primary) 50%), linear-gradient(153deg, var(--saas-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-padding-inline-end: 2.25rem;
+    --usk-native-range-track-size: .28rem;
+    --usk-native-range-track-background: var(--saas-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--saas-border);
+    --usk-native-range-track-radius: 2px;
+    --usk-native-range-track-shadow: none;
+    --usk-native-range-progress-background: var(--saas-primary);
+    --usk-native-range-thumb-size: 1rem;
+    --usk-native-range-thumb-background: var(--saas-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--saas-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: none;
+    --usk-native-progress-size: .42rem;
+    --usk-native-progress-track-background: var(--saas-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--saas-border);
+    --usk-native-progress-track-radius: 2px;
+    --usk-native-progress-track-shadow: none;
+    --usk-native-progress-value-background: var(--saas-primary);
+    --usk-native-progress-value-radius: 2px;
+    --usk-native-progress-value-shadow: none;
+    --usk-native-meter-optimum-background: var(--saas-success);
+    --usk-native-meter-suboptimum-background: var(--saas-warning);
+    --usk-native-meter-critical-background: var(--saas-danger);
+    --usk-native-file-button-background: var(--saas-primary);
+    --usk-native-file-button-border: 1px solid var(--saas-border);
+    --usk-native-file-button-radius: .2rem;
+    --usk-native-file-button-shadow: none;
+    --usk-native-color-swatch-border: 1px solid var(--saas-border);
+    --usk-native-color-swatch-radius: .2rem;
+    --usk-native-indicator-opacity: .72;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .65rem;
+    --usk-native-scrollbar-track: var(--saas-surface-soft);
+    --usk-native-scrollbar-thumb: var(--saas-primary);
+    --usk-native-scrollbar-radius: 2px;
     --saas-bg: rgb(var(--saas-bg-rgb));
     --saas-surface: rgb(var(--saas-surface-rgb) / var(--saas-panel-alpha));
     --saas-surface-strong: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha));
@@ -4797,6 +4991,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--bento-space-5);
+    --usk-native-control-min-block-size: 2.875rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.5rem;
+    --usk-native-choice-background: var(--bento-control-bg);
+    --usk-native-choice-border: 2px solid var(--bento-border);
+    --usk-native-checkbox-radius: .12rem;
+    --usk-native-radio-radius: .35rem;
+    --usk-native-choice-shadow: 2px 2px 0 var(--bento-border);
+    --usk-native-choice-checked-background: var(--bento-primary);
+    --usk-native-choice-mark-color: var(--bento-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(30deg, transparent 50%, var(--bento-primary) 50%), linear-gradient(150deg, var(--bento-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
+    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-padding-inline-end: 2.4rem;
+    --usk-native-range-track-size: .62rem;
+    --usk-native-range-track-background: var(--bento-surface-soft);
+    --usk-native-range-track-border: 2px solid var(--bento-border);
+    --usk-native-range-track-radius: .12rem;
+    --usk-native-range-track-shadow: 2px 2px 0 var(--bento-border);
+    --usk-native-range-progress-background: var(--bento-primary);
+    --usk-native-range-thumb-size: 1.15rem;
+    --usk-native-range-thumb-background: var(--bento-surface-strong);
+    --usk-native-range-thumb-border: 2px solid var(--bento-border);
+    --usk-native-range-thumb-radius: .35rem;
+    --usk-native-range-thumb-shadow: 2px 2px 0 var(--bento-border);
+    --usk-native-progress-size: .72rem;
+    --usk-native-progress-track-background: var(--bento-surface-soft);
+    --usk-native-progress-track-border: 2px solid var(--bento-border);
+    --usk-native-progress-track-radius: .12rem;
+    --usk-native-progress-track-shadow: 2px 2px 0 var(--bento-border);
+    --usk-native-progress-value-background: var(--bento-primary);
+    --usk-native-progress-value-radius: .12rem;
+    --usk-native-progress-value-shadow: 2px 2px 0 var(--bento-border);
+    --usk-native-meter-optimum-background: var(--bento-success);
+    --usk-native-meter-suboptimum-background: var(--bento-warning);
+    --usk-native-meter-critical-background: var(--bento-danger);
+    --usk-native-file-button-background: var(--bento-primary);
+    --usk-native-file-button-border: 2px solid var(--bento-border);
+    --usk-native-file-button-radius: .12rem;
+    --usk-native-file-button-shadow: 2px 2px 0 var(--bento-border);
+    --usk-native-color-swatch-border: 2px solid var(--bento-border);
+    --usk-native-color-swatch-radius: .12rem;
+    --usk-native-indicator-opacity: .77;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .8rem;
+    --usk-native-scrollbar-track: var(--bento-surface-soft);
+    --usk-native-scrollbar-thumb: var(--bento-primary);
+    --usk-native-scrollbar-radius: .12rem;
     --bento-bg: rgb(var(--bento-bg-rgb));
     --bento-surface: rgb(var(--bento-surface-rgb) / var(--bento-panel-alpha));
     --bento-surface-strong: rgb(var(--bento-surface-strong-rgb) / var(--bento-panel-alpha));
@@ -6005,6 +6250,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--max-space-5);
+    --usk-native-control-min-block-size: 3.25rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.75rem;
+    --usk-native-choice-background: var(--max-control-bg);
+    --usk-native-choice-border: 2px solid var(--max-border);
+    --usk-native-checkbox-radius: .45rem;
+    --usk-native-radio-radius: 42%;
+    --usk-native-choice-shadow: 5px 5px 0 var(--max-border);
+    --usk-native-choice-checked-background: var(--max-primary);
+    --usk-native-choice-mark-color: var(--max-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(33deg, transparent 50%, var(--max-primary) 50%), linear-gradient(147deg, var(--max-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-padding-inline-end: 2.55rem;
+    --usk-native-range-track-size: .8rem;
+    --usk-native-range-track-background: var(--max-surface-soft);
+    --usk-native-range-track-border: 2px solid var(--max-border);
+    --usk-native-range-track-radius: .35rem;
+    --usk-native-range-track-shadow: 5px 5px 0 var(--max-border);
+    --usk-native-range-progress-background: var(--max-primary);
+    --usk-native-range-thumb-size: 1.8rem;
+    --usk-native-range-thumb-background: var(--max-surface-strong);
+    --usk-native-range-thumb-border: 2px solid var(--max-border);
+    --usk-native-range-thumb-radius: 42%;
+    --usk-native-range-thumb-shadow: 5px 5px 0 var(--max-border);
+    --usk-native-progress-size: 1rem;
+    --usk-native-progress-track-background: var(--max-surface-soft);
+    --usk-native-progress-track-border: 2px solid var(--max-border);
+    --usk-native-progress-track-radius: .35rem;
+    --usk-native-progress-track-shadow: 5px 5px 0 var(--max-border);
+    --usk-native-progress-value-background: var(--max-primary);
+    --usk-native-progress-value-radius: .35rem;
+    --usk-native-progress-value-shadow: 5px 5px 0 var(--max-border);
+    --usk-native-meter-optimum-background: var(--max-success);
+    --usk-native-meter-suboptimum-background: var(--max-warning);
+    --usk-native-meter-critical-background: var(--max-danger);
+    --usk-native-file-button-background: var(--max-primary);
+    --usk-native-file-button-border: 2px solid var(--max-border);
+    --usk-native-file-button-radius: .45rem;
+    --usk-native-file-button-shadow: 5px 5px 0 var(--max-border);
+    --usk-native-color-swatch-border: 2px solid var(--max-border);
+    --usk-native-color-swatch-radius: .45rem;
+    --usk-native-indicator-opacity: .82;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: 1rem;
+    --usk-native-scrollbar-track: var(--max-surface-soft);
+    --usk-native-scrollbar-thumb: var(--max-primary);
+    --usk-native-scrollbar-radius: .35rem;
     --max-bg: rgb(var(--max-bg-rgb));
     --max-surface: rgb(var(--max-surface-rgb) / var(--max-panel-alpha));
     --max-surface-strong: rgb(var(--max-surface-strong-rgb) / var(--max-panel-alpha));
@@ -7207,6 +7503,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--bau-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.55rem;
+    --usk-native-choice-background: var(--bau-control-bg);
+    --usk-native-choice-border: 2px solid var(--bau-border);
+    --usk-native-checkbox-radius: 0;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 3px 3px 0 var(--bau-border);
+    --usk-native-choice-checked-background: var(--bau-primary);
+    --usk-native-choice-mark-color: var(--bau-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(36deg, transparent 50%, var(--bau-primary) 50%), linear-gradient(144deg, var(--bau-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
+    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-padding-inline-end: 2.7rem;
+    --usk-native-range-track-size: .32rem;
+    --usk-native-range-track-background: var(--bau-surface-soft);
+    --usk-native-range-track-border: 2px solid var(--bau-border);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: 3px 3px 0 var(--bau-border);
+    --usk-native-range-progress-background: var(--bau-primary);
+    --usk-native-range-thumb-size: 1.35rem;
+    --usk-native-range-thumb-background: var(--bau-surface-strong);
+    --usk-native-range-thumb-border: 2px solid var(--bau-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 3px 3px 0 var(--bau-border);
+    --usk-native-progress-size: .8rem;
+    --usk-native-progress-track-background: var(--bau-surface-soft);
+    --usk-native-progress-track-border: 2px solid var(--bau-border);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: 3px 3px 0 var(--bau-border);
+    --usk-native-progress-value-background: var(--bau-primary);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: 3px 3px 0 var(--bau-border);
+    --usk-native-meter-optimum-background: var(--bau-success);
+    --usk-native-meter-suboptimum-background: var(--bau-warning);
+    --usk-native-meter-critical-background: var(--bau-danger);
+    --usk-native-file-button-background: var(--bau-primary);
+    --usk-native-file-button-border: 2px solid var(--bau-border);
+    --usk-native-file-button-radius: 0;
+    --usk-native-file-button-shadow: 3px 3px 0 var(--bau-border);
+    --usk-native-color-swatch-border: 2px solid var(--bau-border);
+    --usk-native-color-swatch-radius: 0;
+    --usk-native-indicator-opacity: .87;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .75rem;
+    --usk-native-scrollbar-track: var(--bau-surface-soft);
+    --usk-native-scrollbar-thumb: var(--bau-primary);
+    --usk-native-scrollbar-radius: 0;
     --bau-bg: rgb(var(--bau-bg-rgb));
     --bau-surface: rgb(var(--bau-surface-rgb) / var(--bau-panel-alpha));
     --bau-surface-strong: rgb(var(--bau-surface-strong-rgb) / var(--bau-panel-alpha));
@@ -8399,6 +8746,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--tactile-space-5);
+    --usk-native-control-min-block-size: 3.125rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.6rem;
+    --usk-native-choice-background: var(--tactile-control-bg);
+    --usk-native-choice-border: 2px solid var(--tactile-border);
+    --usk-native-checkbox-radius: .32rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: inset 2px 2px 4px #0000004d;
+    --usk-native-choice-checked-background: var(--tactile-primary);
+    --usk-native-choice-mark-color: var(--tactile-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(39deg, transparent 50%, var(--tactile-primary) 50%), linear-gradient(141deg, var(--tactile-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-padding-inline-end: 2.25rem;
+    --usk-native-range-track-size: .68rem;
+    --usk-native-range-track-background: var(--tactile-surface-soft);
+    --usk-native-range-track-border: 2px solid var(--tactile-border);
+    --usk-native-range-track-radius: .25rem;
+    --usk-native-range-track-shadow: inset 2px 2px 4px #0000004d;
+    --usk-native-range-progress-background: var(--tactile-primary);
+    --usk-native-range-thumb-size: 1.5rem;
+    --usk-native-range-thumb-background: var(--tactile-surface-strong);
+    --usk-native-range-thumb-border: 2px solid var(--tactile-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: inset 2px 2px 4px #0000004d;
+    --usk-native-progress-size: .9rem;
+    --usk-native-progress-track-background: var(--tactile-surface-soft);
+    --usk-native-progress-track-border: 2px solid var(--tactile-border);
+    --usk-native-progress-track-radius: .28rem;
+    --usk-native-progress-track-shadow: inset 2px 2px 4px #0000004d;
+    --usk-native-progress-value-background: var(--tactile-primary);
+    --usk-native-progress-value-radius: .28rem;
+    --usk-native-progress-value-shadow: inset 2px 2px 4px #0000004d;
+    --usk-native-meter-optimum-background: var(--tactile-success);
+    --usk-native-meter-suboptimum-background: var(--tactile-warning);
+    --usk-native-meter-critical-background: var(--tactile-danger);
+    --usk-native-file-button-background: var(--tactile-primary);
+    --usk-native-file-button-border: 2px solid var(--tactile-border);
+    --usk-native-file-button-radius: .32rem;
+    --usk-native-file-button-shadow: inset 2px 2px 4px #0000004d;
+    --usk-native-color-swatch-border: 2px solid var(--tactile-border);
+    --usk-native-color-swatch-radius: .32rem;
+    --usk-native-indicator-opacity: .92;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .85rem;
+    --usk-native-scrollbar-track: var(--tactile-surface-soft);
+    --usk-native-scrollbar-thumb: var(--tactile-primary);
+    --usk-native-scrollbar-radius: .28rem;
     --tactile-bg: rgb(var(--tactile-bg-rgb));
     --tactile-surface: rgb(var(--tactile-surface-rgb) / var(--tactile-panel-alpha));
     --tactile-surface-strong: rgb(var(--tactile-surface-strong-rgb) / var(--tactile-panel-alpha));
@@ -9569,6 +9967,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--neo-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.55rem;
+    --usk-native-choice-background: var(--neo-control-bg);
+    --usk-native-choice-border: 1px solid var(--neo-border);
+    --usk-native-checkbox-radius: .45rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 4px 4px 8px #00000038;
+    --usk-native-choice-checked-background: var(--neo-primary);
+    --usk-native-choice-mark-color: var(--neo-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(42deg, transparent 50%, var(--neo-primary) 50%), linear-gradient(138deg, var(--neo-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-padding-inline-end: 2.4rem;
+    --usk-native-range-track-size: .62rem;
+    --usk-native-range-track-background: var(--neo-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--neo-border);
+    --usk-native-range-track-radius: 999px;
+    --usk-native-range-track-shadow: 4px 4px 8px #00000038;
+    --usk-native-range-progress-background: var(--neo-primary);
+    --usk-native-range-thumb-size: 1.45rem;
+    --usk-native-range-thumb-background: var(--neo-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--neo-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 4px 4px 8px #00000038;
+    --usk-native-progress-size: .82rem;
+    --usk-native-progress-track-background: var(--neo-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--neo-border);
+    --usk-native-progress-track-radius: 999px;
+    --usk-native-progress-track-shadow: 4px 4px 8px #00000038;
+    --usk-native-progress-value-background: var(--neo-primary);
+    --usk-native-progress-value-radius: 999px;
+    --usk-native-progress-value-shadow: 4px 4px 8px #00000038;
+    --usk-native-meter-optimum-background: var(--neo-success);
+    --usk-native-meter-suboptimum-background: var(--neo-warning);
+    --usk-native-meter-critical-background: var(--neo-danger);
+    --usk-native-file-button-background: var(--neo-primary);
+    --usk-native-file-button-border: 1px solid var(--neo-border);
+    --usk-native-file-button-radius: .45rem;
+    --usk-native-file-button-shadow: 4px 4px 8px #00000038;
+    --usk-native-color-swatch-border: 1px solid var(--neo-border);
+    --usk-native-color-swatch-radius: .45rem;
+    --usk-native-indicator-opacity: .72;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .8rem;
+    --usk-native-scrollbar-track: var(--neo-surface-soft);
+    --usk-native-scrollbar-thumb: var(--neo-primary);
+    --usk-native-scrollbar-radius: 999px;
     --neo-bg: rgb(var(--neo-bg-rgb));
     --neo-surface: rgb(var(--neo-surface-rgb) / var(--neo-panel-alpha));
     --neo-surface-strong: rgb(var(--neo-surface-strong-rgb) / var(--neo-panel-alpha));
@@ -10763,6 +11212,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--retro-space-5);
+    --usk-native-control-min-block-size: 3.1rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.55rem;
+    --usk-native-choice-background: var(--retro-control-bg);
+    --usk-native-choice-border: 1px solid var(--retro-border);
+    --usk-native-checkbox-radius: .2rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 0 0 10px var(--retro-primary);
+    --usk-native-choice-checked-background: var(--retro-primary);
+    --usk-native-choice-mark-color: var(--retro-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--retro-primary) 50%), linear-gradient(135deg, var(--retro-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
+    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-padding-inline-end: 2.55rem;
+    --usk-native-range-track-size: .72rem;
+    --usk-native-range-track-background: var(--retro-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--retro-border);
+    --usk-native-range-track-radius: .18rem;
+    --usk-native-range-track-shadow: 0 0 10px var(--retro-primary);
+    --usk-native-range-progress-background: var(--retro-primary);
+    --usk-native-range-thumb-size: 1.55rem;
+    --usk-native-range-thumb-background: var(--retro-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--retro-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 0 0 10px var(--retro-primary);
+    --usk-native-progress-size: .82rem;
+    --usk-native-progress-track-background: var(--retro-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--retro-border);
+    --usk-native-progress-track-radius: .16rem;
+    --usk-native-progress-track-shadow: 0 0 10px var(--retro-primary);
+    --usk-native-progress-value-background: var(--retro-primary);
+    --usk-native-progress-value-radius: .16rem;
+    --usk-native-progress-value-shadow: 0 0 10px var(--retro-primary);
+    --usk-native-meter-optimum-background: var(--retro-success);
+    --usk-native-meter-suboptimum-background: var(--retro-warning);
+    --usk-native-meter-critical-background: var(--retro-danger);
+    --usk-native-file-button-background: var(--retro-primary);
+    --usk-native-file-button-border: 1px solid var(--retro-border);
+    --usk-native-file-button-radius: .2rem;
+    --usk-native-file-button-shadow: 0 0 10px var(--retro-primary);
+    --usk-native-color-swatch-border: 1px solid var(--retro-border);
+    --usk-native-color-swatch-radius: .2rem;
+    --usk-native-indicator-opacity: .77;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .78rem;
+    --usk-native-scrollbar-track: var(--retro-surface-soft);
+    --usk-native-scrollbar-thumb: var(--retro-primary);
+    --usk-native-scrollbar-radius: .16rem;
     --retro-bg: rgb(var(--retro-bg-rgb));
     --retro-surface: rgb(var(--retro-surface-rgb) / var(--retro-panel-alpha));
     --retro-surface-strong: rgb(var(--retro-surface-strong-rgb) / var(--retro-panel-alpha));
@@ -11945,6 +12445,57 @@
     --usk-native-border-width: 3px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--brutal-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.55rem;
+    --usk-native-choice-background: var(--brutal-control-bg);
+    --usk-native-choice-border: 2px solid var(--brutal-border);
+    --usk-native-checkbox-radius: 0;
+    --usk-native-radio-radius: 0;
+    --usk-native-choice-shadow: 4px 4px 0 var(--brutal-border);
+    --usk-native-choice-checked-background: var(--brutal-primary);
+    --usk-native-choice-mark-color: var(--brutal-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(48deg, transparent 50%, var(--brutal-primary) 50%), linear-gradient(132deg, var(--brutal-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-padding-inline-end: 2.7rem;
+    --usk-native-range-track-size: .8rem;
+    --usk-native-range-track-background: var(--brutal-surface-soft);
+    --usk-native-range-track-border: 2px solid var(--brutal-border);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: 4px 4px 0 var(--brutal-border);
+    --usk-native-range-progress-background: var(--brutal-primary);
+    --usk-native-range-thumb-size: 1.45rem;
+    --usk-native-range-thumb-background: var(--brutal-surface-strong);
+    --usk-native-range-thumb-border: 2px solid var(--brutal-border);
+    --usk-native-range-thumb-radius: 0;
+    --usk-native-range-thumb-shadow: 4px 4px 0 var(--brutal-border);
+    --usk-native-progress-size: .95rem;
+    --usk-native-progress-track-background: var(--brutal-surface-soft);
+    --usk-native-progress-track-border: 2px solid var(--brutal-border);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: 4px 4px 0 var(--brutal-border);
+    --usk-native-progress-value-background: var(--brutal-primary);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: 4px 4px 0 var(--brutal-border);
+    --usk-native-meter-optimum-background: var(--brutal-success);
+    --usk-native-meter-suboptimum-background: var(--brutal-warning);
+    --usk-native-meter-critical-background: var(--brutal-danger);
+    --usk-native-file-button-background: var(--brutal-primary);
+    --usk-native-file-button-border: 2px solid var(--brutal-border);
+    --usk-native-file-button-radius: 0;
+    --usk-native-file-button-shadow: 4px 4px 0 var(--brutal-border);
+    --usk-native-color-swatch-border: 2px solid var(--brutal-border);
+    --usk-native-color-swatch-radius: 0;
+    --usk-native-indicator-opacity: .82;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: 1rem;
+    --usk-native-scrollbar-track: var(--brutal-surface-soft);
+    --usk-native-scrollbar-thumb: var(--brutal-primary);
+    --usk-native-scrollbar-radius: 0;
     --brutal-bg: rgb(var(--brutal-bg-rgb));
     --brutal-surface: rgb(var(--brutal-surface-rgb) / var(--brutal-panel-alpha));
     --brutal-surface-strong: rgb(var(--brutal-surface-strong-rgb) / var(--brutal-panel-strong-alpha));
@@ -12928,6 +13479,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--cyber-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.5rem;
+    --usk-native-choice-background: var(--cyber-control-bg);
+    --usk-native-choice-border: 1px solid var(--cyber-border);
+    --usk-native-checkbox-radius: .1rem;
+    --usk-native-radio-radius: 32%;
+    --usk-native-choice-shadow: 0 0 14px var(--cyber-primary);
+    --usk-native-choice-checked-background: var(--cyber-primary);
+    --usk-native-choice-mark-color: var(--cyber-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(51deg, transparent 50%, var(--cyber-primary) 50%), linear-gradient(129deg, var(--cyber-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-padding-inline-end: 2.25rem;
+    --usk-native-range-track-size: .58rem;
+    --usk-native-range-track-background: var(--cyber-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--cyber-border);
+    --usk-native-range-track-radius: .08rem;
+    --usk-native-range-track-shadow: 0 0 14px var(--cyber-primary);
+    --usk-native-range-progress-background: var(--cyber-primary);
+    --usk-native-range-thumb-size: 1.4rem;
+    --usk-native-range-thumb-background: var(--cyber-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--cyber-border);
+    --usk-native-range-thumb-radius: 32%;
+    --usk-native-range-thumb-shadow: 0 0 14px var(--cyber-primary);
+    --usk-native-progress-size: .72rem;
+    --usk-native-progress-track-background: var(--cyber-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--cyber-border);
+    --usk-native-progress-track-radius: .08rem;
+    --usk-native-progress-track-shadow: 0 0 14px var(--cyber-primary);
+    --usk-native-progress-value-background: var(--cyber-primary);
+    --usk-native-progress-value-radius: .08rem;
+    --usk-native-progress-value-shadow: 0 0 14px var(--cyber-primary);
+    --usk-native-meter-optimum-background: var(--cyber-success);
+    --usk-native-meter-suboptimum-background: var(--cyber-warning);
+    --usk-native-meter-critical-background: var(--cyber-danger);
+    --usk-native-file-button-background: var(--cyber-primary);
+    --usk-native-file-button-border: 1px solid var(--cyber-border);
+    --usk-native-file-button-radius: .1rem;
+    --usk-native-file-button-shadow: 0 0 14px var(--cyber-primary);
+    --usk-native-color-swatch-border: 1px solid var(--cyber-border);
+    --usk-native-color-swatch-radius: .1rem;
+    --usk-native-indicator-opacity: .87;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .75rem;
+    --usk-native-scrollbar-track: var(--cyber-surface-soft);
+    --usk-native-scrollbar-thumb: var(--cyber-primary);
+    --usk-native-scrollbar-radius: .08rem;
     --cyber-bg: rgb(var(--cyber-bg-rgb));
     --cyber-surface: rgb(var(--cyber-surface-rgb) / var(--cyber-panel-alpha));
     --cyber-surface-strong: rgb(var(--cyber-surface-strong-rgb) / var(--cyber-panel-strong-alpha));
@@ -13928,6 +14530,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--y2k-space-5);
+    --usk-native-control-min-block-size: 3.125rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.6rem;
+    --usk-native-choice-background: var(--y2k-control-bg);
+    --usk-native-choice-border: 1px solid var(--y2k-border);
+    --usk-native-checkbox-radius: .65rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: inset 0 3px #ffffff8c;
+    --usk-native-choice-checked-background: var(--y2k-primary);
+    --usk-native-choice-mark-color: var(--y2k-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(54deg, transparent 50%, var(--y2k-primary) 50%), linear-gradient(126deg, var(--y2k-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
+    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-padding-inline-end: 2.4rem;
+    --usk-native-range-track-size: .66rem;
+    --usk-native-range-track-background: var(--y2k-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--y2k-border);
+    --usk-native-range-track-radius: 999px;
+    --usk-native-range-track-shadow: inset 0 3px #ffffff8c;
+    --usk-native-range-progress-background: var(--y2k-primary);
+    --usk-native-range-thumb-size: 1.55rem;
+    --usk-native-range-thumb-background: var(--y2k-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--y2k-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: inset 0 3px #ffffff8c;
+    --usk-native-progress-size: .88rem;
+    --usk-native-progress-track-background: var(--y2k-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--y2k-border);
+    --usk-native-progress-track-radius: 999px;
+    --usk-native-progress-track-shadow: inset 0 3px #ffffff8c;
+    --usk-native-progress-value-background: var(--y2k-primary);
+    --usk-native-progress-value-radius: 999px;
+    --usk-native-progress-value-shadow: inset 0 3px #ffffff8c;
+    --usk-native-meter-optimum-background: var(--y2k-success);
+    --usk-native-meter-suboptimum-background: var(--y2k-warning);
+    --usk-native-meter-critical-background: var(--y2k-danger);
+    --usk-native-file-button-background: var(--y2k-primary);
+    --usk-native-file-button-border: 1px solid var(--y2k-border);
+    --usk-native-file-button-radius: .65rem;
+    --usk-native-file-button-shadow: inset 0 3px #ffffff8c;
+    --usk-native-color-swatch-border: 1px solid var(--y2k-border);
+    --usk-native-color-swatch-radius: .65rem;
+    --usk-native-indicator-opacity: .92;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .82rem;
+    --usk-native-scrollbar-track: var(--y2k-surface-soft);
+    --usk-native-scrollbar-thumb: var(--y2k-primary);
+    --usk-native-scrollbar-radius: 999px;
     --y2k-bg: rgb(var(--y2k-bg-rgb));
     --y2k-surface: rgb(var(--y2k-surface-rgb) / var(--y2k-panel-alpha));
     --y2k-surface-strong: rgb(var(--y2k-surface-strong-rgb) / var(--y2k-panel-strong-alpha));
@@ -14902,6 +15555,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--rg-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.5rem;
+    --usk-native-choice-background: var(--rg-control-bg);
+    --usk-native-choice-border: 1px solid var(--rg-border);
+    --usk-native-checkbox-radius: .28rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: inset 0 1px #ffffff8c;
+    --usk-native-choice-checked-background: var(--rg-primary);
+    --usk-native-choice-mark-color: var(--rg-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(57deg, transparent 50%, var(--rg-primary) 50%), linear-gradient(123deg, var(--rg-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-padding-inline-end: 2.55rem;
+    --usk-native-range-track-size: .54rem;
+    --usk-native-range-track-background: var(--rg-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--rg-border);
+    --usk-native-range-track-radius: .2rem;
+    --usk-native-range-track-shadow: inset 0 1px #ffffff8c;
+    --usk-native-range-progress-background: var(--rg-primary);
+    --usk-native-range-thumb-size: 1.35rem;
+    --usk-native-range-thumb-background: var(--rg-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--rg-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: inset 0 1px #ffffff8c;
+    --usk-native-progress-size: .72rem;
+    --usk-native-progress-track-background: var(--rg-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--rg-border);
+    --usk-native-progress-track-radius: .2rem;
+    --usk-native-progress-track-shadow: inset 0 1px #ffffff8c;
+    --usk-native-progress-value-background: var(--rg-primary);
+    --usk-native-progress-value-radius: .2rem;
+    --usk-native-progress-value-shadow: inset 0 1px #ffffff8c;
+    --usk-native-meter-optimum-background: var(--rg-success);
+    --usk-native-meter-suboptimum-background: var(--rg-warning);
+    --usk-native-meter-critical-background: var(--rg-danger);
+    --usk-native-file-button-background: var(--rg-primary);
+    --usk-native-file-button-border: 1px solid var(--rg-border);
+    --usk-native-file-button-radius: .28rem;
+    --usk-native-file-button-shadow: inset 0 1px #ffffff8c;
+    --usk-native-color-swatch-border: 1px solid var(--rg-border);
+    --usk-native-color-swatch-radius: .28rem;
+    --usk-native-indicator-opacity: .72;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .72rem;
+    --usk-native-scrollbar-track: var(--rg-surface-soft);
+    --usk-native-scrollbar-thumb: var(--rg-primary);
+    --usk-native-scrollbar-radius: .2rem;
     --rg-bg: rgb(var(--rg-bg-rgb));
     --rg-surface: rgb(var(--rg-surface-rgb) / var(--rg-panel-alpha));
     --rg-surface-strong: rgb(var(--rg-surface-strong-rgb) / var(--rg-panel-strong-alpha));
@@ -15926,6 +16630,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--luxe-space-5);
+    --usk-native-control-min-block-size: 2.75rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.35rem;
+    --usk-native-choice-background: var(--luxe-control-bg);
+    --usk-native-choice-border: 1px solid var(--luxe-border);
+    --usk-native-checkbox-radius: 0;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: none;
+    --usk-native-choice-checked-background: var(--luxe-primary);
+    --usk-native-choice-mark-color: var(--luxe-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(60deg, transparent 50%, var(--luxe-primary) 50%), linear-gradient(120deg, var(--luxe-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
+    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-padding-inline-end: 2.7rem;
+    --usk-native-range-track-size: 1px;
+    --usk-native-range-track-background: var(--luxe-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--luxe-border);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: none;
+    --usk-native-range-progress-background: var(--luxe-primary);
+    --usk-native-range-thumb-size: .85rem;
+    --usk-native-range-thumb-background: var(--luxe-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--luxe-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: none;
+    --usk-native-progress-size: .28rem;
+    --usk-native-progress-track-background: var(--luxe-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--luxe-border);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: none;
+    --usk-native-progress-value-background: var(--luxe-primary);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: none;
+    --usk-native-meter-optimum-background: var(--luxe-success);
+    --usk-native-meter-suboptimum-background: var(--luxe-warning);
+    --usk-native-meter-critical-background: var(--luxe-danger);
+    --usk-native-file-button-background: var(--luxe-primary);
+    --usk-native-file-button-border: 1px solid var(--luxe-border);
+    --usk-native-file-button-radius: 0;
+    --usk-native-file-button-shadow: none;
+    --usk-native-color-swatch-border: 1px solid var(--luxe-border);
+    --usk-native-color-swatch-radius: 0;
+    --usk-native-indicator-opacity: .77;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .55rem;
+    --usk-native-scrollbar-track: var(--luxe-surface-soft);
+    --usk-native-scrollbar-thumb: var(--luxe-primary);
+    --usk-native-scrollbar-radius: 0;
     --luxe-bg: rgb(var(--luxe-bg-rgb));
     --luxe-surface: rgb(var(--luxe-surface-rgb) / var(--luxe-panel-alpha));
     --luxe-surface-strong: rgb(var(--luxe-surface-strong-rgb) / var(--luxe-panel-alpha));
@@ -17227,6 +17982,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--organic-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.5rem;
+    --usk-native-choice-background: var(--organic-control-bg);
+    --usk-native-choice-border: 1px solid var(--organic-border);
+    --usk-native-checkbox-radius: 42% 58%;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 0 3px 8px #0000002e;
+    --usk-native-choice-checked-background: var(--organic-primary);
+    --usk-native-choice-mark-color: var(--organic-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(63deg, transparent 50%, var(--organic-primary) 50%), linear-gradient(117deg, var(--organic-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-padding-inline-end: 2.25rem;
+    --usk-native-range-track-size: .6rem;
+    --usk-native-range-track-background: var(--organic-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--organic-border);
+    --usk-native-range-track-radius: 55% 45%;
+    --usk-native-range-track-shadow: 0 3px 8px #0000002e;
+    --usk-native-range-progress-background: var(--organic-primary);
+    --usk-native-range-thumb-size: 1.45rem;
+    --usk-native-range-thumb-background: var(--organic-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--organic-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 0 3px 8px #0000002e;
+    --usk-native-progress-size: .76rem;
+    --usk-native-progress-track-background: var(--organic-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--organic-border);
+    --usk-native-progress-track-radius: 48% 52%;
+    --usk-native-progress-track-shadow: 0 3px 8px #0000002e;
+    --usk-native-progress-value-background: var(--organic-primary);
+    --usk-native-progress-value-radius: 48% 52%;
+    --usk-native-progress-value-shadow: 0 3px 8px #0000002e;
+    --usk-native-meter-optimum-background: var(--organic-success);
+    --usk-native-meter-suboptimum-background: var(--organic-warning);
+    --usk-native-meter-critical-background: var(--organic-danger);
+    --usk-native-file-button-background: var(--organic-primary);
+    --usk-native-file-button-border: 1px solid var(--organic-border);
+    --usk-native-file-button-radius: 42% 58%;
+    --usk-native-file-button-shadow: 0 3px 8px #0000002e;
+    --usk-native-color-swatch-border: 1px solid var(--organic-border);
+    --usk-native-color-swatch-radius: 42% 58%;
+    --usk-native-indicator-opacity: .82;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .74rem;
+    --usk-native-scrollbar-track: var(--organic-surface-soft);
+    --usk-native-scrollbar-thumb: var(--organic-primary);
+    --usk-native-scrollbar-radius: 48% 52%;
     --organic-bg: rgb(var(--organic-bg-rgb));
     --organic-surface: rgb(var(--organic-surface-rgb) / var(--organic-panel-alpha));
     --organic-surface-strong: rgb(var(--organic-surface-strong-rgb) / var(--organic-panel-alpha));
@@ -18491,6 +19297,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--utility-space-5);
+    --usk-native-control-min-block-size: 2.75rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.35rem;
+    --usk-native-choice-background: var(--utility-control-bg);
+    --usk-native-choice-border: 2px solid var(--utility-border);
+    --usk-native-checkbox-radius: .08rem;
+    --usk-native-radio-radius: .08rem;
+    --usk-native-choice-shadow: 2px 2px 0 #0000004d;
+    --usk-native-choice-checked-background: var(--utility-primary);
+    --usk-native-choice-mark-color: var(--utility-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(66deg, transparent 50%, var(--utility-primary) 50%), linear-gradient(114deg, var(--utility-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
+    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-padding-inline-end: 2.4rem;
+    --usk-native-range-track-size: .7rem;
+    --usk-native-range-track-background: var(--utility-surface-soft);
+    --usk-native-range-track-border: 2px solid var(--utility-border);
+    --usk-native-range-track-radius: .06rem;
+    --usk-native-range-track-shadow: 2px 2px 0 #0000004d;
+    --usk-native-range-progress-background: var(--utility-primary);
+    --usk-native-range-thumb-size: 1.25rem;
+    --usk-native-range-thumb-background: var(--utility-surface-strong);
+    --usk-native-range-thumb-border: 2px solid var(--utility-border);
+    --usk-native-range-thumb-radius: .08rem;
+    --usk-native-range-thumb-shadow: 2px 2px 0 #0000004d;
+    --usk-native-progress-size: .76rem;
+    --usk-native-progress-track-background: var(--utility-surface-soft);
+    --usk-native-progress-track-border: 2px solid var(--utility-border);
+    --usk-native-progress-track-radius: .06rem;
+    --usk-native-progress-track-shadow: 2px 2px 0 #0000004d;
+    --usk-native-progress-value-background: var(--utility-primary);
+    --usk-native-progress-value-radius: .06rem;
+    --usk-native-progress-value-shadow: 2px 2px 0 #0000004d;
+    --usk-native-meter-optimum-background: var(--utility-success);
+    --usk-native-meter-suboptimum-background: var(--utility-warning);
+    --usk-native-meter-critical-background: var(--utility-danger);
+    --usk-native-file-button-background: var(--utility-primary);
+    --usk-native-file-button-border: 2px solid var(--utility-border);
+    --usk-native-file-button-radius: .08rem;
+    --usk-native-file-button-shadow: 2px 2px 0 #0000004d;
+    --usk-native-color-swatch-border: 2px solid var(--utility-border);
+    --usk-native-color-swatch-radius: .08rem;
+    --usk-native-indicator-opacity: .87;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .85rem;
+    --usk-native-scrollbar-track: var(--utility-surface-soft);
+    --usk-native-scrollbar-thumb: var(--utility-primary);
+    --usk-native-scrollbar-radius: .06rem;
     --utility-bg: rgb(var(--utility-bg-rgb));
     --utility-surface: rgb(var(--utility-surface-rgb) / var(--utility-panel-alpha));
     --utility-surface-strong: rgb(var(--utility-surface-strong-rgb) / var(--utility-panel-alpha));
@@ -19785,6 +20642,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--blueprint-space-5);
+    --usk-native-control-min-block-size: 2.75rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.35rem;
+    --usk-native-choice-background: var(--blueprint-control-bg);
+    --usk-native-choice-border: 1px solid var(--blueprint-border);
+    --usk-native-checkbox-radius: 0;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 0 0 0 1px var(--blueprint-primary);
+    --usk-native-choice-checked-background: var(--blueprint-primary);
+    --usk-native-choice-mark-color: var(--blueprint-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(69deg, transparent 50%, var(--blueprint-primary) 50%), linear-gradient(111deg, var(--blueprint-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
+    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-padding-inline-end: 2.55rem;
+    --usk-native-range-track-size: .34rem;
+    --usk-native-range-track-background: var(--blueprint-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--blueprint-border);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: 0 0 0 1px var(--blueprint-primary);
+    --usk-native-range-progress-background: var(--blueprint-primary);
+    --usk-native-range-thumb-size: 1.2rem;
+    --usk-native-range-thumb-background: var(--blueprint-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--blueprint-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 0 0 0 1px var(--blueprint-primary);
+    --usk-native-progress-size: .55rem;
+    --usk-native-progress-track-background: var(--blueprint-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--blueprint-border);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: 0 0 0 1px var(--blueprint-primary);
+    --usk-native-progress-value-background: var(--blueprint-primary);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: 0 0 0 1px var(--blueprint-primary);
+    --usk-native-meter-optimum-background: var(--blueprint-success);
+    --usk-native-meter-suboptimum-background: var(--blueprint-warning);
+    --usk-native-meter-critical-background: var(--blueprint-danger);
+    --usk-native-file-button-background: var(--blueprint-primary);
+    --usk-native-file-button-border: 1px solid var(--blueprint-border);
+    --usk-native-file-button-radius: 0;
+    --usk-native-file-button-shadow: 0 0 0 1px var(--blueprint-primary);
+    --usk-native-color-swatch-border: 1px solid var(--blueprint-border);
+    --usk-native-color-swatch-radius: 0;
+    --usk-native-indicator-opacity: .92;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .65rem;
+    --usk-native-scrollbar-track: var(--blueprint-surface-soft);
+    --usk-native-scrollbar-thumb: var(--blueprint-primary);
+    --usk-native-scrollbar-radius: 0;
     --blueprint-bg: rgb(var(--blueprint-bg-rgb));
     --blueprint-surface: rgb(var(--blueprint-surface-rgb) / var(--blueprint-panel-alpha));
     --blueprint-surface-strong: rgb(var(--blueprint-surface-strong-rgb) / var(--blueprint-panel-alpha));
@@ -21073,6 +21981,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--deco-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.45rem;
+    --usk-native-choice-background: var(--deco-control-bg);
+    --usk-native-choice-border: 1px solid var(--deco-border);
+    --usk-native-checkbox-radius: .12rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 0 0 0 2px var(--deco-surface-strong);
+    --usk-native-choice-checked-background: var(--deco-primary);
+    --usk-native-choice-mark-color: var(--deco-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(72deg, transparent 50%, var(--deco-primary) 50%), linear-gradient(108deg, var(--deco-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-padding-inline-end: 2.7rem;
+    --usk-native-range-track-size: .48rem;
+    --usk-native-range-track-background: var(--deco-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--deco-border);
+    --usk-native-range-track-radius: .08rem;
+    --usk-native-range-track-shadow: 0 0 0 2px var(--deco-surface-strong);
+    --usk-native-range-progress-background: var(--deco-primary);
+    --usk-native-range-thumb-size: 1.35rem;
+    --usk-native-range-thumb-background: var(--deco-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--deco-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 0 0 0 2px var(--deco-surface-strong);
+    --usk-native-progress-size: .7rem;
+    --usk-native-progress-track-background: var(--deco-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--deco-border);
+    --usk-native-progress-track-radius: .08rem;
+    --usk-native-progress-track-shadow: 0 0 0 2px var(--deco-surface-strong);
+    --usk-native-progress-value-background: var(--deco-primary);
+    --usk-native-progress-value-radius: .08rem;
+    --usk-native-progress-value-shadow: 0 0 0 2px var(--deco-surface-strong);
+    --usk-native-meter-optimum-background: var(--deco-success);
+    --usk-native-meter-suboptimum-background: var(--deco-warning);
+    --usk-native-meter-critical-background: var(--deco-danger);
+    --usk-native-file-button-background: var(--deco-primary);
+    --usk-native-file-button-border: 1px solid var(--deco-border);
+    --usk-native-file-button-radius: .12rem;
+    --usk-native-file-button-shadow: 0 0 0 2px var(--deco-surface-strong);
+    --usk-native-color-swatch-border: 1px solid var(--deco-border);
+    --usk-native-color-swatch-radius: .12rem;
+    --usk-native-indicator-opacity: .72;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .7rem;
+    --usk-native-scrollbar-track: var(--deco-surface-soft);
+    --usk-native-scrollbar-thumb: var(--deco-primary);
+    --usk-native-scrollbar-radius: .08rem;
     --deco-bg: rgb(var(--deco-bg-rgb));
     --deco-surface: rgb(var(--deco-surface-rgb) / var(--deco-panel-alpha));
     --deco-surface-strong: rgb(var(--deco-surface-strong-rgb) / var(--deco-panel-alpha));
@@ -22346,6 +23305,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--clay-space-5);
+    --usk-native-control-min-block-size: 3.2rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.65rem;
+    --usk-native-choice-background: var(--clay-control-bg);
+    --usk-native-choice-border: 1px solid var(--clay-border);
+    --usk-native-checkbox-radius: .58rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: inset 0 4px #ffffff4d;
+    --usk-native-choice-checked-background: var(--clay-primary);
+    --usk-native-choice-mark-color: var(--clay-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(75deg, transparent 50%, var(--clay-primary) 50%), linear-gradient(105deg, var(--clay-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-padding-inline-end: 2.25rem;
+    --usk-native-range-track-size: .76rem;
+    --usk-native-range-track-background: var(--clay-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--clay-border);
+    --usk-native-range-track-radius: 999px;
+    --usk-native-range-track-shadow: inset 0 4px #ffffff4d;
+    --usk-native-range-progress-background: var(--clay-primary);
+    --usk-native-range-thumb-size: 1.65rem;
+    --usk-native-range-thumb-background: var(--clay-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--clay-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: inset 0 4px #ffffff4d;
+    --usk-native-progress-size: 1rem;
+    --usk-native-progress-track-background: var(--clay-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--clay-border);
+    --usk-native-progress-track-radius: 999px;
+    --usk-native-progress-track-shadow: inset 0 4px #ffffff4d;
+    --usk-native-progress-value-background: var(--clay-primary);
+    --usk-native-progress-value-radius: 999px;
+    --usk-native-progress-value-shadow: inset 0 4px #ffffff4d;
+    --usk-native-meter-optimum-background: var(--clay-success);
+    --usk-native-meter-suboptimum-background: var(--clay-warning);
+    --usk-native-meter-critical-background: var(--clay-danger);
+    --usk-native-file-button-background: var(--clay-primary);
+    --usk-native-file-button-border: 1px solid var(--clay-border);
+    --usk-native-file-button-radius: .58rem;
+    --usk-native-file-button-shadow: inset 0 4px #ffffff4d;
+    --usk-native-color-swatch-border: 1px solid var(--clay-border);
+    --usk-native-color-swatch-radius: .58rem;
+    --usk-native-indicator-opacity: .77;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .9rem;
+    --usk-native-scrollbar-track: var(--clay-surface-soft);
+    --usk-native-scrollbar-thumb: var(--clay-primary);
+    --usk-native-scrollbar-radius: 999px;
     --clay-bg: rgb(var(--clay-bg-rgb));
     --clay-surface: rgb(var(--clay-surface-rgb) / var(--clay-panel-alpha));
     --clay-surface-strong: rgb(var(--clay-surface-strong-rgb) / var(--clay-panel-alpha));
@@ -23632,6 +24642,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--terminal-space-5);
+    --usk-native-control-min-block-size: 2.65rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.3rem;
+    --usk-native-choice-background: var(--terminal-control-bg);
+    --usk-native-choice-border: 1px solid var(--terminal-border);
+    --usk-native-checkbox-radius: 0;
+    --usk-native-radio-radius: 0;
+    --usk-native-choice-shadow: 0 0 9px var(--terminal-primary);
+    --usk-native-choice-checked-background: var(--terminal-primary);
+    --usk-native-choice-mark-color: var(--terminal-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(78deg, transparent 50%, var(--terminal-primary) 50%), linear-gradient(102deg, var(--terminal-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-padding-inline-end: 2.4rem;
+    --usk-native-range-track-size: .5rem;
+    --usk-native-range-track-background: var(--terminal-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--terminal-border);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: 0 0 9px var(--terminal-primary);
+    --usk-native-range-progress-background: var(--terminal-primary);
+    --usk-native-range-thumb-size: 1.1rem;
+    --usk-native-range-thumb-background: var(--terminal-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--terminal-border);
+    --usk-native-range-thumb-radius: 0;
+    --usk-native-range-thumb-shadow: 0 0 9px var(--terminal-primary);
+    --usk-native-progress-size: .62rem;
+    --usk-native-progress-track-background: var(--terminal-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--terminal-border);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: 0 0 9px var(--terminal-primary);
+    --usk-native-progress-value-background: var(--terminal-primary);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: 0 0 9px var(--terminal-primary);
+    --usk-native-meter-optimum-background: var(--terminal-success);
+    --usk-native-meter-suboptimum-background: var(--terminal-warning);
+    --usk-native-meter-critical-background: var(--terminal-danger);
+    --usk-native-file-button-background: var(--terminal-primary);
+    --usk-native-file-button-border: 1px solid var(--terminal-border);
+    --usk-native-file-button-radius: 0;
+    --usk-native-file-button-shadow: 0 0 9px var(--terminal-primary);
+    --usk-native-color-swatch-border: 1px solid var(--terminal-border);
+    --usk-native-color-swatch-radius: 0;
+    --usk-native-indicator-opacity: .82;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .65rem;
+    --usk-native-scrollbar-track: var(--terminal-surface-soft);
+    --usk-native-scrollbar-thumb: var(--terminal-primary);
+    --usk-native-scrollbar-radius: 0;
     --terminal-bg: rgb(var(--terminal-bg-rgb));
     --terminal-surface: rgb(var(--terminal-surface-rgb) / var(--terminal-panel-alpha));
     --terminal-surface-strong: rgb(var(--terminal-surface-strong-rgb) / var(--terminal-panel-alpha));
@@ -24933,6 +25994,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--paper-space-5);
+    --usk-native-control-min-block-size: 2.8rem;
+    --usk-native-control-padding-block: .68rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .5rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.4rem;
+    --usk-native-choice-background: var(--paper-control-bg);
+    --usk-native-choice-border: 1px solid var(--paper-border);
+    --usk-native-checkbox-radius: .08rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 2px 2px 0 #00000029;
+    --usk-native-choice-checked-background: var(--paper-primary);
+    --usk-native-choice-mark-color: var(--paper-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(81deg, transparent 50%, var(--paper-primary) 50%), linear-gradient(99deg, var(--paper-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
+    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-padding-inline-end: 2.55rem;
+    --usk-native-range-track-size: .22rem;
+    --usk-native-range-track-background: var(--paper-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--paper-border);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: 2px 2px 0 #00000029;
+    --usk-native-range-progress-background: var(--paper-primary);
+    --usk-native-range-thumb-size: 1.15rem;
+    --usk-native-range-thumb-background: var(--paper-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--paper-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 2px 2px 0 #00000029;
+    --usk-native-progress-size: .48rem;
+    --usk-native-progress-track-background: var(--paper-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--paper-border);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: 2px 2px 0 #00000029;
+    --usk-native-progress-value-background: var(--paper-primary);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: 2px 2px 0 #00000029;
+    --usk-native-meter-optimum-background: var(--paper-success);
+    --usk-native-meter-suboptimum-background: var(--paper-warning);
+    --usk-native-meter-critical-background: var(--paper-danger);
+    --usk-native-file-button-background: var(--paper-primary);
+    --usk-native-file-button-border: 1px solid var(--paper-border);
+    --usk-native-file-button-radius: .08rem;
+    --usk-native-file-button-shadow: 2px 2px 0 #00000029;
+    --usk-native-color-swatch-border: 1px solid var(--paper-border);
+    --usk-native-color-swatch-radius: .08rem;
+    --usk-native-indicator-opacity: .87;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .6rem;
+    --usk-native-scrollbar-track: var(--paper-surface-soft);
+    --usk-native-scrollbar-thumb: var(--paper-primary);
+    --usk-native-scrollbar-radius: 0;
     --paper-bg: rgb(var(--paper-bg-rgb));
     --paper-surface: rgb(var(--paper-surface-rgb) / var(--paper-panel-alpha));
     --paper-surface-strong: rgb(var(--paper-surface-strong-rgb) / var(--paper-panel-alpha));
@@ -26229,6 +27341,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--noir-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.45rem;
+    --usk-native-choice-background: var(--noir-control-bg);
+    --usk-native-choice-border: 1px solid var(--noir-border);
+    --usk-native-checkbox-radius: .08rem .38rem;
+    --usk-native-radio-radius: 44% 56%;
+    --usk-native-choice-shadow: 0 0 12px var(--noir-primary);
+    --usk-native-choice-checked-background: var(--noir-primary);
+    --usk-native-choice-mark-color: var(--noir-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(84deg, transparent 50%, var(--noir-primary) 50%), linear-gradient(96deg, var(--noir-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
+    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-padding-inline-end: 2.7rem;
+    --usk-native-range-track-size: .42rem;
+    --usk-native-range-track-background: var(--noir-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--noir-border);
+    --usk-native-range-track-radius: 0 .28rem;
+    --usk-native-range-track-shadow: 0 0 12px var(--noir-primary);
+    --usk-native-range-progress-background: var(--noir-primary);
+    --usk-native-range-thumb-size: 1.35rem;
+    --usk-native-range-thumb-background: var(--noir-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--noir-border);
+    --usk-native-range-thumb-radius: 44% 56%;
+    --usk-native-range-thumb-shadow: 0 0 12px var(--noir-primary);
+    --usk-native-progress-size: .68rem;
+    --usk-native-progress-track-background: var(--noir-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--noir-border);
+    --usk-native-progress-track-radius: 0 .3rem;
+    --usk-native-progress-track-shadow: 0 0 12px var(--noir-primary);
+    --usk-native-progress-value-background: var(--noir-primary);
+    --usk-native-progress-value-radius: 0 .3rem;
+    --usk-native-progress-value-shadow: 0 0 12px var(--noir-primary);
+    --usk-native-meter-optimum-background: var(--noir-success);
+    --usk-native-meter-suboptimum-background: var(--noir-warning);
+    --usk-native-meter-critical-background: var(--noir-danger);
+    --usk-native-file-button-background: var(--noir-primary);
+    --usk-native-file-button-border: 1px solid var(--noir-border);
+    --usk-native-file-button-radius: .08rem .38rem;
+    --usk-native-file-button-shadow: 0 0 12px var(--noir-primary);
+    --usk-native-color-swatch-border: 1px solid var(--noir-border);
+    --usk-native-color-swatch-radius: .08rem .38rem;
+    --usk-native-indicator-opacity: .92;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .72rem;
+    --usk-native-scrollbar-track: var(--noir-surface-soft);
+    --usk-native-scrollbar-thumb: var(--noir-primary);
+    --usk-native-scrollbar-radius: 0 .3rem;
     --noir-bg: rgb(var(--noir-bg-rgb));
     --noir-surface: rgb(var(--noir-surface-rgb) / var(--noir-panel-alpha));
     --noir-surface-strong: rgb(var(--noir-surface-strong-rgb) / var(--noir-panel-alpha));

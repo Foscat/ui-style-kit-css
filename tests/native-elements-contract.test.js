@@ -131,6 +131,53 @@ test('native layer exposes documented sizing and paint tokens', () => {
     '--usk-native-thumb',
     '--usk-native-thumb-border',
     '--usk-native-indicator'
+    ,
+    '--usk-native-choice-size',
+    '--usk-native-choice-background',
+    '--usk-native-choice-border',
+    '--usk-native-checkbox-radius',
+    '--usk-native-radio-radius',
+    '--usk-native-choice-shadow',
+    '--usk-native-choice-checked-background',
+    '--usk-native-choice-mark-color',
+    '--usk-native-select-indicator-image',
+    '--usk-native-select-indicator-size',
+    '--usk-native-select-indicator-position',
+    '--usk-native-select-padding-inline-end',
+    '--usk-native-range-track-size',
+    '--usk-native-range-track-background',
+    '--usk-native-range-track-border',
+    '--usk-native-range-track-radius',
+    '--usk-native-range-track-shadow',
+    '--usk-native-range-progress-background',
+    '--usk-native-range-thumb-size',
+    '--usk-native-range-thumb-background',
+    '--usk-native-range-thumb-border',
+    '--usk-native-range-thumb-radius',
+    '--usk-native-range-thumb-shadow',
+    '--usk-native-progress-size',
+    '--usk-native-progress-track-background',
+    '--usk-native-progress-track-border',
+    '--usk-native-progress-track-radius',
+    '--usk-native-progress-track-shadow',
+    '--usk-native-progress-value-background',
+    '--usk-native-progress-value-radius',
+    '--usk-native-progress-value-shadow',
+    '--usk-native-meter-optimum-background',
+    '--usk-native-meter-suboptimum-background',
+    '--usk-native-meter-critical-background',
+    '--usk-native-file-button-background',
+    '--usk-native-file-button-border',
+    '--usk-native-file-button-radius',
+    '--usk-native-file-button-shadow',
+    '--usk-native-color-swatch-border',
+    '--usk-native-color-swatch-radius',
+    '--usk-native-indicator-opacity',
+    '--usk-native-indicator-filter',
+    '--usk-native-scrollbar-size',
+    '--usk-native-scrollbar-track',
+    '--usk-native-scrollbar-thumb',
+    '--usk-native-scrollbar-radius'
   ];
 
   for (const token of requiredTokens) {
@@ -224,6 +271,7 @@ test('native layer has executable selectors for supported native subparts and st
     '-webkit-file-upload-button',
     '-webkit-slider-runnable-track',
     '-moz-range-track',
+    '-moz-range-progress',
     '-webkit-slider-thumb',
     '-moz-range-thumb',
     '-webkit-color-swatch-wrapper',
@@ -257,6 +305,23 @@ test('native layer has executable selectors for supported native subparts and st
   assert.equal(classes.has('is-invalid'), true);
   assert.equal(classes.has('is-valid'), true);
   assert.equal(attributes.some(({ name, value }) => name === 'aria-invalid' && value === 'true'), true);
+});
+
+test('single and multiple selects keep distinct indicator semantics', () => {
+  const ast = astFor('styles/native-elements.css');
+  const rules = collect(ast, 'Rule', (node) => ({
+    selector: generate(node.prelude),
+    declarations: [...node.block.children]
+      .filter((child) => child.type === 'Declaration')
+      .map((child) => child.property)
+  }));
+  const singleSelect = rules.find(({ selector }) => selector.includes('select:not([multiple])'));
+  const multipleSelect = rules.find(({ selector }) => selector.includes('select[multiple]'));
+
+  assert.ok(singleSelect, 'single selects should consume the preset indicator');
+  assert.equal(singleSelect.declarations.includes('background-image'), true);
+  assert.ok(multipleSelect, 'multiple selects should explicitly suppress the single-select indicator');
+  assert.equal(multipleSelect.declarations.includes('background-image'), true);
 });
 
 test('native coverage documentation records the platform contract', () => {

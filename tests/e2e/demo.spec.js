@@ -534,6 +534,35 @@ test('native form samples provide padded block layout for unclassed controls', a
   expect(nativeLabelMetrics.every(({ inlinePadding }) => inlinePadding >= 0), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
 });
 
+test('native specimen exposes the complete semantic control state matrix', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const forms = page.getByTestId('native-forms');
+  for (const testId of [
+    'native-number', 'native-date', 'native-time', 'native-color', 'native-file',
+    'native-select-single', 'native-select-multiple', 'native-checkbox-indeterminate',
+    'native-checkbox-disabled', 'native-radio-disabled', 'native-range-enabled',
+    'native-range-disabled', 'native-valid', 'native-invalid', 'native-required',
+    'native-readonly', 'native-disabled'
+  ]) {
+    await expect(forms.getByTestId(testId)).toBeVisible();
+  }
+
+  expect(await forms.getByTestId('native-checkbox-indeterminate').evaluate((control) => control.indeterminate)).toBe(true);
+  await expect(forms.getByTestId('native-select-multiple')).toHaveAttribute('multiple', '');
+  await expect(forms.getByTestId('native-range-disabled')).toBeDisabled();
+
+  const status = page.getByTestId('native-meter-progress');
+  for (const testId of [
+    'native-progress-zero', 'native-progress-partial', 'native-progress-complete',
+    'native-progress-indeterminate', 'native-meter-optimum',
+    'native-meter-suboptimum', 'native-meter-critical'
+  ]) {
+    await expect(status.getByTestId(testId)).toBeVisible();
+  }
+  await expect(status.getByTestId('native-progress-indeterminate')).not.toHaveAttribute('value', /.+/);
+});
+
 test('native dialog demo opens a real modal with a themed backdrop', async ({ page }) => {
   // Contended WebKit startup can consume most of the generic budget before this focused dialog flow completes.
   test.setTimeout(60_000);

@@ -52,7 +52,7 @@ Color schemes are defined once in `styles/theme-colors.css`. Native HTML fallbac
 |---|---|
 | Shared native HTML element fallback selectors | `styles/native-elements.css` |
 
-Native selectors stay generic under `[data-ui][data-theme][data-mode]`. Presets only provide token mappings such as `--usk-native-surface`, `--usk-native-radius`, and `--usk-native-shadow`, which avoids repeating the same fieldset, table, dialog, details, form, and semantic-element rules in every UI file.
+Native selectors stay generic under `[data-ui][data-theme][data-mode]`. Every preset maps the complete choice, select, range, progress, meter, file, color, indicator, and scrollbar identity token set while retaining theme-owned color channels. This avoids repeating browser pseudo-element rules in every UI file and keeps vendor selectors safely separated.
 
 ## Shared overflow layer
 

@@ -16,6 +16,7 @@
  * @property {'start'|'center'|'end'} filledAlignment Required grid alignment for the filled CTA.
  * @property {string} description Human-readable component identity.
  * @property {readonly string[]} signatureSelectors Prefix-relative selectors used by identity contracts.
+ * @property {Readonly<{control: string, select: string, range: string, progress: string}>} nativeIdentity Human-readable native-control intent.
  */
 
 const compositionFamilies = new Set(['compact', 'block', 'soft', 'elongated', 'expressive']);
@@ -27,28 +28,29 @@ const signatureSelectors = Object.freeze([
   'media-scrim',
   'callout-bar'
 ]);
+const nativeIdentityKeys = Object.freeze(['control', 'select', 'range', 'progress']);
 
 const identityRows = [
-  ['minimal-saas', 'saas', 'compact', 'metric', 'intrinsic', 'start', 'single-corner fold, fine outline, low elevation'],
-  ['bento', 'bento', 'block', 'grid-feature', 'min(100%,14rem)', 'center', 'stepped tile edges and compact block composition'],
-  ['maximalist', 'max', 'expressive', 'well', 'intrinsic', 'end', 'skewed poster silhouette and pronounced layered shadow'],
-  ['bauhaus', 'bau', 'block', 'well', 'min(100%,12rem)', 'start', 'asymmetric hard geometry and structural blocks'],
-  ['tactile', 'tactile', 'expressive', 'well', 'intrinsic', 'center', 'chamfered keycap with bevel and pressed depth'],
-  ['neumorphism', 'neo', 'soft', 'well', 'intrinsic', 'center', 'soft clipping with raised and inset shadows'],
-  ['retrofuturism', 'retro', 'elongated', 'well', 'min(100%,18rem)', 'center', 'elongated console geometry with metallic rim'],
-  ['brutalism', 'brutal', 'block', 'well', 'min(100%,14rem)', 'start', 'blunt cut, thick border, and hard offset shadow'],
-  ['cyberpunk', 'cyber', 'elongated', 'well', 'min(100%,18rem)', 'end', 'multi-notch technical polygon with neon edge'],
-  ['y2k', 'y2k', 'soft', 'well', 'min(100%,14rem)', 'center', 'glossy hexagonal capsule with reflective depth'],
-  ['retro-glass', 'rg', 'elongated', 'well', 'min(100%,16rem)', 'center', 'frosted angular tab with inner highlight'],
-  ['editorial-luxe', 'luxe', 'compact', 'metric', 'intrinsic', 'start', 'slim bookplate with hairline framing'],
-  ['organic-modern', 'organic', 'soft', 'metric', 'intrinsic', 'center', 'asymmetric pebble contour with soft depth'],
-  ['industrial-utility', 'utility', 'compact', 'metric', 'intrinsic', 'start', 'octagonal equipment control with operational density'],
-  ['technical-blueprint', 'blueprint', 'compact', 'metric', 'intrinsic', 'start', 'drafting-corner outline and technical rules'],
-  ['art-deco', 'deco', 'soft', 'metric', 'min(100%,15rem)', 'center', 'symmetric chevrons with double-rule framing'],
-  ['clay', 'clay', 'soft', 'metric', 'intrinsic', 'center', 'inflated pill with chunky soft shadow'],
-  ['data-terminal', 'terminal', 'compact', 'metric', 'intrinsic', 'start', 'terminal brackets with luminous outline'],
-  ['paper-editorial', 'paper', 'compact', 'metric', 'intrinsic', 'start', 'ticket notches with inked offset edge'],
-  ['neo-noir', 'noir', 'elongated', 'metric', 'min(100%,16rem)', 'end', 'cinematic slant with edge lighting']
+  ['minimal-saas', 'saas', 'compact', 'metric', 'intrinsic', 'start', 'single-corner fold, fine outline, low elevation', 'precise compact shell with quiet rules', 'fine minimal chevron', 'slim track and small circular thumb', 'restrained solid progress'],
+  ['bento', 'bento', 'block', 'grid-feature', 'min(100%,14rem)', 'center', 'stepped tile edges and compact block composition', 'nested tile shell with stepped corners', 'stepped tile indicator', 'block thumb on stepped track', 'segmented tile progress'],
+  ['maximalist', 'max', 'expressive', 'well', 'intrinsic', 'end', 'skewed poster silhouette and pronounced layered shadow', 'chunky layered poster control', 'expressive layered indicator', 'oversized expressive thumb', 'layered poster progress'],
+  ['bauhaus', 'bau', 'block', 'well', 'min(100%,12rem)', 'start', 'asymmetric hard geometry and structural blocks', 'hard geometric control', 'square geometric mark', 'circle thumb against hard line', 'block-composed progress'],
+  ['tactile', 'tactile', 'expressive', 'well', 'intrinsic', 'center', 'chamfered keycap with bevel and pressed depth', 'beveled keycap control', 'recessed physical selector', 'lever thumb in recessed track', 'inset gauge fill'],
+  ['neumorphism', 'neo', 'soft', 'well', 'intrinsic', 'center', 'soft clipping with raised and inset shadows', 'soft extruded control', 'raised shell with inset picker', 'raised thumb on concave track', 'softly inset progress'],
+  ['retrofuturism', 'retro', 'elongated', 'well', 'min(100%,18rem)', 'center', 'elongated console geometry with metallic rim', 'instrument panel control', 'console instrument indicator', 'dial thumb in metallic channel', 'luminous gauge progress'],
+  ['brutalism', 'brutal', 'block', 'well', 'min(100%,14rem)', 'start', 'blunt cut, thick border, and hard offset shadow', 'heavy blunt control', 'block arrow selector', 'rectangular thumb on thick track', 'hard-edged progress'],
+  ['cyberpunk', 'cyber', 'elongated', 'well', 'min(100%,18rem)', 'end', 'multi-notch technical polygon with neon edge', 'clipped neon technical control', 'angular neon chevron', 'notched thumb and track', 'segmented neon progress'],
+  ['y2k', 'y2k', 'soft', 'well', 'min(100%,14rem)', 'center', 'glossy hexagonal capsule with reflective depth', 'glossy candy capsule', 'reflective directional mark', 'orb thumb on chrome track', 'glossy capsule progress'],
+  ['retro-glass', 'rg', 'elongated', 'well', 'min(100%,16rem)', 'center', 'frosted angular tab with inner highlight', 'frosted glass control', 'glass directional indicator', 'lens thumb in translucent channel', 'frosted progress fill'],
+  ['editorial-luxe', 'luxe', 'compact', 'metric', 'intrinsic', 'start', 'slim bookplate with hairline framing', 'fine-rule editorial control', 'understated editorial chevron', 'needle thumb on ruled track', 'elegant ruled progress'],
+  ['organic-modern', 'organic', 'soft', 'metric', 'intrinsic', 'center', 'asymmetric pebble contour with soft depth', 'soft pebble control', 'leaf-like indicator', 'pebble thumb on organic track', 'organic rounded progress'],
+  ['industrial-utility', 'utility', 'compact', 'metric', 'intrinsic', 'start', 'octagonal equipment control with operational density', 'dense equipment plate', 'machine-control indicator', 'switchgear thumb on equipment track', 'operational status progress'],
+  ['technical-blueprint', 'blueprint', 'compact', 'metric', 'intrinsic', 'start', 'drafting-corner outline and technical rules', 'measured drafting control', 'calibrated directional indicator', 'crosshair thumb on ticked track', 'ticked technical progress'],
+  ['art-deco', 'deco', 'soft', 'metric', 'min(100%,15rem)', 'center', 'symmetric chevrons with double-rule framing', 'symmetric double-rule control', 'faceted selector mark', 'jewel thumb on stepped track', 'symmetric ruled progress'],
+  ['clay', 'clay', 'soft', 'metric', 'intrinsic', 'center', 'inflated pill with chunky soft shadow', 'inflated soft control', 'pill selector indicator', 'rounded knob on raised channel', 'chunky soft progress'],
+  ['data-terminal', 'terminal', 'compact', 'metric', 'intrinsic', 'start', 'terminal brackets with luminous outline', 'dense terminal control', 'caret bracket indicator', 'cursor thumb on segmented channel', 'luminous terminal progress'],
+  ['paper-editorial', 'paper', 'compact', 'metric', 'intrinsic', 'start', 'ticket notches with inked offset edge', 'printed paper control', 'inked directional mark', 'stamp thumb on printed rule', 'ink-offset progress'],
+  ['neo-noir', 'noir', 'elongated', 'metric', 'min(100%,16rem)', 'end', 'cinematic slant with edge lighting', 'slanted cinematic control', 'slash indicator', 'metallic thumb in shadow channel', 'edge-lit progress']
 ];
 
 /** @type {readonly PresetIdentity[]} */
@@ -59,7 +61,11 @@ export const PRESET_IDENTITIES = Object.freeze(identityRows.map(([
   specimenSuffix,
   filledInlineSize,
   filledAlignment,
-  description
+  description,
+  nativeControl,
+  nativeSelect,
+  nativeRange,
+  nativeProgress
 ]) => Object.freeze({
   id,
   prefix,
@@ -68,7 +74,13 @@ export const PRESET_IDENTITIES = Object.freeze(identityRows.map(([
   filledInlineSize,
   filledAlignment,
   description,
-  signatureSelectors
+  signatureSelectors,
+  nativeIdentity: Object.freeze({
+    control: nativeControl,
+    select: nativeSelect,
+    range: nativeRange,
+    progress: nativeProgress
+  })
 })));
 
 /**
@@ -136,6 +148,14 @@ export function validatePresetIdentities(manifest, identities = PRESET_IDENTITIE
     }
     if (!Array.isArray(identity.signatureSelectors) || identity.signatureSelectors.length === 0) {
       throw new Error(`missing signature selectors for ${identity.id}`);
+    }
+    for (const key of nativeIdentityKeys) {
+      if (typeof identity.nativeIdentity?.[key] !== 'string' || identity.nativeIdentity[key].trim().length === 0) {
+        throw new Error(`missing native identity ${key} for ${identity.id}`);
+      }
+    }
+    if (Object.keys(identity.nativeIdentity).join(',') !== nativeIdentityKeys.join(',')) {
+      throw new Error(`native identity keys must remain stable for ${identity.id}`);
     }
   }
 

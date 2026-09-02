@@ -1,10 +1,10 @@
 # Publishing Guide
 
-## 2.3.0 release workflow
+## 2.4.0 release workflow
 
-Prepare `ui-style-kit-css@2.3.0` on its release branch, open a pull request against `main`, and merge only after the complete gate is green. The aligned companion set is `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`.
+Prepare `ui-style-kit-css@2.4.0` on its release branch, open a pull request against `main`, and merge only after the complete gate is green. The aligned companion set is `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`.
 
-Do not push `v2.3.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
+Do not push `v2.4.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
 
 Release Version Alignment owns the expensive browser release gate: Playwright demo coverage, curated visual checks, the sharded UI matrix, and the full clean-install ecosystem matrix. The protected npm workflow intentionally does not rerun those browser gates; it revalidates the immutable tag, package contracts, browser-free compatibility checks, companion commit reachability, the explicit release preflight with `--skip-clean-install`, npm token presence, npm owner authorization, and registry state before publishing.
 
@@ -16,7 +16,7 @@ npm run release:verify
 
 `npm run release:verify` is the non-publishing release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:axe`, `npm run test:visual`, `npm run test:matrix`, the explicit UI-candidate release preflight, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
 
-`npm run release:preflight` validates the shared manifests and compatibility contract, queries npm for every exact minimum/current version, resolves every export from the candidate tarball, checks maintained documentation against installed packages, and reuses the current/minimum clean-install browser matrix. Normal UI preflight remains strict and queries `ui-style-kit-css@2.3.0` alongside every other documented exact version. The release workflows pass `--candidate-package ui-style-kit-css`, which excludes only that exact current version while it is absent from npm and still requires every published minimum and companion version. The gate performs no publish, tag, release, or deployment mutation and is therefore safe to execute on pull requests.
+`npm run release:preflight` validates the shared manifests and compatibility contract, queries npm for every exact minimum/current version, resolves every export from the candidate tarball, checks maintained documentation against installed packages, and reuses the current/minimum clean-install browser matrix. Normal UI preflight remains strict and queries `ui-style-kit-css@2.4.0` alongside every other documented exact version. The release workflows pass `--candidate-package ui-style-kit-css`, which excludes only that exact current version while it is absent from npm and still requires every published minimum and companion version. The gate performs no publish, tag, release, or deployment mutation and is therefore safe to execute on pull requests.
 
 `npm run check` rebuilds dist CSS, runs stylelint, executes package and API contracts, validates all theme/mode contrast pairs, enforces the Browserslist compatibility contract through `check:compat`, verifies CSS ownership, and confirms package metadata. Browser gates cover regular demo flows, representative Axe scans, curated visual checks, and the sharded 3,600-combination matrix. `npm run check:ecosystem:packs` verifies standalone, pairwise, and all-three packed package compatibility for canonical visual/theme/state/layout imports and deprecated bridge imports in both supported matrices. `npm run pack:dry-run` shows the exact files that would publish.
 
@@ -24,7 +24,7 @@ npm run release:verify
 
 `npm run check:ecosystem:minimum` downloads and repacks the declared minimum published runtime versions: `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`. Those tarballs predate the additive shared-manifest policy introduced on the coordinated branches, so the minimum matrix validates their exact installed versions and published CSS entry points; current packed heads retain the stricter manifest-schema and current-documentation checks. `npm run check:ecosystem:packs` runs current first and minimum second.
 
-The current matrix checks `ui-style-kit-css@2.3.0` as the active candidate only while its exact npm version is absent, `interactive-surface-css@1.6.0` as a published release, and `layout-style-css@3.1.0` as a published release. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current matrix checks `ui-style-kit-css@2.4.0` as the active candidate only while its exact npm version is absent, `interactive-surface-css@1.6.0` as a published release, and `layout-style-css@3.1.0` as a published release. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Both matrices install fresh tarball consumers for UI only, Interaction only, Layout only, every pair, and all three. Chromium then checks selected theme paint, native and prefixed components, interaction focus/disabled/loading/selected/persistent states, Layout wrappers/primitives/recipes/personalities, console cleanliness, and an empty external-request log. Three text-free baselines under `tests/snapshots/clean-install/` cover the highest-risk integrated combinations.
 
@@ -59,7 +59,7 @@ npm run check:ecosystem:packs -- --layout-repo ../Layout-Style-CSS --interactive
 npm publish
 ```
 
-`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.3.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the full release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.4.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
 
 The repository `NPM_TOKEN` secret must authenticate to npm as a user that appears in `npm owner ls ui-style-kit-css`. If the token belongs to another npm account or lacks package publish rights, npm may report a misleading registry `E404` at publish time.
 
@@ -71,4 +71,4 @@ npm run release:minor
 npm run release:major
 ```
 
-Use patch for compatible fixes, minor for new themes, presets, component capabilities, or browser-support contracts, and major for incompatible public API changes. The nine additional presets, ten additional schemes, universal component vocabulary, and compatibility contract make `2.3.0` a minor release.
+Use patch for compatible fixes, minor for new themes, presets, component capabilities, or browser-support contracts, and major for incompatible public API changes. The complete preset-specific native-control identity and browser coverage contract make `2.4.0` a minor release.

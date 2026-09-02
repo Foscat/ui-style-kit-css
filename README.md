@@ -9,7 +9,7 @@ It is separate from, but complementary to, **Interactive Surface CSS** and **Lay
 
 ## Current Release
 
-`v2.3.0` expands the library to 20 UI style systems and 20 shared color schemes, adds a universal commercial component vocabulary and a declared modern-browser support floor, and grows the browser matrix to 3,600 preset/theme/mode/engine combinations. Existing default, focused, visual-only, and bridge entrypoints remain compatible, and parser-based minification remains exactly pinned.
+`v2.4.0` gives all 20 UI style systems a complete native-control identity across selects, choices, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars. Existing themes, modes, selectors, default/focused/visual/bridge entrypoints, and the 3,600-case browser matrix remain compatible, and parser-based minification remains exactly pinned.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -50,11 +50,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.3.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.4.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.6.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.1.0` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.3.0` is the current release target and is verified with Interactive Surface `1.6.0`. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.4.0` is the current release target and is verified with Interactive Surface `1.6.0`. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -162,11 +162,11 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~855 KB | ~125 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~841 KB | ~123 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~1015 KB | ~143 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~916 KB | ~138 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~902 KB | ~136 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~1082 KB | ~154 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~24 KB | ~4 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~32 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
@@ -182,7 +182,7 @@ Use the latest published NPM package:
 For production, pin the exact approved release rather than relying on `latest`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.3.0/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.4.0/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -358,7 +358,7 @@ contrast
 
 ## Native HTML coverage
 
-`styles/native-elements.css` owns the shared native selectors under `[data-ui][data-theme][data-mode]`. Each style system maps those selectors to its visual identity through `--usk-native-*` tokens, so native controls keep the same coverage while inheriting each preset's radius, shadows, borders, typography, and color surfaces.
+`styles/native-elements.css` owns the shared native selectors under `[data-ui][data-theme][data-mode]`. Each style system maps the complete `--usk-native-*` identity contract, so choices, selects, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars inherit preset-specific geometry, material, borders, depth, typography, and theme-owned color. Browser/OS popup internals remain platform-owned.
 
 `styles/content-overflow.css` owns the shared text containment contract under `[data-ui][data-theme][data-mode]`. It keeps headings, paragraphs, links, table cells, controls, badges, nav links, and common UI wrappers from widening their parent wrapper when content contains long words, hashes, URLs, or copyable tokens.
 

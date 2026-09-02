@@ -92,7 +92,7 @@ test('normal UI preflight queries all six exact minimum and current ecosystem ve
     '/layout-style-css/3.0.0',
     '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0',
-    '/ui-style-kit-css/2.3.0'
+    '/ui-style-kit-css/2.4.0'
   ]);
 });
 
@@ -175,7 +175,7 @@ test('excludes only the unpublished candidate current version from registry chec
     await releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
       registryUrl: `http://127.0.0.1:${port}`,
       candidatePackage: 'ui-style-kit-css',
-      candidateVersion: '2.3.0'
+      candidateVersion: '2.4.0'
     });
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
@@ -211,7 +211,7 @@ test('still rejects a nonexistent companion current version for an unpublished c
       releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
         registryUrl: `http://127.0.0.1:${port}`,
         candidatePackage: 'ui-style-kit-css',
-        candidateVersion: '2.3.0'
+        candidateVersion: '2.4.0'
       }),
       /interactive-surface-css@1\.6\.0 does not exist exactly/
     );
@@ -241,7 +241,7 @@ test('still rejects a candidate minimum distinct from its unpublished current ve
       releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
         registryUrl: `http://127.0.0.1:${port}`,
         candidatePackage: 'ui-style-kit-css',
-        candidateVersion: '2.3.0'
+        candidateVersion: '2.4.0'
       }),
       /ui-style-kit-css@2\.1\.0 does not exist exactly/
     );
@@ -512,7 +512,7 @@ function futureCandidateCompatibility() {
         'layout-style-css': '3.0.0'
       },
       current: {
-        'ui-style-kit-css': '2.3.0',
+        'ui-style-kit-css': '2.4.0',
         'interactive-surface-css': '1.6.0',
         'layout-style-css': '3.1.0'
       }

@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 20 shared color themes, and 3 display modes.
 
-Version `v2.3.0` expands the library to 20 UI systems and 20 shared color themes, adds universal commercial component modifiers and a modern-browser support contract, and preserves the existing v2 entrypoint and bridge contracts.
+Version `v2.4.0` adds complete, distinct native-control identities to all 20 UI systems while preserving the 20 shared color themes, v2 entrypoints, component selectors, and bridge contracts.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 

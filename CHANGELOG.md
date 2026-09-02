@@ -4,6 +4,19 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-09-01
+
+### Added
+
+- Added a frozen native-control intent contract for every preset and complete per-preset mappings for choice, select, range, progress, meter, file, color, indicator, and scrollbar tokens.
+- Added Firefox range-progress paint, distinct single/multiple select behavior, indeterminate progress treatment, and a complete native-control demo specimen.
+- Added manifest-driven unit and cross-browser computed-style coverage proving all 20 presets resolve to unique native-control signatures.
+
+### Changed
+
+- Expanded preset identity beyond color and radius so native controls now inherit each system's typography, geometry, material, border, depth, indicator, range, progress, and loading language.
+- Preserved theme-owned palette channels, semantic native HTML, v2 selectors and entrypoints, bridge ownership, forced-color behavior, reduced motion, and platform-owned picker/dialog boundaries.
+
 ## [2.3.0] - 2026-08-29
 
 ### Added

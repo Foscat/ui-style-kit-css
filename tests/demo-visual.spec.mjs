@@ -12,6 +12,33 @@ const styles = [
   'paper-editorial', 'neo-noir'
 ];
 const modes = ['light', 'dark', 'contrast'];
+const nativeIdentityFamilies = ['minimal-saas', 'bauhaus', 'neumorphism', 'cyberpunk', 'paper-editorial'];
+const nativeIdentityViewports = [
+  { name: 'desktop', width: 1440, height: 1200 },
+  { name: 'mobile', width: 390, height: 844 }
+];
+
+/**
+ * Creates a compact visual probe from the full native-control demo specimen.
+ *
+ * @param {import('@playwright/test').Page} page Playwright page rendering the demo.
+ * @returns {Promise<import('@playwright/test').Locator>} Locator for the focused probe.
+ */
+async function createNativeIdentityProbe(page) {
+  await page.evaluate(() => {
+    const probe = document.createElement('div');
+    const forms = document.querySelector('[data-testid="native-forms"]');
+    const status = document.querySelector('[data-testid="native-meter-progress"]');
+
+    probe.id = 'native-identity-visual-probe';
+    probe.className = 'demo-native-grid';
+    probe.style.padding = '1rem';
+    probe.append(forms.cloneNode(true), status.cloneNode(true));
+    document.body.replaceChildren(probe);
+  });
+
+  return page.locator('#native-identity-visual-probe');
+}
 
 test.describe('UI Style Kit visual smoke renders', () => {
   for (const ui of styles) {
@@ -32,6 +59,26 @@ test.describe('UI Style Kit visual smoke renders', () => {
 
         const screenshot = await page.locator('main').screenshot();
         expect(screenshot.byteLength).toBeGreaterThan(10_000);
+      });
+    }
+  }
+});
+
+test.describe('representative native-control identity baselines', () => {
+  for (const ui of nativeIdentityFamilies) {
+    for (const viewport of nativeIdentityViewports) {
+      test(`${ui} / ${viewport.name}`, async ({ page }) => {
+        await page.setViewportSize({ width: viewport.width, height: viewport.height });
+        await page.goto(demoUrl);
+        await page.selectOption('#uiSelect', ui);
+        await page.selectOption('#modeSelect', 'light');
+        await page.selectOption('#themeSelect', 'arctic-indigo');
+
+        const probe = await createNativeIdentityProbe(page);
+        await expect(probe).toHaveScreenshot(`native-controls-${ui}-${viewport.name}.png`, {
+          animations: 'disabled',
+          caret: 'hide'
+        });
       });
     }
   }
