@@ -122,6 +122,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--blueprint-space-5);
+  --usk-native-control-min-block-size: 2.75rem;
+  --usk-native-control-padding-block: .74rem;
+  --usk-native-control-padding-inline: .95rem;
+  --usk-native-subcontrol-padding-block: .58rem;
+  --usk-native-subcontrol-padding-inline: .72rem;
+  --usk-native-choice-size: 1.35rem;
+  --usk-native-choice-background: var(--blueprint-control-bg);
+  --usk-native-choice-border: 1px solid var(--blueprint-border);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: 0 0 0 1px var(--blueprint-primary);
+  --usk-native-choice-checked-background: var(--blueprint-primary);
+  --usk-native-choice-mark-color: var(--blueprint-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(69deg, transparent 50%, var(--blueprint-primary) 50%), linear-gradient(111deg, var(--blueprint-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.5rem 0.5rem, 0.5rem 0.5rem;
+  --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - 0.84rem) 50%;
+  --usk-native-select-padding-inline-end: 2.55rem;
+  --usk-native-range-track-size: .34rem;
+  --usk-native-range-track-background: var(--blueprint-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--blueprint-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: 0 0 0 1px var(--blueprint-primary);
+  --usk-native-range-progress-background: var(--blueprint-primary);
+  --usk-native-range-thumb-size: 1.2rem;
+  --usk-native-range-thumb-background: var(--blueprint-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--blueprint-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: 0 0 0 1px var(--blueprint-primary);
+  --usk-native-progress-size: .55rem;
+  --usk-native-progress-track-background: var(--blueprint-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--blueprint-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: 0 0 0 1px var(--blueprint-primary);
+  --usk-native-progress-value-background: var(--blueprint-primary);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: 0 0 0 1px var(--blueprint-primary);
+  --usk-native-meter-optimum-background: var(--blueprint-success);
+  --usk-native-meter-suboptimum-background: var(--blueprint-warning);
+  --usk-native-meter-critical-background: var(--blueprint-danger);
+  --usk-native-file-button-background: var(--blueprint-primary);
+  --usk-native-file-button-border: 1px solid var(--blueprint-border);
+  --usk-native-file-button-radius: 0;
+  --usk-native-file-button-shadow: 0 0 0 1px var(--blueprint-primary);
+  --usk-native-color-swatch-border: 1px solid var(--blueprint-border);
+  --usk-native-color-swatch-radius: 0;
+  --usk-native-indicator-opacity: 0.9199999999999999;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .65rem;
+  --usk-native-scrollbar-track: var(--blueprint-surface-soft);
+  --usk-native-scrollbar-thumb: var(--blueprint-primary);
+  --usk-native-scrollbar-radius: 0;
   --blueprint-bg: rgb(var(--blueprint-bg-rgb));
   --blueprint-surface: rgb(var(--blueprint-surface-rgb) / var(--blueprint-panel-alpha));
   --blueprint-surface-strong: rgb(var(--blueprint-surface-strong-rgb) / var(--blueprint-panel-alpha));
@@ -509,7 +560,6 @@
 .blueprint-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--blueprint-card-bg);
   color: var(--blueprint-text);
   border: 1px solid var(--blueprint-border);
@@ -630,6 +680,7 @@
 
 /* Filled and framed actions share drafting corners and measured center notches. */
 .blueprint-button.blueprint-button-cut, .blueprint-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
@@ -668,6 +719,100 @@
   border: .08em double currentColor; border-radius: 0; background: repeating-conic-gradient(currentColor 0 8deg, transparent 8deg 24deg); box-shadow: inset 0 0 0 .1em rgb(var(--blueprint-surface-rgb) / .45); clip-path: polygon(0 0, 42% 0, 42% 12%, 58% 12%, 58% 0, 100% 0, 100% 42%, 88% 42%, 88% 58%, 100% 58%, 100% 100%, 0 100%); animation: blueprint-spin 1s steps(12, end) infinite;
 }
 
+/**
+ * Final Technical Blueprint fidelity layer.
+ * Integrates measured drafting rules, registration marks, and calibrated controls.
+ */
+[data-ui="technical-blueprint"][data-theme][data-mode] {
+  --usk-native-font-control: "Arial Narrow", Bahnschrift, ui-monospace, monospace;
+  --usk-native-control-min-block-size: 2.42rem;
+  --usk-native-control-padding-block: .48rem;
+  --usk-native-control-padding-inline: .74rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: .18rem .18rem 0 rgb(var(--blueprint-primary-rgb) / .2);
+  --usk-native-shadow-md: inset 0 0 0 1px rgb(var(--blueprint-primary-rgb) / .14), .28rem .28rem 0 rgb(var(--blueprint-primary-rgb) / .22);
+  --usk-native-focus-ring: 0 0 0 1px var(--blueprint-surface), 0 0 0 3px var(--blueprint-focus);
+  --usk-native-subcontrol-padding-block: .34rem;
+  --usk-native-subcontrol-padding-inline: .54rem;
+  --usk-native-choice-size: 1.08rem;
+  --usk-native-choice-background: linear-gradient(90deg, transparent 46%, rgb(var(--blueprint-primary-rgb) / .12) 46% 54%, transparent 54%), var(--blueprint-control-bg);
+  --usk-native-choice-border: 1px solid var(--blueprint-primary);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: 0 0 0 1px var(--blueprint-surface-strong);
+  --usk-native-choice-checked-background: linear-gradient(135deg, var(--blueprint-primary) 0 46%, var(--blueprint-surface) 46% 54%, var(--blueprint-primary) 54%);
+  --usk-native-choice-mark-color: var(--blueprint-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 47%, var(--blueprint-primary) 47% 53%, transparent 53%), linear-gradient(135deg, transparent 47%, var(--blueprint-primary) 47% 53%, transparent 53%);
+  --usk-native-select-indicator-size: .62rem .62rem, .62rem .62rem;
+  --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .64rem) 50%;
+  --usk-native-select-padding-inline-end: 2.15rem;
+  --usk-native-range-track-size: .22rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--blueprint-primary) 0 1px, transparent 1px .62rem), var(--blueprint-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--blueprint-primary);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: 0 -.34rem 0 -.31rem var(--blueprint-primary);
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--blueprint-primary), var(--blueprint-focus));
+  --usk-native-range-thumb-size: 1.02rem;
+  --usk-native-range-thumb-background: var(--blueprint-surface);
+  --usk-native-range-thumb-border: 1px double var(--blueprint-primary);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 0 0 0 2px var(--blueprint-surface), 0 0 0 3px var(--blueprint-primary);
+  --usk-native-progress-size: .46rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, transparent 0 24%, rgb(var(--blueprint-primary-rgb) / .18) 24% 25%), var(--blueprint-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--blueprint-primary);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: .14rem .14rem 0 rgb(var(--blueprint-primary-rgb) / .18);
+  --usk-native-progress-value-background: linear-gradient(90deg, var(--blueprint-primary), var(--blueprint-focus));
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-scrollbar-size: .7rem;
+  --usk-native-scrollbar-track: repeating-linear-gradient(45deg, var(--blueprint-surface) 0 .18rem, var(--blueprint-surface-soft) .18rem .36rem);
+  --usk-native-scrollbar-thumb: linear-gradient(90deg, transparent 35%, var(--blueprint-primary) 35% 65%, transparent 65%);
+  --usk-native-scrollbar-radius: 0;
+}
+
+.blueprint-title { font-weight: 800; letter-spacing: .02em; }
+.blueprint-label { font-size: .71rem; font-weight: 700; }
+.blueprint-card, .blueprint-panel { padding: .94rem; background: var(--blueprint-card-bg); border: 1px solid var(--blueprint-primary); border-radius: 0; box-shadow: inset 0 0 0 1px rgb(var(--blueprint-primary-rgb) / .12), .22rem .22rem 0 rgb(var(--blueprint-primary-rgb) / .2); background-image: linear-gradient(90deg, transparent calc(100% - .5rem), rgb(var(--blueprint-primary-rgb) / .24) calc(100% - .5rem) calc(100% - .44rem), transparent calc(100% - .44rem)); }
+.blueprint-well, .blueprint-inset { padding: .7rem; background: repeating-linear-gradient(0deg, transparent 0 .28rem, rgb(var(--blueprint-primary-rgb) / .08) .28rem calc(.28rem + 1px)), var(--blueprint-surface); border: 1px dashed var(--blueprint-primary); border-radius: 0; box-shadow: inset 0 0 0 1px var(--blueprint-surface-strong); }
+.blueprint-button, .blueprint-icon-button { min-height: 2.42rem; padding: .48rem .74rem; background: transparent; border: 1px solid var(--blueprint-primary); border-radius: 0; box-shadow: .16rem .16rem 0 rgb(var(--blueprint-primary-rgb) / .2); font-weight: 700; }
+.blueprint-button:active, .blueprint-button[aria-pressed="true"], .blueprint-button.is-active { transform: translate(.12rem, .12rem); box-shadow: none; }
+.blueprint-input, .blueprint-textarea, .blueprint-select { min-height: 2.28rem; padding: .42rem .62rem; background: var(--blueprint-control-bg); border: 1px solid var(--blueprint-primary); border-radius: 0; box-shadow: inset 0 -.18rem 0 rgb(var(--blueprint-primary-rgb) / .12); }
+.blueprint-nav, .blueprint-toolbar { border: 1px solid var(--blueprint-primary); border-radius: 0; box-shadow: inset 0 0 0 1px var(--blueprint-surface-strong); }
+.blueprint-nav-link { border-radius: 0; border-inline-end: 1px solid var(--blueprint-primary); }
+.blueprint-badge { min-height: 1.42rem; padding: .22rem .46rem; border: 1px solid currentColor; border-radius: 0; box-shadow: .1rem .1rem 0 rgb(var(--blueprint-primary-rgb) / .18); }
+.blueprint-alert { padding: .68rem .8rem; background: repeating-linear-gradient(135deg, transparent 0 .35rem, rgb(var(--blueprint-primary-rgb) / .06) .35rem .42rem), var(--blueprint-surface); border: 1px dashed currentColor; border-radius: 0; box-shadow: .2rem .2rem 0 rgb(var(--blueprint-primary-rgb) / .18); }
+.blueprint-progress { height: .46rem; background: repeating-linear-gradient(90deg, transparent 0 24%, rgb(var(--blueprint-primary-rgb) / .18) 24% 25%), var(--blueprint-surface-soft); border-radius: 0; }
+.blueprint-progress-bar { background: linear-gradient(90deg, var(--blueprint-primary), var(--blueprint-focus)); border-radius: 0; box-shadow: none; }
+.blueprint-table-wrap { background: var(--blueprint-surface); border: 1px solid var(--blueprint-primary); border-radius: 0; box-shadow: .24rem .24rem 0 rgb(var(--blueprint-primary-rgb) / .2); }
+.blueprint-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.blueprint-table th { padding: .48rem .58rem; background: repeating-linear-gradient(135deg, rgb(var(--blueprint-primary-rgb) / .12) 0 1px, transparent 1px .3rem); border: 1px solid var(--blueprint-primary); font-weight: 700; }
+.blueprint-table td { padding: .5rem .58rem; border: 1px solid var(--blueprint-primary); }
+.blueprint-tooltip, [data-ui="technical-blueprint"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 1px solid var(--blueprint-primary); border-radius: 0; box-shadow: .16rem .16rem 0 rgb(var(--blueprint-primary-rgb) / .24); }
+.blueprint-card-service, .blueprint-card-feature, .blueprint-media-scrim, .blueprint-feature-strip, .blueprint-callout-bar { border-radius: 0; background-image: linear-gradient(90deg, transparent calc(100% - .5rem), rgb(var(--blueprint-primary-rgb) / .24) calc(100% - .5rem) calc(100% - .44rem), transparent calc(100% - .44rem)); }
+
+/* A broad blueprint wash makes the drafting sheet legible beyond its one-pixel grid. */
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="technical-blueprint"][data-theme][data-mode] {
+    --usk-native-card-bg: linear-gradient(135deg, color-mix(in srgb, var(--blueprint-surface) 72%, var(--blueprint-primary)), var(--blueprint-surface) 62%);
+    --usk-native-control-bg: linear-gradient(180deg, color-mix(in srgb, var(--blueprint-surface-soft) 76%, var(--blueprint-primary)), var(--blueprint-surface-soft));
+  }
+  .blueprint-panel,
+  .blueprint-card-service,
+  .blueprint-feature-strip,
+  .blueprint-callout-bar {
+    background-color: var(--blueprint-card-bg);
+    background-image:
+      linear-gradient(135deg, color-mix(in srgb, var(--blueprint-card-bg) 70%, var(--blueprint-primary)), transparent 68%),
+      repeating-linear-gradient(90deg, transparent 0 1.45rem, rgb(var(--blueprint-primary-rgb) / .18) 1.45rem calc(1.45rem + 1px));
+  }
+}
+.blueprint-input { border-radius: .02rem; }
+.blueprint-alert { border-radius: .025rem; }
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="technical-blueprint"] *, [data-ui="technical-blueprint"] *::before, [data-ui="technical-blueprint"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -683,4 +828,15 @@
   [data-ui="technical-blueprint"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="technical-blueprint"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.technical_blueprint {
+/* Keeps semantic field states above preset-specific material paint. */
+.blueprint-input[aria-invalid="true"], .blueprint-textarea[aria-invalid="true"], .blueprint-select[aria-invalid="true"] { border-color: var(--blueprint-danger); box-shadow: 0 0 0 2px rgb(var(--blueprint-danger-rgb) / .2); }
+.blueprint-input[readonly], .blueprint-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.blueprint-button-primary { background: var(--blueprint-primary); color: var(--blueprint-on-primary); border-color: var(--blueprint-primary); }
+.blueprint-button-secondary { background: var(--blueprint-secondary); color: var(--blueprint-on-secondary); border-color: var(--blueprint-secondary); }
+.blueprint-button-danger { background: var(--blueprint-danger); color: var(--blueprint-on-danger); border-color: var(--blueprint-danger); }
+.blueprint-button-ghost { background: transparent; color: var(--blueprint-primary); border-color: transparent; }
 }

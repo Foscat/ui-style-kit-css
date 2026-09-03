@@ -6,11 +6,11 @@ UI Style Kit CSS stays standalone while offering stable integration points for t
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.3.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.4.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.6.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.1.0` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The current combination is `ui-style-kit-css@2.3.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.1.0`. UI Style Kit `2.3.0` is the current release target; the companion versions are published releases. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.4.0`, `interactive-surface-css@1.6.0`, and `layout-style-css@3.1.0`. UI Style Kit `2.4.0` is the current release target; the companion versions are published releases. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 

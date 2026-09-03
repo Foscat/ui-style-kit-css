@@ -274,7 +274,8 @@ test('button pill components have centered 44px geometry and complete interactio
     assert.equal(declarations.get('box-sizing'), 'border-box', `.${className} should use reliable box sizing`);
     assert.equal(declarations.get('min-block-size'), '44px', `.${className} should prefer a 44px minimum height`);
     assert.equal(declarations.get('text-align'), 'center', `.${className} should center multiline text`);
-    assert.equal(declarations.get('overflow-wrap'), 'anywhere', `.${className} should keep long text inside`);
+    assert.equal(declarations.get('overflow-wrap'), 'break-word', `.${className} should wrap only when text would overflow`);
+    assert.equal(declarations.get('word-break'), 'normal', `.${className} should preserve normal word boundaries`);
     assert.equal(declarations.get('padding-inline'), 'max(1rem,1em)', `.${className} should keep safe inline padding`);
     assert.equal(declarations.get('color'), `var(--${prefix}-on-primary)`, `.${className} should use theme foreground`);
     assert.equal(declarations.get('background'), `var(--${prefix}-primary)`, `.${className} should use theme paint`);

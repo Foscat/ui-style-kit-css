@@ -43,7 +43,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.3.0',
+      'ui-style-kit-css': '2.4.0',
       'interactive-surface-css': '1.6.0',
       'layout-style-css': '3.1.0'
     }

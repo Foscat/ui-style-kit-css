@@ -207,9 +207,55 @@ Native HTML coverage is shared in `styles/native-elements.css` to avoid repeatin
 --usk-native-shadow
 --usk-native-shadow-md
 --usk-native-focus-ring
+--usk-native-choice-size
+--usk-native-choice-background
+--usk-native-choice-border
+--usk-native-checkbox-radius
+--usk-native-radio-radius
+--usk-native-choice-shadow
+--usk-native-choice-checked-background
+--usk-native-choice-mark-color
+--usk-native-select-indicator-image
+--usk-native-select-indicator-size
+--usk-native-select-indicator-position
+--usk-native-select-padding-inline-end
+--usk-native-range-track-size
+--usk-native-range-track-background
+--usk-native-range-track-border
+--usk-native-range-track-radius
+--usk-native-range-track-shadow
+--usk-native-range-progress-background
+--usk-native-range-thumb-size
+--usk-native-range-thumb-background
+--usk-native-range-thumb-border
+--usk-native-range-thumb-radius
+--usk-native-range-thumb-shadow
+--usk-native-progress-size
+--usk-native-progress-track-background
+--usk-native-progress-track-border
+--usk-native-progress-track-radius
+--usk-native-progress-track-shadow
+--usk-native-progress-value-background
+--usk-native-progress-value-radius
+--usk-native-progress-value-shadow
+--usk-native-meter-optimum-background
+--usk-native-meter-suboptimum-background
+--usk-native-meter-critical-background
+--usk-native-file-button-background
+--usk-native-file-button-border
+--usk-native-file-button-radius
+--usk-native-file-button-shadow
+--usk-native-color-swatch-border
+--usk-native-color-swatch-radius
+--usk-native-indicator-opacity
+--usk-native-indicator-filter
+--usk-native-scrollbar-size
+--usk-native-scrollbar-track
+--usk-native-scrollbar-thumb
+--usk-native-scrollbar-radius
 ```
 
-Consumers usually override the prefixed public tokens, not these internal bridge tokens. Use `--usk-native-*` only when intentionally customizing native fallback styling across every UI preset.
+Every preset maps the complete identity set. Consumers usually override the prefixed public tokens, not these internal bridge tokens. Use `--usk-native-*` only when intentionally customizing native fallback styling across every UI preset.
 
 Use prefixed RGB aliases for component-local alpha effects:
 

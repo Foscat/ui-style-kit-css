@@ -133,6 +133,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--y2k-space-5);
+  --usk-native-control-min-block-size: 3.125rem;
+  --usk-native-control-padding-block: .68rem;
+  --usk-native-control-padding-inline: 1rem;
+  --usk-native-subcontrol-padding-block: .5rem;
+  --usk-native-subcontrol-padding-inline: .8rem;
+  --usk-native-choice-size: 1.6rem;
+  --usk-native-choice-background: var(--y2k-control-bg);
+  --usk-native-choice-border: 1px solid var(--y2k-border);
+  --usk-native-checkbox-radius: .65rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: inset 0 3px rgb(255 255 255 / .55);
+  --usk-native-choice-checked-background: var(--y2k-primary);
+  --usk-native-choice-mark-color: var(--y2k-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(54deg, transparent 50%, var(--y2k-primary) 50%), linear-gradient(126deg, var(--y2k-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.5rem 0.5rem, 0.5rem 0.5rem;
+  --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - 0.78rem) 50%;
+  --usk-native-select-padding-inline-end: 2.4rem;
+  --usk-native-range-track-size: .66rem;
+  --usk-native-range-track-background: var(--y2k-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--y2k-border);
+  --usk-native-range-track-radius: 999px;
+  --usk-native-range-track-shadow: inset 0 3px rgb(255 255 255 / .55);
+  --usk-native-range-progress-background: var(--y2k-primary);
+  --usk-native-range-thumb-size: 1.55rem;
+  --usk-native-range-thumb-background: var(--y2k-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--y2k-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: inset 0 3px rgb(255 255 255 / .55);
+  --usk-native-progress-size: .88rem;
+  --usk-native-progress-track-background: var(--y2k-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--y2k-border);
+  --usk-native-progress-track-radius: 999px;
+  --usk-native-progress-track-shadow: inset 0 3px rgb(255 255 255 / .55);
+  --usk-native-progress-value-background: var(--y2k-primary);
+  --usk-native-progress-value-radius: 999px;
+  --usk-native-progress-value-shadow: inset 0 3px rgb(255 255 255 / .55);
+  --usk-native-meter-optimum-background: var(--y2k-success);
+  --usk-native-meter-suboptimum-background: var(--y2k-warning);
+  --usk-native-meter-critical-background: var(--y2k-danger);
+  --usk-native-file-button-background: var(--y2k-primary);
+  --usk-native-file-button-border: 1px solid var(--y2k-border);
+  --usk-native-file-button-radius: .65rem;
+  --usk-native-file-button-shadow: inset 0 3px rgb(255 255 255 / .55);
+  --usk-native-color-swatch-border: 1px solid var(--y2k-border);
+  --usk-native-color-swatch-radius: .65rem;
+  --usk-native-indicator-opacity: 0.9199999999999999;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .82rem;
+  --usk-native-scrollbar-track: var(--y2k-surface-soft);
+  --usk-native-scrollbar-thumb: var(--y2k-primary);
+  --usk-native-scrollbar-radius: 999px;
   --y2k-bg: rgb(var(--y2k-bg-rgb));
   --y2k-surface: rgb(var(--y2k-surface-rgb) / var(--y2k-panel-alpha));
   --y2k-surface-strong: rgb(var(--y2k-surface-strong-rgb) / var(--y2k-panel-strong-alpha));
@@ -274,8 +325,8 @@
 .y2k-title, .y2k-heading, .y2k-kicker, .y2k-button, .y2k-badge, .y2k-nav-link { font-family: var(--y2k-font-heading); }
 .y2k-title { margin: 0; font-size: clamp(2.25rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -0.05em; color: var(--y2k-text); text-shadow: 2px 2px 0 rgb(var(--y2k-accent-rgb) / .56), 0 0 24px var(--y2k-glow-accent); } .y2k-heading { margin: 0; font-size: clamp(1.25rem, 3vw, 2rem); letter-spacing: -0.03em; } .y2k-kicker { margin: 0; color: var(--y2k-primary); font-size: .82rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; } .y2k-subtitle, .y2k-copy { margin: 0; color: var(--y2k-text-muted); line-height: 1.65; } .y2k-text-muted { color: var(--y2k-text-muted); }
 
-.y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap { position: relative; background: linear-gradient(145deg, rgb(255 255 255 / .42), rgb(255 255 255 / .08)), var(--y2k-surface); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .38); border-bottom-color: rgb(var(--y2k-border-rgb) / .4); border-right-color: rgb(var(--y2k-border-rgb) / .35); border-radius: var(--y2k-radius-xl); box-shadow: var(--y2k-shadow-md), inset 0 1px 0 rgb(255 255 255 / .42), 0 0 28px var(--y2k-glow-accent); overflow: hidden; transition: transform var(--y2k-transition-base), box-shadow var(--y2k-transition-base); }
-.y2k-card::before, .y2k-panel::before, .y2k-bubble::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 20% 0%, rgb(255 255 255 / .42), transparent 22%), linear-gradient(120deg, transparent 0 55%, rgb(var(--y2k-accent-rgb) / .12)); }
+.y2k-card, .y2k-panel, .y2k-bubble, .y2k-toolbar, .y2k-table-wrap { position: relative; background: linear-gradient(145deg, rgb(255 255 255 / .42), rgb(255 255 255 / .08)), var(--y2k-surface); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .38); border-bottom-color: rgb(var(--y2k-border-rgb) / .4); border-right-color: rgb(var(--y2k-border-rgb) / .35); border-radius: var(--y2k-radius-xl); box-shadow: var(--y2k-shadow-md), inset 0 1px 0 rgb(255 255 255 / .42), 0 0 28px var(--y2k-glow-accent); transition: transform var(--y2k-transition-base), box-shadow var(--y2k-transition-base); }
+.y2k-card::before, .y2k-panel::before, .y2k-bubble::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 20% 0%, rgb(255 255 255 / .42), transparent 22%), linear-gradient(120deg, transparent 0 55%, rgb(var(--y2k-accent-rgb) / .12)); border-radius: inherit; }
 .y2k-card, .y2k-panel, .y2k-bubble { padding: var(--y2k-space-6); } .y2k-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--y2k-space-4); padding: var(--y2k-space-4); border-radius: var(--y2k-radius-pill); } .y2k-hover-lift:hover { transform: translateY(-3px) scale(1.005); box-shadow: var(--y2k-shadow-lg), 0 0 42px var(--y2k-glow-accent); } .y2k-inset, .y2k-well { background: linear-gradient(180deg, rgb(0 0 0 / .08), rgb(255 255 255 / .12)), var(--y2k-surface-soft); border: 1px solid rgb(var(--y2k-border-rgb) / .42); border-radius: var(--y2k-radius-lg); box-shadow: inset 0 8px 18px rgb(0 0 0 / .12); } .y2k-well { padding: var(--y2k-space-5); }
 
 .y2k-button, .y2k-icon-button { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--y2k-space-2); min-height: 2.85rem; padding: .75rem 1.15rem; background: linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .08)), var(--y2k-surface-strong); color: var(--y2k-text); border: 1px solid rgb(255 255 255 / .42); border-radius: var(--y2k-radius-pill); box-shadow: var(--y2k-shadow-sm), inset 0 1px 0 rgb(255 255 255 / .5); font: inherit; font-family: var(--y2k-font-display); font-weight: 900; letter-spacing: .02em; cursor: pointer; text-decoration: none; transition: transform var(--y2k-transition-fast), box-shadow var(--y2k-transition-fast), background var(--y2k-transition-fast); }
@@ -437,7 +488,6 @@
 .y2k-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--y2k-card-bg);
   color: var(--y2k-text);
   border: 1px solid var(--y2k-border);
@@ -525,9 +575,10 @@
 /* Filled and framed actions share a glossy gem profile with different reflections. */
 .y2k-button.y2k-button-cut, .y2k-button-cut {
   inline-size: min(100%, 14rem);
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
-  justify-self: center;
+  justify-self: start;
   justify-content: center;
   clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
 }
@@ -563,6 +614,89 @@
   border: .09em solid rgb(255 255 255 / .58); border-block-start-color: currentColor; border-radius: 50%; background: radial-gradient(circle at 30% 24%, rgb(255 255 255 / .9), transparent 20%), conic-gradient(currentColor, transparent 48%, currentColor); box-shadow: 0 0 .45em currentColor, inset -.08em -.08em .16em rgb(0 0 0 / .18); clip-path: circle(50%); animation: y2k-spin .9s linear infinite;
 }
 
+/**
+ * Final Y2K fidelity layer.
+ * Recreates dense portal panels with one-pixel operating-system bevels.
+ */
+[data-ui="y2k"][data-theme][data-mode] {
+  --y2k-card-bg: linear-gradient(135deg, rgb(var(--y2k-primary-rgb) / .18), rgb(var(--y2k-surface-strong-rgb) / .96) 48%, rgb(var(--y2k-secondary-rgb) / .12)), var(--y2k-surface);
+  --usk-native-card-bg: var(--y2k-card-bg);
+  --usk-native-font-control: Tahoma, Verdana, "Segoe UI", sans-serif;
+  --usk-native-control-min-block-size: 2.08rem;
+  --usk-native-control-padding-block: .34rem;
+  --usk-native-control-padding-inline: .68rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: inset 1px 1px 0 var(--y2k-surface-strong), inset -1px -1px 0 var(--y2k-border);
+  --usk-native-shadow-md: inset 2px 2px 0 var(--y2k-surface-strong), inset -2px -2px 0 var(--y2k-border), 2px 2px 0 rgb(var(--y2k-text-rgb) / .18);
+  --usk-native-focus-ring: 0 0 0 1px var(--y2k-surface), 0 0 0 2px var(--y2k-focus);
+  --usk-native-subcontrol-padding-block: .24rem;
+  --usk-native-subcontrol-padding-inline: .44rem;
+  --usk-native-choice-size: 1rem;
+  --usk-native-choice-background: linear-gradient(135deg, var(--y2k-surface-strong), var(--y2k-control-bg));
+  --usk-native-choice-border: 1px solid var(--y2k-text);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: inset 1px 1px 0 var(--y2k-border), inset -1px -1px 0 var(--y2k-surface-strong);
+  --usk-native-choice-checked-background: linear-gradient(180deg, var(--y2k-primary-hover), var(--y2k-primary));
+  --usk-native-choice-mark-color: var(--y2k-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 45%, var(--y2k-text) 45% 55%, transparent 55%), linear-gradient(135deg, transparent 45%, var(--y2k-text) 45% 55%, transparent 55%);
+  --usk-native-select-indicator-size: .48rem .48rem, .48rem .48rem;
+  --usk-native-select-indicator-position: calc(100% - .84rem) 50%, calc(100% - .56rem) 50%;
+  --usk-native-select-padding-inline-end: 1.85rem;
+  --usk-native-range-track-size: .38rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .4rem, var(--y2k-surface-soft) .4rem .48rem);
+  --usk-native-range-track-border: 1px inset var(--y2k-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: inset 1px 1px 0 rgb(var(--y2k-text-rgb) / .28);
+  --usk-native-range-progress-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .4rem, var(--y2k-surface) .4rem .48rem);
+  --usk-native-range-thumb-size: 1.12rem;
+  --usk-native-range-thumb-background: linear-gradient(135deg, var(--y2k-surface-strong), var(--y2k-surface-soft));
+  --usk-native-range-thumb-border: 1px outset var(--y2k-border);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 1px 1px 0 rgb(var(--y2k-text-rgb) / .24);
+  --usk-native-progress-size: .66rem;
+  --usk-native-progress-track-background: var(--y2k-control-bg);
+  --usk-native-progress-track-border: 1px inset var(--y2k-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: inset 1px 1px 0 rgb(var(--y2k-text-rgb) / .28);
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .5rem, var(--y2k-surface-strong) .5rem .56rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: inset 1px 1px 0 rgb(var(--y2k-surface-strong-rgb) / .65);
+  --usk-native-scrollbar-size: .94rem;
+  --usk-native-scrollbar-track: linear-gradient(135deg, var(--y2k-surface-soft), var(--y2k-surface));
+  --usk-native-scrollbar-thumb: linear-gradient(135deg, var(--y2k-surface-strong), var(--y2k-primary));
+  --usk-native-scrollbar-radius: 0;
+}
+
+.y2k-title { font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-weight: 900; letter-spacing: .015em; font-style: italic; }
+.y2k-label { font-family: Tahoma, Verdana, sans-serif; font-size: .68rem; font-weight: 700; }
+.y2k-card, .y2k-panel { padding: .66rem; background: linear-gradient(180deg, rgb(var(--y2k-primary-rgb) / .22) 0 1.2rem, transparent 1.2rem), var(--y2k-card-bg); border: 2px outset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong), inset -1px -1px 0 rgb(var(--y2k-text-rgb) / .34); }
+.y2k-card::before, .y2k-panel::before { background: linear-gradient(135deg, rgb(var(--y2k-surface-strong-rgb) / .28), transparent 34%); }
+.y2k-well, .y2k-inset { padding: .5rem; background: var(--y2k-control-bg); border: 1px inset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 rgb(var(--y2k-text-rgb) / .24); }
+.y2k-button, .y2k-icon-button { min-height: 2.08rem; padding: .34rem .68rem; background: linear-gradient(180deg, var(--y2k-surface-strong), var(--y2k-surface-soft)); border: 1px outset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong), inset -1px -1px 0 rgb(var(--y2k-text-rgb) / .32); font-family: Tahoma, Verdana, sans-serif; font-weight: 700; }
+.y2k-button:active, .y2k-button[aria-pressed="true"], .y2k-button.is-active { transform: none; border-style: inset; box-shadow: inset 1px 1px 0 rgb(var(--y2k-text-rgb) / .32); }
+.y2k-input, .y2k-textarea, .y2k-select { min-height: 1.94rem; padding: .3rem .48rem; background: var(--y2k-control-bg); border: 1px inset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 rgb(var(--y2k-text-rgb) / .22); font-family: Tahoma, Verdana, sans-serif; }
+.y2k-nav, .y2k-toolbar { gap: 1px; padding: 2px; border: 1px outset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong); }
+.y2k-nav-link { min-height: 1.8rem; padding: .26rem .5rem; border: 1px outset var(--y2k-border); border-radius: 0; }
+.y2k-badge { min-height: 1.2rem; padding: .14rem .32rem; border: 1px solid currentColor; border-radius: 0; box-shadow: 1px 1px 0 rgb(var(--y2k-text-rgb) / .24); }
+.y2k-alert { padding: .44rem .52rem; background: var(--y2k-control-bg); border: 1px solid currentColor; border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong); }
+.y2k-progress { height: .66rem; background: var(--y2k-control-bg); border: 1px inset var(--y2k-border); border-radius: 0; }
+.y2k-progress-bar { background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .5rem, var(--y2k-surface-strong) .5rem .56rem); border-radius: 0; box-shadow: inset 1px 1px 0 rgb(var(--y2k-surface-strong-rgb) / .65); }
+.y2k-table-wrap { background: var(--y2k-card-bg); border: 1px solid var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong); }
+.y2k-table { border-collapse: collapse; font-family: Tahoma, Verdana, sans-serif; }
+.y2k-table th { padding: .32rem .42rem; background: linear-gradient(90deg, var(--y2k-primary), var(--y2k-primary-hover)); color: var(--y2k-on-primary); border: 1px solid var(--y2k-border); font-weight: 700; }
+.y2k-table td { padding: .3rem .42rem; border: 1px solid var(--y2k-border); }
+.y2k-tooltip, [data-ui="y2k"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 1px outset var(--y2k-border); border-radius: 0; box-shadow: 2px 2px 0 rgb(var(--y2k-text-rgb) / .28); }
+.y2k-card-service, .y2k-card-feature, .y2k-media-scrim, .y2k-feature-strip, .y2k-callout-bar { background: linear-gradient(180deg, rgb(var(--y2k-primary-rgb) / .18) 0 1rem, transparent 1rem), var(--y2k-card-bg); border: 2px outset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong), inset -1px -1px 0 rgb(var(--y2k-text-rgb) / .32); clip-path: none; }
+.y2k-feature-item { border-inline-end: 1px solid var(--y2k-border); border-block-end: 1px solid var(--y2k-border); }
+.y2k-button { border-radius: 1px; }
+.y2k-input { border-radius: 1px; }
+.y2k-card { border-radius: 1px; }
+.y2k-alert { border-radius: 1px; }
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="y2k"] *, [data-ui="y2k"] *::before, [data-ui="y2k"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -578,4 +712,15 @@
   [data-ui="y2k"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="y2k"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.y2k {
+/* Keeps semantic field states above preset-specific material paint. */
+.y2k-input[aria-invalid="true"], .y2k-textarea[aria-invalid="true"], .y2k-select[aria-invalid="true"] { border-color: var(--y2k-danger); box-shadow: 0 0 0 2px rgb(var(--y2k-danger-rgb) / .2); }
+.y2k-input[readonly], .y2k-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.y2k-button-primary { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .46), transparent 52%), var(--y2k-primary); color: var(--y2k-on-primary); border-color: var(--y2k-primary); }
+.y2k-button-secondary { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .42), transparent 52%), var(--y2k-secondary); color: var(--y2k-on-secondary); border-color: var(--y2k-secondary); }
+.y2k-button-danger { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .38), transparent 52%), var(--y2k-danger); color: var(--y2k-on-danger); border-color: var(--y2k-danger); }
+.y2k-button-ghost { background: transparent; color: var(--y2k-primary); border-color: transparent; }
 }

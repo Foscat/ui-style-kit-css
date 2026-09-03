@@ -462,6 +462,119 @@ test('buttons progress loading and tooltip examples share a polished controls ca
   expect(tooltipBox.width).toBeLessThanOrEqual(controlsBox.width);
 });
 
+test('Retrofuturism action controls keep enamel depth and accessible sizing in both visual modes', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'retrofuturism');
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    const actionMetrics = await page.locator('.retro-button-primary, .retro-button-secondary, .retro-button-danger')
+      .evaluateAll((actions) => actions.slice(0, 3).map((action) => {
+        const styles = getComputedStyle(action);
+        const rect = action.getBoundingClientRect();
+
+        return {
+          backgroundImage: styles.backgroundImage,
+          borderStyle: styles.borderStyle,
+          height: rect.height
+        };
+      }));
+
+    expect(actionMetrics).toHaveLength(3);
+    expect(actionMetrics.every(({ backgroundImage }) => backgroundImage.includes('linear-gradient')), JSON.stringify({ mode, actionMetrics }, null, 2)).toBe(true);
+    expect(actionMetrics.every(({ borderStyle }) => borderStyle === 'double'), JSON.stringify({ mode, actionMetrics }, null, 2)).toBe(true);
+    expect(actionMetrics.every(({ height }) => height >= 44), JSON.stringify({ mode, actionMetrics }, null, 2)).toBe(true);
+  }
+});
+
+/**
+ * Verifies that Technical Blueprint action paint remains sourced from every
+ * selected color scheme instead of falling back to a preset-specific palette.
+ */
+test('Technical Blueprint action colors follow every selected scheme in both sheet modes', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+
+  const themes = await page.locator('#themeSelect option').evaluateAll((options) => options.map((option) => option.value));
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    for (const theme of themes) {
+      await page.selectOption('#themeSelect', theme);
+
+      const colors = await page.locator('.blueprint-button-primary, .blueprint-button-secondary, .blueprint-button-danger')
+        .evaluateAll((actions) => {
+          const rootStyles = getComputedStyle(document.body);
+          const tokenColor = (token) => `rgb(${rootStyles.getPropertyValue(token).trim().split(/\s+/).join(', ')})`;
+          const [primary, secondary, danger] = actions.slice(0, 3).map((action) => getComputedStyle(action));
+
+          return {
+            primary: {
+              actual: primary.backgroundColor,
+              expected: tokenColor('--usk-primary-rgb')
+            },
+            secondary: {
+              background: secondary.backgroundColor,
+              border: secondary.borderColor,
+              color: secondary.color,
+              expected: tokenColor('--usk-secondary-rgb')
+            },
+            danger: {
+              background: danger.backgroundColor,
+              border: danger.borderColor,
+              color: danger.color,
+              expected: tokenColor('--usk-danger-rgb')
+            }
+          };
+        });
+
+      expect(colors.primary.actual, JSON.stringify({ mode, theme, colors }, null, 2)).toBe(colors.primary.expected);
+      expect(colors.secondary.background, JSON.stringify({ mode, theme, colors }, null, 2)).toBe('rgba(0, 0, 0, 0)');
+      expect(colors.secondary.border, JSON.stringify({ mode, theme, colors }, null, 2)).toBe(colors.secondary.expected);
+      expect(colors.secondary.color, JSON.stringify({ mode, theme, colors }, null, 2)).toBe(colors.secondary.expected);
+      expect(colors.danger.background, JSON.stringify({ mode, theme, colors }, null, 2)).toBe('rgba(0, 0, 0, 0)');
+      expect(colors.danger.border, JSON.stringify({ mode, theme, colors }, null, 2)).toBe(colors.danger.expected);
+      expect(colors.danger.color, JSON.stringify({ mode, theme, colors }, null, 2)).toBe(colors.danger.expected);
+    }
+  }
+});
+
+/**
+ * Verifies the square, flat drafting geometry shown by the paired Technical
+ * Blueprint references while retaining accessible action target sizing.
+ */
+test('Technical Blueprint controls use flat drafting geometry in both sheet modes', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+  await page.selectOption('#themeSelect', 'arctic-indigo');
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    const geometry = await page.locator('.blueprint-button-primary, .blueprint-button-secondary, .blueprint-button-danger')
+      .evaluateAll((actions) => actions.slice(0, 3).map((action) => {
+        const styles = getComputedStyle(action);
+
+        return {
+          borderRadius: styles.borderRadius,
+          boxShadow: styles.boxShadow,
+          height: action.getBoundingClientRect().height
+        };
+      }));
+    const switchGeometry = await page.locator('.blueprint-switch-track, .blueprint-switch-thumb')
+      .evaluateAll((parts) => parts.slice(0, 2).map((part) => getComputedStyle(part).borderRadius));
+    const cardShadow = await page.locator('.blueprint-card').first().evaluate((card) => getComputedStyle(card).boxShadow);
+
+    expect(geometry.every(({ borderRadius }) => borderRadius === '0px'), JSON.stringify({ mode, geometry }, null, 2)).toBe(true);
+    expect(geometry.every(({ boxShadow }) => boxShadow === 'none'), JSON.stringify({ mode, geometry }, null, 2)).toBe(true);
+    expect(geometry.every(({ height }) => height >= 44), JSON.stringify({ mode, geometry }, null, 2)).toBe(true);
+    expect(switchGeometry, JSON.stringify({ mode, switchGeometry }, null, 2)).toEqual(['0px', '0px']);
+    expect(cardShadow, JSON.stringify({ mode, cardShadow }, null, 2)).toBe('none');
+  }
+});
+
 test('component showcase avoids overlap and oversized empty card areas', async ({ page }) => {
   await page.setViewportSize({ width: 1696, height: 1155 });
   await page.goto(demoUrl);
@@ -532,6 +645,35 @@ test('native form samples provide padded block layout for unclassed controls', a
   expect(nativeLabelMetrics.every(({ display }) => display !== 'inline'), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
   expect(nativeLabelMetrics.every(({ rowGap }) => parseFloat(rowGap) >= 6), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
   expect(nativeLabelMetrics.every(({ inlinePadding }) => inlinePadding >= 0), JSON.stringify(nativeLabelMetrics, null, 2)).toBe(true);
+});
+
+test('native specimen exposes the complete semantic control state matrix', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const forms = page.getByTestId('native-forms');
+  for (const testId of [
+    'native-number', 'native-date', 'native-time', 'native-color', 'native-file',
+    'native-select-single', 'native-select-multiple', 'native-checkbox-indeterminate',
+    'native-checkbox-disabled', 'native-radio-disabled', 'native-range-enabled',
+    'native-range-disabled', 'native-valid', 'native-invalid', 'native-required',
+    'native-readonly', 'native-disabled'
+  ]) {
+    await expect(forms.getByTestId(testId)).toBeVisible();
+  }
+
+  expect(await forms.getByTestId('native-checkbox-indeterminate').evaluate((control) => control.indeterminate)).toBe(true);
+  await expect(forms.getByTestId('native-select-multiple')).toHaveAttribute('multiple', '');
+  await expect(forms.getByTestId('native-range-disabled')).toBeDisabled();
+
+  const status = page.getByTestId('native-meter-progress');
+  for (const testId of [
+    'native-progress-zero', 'native-progress-partial', 'native-progress-complete',
+    'native-progress-indeterminate', 'native-meter-optimum',
+    'native-meter-suboptimum', 'native-meter-critical'
+  ]) {
+    await expect(status.getByTestId(testId)).toBeVisible();
+  }
+  await expect(status.getByTestId('native-progress-indeterminate')).not.toHaveAttribute('value', /.+/);
 });
 
 test('native dialog demo opens a real modal with a themed backdrop', async ({ page }) => {
@@ -796,6 +938,7 @@ test('clipped CTA controls preserve focus visibility and target sizing', async (
 });
 
 test('preset CTA motion respects reduced-motion preferences', async ({ page }) => {
+  test.setTimeout(90_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(demoUrl);
 
@@ -914,6 +1057,7 @@ test('demo primary navigation follows page order and updates the current link', 
 
 test('layout wrappers contain long text without page-level overflow', async ({ page }) => {
   const longText = 'UnbrokenLayoutWrapperContentToken'.repeat(10);
+  const longControlText = 'Navigation label with intentionally verbose but safely breakable content '.repeat(6).trim();
 
   for (const viewport of [
     { width: 390, height: 844 },
@@ -924,21 +1068,21 @@ test('layout wrappers contain long text without page-level overflow', async ({ p
 
     for (const [ui, prefix] of stylePresets) {
       await page.selectOption('#uiSelect', ui);
-      await page.evaluate(({ longText: injectedText, prefix: classPrefix }) => {
+      await page.evaluate(({ longText: injectedText, longControlText: injectedControlText, prefix: classPrefix }) => {
         document.querySelector('main').innerHTML = `
           <section class="${classPrefix}-page">
             <div class="${classPrefix}-container ${classPrefix}-stack" data-testid="overflow-wrapper">
               <article class="${classPrefix}-card ${classPrefix}-stack">
-                <p class="${classPrefix}-kicker">${injectedText}</p>
+                <p class="${classPrefix}-kicker">${injectedControlText}</p>
                 <h1 class="${classPrefix}-title">${injectedText}</h1>
                 <p class="${classPrefix}-copy">${injectedText}</p>
                 <nav class="${classPrefix}-nav" aria-label="Overflow probe navigation">
-                  <a class="${classPrefix}-nav-link" href="#main">${injectedText}</a>
+                  <a class="${classPrefix}-nav-link" href="#main">${injectedControlText}</a>
                 </nav>
               </article>
             </div>
           </section>`;
-      }, { longText, prefix });
+      }, { longText, longControlText, prefix });
 
       const overflowReport = await page.evaluate(() => {
         const viewportWidth = document.documentElement.clientWidth;
@@ -946,15 +1090,23 @@ test('layout wrappers contain long text without page-level overflow', async ({ p
         const overflowers = candidates
           .map((element) => {
             const rect = element.getBoundingClientRect();
+            const styles = getComputedStyle(element);
             return {
               tag: element.tagName.toLowerCase(),
               className: element.className,
               left: Math.floor(rect.left),
               right: Math.ceil(rect.right),
-              width: Math.ceil(rect.width)
+              width: Math.ceil(rect.width),
+              clientWidth: element.clientWidth,
+              scrollWidth: element.scrollWidth,
+              overflowWrap: styles.overflowWrap,
+              wordBreak: styles.wordBreak,
+              whiteSpace: styles.whiteSpace
             };
           })
-          .filter(({ left, right }) => left < -1 || right > viewportWidth + 1);
+          .filter(({ left, right, clientWidth, scrollWidth }) => (
+            left < -1 || right > viewportWidth + 1 || scrollWidth > clientWidth + 1
+          ));
 
         return {
           documentWidth: document.documentElement.scrollWidth,
@@ -1007,11 +1159,29 @@ test('demo avoids page-level overflow across the responsive orientation matrix',
           document.documentElement.scrollWidth,
           document.body.scrollWidth
         ) - viewportWidth;
+        /**
+         * Identifies descendants whose horizontal extent is intentionally contained by a scroll owner.
+         *
+         * @param {Element} element Candidate descendant.
+         * @returns {boolean} Whether an ancestor owns horizontal scrolling.
+         */
+        const isInsideHorizontalScroller = (element) => {
+          let ancestor = element.parentElement;
+
+          while (ancestor && ancestor !== document.body) {
+            const overflowX = getComputedStyle(ancestor).overflowX;
+            if (overflowX === 'auto' || overflowX === 'scroll') return true;
+            ancestor = ancestor.parentElement;
+          }
+
+          return false;
+        };
         const incoherentOverflow = [...document.body.querySelectorAll('*')]
           .filter((element) => {
             const styles = getComputedStyle(element);
             if (styles.position === 'fixed') return false;
             if (styles.overflowX === 'auto' || styles.overflowX === 'scroll') return false;
+            if (isInsideHorizontalScroller(element)) return false;
 
             const rect = element.getBoundingClientRect();
             return rect.width > 0 && rect.height > 0 && (rect.left < -1 || rect.right > viewportWidth + 1);

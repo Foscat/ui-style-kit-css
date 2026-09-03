@@ -122,6 +122,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--paper-space-5);
+  --usk-native-control-min-block-size: 2.8rem;
+  --usk-native-control-padding-block: .68rem;
+  --usk-native-control-padding-inline: .95rem;
+  --usk-native-subcontrol-padding-block: .5rem;
+  --usk-native-subcontrol-padding-inline: .72rem;
+  --usk-native-choice-size: 1.4rem;
+  --usk-native-choice-background: var(--paper-control-bg);
+  --usk-native-choice-border: 1px solid var(--paper-border);
+  --usk-native-checkbox-radius: .08rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: 2px 2px 0 rgb(0 0 0 / .16);
+  --usk-native-choice-checked-background: var(--paper-primary);
+  --usk-native-choice-mark-color: var(--paper-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(81deg, transparent 50%, var(--paper-primary) 50%), linear-gradient(99deg, var(--paper-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.46rem 0.46rem, 0.46rem 0.46rem;
+  --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - 0.84rem) 50%;
+  --usk-native-select-padding-inline-end: 2.55rem;
+  --usk-native-range-track-size: .22rem;
+  --usk-native-range-track-background: var(--paper-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--paper-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: 2px 2px 0 rgb(0 0 0 / .16);
+  --usk-native-range-progress-background: var(--paper-primary);
+  --usk-native-range-thumb-size: 1.15rem;
+  --usk-native-range-thumb-background: var(--paper-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--paper-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: 2px 2px 0 rgb(0 0 0 / .16);
+  --usk-native-progress-size: .48rem;
+  --usk-native-progress-track-background: var(--paper-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--paper-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: 2px 2px 0 rgb(0 0 0 / .16);
+  --usk-native-progress-value-background: var(--paper-primary);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: 2px 2px 0 rgb(0 0 0 / .16);
+  --usk-native-meter-optimum-background: var(--paper-success);
+  --usk-native-meter-suboptimum-background: var(--paper-warning);
+  --usk-native-meter-critical-background: var(--paper-danger);
+  --usk-native-file-button-background: var(--paper-primary);
+  --usk-native-file-button-border: 1px solid var(--paper-border);
+  --usk-native-file-button-radius: .08rem;
+  --usk-native-file-button-shadow: 2px 2px 0 rgb(0 0 0 / .16);
+  --usk-native-color-swatch-border: 1px solid var(--paper-border);
+  --usk-native-color-swatch-radius: .08rem;
+  --usk-native-indicator-opacity: 0.87;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .6rem;
+  --usk-native-scrollbar-track: var(--paper-surface-soft);
+  --usk-native-scrollbar-thumb: var(--paper-primary);
+  --usk-native-scrollbar-radius: 0;
   --paper-bg: rgb(var(--paper-bg-rgb));
   --paper-surface: rgb(var(--paper-surface-rgb) / var(--paper-panel-alpha));
   --paper-surface-strong: rgb(var(--paper-surface-strong-rgb) / var(--paper-panel-alpha));
@@ -509,7 +560,6 @@
 .paper-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--paper-card-bg);
   color: var(--paper-text);
   border: 1px solid var(--paper-border);
@@ -630,6 +680,7 @@
 
 /* Filled and framed actions share ticket notches and an ink-offset edge. */
 .paper-button.paper-button-cut, .paper-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
@@ -670,6 +721,108 @@
   border: .09em solid currentColor; border-block-start-color: transparent; border-radius: 0; background: conic-gradient(currentColor, transparent 36%, currentColor 62%, transparent); box-shadow: .09em .09em 0 currentColor; clip-path: polygon(12% 0, 88% 0, 88% 10%, 100% 10%, 100% 90%, 88% 90%, 88% 100%, 12% 100%, 12% 90%, 0 90%, 0 10%, 12% 10%); animation: paper-spin .98s steps(12, end) infinite;
 }
 
+/**
+ * Grounds Paper Editorial in compact field-manual density, registration rules,
+ * offset ink, and measured mono data without introducing non-semantic paint.
+ */
+[data-ui="paper-editorial"][data-theme][data-mode] {
+  --usk-native-font-control: var(--paper-font-mono);
+  --usk-native-control-min-block-size: 2.35rem;
+  --usk-native-control-padding-block: .48rem;
+  --usk-native-control-padding-inline: .7rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: .03rem;
+  --usk-native-radius-lg: .06rem;
+  --usk-native-shadow: .12rem .12rem 0 rgb(var(--paper-text-rgb) / .24);
+  --usk-native-shadow-md: .2rem .22rem 0 rgb(var(--paper-text-rgb) / .2), 0 .65rem 1.2rem rgb(var(--paper-text-rgb) / .1);
+  --usk-native-focus-ring: 0 0 0 2px var(--paper-surface-strong), 0 0 0 3px var(--paper-primary);
+  --usk-native-subcontrol-padding-block: .3rem;
+  --usk-native-subcontrol-padding-inline: .48rem;
+  --usk-native-choice-size: 1.02rem;
+  --usk-native-choice-background: repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .035) 0 1px, transparent 1px 3px), var(--paper-control-bg);
+  --usk-native-choice-border: 1px solid var(--paper-text);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: 1px 1px 0 rgb(var(--paper-text-rgb) / .28);
+  --usk-native-choice-checked-background: var(--paper-primary);
+  --usk-native-choice-mark-color: var(--paper-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 46%, var(--paper-text) 47% 53%, transparent 54%), linear-gradient(135deg, var(--paper-text) 47% 53%, transparent 54%);
+  --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+  --usk-native-select-indicator-position: calc(100% - 1.12rem) 50%, calc(100% - .86rem) 50%;
+  --usk-native-select-padding-inline-end: 2.42rem;
+  --usk-native-range-track-size: .28rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--paper-border) 0 1px, transparent 1px .62rem), linear-gradient(var(--paper-surface-soft), var(--paper-surface-soft));
+  --usk-native-range-track-border: 1px solid var(--paper-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: 0 1px 0 rgb(var(--paper-text-rgb) / .22);
+  --usk-native-range-progress-background: var(--paper-primary);
+  --usk-native-range-thumb-size: 1rem;
+  --usk-native-range-thumb-background: var(--paper-surface-strong);
+  --usk-native-range-thumb-border: 2px solid var(--paper-primary);
+  --usk-native-range-thumb-radius: .02rem;
+  --usk-native-range-thumb-shadow: .08rem .08rem 0 rgb(var(--paper-text-rgb) / .28);
+  --usk-native-progress-size: .48rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, var(--paper-surface-soft) 0 .82rem, var(--paper-border) .82rem calc(.82rem + 1px));
+  --usk-native-progress-track-border: 1px solid var(--paper-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: 0 1px 0 rgb(var(--paper-text-rgb) / .2);
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--paper-primary) 0 .72rem, var(--paper-surface-strong) .72rem .82rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: inset -1px 0 0 var(--paper-text);
+  --usk-native-scrollbar-size: .62rem;
+  --usk-native-scrollbar-track: repeating-linear-gradient(0deg, var(--paper-surface-soft) 0 .45rem, rgb(var(--paper-text-rgb) / .14) .45rem calc(.45rem + 1px));
+  --usk-native-scrollbar-thumb: var(--paper-primary);
+  --usk-native-scrollbar-radius: 0;
+}
+
+.paper-title { font-weight: 800; letter-spacing: .025em; }
+.paper-label { font-size: .66rem; font-weight: 800; }
+.paper-button { min-height: 2.35rem; padding: .48rem .7rem; background: var(--paper-primary); border-radius: 0; box-shadow: .12rem .12rem 0 rgb(var(--paper-text-rgb) / .24); font-weight: 800; }
+.paper-input { min-height: 2.28rem; padding: .42rem .62rem; border-radius: .03rem; }
+.paper-card { padding: 1.05rem; background: repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .02) 0 1px, transparent 1px 4px), var(--paper-card-bg); border: 1px solid var(--paper-border); border-radius: .05rem; box-shadow: .16rem .18rem 0 rgb(var(--paper-text-rgb) / .2); }
+.paper-well { background: repeating-linear-gradient(90deg, rgb(var(--paper-border-rgb) / .04) 0 1px, transparent 1px 7px), var(--paper-surface-soft); border: 1px dashed var(--paper-border); box-shadow: inset .24rem 0 0 rgb(var(--paper-primary-rgb) / .18); }
+.paper-badge { min-height: 1.35rem; padding: .12rem .38rem; border-radius: .02rem; }
+.paper-alert { background: repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .025) 0 1px, transparent 1px 4px), var(--paper-card-bg); border: 1px solid var(--paper-border); border-radius: 0; box-shadow: .1rem .1rem 0 rgb(var(--paper-text-rgb) / .18); }
+.paper-progress { height: .48rem; background: repeating-linear-gradient(90deg, var(--paper-surface-soft) 0 .82rem, var(--paper-border) .82rem calc(.82rem + 1px)); }
+.paper-table-wrap { background: repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .018) 0 1px, transparent 1px 4px), var(--paper-card-bg); border-radius: .04rem; box-shadow: .14rem .16rem 0 rgb(var(--paper-text-rgb) / .18); }
+.paper-table th { padding: .44rem .58rem; background: rgb(var(--paper-primary-rgb) / .1); font-weight: 800; }
+.paper-table td { padding: .4rem .56rem; }
+
+.paper-nav, .paper-panel, .paper-toolbar, .paper-tooltip,
+[data-ui="paper-editorial"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]),
+.paper-card-service, .paper-feature-strip, .paper-callout-bar {
+  border: 1px solid var(--paper-border);
+  border-radius: .04rem;
+  box-shadow: .14rem .16rem 0 rgb(var(--paper-text-rgb) / .18);
+}
+.paper-nav { border-block: 2px solid var(--paper-text); box-shadow: none; }
+.paper-panel { border-block-start: 2px solid var(--paper-text); }
+.paper-progress-bar { background: repeating-linear-gradient(90deg, var(--paper-primary) 0 .72rem, var(--paper-surface-strong) .72rem .82rem); }
+
+/* Warm semantic paper stock, a binder margin, and ruled ink establish the field manual. */
+[data-ui="paper-editorial"][data-theme][data-mode] {
+  --usk-native-card-bg: linear-gradient(90deg, transparent 0 1.5rem, rgb(var(--paper-primary-rgb) / .32) 1.5rem calc(1.5rem + 1px), transparent calc(1.5rem + 1px)), repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .035) 0 1px, transparent 1px .5rem), linear-gradient(rgb(var(--paper-warning-rgb) / .12), rgb(var(--paper-warning-rgb) / .12)), var(--paper-surface);
+  --usk-native-control-bg: repeating-linear-gradient(0deg, var(--paper-surface-soft) 0 .66rem, rgb(var(--paper-primary-rgb) / .12) .66rem calc(.66rem + 1px));
+}
+.paper-panel,
+.paper-card-service,
+.paper-feature-strip,
+.paper-callout-bar {
+  background:
+    linear-gradient(90deg, transparent 0 1.5rem, rgb(var(--paper-primary-rgb) / .32) 1.5rem calc(1.5rem + 1px), transparent calc(1.5rem + 1px)),
+    repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .045) 0 1px, transparent 1px .5rem),
+    linear-gradient(rgb(var(--paper-warning-rgb) / .12), rgb(var(--paper-warning-rgb) / .12)),
+    var(--paper-card-bg);
+}
+[data-ui="paper-editorial"][data-theme][data-mode] :where(fieldset, article, aside) {
+  background:
+    linear-gradient(90deg, transparent 0 1.5rem, rgb(var(--paper-primary-rgb) / .32) 1.5rem calc(1.5rem + 1px), transparent calc(1.5rem + 1px)),
+    repeating-linear-gradient(0deg, rgb(var(--paper-text-rgb) / .045) 0 1px, transparent 1px .5rem),
+    linear-gradient(rgb(var(--paper-warning-rgb) / .12), rgb(var(--paper-warning-rgb) / .12)),
+    var(--paper-surface);
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="paper-editorial"] *, [data-ui="paper-editorial"] *::before, [data-ui="paper-editorial"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -685,4 +838,15 @@
   [data-ui="paper-editorial"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="paper-editorial"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.paper_editorial {
+/* Keeps semantic field states above preset-specific material paint. */
+.paper-input[aria-invalid="true"], .paper-textarea[aria-invalid="true"], .paper-select[aria-invalid="true"] { border-color: var(--paper-danger); box-shadow: 0 0 0 2px rgb(var(--paper-danger-rgb) / .18); }
+.paper-input[readonly], .paper-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.paper-button-primary { background: var(--paper-primary); color: var(--paper-on-primary); border-color: var(--paper-primary); }
+.paper-button-secondary { background: var(--paper-secondary); color: var(--paper-on-secondary); border-color: var(--paper-secondary); }
+.paper-button-danger { background: var(--paper-danger); color: var(--paper-on-danger); border-color: var(--paper-danger); }
+.paper-button-ghost { background: transparent; color: var(--paper-primary); border-color: transparent; }
 }

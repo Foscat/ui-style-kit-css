@@ -308,20 +308,20 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.3 library system and published companion set', () => {
+test('README documents the 2.4 library system and published companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.3\.0/);
+  assert.match(readme, /v2\.4\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.3\.0/);
+  assert.match(readme, /ui-style-kit-css@2\.4\.0/);
   assert.match(readme, /interactive-surface-css@1\.6\.0/);
   assert.match(readme, /layout-style-css@3\.1\.0/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /UI Style Kit `2\.3\.0` is the current release target/);
+  assert.match(readme, /UI Style Kit `2\.4\.0` is the current release target/);
   assert.match(readme, /Layout Style `3\.1\.0` is the compatible structural release/);
   assert.doesNotMatch(readme, /active staged candidate/i);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
@@ -382,7 +382,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.3\.0/);
+    assert.match(contents, /ui-style-kit-css@2\.4\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
     assert.match(contents, /layout-style-css@3\.1\.0/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
@@ -398,7 +398,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
-test('ecosystem fixture pins both published companions for the UI 2.3.0 release', () => {
+test('ecosystem fixture pins both published companions for the UI 2.4.0 release', () => {
   const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
@@ -412,14 +412,14 @@ test('ecosystem fixture pins both published companions for the UI 2.3.0 release'
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.3.0',
+      'ui-style-kit-css': '2.4.0',
       'interactive-surface-css': '1.6.0',
       'layout-style-css': '3.1.0'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.3\.0[\s\S]{0,160}current release target/i);
+    assert.match(contents, /ui-style-kit-css@2\.4\.0[\s\S]{0,160}current release target/i);
     assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
     assert.match(contents, /layout-style-css@3\.1\.0[\s\S]{0,160}(?:compatible structural release|published)/i);
     assert.doesNotMatch(contents, /active staged candidate/i);
@@ -462,7 +462,7 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.3\.0` is the current release target/);
+    assert.match(contents, /UI Style Kit `2\.4\.0` is the current release target/);
     assert.match(contents, /Layout Style `3\.1\.0` is the compatible structural release/);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
@@ -492,6 +492,10 @@ test('release automation scripts are exposed', () => {
     'test:e2e',
     'test:axe',
     'test:matrix',
+    'test:matrix:block',
+    'test:matrix:case',
+    'test:matrix:range',
+    'test:matrix:raw',
     'test:visual',
     'test:e2e:install:ci',
     'check:contrast',
@@ -512,6 +516,14 @@ test('release automation scripts are exposed', () => {
     assert.equal(typeof packageJson.scripts?.[scriptName], 'string', `Missing script: ${scriptName}`);
     assert.notEqual(packageJson.scripts[scriptName].trim(), '', `Script should not be empty: ${scriptName}`);
   }
+});
+
+test('local UI matrix exposes resumable blocks and exact-case reruns', () => {
+  assert.equal(packageJson.scripts['test:matrix'], 'node scripts/run-ui-matrix.mjs blocks');
+  assert.equal(packageJson.scripts['test:matrix:block'], 'node scripts/run-ui-matrix.mjs block');
+  assert.equal(packageJson.scripts['test:matrix:case'], 'node scripts/run-ui-matrix.mjs case');
+  assert.equal(packageJson.scripts['test:matrix:range'], 'node scripts/run-ui-matrix.mjs range');
+  assert.equal(packageJson.scripts['test:matrix:raw'], 'playwright test --config playwright.matrix.config.js');
 });
 
 test('clean-install ecosystem scripts and CI enforce current and minimum rendered matrices', () => {
@@ -575,7 +587,7 @@ test('publishing docs pin published companion merge commits for the UI release',
   assert.match(publishingGuide, /afcb1fdf70d4635e35739e621ee1598400fed103/);
   assert.match(publishingGuide, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
   assert.match(publishingGuide, /layout-style-css@3\.1\.0[\s\S]{0,120}published/i);
-  assert.match(publishingGuide, /ui-style-kit-css@2\.3\.0[\s\S]{0,160}active candidate only while/i);
+  assert.match(publishingGuide, /ui-style-kit-css@2\.4\.0[\s\S]{0,160}active candidate only while/i);
   assert.doesNotMatch(publishingGuide, /active staged candidate/i);
   assert.match(publishingGuide, /current[^\n]*layout-style-css@3\.1\.0/i);
   assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
@@ -628,7 +640,7 @@ test('CI workflow shards the UI matrix by engine and preset group', () => {
   assert.match(ciWorkflow, /preset-shard:\s*\[1,\s*2,\s*3,\s*4\]/);
   assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARD:/);
   assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
-  assert.match(ciWorkflow, /npm run test:matrix -- --project=\$\{\{ matrix\.engine \}\}/);
+  assert.match(ciWorkflow, /npm run test:matrix:raw -- --project=\$\{\{ matrix\.engine \}\}/);
   assert.match(ciWorkflow, /playwright-report/);
   assert.match(ciWorkflow, /test-results/);
 });
@@ -648,8 +660,8 @@ function assertReleaseWorkflowShardsUiMatrix(workflowName) {
   assert.match(workflow, /for preset_shard in 1 2 3 4/);
   assert.match(workflow, /UI_MATRIX_PRESET_SHARD="\$\{preset_shard\}"/);
   assert.match(workflow, /UI_MATRIX_PRESET_SHARDS=4/);
-  assert.match(workflow, /npm run test:matrix -- --project="\$\{engine\}"/);
-  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix\s*$/m);
+  assert.match(workflow, /npm run test:matrix:raw -- --project="\$\{engine\}"/);
+  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix(?::raw)?\s*$/m);
 }
 
 test('release version alignment shards the UI matrix before creating releases', () => {
@@ -817,17 +829,21 @@ test('content overflow compatibility stays exported while 2.1 bundles use owned 
   const visualCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.visual.css'), 'utf8');
 
   assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
-  assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.match(overflowCss, /overflow-wrap:\s*break-word/);
+  assert.match(overflowCss, /word-break:\s*normal/);
   assert.match(overflowCss, /white-space:\s*normal/);
   assert.match(componentsCss, /@layer ui-style-kit\.components/);
-  assert.match(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.match(componentsCss, /overflow-wrap:\s*break-word/);
   assert.match(compatibilityCss, /@layer ui-style-kit\.compat_layout/);
-  assert.match(compatibilityCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(compatibilityCss, /overflow-wrap/);
   assert.match(bundledCss, /styles\/components\.css/);
   assert.match(bundledCss, /styles\/compat-layout\.css/);
   assert.match(visualCss, /styles\/components\.css/);
   assert.doesNotMatch(visualCss, /styles\/compat-layout\.css/);
-  assert.match(minCss, /overflow-wrap:anywhere/);
+  assert.doesNotMatch(minCss, /overflow-wrap:anywhere/);
+  assert.match(minCss, /overflow-wrap:break-word/);
 });
 
 test('native element fallback styles are shared instead of duplicated per preset', () => {
@@ -877,6 +893,39 @@ test('native element fallback styles are shared instead of duplicated per preset
     assert.match(css, /--usk-native-surface\s*:/, `${fileName} should map native surface tokens`);
     assert.doesNotMatch(css, /Native HTML Coverage \+ CSS Accessibility Layer/);
     assert.doesNotMatch(css, new RegExp(`\\[data-ui="${uiName}"\\] :where\\(fieldset\\)`));
+  }
+});
+
+test('every manifest preset maps the complete native-control identity contract', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const requiredTokens = [
+    'control-bg', 'border-width', 'radius-sm', 'radius', 'shadow', 'focus-ring',
+    'control-min-block-size', 'control-padding-block', 'control-padding-inline',
+    'subcontrol-padding-block', 'subcontrol-padding-inline', 'choice-size',
+    'choice-background', 'choice-border', 'checkbox-radius', 'radio-radius',
+    'choice-shadow', 'choice-checked-background', 'choice-mark-color',
+    'select-indicator-image', 'select-indicator-size', 'select-indicator-position',
+    'select-padding-inline-end', 'range-track-size', 'range-track-background',
+    'range-track-border', 'range-track-radius', 'range-track-shadow',
+    'range-progress-background', 'range-thumb-size', 'range-thumb-background',
+    'range-thumb-border', 'range-thumb-radius', 'range-thumb-shadow',
+    'progress-size', 'progress-track-background', 'progress-track-border',
+    'progress-track-radius', 'progress-track-shadow', 'progress-value-background',
+    'progress-value-radius', 'progress-value-shadow', 'meter-optimum-background',
+    'meter-suboptimum-background', 'meter-critical-background',
+    'file-button-background', 'file-button-border', 'file-button-radius',
+    'file-button-shadow', 'color-swatch-border', 'color-swatch-radius',
+    'indicator-opacity', 'indicator-filter', 'scrollbar-size', 'scrollbar-track',
+    'scrollbar-thumb', 'scrollbar-radius'
+  ].map((suffix) => `--usk-native-${suffix}`);
+
+  for (const { id } of manifest.presets) {
+    const css = fs.readFileSync(path.join(rootDir, 'styles', `${id}.css`), 'utf8');
+    const block = css.match(new RegExp(`\\[data-ui="${escapeRegExp(id)}"\\]\\[data-theme\\]\\[data-mode\\]\\s*\\{([\\s\\S]*?)\\n\\}`))?.[1] ?? '';
+
+    for (const token of requiredTokens) {
+      assert.match(block, new RegExp(`${escapeRegExp(token)}\\s*:`), `${id} should map ${token}`);
+    }
   }
 });
 

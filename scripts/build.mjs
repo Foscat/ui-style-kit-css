@@ -79,6 +79,29 @@ const compatibilitySuffixes = new Set(publicManifest.classApi.deprecatedStructur
 const layerOrder = publicManifest.cascadeLayers.join(', ');
 
 /**
+ * Write one generated artifact while tolerating brief Windows scanner or preview locks.
+ *
+ * @param {string} filePath Absolute generated-file path.
+ * @param {string|Buffer} contents Generated artifact contents.
+ * @param {number} [maxAttempts=8] Maximum write attempts before surfacing the error.
+ * @returns {Promise<void>} Resolves after the artifact is written.
+ */
+async function writeGeneratedFile(filePath, contents, maxAttempts = 8) {
+  const transientCodes = new Set(['EACCES', 'EBUSY', 'EPERM', 'UNKNOWN']);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      await fs.promises.writeFile(filePath, contents);
+      return;
+    } catch (error) {
+      const isRetryable = error instanceof Error && transientCodes.has(error.code);
+      if (!isRetryable || attempt === maxAttempts) throw error;
+      await new Promise((resolve) => setTimeout(resolve, attempt * 25));
+    }
+  }
+}
+
+/**
  * Resolve the package browser policy into Lightning CSS compilation targets.
  *
  * @param {string[]} queries Browserslist queries from package metadata.
@@ -481,19 +504,19 @@ const visualBundle = bundle(visualSections());
 const defaultBundle = bundle([...visualSections(), ...compatibilitySections()]);
 const legacyBridgeBundle = `${defaultBundle}\n/* ${legacyBridgeFile} (deprecated stateful bridge) */\n${sourceSection(legacyBridgeFile)}\n`;
 
-fs.writeFileSync(path.join(dist, 'ui-style-kit.css'), defaultBundle);
-fs.writeFileSync(path.join(dist, 'ui-style-kit.min.css'), minifyCss(defaultBundle, 'ui-style-kit.css'));
-fs.writeFileSync(path.join(dist, 'ui-style-kit.visual.css'), visualBundle);
-fs.writeFileSync(path.join(dist, 'ui-style-kit.visual.min.css'), minifyCss(visualBundle, 'ui-style-kit.visual.css'));
-fs.writeFileSync(path.join(dist, 'ui-style-kit.with-bridge.css'), legacyBridgeBundle);
-fs.writeFileSync(
+await writeGeneratedFile(path.join(dist, 'ui-style-kit.css'), defaultBundle);
+await writeGeneratedFile(path.join(dist, 'ui-style-kit.min.css'), minifyCss(defaultBundle, 'ui-style-kit.css'));
+await writeGeneratedFile(path.join(dist, 'ui-style-kit.visual.css'), visualBundle);
+await writeGeneratedFile(path.join(dist, 'ui-style-kit.visual.min.css'), minifyCss(visualBundle, 'ui-style-kit.visual.css'));
+await writeGeneratedFile(path.join(dist, 'ui-style-kit.with-bridge.css'), legacyBridgeBundle);
+await writeGeneratedFile(
   path.join(dist, 'ui-style-kit.with-bridge.min.css'),
   minifyCss(legacyBridgeBundle, 'ui-style-kit.with-bridge.css')
 );
 
 for (const preset of presetFiles) {
   const focusedBundle = bundle(visualSections([preset]));
-  fs.writeFileSync(path.join(focusedDist, `${preset.id}.css`), focusedBundle);
+  await writeGeneratedFile(path.join(focusedDist, `${preset.id}.css`), focusedBundle);
 }
 
 syncDemoManifest();

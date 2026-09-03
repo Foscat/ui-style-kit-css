@@ -122,6 +122,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--terminal-space-5);
+  --usk-native-control-min-block-size: 2.65rem;
+  --usk-native-control-padding-block: .74rem;
+  --usk-native-control-padding-inline: 1rem;
+  --usk-native-subcontrol-padding-block: .58rem;
+  --usk-native-subcontrol-padding-inline: .8rem;
+  --usk-native-choice-size: 1.3rem;
+  --usk-native-choice-background: var(--terminal-control-bg);
+  --usk-native-choice-border: 1px solid var(--terminal-border);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 0;
+  --usk-native-choice-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-choice-checked-background: var(--terminal-primary);
+  --usk-native-choice-mark-color: var(--terminal-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(78deg, transparent 50%, var(--terminal-primary) 50%), linear-gradient(102deg, var(--terminal-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.42000000000000004rem 0.42000000000000004rem, 0.42000000000000004rem 0.42000000000000004rem;
+  --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - 0.78rem) 50%;
+  --usk-native-select-padding-inline-end: 2.4rem;
+  --usk-native-range-track-size: .5rem;
+  --usk-native-range-track-background: var(--terminal-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--terminal-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-range-progress-background: var(--terminal-primary);
+  --usk-native-range-thumb-size: 1.1rem;
+  --usk-native-range-thumb-background: var(--terminal-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--terminal-border);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-progress-size: .62rem;
+  --usk-native-progress-track-background: var(--terminal-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--terminal-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-progress-value-background: var(--terminal-primary);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-meter-optimum-background: var(--terminal-success);
+  --usk-native-meter-suboptimum-background: var(--terminal-warning);
+  --usk-native-meter-critical-background: var(--terminal-danger);
+  --usk-native-file-button-background: var(--terminal-primary);
+  --usk-native-file-button-border: 1px solid var(--terminal-border);
+  --usk-native-file-button-radius: 0;
+  --usk-native-file-button-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-color-swatch-border: 1px solid var(--terminal-border);
+  --usk-native-color-swatch-radius: 0;
+  --usk-native-indicator-opacity: 0.82;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .65rem;
+  --usk-native-scrollbar-track: var(--terminal-surface-soft);
+  --usk-native-scrollbar-thumb: var(--terminal-primary);
+  --usk-native-scrollbar-radius: 0;
   --terminal-bg: rgb(var(--terminal-bg-rgb));
   --terminal-surface: rgb(var(--terminal-surface-rgb) / var(--terminal-panel-alpha));
   --terminal-surface-strong: rgb(var(--terminal-surface-strong-rgb) / var(--terminal-panel-alpha));
@@ -509,7 +560,6 @@
 .terminal-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--terminal-card-bg);
   color: var(--terminal-text);
   border: 1px solid var(--terminal-border);
@@ -635,6 +685,7 @@
 
 /* Filled and framed actions share command brackets and restrained terminal glow. */
 .terminal-button.terminal-button-cut, .terminal-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
@@ -673,6 +724,153 @@
   border: .09em solid currentColor; border-radius: 0; background: conic-gradient(currentColor 0 20%, transparent 0 32%, currentColor 0 46%, transparent 0 72%, currentColor 0 84%, transparent 0); box-shadow: 0 0 .38em currentColor; clip-path: polygon(0 0, 45% 0, 45% 18%, 18% 18%, 18% 45%, 0 45%, 0 0, 100% 0, 100% 100%, 55% 100%, 55% 82%, 82% 82%, 82% 55%, 100% 55%); animation: terminal-spin .76s steps(4, end) infinite;
 }
 
+/**
+ * Final Data Terminal fidelity layer.
+ * Keeps every control on the same dense one-pixel command grid.
+ */
+[data-ui="data-terminal"][data-theme][data-mode] {
+  --terminal-command-plane:
+    repeating-linear-gradient(0deg, rgb(var(--terminal-primary-rgb) / .1) 0 1px, transparent 1px 4px),
+    linear-gradient(145deg, rgb(var(--terminal-primary-rgb) / .22), rgb(var(--terminal-surface-rgb) / .94) 52%, rgb(var(--terminal-secondary-rgb) / .16));
+  --terminal-card-bg: var(--terminal-command-plane);
+  --usk-native-card-bg: var(--terminal-command-plane);
+  --usk-native-font-control: ui-monospace, Consolas, "Liberation Mono", monospace;
+  --usk-native-control-min-block-size: 2.2rem;
+  --usk-native-control-padding-block: .38rem;
+  --usk-native-control-padding-inline: .62rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: none;
+  --usk-native-shadow-md: none;
+  --usk-native-focus-ring: 0 0 0 1px var(--terminal-focus);
+  --usk-native-subcontrol-padding-block: .28rem;
+  --usk-native-subcontrol-padding-inline: .48rem;
+  --usk-native-choice-size: 1rem;
+  --usk-native-choice-background: var(--terminal-control-bg);
+  --usk-native-choice-border: 1px solid var(--terminal-text-muted);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 0;
+  --usk-native-choice-shadow: inset 0 0 0 1px var(--terminal-surface);
+  --usk-native-choice-checked-background: linear-gradient(var(--terminal-primary), var(--terminal-primary));
+  --usk-native-choice-mark-color: var(--terminal-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(90deg, transparent 38%, var(--terminal-primary) 38% 62%, transparent 62%);
+  --usk-native-select-indicator-size: .72rem .5rem;
+  --usk-native-select-indicator-position: calc(100% - .66rem) 50%;
+  --usk-native-select-padding-inline-end: 1.65rem;
+  --usk-native-range-track-size: .32rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 1px, transparent 1px .5rem), var(--terminal-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--terminal-text-muted);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--terminal-success), var(--terminal-warning), var(--terminal-danger));
+  --usk-native-range-thumb-size: .9rem;
+  --usk-native-range-thumb-background: var(--terminal-text);
+  --usk-native-range-thumb-border: 1px solid var(--terminal-surface);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 0 0 0 1px var(--terminal-primary);
+  --usk-native-progress-size: .58rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, var(--terminal-surface-soft) 0 .48rem, var(--terminal-border) .48rem .54rem);
+  --usk-native-progress-track-border: 1px solid var(--terminal-text-muted);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 .48rem, transparent .48rem .54rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-scrollbar-size: .6rem;
+  --usk-native-scrollbar-track: var(--terminal-surface);
+  --usk-native-scrollbar-thumb: linear-gradient(var(--terminal-primary), var(--terminal-primary));
+  --usk-native-scrollbar-radius: 0;
+}
+
+.terminal-title {
+  font-weight: 700;
+  letter-spacing: .035em;
+}
+
+.terminal-label {
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.terminal-card,
+.terminal-panel {
+  padding: .78rem;
+  background: var(--terminal-card-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.terminal-well,
+.terminal-inset {
+  padding: .58rem;
+  background: var(--terminal-control-bg);
+  border: 1px dashed var(--terminal-border);
+  border-radius: 0;
+  box-shadow: inset .2rem 0 0 rgb(var(--terminal-primary-rgb) / .22);
+}
+
+.terminal-button,
+.terminal-icon-button {
+  min-height: 2.2rem;
+  padding: .38rem .62rem;
+  background: var(--terminal-control-bg);
+  border: 1px solid var(--terminal-primary);
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: 700;
+}
+
+.terminal-button::before { content: "["; margin-inline-end: .38em; }
+.terminal-button::after { content: "]"; margin-inline-start: .38em; }
+.terminal-button:active, .terminal-button[aria-pressed="true"], .terminal-button.is-active { color: var(--terminal-on-primary); background: var(--terminal-primary); }
+.terminal-button:disabled, .terminal-disabled { color: var(--terminal-text-muted); border-color: var(--terminal-text-muted); box-shadow: none; }
+
+.terminal-input,
+.terminal-textarea,
+.terminal-select {
+  min-height: 2.1rem;
+  padding: .34rem .52rem;
+  background: var(--terminal-control-bg);
+  border: 1px solid var(--terminal-text-muted);
+  border-radius: 0;
+  box-shadow: inset .16rem 0 0 rgb(var(--terminal-primary-rgb) / .28);
+}
+
+.terminal-nav, .terminal-toolbar, .terminal-feature-strip { gap: 1px; padding: 1px; border: 1px solid var(--terminal-border); border-radius: 0; box-shadow: none; }
+.terminal-nav-link { min-height: 1.9rem; padding: .3rem .52rem; border-radius: 0; }
+.terminal-badge { min-height: 1.3rem; padding: .18rem .38rem; border: 1px solid currentColor; border-radius: 0; font-family: var(--terminal-font-mono); }
+.terminal-alert { padding: .52rem .62rem; background: var(--terminal-control-bg); border: 1px solid currentColor; border-radius: 0; box-shadow: none; }
+.terminal-progress { height: .58rem; background: repeating-linear-gradient(90deg, var(--terminal-surface-soft) 0 .48rem, var(--terminal-border) .48rem .54rem); border-radius: 0; }
+.terminal-progress-bar { background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 .48rem, transparent .48rem .54rem); border-radius: 0; box-shadow: none; }
+.terminal-table-wrap { background: var(--terminal-surface); border: 1px solid var(--terminal-border); border-radius: 0; box-shadow: none; }
+.terminal-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.terminal-table th { padding: .38rem .46rem; background: var(--terminal-control-bg); border: 1px solid var(--terminal-border); font-weight: 700; }
+.terminal-table td { padding: .34rem .46rem; border: 1px solid var(--terminal-border); }
+.terminal-table tr:hover td { color: var(--terminal-on-primary); background: var(--terminal-primary); }
+.terminal-tooltip, [data-ui="data-terminal"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 1px dashed var(--terminal-warning); border-radius: 0; box-shadow: none; }
+.terminal-card-service, .terminal-card-feature, .terminal-media-scrim, .terminal-callout-bar { border-radius: 0; box-shadow: none; }
+
+/* Command planes use compact signal rails instead of broad decorative striping. */
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="data-terminal"][data-theme][data-mode] {
+    --usk-native-card-bg: var(--terminal-card-bg);
+    --usk-native-control-bg: color-mix(in srgb, var(--terminal-surface-soft) 88%, var(--terminal-primary));
+  }
+  .terminal-panel,
+  .terminal-card-service,
+  .terminal-feature-strip,
+  .terminal-callout-bar {
+    background:
+      linear-gradient(90deg, var(--terminal-primary) 0 28%, var(--terminal-warning) 28% 38%, transparent 38%) top / 100% 2px no-repeat,
+      var(--terminal-card-bg);
+  }
+}
+.terminal-input { border-radius: .01rem; }
+.terminal-alert { border-radius: .015rem; }
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="data-terminal"] *, [data-ui="data-terminal"] *::before, [data-ui="data-terminal"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -688,4 +886,15 @@
   [data-ui="data-terminal"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="data-terminal"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.data_terminal {
+/* Keeps semantic field states above preset-specific material paint. */
+.terminal-input[aria-invalid="true"], .terminal-textarea[aria-invalid="true"], .terminal-select[aria-invalid="true"] { border-color: var(--terminal-danger); box-shadow: 0 0 0 2px rgb(var(--terminal-danger-rgb) / .2); }
+.terminal-input[readonly], .terminal-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.terminal-button-primary { background: var(--terminal-primary); color: var(--terminal-on-primary); border-color: var(--terminal-primary); }
+.terminal-button-secondary { background: var(--terminal-secondary); color: var(--terminal-on-secondary); border-color: var(--terminal-secondary); }
+.terminal-button-danger { background: var(--terminal-danger); color: var(--terminal-on-danger); border-color: var(--terminal-danger); }
+.terminal-button-ghost { background: transparent; color: var(--terminal-primary); border-color: transparent; }
 }

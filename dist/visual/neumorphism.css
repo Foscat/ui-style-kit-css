@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.3.0
+ * UI Style Kit CSS v2.4.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -1634,6 +1634,52 @@
   --usk-native-thumb: var(--usk-native-surface-strong);
   --usk-native-thumb-border: var(--usk-native-primary);
   --usk-native-indicator: var(--usk-native-primary);
+  --usk-native-choice-size: 1.5rem;
+  --usk-native-choice-background: var(--usk-native-control-bg);
+  --usk-native-choice-border: var(--usk-native-border-width) solid var(--usk-native-border);
+  --usk-native-checkbox-radius: .3rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: none;
+  --usk-native-choice-checked-background: var(--usk-native-primary);
+  --usk-native-choice-mark-color: var(--usk-native-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .85rem) 50%;
+  --usk-native-select-padding-inline-end: 2.5rem;
+  --usk-native-range-track-size: .45rem;
+  --usk-native-range-track-background: var(--usk-native-track);
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 999px;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: var(--usk-native-track-fill);
+  --usk-native-range-thumb-size: 1.2rem;
+  --usk-native-range-thumb-background: var(--usk-native-thumb);
+  --usk-native-range-thumb-border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: var(--usk-native-shadow);
+  --usk-native-progress-size: .9rem;
+  --usk-native-progress-track-background: var(--usk-native-track);
+  --usk-native-progress-track-border: 0 solid transparent;
+  --usk-native-progress-track-radius: 999px;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: var(--usk-native-track-fill);
+  --usk-native-progress-value-radius: inherit;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-meter-optimum-background: var(--usk-native-success);
+  --usk-native-meter-suboptimum-background: var(--usk-native-warning);
+  --usk-native-meter-critical-background: var(--usk-native-danger);
+  --usk-native-file-button-background: var(--usk-native-primary);
+  --usk-native-file-button-border: var(--usk-native-border-width) solid var(--usk-native-primary);
+  --usk-native-file-button-radius: var(--usk-native-radius-sm);
+  --usk-native-file-button-shadow: var(--usk-native-shadow);
+  --usk-native-color-swatch-border: 0 solid transparent;
+  --usk-native-color-swatch-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  --usk-native-indicator-opacity: .78;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .75rem;
+  --usk-native-scrollbar-track: var(--usk-native-track);
+  --usk-native-scrollbar-thumb: var(--usk-native-thumb-border);
+  --usk-native-scrollbar-radius: 999px;
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
@@ -1839,6 +1885,24 @@
 
 [data-ui][data-theme][data-mode] :where(input, textarea, select, button) { font: inherit; }
 
+[data-ui][data-theme][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+[data-ui][data-theme][data-mode] :where(select[multiple]) {
+  padding-inline-end: var(--usk-native-control-padding-inline);
+  background-image: none;
+}
+
+[dir="rtl"] [data-ui][data-theme][data-mode] :where(select:not([multiple])),
+[data-ui][data-theme][data-mode][dir="rtl"] :where(select:not([multiple])) {
+  --usk-native-select-indicator-position: 1.15rem 50%, .85rem 50%;
+}
+
 [data-ui][data-theme][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
   -webkit-appearance: none;
   appearance: none;
@@ -1876,9 +1940,36 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
-  inline-size: 1.5rem;
-  block-size: 1.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: var(--usk-native-choice-size);
+  block-size: var(--usk-native-choice-size);
+  background: var(--usk-native-choice-background);
+  border: var(--usk-native-choice-border);
+  box-shadow: var(--usk-native-choice-shadow);
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]) { border-radius: var(--usk-native-checkbox-radius); }
+[data-ui][data-theme][data-mode] :where(input[type="radio"]) { border-radius: var(--usk-native-radio-radius); }
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:checked) {
+  background-color: var(--usk-native-choice-checked-background);
+  background-image: linear-gradient(135deg, transparent 42%, var(--usk-native-choice-mark-color) 42% 56%, transparent 56%), linear-gradient(45deg, transparent 54%, var(--usk-native-choice-mark-color) 54% 68%, transparent 68%);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:hover:not(:disabled), input[type="radio"]:hover:not(:disabled)) {
+  border-color: var(--usk-native-primary);
+  filter: brightness(1.04);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:active:not(:disabled), input[type="radio"]:active:not(:disabled)) {
+  filter: brightness(.94);
+  transform: scale(.94);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="radio"]:checked) {
+  background: radial-gradient(circle, var(--usk-native-choice-mark-color) 0 31%, transparent 34%), var(--usk-native-choice-checked-background);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"]) {
@@ -1891,36 +1982,46 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-runnable-track {
-  block-size: .45rem;
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-track-background);
+  border: var(--usk-native-range-track-border);
+  border-radius: var(--usk-native-range-track-radius);
+  box-shadow: var(--usk-native-range-track-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-track {
-  block-size: .45rem;
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-track-background);
+  border: var(--usk-native-range-track-border);
+  border-radius: var(--usk-native-range-track-radius);
+  box-shadow: var(--usk-native-range-track-shadow);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-progress {
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-progress-background);
+  border-radius: var(--usk-native-range-track-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  inline-size: 1.2rem;
-  block-size: 1.2rem;
-  margin-block-start: -.38rem;
-  background: var(--usk-native-thumb);
-  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
-  border-radius: 999px;
-  box-shadow: var(--usk-native-shadow);
+  inline-size: var(--usk-native-range-thumb-size);
+  block-size: var(--usk-native-range-thumb-size);
+  margin-block-start: calc((var(--usk-native-range-track-size) - var(--usk-native-range-thumb-size)) / 2);
+  background: var(--usk-native-range-thumb-background);
+  border: var(--usk-native-range-thumb-border);
+  border-radius: var(--usk-native-range-thumb-radius);
+  box-shadow: var(--usk-native-range-thumb-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-thumb {
-  inline-size: 1.2rem;
-  block-size: 1.2rem;
-  background: var(--usk-native-thumb);
-  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
-  border-radius: 999px;
-  box-shadow: var(--usk-native-shadow);
+  inline-size: var(--usk-native-range-thumb-size);
+  block-size: var(--usk-native-range-thumb-size);
+  background: var(--usk-native-range-thumb-background);
+  border: var(--usk-native-range-thumb-border);
+  border-radius: var(--usk-native-range-thumb-radius);
+  box-shadow: var(--usk-native-range-thumb-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"]) {
@@ -1937,13 +2038,13 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"])::-webkit-color-swatch {
-  border: 0;
-  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  border: var(--usk-native-color-swatch-border);
+  border-radius: var(--usk-native-color-swatch-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"])::-moz-color-swatch {
-  border: 0;
-  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  border: var(--usk-native-color-swatch-border);
+  border-radius: var(--usk-native-color-swatch-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="file"]) { color: var(--usk-native-text-muted); }
@@ -1954,9 +2055,10 @@
   margin-inline-end: .75rem;
   padding: var(--usk-native-subcontrol-padding-block) var(--usk-native-subcontrol-padding-inline);
   color: var(--usk-native-on-primary);
-  background: var(--usk-native-primary);
-  border: var(--usk-native-border-width) solid var(--usk-native-primary);
-  border-radius: var(--usk-native-radius-sm);
+  background: var(--usk-native-file-button-background);
+  border: var(--usk-native-file-button-border);
+  border-radius: var(--usk-native-file-button-radius);
+  box-shadow: var(--usk-native-file-button-shadow);
   font-weight: 800;
   cursor: pointer;
 }
@@ -2002,6 +2104,7 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"]:indeterminate, input[type="radio"]:indeterminate) {
+  background: linear-gradient(var(--usk-native-choice-mark-color), var(--usk-native-choice-mark-color)) center / 58% .15rem no-repeat var(--usk-native-choice-checked-background);
   accent-color: var(--usk-native-warning);
 }
 
@@ -2021,7 +2124,6 @@
 [data-ui][data-theme][data-mode] :where(table) {
   width: 100%;
   margin: 1rem 0;
-  overflow: hidden;
   background: var(--usk-native-surface);
   border: var(--usk-native-border-width) solid var(--usk-native-border);
   border-radius: var(--usk-native-radius);
@@ -2078,35 +2180,56 @@
 [data-ui][data-theme][data-mode] :where(dialog)::backdrop { background: rgb(0 0 0 / .62); }
 
 [data-ui][data-theme][data-mode] :where(progress, meter) {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
-  min-height: .9rem;
+  min-height: var(--usk-native-progress-size);
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(progress:not([value])) {
+  background: repeating-linear-gradient(115deg, var(--usk-native-progress-track-background) 0 .5rem, var(--usk-native-progress-value-background) .5rem 1rem);
+  background-size: 200% 100%;
+  border: var(--usk-native-progress-track-border);
+  border-radius: var(--usk-native-progress-track-radius);
+  box-shadow: var(--usk-native-progress-track-shadow);
+  animation: usk-native-progress-indeterminate 1.2s linear infinite;
+}
+
+@keyframes usk-native-progress-indeterminate {
+  to { background-position: -2rem 0; }
 }
 
 [data-ui][data-theme][data-mode] :where(progress, meter)::-webkit-progress-bar,
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-bar {
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  background: var(--usk-native-progress-track-background);
+  border: var(--usk-native-progress-track-border);
+  border-radius: var(--usk-native-progress-track-radius);
+  box-shadow: var(--usk-native-progress-track-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(progress)::-webkit-progress-value,
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value {
-  background: var(--usk-native-track-fill);
-  border-radius: inherit;
+  background: var(--usk-native-progress-value-background);
+  border-radius: var(--usk-native-progress-value-radius);
+  box-shadow: var(--usk-native-progress-value-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(progress)::-moz-progress-bar,
 [data-ui][data-theme][data-mode] :where(meter)::-moz-meter-bar {
-  background: var(--usk-native-track-fill);
-  border-radius: 999px;
+  background: var(--usk-native-progress-value-background);
+  border-radius: var(--usk-native-progress-value-radius);
+  box-shadow: var(--usk-native-progress-value-shadow);
 }
 
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value { background: var(--usk-native-meter-optimum-background); }
+
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-suboptimum-value {
-  background: var(--usk-native-warning);
+  background: var(--usk-native-meter-suboptimum-background);
 }
 
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-even-less-good-value {
-  background: var(--usk-native-danger);
+  background: var(--usk-native-meter-critical-background);
 }
 
 [data-ui][data-theme][data-mode] :where(main, section, header, footer, nav, article, aside, address) {
@@ -2151,7 +2274,8 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="date"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"])::-webkit-calendar-picker-indicator {
-  opacity: .78;
+  opacity: var(--usk-native-indicator-opacity);
+  filter: var(--usk-native-indicator-filter);
   accent-color: var(--usk-native-indicator);
 }
 
@@ -2166,6 +2290,8 @@
 
 [data-ui][data-theme][data-mode] :where(select)::picker-icon {
   color: var(--usk-native-indicator);
+  opacity: var(--usk-native-indicator-opacity);
+  filter: var(--usk-native-indicator-filter);
 }
 
 [data-ui][data-theme][data-mode] :where(:focus-visible) {
@@ -2184,9 +2310,9 @@
 [data-ui][data-theme][data-mode] :where([aria-busy="true"]) { cursor: progress; }
 [data-ui][data-theme][data-mode] :where([hidden]) { display: none !important; }
 [data-ui][data-theme][data-mode] ::selection { color: var(--usk-native-on-primary); background: var(--usk-native-primary); }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: .75rem; block-size: .75rem; }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-track); }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-thumb-border); border-radius: 999px; }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: var(--usk-native-scrollbar-size); block-size: var(--usk-native-scrollbar-size); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-scrollbar-track); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-scrollbar-thumb); border-radius: var(--usk-native-scrollbar-radius); }
 
 @supports (color: color-mix(in srgb, black, white)) {
   [data-ui][data-theme][data-mode] {
@@ -2219,6 +2345,22 @@
   [data-ui][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
     transition-duration: 1ms !important;
   }
+
+  [data-ui][data-theme][data-mode] :where(progress:not([value])) {
+    animation: none;
+  }
+}
+
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-webkit-slider-runnable-track,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-webkit-slider-thumb,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-moz-range-track,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-moz-range-thumb,
+[data-ui][data-theme][data-mode="contrast"] :where(progress, meter),
+[data-ui][data-theme][data-mode="contrast"] :where(progress, meter)::-webkit-progress-bar,
+[data-ui][data-theme][data-mode="contrast"] :where(progress)::-webkit-progress-value,
+[data-ui][data-theme][data-mode="contrast"] :where(progress)::-moz-progress-bar {
+  box-shadow: none;
+  filter: none;
 }
 
 @media (forced-colors: active) {
@@ -2261,6 +2403,9 @@
   label,
   legend,
   summary,
+  strong,
+  small,
+  em,
   code,
   kbd,
   samp,
@@ -2270,7 +2415,8 @@
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -2398,7 +2544,6 @@
 ), [data-ui]:where([data-ui="neumorphism"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -2449,6 +2594,8 @@
 ), [data-ui]:where([data-ui="neumorphism"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
 
@@ -2521,7 +2668,8 @@
   font-weight: 850;
   text-align: center;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
   cursor: pointer;
   transition:
@@ -2683,7 +2831,8 @@
 ) {
   max-inline-size: min(18rem, calc(100vw - 2rem));
   text-align: start;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 /* Directional tooltips detach only from an explicit anchor so static tooltip chips keep normal-flow sizing. */
@@ -3064,7 +3213,6 @@
 ), [data-ui]:where([data-ui="neumorphism"])[data-theme][data-mode] :where(.luxe-surface,.luxe-surface-sm,.luxe-surface-lg,.ui-card,.luxe-card-service,.luxe-card-feature,.luxe-panel,.ui-toolbar,.luxe-well,.luxe-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.luxe-feature-strip,.luxe-feature-item,.luxe-callout-bar,.luxe-media-scrim,.organic-surface,.organic-surface-sm,.organic-surface-lg,.ui-card,.organic-card-service,.organic-card-feature,.organic-panel,.ui-toolbar,.organic-well,.organic-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.organic-feature-strip,.organic-feature-item,.organic-callout-bar,.organic-media-scrim,.utility-surface,.utility-surface-sm,.utility-surface-lg,.ui-card,.utility-card-service,.utility-card-feature,.utility-panel,.ui-toolbar,.utility-well,.utility-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.utility-feature-strip,.utility-feature-item,.utility-callout-bar,.utility-media-scrim,.blueprint-surface,.blueprint-surface-sm,.blueprint-surface-lg,.ui-card,.blueprint-card-service,.blueprint-card-feature,.blueprint-panel,.ui-toolbar,.blueprint-well,.blueprint-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.blueprint-feature-strip,.blueprint-feature-item,.blueprint-callout-bar,.blueprint-media-scrim,.deco-surface,.deco-surface-sm,.deco-surface-lg,.ui-card,.deco-card-service,.deco-card-feature,.deco-panel,.ui-toolbar,.deco-well,.deco-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.deco-feature-strip,.deco-feature-item,.deco-callout-bar,.deco-media-scrim,.clay-surface,.clay-surface-sm,.clay-surface-lg,.ui-card,.clay-card-service,.clay-card-feature,.clay-panel,.ui-toolbar,.clay-well,.clay-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.clay-feature-strip,.clay-feature-item,.clay-callout-bar,.clay-media-scrim,.terminal-surface,.terminal-surface-sm,.terminal-surface-lg,.ui-card,.terminal-card-service,.terminal-card-feature,.terminal-panel,.ui-toolbar,.terminal-well,.terminal-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.terminal-feature-strip,.terminal-feature-item,.terminal-callout-bar,.terminal-media-scrim,.paper-surface,.paper-surface-sm,.paper-surface-lg,.ui-card,.paper-card-service,.paper-card-feature,.paper-panel,.ui-toolbar,.paper-well,.paper-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.paper-feature-strip,.paper-feature-item,.paper-callout-bar,.paper-media-scrim,.noir-surface,.noir-surface-sm,.noir-surface-lg,.ui-card,.noir-card-service,.noir-card-feature,.noir-panel,.ui-toolbar,.noir-well,.noir-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.noir-feature-strip,.noir-feature-item,.noir-callout-bar,.noir-media-scrim) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -3143,6 +3291,8 @@
 ), [data-ui]:where([data-ui="neumorphism"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.luxe-button-cut,.luxe-button-outline-heavy,.ui-badge,.luxe-badge-seal,.ui-nav-link,.luxe-icon-medallion,.ui-button,.ui-icon-button,.organic-button-cut,.organic-button-outline-heavy,.ui-badge,.organic-badge-seal,.ui-nav-link,.organic-icon-medallion,.ui-button,.ui-icon-button,.utility-button-cut,.utility-button-outline-heavy,.ui-badge,.utility-badge-seal,.ui-nav-link,.utility-icon-medallion,.ui-button,.ui-icon-button,.blueprint-button-cut,.blueprint-button-outline-heavy,.ui-badge,.blueprint-badge-seal,.ui-nav-link,.blueprint-icon-medallion,.ui-button,.ui-icon-button,.deco-button-cut,.deco-button-outline-heavy,.ui-badge,.deco-badge-seal,.ui-nav-link,.deco-icon-medallion,.ui-button,.ui-icon-button,.clay-button-cut,.clay-button-outline-heavy,.ui-badge,.clay-badge-seal,.ui-nav-link,.clay-icon-medallion,.ui-button,.ui-icon-button,.terminal-button-cut,.terminal-button-outline-heavy,.ui-badge,.terminal-badge-seal,.ui-nav-link,.terminal-icon-medallion,.ui-button,.ui-icon-button,.paper-button-cut,.paper-button-outline-heavy,.ui-badge,.paper-badge-seal,.ui-nav-link,.paper-icon-medallion,.ui-button,.ui-icon-button,.noir-button-cut,.noir-button-outline-heavy,.ui-badge,.noir-badge-seal,.ui-nav-link,.noir-icon-medallion) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
 
@@ -3207,7 +3357,8 @@
   font-weight: 850;
   text-align: center;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
@@ -3382,7 +3533,7 @@
   .noir-tooltip-right,
   .noir-tooltip-bottom,
   .noir-tooltip-left
-) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: anywhere; }
+) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: break-word; word-break: normal; }
 
 [data-ui][data-theme][data-mode] :where(
   [data-ui-tooltip-anchor] > .luxe-tooltip-top,
@@ -3512,12 +3663,14 @@
     --neo-font-heading: var(--neo-font-display);
     --neo-font-control: var(--neo-font-display);
     --neo-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    --neo-radius-xs: .25rem;
-    --neo-radius-sm: .5rem;
-    --neo-radius-md: .9rem;
-    --neo-radius-lg: 1.4rem;
-    --neo-radius-xl: calc(1.4rem + .5rem);
+    --neo-radius-xs: .52rem;
+    --neo-radius-sm: .82rem;
+    --neo-radius-md: 1.15rem;
+    --neo-radius-lg: 1.55rem;
+    --neo-radius-xl: 2.25rem;
     --neo-radius-pill: 999px;
+    --neo-soft-edge: 1px solid rgb(var(--neo-border-rgb) / .28);
+    --neo-sunken-edge: 1px solid rgb(var(--neo-border-rgb) / .18);
     --neo-space-1: .25rem;
     --neo-space-2: .5rem;
     --neo-space-3: .75rem;
@@ -3615,6 +3768,57 @@
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--neo-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .8rem;
+    --usk-native-choice-size: 1.55rem;
+    --usk-native-choice-background: var(--neo-control-bg);
+    --usk-native-choice-border: 1px solid var(--neo-border);
+    --usk-native-checkbox-radius: .45rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: 4px 4px 8px #00000038;
+    --usk-native-choice-checked-background: var(--neo-primary);
+    --usk-native-choice-mark-color: var(--neo-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(42deg, transparent 50%, var(--neo-primary) 50%), linear-gradient(138deg, var(--neo-primary) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-padding-inline-end: 2.4rem;
+    --usk-native-range-track-size: .62rem;
+    --usk-native-range-track-background: var(--neo-surface-soft);
+    --usk-native-range-track-border: 1px solid var(--neo-border);
+    --usk-native-range-track-radius: 999px;
+    --usk-native-range-track-shadow: 4px 4px 8px #00000038;
+    --usk-native-range-progress-background: var(--neo-primary);
+    --usk-native-range-thumb-size: 1.45rem;
+    --usk-native-range-thumb-background: var(--neo-surface-strong);
+    --usk-native-range-thumb-border: 1px solid var(--neo-border);
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: 4px 4px 8px #00000038;
+    --usk-native-progress-size: .82rem;
+    --usk-native-progress-track-background: var(--neo-surface-soft);
+    --usk-native-progress-track-border: 1px solid var(--neo-border);
+    --usk-native-progress-track-radius: 999px;
+    --usk-native-progress-track-shadow: 4px 4px 8px #00000038;
+    --usk-native-progress-value-background: var(--neo-primary);
+    --usk-native-progress-value-radius: 999px;
+    --usk-native-progress-value-shadow: 4px 4px 8px #00000038;
+    --usk-native-meter-optimum-background: var(--neo-success);
+    --usk-native-meter-suboptimum-background: var(--neo-warning);
+    --usk-native-meter-critical-background: var(--neo-danger);
+    --usk-native-file-button-background: var(--neo-primary);
+    --usk-native-file-button-border: 1px solid var(--neo-border);
+    --usk-native-file-button-radius: .45rem;
+    --usk-native-file-button-shadow: 4px 4px 8px #00000038;
+    --usk-native-color-swatch-border: 1px solid var(--neo-border);
+    --usk-native-color-swatch-radius: .45rem;
+    --usk-native-indicator-opacity: .72;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .8rem;
+    --usk-native-scrollbar-track: var(--neo-surface-soft);
+    --usk-native-scrollbar-thumb: var(--neo-primary);
+    --usk-native-scrollbar-radius: 999px;
     --neo-bg: rgb(var(--neo-bg-rgb));
     --neo-surface: rgb(var(--neo-surface-rgb) / var(--neo-panel-alpha));
     --neo-surface-strong: rgb(var(--neo-surface-strong-rgb) / var(--neo-panel-alpha));
@@ -3735,10 +3939,6 @@
     position: relative;
   }
 
-  .neo-card, .neo-panel, :where([data-ui="neumorphism"]) .ui-card {
-    padding: var(--neo-space-6);
-  }
-
   .neo-toolbar, :where([data-ui="neumorphism"]) .ui-toolbar {
     justify-content: space-between;
     align-items: center;
@@ -3746,11 +3946,6 @@
     padding: var(--neo-space-4);
     flex-wrap: wrap;
     display: flex;
-  }
-
-  .neo-surface-sm {
-    border-radius: var(--neo-radius-md);
-    box-shadow: 0 6px 18px rgb(0 0 0 / calc(var(--neo-shadow-alpha)*.72));
   }
 
   .neo-surface-lg {
@@ -3839,12 +4034,6 @@
     background: none;
   }
 
-  .neo-icon-button, :where([data-ui="neumorphism"]) .ui-icon-button {
-    border-radius: var(--neo-radius-pill);
-    width: 2.75rem;
-    padding: 0;
-  }
-
   .neo-button:disabled, .neo-icon-button:disabled, .neo-disabled, :where([data-ui="neumorphism"]) .ui-button:disabled, :where([data-ui="neumorphism"]) .ui-icon-button:disabled {
     opacity: .55;
     cursor: not-allowed;
@@ -3898,10 +4087,6 @@
     opacity: .82;
   }
 
-  .neo-input:hover, .neo-textarea:hover, .neo-select:hover, :where([data-ui="neumorphism"]) .ui-input:hover, :where([data-ui="neumorphism"]) .ui-textarea:hover, :where([data-ui="neumorphism"]) .ui-select:hover {
-    border-color: rgb(var(--neo-primary-rgb)/.58);
-  }
-
   .neo-input:focus, .neo-textarea:focus, .neo-select:focus, :where([data-ui="neumorphism"]) .ui-input:focus, :where([data-ui="neumorphism"]) .ui-textarea:focus, :where([data-ui="neumorphism"]) .ui-select:focus {
     border-color: var(--neo-focus);
     box-shadow: var(--neo-focus-ring);
@@ -3935,10 +4120,6 @@
     transition: background var(--neo-transition-fast),box-shadow var(--neo-transition-fast);
     place-items: center;
     display: inline-grid;
-  }
-
-  .neo-check-control, :where([data-ui="neumorphism"]) .ui-check-control {
-    border-radius: var(--neo-radius-xs);
   }
 
   .neo-radio-control, :where([data-ui="neumorphism"]) .ui-radio-control {
@@ -4284,43 +4465,280 @@
   }
 
   [data-ui="neumorphism"][data-mode="light"] {
-    --neo-nm-light: #fffffff0;
-    --neo-nm-dark: #94a2b285;
+    --neo-nm-light: #fffffff5;
+    --neo-nm-dark: #a5abb56b;
+    --neo-nm-primary-glow: rgb(var(--neo-primary-rgb) / .24);
   }
 
   [data-ui="neumorphism"][data-mode="dark"] {
-    --neo-nm-light: #2e3746bd;
-    --neo-nm-dark: #00000080;
+    --neo-nm-light: #394252b8;
+    --neo-nm-dark: #0000008f;
+    --neo-nm-primary-glow: rgb(var(--neo-primary-rgb) / .3);
   }
 
   [data-ui="neumorphism"][data-mode="contrast"] {
-    --neo-nm-light: #404040;
+    --neo-nm-light: #fff3;
     --neo-nm-dark: #000;
+    --neo-nm-primary-glow: rgb(var(--neo-primary-rgb) / .5);
   }
 
-  [data-ui="neumorphism"] {
-    background: var(--neo-bg);
+  [data-ui="neumorphism"][data-theme][data-mode] {
+    --neo-theme-bg: linear-gradient(145deg, rgb(var(--neo-surface-strong-rgb) / .28), transparent 34rem), var(--neo-bg);
+    --neo-card-bg: var(--neo-surface);
+    --neo-control-bg: rgb(var(--neo-surface-rgb) / var(--neo-panel-alpha));
+    --neo-muted-divider: rgb(var(--neo-border-rgb) / calc(var(--neo-border-alpha) * .34));
+    --neo-raised-shadow: -.72rem -.72rem 1.35rem var(--neo-nm-light), .78rem .78rem 1.45rem var(--neo-nm-dark);
+    --neo-raised-shadow-sm: -.32rem -.32rem .72rem var(--neo-nm-light), .36rem .36rem .78rem var(--neo-nm-dark);
+    --neo-raised-shadow-lg: -1rem -1rem 1.85rem var(--neo-nm-light), 1.1rem 1.1rem 2rem var(--neo-nm-dark);
+    --neo-inset-shadow: inset .42rem .42rem .82rem var(--neo-nm-dark), inset -.42rem -.42rem .82rem var(--neo-nm-light);
+    --neo-inset-shadow-sm: inset .24rem .24rem .5rem var(--neo-nm-dark), inset -.24rem -.24rem .5rem var(--neo-nm-light);
+    --neo-button-shadow: -.3rem -.3rem .7rem var(--neo-nm-light), .34rem .34rem .75rem var(--neo-nm-dark);
+    --neo-button-primary-shadow: -.28rem -.28rem .65rem var(--neo-nm-light), .38rem .38rem .85rem var(--neo-nm-primary-glow);
+    --neo-control-shadow: var(--neo-inset-shadow-sm);
+    --neo-focus-ring: 0 0 0 3px rgb(var(--neo-focus-rgb) / var(--neo-focus-alpha)), var(--neo-inset-shadow-sm);
+    --usk-native-card-bg: var(--neo-card-bg);
+    --usk-native-control-bg: var(--neo-control-bg);
+    --usk-native-radius-sm: var(--neo-radius-md);
+    --usk-native-radius: var(--neo-radius-lg);
+    --usk-native-radius-lg: var(--neo-radius-xl);
+    --usk-native-border: var(--neo-muted-divider);
+    --usk-native-field-gap: .62rem;
+    --usk-native-panel-padding: var(--neo-space-6);
+    --usk-native-control-min-block-size: 3.05rem;
+    --usk-native-control-padding-block: .82rem;
+    --usk-native-control-padding-inline: 1rem;
+    --usk-native-subcontrol-padding-block: .64rem;
+    --usk-native-subcontrol-padding-inline: .92rem;
+    --usk-native-choice-size: 1.42rem;
+    --usk-native-choice-background: var(--neo-control-bg);
+    --usk-native-choice-border: var(--neo-sunken-edge);
+    --usk-native-choice-shadow: var(--neo-control-shadow);
+    --usk-native-checkbox-radius: .38rem;
+    --usk-native-range-track-size: .56rem;
+    --usk-native-range-track-background: var(--neo-control-bg);
+    --usk-native-range-track-border: 0 solid transparent;
+    --usk-native-range-track-shadow: var(--neo-inset-shadow-sm);
+    --usk-native-range-thumb-size: 1.55rem;
+    --usk-native-range-thumb-background: var(--neo-surface);
+    --usk-native-range-thumb-border: var(--neo-soft-edge);
+    --usk-native-range-thumb-shadow: var(--neo-button-shadow);
+    --usk-native-progress-size: .95rem;
+    --usk-native-progress-track-background: var(--neo-control-bg);
+    --usk-native-progress-track-border: 0 solid transparent;
+    --usk-native-progress-track-shadow: var(--neo-inset-shadow-sm);
+    --usk-native-progress-value-background: linear-gradient(90deg, var(--neo-primary), var(--neo-primary-hover));
+    --usk-native-progress-value-shadow: inset 0 1px 0 #ffffff6b, 0 .12rem .38rem rgb(var(--neo-primary-rgb) / .3);
+    --usk-native-file-button-background: var(--neo-control-bg);
+    --usk-native-file-button-border: var(--neo-soft-edge);
+    --usk-native-file-button-radius: var(--neo-radius-md);
+    --usk-native-file-button-shadow: var(--neo-button-shadow);
+    --usk-native-color-swatch-border: var(--neo-soft-edge);
+    --usk-native-color-swatch-radius: var(--neo-radius-md);
+    --usk-native-scrollbar-track: var(--neo-control-bg);
+    --usk-native-scrollbar-thumb: var(--neo-primary);
+    --usk-native-shadow: var(--neo-raised-shadow-sm);
+    --usk-native-shadow-md: var(--neo-raised-shadow);
+  }
+
+  .neo-subtitle, .neo-copy, .neo-help-text, :where([data-ui="neumorphism"]) .ui-help-text {
+    color: var(--neo-text-muted);
+  }
+
+  .neo-divider {
+    background: var(--neo-muted-divider);
   }
 
   .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card, :where([data-ui="neumorphism"]) .ui-toolbar, :where([data-ui="neumorphism"]) .ui-table-wrap {
-    border-color: rgb(var(--neo-border-rgb)/.14);
-    box-shadow: 10px 10px 22px var(--neo-nm-dark),-10px -10px 22px var(--neo-nm-light);
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow);
+    border-color: #0000;
+    border-radius: 2.25rem;
+  }
+
+  .neo-surface-sm {
+    border-radius: var(--neo-radius-lg);
+    box-shadow: var(--neo-raised-shadow-sm);
   }
 
   .neo-surface-lg, .neo-hover-lift:hover {
-    box-shadow: 16px 16px 32px var(--neo-nm-dark),-16px -16px 32px var(--neo-nm-light);
+    box-shadow: var(--neo-raised-shadow-lg);
   }
 
-  .neo-well, .neo-inset, .neo-input, .neo-textarea, .neo-select, .neo-progress, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select, :where([data-ui="neumorphism"]) .ui-progress {
-    box-shadow: inset 5px 5px 11px var(--neo-nm-dark),inset -5px -5px 11px var(--neo-nm-light);
+  .neo-well, .neo-inset {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-inset-shadow);
+    border-color: #0000;
+    border-radius: 1.55rem;
+  }
+
+  .neo-input, .neo-textarea, .neo-select, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-control-shadow);
+    border-color: #0000;
+    border-radius: 1.55rem;
+  }
+
+  .neo-input:hover, .neo-textarea:hover, .neo-select:hover, :where([data-ui="neumorphism"]) .ui-input:hover, :where([data-ui="neumorphism"]) .ui-textarea:hover, :where([data-ui="neumorphism"]) .ui-select:hover {
+    border-color: rgb(var(--neo-primary-rgb)/.24);
+  }
+
+  .neo-input:focus, .neo-textarea:focus, .neo-select:focus, :where([data-ui="neumorphism"]) .ui-input:focus, :where([data-ui="neumorphism"]) .ui-textarea:focus, :where([data-ui="neumorphism"]) .ui-select:focus {
+    box-shadow: var(--neo-focus-ring);
+    border-color: #0000;
   }
 
   .neo-button, .neo-icon-button, .neo-badge, .neo-nav, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button, :where([data-ui="neumorphism"]) .ui-badge, :where([data-ui="neumorphism"]) .ui-nav {
-    box-shadow: 5px 5px 11px var(--neo-nm-dark),-5px -5px 11px var(--neo-nm-light);
+    border-radius: var(--neo-radius-pill);
+    box-shadow: var(--neo-button-shadow);
+    border-color: #0000;
+  }
+
+  .neo-button, :where([data-ui="neumorphism"]) .ui-button {
+    min-height: 3rem;
+    padding-inline: 1.2rem;
+    font-weight: 760;
+  }
+
+  .neo-button-primary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"]) {
+    background: var(--neo-primary);
+    color: var(--neo-on-primary);
+    box-shadow: var(--neo-button-primary-shadow),inset 0 1px 0 #ffffff57;
+  }
+
+  .neo-button-secondary, .neo-button-ghost, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="secondary"]), :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="ghost"]) {
+    background: var(--neo-control-bg);
+    color: var(--neo-text);
   }
 
   .neo-button:active, .neo-icon-button:active, .neo-button.is-active, .neo-icon-button.is-active, .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button.is-active, :where([data-ui="neumorphism"]) .ui-icon-button.is-active, :where([data-ui="neumorphism"]) .ui-nav-link.is-active {
-    box-shadow: inset 4px 4px 9px var(--neo-nm-dark),inset -4px -4px 9px var(--neo-nm-light);
+    box-shadow: var(--neo-inset-shadow-sm);
+    transform: translateY(1px);
+  }
+
+  .neo-check-control, .neo-radio-control, .neo-switch-track, :where([data-ui="neumorphism"]) .ui-check-control, :where([data-ui="neumorphism"]) .ui-radio-control, :where([data-ui="neumorphism"]) .ui-switch-track {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-control-shadow);
+    border-color: #0000;
+  }
+
+  .neo-check-control, :where([data-ui="neumorphism"]) .ui-check-control {
+    border-radius: var(--neo-radius-xs);
+  }
+
+  .neo-check input:checked + .neo-check-control, .neo-radio input:checked + .neo-radio-control, :where([data-ui="neumorphism"]) .ui-check input:checked+.ui-check-control, :where([data-ui="neumorphism"]) .ui-radio input:checked+.ui-radio-control {
+    background: var(--neo-primary);
+    box-shadow: var(--neo-button-primary-shadow);
+    border-color: #0000;
+  }
+
+  .neo-check input:checked + .neo-check-control:after, :where([data-ui="neumorphism"]) .ui-check input:checked+.ui-check-control:after {
+    content: "";
+    border: solid var(--neo-on-primary);
+    border-width: 0 .14rem .14rem 0;
+    block-size: .72rem;
+    inline-size: .42rem;
+    transform: rotate(45deg) translateY(-.04rem);
+  }
+
+  .neo-switch-track, :where([data-ui="neumorphism"]) .ui-switch-track {
+    width: 3.65rem;
+    height: 1.9rem;
+  }
+
+  .neo-switch-thumb, :where([data-ui="neumorphism"]) .ui-switch-thumb {
+    background: var(--neo-surface);
+    box-shadow: var(--neo-button-shadow);
+    border-color: #0000;
+    top: .24rem;
+    left: .24rem;
+  }
+
+  .neo-switch input:checked + .neo-switch-track, :where([data-ui="neumorphism"]) .ui-switch input:checked+.ui-switch-track {
+    background: var(--neo-primary);
+    box-shadow: inset .2rem .2rem .45rem rgb(var(--neo-primary-hover-rgb)/.72),inset -.2rem -.2rem .45rem #ffffff42;
+    border-color: #0000;
+  }
+
+  .neo-switch input:checked + .neo-switch-track .neo-switch-thumb, :where([data-ui="neumorphism"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
+    background: var(--neo-on-primary);
+  }
+
+  .neo-badge, :where([data-ui="neumorphism"]) .ui-badge {
+    background: var(--neo-control-bg);
+    border-color: #0000;
+    font-weight: 760;
+  }
+
+  .neo-nav, :where([data-ui="neumorphism"]) .ui-nav {
+    gap: var(--neo-space-2);
+    background: var(--neo-card-bg);
+    padding: .45rem;
+  }
+
+  .neo-nav-link, :where([data-ui="neumorphism"]) .ui-nav-link {
+    min-height: 2.55rem;
+    color: var(--neo-text-muted);
+    border-radius: var(--neo-radius-pill);
+    font-weight: 760;
+  }
+
+  .neo-nav-link:hover, :where([data-ui="neumorphism"]) .ui-nav-link:hover {
+    color: var(--neo-text);
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-inset-shadow-sm);
+  }
+
+  .neo-nav-link[aria-current="page"], .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-nav-link[aria-current="page"], :where([data-ui="neumorphism"]) .ui-nav-link.is-active {
+    color: var(--neo-on-primary);
+    background: var(--neo-primary);
+    box-shadow: var(--neo-button-primary-shadow);
+  }
+
+  .neo-progress, :where([data-ui="neumorphism"]) .ui-progress {
+    background: var(--neo-control-bg);
+    height: .95rem;
+    box-shadow: var(--neo-inset-shadow-sm);
+    border-color: #0000;
+  }
+
+  .neo-progress-bar, :where([data-ui="neumorphism"]) .ui-progress-bar {
+    background: linear-gradient(90deg,var(--neo-primary),var(--neo-primary-hover));
+    box-shadow: inset 0 1px 0 #ffffff61,0 .12rem .38rem rgb(var(--neo-primary-rgb)/.3);
+  }
+
+  .neo-alert, :where([data-ui="neumorphism"]) .ui-alert {
+    background: var(--neo-card-bg);
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-raised-shadow);
+    border-color: #0000;
+  }
+
+  .neo-table th, :where([data-ui="neumorphism"]) .ui-table th {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-inset-shadow-sm);
+  }
+
+  .neo-table th, .neo-table td, :where([data-ui="neumorphism"]) .ui-table th, :where([data-ui="neumorphism"]) .ui-table td {
+    border-bottom-color: var(--neo-muted-divider);
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(input[type="file"])::file-selector-button {
+    color: var(--neo-text);
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-button-shadow);
+    border-color: #0000;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
+    color: var(--neo-text);
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-button-shadow);
+    border-color: #0000;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+    box-shadow: var(--neo-raised-shadow);
+    border-color: #0000;
   }
 
   .neo-spinner, .neo-loading-spinner, [data-ui="neumorphism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
@@ -4375,7 +4793,7 @@
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border: 1px solid rgb(var(--neo-border-rgb)/.72);
-    border-radius: var(--neo-radius-lg);
+    border-radius: 1.55rem;
     inline-size: 100%;
     display: block;
   }
@@ -4482,7 +4900,6 @@
     border-radius: var(--neo-radius-lg);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
     display: grid;
-    overflow: hidden;
   }
 
   .neo-feature-item {
@@ -4518,10 +4935,6 @@
 
   .neo-callout-bar > :where(p, div) {
     min-inline-size: 0;
-  }
-
-  .neo-callout-bar > :where(.neo-button, a, button):last-child, :where([data-ui="neumorphism"]) .neo-callout-bar>:where(.ui-button,a,button):last-child {
-    justify-self: end;
   }
 
   .neo-eyebrow {
@@ -4604,6 +5017,7 @@
 
   .neo-button.neo-button-cut, .neo-button-cut, :where([data-ui="neumorphism"]) .ui-button.neo-button-cut {
     border-radius: var(--neo-radius-pill);
+    min-block-size: 2.75rem;
     min-inline-size: 6rem;
     max-inline-size: 100%;
     clip-path: inset(0 round var(--neo-radius-pill));
@@ -4620,8 +5034,8 @@
 
   .neo-card-service, .neo-media-scrim, .neo-feature-strip, .neo-callout-bar, .neo-well {
     border: 1px solid rgb(var(--neo-border-rgb)/.36);
-    border-radius: var(--neo-radius-xl);
     box-shadow: -.55rem -.55rem 1.15rem rgb(var(--neo-surface-strong-rgb)/.74),.58rem .58rem 1.2rem rgb(var(--neo-text-rgb)/.14);
+    border-radius: 2.25rem;
   }
 
   .neo-well {
@@ -4638,6 +5052,282 @@
     border: 1px solid rgb(var(--neo-border-rgb)/.38);
     border-radius: var(--neo-radius-xl);
     box-shadow: -.65rem -.65rem 1.3rem rgb(var(--neo-surface-strong-rgb)/.72),.72rem .72rem 1.45rem rgb(var(--neo-text-rgb)/.2);
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] {
+    --neo-theme-bg: linear-gradient(rgb(var(--neo-primary-rgb) / .08), rgb(var(--neo-primary-rgb) / .08)), var(--neo-bg);
+    --neo-card-bg: linear-gradient(rgb(var(--neo-primary-rgb) / .055), rgb(var(--neo-primary-rgb) / .055)), var(--neo-surface);
+    --neo-control-bg: linear-gradient(rgb(var(--neo-primary-rgb) / .025), rgb(var(--neo-primary-rgb) / .025)), var(--neo-surface);
+    --neo-muted-divider: rgb(var(--neo-text-rgb) / .09);
+    --neo-raised-shadow: -.9rem -.9rem 1.75rem var(--neo-nm-light), 1rem 1rem 1.9rem var(--neo-nm-dark);
+    --neo-raised-shadow-sm: -.42rem -.42rem .9rem var(--neo-nm-light), .48rem .48rem 1rem var(--neo-nm-dark);
+    --neo-raised-shadow-lg: -1.15rem -1.15rem 2.2rem var(--neo-nm-light), 1.3rem 1.3rem 2.4rem var(--neo-nm-dark);
+    --neo-inset-shadow: inset .52rem .52rem 1rem var(--neo-nm-dark), inset -.52rem -.52rem 1rem var(--neo-nm-light);
+    --neo-inset-shadow-sm: inset .3rem .3rem .62rem var(--neo-nm-dark), inset -.3rem -.3rem .62rem var(--neo-nm-light);
+    --neo-button-shadow: -.4rem -.4rem .85rem var(--neo-nm-light), .46rem .46rem .95rem var(--neo-nm-dark);
+    --neo-button-primary-shadow: -.36rem -.36rem .78rem var(--neo-nm-light), .5rem .5rem 1.05rem var(--neo-nm-primary-glow);
+    --neo-control-shadow: var(--neo-inset-shadow);
+    --neo-focus-ring: 0 0 0 .22rem rgb(var(--neo-focus-rgb) / var(--neo-focus-alpha)), var(--neo-inset-shadow);
+    --usk-native-border-width: 0;
+    --usk-native-panel-padding: 2rem;
+    --usk-native-control-min-block-size: 3.25rem;
+    --usk-native-control-padding-block: .9rem;
+    --usk-native-control-padding-inline: 1.15rem;
+    --usk-native-subcontrol-padding-block: .7rem;
+    --usk-native-subcontrol-padding-inline: .95rem;
+    --usk-native-choice-size: 1.65rem;
+    --usk-native-choice-border: 0 solid transparent;
+    --usk-native-choice-shadow: var(--neo-inset-shadow-sm);
+    --usk-native-checkbox-radius: .52rem;
+    --usk-native-select-indicator-size: .28rem .28rem, .28rem .28rem;
+    --usk-native-range-track-size: .72rem;
+    --usk-native-range-track-border: 0 solid transparent;
+    --usk-native-range-track-radius: 999px;
+    --usk-native-range-track-shadow: var(--neo-inset-shadow);
+    --usk-native-range-thumb-size: 1.78rem;
+    --usk-native-range-thumb-border: 0 solid transparent;
+    --usk-native-range-thumb-radius: 50%;
+    --usk-native-range-thumb-shadow: var(--neo-button-shadow);
+    --usk-native-progress-size: 1.05rem;
+    --usk-native-progress-track-border: 0 solid transparent;
+    --usk-native-progress-track-radius: 999px;
+    --usk-native-progress-track-shadow: var(--neo-inset-shadow);
+    --usk-native-progress-value-radius: 999px;
+    --usk-native-progress-value-shadow: inset 0 .12rem .2rem #ffffff57, 0 .18rem .42rem rgb(var(--neo-primary-rgb) / .28);
+    --usk-native-file-button-border: 0 solid transparent;
+    --usk-native-file-button-radius: var(--neo-radius-md);
+    --usk-native-scrollbar-size: .9rem;
+    --usk-native-scrollbar-radius: 999px;
+  }
+
+  [data-ui="neumorphism"] {
+    background: var(--neo-theme-bg);
+  }
+
+  .neo-heading {
+    letter-spacing: -.028em;
+    font-weight: 680;
+  }
+
+  .neo-label, :where([data-ui="neumorphism"]) .ui-label {
+    letter-spacing: .01em;
+    font-size: .82rem;
+    font-weight: 650;
+  }
+
+  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card, :where([data-ui="neumorphism"]) .ui-toolbar, :where([data-ui="neumorphism"]) .ui-table-wrap {
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+    border-radius: 2.25rem;
+  }
+
+  .neo-toolbar, :where([data-ui="neumorphism"]) .ui-toolbar {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .neo-input:hover, .neo-textarea:hover, .neo-select:hover, :where([data-ui="neumorphism"]) .ui-input:hover, :where([data-ui="neumorphism"]) .ui-textarea:hover, :where([data-ui="neumorphism"]) .ui-select:hover {
+    background: rgb(var(--neo-surface-strong-rgb)/.22);
+    border-color: #0000;
+  }
+
+  .neo-input:focus, .neo-textarea:focus, .neo-select:focus, :where([data-ui="neumorphism"]) .ui-input:focus, :where([data-ui="neumorphism"]) .ui-textarea:focus, :where([data-ui="neumorphism"]) .ui-select:focus {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-focus-ring);
+  }
+
+  .neo-button, .neo-icon-button, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
+    min-height: 3.25rem;
+    box-shadow: var(--neo-button-shadow);
+    border: 0 solid #0000;
+    border-radius: 1.55rem;
+    padding: .9rem 1.4rem;
+    font-weight: 680;
+  }
+
+  .neo-icon-button, :where([data-ui="neumorphism"]) .ui-icon-button {
+    border-radius: 50%;
+    width: 3.25rem;
+    padding: 0;
+  }
+
+  .neo-button:hover, .neo-icon-button:hover, :where([data-ui="neumorphism"]) .ui-button:hover, :where([data-ui="neumorphism"]) .ui-icon-button:hover {
+    box-shadow: var(--neo-raised-shadow-sm);
+    transform: translateY(-2px);
+  }
+
+  .neo-button:active, .neo-icon-button:active, .neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"], .neo-button.is-active, .neo-icon-button.is-active, :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-button.is-active, :where([data-ui="neumorphism"]) .ui-icon-button.is-active {
+    box-shadow: var(--neo-inset-shadow-sm);
+    transform: translateY(1px);
+  }
+
+  .neo-button-primary:active, .neo-button-primary[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"]):active, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"])[aria-pressed="true"] {
+    box-shadow: inset .3rem .3rem .62rem rgb(var(--neo-primary-hover-rgb)/.72),inset -.24rem -.24rem .54rem #ffffff3d;
+  }
+
+  .neo-button:disabled, .neo-icon-button:disabled, .neo-disabled, :where([data-ui="neumorphism"]) .ui-button:disabled, :where([data-ui="neumorphism"]) .ui-icon-button:disabled {
+    opacity: .46;
+    box-shadow: -.16rem -.16rem .34rem var(--neo-nm-light),.18rem .18rem .38rem var(--neo-nm-dark);
+    transform: none;
+  }
+
+  .neo-badge, :where([data-ui="neumorphism"]) .ui-badge {
+    border-radius: var(--neo-radius-pill);
+    min-height: 1.8rem;
+    box-shadow: var(--neo-raised-shadow-sm);
+    border: 0 solid #0000;
+    padding: .38rem .78rem;
+    font-size: .76rem;
+    font-weight: 680;
+  }
+
+  .neo-badge-success, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="success"]) {
+    background: rgb(var(--neo-success-rgb)/.18);
+    color: var(--neo-success);
+  }
+
+  .neo-badge-warning, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="warning"]) {
+    background: rgb(var(--neo-warning-rgb)/.2);
+    color: var(--neo-warning);
+  }
+
+  .neo-badge-danger, :where([data-ui="neumorphism"]) .ui-badge:where([data-ui-variant="danger"]) {
+    background: rgb(var(--neo-danger-rgb)/.18);
+    color: var(--neo-danger);
+  }
+
+  .neo-nav, :where([data-ui="neumorphism"]) .ui-nav {
+    background: var(--neo-card-bg);
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-raised-shadow-sm);
+    border: 0 solid #0000;
+    gap: .35rem;
+    padding: .65rem;
+  }
+
+  .neo-nav-link, :where([data-ui="neumorphism"]) .ui-nav-link {
+    border-radius: var(--neo-radius-md);
+    min-height: 2.8rem;
+    padding: .75rem 1.05rem;
+    font-weight: 680;
+  }
+
+  .neo-nav-link:hover, :where([data-ui="neumorphism"]) .ui-nav-link:hover {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-inset-shadow-sm);
+  }
+
+  .neo-nav-link[aria-current="page"], .neo-nav-link.is-active, :where([data-ui="neumorphism"]) .ui-nav-link[aria-current="page"], :where([data-ui="neumorphism"]) .ui-nav-link.is-active {
+    background: var(--neo-primary);
+    box-shadow: inset .2rem .2rem .42rem rgb(var(--neo-primary-hover-rgb)/.62),inset -.16rem -.16rem .35rem #fff3;
+  }
+
+  .neo-progress, :where([data-ui="neumorphism"]) .ui-progress {
+    background: var(--neo-control-bg);
+    border-radius: var(--neo-radius-pill);
+    height: 1.05rem;
+    box-shadow: var(--neo-inset-shadow);
+    border: 0 solid #0000;
+    padding: .16rem;
+  }
+
+  .neo-progress-bar, :where([data-ui="neumorphism"]) .ui-progress-bar {
+    border-radius: var(--neo-radius-pill);
+  }
+
+  .neo-alert, :where([data-ui="neumorphism"]) .ui-alert {
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+    border-radius: 2.25rem;
+    padding: 1.5rem 1.6rem;
+  }
+
+  .neo-alert-success, :where([data-ui="neumorphism"]) .ui-alert:where([data-ui-variant="success"]) {
+    box-shadow: var(--neo-raised-shadow),inset .32rem 0 0 var(--neo-success);
+  }
+
+  .neo-alert-warning, :where([data-ui="neumorphism"]) .ui-alert:where([data-ui-variant="warning"]) {
+    box-shadow: var(--neo-raised-shadow),inset .32rem 0 0 var(--neo-warning);
+  }
+
+  .neo-alert-danger, :where([data-ui="neumorphism"]) .ui-alert:where([data-ui-variant="danger"]) {
+    box-shadow: var(--neo-raised-shadow),inset .32rem 0 0 var(--neo-danger);
+  }
+
+  .neo-table, :where([data-ui="neumorphism"]) .ui-table {
+    border-collapse: separate;
+    border-spacing: 0 .45rem;
+  }
+
+  .neo-table th, .neo-table td, :where([data-ui="neumorphism"]) .ui-table th, :where([data-ui="neumorphism"]) .ui-table td {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-inset-shadow-sm);
+    border-bottom: 0;
+    padding: 1rem 1.15rem;
+  }
+
+  .neo-table th:first-child, .neo-table td:first-child, :where([data-ui="neumorphism"]) .ui-table th:first-child, :where([data-ui="neumorphism"]) .ui-table td:first-child {
+    border-radius: var(--neo-radius-md)0 0 var(--neo-radius-md);
+  }
+
+  .neo-table th:last-child, .neo-table td:last-child, :where([data-ui="neumorphism"]) .ui-table th:last-child, :where([data-ui="neumorphism"]) .ui-table td:last-child {
+    border-radius: 0 var(--neo-radius-md) var(--neo-radius-md)0;
+  }
+
+  .neo-card-service, .neo-card-feature, .neo-feature-strip, .neo-callout-bar {
+    background: var(--neo-card-bg);
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+    padding: 1.5rem;
+  }
+
+  .neo-card-service {
+    text-align: start;
+  }
+
+  .neo-feature-item {
+    background: var(--neo-control-bg);
+    border-radius: var(--neo-radius-lg);
+    box-shadow: var(--neo-inset-shadow-sm);
+    border: 0;
+    padding: 1.15rem;
+  }
+
+  .neo-callout-bar > :where(.neo-button, a, button):last-child, :where([data-ui="neumorphism"]) .neo-callout-bar>:where(.ui-button,a,button):last-child {
+    justify-self: end;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+    background: var(--neo-card-bg);
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(legend) {
+    background: var(--neo-card-bg);
+    border-radius: var(--neo-radius-md);
+    box-shadow: var(--neo-raised-shadow-sm);
+    padding: .45rem .85rem;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+    border-radius: var(--neo-radius-lg);
+    box-shadow: var(--neo-button-shadow);
+    border: 0 solid #0000;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
+    box-shadow: var(--neo-inset-shadow-sm);
+    transform: translateY(1px);
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(dialog) {
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-raised-shadow-lg);
+    border: 0 solid #0000;
   }
 
   .neo-button[aria-busy="true"]:after, .neo-icon-button[aria-busy="true"]:after, [data-ui="neumorphism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="neumorphism"]) .ui-button[aria-busy="true"]:after, :where([data-ui="neumorphism"]) .ui-icon-button[aria-busy="true"]:after {
@@ -4693,5 +5383,194 @@
       text-decoration: underline;
       color: #000 !important;
     }
+  }
+
+  .neo-input[aria-invalid="true"], .neo-textarea[aria-invalid="true"], .neo-select[aria-invalid="true"], :where([data-ui="neumorphism"]) .ui-input[aria-invalid="true"], :where([data-ui="neumorphism"]) .ui-textarea[aria-invalid="true"], :where([data-ui="neumorphism"]) .ui-select[aria-invalid="true"] {
+    border-color: var(--neo-danger);
+    box-shadow: 0 0 0 2px rgb(var(--neo-danger-rgb)/.18),var(--neo-inset-shadow);
+  }
+
+  .neo-input[readonly], .neo-textarea[readonly], :where([data-ui="neumorphism"]) .ui-input[readonly], :where([data-ui="neumorphism"]) .ui-textarea[readonly] {
+    filter: saturate(.72);
+    opacity: .78;
+  }
+
+  .neo-title {
+    letter-spacing: -.048em;
+    font-weight: 680;
+  }
+
+  .neo-label, :where([data-ui="neumorphism"]) .ui-label {
+    font-size: .82rem;
+    font-weight: 650;
+  }
+
+  .neo-button, .neo-icon-button, :where([data-ui="neumorphism"]) .ui-button, :where([data-ui="neumorphism"]) .ui-icon-button {
+    background: var(--neo-control-bg);
+    min-height: 3.25rem;
+    box-shadow: var(--neo-button-shadow);
+    border: 0 solid #0000;
+    border-radius: 1.55rem;
+    padding: .9rem 1.4rem;
+    font-weight: 680;
+  }
+
+  .neo-icon-button, :where([data-ui="neumorphism"]) .ui-icon-button {
+    border-radius: 50%;
+    padding: 0;
+  }
+
+  .neo-button-primary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"]) {
+    background: var(--neo-primary);
+    box-shadow: var(--neo-button-primary-shadow);
+  }
+
+  .neo-button-secondary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="secondary"]) {
+    background: var(--neo-secondary);
+    box-shadow: var(--neo-button-shadow);
+  }
+
+  .neo-button-danger, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="danger"]) {
+    background: var(--neo-danger);
+    box-shadow: var(--neo-button-primary-shadow);
+  }
+
+  .neo-button:active, .neo-icon-button:active, .neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-button:active, :where([data-ui="neumorphism"]) .ui-icon-button:active, :where([data-ui="neumorphism"]) .ui-button[aria-pressed="true"], :where([data-ui="neumorphism"]) .ui-icon-button[aria-pressed="true"] {
+    box-shadow: var(--neo-inset-shadow);
+    transform: translateY(1px);
+  }
+
+  .neo-input, .neo-textarea, .neo-select, :where([data-ui="neumorphism"]) .ui-input, :where([data-ui="neumorphism"]) .ui-textarea, :where([data-ui="neumorphism"]) .ui-select {
+    background: var(--neo-control-bg);
+    min-height: 3.25rem;
+    box-shadow: var(--neo-control-shadow);
+    border: 0 solid #0000;
+    border-radius: 1.55rem;
+    padding: .9rem 1.15rem;
+  }
+
+  .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-card, :where([data-ui="neumorphism"]) .ui-toolbar, :where([data-ui="neumorphism"]) .ui-table-wrap {
+    background: var(--neo-card-bg);
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+  }
+
+  .neo-card, .neo-panel, :where([data-ui="neumorphism"]) .ui-card {
+    padding: 1.5rem;
+  }
+
+  .neo-well, .neo-inset {
+    background: var(--neo-control-bg);
+    box-shadow: var(--neo-inset-shadow);
+    border: 0 solid #0000;
+    border-radius: 1.75rem;
+  }
+
+  .neo-badge, :where([data-ui="neumorphism"]) .ui-badge {
+    border-radius: var(--neo-radius-pill);
+    min-height: 1.8rem;
+    box-shadow: var(--neo-button-shadow);
+    padding: .38rem .78rem;
+  }
+
+  .neo-alert, :where([data-ui="neumorphism"]) .ui-alert {
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow),inset .32rem 0 0 var(--neo-primary);
+    border: 0 solid #0000;
+    border-radius: 2.25rem;
+  }
+
+  .neo-progress, :where([data-ui="neumorphism"]) .ui-progress {
+    background: var(--neo-control-bg);
+    height: 1.05rem;
+    box-shadow: var(--neo-inset-shadow);
+  }
+
+  .neo-progress-bar, :where([data-ui="neumorphism"]) .ui-progress-bar {
+    border-radius: inherit;
+    box-shadow: var(--neo-button-shadow);
+  }
+
+  .neo-table-wrap, :where([data-ui="neumorphism"]) .ui-table-wrap {
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow);
+    border-radius: 2.25rem;
+  }
+
+  .neo-table th, :where([data-ui="neumorphism"]) .ui-table th {
+    background: var(--neo-control-bg);
+    padding: 1rem 1.15rem;
+    font-weight: 700;
+  }
+
+  .neo-table td, :where([data-ui="neumorphism"]) .ui-table td {
+    padding: 1rem 1.15rem;
+  }
+
+  .neo-nav, :where([data-ui="neumorphism"]) .ui-nav {
+    box-shadow: var(--neo-inset-shadow);
+    border: 0;
+    border-radius: 2rem;
+  }
+
+  .neo-nav-link, :where([data-ui="neumorphism"]) .ui-nav-link {
+    border-radius: 1.4rem;
+    min-height: 2.75rem;
+    padding: .68rem 1rem;
+  }
+
+  .neo-tooltip, [data-ui="neumorphism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+    box-shadow: var(--neo-raised-shadow);
+    border: 0;
+    border-radius: 1.25rem;
+  }
+
+  .neo-card-service, .neo-card-feature, .neo-feature-strip, .neo-callout-bar {
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+    border-radius: 2rem;
+    padding: 1.4rem;
+  }
+
+  .neo-feature-item {
+    box-shadow: var(--neo-inset-shadow);
+    padding: 1rem;
+  }
+
+  [data-ui="neumorphism"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+    background: var(--neo-card-bg);
+    box-shadow: var(--neo-raised-shadow);
+    border: 0 solid #0000;
+    border-radius: 2.25rem;
+  }
+
+  .neo-button-primary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="primary"]) {
+    background: var(--neo-primary);
+    color: var(--neo-on-primary);
+    border-color: var(--neo-primary);
+    box-shadow: var(--neo-button-primary-shadow);
+  }
+
+  .neo-button-secondary, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="secondary"]) {
+    background: var(--neo-secondary);
+    color: var(--neo-on-secondary);
+    border-color: var(--neo-secondary);
+    box-shadow: var(--neo-button-shadow);
+  }
+
+  .neo-button-danger, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="danger"]) {
+    background: var(--neo-danger);
+    color: var(--neo-on-danger);
+    border-color: var(--neo-danger);
+    box-shadow: var(--neo-button-primary-shadow);
+  }
+
+  .neo-button-ghost, :where([data-ui="neumorphism"]) .ui-button:where([data-ui-variant="ghost"]) {
+    color: var(--neo-primary);
+    box-shadow: var(--neo-button-shadow);
+    background: none;
+    border-color: #0000;
   }
 }

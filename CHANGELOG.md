@@ -4,6 +4,28 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-09-01
+
+### Added
+
+- Added a frozen native-control intent contract for every preset and complete per-preset mappings for choice, select, range, progress, meter, file, color, indicator, and scrollbar tokens.
+- Added Firefox range-progress paint, distinct single/multiple select behavior, indeterminate progress treatment, and a complete native-control demo specimen.
+- Added manifest-driven unit and cross-browser computed-style coverage proving all 20 presets resolve to unique native-control signatures.
+- Added frozen six-axis template signatures plus pairwise identity contracts across typography, density, geometry, material, feedback, data presentation, and the 48-token native-control surface.
+- Added fixed desktop and mobile component and native-control specimens for every preset, with direct pairwise visual-difference thresholds.
+- Added executable six-axis reference traits that assert concrete authored CSS for every preset, plus preset-, viewport-, mode-, and pair-scoped browser cases for exact reruns.
+- Added stable global UI-matrix case identifiers, 36 resumable 100-case blocks, exact-case reruns, and bounded range commands so passed coverage is not repeated during diagnosis.
+
+### Changed
+
+- Expanded preset identity beyond color and radius so native controls now inherit each system's typography, geometry, material, border, depth, indicator, range, progress, and loading language.
+- Reworked all 20 preset systems against the 39-image v2.4.0 reference archive and retained design contracts. Each identity now reaches components, native controls, feedback, data views, and interaction states.
+- Preserved theme-owned palette channels, semantic native HTML, v2 selectors and entrypoints, bridge ownership, forced-color behavior, reduced motion, and platform-owned picker/dialog boundaries.
+
+### Fixed
+
+- Replaced broad `overflow-wrap: anywhere` inheritance with targeted `break-word` containment and normal word boundaries, and removed clipping from general surfaces, feature strips, and native tables while retaining deliberate progress, media, and accessibility masks.
+
 ## [2.3.0] - 2026-08-29
 
 ### Added
@@ -47,7 +69,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 ### Added
 
 - Added the public 12-token shared semantic producer contract and its machine-readable manifest inventory for companion and third-party consumers.
-- Implemented the manifest-backed semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and unchanged-markup runtime switching across all 11 presets.
+- Implemented the manifest-backed semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and unchanged-markup runtime switching across every preset supported by that release.
 - Added a persistent semantic component demo whose DOM nodes and classes remain stable through every preset switch.
 - Documented native `<dialog>` as the neutral modal/dialog fallback without inventing `.ui-modal` or `.ui-dialog` selectors.
 

@@ -11,7 +11,7 @@ Lead with stable semantic classes when an interface can switch visual presets:
 </article>
 ```
 
-Changing only the ancestor `data-ui` value restyles that markup across all 11 presets in the generated default, visual, and with-bridge bundles. A generated `visual/<preset>.css` focused entrypoint supplies the same semantic aliases for its selected preset only. Raw `styles/*` and standalone preset exports remain advanced prefixed APIs and do not promise multi-preset semantic switching.
+Changing only the ancestor `data-ui` value restyles that markup across all 20 presets in the generated default, visual, and with-bridge bundles. A generated `visual/<preset>.css` focused entrypoint supplies the same semantic aliases for its selected preset only. Raw `styles/*` and standalone preset exports remain advanced prefixed APIs and do not promise multi-preset semantic switching.
 
 ## UI systems
 
@@ -40,6 +40,10 @@ Color schemes are defined once in `styles/theme-colors.css`. Native HTML fallbac
 | Paper Editorial | `paper-editorial` | `paper` | `styles/paper-editorial.css` |
 | Neo-Noir | `neo-noir` | `noir` | `styles/neo-noir.css` |
 
+Each row is also bound to an internal six-axis template signature covering typography, density, geometry, material, feedback, and data presentation. The release contracts compare every preset pair across those visible axes and require substantial differences across the 48-token native-control identity surface. Color remains owned by the active semantic theme and mode rather than by a fixed preset palette.
+
+The release registry turns those signatures into executable reference traits. Each trait checks a real selector, property, and required value fragment. Preset-scoped browser cases isolate each viewport, mode, and cross-preset comparison.
+
 ## Shared color file
 
 | Purpose | Import |
@@ -52,15 +56,15 @@ Color schemes are defined once in `styles/theme-colors.css`. Native HTML fallbac
 |---|---|
 | Shared native HTML element fallback selectors | `styles/native-elements.css` |
 
-Native selectors stay generic under `[data-ui][data-theme][data-mode]`. Presets only provide token mappings such as `--usk-native-surface`, `--usk-native-radius`, and `--usk-native-shadow`, which avoids repeating the same fieldset, table, dialog, details, form, and semantic-element rules in every UI file.
+Native selectors stay generic under `[data-ui][data-theme][data-mode]`. Every preset maps the complete choice, select, range, progress, meter, file, color, indicator, and scrollbar identity token set while retaining theme-owned color channels. This avoids repeating browser pseudo-element rules in every UI file and keeps vendor selectors safely separated.
 
 ## Shared overflow layer
 
 | Purpose | Import |
 |---|---|
-| Shared long-text containment for UI wrappers and controls | `styles/content-overflow.css` |
+| Shared long-text containment for text and controls | `styles/content-overflow.css` |
 
-The overflow layer keeps headings, paragraphs, links, table cells, controls, badges, nav links, and common layout wrappers from widening the page when content includes long tokens or URLs.
+The overflow layer uses `break-word` with normal word boundaries for text and compact controls. Layout wrappers keep only their shrink constraints, avoiding inherited emergency wrapping across entire component trees.
 
 ## Bridge bundle
 
@@ -101,7 +105,7 @@ The bridge inherits from shared `--usk-*` color roles, then applies `.interactiv
 
 ## Semantic component contract
 
-The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 implemented generic selectors map only to source suffixes with 11-of-11 composed preset coverage. The `implementationStatus` section records `.ui-spinner` and `.ui-tooltip` as retained hooks, the other 27 selectors as generated aliases, and no pending selectors.
+The machine-readable source of truth is `manifest.json#semanticComponentApi`. Its 29 implemented generic selectors map only to source suffixes with 20-of-20 composed preset coverage. The `implementationStatus` section records `.ui-spinner` and `.ui-tooltip` as retained hooks, the other 27 selectors as generated aliases, and no pending selectors.
 
 | Role | Generic selector -> current source suffix |
 |---|---|

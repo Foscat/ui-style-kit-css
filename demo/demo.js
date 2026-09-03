@@ -388,6 +388,11 @@ function bindCodeCopyButtons() {
   });
 }
 
+/**
+ * Bind the native modal specimen without replacing browser dialog semantics.
+ *
+ * @returns {void}
+ */
 function bindNativeDialogDemo() {
   const openButton = main.querySelector("[data-testid='native-modal-open']");
   const dialog = main.querySelector("[data-testid='native-modal-dialog']");
@@ -401,6 +406,16 @@ function bindNativeDialogDemo() {
       dialog.setAttribute("open", "");
     }
   });
+}
+
+/**
+ * Apply native runtime-only states that cannot be represented by HTML attributes.
+ *
+ * @returns {void}
+ */
+function bindNativeSemanticStates() {
+  const indeterminate = main.querySelector("[data-testid='native-checkbox-indeterminate']");
+  if (indeterminate) indeterminate.indeterminate = true;
 }
 
 /**
@@ -942,20 +957,32 @@ function render() {
                   <label>Text <input type="text" value="Text value"></label>
                   <label>Email <input type="email" value="name@example.com"></label>
                   <label>Search <search><input type="search" value="Query"></search></label>
+                  <label>Number <input type="number" value="42" data-testid="native-number"></label>
+                  <label>Date <input type="date" value="2026-09-01" data-testid="native-date"></label>
+                  <label>Time <input type="time" value="09:30" data-testid="native-time"></label>
                   <label>Textarea <textarea>Native textarea</textarea></label>
-                  <label>Select <select><optgroup label="Group"><option>Option A</option><option>Option B</option></optgroup></select></label>
-                  <label>Invalid <input required aria-invalid="true" placeholder="Required"></label>
-                  <label>Disabled <input disabled value="Disabled"></label>
-                  <label>Color <input type="color" value="#6f8cff"></label>
-                  <label>File <input type="file"></label>
+                  <label>Single select <select data-testid="native-select-single"><optgroup label="Available"><option>Option A</option><option selected>Option B</option><option disabled>Unavailable</option></optgroup></select></label>
+                  <label>Multiple select <select multiple size="3" data-testid="native-select-multiple"><option selected>Alpha</option><option>Beta</option><option>Gamma</option></select></label>
+                  <label>Valid <input class="is-valid" value="Accepted" data-testid="native-valid"></label>
+                  <label>Invalid <input required aria-invalid="true" placeholder="Required" data-testid="native-invalid"></label>
+                  <label>Required <input required value="Required value" data-testid="native-required"></label>
+                  <label>Read only <input readonly value="Read only" data-testid="native-readonly"></label>
+                  <label>Disabled <input disabled value="Disabled" data-testid="native-disabled"></label>
+                  <label>Color <input type="color" value="#6f8cff" data-testid="native-color"></label>
+                  <label>File <input type="file" data-testid="native-file"></label>
                 </div>
                 <div class="demo-inline-row">
                   <label><input type="checkbox" checked> Checked</label>
                   <label><input type="checkbox"> Unchecked</label>
+                  <label><input type="checkbox" data-testid="native-checkbox-indeterminate"> Indeterminate</label>
+                  <label><input type="checkbox" disabled data-testid="native-checkbox-disabled"> Disabled</label>
                   <label><input type="radio" name="native-radio-${ui}" checked> Radio A</label>
                   <label><input type="radio" name="native-radio-${ui}"> Radio B</label>
+                  <label><input type="radio" name="native-radio-${ui}" disabled data-testid="native-radio-disabled"> Disabled radio</label>
                 </div>
-                <label>Range <input type="range" value="62"></label>
+                <label>Range <input type="range" value="62" data-testid="native-range-enabled"></label>
+                <label>Keyboard focus range <input type="range" value="36" data-testid="native-range-focus"></label>
+                <label>Disabled range <input type="range" value="74" disabled data-testid="native-range-disabled"></label>
               </fieldset>
             </section>
 
@@ -1005,8 +1032,13 @@ function render() {
 
             <section class="${p}-panel demo-native-sample" data-testid="native-meter-progress">
               <h3>Meter and progress</h3>
-              <label>Progress <progress value="72" max="100">72%</progress></label>
-              <label>Meter <meter value=".68">68%</meter></label>
+              <label>Progress 0% <progress value="0" max="100" data-testid="native-progress-zero">0%</progress></label>
+              <label>Progress 72% <progress value="72" max="100" data-testid="native-progress-partial">72%</progress></label>
+              <label>Progress 100% <progress value="100" max="100" data-testid="native-progress-complete">100%</progress></label>
+              <label>Indeterminate progress <progress max="100" data-testid="native-progress-indeterminate">Loading</progress></label>
+              <label>Optimum meter <meter min="0" max="100" low="35" high="75" optimum="90" value="90" data-testid="native-meter-optimum">90%</meter></label>
+              <label>Suboptimum meter <meter min="0" max="100" low="35" high="75" optimum="90" value="55" data-testid="native-meter-suboptimum">55%</meter></label>
+              <label>Critical meter <meter min="0" max="100" low="35" high="75" optimum="90" value="18" data-testid="native-meter-critical">18%</meter></label>
             </section>
 
             <section class="${p}-panel demo-native-sample" data-testid="native-semantics">
@@ -1066,6 +1098,7 @@ import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
   bindThemeTokenControls();
   bindCodeCopyButtons();
   bindNativeDialogDemo();
+  bindNativeSemanticStates();
   syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview");
   if (bridgeToggle) {
     bridgeToggle.checked = bridgeAttached;

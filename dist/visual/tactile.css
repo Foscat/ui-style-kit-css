@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.3.0
+ * UI Style Kit CSS v2.4.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -1634,6 +1634,52 @@
   --usk-native-thumb: var(--usk-native-surface-strong);
   --usk-native-thumb-border: var(--usk-native-primary);
   --usk-native-indicator: var(--usk-native-primary);
+  --usk-native-choice-size: 1.5rem;
+  --usk-native-choice-background: var(--usk-native-control-bg);
+  --usk-native-choice-border: var(--usk-native-border-width) solid var(--usk-native-border);
+  --usk-native-checkbox-radius: .3rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: none;
+  --usk-native-choice-checked-background: var(--usk-native-primary);
+  --usk-native-choice-mark-color: var(--usk-native-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .85rem) 50%;
+  --usk-native-select-padding-inline-end: 2.5rem;
+  --usk-native-range-track-size: .45rem;
+  --usk-native-range-track-background: var(--usk-native-track);
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 999px;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: var(--usk-native-track-fill);
+  --usk-native-range-thumb-size: 1.2rem;
+  --usk-native-range-thumb-background: var(--usk-native-thumb);
+  --usk-native-range-thumb-border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: var(--usk-native-shadow);
+  --usk-native-progress-size: .9rem;
+  --usk-native-progress-track-background: var(--usk-native-track);
+  --usk-native-progress-track-border: 0 solid transparent;
+  --usk-native-progress-track-radius: 999px;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: var(--usk-native-track-fill);
+  --usk-native-progress-value-radius: inherit;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-meter-optimum-background: var(--usk-native-success);
+  --usk-native-meter-suboptimum-background: var(--usk-native-warning);
+  --usk-native-meter-critical-background: var(--usk-native-danger);
+  --usk-native-file-button-background: var(--usk-native-primary);
+  --usk-native-file-button-border: var(--usk-native-border-width) solid var(--usk-native-primary);
+  --usk-native-file-button-radius: var(--usk-native-radius-sm);
+  --usk-native-file-button-shadow: var(--usk-native-shadow);
+  --usk-native-color-swatch-border: 0 solid transparent;
+  --usk-native-color-swatch-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  --usk-native-indicator-opacity: .78;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .75rem;
+  --usk-native-scrollbar-track: var(--usk-native-track);
+  --usk-native-scrollbar-thumb: var(--usk-native-thumb-border);
+  --usk-native-scrollbar-radius: 999px;
   --usk-native-shadow: none;
   --usk-native-shadow-md: var(--usk-native-shadow);
   --usk-native-focus-ring: 0 0 0 3px rgb(var(--usk-focus-rgb) / .28);
@@ -1839,6 +1885,24 @@
 
 [data-ui][data-theme][data-mode] :where(input, textarea, select, button) { font: inherit; }
 
+[data-ui][data-theme][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+[data-ui][data-theme][data-mode] :where(select[multiple]) {
+  padding-inline-end: var(--usk-native-control-padding-inline);
+  background-image: none;
+}
+
+[dir="rtl"] [data-ui][data-theme][data-mode] :where(select:not([multiple])),
+[data-ui][data-theme][data-mode][dir="rtl"] :where(select:not([multiple])) {
+  --usk-native-select-indicator-position: 1.15rem 50%, .85rem 50%;
+}
+
 [data-ui][data-theme][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
   -webkit-appearance: none;
   appearance: none;
@@ -1876,9 +1940,36 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
-  inline-size: 1.5rem;
-  block-size: 1.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: var(--usk-native-choice-size);
+  block-size: var(--usk-native-choice-size);
+  background: var(--usk-native-choice-background);
+  border: var(--usk-native-choice-border);
+  box-shadow: var(--usk-native-choice-shadow);
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]) { border-radius: var(--usk-native-checkbox-radius); }
+[data-ui][data-theme][data-mode] :where(input[type="radio"]) { border-radius: var(--usk-native-radio-radius); }
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:checked) {
+  background-color: var(--usk-native-choice-checked-background);
+  background-image: linear-gradient(135deg, transparent 42%, var(--usk-native-choice-mark-color) 42% 56%, transparent 56%), linear-gradient(45deg, transparent 54%, var(--usk-native-choice-mark-color) 54% 68%, transparent 68%);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:hover:not(:disabled), input[type="radio"]:hover:not(:disabled)) {
+  border-color: var(--usk-native-primary);
+  filter: brightness(1.04);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="checkbox"]:active:not(:disabled), input[type="radio"]:active:not(:disabled)) {
+  filter: brightness(.94);
+  transform: scale(.94);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="radio"]:checked) {
+  background: radial-gradient(circle, var(--usk-native-choice-mark-color) 0 31%, transparent 34%), var(--usk-native-choice-checked-background);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"]) {
@@ -1891,36 +1982,46 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-runnable-track {
-  block-size: .45rem;
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-track-background);
+  border: var(--usk-native-range-track-border);
+  border-radius: var(--usk-native-range-track-radius);
+  box-shadow: var(--usk-native-range-track-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-track {
-  block-size: .45rem;
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-track-background);
+  border: var(--usk-native-range-track-border);
+  border-radius: var(--usk-native-range-track-radius);
+  box-shadow: var(--usk-native-range-track-shadow);
+}
+
+[data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-progress {
+  block-size: var(--usk-native-range-track-size);
+  background: var(--usk-native-range-progress-background);
+  border-radius: var(--usk-native-range-track-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  inline-size: 1.2rem;
-  block-size: 1.2rem;
-  margin-block-start: -.38rem;
-  background: var(--usk-native-thumb);
-  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
-  border-radius: 999px;
-  box-shadow: var(--usk-native-shadow);
+  inline-size: var(--usk-native-range-thumb-size);
+  block-size: var(--usk-native-range-thumb-size);
+  margin-block-start: calc((var(--usk-native-range-track-size) - var(--usk-native-range-thumb-size)) / 2);
+  background: var(--usk-native-range-thumb-background);
+  border: var(--usk-native-range-thumb-border);
+  border-radius: var(--usk-native-range-thumb-radius);
+  box-shadow: var(--usk-native-range-thumb-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="range"])::-moz-range-thumb {
-  inline-size: 1.2rem;
-  block-size: 1.2rem;
-  background: var(--usk-native-thumb);
-  border: var(--usk-native-border-width) solid var(--usk-native-thumb-border);
-  border-radius: 999px;
-  box-shadow: var(--usk-native-shadow);
+  inline-size: var(--usk-native-range-thumb-size);
+  block-size: var(--usk-native-range-thumb-size);
+  background: var(--usk-native-range-thumb-background);
+  border: var(--usk-native-range-thumb-border);
+  border-radius: var(--usk-native-range-thumb-radius);
+  box-shadow: var(--usk-native-range-thumb-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"]) {
@@ -1937,13 +2038,13 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"])::-webkit-color-swatch {
-  border: 0;
-  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  border: var(--usk-native-color-swatch-border);
+  border-radius: var(--usk-native-color-swatch-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="color"])::-moz-color-swatch {
-  border: 0;
-  border-radius: calc(var(--usk-native-radius-sm) / 1.5);
+  border: var(--usk-native-color-swatch-border);
+  border-radius: var(--usk-native-color-swatch-radius);
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="file"]) { color: var(--usk-native-text-muted); }
@@ -1954,9 +2055,10 @@
   margin-inline-end: .75rem;
   padding: var(--usk-native-subcontrol-padding-block) var(--usk-native-subcontrol-padding-inline);
   color: var(--usk-native-on-primary);
-  background: var(--usk-native-primary);
-  border: var(--usk-native-border-width) solid var(--usk-native-primary);
-  border-radius: var(--usk-native-radius-sm);
+  background: var(--usk-native-file-button-background);
+  border: var(--usk-native-file-button-border);
+  border-radius: var(--usk-native-file-button-radius);
+  box-shadow: var(--usk-native-file-button-shadow);
   font-weight: 800;
   cursor: pointer;
 }
@@ -2002,6 +2104,7 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="checkbox"]:indeterminate, input[type="radio"]:indeterminate) {
+  background: linear-gradient(var(--usk-native-choice-mark-color), var(--usk-native-choice-mark-color)) center / 58% .15rem no-repeat var(--usk-native-choice-checked-background);
   accent-color: var(--usk-native-warning);
 }
 
@@ -2021,7 +2124,6 @@
 [data-ui][data-theme][data-mode] :where(table) {
   width: 100%;
   margin: 1rem 0;
-  overflow: hidden;
   background: var(--usk-native-surface);
   border: var(--usk-native-border-width) solid var(--usk-native-border);
   border-radius: var(--usk-native-radius);
@@ -2078,35 +2180,56 @@
 [data-ui][data-theme][data-mode] :where(dialog)::backdrop { background: rgb(0 0 0 / .62); }
 
 [data-ui][data-theme][data-mode] :where(progress, meter) {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
-  min-height: .9rem;
+  min-height: var(--usk-native-progress-size);
   accent-color: var(--usk-native-primary);
+}
+
+[data-ui][data-theme][data-mode] :where(progress:not([value])) {
+  background: repeating-linear-gradient(115deg, var(--usk-native-progress-track-background) 0 .5rem, var(--usk-native-progress-value-background) .5rem 1rem);
+  background-size: 200% 100%;
+  border: var(--usk-native-progress-track-border);
+  border-radius: var(--usk-native-progress-track-radius);
+  box-shadow: var(--usk-native-progress-track-shadow);
+  animation: usk-native-progress-indeterminate 1.2s linear infinite;
+}
+
+@keyframes usk-native-progress-indeterminate {
+  to { background-position: -2rem 0; }
 }
 
 [data-ui][data-theme][data-mode] :where(progress, meter)::-webkit-progress-bar,
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-bar {
-  background: var(--usk-native-track);
-  border-radius: 999px;
+  background: var(--usk-native-progress-track-background);
+  border: var(--usk-native-progress-track-border);
+  border-radius: var(--usk-native-progress-track-radius);
+  box-shadow: var(--usk-native-progress-track-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(progress)::-webkit-progress-value,
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value {
-  background: var(--usk-native-track-fill);
-  border-radius: inherit;
+  background: var(--usk-native-progress-value-background);
+  border-radius: var(--usk-native-progress-value-radius);
+  box-shadow: var(--usk-native-progress-value-shadow);
 }
 
 [data-ui][data-theme][data-mode] :where(progress)::-moz-progress-bar,
 [data-ui][data-theme][data-mode] :where(meter)::-moz-meter-bar {
-  background: var(--usk-native-track-fill);
-  border-radius: 999px;
+  background: var(--usk-native-progress-value-background);
+  border-radius: var(--usk-native-progress-value-radius);
+  box-shadow: var(--usk-native-progress-value-shadow);
 }
 
+[data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-optimum-value { background: var(--usk-native-meter-optimum-background); }
+
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-suboptimum-value {
-  background: var(--usk-native-warning);
+  background: var(--usk-native-meter-suboptimum-background);
 }
 
 [data-ui][data-theme][data-mode] :where(meter)::-webkit-meter-even-less-good-value {
-  background: var(--usk-native-danger);
+  background: var(--usk-native-meter-critical-background);
 }
 
 [data-ui][data-theme][data-mode] :where(main, section, header, footer, nav, article, aside, address) {
@@ -2151,7 +2274,8 @@
 }
 
 [data-ui][data-theme][data-mode] :where(input[type="date"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"])::-webkit-calendar-picker-indicator {
-  opacity: .78;
+  opacity: var(--usk-native-indicator-opacity);
+  filter: var(--usk-native-indicator-filter);
   accent-color: var(--usk-native-indicator);
 }
 
@@ -2166,6 +2290,8 @@
 
 [data-ui][data-theme][data-mode] :where(select)::picker-icon {
   color: var(--usk-native-indicator);
+  opacity: var(--usk-native-indicator-opacity);
+  filter: var(--usk-native-indicator-filter);
 }
 
 [data-ui][data-theme][data-mode] :where(:focus-visible) {
@@ -2184,9 +2310,9 @@
 [data-ui][data-theme][data-mode] :where([aria-busy="true"]) { cursor: progress; }
 [data-ui][data-theme][data-mode] :where([hidden]) { display: none !important; }
 [data-ui][data-theme][data-mode] ::selection { color: var(--usk-native-on-primary); background: var(--usk-native-primary); }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: .75rem; block-size: .75rem; }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-track); }
-[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-thumb-border); border-radius: 999px; }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar { inline-size: var(--usk-native-scrollbar-size); block-size: var(--usk-native-scrollbar-size); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-track { background: var(--usk-native-scrollbar-track); }
+[data-ui][data-theme][data-mode] ::-webkit-scrollbar-thumb { background: var(--usk-native-scrollbar-thumb); border-radius: var(--usk-native-scrollbar-radius); }
 
 @supports (color: color-mix(in srgb, black, white)) {
   [data-ui][data-theme][data-mode] {
@@ -2219,6 +2345,22 @@
   [data-ui][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
     transition-duration: 1ms !important;
   }
+
+  [data-ui][data-theme][data-mode] :where(progress:not([value])) {
+    animation: none;
+  }
+}
+
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-webkit-slider-runnable-track,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-webkit-slider-thumb,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-moz-range-track,
+[data-ui][data-theme][data-mode="contrast"] :where(input[type="range"])::-moz-range-thumb,
+[data-ui][data-theme][data-mode="contrast"] :where(progress, meter),
+[data-ui][data-theme][data-mode="contrast"] :where(progress, meter)::-webkit-progress-bar,
+[data-ui][data-theme][data-mode="contrast"] :where(progress)::-webkit-progress-value,
+[data-ui][data-theme][data-mode="contrast"] :where(progress)::-moz-progress-bar {
+  box-shadow: none;
+  filter: none;
 }
 
 @media (forced-colors: active) {
@@ -2261,6 +2403,9 @@
   label,
   legend,
   summary,
+  strong,
+  small,
+  em,
   code,
   kbd,
   samp,
@@ -2270,7 +2415,8 @@
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -2398,7 +2544,6 @@
 ), [data-ui]:where([data-ui="tactile"])[data-theme][data-mode] :where([class~="saas-surface"],[class~="saas-surface-sm"],[class~="saas-surface-lg"],.ui-card,[class~="saas-panel"],.ui-toolbar,[class~="saas-well"],[class~="saas-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bento-surface"],[class~="bento-surface-sm"],[class~="bento-surface-lg"],.ui-card,[class~="bento-panel"],.ui-toolbar,[class~="bento-well"],[class~="bento-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="max-surface"],[class~="max-surface-sm"],[class~="max-surface-lg"],.ui-card,[class~="max-panel"],.ui-toolbar,[class~="max-well"],[class~="max-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="bau-surface"],[class~="bau-surface-sm"],[class~="bau-surface-lg"],.ui-card,[class~="bau-panel"],.ui-toolbar,[class~="bau-well"],[class~="bau-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="tactile-surface"],[class~="tactile-surface-sm"],[class~="tactile-surface-lg"],.ui-card,[class~="tactile-panel"],.ui-toolbar,[class~="tactile-well"],[class~="tactile-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="neo-surface"],[class~="neo-surface-sm"],[class~="neo-surface-lg"],.ui-card,[class~="neo-panel"],.ui-toolbar,[class~="neo-well"],[class~="neo-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="retro-surface"],[class~="retro-surface-sm"],[class~="retro-surface-lg"],.ui-card,[class~="retro-panel"],.ui-toolbar,[class~="retro-well"],[class~="retro-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,[class~="brutal-surface"],.ui-card,[class~="brutal-panel"],.ui-toolbar,[class~="brutal-well"],[class~="brutal-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="cyber-panel"],.ui-toolbar,[class~="cyber-well"],[class~="cyber-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="y2k-panel"],.ui-toolbar,[class~="y2k-well"],[class~="y2k-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.ui-card,[class~="rg-panel"],.ui-toolbar,[class~="rg-well"],[class~="rg-inset"],.ui-field,.ui-alert,.ui-table-wrap,.ui-nav) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -2449,6 +2594,8 @@
 ), [data-ui]:where([data-ui="tactile"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link,.ui-button,.ui-icon-button,.ui-badge,.ui-nav-link) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
 
@@ -2521,7 +2668,8 @@
   font-weight: 850;
   text-align: center;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
   cursor: pointer;
   transition:
@@ -2683,7 +2831,8 @@
 ) {
   max-inline-size: min(18rem, calc(100vw - 2rem));
   text-align: start;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 /* Directional tooltips detach only from an explicit anchor so static tooltip chips keep normal-flow sizing. */
@@ -3064,7 +3213,6 @@
 ), [data-ui]:where([data-ui="tactile"])[data-theme][data-mode] :where(.luxe-surface,.luxe-surface-sm,.luxe-surface-lg,.ui-card,.luxe-card-service,.luxe-card-feature,.luxe-panel,.ui-toolbar,.luxe-well,.luxe-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.luxe-feature-strip,.luxe-feature-item,.luxe-callout-bar,.luxe-media-scrim,.organic-surface,.organic-surface-sm,.organic-surface-lg,.ui-card,.organic-card-service,.organic-card-feature,.organic-panel,.ui-toolbar,.organic-well,.organic-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.organic-feature-strip,.organic-feature-item,.organic-callout-bar,.organic-media-scrim,.utility-surface,.utility-surface-sm,.utility-surface-lg,.ui-card,.utility-card-service,.utility-card-feature,.utility-panel,.ui-toolbar,.utility-well,.utility-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.utility-feature-strip,.utility-feature-item,.utility-callout-bar,.utility-media-scrim,.blueprint-surface,.blueprint-surface-sm,.blueprint-surface-lg,.ui-card,.blueprint-card-service,.blueprint-card-feature,.blueprint-panel,.ui-toolbar,.blueprint-well,.blueprint-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.blueprint-feature-strip,.blueprint-feature-item,.blueprint-callout-bar,.blueprint-media-scrim,.deco-surface,.deco-surface-sm,.deco-surface-lg,.ui-card,.deco-card-service,.deco-card-feature,.deco-panel,.ui-toolbar,.deco-well,.deco-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.deco-feature-strip,.deco-feature-item,.deco-callout-bar,.deco-media-scrim,.clay-surface,.clay-surface-sm,.clay-surface-lg,.ui-card,.clay-card-service,.clay-card-feature,.clay-panel,.ui-toolbar,.clay-well,.clay-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.clay-feature-strip,.clay-feature-item,.clay-callout-bar,.clay-media-scrim,.terminal-surface,.terminal-surface-sm,.terminal-surface-lg,.ui-card,.terminal-card-service,.terminal-card-feature,.terminal-panel,.ui-toolbar,.terminal-well,.terminal-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.terminal-feature-strip,.terminal-feature-item,.terminal-callout-bar,.terminal-media-scrim,.paper-surface,.paper-surface-sm,.paper-surface-lg,.ui-card,.paper-card-service,.paper-card-feature,.paper-panel,.ui-toolbar,.paper-well,.paper-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.paper-feature-strip,.paper-feature-item,.paper-callout-bar,.paper-media-scrim,.noir-surface,.noir-surface-sm,.noir-surface-lg,.ui-card,.noir-card-service,.noir-card-feature,.noir-panel,.ui-toolbar,.noir-well,.noir-inset,.ui-field,.ui-alert,.ui-table-wrap,.ui-nav,.noir-feature-strip,.noir-feature-item,.noir-callout-bar,.noir-media-scrim) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -3143,6 +3291,8 @@
 ), [data-ui]:where([data-ui="tactile"])[data-theme][data-mode] :where(.ui-button,.ui-icon-button,.luxe-button-cut,.luxe-button-outline-heavy,.ui-badge,.luxe-badge-seal,.ui-nav-link,.luxe-icon-medallion,.ui-button,.ui-icon-button,.organic-button-cut,.organic-button-outline-heavy,.ui-badge,.organic-badge-seal,.ui-nav-link,.organic-icon-medallion,.ui-button,.ui-icon-button,.utility-button-cut,.utility-button-outline-heavy,.ui-badge,.utility-badge-seal,.ui-nav-link,.utility-icon-medallion,.ui-button,.ui-icon-button,.blueprint-button-cut,.blueprint-button-outline-heavy,.ui-badge,.blueprint-badge-seal,.ui-nav-link,.blueprint-icon-medallion,.ui-button,.ui-icon-button,.deco-button-cut,.deco-button-outline-heavy,.ui-badge,.deco-badge-seal,.ui-nav-link,.deco-icon-medallion,.ui-button,.ui-icon-button,.clay-button-cut,.clay-button-outline-heavy,.ui-badge,.clay-badge-seal,.ui-nav-link,.clay-icon-medallion,.ui-button,.ui-icon-button,.terminal-button-cut,.terminal-button-outline-heavy,.ui-badge,.terminal-badge-seal,.ui-nav-link,.terminal-icon-medallion,.ui-button,.ui-icon-button,.paper-button-cut,.paper-button-outline-heavy,.ui-badge,.paper-badge-seal,.ui-nav-link,.paper-icon-medallion,.ui-button,.ui-icon-button,.noir-button-cut,.noir-button-outline-heavy,.ui-badge,.noir-badge-seal,.ui-nav-link,.noir-icon-medallion) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
 
@@ -3207,7 +3357,8 @@
   font-weight: 850;
   text-align: center;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
@@ -3382,7 +3533,7 @@
   .noir-tooltip-right,
   .noir-tooltip-bottom,
   .noir-tooltip-left
-) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: anywhere; }
+) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: break-word; word-break: normal; }
 
 [data-ui][data-theme][data-mode] :where(
   [data-ui-tooltip-anchor] > .luxe-tooltip-top,
@@ -3507,16 +3658,16 @@
 @layer ui-style-kit.presets {
   :root {
     --tactile-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --tactile-font-display: Inter, ui-sans-serif, system-ui, sans-serif;
+    --tactile-font-display: Georgia, Cambria, "Times New Roman", Times, serif;
     --tactile-font-body: var(--tactile-font-sans);
     --tactile-font-heading: var(--tactile-font-display);
-    --tactile-font-control: var(--tactile-font-display);
+    --tactile-font-control: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --tactile-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    --tactile-radius-xs: .25rem;
-    --tactile-radius-sm: .5rem;
-    --tactile-radius-md: .9rem;
-    --tactile-radius-lg: 1.4rem;
-    --tactile-radius-xl: calc(1.4rem + .5rem);
+    --tactile-radius-xs: .1rem;
+    --tactile-radius-sm: .18rem;
+    --tactile-radius-md: .28rem;
+    --tactile-radius-lg: .4rem;
+    --tactile-radius-xl: .6rem;
     --tactile-radius-pill: 999px;
     --tactile-space-1: .25rem;
     --tactile-space-2: .5rem;
@@ -3534,10 +3685,12 @@
     --lightningcss-dark: ;
     color-scheme: light;
     --tactile-panel-alpha: .98;
-    --tactile-panel-soft-alpha: .78;
-    --tactile-border-alpha: .58;
-    --tactile-shadow-alpha: .12;
+    --tactile-panel-soft-alpha: .82;
+    --tactile-border-alpha: .68;
+    --tactile-shadow-alpha: .16;
     --tactile-focus-alpha: .34;
+    --tactile-paper-alpha: .96;
+    --tactile-sidebar-alpha: .94;
   }
 
   [data-ui="tactile"][data-mode="dark"] {
@@ -3545,10 +3698,12 @@
     --lightningcss-dark: initial;
     color-scheme: dark;
     --tactile-panel-alpha: .92;
-    --tactile-panel-soft-alpha: .64;
-    --tactile-border-alpha: .52;
+    --tactile-panel-soft-alpha: .68;
+    --tactile-border-alpha: .62;
     --tactile-shadow-alpha: .34;
     --tactile-focus-alpha: .42;
+    --tactile-paper-alpha: .88;
+    --tactile-sidebar-alpha: .96;
   }
 
   [data-ui="tactile"][data-mode="contrast"] {
@@ -3560,6 +3715,8 @@
     --tactile-border-alpha: 1;
     --tactile-shadow-alpha: .5;
     --tactile-focus-alpha: .72;
+    --tactile-paper-alpha: 1;
+    --tactile-sidebar-alpha: 1;
   }
 
   [data-ui="tactile"][data-theme][data-mode] {
@@ -3606,15 +3763,66 @@
     --usk-native-font-heading: var(--tactile-font-heading);
     --usk-native-font-control: var(--tactile-font-control);
     --usk-native-font-mono: var(--tactile-font-mono);
-    --usk-native-radius-sm: var(--tactile-radius-sm);
+    --usk-native-radius-sm: var(--tactile-radius-xs);
     --usk-native-radius: var(--tactile-radius-md);
     --usk-native-radius-lg: var(--tactile-radius-lg);
-    --usk-native-shadow: var(--tactile-shadow-sm, none);
-    --usk-native-shadow-md: var(--tactile-shadow-md, var(--usk-native-shadow));
+    --usk-native-shadow: var(--tactile-button-shadow);
+    --usk-native-shadow-md: var(--tactile-panel-shadow);
     --usk-native-focus-ring: var(--tactile-focus-ring, 0 0 0 3px rgb(var(--tactile-focus-rgb) / .28));
     --usk-native-border-width: 1px;
     --usk-native-field-gap: .5rem;
     --usk-native-panel-padding: var(--tactile-space-5);
+    --usk-native-control-min-block-size: 3rem;
+    --usk-native-control-padding-block: .74rem;
+    --usk-native-control-padding-inline: .95rem;
+    --usk-native-subcontrol-padding-block: .58rem;
+    --usk-native-subcontrol-padding-inline: .72rem;
+    --usk-native-choice-size: 1.35rem;
+    --usk-native-choice-background: var(--tactile-control-bg);
+    --usk-native-choice-border: 1px solid var(--tactile-keyline);
+    --usk-native-checkbox-radius: .18rem;
+    --usk-native-radio-radius: 50%;
+    --usk-native-choice-shadow: var(--tactile-inset-shadow);
+    --usk-native-choice-checked-background: var(--tactile-action-solid);
+    --usk-native-choice-mark-color: var(--tactile-on-primary);
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--tactile-text) 50%), linear-gradient(135deg, var(--tactile-text) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-padding-inline-end: 2.25rem;
+    --usk-native-range-track-size: .56rem;
+    --usk-native-range-track-background: var(--tactile-recessed-track);
+    --usk-native-range-track-border: 1px solid var(--tactile-track-rim);
+    --usk-native-range-track-radius: .2rem;
+    --usk-native-range-track-shadow: var(--tactile-deep-inset-shadow);
+    --usk-native-range-progress-background: var(--tactile-action-solid);
+    --usk-native-range-thumb-size: 1.55rem;
+    --usk-native-range-thumb-background: var(--tactile-thumb-bg);
+    --usk-native-range-thumb-border: 1px solid var(--tactile-keyline);
+    --usk-native-range-thumb-radius: .22rem;
+    --usk-native-range-thumb-shadow: var(--tactile-button-shadow);
+    --usk-native-progress-size: .76rem;
+    --usk-native-progress-track-background: var(--tactile-recessed-track);
+    --usk-native-progress-track-border: 1px solid var(--tactile-track-rim);
+    --usk-native-progress-track-radius: .18rem;
+    --usk-native-progress-track-shadow: var(--tactile-deep-inset-shadow);
+    --usk-native-progress-value-background: var(--tactile-progress-fill);
+    --usk-native-progress-value-radius: .12rem;
+    --usk-native-progress-value-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb) / .22);
+    --usk-native-meter-optimum-background: var(--tactile-success);
+    --usk-native-meter-suboptimum-background: var(--tactile-warning);
+    --usk-native-meter-critical-background: var(--tactile-danger);
+    --usk-native-file-button-background: var(--tactile-action-solid);
+    --usk-native-file-button-border: 1px solid var(--tactile-keyline);
+    --usk-native-file-button-radius: .22rem;
+    --usk-native-file-button-shadow: var(--tactile-button-shadow);
+    --usk-native-color-swatch-border: 1px solid var(--tactile-keyline);
+    --usk-native-color-swatch-radius: .18rem;
+    --usk-native-indicator-opacity: .92;
+    --usk-native-indicator-filter: none;
+    --usk-native-scrollbar-size: .85rem;
+    --usk-native-scrollbar-track: var(--tactile-recessed-track);
+    --usk-native-scrollbar-thumb: var(--tactile-thumb-bg);
+    --usk-native-scrollbar-radius: .18rem;
     --tactile-bg: rgb(var(--tactile-bg-rgb));
     --tactile-surface: rgb(var(--tactile-surface-rgb) / var(--tactile-panel-alpha));
     --tactile-surface-strong: rgb(var(--tactile-surface-strong-rgb) / var(--tactile-panel-alpha));
@@ -3645,10 +3853,33 @@
     --tactile-link: rgb(var(--tactile-link-rgb));
     --tactile-focus: rgb(var(--tactile-focus-rgb));
     --tactile-focus-ring: 0 0 0 3px rgb(var(--tactile-focus-rgb) / var(--tactile-focus-alpha));
+    --tactile-paper-wash: rgb(var(--tactile-warning-rgb) / .14);
+    --tactile-bevel-highlight: rgb(var(--tactile-surface-strong-rgb) / .82);
+    --tactile-bevel-shadow: rgb(var(--tactile-text-rgb) / .24);
     --tactile-theme-bg-size: auto;
-    --tactile-theme-bg: radial-gradient(circle at 0% 0%, rgb(var(--tactile-primary-rgb) / .16), transparent 32rem), radial-gradient(circle at 100% 0%, rgb(var(--tactile-accent-rgb) / .12), transparent 30rem), radial-gradient(circle at 50% 100%, rgb(var(--tactile-secondary-rgb) / .1), transparent 34rem), var(--tactile-bg);
-    --tactile-card-bg: linear-gradient(135deg, rgb(var(--tactile-primary-rgb) / .1), rgb(var(--tactile-accent-rgb) / .055) 42%, rgb(var(--tactile-surface-strong-rgb) / var(--tactile-panel-alpha)) 100%), var(--tactile-surface);
-    --tactile-control-bg: linear-gradient(180deg, rgb(var(--tactile-surface-strong-rgb) / var(--tactile-panel-alpha)), rgb(var(--tactile-surface-soft-rgb) / var(--tactile-panel-soft-alpha)));
+    --tactile-paper-bg: linear-gradient(180deg, var(--tactile-paper-wash), transparent 28rem), linear-gradient(135deg, rgb(var(--tactile-accent-rgb) / .06), transparent 26rem), linear-gradient(180deg, rgb(var(--tactile-surface-strong-rgb) / var(--tactile-paper-alpha)), rgb(var(--tactile-surface-rgb) / var(--tactile-panel-alpha)));
+    --tactile-paper-grain: radial-gradient(circle at 12% 18%, rgb(var(--tactile-text-rgb) / .04) 0 1px, transparent 1.4px), radial-gradient(circle at 68% 34%, rgb(var(--tactile-warning-rgb) / .055) 0 1px, transparent 1.5px), linear-gradient(90deg, rgb(var(--tactile-text-rgb) / .018) 1px, transparent 1px), linear-gradient(180deg, rgb(var(--tactile-warning-rgb) / .055), transparent 18rem);
+    --tactile-theme-bg: var(--tactile-paper-grain), var(--tactile-paper-bg), var(--tactile-bg);
+    --tactile-card-bg: var(--tactile-paper-grain), var(--tactile-paper-bg);
+    --tactile-control-bg: linear-gradient(180deg, rgb(var(--tactile-warning-rgb) / .1), transparent), linear-gradient(180deg, rgb(var(--tactile-surface-strong-rgb) / .86), rgb(var(--tactile-surface-soft-rgb) / .7));
+    --tactile-field-bg: linear-gradient(180deg, rgb(var(--tactile-warning-rgb) / .075), transparent), linear-gradient(180deg, rgb(var(--tactile-surface-soft-rgb) / .8), rgb(var(--tactile-surface-strong-rgb) / .58));
+    --tactile-inset-bg: linear-gradient(180deg, rgb(var(--tactile-warning-rgb) / .08), transparent), linear-gradient(180deg, rgb(var(--tactile-surface-soft-rgb) / .74), rgb(var(--tactile-surface-rgb) / .6));
+    --tactile-recessed-track: rgb(var(--tactile-text-rgb) / .82);
+    --tactile-track-rim: rgb(var(--tactile-text-rgb) / .72);
+    --tactile-thumb-bg: linear-gradient(90deg, rgb(var(--tactile-warning-rgb) / .1), transparent), linear-gradient(90deg, rgb(var(--tactile-surface-strong-rgb) / .98), rgb(var(--tactile-surface-soft-rgb) / .9));
+    --tactile-action-solid: var(--tactile-primary);
+    --tactile-action-bg: linear-gradient(180deg, var(--tactile-primary), var(--tactile-primary-hover));
+    --tactile-action-hover-bg: linear-gradient(180deg, var(--tactile-primary-hover), var(--tactile-primary));
+    --tactile-progress-fill: linear-gradient(90deg, var(--tactile-success), var(--tactile-primary));
+    --tactile-keyline: rgb(var(--tactile-text-rgb) / max(.46, calc(var(--tactile-border-alpha) * .78)));
+    --tactile-panel-shadow: inset 0 2px 0 var(--tactile-bevel-highlight), inset 0 -2px 0 var(--tactile-bevel-shadow), 0 .55rem 1.25rem rgb(var(--tactile-text-rgb) / var(--tactile-shadow-alpha));
+    --tactile-button-shadow: inset 0 2px 0 var(--tactile-bevel-highlight), inset 0 -2px 0 var(--tactile-bevel-shadow), 0 .32rem .68rem rgb(var(--tactile-text-rgb) / calc(var(--tactile-shadow-alpha) * .92));
+    --tactile-inset-shadow: inset .16rem .16rem .34rem rgb(var(--tactile-text-rgb) / .2), inset -.08rem -.08rem .2rem rgb(var(--tactile-surface-strong-rgb) / .38);
+    --tactile-deep-inset-shadow: inset .16rem .16rem .32rem #00000094, inset -.08rem -.08rem .16rem rgb(var(--tactile-surface-strong-rgb) / .14);
+    --tactile-sidebar-bg: linear-gradient(180deg, rgb(var(--tactile-text-rgb) / var(--tactile-sidebar-alpha)), rgb(var(--tactile-text-rgb) / calc(var(--tactile-sidebar-alpha) - .06)));
+    --tactile-sidebar-fg: rgb(var(--tactile-bg-rgb));
+    --tactile-sidebar-muted: rgb(var(--tactile-bg-rgb) / .74);
+    --tactile-rail: var(--tactile-primary);
     --tactile-spinner-track: rgb(var(--tactile-border-rgb) / max(.28, calc(var(--tactile-border-alpha) * .7)));
     --tactile-spinner-stroke: var(--tactile-primary);
     --tactile-spinner-accent: var(--tactile-accent);
@@ -3661,7 +3892,7 @@
   }
 
   [data-ui="tactile"] {
-    background: radial-gradient(circle at 50% -10%,#ffffff14,transparent 30rem),var(--tactile-bg);
+    background: var(--tactile-paper-grain),var(--tactile-paper-bg),var(--tactile-bg);
     color: var(--tactile-text);
     font-family: var(--tactile-font-body);
     text-rendering: optimizelegibility;
@@ -3679,39 +3910,44 @@
     background-size: var(--tactile-theme-bg-size);
   }
 
-  .tactile-title, .tactile-heading, .tactile-kicker, .tactile-button, .tactile-badge, .tactile-nav-link, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-badge, :where([data-ui="tactile"]) .ui-nav-link {
+  .tactile-title, .tactile-heading {
     font-family: var(--tactile-font-heading);
+  }
+
+  .tactile-kicker, .tactile-button, .tactile-badge, .tactile-nav-link, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-badge, :where([data-ui="tactile"]) .ui-nav-link {
+    font-family: var(--tactile-font-control);
   }
 
   .tactile-title {
     color: var(--tactile-text);
-    letter-spacing: -.045em;
+    font-family: var(--tactile-font-display);
+    letter-spacing: -.03em;
     margin: 0;
-    font-size: clamp(2rem, 5vw, 3.7rem);
-    line-height: 1.02;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: .98;
   }
 
   .tactile-heading {
     color: var(--tactile-text);
-    letter-spacing: -.03em;
+    letter-spacing: -.02em;
     margin: 0;
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    line-height: 1.15;
+    font-size: clamp(1.25rem, 2.5vw, 2.1rem);
+    line-height: 1.08;
   }
 
   .tactile-kicker {
-    color: var(--tactile-primary);
-    letter-spacing: .12em;
+    color: var(--tactile-text);
+    letter-spacing: .14em;
     text-transform: uppercase;
     margin: 0;
-    font-size: .82rem;
-    font-weight: 850;
+    font-size: .78rem;
+    font-weight: 900;
   }
 
   .tactile-subtitle, .tactile-copy {
     color: var(--tactile-text-muted);
     margin: 0;
-    line-height: 1.65;
+    line-height: 1.58;
   }
 
   .tactile-text-muted {
@@ -3719,24 +3955,21 @@
   }
 
   .tactile-divider {
-    background: var(--tactile-border);
-    border: 0;
+    background: rgb(var(--tactile-border-rgb)/.62);
     width: 100%;
     height: 1px;
+    box-shadow: 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.48);
+    border: 0;
   }
 
   .tactile-surface, .tactile-card, .tactile-panel, .tactile-toolbar, .tactile-table-wrap, :where([data-ui="tactile"]) .ui-card, :where([data-ui="tactile"]) .ui-toolbar, :where([data-ui="tactile"]) .ui-table-wrap {
-    background: linear-gradient(180deg,#ffffff2e,#ffffff08),linear-gradient(135deg,rgb(var(--tactile-primary-rgb)/.07),transparent 46%),var(--tactile-surface);
+    background: var(--tactile-card-bg);
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-lg);
-    box-shadow: 0 18px 36px rgb(0 0 0 / var(--tactile-shadow-alpha)),inset 0 1px 0 #ffffff40;
+    box-shadow: var(--tactile-panel-shadow);
     transition: transform var(--tactile-transition-base),box-shadow var(--tactile-transition-base),border-color var(--tactile-transition-base),background var(--tactile-transition-base);
     position: relative;
-  }
-
-  .tactile-card, .tactile-panel, :where([data-ui="tactile"]) .ui-card {
-    padding: var(--tactile-space-6);
   }
 
   .tactile-toolbar, :where([data-ui="tactile"]) .ui-toolbar {
@@ -3750,26 +3983,26 @@
 
   .tactile-surface-sm {
     border-radius: var(--tactile-radius-md);
-    box-shadow: 0 6px 18px rgb(0 0 0 / calc(var(--tactile-shadow-alpha)*.72));
+    box-shadow: var(--tactile-button-shadow);
   }
 
   .tactile-surface-lg {
     border-radius: var(--tactile-radius-xl);
-    box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--tactile-shadow-alpha) + .08));
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.72),0 .9rem 2rem rgb(var(--tactile-text-rgb)/calc(var(--tactile-shadow-alpha) + .08));
   }
 
   .tactile-well, .tactile-inset {
-    background: var(--tactile-surface-soft);
+    background: var(--tactile-inset-bg);
     color: var(--tactile-text);
-    border: 1px solid rgb(var(--tactile-border-rgb)/calc(var(--tactile-border-alpha)*.7));
+    border: 1px solid rgb(var(--tactile-border-rgb)/calc(var(--tactile-border-alpha)*.82));
     border-radius: var(--tactile-radius-md);
     padding: var(--tactile-space-5);
-    box-shadow: inset 0 1px 3px #00000014;
+    box-shadow: var(--tactile-inset-shadow);
   }
 
   .tactile-hover-lift:hover {
-    box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--tactile-shadow-alpha) + .12));
-    transform: translateY(-2px);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.8),0 .9rem 1.8rem rgb(var(--tactile-text-rgb)/calc(var(--tactile-shadow-alpha) + .08));
+    transform: translateY(-1px);
   }
 
   .tactile-button, .tactile-icon-button, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-icon-button {
@@ -3777,18 +4010,18 @@
     justify-content: center;
     align-items: center;
     gap: var(--tactile-space-2);
-    background: var(--tactile-surface);
-    min-height: 2.75rem;
+    background: var(--tactile-control-bg);
+    min-height: 3rem;
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-md);
-    box-shadow: 0 6px 18px rgb(0 0 0 / var(--tactile-shadow-alpha));
+    box-shadow: var(--tactile-button-shadow);
     font: inherit;
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
     transition: color var(--tactile-transition-fast),background var(--tactile-transition-fast),border-color var(--tactile-transition-fast),box-shadow var(--tactile-transition-fast),transform var(--tactile-transition-fast);
-    padding: .75rem 1.1rem;
+    padding: .72rem 1.15rem;
     font-weight: 800;
     line-height: 1;
     text-decoration: none;
@@ -3797,51 +4030,37 @@
 
   .tactile-button:hover, .tactile-icon-button:hover, :where([data-ui="tactile"]) .ui-button:hover, :where([data-ui="tactile"]) .ui-icon-button:hover {
     border-color: var(--tactile-primary);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.86),inset 0-2px 0 rgb(var(--tactile-text-rgb)/.22),0 .42rem .82rem rgb(var(--tactile-text-rgb)/calc(var(--tactile-shadow-alpha) + .06));
     transform: translateY(-1px);
   }
 
-  .tactile-button:active, .tactile-icon-button:active, .tactile-button[aria-pressed="true"], .tactile-icon-button[aria-pressed="true"], .tactile-button.is-active, .tactile-icon-button.is-active, :where([data-ui="tactile"]) .ui-button:active, :where([data-ui="tactile"]) .ui-icon-button:active, :where([data-ui="tactile"]) .ui-button[aria-pressed="true"], :where([data-ui="tactile"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="tactile"]) .ui-button.is-active, :where([data-ui="tactile"]) .ui-icon-button.is-active {
-    transform: translateY(1px);
-    box-shadow: inset 0 3px 10px #0000002e;
-  }
-
   .tactile-button-primary, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="primary"]) {
-    background: var(--tactile-primary);
+    background: var(--tactile-action-bg);
     color: var(--tactile-on-primary);
     border-color: var(--tactile-primary);
+    box-shadow: var(--tactile-button-shadow);
   }
 
   .tactile-button-primary:hover, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="primary"]):hover {
-    background: var(--tactile-primary-hover);
+    background: var(--tactile-action-hover-bg);
     border-color: var(--tactile-primary-hover);
   }
 
-  .tactile-button-secondary, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="secondary"]) {
-    background: var(--tactile-secondary);
-    color: var(--tactile-on-secondary);
-    border-color: var(--tactile-secondary);
-  }
-
   .tactile-button-secondary:hover, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="secondary"]):hover {
-    background: var(--tactile-secondary-hover);
-    border-color: var(--tactile-secondary-hover);
-  }
-
-  .tactile-button-danger, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="danger"]) {
-    background: var(--tactile-danger);
-    color: var(--tactile-on-danger);
-    border-color: var(--tactile-danger);
+    background: var(--tactile-field-bg);
+    border-color: var(--tactile-primary);
   }
 
   .tactile-button-ghost, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="ghost"]) {
-    color: var(--tactile-text);
+    color: var(--tactile-primary);
     box-shadow: none;
     background: none;
+    border-color: #0000;
   }
 
   .tactile-icon-button, :where([data-ui="tactile"]) .ui-icon-button {
-    border-radius: var(--tactile-radius-pill);
-    width: 2.75rem;
+    border-radius: var(--tactile-radius-sm);
+    width: 3rem;
     padding: 0;
   }
 
@@ -3851,11 +4070,11 @@
     transform: none;
   }
 
-  .tactile-card, .tactile-panel, :where([data-ui="tactile"]) .ui-card {
+  .tactile-card, .tactile-panel, .tactile-toolbar, .tactile-table-wrap, :where([data-ui="tactile"]) .ui-card, :where([data-ui="tactile"]) .ui-toolbar, :where([data-ui="tactile"]) .ui-table-wrap {
     background: var(--tactile-card-bg);
   }
 
-  .tactile-toolbar, .tactile-table-wrap, .tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-ghost), .tactile-icon-button, :where([data-ui="tactile"]) .ui-toolbar, :where([data-ui="tactile"]) .ui-table-wrap, :where([data-ui="tactile"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="tactile"]) .ui-icon-button {
+  .tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-ghost), .tactile-icon-button, :where([data-ui="tactile"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="tactile"]) .ui-icon-button {
     background: var(--tactile-control-bg);
   }
 
@@ -3871,21 +4090,24 @@
 
   .tactile-label, :where([data-ui="tactile"]) .ui-label {
     color: var(--tactile-text);
-    font-size: .925rem;
-    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: .78rem;
+    font-weight: 900;
   }
 
   .tactile-input, .tactile-textarea, .tactile-select, :where([data-ui="tactile"]) .ui-input, :where([data-ui="tactile"]) .ui-textarea, :where([data-ui="tactile"]) .ui-select {
-    background: var(--tactile-surface-soft);
+    background: var(--tactile-field-bg);
     width: 100%;
-    min-height: 2.875rem;
+    min-height: 3rem;
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-md);
+    box-shadow: var(--tactile-inset-shadow);
     font: inherit;
     transition: background var(--tactile-transition-fast),border-color var(--tactile-transition-fast),box-shadow var(--tactile-transition-fast);
     outline: none;
-    padding: .75rem 1rem;
+    padding: .74rem 1rem;
   }
 
   .tactile-textarea, :where([data-ui="tactile"]) .ui-textarea {
@@ -3900,11 +4122,6 @@
 
   .tactile-input:hover, .tactile-textarea:hover, .tactile-select:hover, :where([data-ui="tactile"]) .ui-input:hover, :where([data-ui="tactile"]) .ui-textarea:hover, :where([data-ui="tactile"]) .ui-select:hover {
     border-color: rgb(var(--tactile-primary-rgb)/.58);
-  }
-
-  .tactile-input:focus, .tactile-textarea:focus, .tactile-select:focus, :where([data-ui="tactile"]) .ui-input:focus, :where([data-ui="tactile"]) .ui-textarea:focus, :where([data-ui="tactile"]) .ui-select:focus {
-    border-color: var(--tactile-focus);
-    box-shadow: var(--tactile-focus-ring);
   }
 
   .tactile-help-text, :where([data-ui="tactile"]) .ui-help-text {
@@ -3928,10 +4145,11 @@
   }
 
   .tactile-check-control, .tactile-radio-control, :where([data-ui="tactile"]) .ui-check-control, :where([data-ui="tactile"]) .ui-radio-control {
-    background: var(--tactile-surface-soft);
-    border: 1px solid var(--tactile-border);
+    background: var(--tactile-field-bg);
+    border: 1px solid var(--tactile-keyline);
     width: 1.35rem;
     height: 1.35rem;
+    box-shadow: var(--tactile-inset-shadow);
     transition: background var(--tactile-transition-fast),box-shadow var(--tactile-transition-fast);
     place-items: center;
     display: inline-grid;
@@ -3946,9 +4164,9 @@
   }
 
   .tactile-check input:checked + .tactile-check-control, .tactile-radio input:checked + .tactile-radio-control, :where([data-ui="tactile"]) .ui-check input:checked+.ui-check-control, :where([data-ui="tactile"]) .ui-radio input:checked+.ui-radio-control {
-    background: var(--tactile-primary);
+    background: var(--tactile-action-solid);
     border-color: var(--tactile-primary);
-    box-shadow: var(--tactile-focus-ring);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.28),var(--tactile-focus-ring);
   }
 
   .tactile-check input:checked + .tactile-check-control:after, :where([data-ui="tactile"]) .ui-check input:checked+.ui-check-control:after {
@@ -3981,55 +4199,59 @@
   }
 
   .tactile-switch-track, :where([data-ui="tactile"]) .ui-switch-track {
-    background: var(--tactile-surface-soft);
-    border: 1px solid var(--tactile-border);
-    border-radius: var(--tactile-radius-pill);
-    width: 3.5rem;
+    background: var(--tactile-recessed-track);
+    border: 1px solid var(--tactile-track-rim);
+    border-radius: var(--tactile-radius-sm);
+    width: 4.35rem;
     height: 1.9rem;
+    box-shadow: var(--tactile-deep-inset-shadow);
     transition: background var(--tactile-transition-fast),box-shadow var(--tactile-transition-fast);
     position: relative;
   }
 
   .tactile-switch-thumb, :where([data-ui="tactile"]) .ui-switch-thumb {
-    background: var(--tactile-surface-strong);
-    border: 1px solid var(--tactile-border);
-    width: 1.34rem;
-    height: 1.34rem;
-    box-shadow: 0 4px 12px rgb(0 0 0 / var(--tactile-shadow-alpha));
+    background: var(--tactile-thumb-bg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-xs);
+    width: 1.58rem;
+    height: 1.58rem;
+    box-shadow: var(--tactile-button-shadow);
     transition: left var(--tactile-transition-fast),background var(--tactile-transition-fast);
-    border-radius: 50%;
     position: absolute;
-    top: .22rem;
-    left: .22rem;
+    top: .16rem;
+    left: .16rem;
   }
 
   .tactile-switch input:checked + .tactile-switch-track, :where([data-ui="tactile"]) .ui-switch input:checked+.ui-switch-track {
-    background: var(--tactile-primary);
+    background: linear-gradient(90deg,var(--tactile-recessed-track)0 50%,var(--tactile-action-solid) 50% 100%);
     border-color: var(--tactile-primary);
   }
 
   .tactile-switch input:checked + .tactile-switch-track .tactile-switch-thumb, :where([data-ui="tactile"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
-    background: var(--tactile-on-primary);
-    left: calc(100% - 1.56rem);
+    background: var(--tactile-thumb-bg);
+    left: calc(100% - 1.74rem);
   }
 
   .tactile-badge, :where([data-ui="tactile"]) .ui-badge {
     align-items: center;
     gap: var(--tactile-space-1);
-    background: var(--tactile-surface-soft);
-    min-height: 1.75rem;
+    background: var(--tactile-field-bg);
+    min-height: 1.65rem;
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
-    border-radius: var(--tactile-radius-pill);
-    padding: .35rem .7rem;
-    font-size: .8125rem;
-    font-weight: 850;
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-sm);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.58);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: .32rem .68rem;
+    font-size: .78rem;
+    font-weight: 900;
     line-height: 1;
     display: inline-flex;
   }
 
   .tactile-badge-primary, :where([data-ui="tactile"]) .ui-badge:where([data-ui-variant="primary"]) {
-    background: var(--tactile-primary);
+    background: var(--tactile-action-solid);
     color: var(--tactile-on-primary);
     border-color: var(--tactile-primary);
   }
@@ -4062,44 +4284,41 @@
     align-items: center;
     gap: var(--tactile-space-2);
     padding: var(--tactile-space-2);
-    background: var(--tactile-surface);
-    border: 1px solid var(--tactile-border);
-    border-radius: var(--tactile-radius-xl);
-    box-shadow: 0 10px 30px rgb(0 0 0 / var(--tactile-shadow-alpha));
+    background: var(--tactile-sidebar-bg);
+    border: 1px solid rgb(var(--tactile-text-rgb)/.88);
+    border-radius: var(--tactile-radius-lg);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-bg-rgb)/.08),0 .75rem 1.5rem rgb(var(--tactile-text-rgb)/calc(var(--tactile-shadow-alpha) + .12));
     flex-wrap: wrap;
     display: flex;
   }
 
   .tactile-nav-link, :where([data-ui="tactile"]) .ui-nav-link {
-    min-height: 2.5rem;
-    color: var(--tactile-text-muted);
-    border-radius: var(--tactile-radius-pill);
+    min-height: 2.75rem;
+    color: var(--tactile-sidebar-muted);
+    border-radius: var(--tactile-radius-md);
     transition: color var(--tactile-transition-fast),background var(--tactile-transition-fast),box-shadow var(--tactile-transition-fast);
+    border: 1px solid #0000;
     justify-content: center;
     align-items: center;
-    padding: .65rem 1rem;
+    padding: .72rem 1rem;
     font-weight: 850;
     text-decoration: none;
     display: inline-flex;
   }
 
   .tactile-nav-link:hover, :where([data-ui="tactile"]) .ui-nav-link:hover {
-    color: var(--tactile-text);
-    background: var(--tactile-surface-soft);
-  }
-
-  .tactile-nav-link[aria-current="page"], .tactile-nav-link.is-active, :where([data-ui="tactile"]) .ui-nav-link[aria-current="page"], :where([data-ui="tactile"]) .ui-nav-link.is-active {
-    color: var(--tactile-on-primary);
-    background: var(--tactile-primary);
+    color: var(--tactile-sidebar-fg);
+    background: rgb(var(--tactile-bg-rgb)/.08);
+    border-color: rgb(var(--tactile-bg-rgb)/.18);
   }
 
   .tactile-tooltip, [data-ui="tactile"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
-    background: linear-gradient(180deg,#ffffff2e,#00000014),var(--tactile-surface-strong);
+    background: var(--tactile-sidebar-bg);
     max-inline-size: 16rem;
-    color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
-    border-radius: var(--tactile-radius-lg);
-    box-shadow: inset 0 1px 0 #ffffff52,0 .7rem 1.4rem rgb(0 0 0 / var(--tactile-shadow-alpha));
+    color: var(--tactile-sidebar-fg);
+    border: 1px solid rgb(var(--tactile-bg-rgb)/.18);
+    border-radius: var(--tactile-radius-md);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-bg-rgb)/.08),0 .7rem 1.4rem rgb(var(--tactile-text-rgb)/var(--tactile-shadow-alpha));
     align-items: center;
     gap: .45rem;
     padding: .6rem .82rem;
@@ -4110,9 +4329,9 @@
   }
 
   .tactile-tooltip-arrow {
-    background: var(--tactile-surface-strong);
-    border: 1px solid var(--tactile-border);
-    border-radius: .18rem;
+    background: rgb(var(--tactile-text-rgb)/.9);
+    border: 1px solid rgb(var(--tactile-bg-rgb)/.18);
+    border-radius: .12rem;
     flex: none;
     block-size: .6rem;
     inline-size: .6rem;
@@ -4120,29 +4339,32 @@
   }
 
   .tactile-progress, :where([data-ui="tactile"]) .ui-progress {
-    background: var(--tactile-surface-soft);
-    border: 1px solid var(--tactile-border);
-    border-radius: var(--tactile-radius-pill);
+    background: var(--tactile-recessed-track);
+    border: 1px solid var(--tactile-track-rim);
+    border-radius: var(--tactile-radius-sm);
     width: 100%;
-    height: .9rem;
+    height: .8rem;
+    box-shadow: var(--tactile-deep-inset-shadow);
     overflow: hidden;
   }
 
   .tactile-progress-bar, :where([data-ui="tactile"]) .ui-progress-bar {
     height: 100%;
     width: var(--tactile-progress-value, 50%);
-    background: linear-gradient(90deg,var(--tactile-primary),var(--tactile-accent));
-    border-radius: inherit;
+    background: var(--tactile-progress-fill);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.2);
+    border-radius: .12rem;
   }
 
   .tactile-alert, :where([data-ui="tactile"]) .ui-alert {
     gap: var(--tactile-space-2);
     padding: var(--tactile-space-4);
-    background: var(--tactile-surface);
+    background: var(--tactile-card-bg);
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-lg);
-    box-shadow: 0 10px 30px rgb(0 0 0 / var(--tactile-shadow-alpha));
+    box-shadow: var(--tactile-panel-shadow);
+    border-inline-start-width: .28rem;
     display: grid;
   }
 
@@ -4180,16 +4402,17 @@
 
   .tactile-table th, .tactile-table td, :where([data-ui="tactile"]) .ui-table th, :where([data-ui="tactile"]) .ui-table td {
     text-align: left;
-    border-bottom: 1px solid var(--tactile-border);
-    padding: .95rem 1rem;
+    border-bottom: 1px solid rgb(var(--tactile-border-rgb)/.58);
+    padding: .9rem 1rem;
   }
 
   .tactile-table th, :where([data-ui="tactile"]) .ui-table th {
     color: var(--tactile-text);
     text-transform: uppercase;
     letter-spacing: .08em;
-    background: rgb(var(--tactile-primary-rgb)/.08);
-    font-size: .82rem;
+    background: var(--tactile-field-bg);
+    box-shadow: inset 0-1px 0 rgb(var(--tactile-text-rgb)/.08);
+    font-size: .78rem;
     font-weight: 900;
   }
 
@@ -4285,22 +4508,23 @@
   }
 
   .tactile-bevel {
-    background: linear-gradient(180deg,#ffffff38,#00000014),var(--tactile-surface);
-    box-shadow: inset 0 1px 0 #ffffff52,inset 0-1px 0 #0000002e,0 16px 34px rgb(0 0 0 / var(--tactile-shadow-alpha));
+    background: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
   }
 
   .tactile-pressed {
-    background: var(--tactile-surface-soft);
+    background: var(--tactile-inset-bg);
+    box-shadow: var(--tactile-inset-shadow);
     transform: translateY(1px);
-    box-shadow: inset 0 4px 14px #00000038, inset 0 -1px #ffffff1f;
   }
 
   .tactile-knob {
-    background: radial-gradient(circle at 35% 30%,#ffffff59,transparent 28%),var(--tactile-surface-strong);
-    border: 1px solid var(--tactile-border);
+    background: radial-gradient(circle at 35% 30%,rgb(var(--tactile-surface-strong-rgb)/.72),transparent 30%),var(--tactile-thumb-bg);
+    border: 1px solid var(--tactile-keyline);
     block-size: 3.25rem;
     inline-size: 3.25rem;
-    box-shadow: inset 0 1px 0 #ffffff4d,0 12px 24px rgb(0 0 0 / var(--tactile-shadow-alpha));
+    box-shadow: var(--tactile-button-shadow);
     border-radius: 50%;
   }
 
@@ -4308,10 +4532,10 @@
     border: .18rem solid rgb(var(--tactile-border-rgb)/.55);
     border-block-start-color: var(--tactile-spinner-stroke);
     border-inline-end-color: var(--tactile-spinner-accent);
-    background: linear-gradient(145deg,rgb(var(--tactile-surface-strong-rgb)/.96),rgb(var(--tactile-surface-soft-rgb)/.72));
+    background: var(--tactile-thumb-bg);
     block-size: 2rem;
     inline-size: 2rem;
-    box-shadow: inset .16rem .16rem .32rem #0000002e,inset -.16rem -.16rem .32rem #ffffff42,0 .25rem .75rem rgb(0 0 0 / var(--tactile-shadow-alpha));
+    box-shadow: var(--tactile-button-shadow);
     vertical-align: -.2em;
     border-radius: 50%;
     animation: .85s cubic-bezier(.2, .8, .2, 1) infinite tactile-spin;
@@ -4355,9 +4579,10 @@
   .tactile-card-media {
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border: 1px solid rgb(var(--tactile-border-rgb)/.72);
-    border-radius: var(--tactile-radius-lg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-md);
     inline-size: 100%;
+    box-shadow: var(--tactile-inset-shadow);
     display: block;
   }
 
@@ -4389,7 +4614,7 @@
   }
 
   .tactile-card-accent-edge {
-    border-inline-start: .35rem solid var(--tactile-primary);
+    border-inline-start: .28rem solid var(--tactile-primary);
   }
 
   .tactile-icon-medallion {
@@ -4397,8 +4622,8 @@
     block-size: 3.75rem;
     inline-size: 3.75rem;
     color: var(--tactile-on-primary);
-    border: 2px solid rgb(var(--tactile-border-rgb)/.82);
-    border-radius: 50%;
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-md);
     flex: none;
     place-items: center;
     padding: .7rem;
@@ -4442,7 +4667,7 @@
     inline-size: 5rem;
     min-inline-size: 5rem;
     color: var(--tactile-text);
-    border: 2px solid var(--tactile-primary);
+    border: 1px solid var(--tactile-primary);
     text-align: center;
     font-family: var(--tactile-font-heading);
     letter-spacing: .04em;
@@ -4459,11 +4684,10 @@
   .tactile-feature-strip {
     background: var(--tactile-card-bg);
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-lg);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
     display: grid;
-    overflow: hidden;
   }
 
   .tactile-feature-item {
@@ -4491,7 +4715,7 @@
     padding: var(--tactile-space-4) var(--tactile-space-5);
     background: var(--tactile-card-bg);
     color: var(--tactile-text);
-    border: 1px solid var(--tactile-border);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-lg);
     grid-template-columns: auto minmax(0, 1fr) auto;
     display: grid;
@@ -4499,10 +4723,6 @@
 
   .tactile-callout-bar > :where(p, div) {
     min-inline-size: 0;
-  }
-
-  .tactile-callout-bar > :where(.tactile-button, a, button):last-child, :where([data-ui="tactile"]) .tactile-callout-bar>:where(.ui-button,a,button):last-child {
-    justify-self: end;
   }
 
   .tactile-eyebrow {
@@ -4518,9 +4738,9 @@
 
   .tactile-media-scrim {
     isolation: isolate;
-    background: var(--tactile-surface-soft);
-    border: 1px solid var(--tactile-border);
-    border-radius: var(--tactile-radius-lg);
+    background: var(--tactile-inset-bg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-md);
     min-block-size: 12rem;
     position: relative;
     overflow: hidden;
@@ -4569,52 +4789,312 @@
   }
 
   .tactile-card-service, .tactile-card-feature, .tactile-feature-strip, .tactile-callout-bar {
-    box-shadow: 0 .75rem 1.6rem #00000038, inset 0 1px #ffffff47;
+    box-shadow: var(--tactile-panel-shadow);
   }
 
   .tactile-icon-medallion, .tactile-badge-seal {
-    background: linear-gradient(145deg,#ffffff38,#00000014),var(--tactile-primary);
-    box-shadow: inset 0 1px #fff6, 0 .45rem .85rem #00000038;
+    background: var(--tactile-action-bg);
+    box-shadow: var(--tactile-button-shadow);
   }
 
   .tactile-button-outline-heavy {
-    box-shadow: inset 0 1px #ffffff3d, 0 .35rem .7rem #0000002e;
+    box-shadow: var(--tactile-button-shadow);
   }
 
   .tactile-button.tactile-button-cut, .tactile-button-cut, :where([data-ui="tactile"]) .ui-button.tactile-button-cut {
     clip-path: polygon(.38rem 0, calc(100% - .38rem) 0, 100% .38rem, 100% calc(100% - .38rem), calc(100% - .38rem) 100%, .38rem 100%, 0 calc(100% - .38rem), 0 .38rem);
     justify-content: center;
     justify-self: center;
+    min-block-size: 2.75rem;
     min-inline-size: 6rem;
     max-inline-size: 100%;
   }
 
   .tactile-button.tactile-button-outline-heavy, .tactile-button-outline-heavy, :where([data-ui="tactile"]) .ui-button.tactile-button-outline-heavy {
     clip-path: polygon(.28rem 0, calc(100% - .28rem) 0, 100% .28rem, 100% calc(100% - .28rem), calc(100% - .28rem) 100%, .28rem 100%, 0 calc(100% - .28rem), 0 .28rem);
-    box-shadow: inset 0 2px 0 rgb(var(--tactile-surface-strong-rgb)/.72),0 .38rem .72rem rgb(var(--tactile-text-rgb)/.2);
+    box-shadow: var(--tactile-button-shadow);
     border-width: 2px;
     border-radius: 0;
   }
 
   .tactile-card-service, .tactile-media-scrim, .tactile-feature-strip, .tactile-callout-bar, .tactile-well {
-    background: linear-gradient(145deg,rgb(var(--tactile-surface-strong-rgb)/.78),rgb(var(--tactile-surface-rgb)/.72));
-    border: 1px solid var(--tactile-border);
+    background: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-lg);
-    box-shadow: inset 0 2px 0 rgb(var(--tactile-surface-strong-rgb)/.78),0 .65rem 1.25rem rgb(var(--tactile-text-rgb)/.2);
+    box-shadow: var(--tactile-panel-shadow);
   }
 
   [data-ui="tactile"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
-    border: 1px solid var(--tactile-primary);
+    background: var(--tactile-control-bg);
+    color: var(--tactile-text);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-md);
-    box-shadow: inset 0 2px 0 rgb(var(--tactile-surface-strong-rgb)/.8),0 .34rem .68rem rgb(var(--tactile-text-rgb)/.2);
+    box-shadow: var(--tactile-button-shadow);
   }
 
   [data-ui="tactile"][data-theme][data-mode] :where(dialog) {
     background-color: var(--tactile-surface);
-    background-image: linear-gradient(145deg,rgb(var(--tactile-surface-strong-rgb)/.84),rgb(var(--tactile-surface-rgb)/.78));
-    border: 1px solid var(--tactile-border);
+    background-image: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
     border-radius: var(--tactile-radius-lg);
-    box-shadow: inset 0 2px 0 rgb(var(--tactile-surface-strong-rgb)/.78),0 1rem 2rem rgb(var(--tactile-text-rgb)/.24);
+    box-shadow: var(--tactile-panel-shadow);
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] {
+    --tactile-card-bg: var(--tactile-paper-grain), var(--tactile-paper-bg), var(--tactile-surface);
+    --tactile-control-bg: linear-gradient(180deg, var(--tactile-bevel-highlight), transparent .28rem), linear-gradient(180deg, rgb(var(--tactile-surface-strong-rgb) / .94), rgb(var(--tactile-surface-soft-rgb) / .76));
+    --tactile-field-bg: linear-gradient(180deg, rgb(var(--tactile-text-rgb) / .055), transparent .2rem), linear-gradient(180deg, rgb(var(--tactile-surface-soft-rgb) / .78), rgb(var(--tactile-surface-strong-rgb) / .62));
+    --tactile-inset-bg: linear-gradient(180deg, rgb(var(--tactile-text-rgb) / .07), transparent .28rem), rgb(var(--tactile-surface-soft-rgb) / .72);
+    --tactile-keyline: rgb(var(--tactile-text-rgb) / max(.58, calc(var(--tactile-border-alpha) * .86)));
+    --tactile-panel-shadow: inset 0 2px 0 var(--tactile-bevel-highlight), inset 0 -3px 0 var(--tactile-bevel-shadow), 0 2px 0 var(--tactile-keyline), 0 .42rem .9rem rgb(var(--tactile-text-rgb) / var(--tactile-shadow-alpha));
+    --tactile-button-shadow: inset 0 2px 0 var(--tactile-bevel-highlight), inset 0 -3px 0 var(--tactile-bevel-shadow), 0 2px 0 var(--tactile-keyline), 0 .3rem .58rem rgb(var(--tactile-text-rgb) / calc(var(--tactile-shadow-alpha) * .82));
+    --tactile-inset-shadow: inset .18rem .2rem .38rem rgb(var(--tactile-text-rgb) / .25), inset -.08rem -.08rem .16rem rgb(var(--tactile-surface-strong-rgb) / .34);
+    --tactile-deep-inset-shadow: inset .2rem .22rem .38rem #000000ad, inset -.08rem -.08rem .14rem rgb(var(--tactile-surface-strong-rgb) / .12);
+    --tactile-progress-fill: repeating-linear-gradient(90deg, var(--tactile-success) 0 calc(12.5% - .16rem), transparent calc(12.5% - .16rem) 12.5%), var(--tactile-primary);
+    --usk-native-panel-padding: 1.2rem;
+    --usk-native-control-min-block-size: 3.05rem;
+    --usk-native-control-padding-block: .7rem;
+    --usk-native-control-padding-inline: .9rem;
+    --usk-native-subcontrol-padding-block: .52rem;
+    --usk-native-subcontrol-padding-inline: .7rem;
+    --usk-native-choice-size: 1.3rem;
+    --usk-native-choice-background: var(--tactile-field-bg);
+    --usk-native-choice-border: 1px solid var(--tactile-keyline);
+    --usk-native-choice-shadow: var(--tactile-inset-shadow);
+    --usk-native-checkbox-radius: .08rem;
+    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+    --usk-native-range-track-size: .68rem;
+    --usk-native-range-track-border: 2px solid var(--tactile-track-rim);
+    --usk-native-range-track-radius: 0;
+    --usk-native-range-track-shadow: var(--tactile-deep-inset-shadow);
+    --usk-native-range-thumb-size: 1.65rem;
+    --usk-native-range-thumb-border: 2px solid var(--tactile-keyline);
+    --usk-native-range-thumb-radius: .08rem;
+    --usk-native-range-thumb-shadow: var(--tactile-button-shadow);
+    --usk-native-progress-size: .85rem;
+    --usk-native-progress-track-border: 2px solid var(--tactile-track-rim);
+    --usk-native-progress-track-radius: 0;
+    --usk-native-progress-track-shadow: var(--tactile-deep-inset-shadow);
+    --usk-native-progress-value-background: var(--tactile-progress-fill);
+    --usk-native-progress-value-radius: 0;
+    --usk-native-progress-value-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb) / .24);
+    --usk-native-file-button-border: 2px solid var(--tactile-keyline);
+    --usk-native-file-button-radius: .08rem;
+    --usk-native-scrollbar-size: 1rem;
+    --usk-native-scrollbar-radius: 0;
+  }
+
+  .tactile-heading {
+    font-family: var(--tactile-font-heading);
+    letter-spacing: -.018em;
+    font-weight: 750;
+  }
+
+  .tactile-toolbar, :where([data-ui="tactile"]) .ui-toolbar {
+    padding: .8rem 1rem;
+  }
+
+  .tactile-well, .tactile-inset {
+    background: var(--tactile-inset-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-inset-shadow);
+    border-radius: .28rem;
+    padding: 1rem;
+  }
+
+  .tactile-button, .tactile-icon-button, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-icon-button {
+    border: 1px solid var(--tactile-keyline);
+    min-height: 3.05rem;
+    box-shadow: var(--tactile-button-shadow);
+    clip-path: polygon(.24rem 0, calc(100% - .24rem) 0, 100% .24rem, 100% calc(100% - .24rem), calc(100% - .24rem) 100%, .24rem 100%, 0 calc(100% - .24rem), 0 .24rem);
+    letter-spacing: .025em;
+    border-radius: 0;
+    padding: .7rem 1.05rem;
+    font-weight: 850;
+  }
+
+  .tactile-icon-button, :where([data-ui="tactile"]) .ui-icon-button {
+    width: 3.05rem;
+    padding: 0;
+  }
+
+  .tactile-button:hover, .tactile-icon-button:hover, :where([data-ui="tactile"]) .ui-button:hover, :where([data-ui="tactile"]) .ui-icon-button:hover {
+    box-shadow: inset 0 2px 0 var(--tactile-bevel-highlight),inset 0-3px 0 var(--tactile-bevel-shadow),0 3px 0 var(--tactile-keyline),0 .4rem .72rem rgb(var(--tactile-text-rgb)/var(--tactile-shadow-alpha));
+    transform: translateY(-1px);
+  }
+
+  .tactile-button:active, .tactile-icon-button:active, .tactile-button[aria-pressed="true"], .tactile-icon-button[aria-pressed="true"], .tactile-button.is-active, .tactile-icon-button.is-active, :where([data-ui="tactile"]) .ui-button:active, :where([data-ui="tactile"]) .ui-icon-button:active, :where([data-ui="tactile"]) .ui-button[aria-pressed="true"], :where([data-ui="tactile"]) .ui-icon-button[aria-pressed="true"], :where([data-ui="tactile"]) .ui-button.is-active, :where([data-ui="tactile"]) .ui-icon-button.is-active {
+    box-shadow: var(--tactile-inset-shadow);
+    transform: translateY(2px);
+  }
+
+  .tactile-button:disabled, .tactile-icon-button:disabled, .tactile-disabled, :where([data-ui="tactile"]) .ui-button:disabled, :where([data-ui="tactile"]) .ui-icon-button:disabled {
+    opacity: .48;
+    box-shadow: inset 0 1px 0 var(--tactile-bevel-highlight),inset 0-1px 0 var(--tactile-bevel-shadow);
+    transform: none;
+  }
+
+  .tactile-input:focus, .tactile-textarea:focus, .tactile-select:focus, :where([data-ui="tactile"]) .ui-input:focus, :where([data-ui="tactile"]) .ui-textarea:focus, :where([data-ui="tactile"]) .ui-select:focus {
+    border-color: var(--tactile-focus);
+    box-shadow: var(--tactile-inset-shadow),var(--tactile-focus-ring);
+  }
+
+  .tactile-badge, :where([data-ui="tactile"]) .ui-badge {
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-xs);
+    min-height: 1.6rem;
+    box-shadow: inset 0 1px 0 var(--tactile-bevel-highlight),0 1px 0 var(--tactile-keyline);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .28rem .58rem;
+    font-size: .7rem;
+    font-weight: 900;
+  }
+
+  .tactile-nav, :where([data-ui="tactile"]) .ui-nav {
+    background: var(--tactile-sidebar-bg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-md);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-bg-rgb)/.1),inset 0-2px 0 #00000073,0 .35rem .8rem rgb(var(--tactile-text-rgb)/var(--tactile-shadow-alpha));
+    gap: .2rem;
+    padding: .4rem;
+  }
+
+  .tactile-nav-link, :where([data-ui="tactile"]) .ui-nav-link {
+    border-radius: var(--tactile-radius-xs);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    min-height: 2.55rem;
+    padding: .62rem .82rem;
+    font-size: .75rem;
+    font-weight: 900;
+  }
+
+  .tactile-nav-link[aria-current="page"], .tactile-nav-link.is-active, :where([data-ui="tactile"]) .ui-nav-link[aria-current="page"], :where([data-ui="tactile"]) .ui-nav-link.is-active {
+    color: var(--tactile-sidebar-fg);
+    background: rgb(var(--tactile-bg-rgb)/.12);
+    border-color: rgb(var(--tactile-bg-rgb)/.22);
+    box-shadow: inset .28rem 0 0 var(--tactile-rail),inset .12rem .12rem .22rem #00000075;
+  }
+
+  .tactile-progress, :where([data-ui="tactile"]) .ui-progress {
+    background: var(--tactile-recessed-track);
+    border: 2px solid var(--tactile-track-rim);
+    height: .85rem;
+    box-shadow: var(--tactile-deep-inset-shadow);
+    border-radius: 0;
+    padding: .1rem;
+  }
+
+  .tactile-progress-bar, :where([data-ui="tactile"]) .ui-progress-bar {
+    background: var(--tactile-progress-fill);
+    box-shadow: inset 0 1px 0 rgb(var(--tactile-surface-strong-rgb)/.24);
+    border-radius: 0;
+  }
+
+  .tactile-alert, :where([data-ui="tactile"]) .ui-alert {
+    background: var(--tactile-card-bg);
+    border: 2px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-inline-start-width: .45rem;
+    border-radius: .28rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .tactile-alert-title, :where([data-ui="tactile"]) .ui-alert-title {
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: .76rem;
+    font-weight: 900;
+  }
+
+  .tactile-table, :where([data-ui="tactile"]) .ui-table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .tactile-table th, .tactile-table td, :where([data-ui="tactile"]) .ui-table th, :where([data-ui="tactile"]) .ui-table td {
+    border-inline-end: 1px solid var(--tactile-keyline);
+    border-bottom: 1px solid var(--tactile-keyline);
+    padding: .72rem .82rem;
+  }
+
+  .tactile-table th, :where([data-ui="tactile"]) .ui-table th {
+    color: var(--tactile-sidebar-fg);
+    background: var(--tactile-sidebar-bg);
+    box-shadow: inset 0 -2px #0000006b;
+  }
+
+  .tactile-table td, :where([data-ui="tactile"]) .ui-table td {
+    background: var(--tactile-field-bg);
+    box-shadow: inset 0 1px 0 var(--tactile-bevel-highlight);
+  }
+
+  .tactile-card-service, .tactile-card-feature, .tactile-feature-strip, .tactile-callout-bar {
+    background: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-lg);
+    box-shadow: var(--tactile-panel-shadow);
+    padding: 1rem;
+  }
+
+  .tactile-card-service {
+    text-align: start;
+  }
+
+  .tactile-feature-item {
+    background: var(--tactile-inset-bg);
+    border-inline-end: 1px solid var(--tactile-keyline);
+    box-shadow: inset 0 1px 0 var(--tactile-bevel-highlight),inset 0-1px 0 var(--tactile-bevel-shadow);
+    padding: .85rem 1rem;
+  }
+
+  .tactile-callout-bar {
+    color: var(--tactile-sidebar-fg);
+    background: var(--tactile-sidebar-bg);
+    border-width: 2px;
+  }
+
+  .tactile-callout-bar > :where(.tactile-button, a, button):last-child, :where([data-ui="tactile"]) .tactile-callout-bar>:where(.ui-button,a,button):last-child {
+    justify-self: end;
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+    background-color: var(--tactile-surface);
+    background-image: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-lg);
+    box-shadow: var(--tactile-panel-shadow);
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] :where(legend) {
+    background: var(--tactile-control-bg);
+    border: 1px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-xs);
+    box-shadow: var(--tactile-button-shadow);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .32rem .58rem;
+    font-size: .7rem;
+    font-weight: 900;
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-button-shadow);
+    clip-path: polygon(.2rem 0, calc(100% - .2rem) 0, 100% .2rem, 100% calc(100% - .2rem), calc(100% - .2rem) 100%, .2rem 100%, 0 calc(100% - .2rem), 0 .2rem);
+    border-radius: 0;
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
+    box-shadow: var(--tactile-inset-shadow);
+    transform: translateY(2px);
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] :where(dialog) {
+    border: 2px solid var(--tactile-keyline);
+    border-radius: var(--tactile-radius-lg);
+    box-shadow: var(--tactile-panel-shadow);
   }
 
   .tactile-button[aria-busy="true"]:after, .tactile-icon-button[aria-busy="true"]:after, [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"]):after, :where([data-ui="tactile"]) .ui-button[aria-busy="true"]:after, :where([data-ui="tactile"]) .ui-icon-button[aria-busy="true"]:after {
@@ -4669,5 +5149,197 @@
       text-decoration: underline;
       color: #000 !important;
     }
+  }
+
+  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
+    border-color: var(--tactile-danger);
+    box-shadow: 0 0 0 2px rgb(var(--tactile-danger-rgb)/.18);
+  }
+
+  .tactile-input[readonly], .tactile-textarea[readonly], :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
+  }
+
+  .tactile-title {
+    font-family: var(--tactile-font-display);
+    letter-spacing: -.035em;
+    font-weight: 750;
+  }
+
+  .tactile-label, :where([data-ui="tactile"]) .ui-label {
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-size: .72rem;
+    font-weight: 900;
+  }
+
+  .tactile-button, .tactile-icon-button, :where([data-ui="tactile"]) .ui-button, :where([data-ui="tactile"]) .ui-icon-button {
+    background: var(--tactile-control-bg);
+    border: 1px solid var(--tactile-keyline);
+    min-height: 3.05rem;
+    box-shadow: var(--tactile-button-shadow);
+    clip-path: polygon(.24rem 0, calc(100% - .24rem) 0, 100% .24rem, 100% calc(100% - .24rem), calc(100% - .24rem) 100%, .24rem 100%, 0 calc(100% - .24rem), 0 .24rem);
+    border-radius: 0;
+    padding: .7rem 1.05rem;
+    font-weight: 850;
+  }
+
+  .tactile-icon-button, :where([data-ui="tactile"]) .ui-icon-button {
+    padding: 0;
+  }
+
+  .tactile-button-primary, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="primary"]) {
+    background: var(--tactile-action-bg);
+    box-shadow: var(--tactile-button-shadow);
+  }
+
+  .tactile-button-secondary, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="secondary"]) {
+    background: var(--tactile-control-bg);
+    box-shadow: var(--tactile-button-shadow);
+  }
+
+  .tactile-button-danger, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="danger"]) {
+    background: var(--tactile-danger);
+    box-shadow: var(--tactile-button-shadow);
+  }
+
+  .tactile-button:active, .tactile-icon-button:active, .tactile-button[aria-pressed="true"], .tactile-icon-button[aria-pressed="true"], :where([data-ui="tactile"]) .ui-button:active, :where([data-ui="tactile"]) .ui-icon-button:active, :where([data-ui="tactile"]) .ui-button[aria-pressed="true"], :where([data-ui="tactile"]) .ui-icon-button[aria-pressed="true"] {
+    box-shadow: var(--tactile-inset-shadow);
+    transform: translateY(2px);
+  }
+
+  .tactile-input, .tactile-textarea, .tactile-select, :where([data-ui="tactile"]) .ui-input, :where([data-ui="tactile"]) .ui-textarea, :where([data-ui="tactile"]) .ui-select {
+    background: var(--tactile-field-bg);
+    border: 1px solid var(--tactile-keyline);
+    min-height: 3.05rem;
+    box-shadow: var(--tactile-inset-shadow);
+    border-radius: .28rem;
+    padding: .7rem .9rem;
+  }
+
+  .tactile-surface, .tactile-card, .tactile-panel, .tactile-toolbar, .tactile-table-wrap, :where([data-ui="tactile"]) .ui-card, :where([data-ui="tactile"]) .ui-toolbar, :where([data-ui="tactile"]) .ui-table-wrap {
+    background: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-radius: .4rem;
+  }
+
+  .tactile-card, .tactile-panel, :where([data-ui="tactile"]) .ui-card {
+    padding: 1rem;
+  }
+
+  .tactile-well, .tactile-inset {
+    background: var(--tactile-inset-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-inset-shadow);
+    border-radius: .28rem;
+  }
+
+  .tactile-badge, :where([data-ui="tactile"]) .ui-badge {
+    border-radius: var(--tactile-radius-xs);
+    min-height: 1.6rem;
+    padding: .28rem .58rem;
+  }
+
+  .tactile-alert, :where([data-ui="tactile"]) .ui-alert {
+    background: var(--tactile-card-bg);
+    border: 2px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-inline-start-width: .45rem;
+    border-radius: .28rem;
+  }
+
+  .tactile-progress, :where([data-ui="tactile"]) .ui-progress {
+    background: var(--tactile-recessed-track);
+    border: 2px solid var(--tactile-track-rim);
+    height: .85rem;
+    box-shadow: var(--tactile-deep-inset-shadow);
+  }
+
+  .tactile-progress-bar, :where([data-ui="tactile"]) .ui-progress-bar {
+    background: var(--tactile-progress-fill);
+    border-radius: 0;
+  }
+
+  .tactile-table-wrap, :where([data-ui="tactile"]) .ui-table-wrap {
+    background: var(--tactile-card-bg);
+    box-shadow: var(--tactile-panel-shadow);
+    border-radius: .4rem;
+  }
+
+  .tactile-table th, :where([data-ui="tactile"]) .ui-table th {
+    background: var(--tactile-sidebar-bg);
+    padding: .72rem .82rem;
+    font-weight: 900;
+  }
+
+  .tactile-table td, :where([data-ui="tactile"]) .ui-table td {
+    background: var(--tactile-field-bg);
+    padding: .72rem .82rem;
+  }
+
+  .tactile-nav, :where([data-ui="tactile"]) .ui-nav {
+    background: var(--tactile-sidebar-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-radius: .35rem;
+  }
+
+  .tactile-nav-link, :where([data-ui="tactile"]) .ui-nav-link {
+    border-radius: .12rem;
+    min-height: 2.55rem;
+    padding: .62rem .82rem;
+  }
+
+  .tactile-tooltip, [data-ui="tactile"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-radius: .2rem;
+  }
+
+  .tactile-card-service, .tactile-card-feature, .tactile-feature-strip, .tactile-callout-bar {
+    background: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-radius: .4rem;
+    padding: 1rem;
+  }
+
+  .tactile-feature-item {
+    background: var(--tactile-inset-bg);
+    padding: .85rem 1rem;
+  }
+
+  [data-ui="tactile"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+    background: var(--tactile-card-bg);
+    border: 1px solid var(--tactile-keyline);
+    box-shadow: var(--tactile-panel-shadow);
+    border-radius: .4rem;
+  }
+
+  .tactile-button-primary, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="primary"]) {
+    background: var(--tactile-primary);
+    color: var(--tactile-on-primary);
+    border-color: var(--tactile-primary);
+  }
+
+  .tactile-button-secondary, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="secondary"]) {
+    background: var(--tactile-secondary);
+    color: var(--tactile-on-secondary);
+    border-color: var(--tactile-secondary);
+  }
+
+  .tactile-button-danger, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="danger"]) {
+    background: var(--tactile-danger);
+    color: var(--tactile-on-danger);
+    border-color: var(--tactile-danger);
+  }
+
+  .tactile-button-ghost, :where([data-ui="tactile"]) .ui-button:where([data-ui-variant="ghost"]) {
+    color: var(--tactile-primary);
+    background: none;
+    border-color: #0000;
   }
 }

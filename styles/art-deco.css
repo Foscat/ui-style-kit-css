@@ -122,6 +122,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--deco-space-5);
+  --usk-native-control-min-block-size: 3rem;
+  --usk-native-control-padding-block: .68rem;
+  --usk-native-control-padding-inline: 1rem;
+  --usk-native-subcontrol-padding-block: .5rem;
+  --usk-native-subcontrol-padding-inline: .8rem;
+  --usk-native-choice-size: 1.45rem;
+  --usk-native-choice-background: var(--deco-control-bg);
+  --usk-native-choice-border: 1px solid var(--deco-border);
+  --usk-native-checkbox-radius: .12rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: 0 0 0 2px var(--deco-surface-strong);
+  --usk-native-choice-checked-background: var(--deco-primary);
+  --usk-native-choice-mark-color: var(--deco-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(72deg, transparent 50%, var(--deco-primary) 50%), linear-gradient(108deg, var(--deco-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.34rem 0.34rem, 0.34rem 0.34rem;
+  --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - 0.8999999999999999rem) 50%;
+  --usk-native-select-padding-inline-end: 2.7rem;
+  --usk-native-range-track-size: .48rem;
+  --usk-native-range-track-background: var(--deco-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--deco-border);
+  --usk-native-range-track-radius: .08rem;
+  --usk-native-range-track-shadow: 0 0 0 2px var(--deco-surface-strong);
+  --usk-native-range-progress-background: var(--deco-primary);
+  --usk-native-range-thumb-size: 1.35rem;
+  --usk-native-range-thumb-background: var(--deco-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--deco-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: 0 0 0 2px var(--deco-surface-strong);
+  --usk-native-progress-size: .7rem;
+  --usk-native-progress-track-background: var(--deco-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--deco-border);
+  --usk-native-progress-track-radius: .08rem;
+  --usk-native-progress-track-shadow: 0 0 0 2px var(--deco-surface-strong);
+  --usk-native-progress-value-background: var(--deco-primary);
+  --usk-native-progress-value-radius: .08rem;
+  --usk-native-progress-value-shadow: 0 0 0 2px var(--deco-surface-strong);
+  --usk-native-meter-optimum-background: var(--deco-success);
+  --usk-native-meter-suboptimum-background: var(--deco-warning);
+  --usk-native-meter-critical-background: var(--deco-danger);
+  --usk-native-file-button-background: var(--deco-primary);
+  --usk-native-file-button-border: 1px solid var(--deco-border);
+  --usk-native-file-button-radius: .12rem;
+  --usk-native-file-button-shadow: 0 0 0 2px var(--deco-surface-strong);
+  --usk-native-color-swatch-border: 1px solid var(--deco-border);
+  --usk-native-color-swatch-radius: .12rem;
+  --usk-native-indicator-opacity: 0.72;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .7rem;
+  --usk-native-scrollbar-track: var(--deco-surface-soft);
+  --usk-native-scrollbar-thumb: var(--deco-primary);
+  --usk-native-scrollbar-radius: .08rem;
   --deco-bg: rgb(var(--deco-bg-rgb));
   --deco-surface: rgb(var(--deco-surface-rgb) / var(--deco-panel-alpha));
   --deco-surface-strong: rgb(var(--deco-surface-strong-rgb) / var(--deco-panel-alpha));
@@ -509,7 +560,6 @@
 .deco-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--deco-card-bg);
   color: var(--deco-text);
   border: 1px solid var(--deco-border);
@@ -626,6 +676,7 @@
 
 /* Filled and framed actions use mirrored chevrons and double-rule symmetry. */
 .deco-button.deco-button-cut, .deco-button-cut {
+  min-block-size: 2.75rem;
   inline-size: min(100%, 15rem);
   min-inline-size: 6rem;
   max-inline-size: 100%;
@@ -665,6 +716,111 @@
   border: .08em double currentColor; border-radius: 0; background: conic-gradient(from 45deg, currentColor 0 25%, transparent 0 50%, currentColor 0 75%, transparent 0); box-shadow: 0 0 0 .06em currentColor; clip-path: polygon(50% 0, 90% 20%, 100% 50%, 90% 80%, 50% 100%, 10% 80%, 0 50%, 10% 20%); animation: deco-spin .92s cubic-bezier(.4, 0, .2, 1) infinite;
 }
 
+/**
+ * Extends Art Deco's stepped symmetry, metallic double keylines, fan motifs,
+ * and jewel-like instrumentation through the complete component vocabulary.
+ */
+[data-ui="art-deco"][data-theme][data-mode] {
+  --usk-native-font-control: var(--deco-font-heading);
+  --usk-native-control-min-block-size: 2.85rem;
+  --usk-native-control-padding-block: .68rem;
+  --usk-native-control-padding-inline: 1.3rem;
+  --usk-native-border-width: 3px;
+  --usk-native-radius-sm: .08rem;
+  --usk-native-radius: .14rem;
+  --usk-native-radius-lg: .2rem;
+  --usk-native-shadow: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 3px var(--deco-border);
+  --usk-native-shadow-md: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 4px var(--deco-border), 0 .72rem 1.4rem rgb(var(--deco-text-rgb) / .14);
+  --usk-native-focus-ring: 0 0 0 1px var(--deco-surface-strong), 0 0 0 3px var(--deco-warning), 0 0 0 5px var(--deco-primary);
+  --usk-native-subcontrol-padding-block: .44rem;
+  --usk-native-subcontrol-padding-inline: .88rem;
+  --usk-native-choice-size: 1.28rem;
+  --usk-native-choice-background: linear-gradient(145deg, var(--deco-surface-strong), var(--deco-control-bg));
+  --usk-native-choice-border: 3px double var(--deco-border);
+  --usk-native-checkbox-radius: .06rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: inset 0 0 0 1px rgb(var(--deco-warning-rgb) / .46);
+  --usk-native-choice-checked-background: linear-gradient(135deg, var(--deco-primary), var(--deco-success));
+  --usk-native-choice-mark-color: var(--deco-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(60deg, transparent 46%, var(--deco-warning) 47% 53%, transparent 54%), linear-gradient(120deg, transparent 46%, var(--deco-warning) 47% 53%, transparent 54%);
+  --usk-native-select-indicator-size: .48rem .64rem, .48rem .64rem;
+  --usk-native-select-indicator-position: calc(100% - 1.34rem) 50%, calc(100% - .98rem) 50%;
+  --usk-native-select-padding-inline-end: 3rem;
+  --usk-native-range-track-size: .36rem;
+  --usk-native-range-track-background: linear-gradient(90deg, var(--deco-success), var(--deco-warning), var(--deco-danger));
+  --usk-native-range-track-border: 3px double var(--deco-border);
+  --usk-native-range-track-radius: .08rem;
+  --usk-native-range-track-shadow: inset 0 0 0 1px rgb(var(--deco-surface-strong-rgb) / .72);
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--deco-primary), var(--deco-warning));
+  --usk-native-range-thumb-size: 1.18rem;
+  --usk-native-range-thumb-background: linear-gradient(135deg, var(--deco-warning), var(--deco-primary));
+  --usk-native-range-thumb-border: 3px double var(--deco-border);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 0 0 0 2px rgb(var(--deco-surface-strong-rgb) / .72);
+  --usk-native-progress-size: .52rem;
+  --usk-native-progress-track-background: linear-gradient(90deg, rgb(var(--deco-border-rgb) / .16), rgb(var(--deco-border-rgb) / .36), rgb(var(--deco-border-rgb) / .16));
+  --usk-native-progress-track-border: 3px double var(--deco-border);
+  --usk-native-progress-track-radius: .08rem;
+  --usk-native-progress-track-shadow: inset 0 0 0 1px var(--deco-surface-strong);
+  --usk-native-progress-value-background: linear-gradient(90deg, var(--deco-success), var(--deco-primary), var(--deco-warning));
+  --usk-native-progress-value-radius: .04rem;
+  --usk-native-progress-value-shadow: inset -1px 0 0 var(--deco-surface-strong);
+  --usk-native-scrollbar-size: .72rem;
+  --usk-native-scrollbar-track: linear-gradient(90deg, var(--deco-surface-soft), var(--deco-surface-strong), var(--deco-surface-soft));
+  --usk-native-scrollbar-thumb: linear-gradient(180deg, var(--deco-warning), var(--deco-primary));
+  --usk-native-scrollbar-radius: .06rem;
+}
+
+.deco-title { font-weight: 500; letter-spacing: .12em; }
+.deco-label { font-size: .67rem; font-weight: 700; }
+.deco-button { min-height: 2.85rem; padding: .68rem 1.3rem; background: linear-gradient(135deg, var(--deco-primary), var(--deco-success)); border-radius: .08rem; box-shadow: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 3px var(--deco-border); font-weight: 700; }
+.deco-input { min-height: 2.75rem; padding: .62rem 1.05rem; border-radius: 0; }
+.deco-card { padding: 1.6rem; background: linear-gradient(145deg, rgb(var(--deco-warning-rgb) / .1), transparent 42%), var(--deco-card-bg); border: 3px double var(--deco-border); border-radius: .16rem; box-shadow: inset 0 0 0 1px var(--deco-surface-strong), 0 .72rem 1.4rem rgb(var(--deco-text-rgb) / .14); }
+.deco-well { background: linear-gradient(135deg, transparent 0 42%, rgb(var(--deco-warning-rgb) / .12) 42% 58%, transparent 58%), var(--deco-surface-soft); border: 3px double var(--deco-border); box-shadow: inset 0 0 0 1px var(--deco-surface-strong); }
+.deco-badge { min-height: 1.6rem; padding: .2rem .6rem; border-radius: .08rem; }
+.deco-alert { background: linear-gradient(90deg, rgb(var(--deco-warning-rgb) / .12), transparent 28%), var(--deco-card-bg); border: 3px double var(--deco-border); border-radius: .1rem; box-shadow: inset 0 0 0 1px var(--deco-surface-strong); }
+.deco-progress { height: .52rem; background: linear-gradient(90deg, rgb(var(--deco-border-rgb) / .16), rgb(var(--deco-border-rgb) / .36), rgb(var(--deco-border-rgb) / .16)); }
+.deco-table-wrap { background: linear-gradient(135deg, rgb(var(--deco-warning-rgb) / .08), transparent), var(--deco-card-bg); border-radius: .12rem; box-shadow: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 4px var(--deco-border); }
+.deco-table th { padding: .68rem .9rem; background: linear-gradient(180deg, var(--deco-primary), var(--deco-surface-strong)); font-weight: 700; }
+.deco-table td { padding: .64rem .88rem; }
+
+.deco-nav, .deco-panel, .deco-toolbar, .deco-tooltip,
+[data-ui="art-deco"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]),
+.deco-card-service, .deco-feature-strip, .deco-callout-bar {
+  border: 3px double var(--deco-border);
+  border-radius: .12rem;
+  box-shadow: inset 0 0 0 1px var(--deco-surface-strong);
+}
+.deco-feature-item {
+  border-inline-end: 3px double var(--deco-border);
+  background: linear-gradient(135deg, transparent 0 46%, rgb(var(--deco-warning-rgb) / .08) 46% 54%, transparent 54%);
+}
+.deco-feature-item:last-child { border-inline-end: 0; }
+.deco-icon-medallion, .deco-badge-seal { background: conic-gradient(from 22.5deg, var(--deco-primary), var(--deco-warning), var(--deco-success), var(--deco-primary)); }
+.deco-progress-bar { background: linear-gradient(90deg, var(--deco-success), var(--deco-primary), var(--deco-warning)); }
+
+/* Symmetric jewel washes keep the stepped frame visible across broad surfaces. */
+@supports (color: color-mix(in srgb, black, white)) {
+  .deco-panel,
+  .deco-card-service,
+  .deco-feature-strip,
+  .deco-callout-bar {
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--deco-surface) 72%, var(--deco-primary)) 0 18%,
+        transparent 36% 64%,
+        color-mix(in srgb, var(--deco-surface) 72%, var(--deco-warning)) 82% 100%
+      ),
+      var(--deco-card-bg);
+  }
+  [data-ui="art-deco"][data-theme][data-mode] :where(fieldset, article, aside) {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--deco-surface) 72%, var(--deco-primary)) 0 18%, transparent 36% 64%, color-mix(in srgb, var(--deco-surface) 72%, var(--deco-warning)) 82%),
+      var(--deco-surface);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="art-deco"] *, [data-ui="art-deco"] *::before, [data-ui="art-deco"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -680,4 +836,15 @@
   [data-ui="art-deco"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="art-deco"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.art_deco {
+/* Keeps semantic field states above preset-specific material paint. */
+.deco-input[aria-invalid="true"], .deco-textarea[aria-invalid="true"], .deco-select[aria-invalid="true"] { border-color: var(--deco-danger); box-shadow: 0 0 0 2px rgb(var(--deco-danger-rgb) / .18); }
+.deco-input[readonly], .deco-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.deco-button-primary { background: linear-gradient(135deg, var(--deco-primary), var(--deco-success)); color: var(--deco-on-primary); border-color: var(--deco-border); }
+.deco-button-secondary { background: linear-gradient(135deg, var(--deco-secondary), var(--deco-warning)); color: var(--deco-on-secondary); border-color: var(--deco-border); }
+.deco-button-danger { background: linear-gradient(135deg, var(--deco-danger), rgb(var(--deco-danger-rgb) / .72)); color: var(--deco-on-danger); border-color: var(--deco-border); }
+.deco-button-ghost { background: transparent; color: var(--deco-primary); border-color: transparent; }
 }

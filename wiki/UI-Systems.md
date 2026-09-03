@@ -1,6 +1,6 @@
 # UI Systems
 
-UI Style Kit CSS `v2.3.0` ships 20 style systems with a shared theme and mode model.
+UI Style Kit CSS `v2.4.0` ships 20 style systems with a shared theme and mode model plus complete preset-specific native-control identities.
 
 All UI systems use the same color scheme layer: `styles/theme-colors.css`. Individual UI files define structure, texture, typography, component treatment, and prefixed aliases for the shared `--usk-*` roles.
 
