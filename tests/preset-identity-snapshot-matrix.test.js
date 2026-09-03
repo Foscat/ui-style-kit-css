@@ -7,7 +7,8 @@ import { PNG } from 'pngjs';
 import { PRESET_IDENTITIES } from '../scripts/preset-identities.mjs';
 
 const snapshotDirectory = path.resolve('tests/demo-visual.spec.mjs-snapshots');
-const platform = process.platform;
+/** Platform tag for the canonical reviewed PNG set decoded by this host-independent unit contract. */
+const approvedSnapshotPlatform = 'win32';
 const viewports = ['desktop', 'mobile'];
 const specimens = Object.freeze([
   Object.freeze({ prefix: 'component-identity', minimumDifference: 0.2 }),
@@ -24,7 +25,7 @@ const decodedSnapshots = new Map();
  * @returns {PNG} Decoded snapshot pixels.
  */
 function loadSnapshot(prefix, preset, viewport) {
-  const filename = `${prefix}-${preset}-${viewport}-${platform}.png`;
+  const filename = `${prefix}-${preset}-${viewport}-${approvedSnapshotPlatform}.png`;
   if (!decodedSnapshots.has(filename)) {
     decodedSnapshots.set(filename, PNG.sync.read(readFileSync(path.join(snapshotDirectory, filename))));
   }
