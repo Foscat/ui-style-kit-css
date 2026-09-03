@@ -425,16 +425,16 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
 
 test('generated semantic aliases preserve exact class-token safety declarations', () => {
   const safetyPropertiesBySelector = {
-    '.ui-button': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-icon-button': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-card': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-field': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-badge': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-alert': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-nav': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-nav-link': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-table-wrap': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-toolbar': ['max-inline-size', 'min-inline-size', 'overflow-wrap']
+    '.ui-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-icon-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-card': ['max-inline-size', 'min-inline-size'],
+    '.ui-field': ['max-inline-size', 'min-inline-size'],
+    '.ui-badge': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-alert': ['max-inline-size', 'min-inline-size'],
+    '.ui-nav': ['max-inline-size', 'min-inline-size'],
+    '.ui-nav-link': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-table-wrap': ['max-inline-size', 'min-inline-size'],
+    '.ui-toolbar': ['max-inline-size', 'min-inline-size']
   };
 
   for (const relativeFile of [
@@ -473,12 +473,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   // These fingerprints include the manifest-generated containment foundation and all authored declarations.
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 17321,
-    sha256: 'c52f588ecbf3db66cc0b818709fc5bf695ea18d94a2ac1cd05e62043f01ff858'
+    count: 20608,
+    sha256: 'c3d33a91483b5c0b6a8ae14d3d0017eaf2534131989e830ebe76e8d78974c558'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 17752,
-    sha256: 'e09022fd2191c8acf8d49843abc52b05e09301d8ed29a34fa52067f45ada1ad8'
+    count: 21040,
+    sha256: '8de8664bb75d1e2d2ab0c71a6f06f3109ca313083d5bcee9d3b6e699a0f026c8'
   });
 });
 

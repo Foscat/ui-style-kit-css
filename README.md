@@ -162,9 +162,9 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~916 KB | ~138 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~902 KB | ~136 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~1082 KB | ~154 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1122 KB | ~166 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~1108 KB | ~164 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~1316 KB | ~180 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~32 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
@@ -251,28 +251,30 @@ For example, a fixed Minimal SaaS integration may continue to use `<button class
 
 ## UI systems
 
-| UI style | `data-ui` | Class prefix | Best for |
-|---|---:|---:|---|
-| Minimal SaaS | `minimal-saas` | `saas` | dashboards, admin tools, SaaS apps |
-| Bento UI | `bento` | `bento` | landing pages, feature sections, showcases |
-| Maximalist / Playful | `maximalist` | `max` | creators, entertainment, bold client sites |
-| Bauhaus / Swiss Modern | `bauhaus` | `bau` | agencies, editorial layouts, design-forward brands |
-| Skeuomorphic / Tactile | `tactile` | `tactile` | premium tactile interfaces, control panels |
-| Neumorphism | `neumorphism` | `neo` | soft dashboards, experimental UI |
-| Retrofuturism | `retrofuturism` | `retro` | futuristic portfolios and product pages |
-| Brutalism | `brutalism` | `brutal` | bold creative websites |
-| Cyberpunk | `cyberpunk` | `cyber` | security, gaming, encryption, tech demos |
-| Y2K | `y2k` | `y2k` | nostalgic, playful, fashion/music/event sites |
-| Retro Glass | `retro-glass` | `rg` | futuristic glass dashboards and hero sections |
-| Editorial Luxe | `editorial-luxe` | `luxe` | luxury brands, architecture, hospitality, premium editorial sites |
-| Organic Modern | `organic-modern` | `organic` | wellness, sustainability, hospitality, natural product brands |
-| Industrial Utility | `industrial-utility` | `utility` | operations software, manufacturing, logistics, fleet and equipment systems |
-| Technical Blueprint | `technical-blueprint` | `blueprint` | engineering, architecture, technical documentation, scientific tools |
-| Art Deco | `art-deco` | `deco` | luxury, hospitality, heritage brands, events and distinctive showcases |
-| Clay | `clay` | `clay` | friendly SaaS, collaborative tools, education and approachable product sites |
-| Data Terminal | `data-terminal` | `terminal` | operator consoles, telemetry, infrastructure, monitoring and developer tools |
-| Paper Editorial | `paper-editorial` | `paper` | news, magazines, journals, cultural sites and story-led publishing |
-| Neo-Noir | `neo-noir` | `noir` | cinematic portfolios, nightlife, premium creative studios and dramatic product sites |
+| UI style | `data-ui` | Prefix | Defining visual contract | Best for |
+|---|---:|---:|---|---|
+| Minimal SaaS | `minimal-saas` | `saas` | compact flat modules, cool 1px rules, tight radii, restrained type, negligible elevation | dense dashboards, admin tools, focused SaaS workflows |
+| Bento UI | `bento` | `bento` | large rounded mosaic tiles, theme-tinted washes, inset highlights, spacious controls, soft elevation | friendly product surfaces, feature mosaics, showcase dashboards |
+| Maximalist / Playful | `maximalist` | `max` | loud poster collage, sticker offsets, hard ink strokes, expressive condensed typography | creators, entertainment, bold client sites |
+| Bauhaus / Swiss Modern | `bauhaus` | `bau` | strict grids, heavy rules, primary geometry, flat construction, condensed uppercase type | agencies, editorial layouts, design-forward brands |
+| Skeuomorphic / Tactile | `tactile` | `tactile` | paper plates, serif headings, keylines, chamfered keycaps, dark troughs, mechanical controls | physical workspace configuration and instrument-like product UI |
+| Neumorphism | `neumorphism` | `neo` | borderless same-surface shells, opposing extrusion shadows, concave fields and pressed states | sculpted dashboards and quiet configuration workflows |
+| Retrofuturism | `retrofuturism` | `retro` | atomic enamel shells, metallic rims, inset instrument bays, oval actions, dial controls | atomic-age dashboards and configuration workspaces |
+| Brutalism | `brutalism` | `brutal` | square full-bleed grids, heavy rules, numbered modules, blunt controls, segmented meters | direct operational and bold creative interfaces |
+| Cyberpunk | `cyberpunk` | `cyber` | chamfered HUD panels, clipped controls, technical condensed type, signal-colored edges | security, gaming, routing, and high-tech command tools |
+| Y2K | `y2k` | `y2k` | dense portal panels, 1px bevels, title bars, system typography, segmented indicators | nostalgic fashion, music, event, and community portals |
+| Retro Glass | `retro-glass` | `rg` | brushed application chrome, glossy navigation, beveled controls, glass panes, dark dock treatment | dense desktop-style media and productivity applications |
+| Editorial Luxe | `editorial-luxe` | `luxe` | Didone hierarchy, double rules, rigid editorial geometry, restrained couture material | luxury brands, architecture, hospitality, premium editorial sites |
+| Organic Modern | `organic-modern` | `organic` | warm material surfaces, serif identity type, fine hairlines, asymmetry, leaf-tipped details | wellness, sustainability, hospitality, natural product brands |
+| Industrial Utility | `industrial-utility` | `utility` | metal-framed panels, recessed instruments, mechanical actions, safety gauges, technical type | operations, manufacturing, logistics, fleet, and equipment systems |
+| Technical Blueprint | `technical-blueprint` | `blueprint` | drafting grids, technical linework, square measured controls, annotations, calibrated geometry | engineering, architecture, technical documentation, scientific tools |
+| Art Deco | `art-deco` | `deco` | stepped symmetry, metallic double keylines, fanbursts, elegant display type, jewel controls | luxury, hospitality, heritage brands, and distinctive showcases |
+| Clay | `clay` | `clay` | continuous sculpted slab, soft mineral surfaces, raised rounded controls, carved seams | collaborative tools, education, and approachable product sites |
+| Data Terminal | `data-terminal` | `terminal` | dense 1px command grid, mono typography, bracketed actions, strict semantic signal colors | operator consoles, telemetry, infrastructure, monitoring, developer tools |
+| Paper Editorial | `paper-editorial` | `paper` | physical field-manual sheet, binder and index details, print rules, condensed and monospaced type | news, journals, cultural sites, and story-led publishing |
+| Neo-Noir | `neo-noir` | `noir` | cinematic slants, trapezoid controls, diagonal cuts, subtle grain, semantic amber/teal/red signaling | cinematic portfolios, production tools, and dramatic product sites |
+
+Each description is backed by concrete CSS declaration checks and preset-scoped visual cases. This lets a failing preset or pair be rerun directly without repeating unrelated green coverage.
 
 ## Color themes
 
@@ -360,7 +362,7 @@ contrast
 
 `styles/native-elements.css` owns the shared native selectors under `[data-ui][data-theme][data-mode]`. Each style system maps the complete `--usk-native-*` identity contract, so choices, selects, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars inherit preset-specific geometry, material, borders, depth, typography, and theme-owned color. Browser/OS popup internals remain platform-owned.
 
-`styles/content-overflow.css` owns the shared text containment contract under `[data-ui][data-theme][data-mode]`. It keeps headings, paragraphs, links, table cells, controls, badges, nav links, and common UI wrappers from widening their parent wrapper when content contains long words, hashes, URLs, or copyable tokens.
+`styles/content-overflow.css` owns the shared text containment contract under `[data-ui][data-theme][data-mode]`. Text and compact controls use `overflow-wrap: break-word` with normal word boundaries so long hashes, URLs, and copyable tokens wrap only when necessary. Structural wrappers receive shrink constraints without inheriting a forced wrapping policy.
 
 The shared native layer covers common native elements, including:
 
@@ -504,10 +506,15 @@ npm run test:e2e
 npm run test:axe
 npm run test:visual
 npm run test:matrix
+npm run test:matrix:block -- --block 33
+npm run test:matrix:case -- --case 3245
+npm run test:matrix:range -- --from 3201 --to 3244
 npm run pack:dry-run
 ```
 
 `npm run check` rebuilds the bundles, runs stylelint, verifies package metadata and the documented class API, validates 4.5:1 text/link/filled-component contrast plus 3:1 light-mode component-edge contrast, and invokes `check:compat` for every generated entrypoint. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `20 presets x 20 themes x 3 modes x 3 engines` matrix.
+
+The local matrix is divided into 36 stable blocks of 100 cases. `npm run test:matrix` runs the blocks in order and stops after the first failing block; use `-- --from-block N` to start at any untested block without repeating earlier green blocks. Each test title includes a stable global case number. Rerun only each failing case with `npm run test:matrix:case -- --case N`; because the other cases in that block have already completed, continue at the next block after the targeted fixes pass. Use `test:matrix:range` only when a bounded follow-up range is useful. `test:matrix:raw` is reserved for the already sharded automation jobs.
 
 The package browser policy is the last two major Chrome, Edge, and Firefox releases plus Safari and iOS 16 or newer, excluding dead browsers. The build resolves that single `package.json` policy into Lightning CSS targets, while `check:compat` verifies required prefix pairs, stable fallbacks, guarded `color-mix()`, `text-wrap`, and `forced-color-adjust` enhancements, and the absence of obsolete intrinsic CTA sizing declarations.
 

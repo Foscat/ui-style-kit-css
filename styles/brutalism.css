@@ -569,7 +569,6 @@
 .brutal-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--brutal-card-bg);
   color: var(--brutal-text);
   border: 1px solid var(--brutal-border);
@@ -658,6 +657,7 @@
 /* Filled and framed actions keep blunt cuts, heavy borders, and hard displacement. */
 .brutal-button.brutal-button-cut, .brutal-button-cut {
   inline-size: min(100%, 14rem);
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
@@ -693,6 +693,84 @@
   border: .18em solid currentColor; border-block-start-color: transparent; border-radius: 0; background: transparent; box-shadow: .12em .12em 0 currentColor; clip-path: inset(0); animation: brutal-spin .64s steps(4, end) infinite;
 }
 
+/**
+ * Reasserts Brutalism as a dense control surface of numbered, full-bleed
+ * modules, blunt controls, and mechanical segmented instrumentation.
+ */
+[data-ui="brutalism"][data-theme][data-mode] {
+  --usk-native-font-control: var(--brutal-font-mono);
+  --usk-native-control-min-block-size: 2.7rem;
+  --usk-native-control-padding-block: .5rem;
+  --usk-native-control-padding-inline: .72rem;
+  --usk-native-border-width: 4px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: .32rem .32rem 0 var(--brutal-text);
+  --usk-native-shadow-md: .48rem .48rem 0 var(--brutal-primary);
+  --usk-native-focus-ring: 0 0 0 2px var(--brutal-surface-strong), 0 0 0 6px var(--brutal-warning);
+  --usk-native-subcontrol-padding-block: .34rem;
+  --usk-native-subcontrol-padding-inline: .52rem;
+  --usk-native-choice-size: 1.18rem;
+  --usk-native-choice-background: var(--brutal-surface-strong);
+  --usk-native-choice-border: 3px solid var(--brutal-text);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 0;
+  --usk-native-choice-shadow: .12rem .12rem 0 var(--brutal-primary);
+  --usk-native-choice-checked-background: var(--brutal-primary);
+  --usk-native-choice-mark-color: var(--brutal-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 38%, var(--brutal-warning) 39% 61%, transparent 62%), linear-gradient(135deg, var(--brutal-warning) 0 50%, transparent 51%);
+  --usk-native-select-indicator-size: .7rem .7rem, .7rem .7rem;
+  --usk-native-select-indicator-position: calc(100% - 1.38rem) 50%, calc(100% - .92rem) 50%;
+  --usk-native-select-padding-inline-end: 2.85rem;
+  --usk-native-range-track-size: .92rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--brutal-surface-soft) 0 1.05rem, var(--brutal-text) 1.05rem calc(1.05rem + 3px));
+  --usk-native-range-track-border: 3px solid var(--brutal-text);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: inset 0 0 0 2px var(--brutal-surface-strong);
+  --usk-native-range-progress-background: repeating-linear-gradient(90deg, var(--brutal-primary) 0 .9rem, var(--brutal-warning) .9rem 1.05rem);
+  --usk-native-range-thumb-size: 1.24rem;
+  --usk-native-range-thumb-background: var(--brutal-text);
+  --usk-native-range-thumb-border: 3px solid var(--brutal-warning);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: .14rem .14rem 0 var(--brutal-primary);
+  --usk-native-progress-size: 1.22rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, var(--brutal-surface-strong) 0 1rem, var(--brutal-text) 1rem calc(1rem + 3px));
+  --usk-native-progress-track-border: 3px solid var(--brutal-text);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: inset 0 0 0 2px var(--brutal-surface-soft);
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--brutal-primary) 0 .82rem, var(--brutal-warning) .82rem 1rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: inset -3px 0 0 var(--brutal-text);
+  --usk-native-scrollbar-size: 1.25rem;
+  --usk-native-scrollbar-track: repeating-linear-gradient(0deg, var(--brutal-surface-soft) 0 .7rem, var(--brutal-text) .7rem calc(.7rem + 2px));
+  --usk-native-scrollbar-thumb: var(--brutal-primary);
+  --usk-native-scrollbar-radius: 0;
+}
+
+.brutal-title { font-weight: 1000; letter-spacing: .01em; }
+.brutal-label { font-size: .68rem; font-weight: 900; }
+.brutal-button { min-height: 2.7rem; padding: .5rem .72rem; background: var(--brutal-primary); border-radius: 0 .08rem 0 0; box-shadow: .32rem .32rem 0 var(--brutal-text); font-weight: 900; }
+.brutal-input { min-height: 2.55rem; padding: .46rem .64rem; border-radius: 0 0 .06rem 0; }
+.brutal-card { padding: .88rem; background: var(--brutal-card-bg); border: 4px solid var(--brutal-text); border-radius: 0; box-shadow: .42rem .42rem 0 var(--brutal-primary); }
+.brutal-well { background: repeating-linear-gradient(0deg, rgb(var(--brutal-text-rgb) / .08) 0 2px, transparent 2px .65rem), var(--brutal-surface-soft); border: 3px solid var(--brutal-text); box-shadow: inset .5rem 0 0 var(--brutal-warning); }
+.brutal-badge { min-height: 1.55rem; padding: .15rem .42rem; border-radius: 0; }
+.brutal-alert { background: var(--brutal-surface-strong); border: 4px solid var(--brutal-text); border-radius: 0; box-shadow: .28rem .28rem 0 var(--brutal-warning); }
+.brutal-progress { height: 1.22rem; background: repeating-linear-gradient(90deg, var(--brutal-surface-strong) 0 1rem, var(--brutal-text) 1rem calc(1rem + 3px)); }
+.brutal-table-wrap { background: var(--brutal-surface-strong); border-radius: 0; box-shadow: .32rem .32rem 0 var(--brutal-primary); }
+.brutal-table th { padding: .48rem .62rem; background: var(--brutal-text); font-weight: 950; }
+.brutal-table td { padding: .46rem .6rem; }
+
+.brutal-nav, .brutal-panel, .brutal-toolbar, .brutal-tooltip,
+[data-ui="brutalism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]),
+.brutal-card-service, .brutal-feature-strip, .brutal-callout-bar {
+  border: 4px solid var(--brutal-text);
+  border-radius: 0;
+  box-shadow: .34rem .34rem 0 var(--brutal-primary);
+}
+.brutal-nav-link { border-inline-start: 3px solid var(--brutal-text); }
+.brutal-progress-bar { background: repeating-linear-gradient(90deg, var(--brutal-primary) 0 .82rem, var(--brutal-warning) .82rem 1rem); }
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="brutalism"] *, [data-ui="brutalism"] *::before, [data-ui="brutalism"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -708,4 +786,15 @@
   [data-ui="brutalism"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="brutalism"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.brutalism {
+/* Keeps semantic field states above preset-specific material paint. */
+.brutal-input[aria-invalid="true"], .brutal-textarea[aria-invalid="true"], .brutal-select[aria-invalid="true"] { border-color: var(--brutal-danger); box-shadow: 3px 3px 0 rgb(var(--brutal-danger-rgb) / .38); }
+.brutal-input[readonly], .brutal-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.brutal-button-primary { background: var(--brutal-primary); color: var(--brutal-on-primary); border-color: var(--brutal-primary); }
+.brutal-button-secondary { background: var(--brutal-secondary); color: var(--brutal-on-secondary); border-color: var(--brutal-secondary); }
+.brutal-button-danger { background: var(--brutal-danger); color: var(--brutal-on-danger); border-color: var(--brutal-danger); }
+.brutal-button-ghost { background: transparent; color: var(--brutal-primary); border-color: transparent; }
 }

@@ -560,7 +560,6 @@
 .clay-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--clay-card-bg);
   color: var(--clay-text);
   border: 1px solid var(--clay-border);
@@ -680,6 +679,7 @@
 
 /* The Clay CTA stays compact and reads as the same inflated soft form as its controls. */
 .clay-button.clay-button-cut, .clay-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 8rem;
   max-inline-size: 100%;
   padding-inline: 1.65rem;
@@ -740,4 +740,177 @@
   [data-ui="clay"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="clay"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.clay {
+/* Keeps semantic field states above preset-specific material paint. */
+.clay-input[aria-invalid="true"], .clay-textarea[aria-invalid="true"], .clay-select[aria-invalid="true"] { border-color: var(--clay-danger); box-shadow: 0 0 0 2px rgb(var(--clay-danger-rgb) / .18); }
+.clay-input[readonly], .clay-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+}
+
+@layer ui-style-kit.clay {
+/**
+ * Defines the mineral slab, raised clay, and carved seam materials used by the preset.
+ * Every material remains derived from the active semantic theme channels.
+ */
+[data-ui="clay"][data-theme][data-mode] {
+  --clay-slab-bg: linear-gradient(180deg, rgb(var(--clay-surface-strong-rgb) / .28), transparent .3rem), var(--clay-surface);
+  --clay-raised-bg: linear-gradient(165deg, rgb(var(--clay-surface-strong-rgb) / .96), rgb(var(--clay-surface-soft-rgb) / .82));
+  --clay-trough-bg: linear-gradient(180deg, rgb(var(--clay-text-rgb) / .12), transparent .42rem), rgb(var(--clay-surface-soft-rgb) / .84);
+  --clay-carved-seam: rgb(var(--clay-border-rgb) / max(.56, var(--clay-border-alpha)));
+  --clay-relief-shadow: inset 0 2px 1px rgb(var(--clay-surface-strong-rgb) / .86), inset 0 -2px 2px rgb(var(--clay-text-rgb) / .12), 0 .24rem .5rem rgb(var(--clay-text-rgb) / .2);
+  --clay-slab-shadow: inset 0 1px 0 rgb(var(--clay-surface-strong-rgb) / .78), inset 0 -2px 2px rgb(var(--clay-text-rgb) / .1), 0 .42rem 1rem rgb(var(--clay-text-rgb) / .14);
+  --clay-carved-shadow: inset .18rem .24rem .44rem rgb(var(--clay-text-rgb) / .24), inset -.1rem -.1rem .2rem rgb(var(--clay-surface-strong-rgb) / .46);
+  --usk-native-control-min-block-size: 2.85rem;
+  --usk-native-control-padding-block: .64rem;
+  --usk-native-control-padding-inline: .82rem;
+  --usk-native-radius-sm: .38rem;
+  --usk-native-radius: .72rem;
+  --usk-native-radius-lg: 1rem;
+  --usk-native-shadow: var(--clay-relief-shadow);
+  --usk-native-shadow-md: var(--clay-slab-shadow);
+  --usk-native-focus-ring: 0 0 0 .18rem rgb(var(--clay-focus-rgb) / .34), var(--clay-relief-shadow);
+  --usk-native-subcontrol-padding-block: .46rem;
+  --usk-native-subcontrol-padding-inline: .62rem;
+  --usk-native-choice-size: 1.15rem;
+  --usk-native-choice-background: var(--clay-raised-bg);
+  --usk-native-choice-border: 1px solid var(--clay-carved-seam);
+  --usk-native-checkbox-radius: .28rem;
+  --usk-native-choice-shadow: var(--clay-relief-shadow);
+  --usk-native-choice-checked-background: linear-gradient(165deg, var(--clay-primary), var(--clay-primary-hover));
+  --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
+  --usk-native-select-indicator-position: calc(100% - .98rem) 48%, calc(100% - .72rem) 48%;
+  --usk-native-select-padding-inline-end: 2.2rem;
+  --usk-native-range-track-size: .48rem;
+  --usk-native-range-track-background: var(--clay-trough-bg);
+  --usk-native-range-track-border: 1px solid var(--clay-carved-seam);
+  --usk-native-range-track-radius: .28rem;
+  --usk-native-range-track-shadow: var(--clay-carved-shadow);
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--clay-primary), var(--clay-accent));
+  --usk-native-range-thumb-size: 1.2rem;
+  --usk-native-range-thumb-background: var(--clay-raised-bg);
+  --usk-native-range-thumb-border: 1px solid var(--clay-carved-seam);
+  --usk-native-range-thumb-radius: 44% 56% 48% 52%;
+  --usk-native-range-thumb-shadow: var(--clay-relief-shadow);
+  --usk-native-progress-size: .62rem;
+  --usk-native-progress-track-background: var(--clay-trough-bg);
+  --usk-native-progress-track-border: 1px solid var(--clay-carved-seam);
+  --usk-native-progress-track-radius: .22rem;
+  --usk-native-progress-track-shadow: var(--clay-carved-shadow);
+  --usk-native-progress-value-background: linear-gradient(180deg, rgb(var(--clay-surface-strong-rgb) / .2), transparent 42%), var(--clay-primary);
+  --usk-native-progress-value-radius: .16rem;
+  --usk-native-progress-value-shadow: inset 0 1px 0 rgb(var(--clay-surface-strong-rgb) / .4);
+  --usk-native-scrollbar-size: .7rem;
+  --usk-native-scrollbar-track: var(--clay-trough-bg);
+  --usk-native-scrollbar-thumb: var(--clay-raised-bg);
+  --usk-native-scrollbar-radius: .22rem;
+}
+
+/** Carries the continuous sculpted-slab grammar through all authored component roles. */
+.clay-title { font-weight: 720; letter-spacing: .055em; }
+.clay-label { font-size: .72rem; font-weight: 720; }
+.clay-button, .clay-icon-button {
+  min-height: 2.85rem;
+  padding: .64rem .82rem;
+  background: var(--clay-raised-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-radius: .72rem;
+  box-shadow: var(--clay-relief-shadow);
+  font-weight: 680;
+}
+.clay-icon-button { padding: 0; }
+.clay-button:active, .clay-icon-button:active,
+.clay-button[aria-pressed="true"], .clay-icon-button[aria-pressed="true"] {
+  transform: translateY(1px);
+  box-shadow: var(--clay-carved-shadow);
+}
+.clay-input, .clay-textarea, .clay-select {
+  min-height: 2.85rem;
+  padding: .64rem .82rem;
+  background: var(--clay-trough-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-radius: .58rem;
+  box-shadow: var(--clay-carved-shadow);
+}
+.clay-surface, .clay-card, .clay-panel, .clay-toolbar, .clay-table-wrap {
+  background: var(--clay-slab-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-radius: 1rem;
+  box-shadow: var(--clay-slab-shadow);
+}
+.clay-card, .clay-panel { padding: 1.25rem; }
+.clay-well, .clay-inset {
+  padding: .9rem;
+  background: var(--clay-trough-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-radius: .62rem;
+  box-shadow: var(--clay-carved-shadow);
+}
+.clay-badge {
+  min-height: 1.55rem;
+  padding: .26rem .56rem;
+  border-radius: .42rem;
+  box-shadow: var(--clay-relief-shadow);
+}
+.clay-alert {
+  background: var(--clay-raised-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-inline-start-width: .32rem;
+  border-radius: .72rem;
+  box-shadow: var(--clay-relief-shadow);
+}
+.clay-progress { height: .62rem; background: var(--clay-trough-bg); box-shadow: var(--clay-carved-shadow); }
+.clay-progress-bar { background: linear-gradient(180deg, rgb(var(--clay-surface-strong-rgb) / .2), transparent 42%), var(--clay-primary); border-radius: .16rem; }
+.clay-table-wrap { background: var(--clay-slab-bg); border-radius: 1rem; box-shadow: var(--clay-slab-shadow); }
+.clay-table { border-collapse: separate; border-spacing: 0; }
+.clay-table th { padding: .66rem .74rem; background: var(--clay-raised-bg); font-weight: 720; }
+.clay-table td { padding: .66rem .74rem; background: rgb(var(--clay-surface-rgb) / .42); }
+.clay-table :where(th, td) { border-inline-end: 1px solid var(--clay-carved-seam); border-block-end: 1px solid var(--clay-carved-seam); }
+.clay-nav { gap: 0; padding: .22rem; border-radius: .58rem; box-shadow: var(--clay-carved-shadow); }
+.clay-nav-link { min-height: 2.3rem; padding: .5rem .68rem; border-radius: .4rem; }
+.clay-tooltip, [data-ui="clay"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border-radius: .42rem; box-shadow: var(--clay-relief-shadow); }
+.clay-card-service, .clay-card-feature, .clay-feature-strip, .clay-callout-bar {
+  padding: 1.1rem;
+  background: var(--clay-slab-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-radius: 1rem;
+  box-shadow: var(--clay-slab-shadow);
+}
+.clay-feature-strip { gap: 0; }
+.clay-feature-item { padding: .78rem; border-inline-end: 1px solid var(--clay-carved-seam); }
+[data-ui="clay"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+  background: var(--clay-slab-bg);
+  border: 1px solid var(--clay-carved-seam);
+  border-radius: 1rem;
+  box-shadow: var(--clay-slab-shadow);
+}
+
+/* Broad mineral washes reinforce the single sculpted-slab material. */
+[data-ui="clay"][data-theme][data-mode] {
+  --usk-native-card-bg: var(--clay-surface);
+  --usk-native-control-bg: var(--clay-surface-soft);
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="clay"][data-theme][data-mode] {
+    --usk-native-card-bg: radial-gradient(circle at 52% 38%, color-mix(in srgb, var(--clay-surface) 72%, var(--clay-primary)), var(--clay-surface) 68%);
+    --usk-native-control-bg: linear-gradient(145deg, color-mix(in srgb, var(--clay-surface-strong) 74%, var(--clay-primary)), var(--clay-surface-soft));
+  }
+}
+.clay-panel,
+.clay-card-service,
+.clay-feature-strip,
+.clay-callout-bar {
+  background:
+    radial-gradient(circle at 54% 36%, rgb(var(--clay-primary-rgb) / .24), transparent 62%),
+    linear-gradient(145deg, rgb(var(--clay-accent-rgb) / .1), transparent 58%),
+    var(--clay-slab-bg);
+}
+}
+
+@layer ui-style-kit.clay {
+/* Restores semantic action paint after identity-specific geometry. */
+.clay-button-primary { background: linear-gradient(165deg, rgb(var(--clay-surface-strong-rgb) / .34), transparent 42%), var(--clay-primary); color: var(--clay-on-primary); border-color: var(--clay-primary); }
+.clay-button-secondary { background: linear-gradient(165deg, rgb(var(--clay-surface-strong-rgb) / .3), transparent 42%), var(--clay-secondary); color: var(--clay-on-secondary); border-color: var(--clay-secondary); }
+.clay-button-danger { background: linear-gradient(165deg, rgb(var(--clay-surface-strong-rgb) / .28), transparent 42%), var(--clay-danger); color: var(--clay-on-danger); border-color: var(--clay-danger); }
+.clay-button-ghost { background: transparent; color: var(--clay-primary); border-color: transparent; }
 }

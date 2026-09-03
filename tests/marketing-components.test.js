@@ -271,3 +271,31 @@ test('shared content containment covers every preset and marketing wrapper', () 
     }
   }
 });
+
+test('general surfaces preserve visible content and focus while intentional masks still clip', () => {
+  const generalSurfaceSuffixes = ['page', 'surface', 'card', 'panel', 'toolbar', 'table-wrap', 'feature-strip'];
+
+  for (const [ui, prefix] of presets) {
+    const css = read(`styles/${ui}.css`);
+
+    for (const suffix of generalSurfaceSuffixes) {
+      const declarations = effectiveClassDeclarations(css, `${prefix}-${suffix}`);
+      assert.notEqual(
+        declarations.get('overflow'),
+        'hidden',
+        `${ui} ${suffix} should not clip content or focus indicators`
+      );
+    }
+
+    assert.equal(
+      effectiveClassDeclarations(css, `${prefix}-media-scrim`).get('overflow'),
+      'hidden',
+      `${ui} media scrim should retain deliberate artwork clipping`
+    );
+  }
+
+  const nativeTable = read('styles/native-elements.css').match(
+    /\[data-ui\]\[data-theme\]\[data-mode\]\s*:where\(table\)\s*\{([^}]*)\}/
+  )?.[1] ?? '';
+  assert.doesNotMatch(nativeTable, /overflow:\s*hidden/, 'native tables should not clip descendants');
+});

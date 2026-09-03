@@ -325,7 +325,7 @@
 [data-ui="cyberpunk"] a { color: var(--cyber-link); text-decoration-color: rgb(var(--cyber-primary-rgb) / 0.6); text-underline-offset: 0.18em; }
 [data-ui="cyberpunk"] ::selection { background: var(--cyber-primary); color: var(--cyber-on-primary); }
 
-.cyber-page { position: relative; min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); overflow: hidden; }
+.cyber-page { position: relative; min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .cyber-page::before { content: ""; position: fixed; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgb(255 255 255 / 0.035) 0 1px, transparent 1px 4px); mix-blend-mode: screen; }
 .cyber-container { width: min(100% - 2rem, 1200px); margin-inline: auto; } .cyber-stack { display: flex; flex-direction: column; gap: var(--cyber-space-4); } .cyber-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cyber-space-3); } .cyber-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--cyber-space-5); } .cyber-section { padding: clamp(1.25rem, 4vw, 2.5rem); }
 
@@ -336,7 +336,7 @@
 
 .cyber-card, .cyber-panel, .cyber-console, .cyber-toolbar, .cyber-table-wrap {
   position: relative; background: linear-gradient(135deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.02)), var(--cyber-surface);
-  color: var(--cyber-text); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); box-shadow: var(--cyber-shadow-md), 0 0 24px var(--cyber-glow-primary); overflow: hidden;
+  color: var(--cyber-text); border: 1px solid var(--cyber-border); border-radius: var(--cyber-radius-md); box-shadow: var(--cyber-shadow-md), 0 0 24px var(--cyber-glow-primary);
   clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem));
   transition: transform var(--cyber-transition-base), box-shadow var(--cyber-transition-base), border-color var(--cyber-transition-base);
 }
@@ -510,7 +510,6 @@
 .cyber-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--cyber-card-bg);
   color: var(--cyber-text);
   border: 1px solid var(--cyber-border);
@@ -597,6 +596,7 @@
 
 /* Filled and framed actions use complementary technical notches and neon edges. */
 .cyber-button.cyber-button-cut, .cyber-button-cut {
+  min-block-size: 2.75rem;
   inline-size: min(100%, 18rem);
   min-inline-size: 6rem;
   max-inline-size: 100%;
@@ -633,6 +633,97 @@
   border: .1em solid currentColor; border-radius: 0; background: conic-gradient(from 90deg, transparent 0 22%, currentColor 0 46%, transparent 0 62%, currentColor 0 84%, transparent 0); box-shadow: 0 0 .45em currentColor; clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%); animation: cyber-spin .7s linear infinite;
 }
 
+/**
+ * Final Cyberpunk fidelity layer.
+ * Carries chamfered HUD geometry and signal edges across the component system.
+ */
+[data-ui="cyberpunk"][data-theme][data-mode] {
+  --usk-native-font-control: Bahnschrift, "Arial Narrow", "Segoe UI", sans-serif;
+  --usk-native-control-min-block-size: 2.85rem;
+  --usk-native-control-padding-block: .66rem;
+  --usk-native-control-padding-inline: 1.08rem;
+  --usk-native-border-width: 2px;
+  --usk-native-radius-sm: .06rem;
+  --usk-native-radius: .1rem;
+  --usk-native-radius-lg: .14rem;
+  --usk-native-shadow: 0 0 .7rem rgb(var(--cyber-primary-rgb) / .28);
+  --usk-native-shadow-md: 0 0 1.4rem rgb(var(--cyber-primary-rgb) / .32), inset .22rem 0 0 rgb(var(--cyber-accent-rgb) / .24);
+  --usk-native-focus-ring: 0 0 0 2px var(--cyber-surface), 0 0 0 4px var(--cyber-focus), 0 0 1rem var(--cyber-focus);
+  --usk-native-subcontrol-padding-block: .5rem;
+  --usk-native-subcontrol-padding-inline: .76rem;
+  --usk-native-choice-size: 1.32rem;
+  --usk-native-choice-background: linear-gradient(135deg, var(--cyber-control-bg), rgb(var(--cyber-primary-rgb) / .1));
+  --usk-native-choice-border: 2px solid var(--cyber-primary);
+  --usk-native-checkbox-radius: .04rem;
+  --usk-native-radio-radius: 28%;
+  --usk-native-choice-shadow: inset .16rem 0 0 rgb(var(--cyber-accent-rgb) / .34), 0 0 .55rem rgb(var(--cyber-primary-rgb) / .3);
+  --usk-native-choice-checked-background: linear-gradient(135deg, var(--cyber-primary), var(--cyber-accent));
+  --usk-native-choice-mark-color: var(--cyber-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 45%, var(--cyber-primary) 45% 56%, transparent 56%), linear-gradient(135deg, transparent 45%, var(--cyber-accent) 45% 56%, transparent 56%);
+  --usk-native-select-indicator-size: .7rem .7rem, .7rem .7rem;
+  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .78rem) 50%;
+  --usk-native-select-padding-inline-end: 2.5rem;
+  --usk-native-range-track-size: .46rem;
+  --usk-native-range-track-background: linear-gradient(90deg, var(--cyber-success), var(--cyber-warning) 62%, var(--cyber-danger));
+  --usk-native-range-track-border: 2px solid var(--cyber-primary);
+  --usk-native-range-track-radius: .04rem;
+  --usk-native-range-track-shadow: 0 0 .7rem rgb(var(--cyber-primary-rgb) / .4);
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--cyber-primary), var(--cyber-accent));
+  --usk-native-range-thumb-size: 1.3rem;
+  --usk-native-range-thumb-background: linear-gradient(135deg, var(--cyber-surface-strong), var(--cyber-primary));
+  --usk-native-range-thumb-border: 2px solid var(--cyber-accent);
+  --usk-native-range-thumb-radius: 28%;
+  --usk-native-range-thumb-shadow: 0 0 .85rem rgb(var(--cyber-accent-rgb) / .5);
+  --usk-native-progress-size: .7rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(110deg, var(--cyber-surface-soft) 0 .65rem, transparent .65rem .78rem);
+  --usk-native-progress-track-border: 2px solid var(--cyber-primary);
+  --usk-native-progress-track-radius: .04rem;
+  --usk-native-progress-track-shadow: inset .2rem 0 0 rgb(var(--cyber-accent-rgb) / .3);
+  --usk-native-progress-value-background: repeating-linear-gradient(110deg, var(--cyber-primary) 0 .65rem, var(--cyber-accent) .65rem .78rem);
+  --usk-native-progress-value-radius: .04rem;
+  --usk-native-progress-value-shadow: 0 0 .8rem rgb(var(--cyber-primary-rgb) / .5);
+  --usk-native-scrollbar-size: .68rem;
+  --usk-native-scrollbar-track: linear-gradient(90deg, var(--cyber-surface), var(--cyber-surface-soft));
+  --usk-native-scrollbar-thumb: linear-gradient(180deg, var(--cyber-primary), var(--cyber-accent));
+  --usk-native-scrollbar-radius: .04rem;
+}
+
+.cyber-title { font-weight: 900; letter-spacing: -.025em; }
+.cyber-label { font-size: .76rem; font-weight: 850; }
+.cyber-card, .cyber-panel { padding: 1.08rem; background: var(--cyber-card-bg); border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .24rem 0 0 rgb(var(--cyber-accent-rgb) / .26), 0 0 1.2rem rgb(var(--cyber-primary-rgb) / .24); clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem); }
+.cyber-well, .cyber-inset { padding: .82rem; background: var(--cyber-control-bg); border: 1px solid var(--cyber-accent); border-radius: 0; box-shadow: inset 0 0 .8rem rgb(var(--cyber-primary-rgb) / .18); clip-path: polygon(.42rem 0, 100% 0, 100% calc(100% - .42rem), calc(100% - .42rem) 100%, 0 100%, 0 .42rem); }
+.cyber-button, .cyber-icon-button { min-height: 2.85rem; padding: .66rem 1.08rem; background: linear-gradient(135deg, rgb(var(--cyber-primary-rgb) / .2), transparent), var(--cyber-control-bg); border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .2rem 0 0 rgb(var(--cyber-accent-rgb) / .38), 0 0 .75rem rgb(var(--cyber-primary-rgb) / .32); font-weight: 850; clip-path: polygon(.5rem 0, 100% 0, 100% calc(100% - .5rem), calc(100% - .5rem) 100%, 0 100%, 0 .5rem); }
+.cyber-button:active, .cyber-button[aria-pressed="true"], .cyber-button.is-active { transform: translateY(1px); background: linear-gradient(135deg, var(--cyber-primary), var(--cyber-accent)); box-shadow: inset 0 0 .6rem rgb(var(--cyber-text-rgb) / .24); }
+.cyber-input, .cyber-textarea, .cyber-select { min-height: 2.55rem; padding: .54rem .82rem; background: var(--cyber-control-bg); border: 1px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .18rem 0 0 rgb(var(--cyber-accent-rgb) / .3); clip-path: polygon(.34rem 0, 100% 0, 100% calc(100% - .34rem), calc(100% - .34rem) 100%, 0 100%, 0 .34rem); }
+.cyber-nav, .cyber-toolbar { border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset 0 -.18rem 0 rgb(var(--cyber-accent-rgb) / .28); }
+.cyber-nav-link { border-radius: 0; clip-path: polygon(.35rem 0, 100% 0, calc(100% - .35rem) 100%, 0 100%); }
+.cyber-badge { min-height: 1.52rem; padding: .26rem .58rem; border: 1px solid currentColor; border-radius: 0; clip-path: polygon(.28rem 0, 100% 0, calc(100% - .28rem) 100%, 0 100%); }
+.cyber-alert { padding: .78rem .92rem; background: var(--cyber-card-bg); border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .28rem 0 0 currentColor, 0 0 .9rem rgb(var(--cyber-primary-rgb) / .22); clip-path: polygon(.45rem 0, 100% 0, 100% calc(100% - .45rem), calc(100% - .45rem) 100%, 0 100%, 0 .45rem); }
+.cyber-progress { height: .7rem; background: repeating-linear-gradient(110deg, var(--cyber-surface-soft) 0 .65rem, transparent .65rem .78rem); border-radius: 0; }
+.cyber-progress-bar { background: repeating-linear-gradient(110deg, var(--cyber-primary) 0 .65rem, var(--cyber-accent) .65rem .78rem); border-radius: 0; }
+.cyber-table-wrap { background: var(--cyber-card-bg); border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .2rem 0 0 rgb(var(--cyber-accent-rgb) / .25); }
+.cyber-table th { padding: .58rem .72rem; background: linear-gradient(90deg, rgb(var(--cyber-primary-rgb) / .2), transparent); font-weight: 850; }
+.cyber-table td { padding: .62rem .72rem; }
+.cyber-tooltip, [data-ui="cyberpunk"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 1px solid var(--cyber-accent); border-radius: 0; clip-path: polygon(.35rem 0, 100% 0, 100% calc(100% - .35rem), calc(100% - .35rem) 100%, 0 100%, 0 .35rem); }
+.cyber-card-service, .cyber-card-feature, .cyber-media-scrim, .cyber-feature-strip, .cyber-callout-bar { border-radius: 0; clip-path: polygon(.55rem 0, 100% 0, 100% calc(100% - .55rem), calc(100% - .55rem) 100%, 0 100%, 0 .55rem); }
+.cyber-button { border-radius: .04rem; }
+.cyber-input { border-radius: .03rem; }
+.cyber-card { border-radius: .05rem; }
+.cyber-alert { border-radius: .07rem; }
+
+/* Large HUD planes carry crossing signal washes as well as luminous edge notches. */
+@supports (color: color-mix(in srgb, black, white)) {
+  .cyber-panel,
+  .cyber-card-service,
+  .cyber-feature-strip,
+  .cyber-callout-bar {
+    background:
+      linear-gradient(126deg, color-mix(in srgb, var(--cyber-surface) 62%, var(--cyber-primary)), transparent 64%),
+      linear-gradient(24deg, transparent 44%, color-mix(in srgb, var(--cyber-surface) 68%, var(--cyber-accent))),
+      var(--cyber-card-bg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="cyberpunk"] *, [data-ui="cyberpunk"] *::before, [data-ui="cyberpunk"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -648,4 +739,15 @@
   [data-ui="cyberpunk"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="cyberpunk"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.cyberpunk {
+/* Keeps semantic field states above preset-specific material paint. */
+.cyber-input[aria-invalid="true"], .cyber-textarea[aria-invalid="true"], .cyber-select[aria-invalid="true"] { border-color: var(--cyber-danger); box-shadow: 0 0 0 2px rgb(var(--cyber-danger-rgb) / .2); }
+.cyber-input[readonly], .cyber-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.cyber-button-primary { background: linear-gradient(112deg, var(--cyber-primary), var(--cyber-accent)); color: var(--cyber-on-primary); border-color: var(--cyber-primary); }
+.cyber-button-secondary { background: linear-gradient(112deg, var(--cyber-secondary), rgb(var(--cyber-secondary-rgb) / .72)); color: var(--cyber-on-secondary); border-color: var(--cyber-secondary); }
+.cyber-button-danger { background: linear-gradient(112deg, var(--cyber-danger), rgb(var(--cyber-danger-rgb) / .66)); color: var(--cyber-on-danger); border-color: var(--cyber-danger); }
+.cyber-button-ghost { background: transparent; color: var(--cyber-primary); border-color: transparent; }
 }

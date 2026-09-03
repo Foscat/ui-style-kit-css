@@ -14,7 +14,9 @@ Release Version Alignment owns the expensive browser release gate: Playwright de
 npm run release:verify
 ```
 
-`npm run release:verify` is the non-publishing release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:axe`, `npm run test:visual`, `npm run test:matrix`, the explicit UI-candidate release preflight, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
+`npm run release:verify` is the non-publishing release gate. It runs `npm run check`, `npm run test:e2e`, `npm run test:axe`, `npm run test:visual`, the 36-block `npm run test:matrix` sequence, the explicit UI-candidate release preflight, `npm audit --audit-level=moderate`, and `npm run pack:dry-run`.
+
+The local UI matrix stops after the first failing 100-case block. Every case has a stable global number, so diagnose each failure with `npm run test:matrix:case -- --case N`. The rest of that block has already completed; after its targeted failures pass, continue at the next untested block with `npm run test:matrix -- --from-block B`. Already green blocks do not run again. `npm run test:matrix:block -- --block B` and `npm run test:matrix:range -- --from N --to M` provide bounded alternatives. CI and Release Version Alignment retain their independent engine and preset shards through `test:matrix:raw`.
 
 `npm run release:preflight` validates the shared manifests and compatibility contract, queries npm for every exact minimum/current version, resolves every export from the candidate tarball, checks maintained documentation against installed packages, and reuses the current/minimum clean-install browser matrix. Normal UI preflight remains strict and queries `ui-style-kit-css@2.4.0` alongside every other documented exact version. The release workflows pass `--candidate-package ui-style-kit-css`, which excludes only that exact current version while it is absent from npm and still requires every published minimum and companion version. The gate performs no publish, tag, release, or deployment mutation and is therefore safe to execute on pull requests.
 

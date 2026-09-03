@@ -23,12 +23,14 @@
   --neo-font-heading: var(--neo-font-display);
   --neo-font-control: var(--neo-font-display);
   --neo-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --neo-radius-xs: .25rem;
-  --neo-radius-sm: .5rem;
-  --neo-radius-md: 0.9rem;
-  --neo-radius-lg: 1.4rem;
-  --neo-radius-xl: calc(1.4rem + .5rem);
+  --neo-radius-xs: .52rem;
+  --neo-radius-sm: .82rem;
+  --neo-radius-md: 1.15rem;
+  --neo-radius-lg: 1.55rem;
+  --neo-radius-xl: 2.25rem;
   --neo-radius-pill: 999px;
+  --neo-soft-edge: 1px solid rgb(var(--neo-border-rgb) / .28);
+  --neo-sunken-edge: 1px solid rgb(var(--neo-border-rgb) / .18);
   --neo-space-1: .25rem;
   --neo-space-2: .5rem;
   --neo-space-3: .75rem;
@@ -428,36 +430,221 @@
 
 
 /* =========================================================
-   Neumorphism Depth Overrides
+   Neomorphism Product Workspace Refinement
 ========================================================= */
 [data-ui="neumorphism"][data-mode="light"] {
-  --neo-nm-light: rgb(255 255 255 / .94);
-  --neo-nm-dark: rgb(148 162 178 / .52);
+  --neo-nm-light: rgb(255 255 255 / .96);
+  --neo-nm-dark: rgb(165 171 181 / .42);
+  --neo-nm-primary-glow: rgb(var(--neo-primary-rgb) / .24);
 }
 [data-ui="neumorphism"][data-mode="dark"] {
-  --neo-nm-light: rgb(46 55 70 / .74);
-  --neo-nm-dark: rgb(0 0 0 / .5);
+  --neo-nm-light: rgb(57 66 82 / .72);
+  --neo-nm-dark: rgb(0 0 0 / .56);
+  --neo-nm-primary-glow: rgb(var(--neo-primary-rgb) / .3);
 }
 [data-ui="neumorphism"][data-mode="contrast"] {
-  --neo-nm-light: rgb(64 64 64 / 1);
+  --neo-nm-light: rgb(255 255 255 / .2);
   --neo-nm-dark: rgb(0 0 0 / 1);
+  --neo-nm-primary-glow: rgb(var(--neo-primary-rgb) / .5);
 }
+
+[data-ui="neumorphism"][data-theme][data-mode] {
+  --neo-theme-bg: linear-gradient(145deg, rgb(var(--neo-surface-strong-rgb) / .28), transparent 34rem), var(--neo-bg);
+  --neo-card-bg: var(--neo-surface);
+  --neo-control-bg: rgb(var(--neo-surface-rgb) / var(--neo-panel-alpha));
+  --neo-muted-divider: rgb(var(--neo-border-rgb) / calc(var(--neo-border-alpha) * .34));
+  --neo-raised-shadow: -.72rem -.72rem 1.35rem var(--neo-nm-light), .78rem .78rem 1.45rem var(--neo-nm-dark);
+  --neo-raised-shadow-sm: -.32rem -.32rem .72rem var(--neo-nm-light), .36rem .36rem .78rem var(--neo-nm-dark);
+  --neo-raised-shadow-lg: -1rem -1rem 1.85rem var(--neo-nm-light), 1.1rem 1.1rem 2rem var(--neo-nm-dark);
+  --neo-inset-shadow: inset .42rem .42rem .82rem var(--neo-nm-dark), inset -.42rem -.42rem .82rem var(--neo-nm-light);
+  --neo-inset-shadow-sm: inset .24rem .24rem .5rem var(--neo-nm-dark), inset -.24rem -.24rem .5rem var(--neo-nm-light);
+  --neo-button-shadow: -.3rem -.3rem .7rem var(--neo-nm-light), .34rem .34rem .75rem var(--neo-nm-dark);
+  --neo-button-primary-shadow: -.28rem -.28rem .65rem var(--neo-nm-light), .38rem .38rem .85rem var(--neo-nm-primary-glow);
+  --neo-control-shadow: var(--neo-inset-shadow-sm);
+  --neo-focus-ring: 0 0 0 3px rgb(var(--neo-focus-rgb) / var(--neo-focus-alpha)), var(--neo-inset-shadow-sm);
+  --usk-native-card-bg: var(--neo-card-bg);
+  --usk-native-control-bg: var(--neo-control-bg);
+  --usk-native-radius-sm: var(--neo-radius-md);
+  --usk-native-radius: var(--neo-radius-lg);
+  --usk-native-radius-lg: var(--neo-radius-xl);
+  --usk-native-border: var(--neo-muted-divider);
+  --usk-native-field-gap: .62rem;
+  --usk-native-panel-padding: var(--neo-space-6);
+  --usk-native-control-min-block-size: 3.05rem;
+  --usk-native-control-padding-block: .82rem;
+  --usk-native-control-padding-inline: 1rem;
+  --usk-native-subcontrol-padding-block: .64rem;
+  --usk-native-subcontrol-padding-inline: .92rem;
+  --usk-native-choice-size: 1.42rem;
+  --usk-native-choice-background: var(--neo-control-bg);
+  --usk-native-choice-border: var(--neo-sunken-edge);
+  --usk-native-choice-shadow: var(--neo-control-shadow);
+  --usk-native-checkbox-radius: .38rem;
+  --usk-native-range-track-size: .56rem;
+  --usk-native-range-track-background: var(--neo-control-bg);
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-shadow: var(--neo-inset-shadow-sm);
+  --usk-native-range-thumb-size: 1.55rem;
+  --usk-native-range-thumb-background: var(--neo-surface);
+  --usk-native-range-thumb-border: var(--neo-soft-edge);
+  --usk-native-range-thumb-shadow: var(--neo-button-shadow);
+  --usk-native-progress-size: .95rem;
+  --usk-native-progress-track-background: var(--neo-control-bg);
+  --usk-native-progress-track-border: 0 solid transparent;
+  --usk-native-progress-track-shadow: var(--neo-inset-shadow-sm);
+  --usk-native-progress-value-background: linear-gradient(90deg, var(--neo-primary), var(--neo-primary-hover));
+  --usk-native-progress-value-shadow: inset 0 1px 0 rgb(255 255 255 / .42), 0 .12rem .38rem rgb(var(--neo-primary-rgb) / .3);
+  --usk-native-file-button-background: var(--neo-control-bg);
+  --usk-native-file-button-border: var(--neo-soft-edge);
+  --usk-native-file-button-radius: var(--neo-radius-md);
+  --usk-native-file-button-shadow: var(--neo-button-shadow);
+  --usk-native-color-swatch-border: var(--neo-soft-edge);
+  --usk-native-color-swatch-radius: var(--neo-radius-md);
+  --usk-native-scrollbar-track: var(--neo-control-bg);
+  --usk-native-scrollbar-thumb: var(--neo-primary);
+  --usk-native-shadow: var(--neo-raised-shadow-sm);
+  --usk-native-shadow-md: var(--neo-raised-shadow);
+}
+
 [data-ui="neumorphism"] { background: var(--neo-bg); }
+.neo-title { font-weight: 760; letter-spacing: -0.055em; }
+.neo-heading { font-weight: 760; letter-spacing: -0.035em; }
+.neo-label { font-size: .9rem; font-weight: 760; letter-spacing: -.01em; }
+.neo-subtitle, .neo-copy, .neo-help-text { color: var(--neo-text-muted); }
+.neo-divider { background: var(--neo-muted-divider); }
 .neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap {
-  border-color: rgb(var(--neo-border-rgb) / .14);
-  box-shadow: 10px 10px 22px var(--neo-nm-dark), -10px -10px 22px var(--neo-nm-light);
+  background: var(--neo-card-bg);
+  border-color: transparent;
+  border-radius: 2.25rem;
+  box-shadow: var(--neo-raised-shadow);
 }
-.neo-surface-lg, .neo-hover-lift:hover {
-  box-shadow: 16px 16px 32px var(--neo-nm-dark), -16px -16px 32px var(--neo-nm-light);
+.neo-card, .neo-panel { padding: clamp(1.25rem, 3vw, 2rem); }
+.neo-surface-sm { border-radius: var(--neo-radius-lg); box-shadow: var(--neo-raised-shadow-sm); }
+.neo-surface-lg, .neo-hover-lift:hover { box-shadow: var(--neo-raised-shadow-lg); }
+.neo-well, .neo-inset {
+  background: var(--neo-control-bg);
+  border-color: transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-inset-shadow);
 }
-.neo-well, .neo-inset, .neo-input, .neo-textarea, .neo-select, .neo-progress {
-  box-shadow: inset 5px 5px 11px var(--neo-nm-dark), inset -5px -5px 11px var(--neo-nm-light);
+.neo-input, .neo-textarea, .neo-select {
+  background: var(--neo-control-bg);
+  border-color: transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-control-shadow);
 }
+.neo-input:hover, .neo-textarea:hover, .neo-select:hover { border-color: rgb(var(--neo-primary-rgb) / .24); }
+.neo-input:focus, .neo-textarea:focus, .neo-select:focus { border-color: transparent; box-shadow: var(--neo-focus-ring); }
 .neo-button, .neo-icon-button, .neo-badge, .neo-nav {
-  box-shadow: 5px 5px 11px var(--neo-nm-dark), -5px -5px 11px var(--neo-nm-light);
+  border-color: transparent;
+  border-radius: var(--neo-radius-pill);
+  box-shadow: var(--neo-button-shadow);
+}
+.neo-button { min-height: 3rem; padding-inline: 1.2rem; font-weight: 760; }
+.neo-button-primary {
+  background: var(--neo-primary);
+  color: var(--neo-on-primary);
+  box-shadow: var(--neo-button-primary-shadow), inset 0 1px 0 rgb(255 255 255 / .34);
+}
+.neo-button-secondary, .neo-button-ghost {
+  background: var(--neo-control-bg);
+  color: var(--neo-text);
 }
 .neo-button:active, .neo-icon-button:active, .neo-button.is-active, .neo-icon-button.is-active, .neo-nav-link.is-active {
-  box-shadow: inset 4px 4px 9px var(--neo-nm-dark), inset -4px -4px 9px var(--neo-nm-light);
+  transform: translateY(1px);
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-check-control, .neo-radio-control, .neo-switch-track {
+  background: var(--neo-control-bg);
+  border-color: transparent;
+  box-shadow: var(--neo-control-shadow);
+}
+.neo-check-control { border-radius: var(--neo-radius-xs); }
+.neo-check input:checked + .neo-check-control,
+.neo-radio input:checked + .neo-radio-control {
+  background: var(--neo-primary);
+  border-color: transparent;
+  box-shadow: var(--neo-button-primary-shadow);
+}
+.neo-check input:checked + .neo-check-control::after {
+  content: "";
+  inline-size: .42rem;
+  block-size: .72rem;
+  border: solid var(--neo-on-primary);
+  border-width: 0 .14rem .14rem 0;
+  transform: rotate(45deg) translateY(-.04rem);
+}
+.neo-switch-track { width: 3.65rem; height: 1.9rem; }
+.neo-switch-thumb {
+  top: .24rem;
+  left: .24rem;
+  background: var(--neo-surface);
+  border-color: transparent;
+  box-shadow: var(--neo-button-shadow);
+}
+.neo-switch input:checked + .neo-switch-track {
+  background: var(--neo-primary);
+  border-color: transparent;
+  box-shadow: inset .2rem .2rem .45rem rgb(var(--neo-primary-hover-rgb) / .72), inset -.2rem -.2rem .45rem rgb(255 255 255 / .26);
+}
+.neo-switch input:checked + .neo-switch-track .neo-switch-thumb { background: var(--neo-on-primary); }
+.neo-badge {
+  background: var(--neo-control-bg);
+  border-color: transparent;
+  font-weight: 760;
+}
+.neo-nav {
+  gap: var(--neo-space-2);
+  padding: .45rem;
+  background: var(--neo-card-bg);
+}
+.neo-nav-link {
+  min-height: 2.55rem;
+  color: var(--neo-text-muted);
+  border-radius: var(--neo-radius-pill);
+  font-weight: 760;
+}
+.neo-nav-link:hover {
+  color: var(--neo-text);
+  background: var(--neo-control-bg);
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-nav-link[aria-current="page"], .neo-nav-link.is-active {
+  color: var(--neo-on-primary);
+  background: var(--neo-primary);
+  box-shadow: var(--neo-button-primary-shadow);
+}
+.neo-progress {
+  height: .95rem;
+  background: var(--neo-control-bg);
+  border-color: transparent;
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-progress-bar {
+  background: linear-gradient(90deg, var(--neo-primary), var(--neo-primary-hover));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .38), 0 .12rem .38rem rgb(var(--neo-primary-rgb) / .3);
+}
+.neo-alert {
+  background: var(--neo-card-bg);
+  border-color: transparent;
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-raised-shadow);
+}
+.neo-table th {
+  background: var(--neo-control-bg);
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-table th, .neo-table td { border-bottom-color: var(--neo-muted-divider); }
+[data-ui="neumorphism"][data-theme][data-mode] :where(input[type="file"])::file-selector-button,
+[data-ui="neumorphism"][data-theme][data-mode] :where(input[type="file"])::-webkit-file-upload-button {
+  color: var(--neo-text);
+  background: var(--neo-control-bg);
+  border-color: transparent;
+  box-shadow: var(--neo-button-shadow);
+}
+[data-ui="neumorphism"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+  border-color: transparent;
+  box-shadow: var(--neo-raised-shadow);
 }
 
 /* Spinner geometry follows the neumorphism preset's soft extruded surfaces. */
@@ -502,7 +689,7 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border: 1px solid rgb(var(--neo-border-rgb) / .72);
-  border-radius: var(--neo-radius-lg);
+  border-radius: 1.55rem;
 }
 
 .neo-card-service {
@@ -594,7 +781,6 @@
 .neo-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--neo-card-bg);
   color: var(--neo-text);
   border: 1px solid var(--neo-border);
@@ -680,6 +866,7 @@
 
 /* Filled and framed actions remain softly clipped while changing elevation state. */
 .neo-button.neo-button-cut, .neo-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: center;
@@ -697,7 +884,7 @@
 /* Marketing and native surfaces pair raised shells with inset metric depth. */
 .neo-card-service, .neo-media-scrim, .neo-feature-strip, .neo-callout-bar, .neo-well {
   border: 1px solid rgb(var(--neo-border-rgb) / .36);
-  border-radius: var(--neo-radius-xl);
+  border-radius: 2.25rem;
   box-shadow: -.55rem -.55rem 1.15rem rgb(var(--neo-surface-strong-rgb) / .74), .58rem .58rem 1.2rem rgb(var(--neo-text-rgb) / .14);
 }
 .neo-well { box-shadow: inset .3rem .3rem .7rem rgb(var(--neo-text-rgb) / .12), inset -.3rem -.3rem .7rem rgb(var(--neo-surface-strong-rgb) / .68); }
@@ -710,6 +897,226 @@
   border: 1px solid rgb(var(--neo-border-rgb) / .38);
   border-radius: var(--neo-radius-xl);
   box-shadow: -.65rem -.65rem 1.3rem rgb(var(--neo-surface-strong-rgb) / .72), .72rem .72rem 1.45rem rgb(var(--neo-text-rgb) / .2);
+}
+
+/* Reference-aligned material system: one surface is either extruded or pressed inward. */
+[data-ui="neumorphism"][data-theme][data-mode] {
+  --neo-theme-bg: linear-gradient(rgb(var(--neo-primary-rgb) / .08), rgb(var(--neo-primary-rgb) / .08)), var(--neo-bg);
+  --neo-card-bg: linear-gradient(rgb(var(--neo-primary-rgb) / .055), rgb(var(--neo-primary-rgb) / .055)), var(--neo-surface);
+  --neo-control-bg: linear-gradient(rgb(var(--neo-primary-rgb) / .025), rgb(var(--neo-primary-rgb) / .025)), var(--neo-surface);
+  --neo-muted-divider: rgb(var(--neo-text-rgb) / .09);
+  --neo-raised-shadow: -.9rem -.9rem 1.75rem var(--neo-nm-light), 1rem 1rem 1.9rem var(--neo-nm-dark);
+  --neo-raised-shadow-sm: -.42rem -.42rem .9rem var(--neo-nm-light), .48rem .48rem 1rem var(--neo-nm-dark);
+  --neo-raised-shadow-lg: -1.15rem -1.15rem 2.2rem var(--neo-nm-light), 1.3rem 1.3rem 2.4rem var(--neo-nm-dark);
+  --neo-inset-shadow: inset .52rem .52rem 1rem var(--neo-nm-dark), inset -.52rem -.52rem 1rem var(--neo-nm-light);
+  --neo-inset-shadow-sm: inset .3rem .3rem .62rem var(--neo-nm-dark), inset -.3rem -.3rem .62rem var(--neo-nm-light);
+  --neo-button-shadow: -.4rem -.4rem .85rem var(--neo-nm-light), .46rem .46rem .95rem var(--neo-nm-dark);
+  --neo-button-primary-shadow: -.36rem -.36rem .78rem var(--neo-nm-light), .5rem .5rem 1.05rem var(--neo-nm-primary-glow);
+  --neo-control-shadow: var(--neo-inset-shadow);
+  --neo-focus-ring: 0 0 0 .22rem rgb(var(--neo-focus-rgb) / var(--neo-focus-alpha)), var(--neo-inset-shadow);
+  --usk-native-border-width: 0;
+  --usk-native-panel-padding: 2rem;
+  --usk-native-control-min-block-size: 3.25rem;
+  --usk-native-control-padding-block: .9rem;
+  --usk-native-control-padding-inline: 1.15rem;
+  --usk-native-subcontrol-padding-block: .7rem;
+  --usk-native-subcontrol-padding-inline: .95rem;
+  --usk-native-choice-size: 1.65rem;
+  --usk-native-choice-border: 0 solid transparent;
+  --usk-native-choice-shadow: var(--neo-inset-shadow-sm);
+  --usk-native-checkbox-radius: .52rem;
+  --usk-native-select-indicator-size: .28rem .28rem, .28rem .28rem;
+  --usk-native-range-track-size: .72rem;
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 999px;
+  --usk-native-range-track-shadow: var(--neo-inset-shadow);
+  --usk-native-range-thumb-size: 1.78rem;
+  --usk-native-range-thumb-border: 0 solid transparent;
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: var(--neo-button-shadow);
+  --usk-native-progress-size: 1.05rem;
+  --usk-native-progress-track-border: 0 solid transparent;
+  --usk-native-progress-track-radius: 999px;
+  --usk-native-progress-track-shadow: var(--neo-inset-shadow);
+  --usk-native-progress-value-radius: 999px;
+  --usk-native-progress-value-shadow: inset 0 .12rem .2rem rgb(255 255 255 / .34), 0 .18rem .42rem rgb(var(--neo-primary-rgb) / .28);
+  --usk-native-file-button-border: 0 solid transparent;
+  --usk-native-file-button-radius: var(--neo-radius-md);
+  --usk-native-scrollbar-size: .9rem;
+  --usk-native-scrollbar-radius: 999px;
+}
+
+[data-ui="neumorphism"] { background: var(--neo-theme-bg); }
+.neo-title { font-weight: 680; letter-spacing: -.048em; }
+.neo-heading { font-weight: 680; letter-spacing: -.028em; }
+.neo-label { font-size: .82rem; font-weight: 650; letter-spacing: .01em; }
+
+.neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap {
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: 2.25rem;
+  box-shadow: var(--neo-raised-shadow);
+}
+.neo-card, .neo-panel { padding: 2rem; }
+.neo-toolbar { padding: 1.25rem 1.5rem; }
+.neo-well, .neo-inset {
+  background: var(--neo-control-bg);
+  border: 0 solid transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-inset-shadow);
+}
+
+.neo-input, .neo-textarea, .neo-select {
+  min-height: 3.25rem;
+  padding: .9rem 1.15rem;
+  background: var(--neo-control-bg);
+  border: 0 solid transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-control-shadow);
+}
+.neo-input:hover, .neo-textarea:hover, .neo-select:hover {
+  background: rgb(var(--neo-surface-strong-rgb) / .22);
+  border-color: transparent;
+}
+.neo-input:focus, .neo-textarea:focus, .neo-select:focus {
+  background: var(--neo-control-bg);
+  box-shadow: var(--neo-focus-ring);
+}
+
+.neo-button, .neo-icon-button {
+  min-height: 3.25rem;
+  padding: .9rem 1.4rem;
+  border: 0 solid transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-button-shadow);
+  font-weight: 680;
+}
+.neo-icon-button { width: 3.25rem; padding: 0; border-radius: 50%; }
+.neo-button:hover, .neo-icon-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--neo-raised-shadow-sm);
+}
+.neo-button:active, .neo-icon-button:active,
+.neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"],
+.neo-button.is-active, .neo-icon-button.is-active {
+  transform: translateY(1px);
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-button-primary:active, .neo-button-primary[aria-pressed="true"] {
+  box-shadow: inset .3rem .3rem .62rem rgb(var(--neo-primary-hover-rgb) / .72), inset -.24rem -.24rem .54rem rgb(255 255 255 / .24);
+}
+.neo-button:disabled, .neo-icon-button:disabled, .neo-disabled {
+  opacity: .46;
+  transform: none;
+  box-shadow: -.16rem -.16rem .34rem var(--neo-nm-light), .18rem .18rem .38rem var(--neo-nm-dark);
+}
+
+.neo-badge {
+  min-height: 1.8rem;
+  padding: .38rem .78rem;
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-pill);
+  box-shadow: var(--neo-raised-shadow-sm);
+  font-size: .76rem;
+  font-weight: 680;
+}
+.neo-badge-success { background: rgb(var(--neo-success-rgb) / .18); color: var(--neo-success); }
+.neo-badge-warning { background: rgb(var(--neo-warning-rgb) / .2); color: var(--neo-warning); }
+.neo-badge-danger { background: rgb(var(--neo-danger-rgb) / .18); color: var(--neo-danger); }
+
+.neo-nav {
+  gap: .35rem;
+  padding: .65rem;
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-raised-shadow-sm);
+}
+.neo-nav-link {
+  min-height: 2.8rem;
+  padding: .75rem 1.05rem;
+  border-radius: var(--neo-radius-md);
+  font-weight: 680;
+}
+.neo-nav-link:hover { background: var(--neo-control-bg); box-shadow: var(--neo-inset-shadow-sm); }
+.neo-nav-link[aria-current="page"], .neo-nav-link.is-active {
+  background: var(--neo-primary);
+  box-shadow: inset .2rem .2rem .42rem rgb(var(--neo-primary-hover-rgb) / .62), inset -.16rem -.16rem .35rem rgb(255 255 255 / .2);
+}
+
+.neo-progress {
+  height: 1.05rem;
+  padding: .16rem;
+  background: var(--neo-control-bg);
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-pill);
+  box-shadow: var(--neo-inset-shadow);
+}
+.neo-progress-bar { border-radius: var(--neo-radius-pill); }
+
+.neo-alert {
+  padding: 1.5rem 1.6rem;
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: 2.25rem;
+  box-shadow: var(--neo-raised-shadow);
+}
+.neo-alert-success { box-shadow: var(--neo-raised-shadow), inset .32rem 0 0 var(--neo-success); }
+.neo-alert-warning { box-shadow: var(--neo-raised-shadow), inset .32rem 0 0 var(--neo-warning); }
+.neo-alert-danger { box-shadow: var(--neo-raised-shadow), inset .32rem 0 0 var(--neo-danger); }
+
+.neo-table { border-collapse: separate; border-spacing: 0 .45rem; }
+.neo-table th, .neo-table td {
+  padding: 1rem 1.15rem;
+  background: var(--neo-control-bg);
+  border-bottom: 0;
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-table th:first-child, .neo-table td:first-child { border-radius: var(--neo-radius-md) 0 0 var(--neo-radius-md); }
+.neo-table th:last-child, .neo-table td:last-child { border-radius: 0 var(--neo-radius-md) var(--neo-radius-md) 0; }
+
+.neo-card-service, .neo-card-feature, .neo-feature-strip, .neo-callout-bar {
+  padding: 1.5rem;
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-raised-shadow);
+}
+.neo-card-service { text-align: start; }
+.neo-feature-item {
+  padding: 1.15rem;
+  background: var(--neo-control-bg);
+  border: 0;
+  border-radius: var(--neo-radius-lg);
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+.neo-callout-bar > :where(.neo-button, a, button):last-child { justify-self: end; }
+
+[data-ui="neumorphism"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-raised-shadow);
+}
+[data-ui="neumorphism"][data-theme][data-mode] :where(legend) {
+  padding: .45rem .85rem;
+  background: var(--neo-card-bg);
+  border-radius: var(--neo-radius-md);
+  box-shadow: var(--neo-raised-shadow-sm);
+}
+[data-ui="neumorphism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-lg);
+  box-shadow: var(--neo-button-shadow);
+}
+[data-ui="neumorphism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
+  transform: translateY(1px);
+  box-shadow: var(--neo-inset-shadow-sm);
+}
+[data-ui="neumorphism"][data-theme][data-mode] :where(dialog) {
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-raised-shadow-lg);
 }
 
 /* Busy indicators read as a softly raised and inset Neumorphic dial. */
@@ -732,4 +1139,95 @@
   [data-ui="neumorphism"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="neumorphism"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.neumorphism {
+/* Keeps semantic field states above preset-specific material paint. */
+.neo-input[aria-invalid="true"], .neo-textarea[aria-invalid="true"], .neo-select[aria-invalid="true"] { border-color: var(--neo-danger); box-shadow: 0 0 0 2px rgb(var(--neo-danger-rgb) / .18), var(--neo-inset-shadow); }
+.neo-input[readonly], .neo-textarea[readonly] { filter: saturate(.72); opacity: .78; }
+}
+
+@layer ui-style-kit.neumorphism {
+/**
+ * Reasserts the borderless same-surface hierarchy after loading-state pseudo-elements.
+ * Raised controls use opposing shadows while wells, fields, and pressed states stay concave.
+ */
+.neo-title { font-weight: 680; letter-spacing: -.048em; }
+.neo-label { font-size: .82rem; font-weight: 650; }
+.neo-button, .neo-icon-button {
+  min-height: 3.25rem;
+  padding: .9rem 1.4rem;
+  background: var(--neo-control-bg);
+  border: 0 solid transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-button-shadow);
+  font-weight: 680;
+}
+.neo-icon-button { padding: 0; border-radius: 50%; }
+.neo-button-primary { background: var(--neo-primary); box-shadow: var(--neo-button-primary-shadow); }
+.neo-button-secondary { background: var(--neo-secondary); box-shadow: var(--neo-button-shadow); }
+.neo-button-danger { background: var(--neo-danger); box-shadow: var(--neo-button-primary-shadow); }
+.neo-button:active, .neo-icon-button:active,
+.neo-button[aria-pressed="true"], .neo-icon-button[aria-pressed="true"] {
+  transform: translateY(1px);
+  box-shadow: var(--neo-inset-shadow);
+}
+.neo-input, .neo-textarea, .neo-select {
+  min-height: 3.25rem;
+  padding: .9rem 1.15rem;
+  background: var(--neo-control-bg);
+  border: 0 solid transparent;
+  border-radius: 1.55rem;
+  box-shadow: var(--neo-control-shadow);
+}
+.neo-surface, .neo-card, .neo-panel, .neo-toolbar, .neo-table-wrap {
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-raised-shadow);
+}
+.neo-card, .neo-panel { padding: 1.5rem; }
+.neo-well, .neo-inset {
+  background: var(--neo-control-bg);
+  border: 0 solid transparent;
+  border-radius: 1.75rem;
+  box-shadow: var(--neo-inset-shadow);
+}
+.neo-badge { min-height: 1.8rem; padding: .38rem .78rem; border-radius: var(--neo-radius-pill); box-shadow: var(--neo-button-shadow); }
+.neo-alert {
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: 2.25rem;
+  box-shadow: var(--neo-raised-shadow), inset .32rem 0 0 var(--neo-primary);
+}
+.neo-progress { height: 1.05rem; background: var(--neo-control-bg); box-shadow: var(--neo-inset-shadow); }
+.neo-progress-bar { border-radius: inherit; box-shadow: var(--neo-button-shadow); }
+.neo-table-wrap { background: var(--neo-card-bg); border-radius: 2.25rem; box-shadow: var(--neo-raised-shadow); }
+.neo-table th { padding: 1rem 1.15rem; background: var(--neo-control-bg); font-weight: 700; }
+.neo-table td { padding: 1rem 1.15rem; }
+.neo-nav { border: 0; border-radius: 2rem; box-shadow: var(--neo-inset-shadow); }
+.neo-nav-link { min-height: 2.75rem; padding: .68rem 1rem; border-radius: 1.4rem; }
+.neo-tooltip, [data-ui="neumorphism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 0; border-radius: 1.25rem; box-shadow: var(--neo-raised-shadow); }
+.neo-card-service, .neo-card-feature, .neo-feature-strip, .neo-callout-bar {
+  padding: 1.4rem;
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: 2rem;
+  box-shadow: var(--neo-raised-shadow);
+}
+.neo-feature-item { padding: 1rem; box-shadow: var(--neo-inset-shadow); }
+[data-ui="neumorphism"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+  background: var(--neo-card-bg);
+  border: 0 solid transparent;
+  border-radius: 2.25rem;
+  box-shadow: var(--neo-raised-shadow);
+}
+}
+
+@layer ui-style-kit.neumorphism {
+/* Restores semantic action paint after identity-specific geometry. */
+.neo-button-primary { background: var(--neo-primary); color: var(--neo-on-primary); border-color: var(--neo-primary); box-shadow: var(--neo-button-primary-shadow); }
+.neo-button-secondary { background: var(--neo-secondary); color: var(--neo-on-secondary); border-color: var(--neo-secondary); box-shadow: var(--neo-button-shadow); }
+.neo-button-danger { background: var(--neo-danger); color: var(--neo-on-danger); border-color: var(--neo-danger); box-shadow: var(--neo-button-primary-shadow); }
+.neo-button-ghost { background: transparent; color: var(--neo-primary); border-color: transparent; box-shadow: var(--neo-button-shadow); }
 }

@@ -560,7 +560,6 @@
 .utility-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--utility-card-bg);
   color: var(--utility-text);
   border: 1px solid var(--utility-border);
@@ -685,6 +684,7 @@
 
 /* Filled and framed actions share an octagonal machine-control plate. */
 .utility-button.utility-button-cut, .utility-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
@@ -723,6 +723,108 @@
   border: .11em solid currentColor; border-radius: 0; background: conic-gradient(currentColor 0 12.5%, transparent 0 25%, currentColor 0 37.5%, transparent 0 50%, currentColor 0 62.5%, transparent 0 75%, currentColor 0 87.5%, transparent 0); box-shadow: inset 0 0 0 .12em rgb(0 0 0 / .16); clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); animation: utility-spin .8s steps(8, end) infinite;
 }
 
+/**
+ * Final Industrial Utility fidelity layer.
+ * Uses raised metal frames, recessed instruments, and calibrated safety rails.
+ */
+[data-ui="industrial-utility"][data-theme][data-mode] {
+  --usk-native-font-control: "Arial Narrow", Bahnschrift, "Segoe UI", sans-serif;
+  --usk-native-control-min-block-size: 2.72rem;
+  --usk-native-control-padding-block: .6rem;
+  --usk-native-control-padding-inline: .9rem;
+  --usk-native-border-width: 2px;
+  --usk-native-radius-sm: .12rem;
+  --usk-native-radius: .2rem;
+  --usk-native-radius-lg: .3rem;
+  --usk-native-shadow: inset 0 1px 0 rgb(var(--utility-surface-strong-rgb) / .72), 0 2px 0 rgb(var(--utility-text-rgb) / .28);
+  --usk-native-shadow-md: inset 0 0 0 1px rgb(var(--utility-surface-strong-rgb) / .5), 0 .55rem 1rem rgb(var(--utility-text-rgb) / .2);
+  --usk-native-focus-ring: 0 0 0 2px var(--utility-surface), 0 0 0 4px var(--utility-focus);
+  --usk-native-subcontrol-padding-block: .46rem;
+  --usk-native-subcontrol-padding-inline: .66rem;
+  --usk-native-choice-size: 1.22rem;
+  --usk-native-choice-background: linear-gradient(180deg, var(--utility-surface-strong), var(--utility-control-bg));
+  --usk-native-choice-border: 2px solid var(--utility-border);
+  --usk-native-checkbox-radius: .08rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: inset 0 2px 3px rgb(var(--utility-text-rgb) / .22);
+  --usk-native-choice-checked-background: linear-gradient(180deg, var(--utility-primary-hover), var(--utility-primary));
+  --usk-native-choice-mark-color: var(--utility-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(60deg, transparent 48%, var(--utility-text) 48% 58%, transparent 58%), linear-gradient(120deg, transparent 48%, var(--utility-text) 48% 58%, transparent 58%);
+  --usk-native-select-indicator-size: .52rem .52rem, .52rem .52rem;
+  --usk-native-select-indicator-position: calc(100% - 1.06rem) 50%, calc(100% - .7rem) 50%;
+  --usk-native-select-padding-inline-end: 2.3rem;
+  --usk-native-range-track-size: .64rem;
+  --usk-native-range-track-background: linear-gradient(90deg, var(--utility-success) 0 58%, var(--utility-warning) 58% 78%, var(--utility-danger) 78%);
+  --usk-native-range-track-border: 2px inset var(--utility-border);
+  --usk-native-range-track-radius: .06rem;
+  --usk-native-range-track-shadow: inset 0 2px 3px rgb(var(--utility-text-rgb) / .3);
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--utility-success), var(--utility-primary));
+  --usk-native-range-thumb-size: 1.26rem;
+  --usk-native-range-thumb-background: linear-gradient(90deg, var(--utility-surface), var(--utility-surface-strong), var(--utility-surface));
+  --usk-native-range-thumb-border: 2px outset var(--utility-border);
+  --usk-native-range-thumb-radius: .1rem;
+  --usk-native-range-thumb-shadow: 1px 2px 0 rgb(var(--utility-text-rgb) / .3);
+  --usk-native-progress-size: .82rem;
+  --usk-native-progress-track-background: var(--utility-control-bg);
+  --usk-native-progress-track-border: 2px inset var(--utility-border);
+  --usk-native-progress-track-radius: .06rem;
+  --usk-native-progress-track-shadow: inset 0 2px 4px rgb(var(--utility-text-rgb) / .32);
+  --usk-native-progress-value-background: linear-gradient(180deg, var(--utility-primary-hover), var(--utility-primary));
+  --usk-native-progress-value-radius: .03rem;
+  --usk-native-progress-value-shadow: inset 0 1px 0 rgb(var(--utility-surface-strong-rgb) / .42);
+  --usk-native-scrollbar-size: .86rem;
+  --usk-native-scrollbar-track: linear-gradient(90deg, var(--utility-control-bg), var(--utility-surface));
+  --usk-native-scrollbar-thumb: linear-gradient(90deg, var(--utility-surface), var(--utility-primary), var(--utility-surface));
+  --usk-native-scrollbar-radius: .08rem;
+}
+
+.utility-title { font-weight: 950; letter-spacing: -.03em; }
+.utility-label { font-size: .74rem; font-weight: 900; }
+.utility-card, .utility-panel { padding: 1rem; background: linear-gradient(180deg, var(--utility-surface-strong), var(--utility-card-bg)); border: 3px double var(--utility-border); border-radius: .28rem; box-shadow: inset 0 1px 0 rgb(var(--utility-surface-strong-rgb) / .8), 0 .45rem .9rem rgb(var(--utility-text-rgb) / .2); }
+.utility-well, .utility-inset { padding: .76rem; background: var(--utility-control-bg); border: 2px inset var(--utility-border); border-radius: .12rem; box-shadow: inset 0 3px 6px rgb(var(--utility-text-rgb) / .25); }
+.utility-button, .utility-icon-button { min-height: 2.72rem; padding: .6rem .9rem; background: linear-gradient(180deg, var(--utility-surface-strong), transparent), var(--utility-control-bg); border: 2px outset var(--utility-border); border-radius: .12rem; box-shadow: inset 0 1px 0 rgb(var(--utility-surface-strong-rgb) / .82), 0 2px 0 rgb(var(--utility-text-rgb) / .3); font-weight: 900; }
+.utility-button:active, .utility-button[aria-pressed="true"], .utility-button.is-active { transform: translateY(2px); border-style: inset; box-shadow: inset 0 3px 6px rgb(var(--utility-text-rgb) / .3); }
+.utility-input, .utility-textarea, .utility-select { min-height: 2.45rem; padding: .5rem .68rem; background: var(--utility-control-bg); border: 2px inset var(--utility-border); border-radius: .1rem; box-shadow: inset 0 2px 4px rgb(var(--utility-text-rgb) / .2); }
+.utility-nav, .utility-toolbar { border: 3px double var(--utility-border); border-radius: .22rem; box-shadow: inset 0 1px 0 rgb(var(--utility-surface-strong-rgb) / .7); }
+.utility-nav-link { border-radius: .08rem; border-block-end: 2px solid transparent; }
+.utility-badge { min-height: 1.58rem; padding: .28rem .5rem; border: 2px outset var(--utility-border); border-radius: .08rem; box-shadow: 1px 2px 0 rgb(var(--utility-text-rgb) / .24); }
+.utility-alert { padding: .72rem .84rem; background: linear-gradient(180deg, var(--utility-surface-strong), var(--utility-surface)); border: 2px solid var(--utility-border); border-radius: .18rem; box-shadow: inset .35rem 0 0 currentColor, 0 3px 0 rgb(var(--utility-text-rgb) / .2); }
+.utility-progress { height: .82rem; background: var(--utility-control-bg); border: 2px inset var(--utility-border); border-radius: .06rem; }
+.utility-progress-bar { background: linear-gradient(180deg, var(--utility-primary-hover), var(--utility-primary)); border-radius: .03rem; box-shadow: inset 0 1px 0 rgb(var(--utility-surface-strong-rgb) / .42); }
+.utility-table-wrap { background: var(--utility-card-bg); border: 3px double var(--utility-border); border-radius: .24rem; box-shadow: 0 .45rem .9rem rgb(var(--utility-text-rgb) / .18); }
+.utility-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.utility-table th { padding: .58rem .66rem; background: linear-gradient(180deg, var(--utility-surface-strong), var(--utility-surface-soft)); border: 1px solid var(--utility-border); font-weight: 900; }
+.utility-table td { padding: .54rem .66rem; border: 1px solid var(--utility-border); }
+.utility-tooltip, [data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 2px outset var(--utility-border); border-radius: .12rem; box-shadow: 0 3px 0 rgb(var(--utility-text-rgb) / .26); }
+.utility-card-service, .utility-card-feature, .utility-media-scrim, .utility-feature-strip, .utility-callout-bar { border: 3px double var(--utility-border); border-radius: .24rem; box-shadow: inset .32rem 0 0 rgb(var(--utility-primary-rgb) / .3), 0 .45rem .9rem rgb(var(--utility-text-rgb) / .18); }
+
+/* A safety-green metal wash and fine grain keep the operator console physical. */
+[data-ui="industrial-utility"][data-theme][data-mode] {
+  --usk-native-card-bg: repeating-linear-gradient(90deg, rgb(var(--utility-text-rgb) / .035) 0 1px, transparent 1px 6px), linear-gradient(rgb(var(--utility-success-rgb) / .12), rgb(var(--utility-success-rgb) / .12)), var(--utility-surface);
+  --usk-native-control-bg: linear-gradient(180deg, var(--utility-surface-strong) 0 45%, var(--utility-surface-soft) 45% 100%);
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="industrial-utility"][data-theme][data-mode] {
+    --usk-native-control-bg: linear-gradient(180deg, var(--utility-surface-strong) 0 45%, color-mix(in srgb, var(--utility-surface-soft) 82%, var(--utility-text)) 45% 100%);
+  }
+}
+.utility-panel,
+.utility-card-service,
+.utility-feature-strip,
+.utility-callout-bar {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgb(var(--utility-text-rgb) / .035) 0 1px,
+      transparent 1px 6px
+    ),
+    linear-gradient(rgb(var(--utility-success-rgb) / .12), rgb(var(--utility-success-rgb) / .12)),
+    var(--utility-card-bg);
+}
+[data-ui="industrial-utility"][data-theme][data-mode] :where(fieldset, article, aside) {
+  background: repeating-linear-gradient(90deg, rgb(var(--utility-text-rgb) / .035) 0 1px, transparent 1px 6px), linear-gradient(rgb(var(--utility-success-rgb) / .12), rgb(var(--utility-success-rgb) / .12)), var(--utility-surface);
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="industrial-utility"] *, [data-ui="industrial-utility"] *::before, [data-ui="industrial-utility"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -738,4 +840,15 @@
   [data-ui="industrial-utility"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="industrial-utility"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.industrial_utility {
+/* Keeps semantic field states above preset-specific material paint. */
+.utility-input[aria-invalid="true"], .utility-textarea[aria-invalid="true"], .utility-select[aria-invalid="true"] { border-color: var(--utility-danger); box-shadow: 0 0 0 2px rgb(var(--utility-danger-rgb) / .2); }
+.utility-input[readonly], .utility-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.utility-button-primary { background: var(--utility-primary); color: var(--utility-on-primary); border-color: var(--utility-primary); }
+.utility-button-secondary { background: var(--utility-secondary); color: var(--utility-on-secondary); border-color: var(--utility-secondary); }
+.utility-button-danger { background: var(--utility-danger); color: var(--utility-on-danger); border-color: var(--utility-danger); }
+.utility-button-ghost { background: transparent; color: var(--utility-primary); border-color: transparent; }
 }

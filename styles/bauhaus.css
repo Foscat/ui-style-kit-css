@@ -23,12 +23,19 @@
   --bau-font-heading: var(--bau-font-display);
   --bau-font-control: var(--bau-font-display);
   --bau-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --bau-radius-xs: .25rem;
-  --bau-radius-sm: .5rem;
-  --bau-radius-md: 0.125rem;
-  --bau-radius-lg: 0.125rem;
-  --bau-radius-xl: calc(0.125rem + .5rem);
+  --bau-radius-xs: 0;
+  --bau-radius-sm: 0;
+  --bau-radius-md: 0;
+  --bau-radius-lg: 0;
+  --bau-radius-xl: 0;
   --bau-radius-pill: 999px;
+  --bau-rule-width: .16rem;
+  --bau-rule-heavy: .28rem;
+  --bau-grid-step: 3rem;
+  --bau-panel-shadow: .48rem .48rem 0 rgb(var(--bau-text-rgb) / .84);
+  --bau-control-shadow: .26rem .26rem 0 rgb(var(--bau-text-rgb) / .88);
+  --bau-control-shadow-hover: .42rem .42rem 0 rgb(var(--bau-text-rgb) / .9);
+  --bau-control-shadow-pressed: .08rem .08rem 0 rgb(var(--bau-text-rgb) / .9);
   --bau-space-1: .25rem;
   --bau-space-2: .5rem;
   --bau-space-3: .75rem;
@@ -44,8 +51,8 @@
   color-scheme: light;
   --bau-panel-alpha: .98;
   --bau-panel-soft-alpha: .78;
-  --bau-border-alpha: .58;
-  --bau-shadow-alpha: .12;
+  --bau-border-alpha: .78;
+  --bau-shadow-alpha: .18;
   --bau-focus-alpha: .34;
 }
 
@@ -53,8 +60,8 @@
   color-scheme: dark;
   --bau-panel-alpha: .92;
   --bau-panel-soft-alpha: .64;
-  --bau-border-alpha: .52;
-  --bau-shadow-alpha: .34;
+  --bau-border-alpha: .68;
+  --bau-shadow-alpha: .38;
   --bau-focus-alpha: .42;
 }
 
@@ -113,63 +120,63 @@
   --usk-native-font-heading: var(--bau-font-heading);
   --usk-native-font-control: var(--bau-font-control);
   --usk-native-font-mono: var(--bau-font-mono);
-  --usk-native-radius-sm: var(--bau-radius-sm);
-  --usk-native-radius: var(--bau-radius-md);
-  --usk-native-radius-lg: var(--bau-radius-lg);
-  --usk-native-shadow: var(--bau-shadow-sm, none);
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: var(--bau-control-shadow);
   --usk-native-shadow-md: var(--bau-shadow-md, var(--usk-native-shadow));
   --usk-native-focus-ring: var(--bau-focus-ring, 0 0 0 3px rgb(var(--bau-focus-rgb) / .28));
-  --usk-native-border-width: 1px;
+  --usk-native-border-width: 2px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--bau-space-5);
-  --usk-native-control-min-block-size: 3rem;
-  --usk-native-control-padding-block: .68rem;
-  --usk-native-control-padding-inline: 1rem;
+  --usk-native-control-min-block-size: 3.125rem;
+  --usk-native-control-padding-block: .75rem;
+  --usk-native-control-padding-inline: 1.05rem;
   --usk-native-subcontrol-padding-block: .5rem;
   --usk-native-subcontrol-padding-inline: .8rem;
-  --usk-native-choice-size: 1.55rem;
+  --usk-native-choice-size: 1.5rem;
   --usk-native-choice-background: var(--bau-control-bg);
   --usk-native-choice-border: 2px solid var(--bau-border);
   --usk-native-checkbox-radius: 0;
   --usk-native-radio-radius: 50%;
-  --usk-native-choice-shadow: 3px 3px 0 var(--bau-border);
+  --usk-native-choice-shadow: var(--bau-control-shadow-pressed);
   --usk-native-choice-checked-background: var(--bau-primary);
   --usk-native-choice-mark-color: var(--bau-on-primary);
-  --usk-native-select-indicator-image: linear-gradient(36deg, transparent 50%, var(--bau-primary) 50%), linear-gradient(144deg, var(--bau-primary) 50%, transparent 50%);
-  --usk-native-select-indicator-size: 0.46rem 0.46rem, 0.46rem 0.46rem;
-  --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - 0.8999999999999999rem) 50%;
-  --usk-native-select-padding-inline-end: 2.7rem;
-  --usk-native-range-track-size: .32rem;
-  --usk-native-range-track-background: var(--bau-surface-soft);
-  --usk-native-range-track-border: 2px solid var(--bau-border);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--bau-text) 50%), linear-gradient(135deg, var(--bau-text) 50%, transparent 50%);
+  --usk-native-select-indicator-size: .58rem .58rem, .58rem .58rem;
+  --usk-native-select-indicator-position: calc(100% - 1.45rem) 50%, calc(100% - 1.04rem) 50%;
+  --usk-native-select-padding-inline-end: 3rem;
+  --usk-native-range-track-size: .24rem;
+  --usk-native-range-track-background: var(--bau-border);
+  --usk-native-range-track-border: 0 solid transparent;
   --usk-native-range-track-radius: 0;
-  --usk-native-range-track-shadow: 3px 3px 0 var(--bau-border);
+  --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: var(--bau-primary);
-  --usk-native-range-thumb-size: 1.35rem;
-  --usk-native-range-thumb-background: var(--bau-surface-strong);
+  --usk-native-range-thumb-size: 1.55rem;
+  --usk-native-range-thumb-background: var(--bau-primary);
   --usk-native-range-thumb-border: 2px solid var(--bau-border);
   --usk-native-range-thumb-radius: 50%;
-  --usk-native-range-thumb-shadow: 3px 3px 0 var(--bau-border);
-  --usk-native-progress-size: .8rem;
-  --usk-native-progress-track-background: var(--bau-surface-soft);
+  --usk-native-range-thumb-shadow: var(--bau-control-shadow-pressed);
+  --usk-native-progress-size: .95rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, var(--bau-surface-soft) 0 1.15rem, rgb(var(--bau-border-rgb) / .7) 1.15rem calc(1.15rem + 2px));
   --usk-native-progress-track-border: 2px solid var(--bau-border);
   --usk-native-progress-track-radius: 0;
-  --usk-native-progress-track-shadow: 3px 3px 0 var(--bau-border);
-  --usk-native-progress-value-background: var(--bau-primary);
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--bau-primary) 0 1.15rem, var(--bau-accent) 1.15rem 1.3rem);
   --usk-native-progress-value-radius: 0;
-  --usk-native-progress-value-shadow: 3px 3px 0 var(--bau-border);
+  --usk-native-progress-value-shadow: none;
   --usk-native-meter-optimum-background: var(--bau-success);
   --usk-native-meter-suboptimum-background: var(--bau-warning);
   --usk-native-meter-critical-background: var(--bau-danger);
   --usk-native-file-button-background: var(--bau-primary);
   --usk-native-file-button-border: 2px solid var(--bau-border);
   --usk-native-file-button-radius: 0;
-  --usk-native-file-button-shadow: 3px 3px 0 var(--bau-border);
+  --usk-native-file-button-shadow: var(--bau-control-shadow);
   --usk-native-color-swatch-border: 2px solid var(--bau-border);
   --usk-native-color-swatch-radius: 0;
-  --usk-native-indicator-opacity: 0.87;
+  --usk-native-indicator-opacity: 1;
   --usk-native-indicator-filter: none;
-  --usk-native-scrollbar-size: .75rem;
+  --usk-native-scrollbar-size: 1rem;
   --usk-native-scrollbar-track: var(--bau-surface-soft);
   --usk-native-scrollbar-thumb: var(--bau-primary);
   --usk-native-scrollbar-radius: 0;
@@ -182,7 +189,8 @@
   --bau-fg: var(--bau-text);
   --bau-surface-fg: var(--bau-text);
   --bau-muted: var(--bau-text-muted);
-  --bau-border: rgb(var(--bau-border-rgb) / max(var(--bau-border-alpha), var(--usk-border-min-alpha)));
+  --bau-structural-ink: rgb(var(--bau-text-rgb));
+  --bau-border: rgb(var(--bau-text-rgb) / .94);
   --bau-control-fg: var(--bau-text);
   --bau-primary: rgb(var(--bau-primary-rgb));
   --bau-primary-hover: rgb(var(--bau-primary-hover-rgb));
@@ -203,17 +211,17 @@
   --bau-link: rgb(var(--bau-link-rgb));
   --bau-focus: rgb(var(--bau-focus-rgb));
   --bau-focus-ring: 0 0 0 3px rgb(var(--bau-focus-rgb) / var(--bau-focus-alpha));
-  --bau-theme-bg-size: auto, auto, 48px 48px, 48px 48px, auto;
-  --bau-theme-bg: radial-gradient(circle at 0% 0%, rgb(var(--bau-primary-rgb) / .13), transparent 30rem), radial-gradient(circle at 100% 0%, rgb(var(--bau-accent-rgb) / .10), transparent 28rem), linear-gradient(90deg, rgb(var(--bau-border-rgb) / .10) 1px, transparent 1px), linear-gradient(rgb(var(--bau-border-rgb) / .10) 1px, transparent 1px), var(--bau-bg);
-  --bau-card-bg: linear-gradient(135deg, rgb(var(--bau-primary-rgb) / .10), rgb(var(--bau-accent-rgb) / .055) 42%, rgb(var(--bau-surface-strong-rgb) / var(--bau-panel-alpha)) 100%), var(--bau-surface);
-  --bau-control-bg: linear-gradient(180deg, rgb(var(--bau-surface-strong-rgb) / var(--bau-panel-alpha)), rgb(var(--bau-surface-soft-rgb) / var(--bau-panel-soft-alpha)));
+  --bau-theme-bg-size: auto, auto, var(--bau-grid-step) var(--bau-grid-step), var(--bau-grid-step) var(--bau-grid-step), auto;
+  --bau-theme-bg: radial-gradient(circle at 78% 7rem, rgb(var(--bau-danger-rgb) / .24) 0 4.2rem, transparent 4.3rem), linear-gradient(90deg, transparent 0 72%, rgb(var(--bau-primary-rgb) / .16) 72% 100%), linear-gradient(90deg, rgb(var(--bau-text-rgb) / .12) var(--bau-rule-width), transparent var(--bau-rule-width)), linear-gradient(rgb(var(--bau-text-rgb) / .12) var(--bau-rule-width), transparent var(--bau-rule-width)), var(--bau-bg);
+  --bau-card-bg: linear-gradient(90deg, var(--bau-primary) 0 .9rem, transparent .9rem), linear-gradient(180deg, rgb(var(--bau-text-rgb) / .12) 0 var(--bau-rule-width), transparent var(--bau-rule-width)), var(--bau-surface);
+  --bau-control-bg: rgb(var(--bau-surface-strong-rgb) / var(--bau-panel-alpha));
   --bau-spinner-track: rgb(var(--bau-border-rgb) / max(.28, calc(var(--bau-border-alpha) * .7)));
   --bau-spinner-stroke: var(--bau-primary);
   --bau-spinner-accent: var(--bau-accent);
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="bauhaus"][data-theme][data-mode] { --bau-border: color-mix(in srgb, rgb(var(--bau-border-rgb) / max(var(--bau-border-alpha), var(--usk-border-min-alpha))), var(--bau-text) var(--usk-border-text-mix)); }
+  [data-ui="bauhaus"][data-theme][data-mode] { --bau-border: color-mix(in srgb, var(--bau-structural-ink) 94%, var(--bau-bg)); }
 }
 
 
@@ -280,12 +288,12 @@
 ========================================================= */
 
 .bau-title, .bau-heading, .bau-kicker, .bau-button, .bau-badge, .bau-nav-link { font-family: var(--bau-font-heading); }
-.bau-title { margin: 0; color: var(--bau-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.06em; text-transform: uppercase; }
-.bau-heading { margin: 0; color: var(--bau-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
-.bau-kicker { margin: 0; color: var(--bau-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.bau-title { margin: 0; color: var(--bau-text); font-size: clamp(2.35rem, 6vw, 4.65rem); font-stretch: condensed; font-weight: 950; line-height: .94; letter-spacing: -0.075em; text-transform: uppercase; }
+.bau-heading { margin: 0; color: var(--bau-text); font-size: clamp(1.15rem, 2.4vw, 2rem); font-stretch: condensed; font-weight: 950; line-height: 1.05; letter-spacing: .02em; text-transform: uppercase; }
+.bau-kicker { margin: 0; color: var(--bau-primary); font-size: .82rem; font-weight: 950; letter-spacing: .16em; text-transform: uppercase; }
 .bau-subtitle, .bau-copy { margin: 0; color: var(--bau-text-muted); line-height: 1.65; }
 .bau-text-muted { color: var(--bau-text-muted); }
-.bau-divider { width: 100%; height: 2px; border: 0; background: var(--bau-border); }
+.bau-divider { width: 100%; height: var(--bau-rule-width); border: 0; background: var(--bau-text); }
 
 /* =========================================================
    Surfaces
@@ -293,19 +301,31 @@
 
 .bau-surface, .bau-card, .bau-panel, .bau-toolbar, .bau-table-wrap {
   position: relative;
-  background: linear-gradient(90deg, rgb(var(--bau-primary-rgb) / .1) 0 .5rem, transparent .5rem), var(--bau-surface);
+  background: var(--bau-card-bg);
   color: var(--bau-text);
-  border: 2px solid var(--bau-border);
-  border-radius: var(--bau-radius-lg);
-  box-shadow: 6px 6px 0 rgb(var(--bau-primary-rgb) / .55);
+  border: var(--bau-rule-width) solid var(--bau-border);
+  border-radius: 0;
+  box-shadow: var(--bau-panel-shadow);
   transition: transform var(--bau-transition-base), box-shadow var(--bau-transition-base), border-color var(--bau-transition-base), background var(--bau-transition-base);
+}
+.bau-surface::before, .bau-card::before, .bau-panel::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inline-size: clamp(2.75rem, 16%, 7rem);
+  block-size: .75rem;
+  background: var(--bau-accent);
+  border-block-end: var(--bau-rule-width) solid var(--bau-border);
+  border-inline-start: var(--bau-rule-width) solid var(--bau-border);
+  pointer-events: none;
 }
 .bau-card, .bau-panel { padding: var(--bau-space-6); }
 .bau-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--bau-space-4); padding: var(--bau-space-4); }
-.bau-surface-sm { border-radius: var(--bau-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / calc(var(--bau-shadow-alpha) * .72)); }
-.bau-surface-lg { border-radius: var(--bau-radius-xl); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--bau-shadow-alpha) + .08)); }
-.bau-well, .bau-inset { background: var(--bau-surface-soft); color: var(--bau-text); border: 2px solid rgb(var(--bau-border-rgb) / calc(var(--bau-border-alpha) * .7)); border-radius: var(--bau-radius-md); padding: var(--bau-space-5); box-shadow: inset 0 1px 3px rgb(0 0 0 / .08); }
-.bau-hover-lift:hover { transform: translate(-3px, -3px); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--bau-shadow-alpha) + .12)); }
+.bau-surface-sm { border-radius: 0; box-shadow: var(--bau-control-shadow); }
+.bau-surface-lg { border-radius: 0; box-shadow: var(--bau-panel-shadow); }
+.bau-well, .bau-inset { background: var(--bau-surface-soft); color: var(--bau-text); border: var(--bau-rule-width) solid rgb(var(--bau-border-rgb) / calc(var(--bau-border-alpha) * .9)); border-block-start-width: var(--bau-rule-heavy); border-radius: 0; padding: var(--bau-space-5); box-shadow: inset .65rem 0 0 rgb(var(--bau-primary-rgb) / .18); }
+.bau-hover-lift:hover { transform: translate(-.2rem, -.2rem); box-shadow: .7rem .7rem 0 rgb(var(--bau-text-rgb) / .88); }
 
 /* =========================================================
    Buttons
@@ -313,21 +333,21 @@
 
 .bau-button, .bau-icon-button {
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--bau-space-2);
-  min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--bau-surface); color: var(--bau-text);
-  border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--bau-shadow-alpha));
-  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
+  min-height: 3rem; padding: .84rem 1.25rem; background: var(--bau-surface); color: var(--bau-text);
+  border: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; box-shadow: var(--bau-control-shadow);
+  font: inherit; font-weight: 950; line-height: 1; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
   transition: color var(--bau-transition-fast), background var(--bau-transition-fast), border-color var(--bau-transition-fast), box-shadow var(--bau-transition-fast), transform var(--bau-transition-fast);
 }
-.bau-button:hover, .bau-icon-button:hover { transform: translateY(-1px); border-color: var(--bau-primary); }
-.bau-button:active, .bau-icon-button:active, .bau-button[aria-pressed="true"], .bau-icon-button[aria-pressed="true"], .bau-button.is-active, .bau-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 3px 10px rgb(0 0 0 / .18); }
-.bau-button-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-primary); }
-.bau-button-primary:hover { background: var(--bau-primary-hover); border-color: var(--bau-primary-hover); }
-.bau-button-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-secondary); }
-.bau-button-secondary:hover { background: var(--bau-secondary-hover); border-color: var(--bau-secondary-hover); }
-.bau-button-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-danger); }
+.bau-button:hover, .bau-icon-button:hover { transform: translate(-.16rem, -.16rem); border-color: var(--bau-border); box-shadow: var(--bau-control-shadow-hover); }
+.bau-button:active, .bau-icon-button:active, .bau-button[aria-pressed="true"], .bau-icon-button[aria-pressed="true"], .bau-button.is-active, .bau-icon-button.is-active { transform: translate(.12rem, .12rem); box-shadow: var(--bau-control-shadow-pressed); }
+.bau-button-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-border); }
+.bau-button-primary:hover { background: var(--bau-primary-hover); border-color: var(--bau-border); }
+.bau-button-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-border); }
+.bau-button-secondary:hover { background: var(--bau-secondary-hover); border-color: var(--bau-border); }
+.bau-button-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-border); }
 .bau-button-ghost { background: transparent; color: var(--bau-text); box-shadow: none; }
-.bau-icon-button { width: 2.75rem; padding: 0; border-radius: var(--bau-radius-pill); }
-.bau-button:disabled, .bau-icon-button:disabled, .bau-disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.bau-icon-button { width: 3rem; padding: 0; border-radius: 0; }
+.bau-button:disabled, .bau-icon-button:disabled, .bau-disabled { opacity: .62; cursor: not-allowed; transform: none; box-shadow: none; }
 
 /* Theme-responsive component defaults */
 .bau-card, .bau-panel { background: var(--bau-card-bg); }
@@ -341,50 +361,50 @@
 ========================================================= */
 
 .bau-field { display: flex; flex-direction: column; gap: var(--bau-space-2); }
-.bau-label { color: var(--bau-text); font-size: .925rem; font-weight: 800; }
+.bau-label { color: var(--bau-text); font-size: .82rem; font-weight: 950; letter-spacing: .1em; text-transform: uppercase; }
 .bau-input, .bau-textarea, .bau-select {
-  width: 100%; min-height: 2.875rem; padding: .75rem 1rem; background: var(--bau-surface-soft); color: var(--bau-text);
-  border: 2px solid var(--bau-border); border-radius: var(--bau-radius-md); font: inherit; outline: none;
+  width: 100%; min-height: 3.125rem; padding: .78rem 1rem; background: var(--bau-control-bg); color: var(--bau-text);
+  border: var(--bau-rule-width) solid var(--bau-border); border-block-end-width: var(--bau-rule-heavy); border-radius: 0; box-shadow: none; font: inherit; outline: none;
   transition: background var(--bau-transition-fast), border-color var(--bau-transition-fast), box-shadow var(--bau-transition-fast);
 }
 .bau-textarea { min-height: 8rem; resize: vertical; }
 .bau-input::placeholder, .bau-textarea::placeholder { color: var(--bau-text-muted); opacity: .82; }
-.bau-input:hover, .bau-textarea:hover, .bau-select:hover { border-color: rgb(var(--bau-primary-rgb) / .58); }
-.bau-input:focus, .bau-textarea:focus, .bau-select:focus { border-color: var(--bau-focus); box-shadow: var(--bau-focus-ring); }
+.bau-input:hover, .bau-textarea:hover, .bau-select:hover { box-shadow: inset .5rem 0 0 rgb(var(--bau-primary-rgb) / .2); }
+.bau-input:focus, .bau-textarea:focus, .bau-select:focus { border-color: var(--bau-focus); box-shadow: var(--bau-focus-ring), inset .5rem 0 0 rgb(var(--bau-primary-rgb) / .26); }
 .bau-help-text { color: var(--bau-text-muted); font-size: .875rem; line-height: 1.45; }
 
 /* Checkbox / Radio */
 .bau-check, .bau-radio { display: inline-flex; align-items: center; gap: var(--bau-space-2); color: var(--bau-text); cursor: pointer; }
 .bau-check input, .bau-radio input { position: absolute; opacity: 0; pointer-events: none; }
-.bau-check-control, .bau-radio-control { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; background: var(--bau-surface-soft); border: 2px solid var(--bau-border); transition: background var(--bau-transition-fast), box-shadow var(--bau-transition-fast); }
-.bau-check-control { border-radius: var(--bau-radius-xs); }
+.bau-check-control, .bau-radio-control { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; background: var(--bau-control-bg); border: var(--bau-rule-width) solid var(--bau-border); box-shadow: var(--bau-control-shadow-pressed); transition: background var(--bau-transition-fast), box-shadow var(--bau-transition-fast); }
+.bau-check-control { border-radius: 0; }
 .bau-radio-control { border-radius: 50%; }
-.bau-check input:checked + .bau-check-control, .bau-radio input:checked + .bau-radio-control { background: var(--bau-primary); border-color: var(--bau-primary); box-shadow: var(--bau-focus-ring); }
-.bau-check input:checked + .bau-check-control::after { content: "✓"; color: var(--bau-on-primary); font-size: .9rem; font-weight: 900; }
+.bau-check input:checked + .bau-check-control, .bau-radio input:checked + .bau-radio-control { background: var(--bau-primary); border-color: var(--bau-border); box-shadow: var(--bau-control-shadow); }
+.bau-check input:checked + .bau-check-control::after { content: ""; width: .7rem; height: .42rem; border: solid var(--bau-on-primary); border-width: 0 0 .18rem .18rem; transform: rotate(-45deg) translate(.03rem, -.03rem); }
 .bau-radio input:checked + .bau-radio-control::after { content: ""; width: .55rem; height: .55rem; background: var(--bau-on-primary); border-radius: 50%; }
 
 /* Switch */
 .bau-switch { display: inline-flex; align-items: center; gap: var(--bau-space-3); color: var(--bau-text); cursor: pointer; }
 .bau-switch input { position: absolute; opacity: 0; pointer-events: none; }
-.bau-switch-track { position: relative; width: 3.5rem; height: 1.9rem; background: var(--bau-surface-soft); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-pill); transition: background var(--bau-transition-fast), box-shadow var(--bau-transition-fast); }
-.bau-switch-thumb { position: absolute; top: .22rem; left: .22rem; width: 1.34rem; height: 1.34rem; background: var(--bau-surface-strong); border: 2px solid var(--bau-border); border-radius: 50%; box-shadow: 0 4px 12px rgb(0 0 0 / var(--bau-shadow-alpha)); transition: left var(--bau-transition-fast), background var(--bau-transition-fast); }
-.bau-switch input:checked + .bau-switch-track { background: var(--bau-primary); border-color: var(--bau-primary); }
-.bau-switch input:checked + .bau-switch-track .bau-switch-thumb { left: calc(100% - 1.34rem - .22rem); background: var(--bau-on-primary); }
+.bau-switch-track { position: relative; width: 3.75rem; height: 1.9rem; background: var(--bau-text); border: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; box-shadow: var(--bau-control-shadow-pressed); transition: background var(--bau-transition-fast), box-shadow var(--bau-transition-fast); }
+.bau-switch-thumb { position: absolute; top: .22rem; left: .22rem; width: 1.18rem; height: 1.18rem; background: var(--bau-bg); border: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; box-shadow: none; transition: left var(--bau-transition-fast), background var(--bau-transition-fast); }
+.bau-switch input:checked + .bau-switch-track { background: var(--bau-primary); border-color: var(--bau-border); box-shadow: var(--bau-control-shadow); }
+.bau-switch input:checked + .bau-switch-track .bau-switch-thumb { left: calc(100% - 1.18rem - .22rem); background: var(--bau-on-primary); }
 
 /* =========================================================
    Badges / Nav / Progress / Alerts / Tables
 ========================================================= */
 
-.bau-badge { display: inline-flex; align-items: center; gap: var(--bau-space-1); min-height: 1.75rem; padding: .35rem .7rem; background: var(--bau-surface-soft); color: var(--bau-text); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-pill); font-size: .8125rem; font-weight: 850; line-height: 1; }
-.bau-badge-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-primary); }
-.bau-badge-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-secondary); }
-.bau-badge-success { background: var(--bau-success); color: var(--bau-on-success); border-color: var(--bau-success); }
-.bau-badge-warning { background: var(--bau-warning); color: var(--bau-on-warning); border-color: var(--bau-warning); }
-.bau-badge-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-danger); }
+.bau-badge { display: inline-flex; align-items: center; gap: var(--bau-space-1); min-height: 1.85rem; padding: .42rem .72rem; background: var(--bau-control-bg); color: var(--bau-text); border: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; box-shadow: var(--bau-control-shadow-pressed); font-size: .76rem; font-weight: 950; letter-spacing: .08em; line-height: 1; text-transform: uppercase; }
+.bau-badge-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-border); }
+.bau-badge-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-border); }
+.bau-badge-success { background: var(--bau-success); color: var(--bau-on-success); border-color: var(--bau-border); }
+.bau-badge-warning { background: var(--bau-warning); color: var(--bau-on-warning); border-color: var(--bau-border); }
+.bau-badge-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-border); }
 
-.bau-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bau-space-2); padding: var(--bau-space-2); background: var(--bau-surface); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-xl); box-shadow: 0 10px 30px rgb(0 0 0 / var(--bau-shadow-alpha)); }
-.bau-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.5rem; padding: .65rem 1rem; color: var(--bau-text-muted); border-radius: var(--bau-radius-pill); text-decoration: none; font-weight: 850; transition: color var(--bau-transition-fast), background var(--bau-transition-fast), box-shadow var(--bau-transition-fast); }
-.bau-nav-link:hover { color: var(--bau-text); background: var(--bau-surface-soft); }
+.bau-nav { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; padding: 0; background: var(--bau-text); border: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; box-shadow: var(--bau-panel-shadow); }
+.bau-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: .75rem 1rem; color: var(--bau-bg); border-inline-end: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; text-decoration: none; font-size: .82rem; font-weight: 950; letter-spacing: .08em; text-transform: uppercase; transition: color var(--bau-transition-fast), background var(--bau-transition-fast), box-shadow var(--bau-transition-fast); }
+.bau-nav-link:hover { color: var(--bau-text); background: var(--bau-surface-strong); box-shadow: inset 0 -.45rem 0 var(--bau-accent); }
 .bau-nav-link[aria-current="page"], .bau-nav-link.is-active { color: var(--bau-on-primary); background: var(--bau-primary); }
 
 /* Tooltips use compact contrast surfaces that stay readable across theme modes. */
@@ -396,22 +416,22 @@
 }
 .bau-tooltip-arrow { inline-size: .6rem; block-size: .6rem; flex: 0 0 auto; background: var(--bau-accent); transform: rotate(45deg); }
 
-.bau-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--bau-surface-soft); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-pill); }
-.bau-progress-bar { height: 100%; width: var(--bau-progress-value, 50%); background: linear-gradient(90deg, var(--bau-primary), var(--bau-accent)); border-radius: inherit; }
+.bau-progress { width: 100%; height: 1rem; overflow: hidden; background: repeating-linear-gradient(90deg, var(--bau-surface-soft) 0 1.15rem, rgb(var(--bau-border-rgb) / .7) 1.15rem calc(1.15rem + 2px)); border: var(--bau-rule-width) solid var(--bau-border); border-radius: 0; }
+.bau-progress-bar { height: 100%; width: var(--bau-progress-value, 50%); background: repeating-linear-gradient(90deg, var(--bau-primary) 0 1.15rem, var(--bau-accent) 1.15rem 1.3rem); border-radius: 0; }
 
-.bau-alert { display: grid; gap: var(--bau-space-2); padding: var(--bau-space-4); background: var(--bau-surface); color: var(--bau-text); border: 2px solid var(--bau-border); border-radius: var(--bau-radius-lg); box-shadow: 0 10px 30px rgb(0 0 0 / var(--bau-shadow-alpha)); }
+.bau-alert { display: grid; gap: var(--bau-space-2); padding: var(--bau-space-4); background: var(--bau-card-bg); color: var(--bau-text); border: var(--bau-rule-width) solid var(--bau-border); border-inline-start-width: .7rem; border-radius: 0; box-shadow: var(--bau-control-shadow); }
 .bau-alert-success { border-left-color: var(--bau-success); }
 .bau-alert-warning { border-left-color: var(--bau-warning); }
 .bau-alert-danger { border-left-color: var(--bau-danger); }
-.bau-alert-title { margin: 0; font-weight: 900; }
+.bau-alert-title { margin: 0; font-weight: 950; letter-spacing: .05em; text-transform: uppercase; }
 .bau-alert-body { margin: 0; color: var(--bau-text-muted); line-height: 1.55; }
 
 .bau-table-wrap { overflow: auto; }
 .bau-table { width: 100%; border-collapse: collapse; }
-.bau-table th, .bau-table td { padding: .95rem 1rem; text-align: left; border-bottom: 2px solid var(--bau-border); }
-.bau-table th { color: var(--bau-text); font-size: .82rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; background: rgb(var(--bau-primary-rgb) / .08); }
+.bau-table th, .bau-table td { padding: .95rem 1rem; text-align: left; border-bottom: var(--bau-rule-width) solid var(--bau-border); border-inline-end: 1px solid rgb(var(--bau-border-rgb) / .55); }
+.bau-table th { color: var(--bau-on-primary); font-size: .82rem; font-weight: 950; text-transform: uppercase; letter-spacing: .09em; background: var(--bau-primary); }
 .bau-table td { color: var(--bau-text-muted); }
-.bau-table tr:hover td { background: rgb(var(--bau-primary-rgb) / .045); }
+.bau-table tr:hover td { color: var(--bau-text); background: rgb(var(--bau-primary-rgb) / .1); }
 
 /* =========================================================
    Utilities
@@ -425,10 +445,11 @@
 .bau-skip-link:focus { transform: translateY(0); }
 
 /* Bauhaus-specific geometric helpers */
-.bau-composition { position: relative; overflow: hidden; }
-.bau-composition::after { content: ""; position: absolute; inline-size: 7rem; block-size: 7rem; right: -2rem; top: -2rem; background: var(--bau-primary); border-radius: 50%; opacity: .22; }
-.bau-block { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 4rem; min-block-size: 4rem; background: var(--bau-primary); color: var(--bau-on-primary); border: 2px solid var(--bau-border); font-weight: 950; }
-.bau-rail { border-left: .75rem solid var(--bau-primary); padding-left: var(--bau-space-4); }
+.bau-composition { position: relative; overflow: hidden; isolation: isolate; }
+.bau-composition::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: 28%; border-inline-start: var(--bau-rule-width) solid rgb(var(--bau-text-rgb) / .62); pointer-events: none; }
+.bau-composition::after { content: ""; position: absolute; inline-size: 7rem; block-size: 7rem; right: -2rem; top: -2rem; background: var(--bau-danger); border: var(--bau-rule-width) solid var(--bau-border); border-radius: 50%; opacity: .9; pointer-events: none; }
+.bau-block { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 4rem; min-block-size: 4rem; background: var(--bau-primary); color: var(--bau-on-primary); border: var(--bau-rule-width) solid var(--bau-border); box-shadow: var(--bau-control-shadow); font-weight: 950; letter-spacing: .08em; text-transform: uppercase; }
+.bau-rail { border-left: .9rem solid var(--bau-primary); padding-left: var(--bau-space-4); box-shadow: inset var(--bau-rule-width) 0 0 var(--bau-border); }
 
 /* Spinner geometry follows the bauhaus preset's hard-edged composition. */
 .bau-spinner, .bau-loading-spinner, [data-ui="bauhaus"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
@@ -470,8 +491,9 @@
   inline-size: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border: 1px solid rgb(var(--bau-border-rgb) / .72);
-  border-radius: var(--bau-radius-lg);
+  border: var(--bau-rule-width) solid rgb(var(--bau-border-rgb) / .86);
+  border-radius: 0;
+  filter: saturate(1.08) contrast(1.08);
 }
 
 .bau-card-service {
@@ -479,11 +501,11 @@
   display: grid;
   gap: var(--bau-space-3);
   align-content: start;
-  text-align: center;
+  text-align: left;
   overflow: visible;
 }
 .bau-card-service > .bau-icon-medallion {
-  justify-self: center;
+  justify-self: start;
   margin-block-start: -2.15rem;
   position: relative;
   z-index: 2;
@@ -510,8 +532,9 @@
   padding: .7rem;
   background: var(--bau-primary);
   color: var(--bau-on-primary);
-  border: 2px solid rgb(var(--bau-border-rgb) / .82);
-  border-radius: 50%;
+  border: var(--bau-rule-width) solid rgb(var(--bau-border-rgb) / .82);
+  border-radius: 0;
+  box-shadow: var(--bau-control-shadow);
   line-height: 1;
 }
 .bau-icon-medallion > :where(svg, img) { inline-size: 100%; block-size: 100%; object-fit: contain; }
@@ -548,10 +571,11 @@
   min-inline-size: 5rem;
   aspect-ratio: 1;
   padding: .65rem;
-  background: var(--bau-surface-strong);
-  color: var(--bau-text);
-  border: 2px solid var(--bau-primary);
-  border-radius: 50%;
+  background: var(--bau-warning);
+  color: var(--bau-on-warning);
+  border: var(--bau-rule-width) solid var(--bau-border);
+  border-radius: 0;
+  box-shadow: var(--bau-control-shadow);
   text-align: center;
   font-family: var(--bau-font-heading);
   font-size: .72rem;
@@ -563,11 +587,10 @@
 .bau-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--bau-card-bg);
   color: var(--bau-text);
-  border: 1px solid var(--bau-border);
-  border-radius: var(--bau-radius-lg);
+  border: var(--bau-rule-width) solid var(--bau-border);
+  border-radius: 0;
 }
 
 .bau-feature-item {
@@ -590,8 +613,9 @@
   padding: var(--bau-space-4) var(--bau-space-5);
   background: var(--bau-card-bg);
   color: var(--bau-text);
-  border: 1px solid var(--bau-border);
-  border-radius: var(--bau-radius-lg);
+  border: var(--bau-rule-width) solid var(--bau-border);
+  border-radius: 0;
+  box-shadow: var(--bau-control-shadow);
 }
 .bau-callout-bar > :where(p, div) { min-inline-size: 0; }
 .bau-callout-bar > :where(.bau-button, a, button):last-child { justify-self: end; }
@@ -612,9 +636,9 @@
   overflow: hidden;
   isolation: isolate;
   min-block-size: 12rem;
-  background: var(--bau-surface-soft);
-  border: 1px solid var(--bau-border);
-  border-radius: var(--bau-radius-lg);
+  background: linear-gradient(135deg, var(--bau-primary) 0 35%, var(--bau-warning) 35% 48%, var(--bau-danger) 48% 100%);
+  border: var(--bau-rule-width) solid var(--bau-border);
+  border-radius: 0;
 }
 .bau-media-scrim > :where(img, picture, video) {
   display: block;
@@ -630,7 +654,8 @@
   inset-block-end: 0;
   padding: clamp(1rem, 4vw, 2rem);
   color: #fff;
-  background: linear-gradient(to top, rgb(0 0 0 / .9), rgb(0 0 0 / .58) 56%, transparent);
+  background: linear-gradient(to top, rgb(0 0 0 / .92), rgb(0 0 0 / .64) 58%, transparent);
+  border-block-start: var(--bau-rule-width) solid var(--bau-warning);
 }
 .bau-media-scrim > :where(figcaption, [data-media-caption]) * {
   color: inherit;
@@ -650,6 +675,7 @@
 
 /* Filled and framed actions oppose their cuts to preserve asymmetric composition. */
 .bau-button.bau-button-cut, .bau-button-cut {
+  min-block-size: 2.75rem;
   inline-size: min(100%, 12rem);
   min-inline-size: 6rem;
   max-inline-size: 100%;
@@ -689,6 +715,104 @@
   border: .12em double currentColor; border-radius: 0; background: conic-gradient(currentColor 0 25%, transparent 0 50%, currentColor 0 75%, transparent 0); box-shadow: none; clip-path: inset(0); animation: bau-spin .78s steps(4, end) infinite;
 }
 
+/**
+ * Carries the Bauhaus construction grid through native controls, flat panels,
+ * primary geometry, and heavy rule-based data presentation.
+ */
+[data-ui="bauhaus"][data-theme][data-mode] {
+  --usk-native-font-control: var(--bau-font-heading);
+  --usk-native-control-min-block-size: 3.125rem;
+  --usk-native-control-padding-block: .72rem;
+  --usk-native-control-padding-inline: 1.15rem;
+  --usk-native-border-width: 2px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: .22rem .22rem 0 rgb(var(--bau-text-rgb) / .78);
+  --usk-native-shadow-md: .46rem .46rem 0 rgb(var(--bau-text-rgb) / .28);
+  --usk-native-focus-ring: 0 0 0 2px var(--bau-surface-strong), 0 0 0 5px var(--bau-primary);
+  --usk-native-subcontrol-padding-block: .49rem;
+  --usk-native-subcontrol-padding-inline: .84rem;
+  --usk-native-choice-size: 1.52rem;
+  --usk-native-choice-background: var(--bau-control-bg);
+  --usk-native-choice-border: 2px solid var(--bau-border);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: inset 0 0 0 2px var(--bau-surface-strong);
+  --usk-native-choice-checked-background: var(--bau-primary);
+  --usk-native-choice-mark-color: var(--bau-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 48%, var(--bau-text) 49%), linear-gradient(135deg, var(--bau-text) 51%, transparent 52%);
+  --usk-native-select-indicator-size: .62rem .62rem, .62rem .62rem;
+  --usk-native-select-indicator-position: calc(100% - 1.5rem) 50%, calc(100% - 1.05rem) 50%;
+  --usk-native-select-padding-inline-end: 3.2rem;
+  --usk-native-range-track-size: .3rem;
+  --usk-native-range-track-background: linear-gradient(90deg, var(--bau-warning) 0 34%, var(--bau-border) 34% 68%, var(--bau-primary) 68%);
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: inset 0 -2px 0 rgb(var(--bau-text-rgb) / .3);
+  --usk-native-range-progress-background: var(--bau-primary);
+  --usk-native-range-thumb-size: 1.58rem;
+  --usk-native-range-thumb-background: var(--bau-primary);
+  --usk-native-range-thumb-border: 2px solid var(--bau-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: .16rem .16rem 0 rgb(var(--bau-text-rgb) / .7);
+  --usk-native-progress-size: .98rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, var(--bau-surface-soft) 0 1.18rem, var(--bau-border) 1.18rem 1.3rem);
+  --usk-native-progress-track-border: 2px solid var(--bau-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--bau-primary) 0 1.18rem, var(--bau-warning) 1.18rem 1.3rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: inset -2px 0 0 var(--bau-border);
+  --usk-native-scrollbar-size: 1rem;
+  --usk-native-scrollbar-track: var(--bau-surface-soft);
+  --usk-native-scrollbar-thumb: linear-gradient(180deg, var(--bau-primary) 0 64%, var(--bau-warning) 64%);
+  --usk-native-scrollbar-radius: 0;
+}
+
+.bau-title { font-weight: 900; letter-spacing: .035em; }
+.bau-label { font-size: .7rem; font-weight: 850; }
+.bau-button { min-height: 3.125rem; padding: .72rem 1.15rem; background: var(--bau-primary); border-radius: 0; box-shadow: .22rem .22rem 0 rgb(var(--bau-text-rgb) / .78); font-weight: 900; }
+.bau-input { min-height: 3rem; padding: .68rem 1rem; border-radius: 0; }
+.bau-card { padding: 1.5rem; background: linear-gradient(90deg, rgb(var(--bau-primary-rgb) / .1) 0 .5rem, transparent .5rem), var(--bau-card-bg); border: 2px solid var(--bau-border); border-radius: 0 4rem 0 0; box-shadow: none; }
+.bau-well { background: linear-gradient(135deg, rgb(var(--bau-warning-rgb) / .16) 0 25%, transparent 25%), var(--bau-surface-soft); border: 2px solid var(--bau-border); box-shadow: inset .5rem 0 0 var(--bau-primary); }
+.bau-badge { min-height: 1.82rem; padding: .28rem .68rem; border-radius: 0; }
+.bau-alert { background: linear-gradient(90deg, var(--bau-warning) 0 .58rem, var(--bau-card-bg) .58rem); border: 2px solid var(--bau-border); border-radius: 0 0 0 2rem; box-shadow: none; }
+.bau-progress { height: .98rem; background: repeating-linear-gradient(90deg, var(--bau-surface-soft) 0 1.18rem, var(--bau-border) 1.18rem 1.3rem); }
+.bau-table-wrap { background: linear-gradient(90deg, rgb(var(--bau-primary-rgb) / .08) 0 .5rem, transparent .5rem), var(--bau-card-bg); border-radius: 0; box-shadow: none; }
+.bau-table th { padding: .82rem 1rem; background: var(--bau-border); font-weight: 900; }
+.bau-table td { padding: .78rem .98rem; }
+
+.bau-nav, .bau-panel, .bau-toolbar, .bau-tooltip,
+[data-ui="bauhaus"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]),
+.bau-card-service, .bau-feature-strip, .bau-callout-bar {
+  border: 2px solid var(--bau-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+.bau-nav-link[aria-current="page"], .bau-nav-link.is-active { box-shadow: inset 0 -.42rem 0 var(--bau-warning); }
+.bau-check-control { border-radius: 0; }
+.bau-switch-track { border-radius: 0; }
+.bau-progress-bar { background: repeating-linear-gradient(90deg, var(--bau-primary) 0 1.18rem, var(--bau-warning) 1.18rem 1.3rem); }
+.bau-card { border-radius: 0 4rem 0 0; }
+
+/* Broad primary construction bands keep the workshop grid unmistakably flat. */
+@supports (color: color-mix(in srgb, black, white)) {
+  .bau-panel,
+  .bau-card-service,
+  .bau-feature-strip,
+  .bau-callout-bar {
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--bau-surface) 68%, var(--bau-primary)) 0 18%,
+        transparent 18% 78%,
+        color-mix(in srgb, var(--bau-surface) 64%, var(--bau-warning)) 78%
+      ),
+      var(--bau-card-bg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="bauhaus"] *, [data-ui="bauhaus"] *::before, [data-ui="bauhaus"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -704,4 +828,15 @@
   [data-ui="bauhaus"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="bauhaus"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.bauhaus {
+/* Keeps semantic field states above preset-specific material paint. */
+.bau-input[aria-invalid="true"], .bau-textarea[aria-invalid="true"], .bau-select[aria-invalid="true"] { border-color: var(--bau-danger); box-shadow: 3px 3px 0 rgb(var(--bau-danger-rgb) / .38); }
+.bau-input[readonly], .bau-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.bau-button-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-primary); }
+.bau-button-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-secondary); }
+.bau-button-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-danger); }
+.bau-button-ghost { background: transparent; color: var(--bau-primary); border-color: transparent; }
 }

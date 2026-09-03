@@ -178,7 +178,7 @@ jobs:
         run: npx playwright install --with-deps ${{ matrix.engine }}
 
       - name: Run UI matrix shard
-        run: npm run test:matrix -- --project=${{ matrix.engine }}
+        run: npm run test:matrix:raw -- --project=${{ matrix.engine }}
 
       - name: Upload matrix artifacts
         if: always()

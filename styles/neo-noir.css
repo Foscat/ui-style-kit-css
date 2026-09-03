@@ -560,7 +560,6 @@
 .noir-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--noir-card-bg);
   color: var(--noir-text);
   border: 1px solid var(--noir-border);
@@ -648,10 +647,10 @@
    Neo-Noir Identity
 ========================================================= */
 :root {
-  --noir-font-display: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --noir-font-display: "Bahnschrift Condensed", "Arial Narrow", sans-serif;
   --noir-font-body: Inter, ui-sans-serif, system-ui, sans-serif;
   --noir-font-heading: var(--noir-font-display);
-  --noir-font-control: var(--noir-font-body);
+  --noir-font-control: var(--noir-font-display);
   --noir-radius-xs: .1rem;
   --noir-radius-sm: .25rem;
   --noir-radius-md: .45rem;
@@ -682,6 +681,7 @@
 /* Filled and framed actions use opposing cinematic slants and edge lighting. */
 .noir-button.noir-button-cut, .noir-button-cut {
   inline-size: min(100%, 16rem);
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: end;
@@ -723,6 +723,91 @@
   border: .1em solid currentColor; border-block-start-color: transparent; border-radius: 0; background: conic-gradient(from 70deg, currentColor, transparent 40%, currentColor, transparent 74%); box-shadow: .16em .08em .3em currentColor; clip-path: polygon(22% 0, 100% 0, 78% 100%, 0 100%); animation: noir-spin .88s cubic-bezier(.55, 0, .25, 1) infinite;
 }
 
+/**
+ * Sharpens Neo Noir's cinematic cuts with slanted controls, restrained grain,
+ * edge lighting, and amber-to-teal-to-danger semantic instrumentation.
+ */
+[data-ui="neo-noir"][data-theme][data-mode] {
+  --usk-native-font-control: var(--noir-font-heading);
+  --usk-native-control-min-block-size: 2.65rem;
+  --usk-native-control-padding-block: .58rem;
+  --usk-native-control-padding-inline: 1.05rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0 .18rem 0 .18rem;
+  --usk-native-radius: 0 .28rem 0 .28rem;
+  --usk-native-radius-lg: 0 .42rem 0 .42rem;
+  --usk-native-shadow: -.16rem 0 .58rem rgb(var(--noir-focus-rgb) / .3), inset 1px 0 0 rgb(var(--noir-surface-strong-rgb) / .72);
+  --usk-native-shadow-md: -.28rem 0 .9rem rgb(var(--noir-primary-rgb) / .28), .42rem .58rem 1.35rem rgb(var(--noir-text-rgb) / .22);
+  --usk-native-focus-ring: 0 0 0 1px var(--noir-focus), -.22rem 0 .72rem rgb(var(--noir-focus-rgb) / .5);
+  --usk-native-subcontrol-padding-block: .36rem;
+  --usk-native-subcontrol-padding-inline: .66rem;
+  --usk-native-choice-size: 1.14rem;
+  --usk-native-choice-background: linear-gradient(135deg, rgb(var(--noir-primary-rgb) / .08), var(--noir-control-bg));
+  --usk-native-choice-border: 1px solid var(--noir-focus);
+  --usk-native-checkbox-radius: 0 .12rem 0 .12rem;
+  --usk-native-radio-radius: 50% 42% 50% 42%;
+  --usk-native-choice-shadow: -.1rem 0 .4rem rgb(var(--noir-focus-rgb) / .34);
+  --usk-native-choice-checked-background: linear-gradient(135deg, var(--noir-warning), var(--noir-primary));
+  --usk-native-choice-mark-color: var(--noir-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(65deg, transparent 45%, var(--noir-warning) 46% 54%, transparent 55%), linear-gradient(115deg, transparent 45%, var(--noir-warning) 46% 54%, transparent 55%);
+  --usk-native-select-indicator-size: .46rem .58rem, .46rem .58rem;
+  --usk-native-select-indicator-position: calc(100% - 1.3rem) 46%, calc(100% - .94rem) 54%;
+  --usk-native-select-padding-inline-end: 2.95rem;
+  --usk-native-range-track-size: .22rem;
+  --usk-native-range-track-background: linear-gradient(90deg, var(--noir-focus), var(--noir-warning), var(--noir-danger));
+  --usk-native-range-track-border: 1px solid rgb(var(--noir-primary-rgb) / .58);
+  --usk-native-range-track-radius: 0 .16rem 0 .16rem;
+  --usk-native-range-track-shadow: 0 0 .62rem rgb(var(--noir-warning-rgb) / .34);
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--noir-warning), var(--noir-primary));
+  --usk-native-range-thumb-size: 1.26rem;
+  --usk-native-range-thumb-background: linear-gradient(135deg, var(--noir-warning), var(--noir-surface-strong));
+  --usk-native-range-thumb-border: 1px solid var(--noir-warning);
+  --usk-native-range-thumb-radius: 0 .18rem 0 .18rem;
+  --usk-native-range-thumb-shadow: -.2rem 0 .62rem rgb(var(--noir-focus-rgb) / .42);
+  --usk-native-progress-size: .44rem;
+  --usk-native-progress-track-background: linear-gradient(100deg, rgb(var(--noir-primary-rgb) / .08), rgb(var(--noir-surface-strong-rgb) / .7));
+  --usk-native-progress-track-border: 1px solid rgb(var(--noir-primary-rgb) / .48);
+  --usk-native-progress-track-radius: 0 .14rem 0 .14rem;
+  --usk-native-progress-track-shadow: inset 0 0 .4rem rgb(var(--noir-text-rgb) / .22);
+  --usk-native-progress-value-background: repeating-linear-gradient(120deg, var(--noir-warning) 0 .55rem, var(--noir-primary) .55rem .66rem);
+  --usk-native-progress-value-radius: 0 .1rem 0 .1rem;
+  --usk-native-progress-value-shadow: .18rem 0 .48rem rgb(var(--noir-warning-rgb) / .36);
+  --usk-native-scrollbar-size: .5rem;
+  --usk-native-scrollbar-track: linear-gradient(180deg, var(--noir-surface-soft), var(--noir-surface-strong));
+  --usk-native-scrollbar-thumb: linear-gradient(180deg, var(--noir-warning), var(--noir-focus));
+  --usk-native-scrollbar-radius: 0 .14rem 0 .14rem;
+}
+
+.noir-title { font-weight: 800; letter-spacing: .04em; }
+.noir-label { font-size: .64rem; font-weight: 700; }
+.noir-button { min-height: 2.65rem; padding: .58rem 1.05rem; background: linear-gradient(115deg, var(--noir-warning), var(--noir-primary)); border-radius: 0 .18rem 0 .18rem; box-shadow: -.16rem 0 .58rem rgb(var(--noir-focus-rgb) / .3); font-weight: 750; }
+.noir-input { min-height: 2.6rem; padding: .54rem .9rem; border-radius: 0 .14rem 0 .14rem; }
+.noir-card { padding: 1.22rem; background: linear-gradient(145deg, rgb(var(--noir-primary-rgb) / .1), rgb(var(--noir-surface-rgb) / .78), rgb(var(--noir-danger-rgb) / .06)); border: 1px solid rgb(var(--noir-primary-rgb) / .54); border-radius: 0 .38rem 0 .38rem; box-shadow: -.24rem 0 .82rem rgb(var(--noir-focus-rgb) / .24), .4rem .58rem 1.3rem rgb(var(--noir-text-rgb) / .2); }
+.noir-well { background: repeating-linear-gradient(112deg, rgb(var(--noir-primary-rgb) / .04) 0 1px, transparent 1px .72rem), var(--noir-surface-soft); border: 1px solid rgb(var(--noir-focus-rgb) / .5); box-shadow: inset -.32rem 0 0 rgb(var(--noir-warning-rgb) / .12); }
+.noir-badge { min-height: 1.48rem; padding: .14rem .52rem; border-radius: 0 .22rem 0 .22rem; }
+.noir-alert { background: linear-gradient(105deg, rgb(var(--noir-warning-rgb) / .12), transparent 38%), var(--noir-card-bg); border: 1px solid rgb(var(--noir-primary-rgb) / .58); border-radius: 0 .24rem 0 .24rem; box-shadow: -.16rem 0 .62rem rgb(var(--noir-focus-rgb) / .26); }
+.noir-progress { height: .44rem; background: linear-gradient(100deg, rgb(var(--noir-primary-rgb) / .08), rgb(var(--noir-surface-strong-rgb) / .7)); }
+.noir-table-wrap { background: linear-gradient(145deg, rgb(var(--noir-primary-rgb) / .08), rgb(var(--noir-surface-rgb) / .82)); border-radius: 0 .32rem 0 .32rem; box-shadow: -.2rem 0 .72rem rgb(var(--noir-focus-rgb) / .22); }
+.noir-table th { padding: .6rem .82rem; background: linear-gradient(100deg, rgb(var(--noir-warning-rgb) / .2), rgb(var(--noir-primary-rgb) / .14)); font-weight: 750; }
+.noir-table td { padding: .57rem .8rem; }
+
+.noir-nav, .noir-panel, .noir-toolbar, .noir-tooltip,
+[data-ui="neo-noir"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]),
+.noir-card-service, .noir-feature-strip, .noir-callout-bar {
+  border: 1px solid rgb(var(--noir-primary-rgb) / .54);
+  border-radius: 0 .32rem 0 .32rem;
+  box-shadow: -.2rem 0 .72rem rgb(var(--noir-focus-rgb) / .22);
+  clip-path: polygon(.36rem 0, 100% 0, calc(100% - .36rem) 100%, 0 100%);
+}
+.noir-panel, .noir-card-service, .noir-feature-strip, .noir-callout-bar {
+  background:
+    linear-gradient(118deg, transparent 0 68%, rgb(var(--noir-danger-rgb) / .1) 68% 82%, transparent 82%),
+    repeating-linear-gradient(112deg, rgb(var(--noir-text-rgb) / .028) 0 1px, transparent 1px .72rem),
+    var(--noir-card-bg);
+}
+.noir-button, .noir-icon-button, .noir-input, .noir-textarea, .noir-select { clip-path: polygon(.42rem 0, 100% 0, calc(100% - .42rem) 100%, 0 100%); }
+.noir-progress-bar { background: repeating-linear-gradient(120deg, var(--noir-warning) 0 .55rem, var(--noir-primary) .55rem .66rem); }
+
 @media (prefers-reduced-motion: reduce) {
   [data-ui="neo-noir"] *, [data-ui="neo-noir"] *::before, [data-ui="neo-noir"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
 }
@@ -738,4 +823,15 @@
   [data-ui="neo-noir"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="neo-noir"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.neo_noir {
+/* Keeps semantic field states above preset-specific material paint. */
+.noir-input[aria-invalid="true"], .noir-textarea[aria-invalid="true"], .noir-select[aria-invalid="true"] { border-color: var(--noir-danger); box-shadow: 0 0 0 2px rgb(var(--noir-danger-rgb) / .2); }
+.noir-input[readonly], .noir-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.noir-button-primary { background: linear-gradient(112deg, var(--noir-warning), var(--noir-primary)); color: var(--noir-on-primary); border-color: var(--noir-warning); }
+.noir-button-secondary { background: linear-gradient(112deg, var(--noir-secondary), var(--noir-focus)); color: var(--noir-on-secondary); border-color: var(--noir-focus); }
+.noir-button-danger { background: linear-gradient(112deg, var(--noir-danger), rgb(var(--noir-danger-rgb) / .68)); color: var(--noir-on-danger); border-color: var(--noir-danger); }
+.noir-button-ghost { background: transparent; color: var(--noir-primary); border-color: transparent; }
 }

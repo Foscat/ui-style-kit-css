@@ -492,6 +492,10 @@ test('release automation scripts are exposed', () => {
     'test:e2e',
     'test:axe',
     'test:matrix',
+    'test:matrix:block',
+    'test:matrix:case',
+    'test:matrix:range',
+    'test:matrix:raw',
     'test:visual',
     'test:e2e:install:ci',
     'check:contrast',
@@ -512,6 +516,14 @@ test('release automation scripts are exposed', () => {
     assert.equal(typeof packageJson.scripts?.[scriptName], 'string', `Missing script: ${scriptName}`);
     assert.notEqual(packageJson.scripts[scriptName].trim(), '', `Script should not be empty: ${scriptName}`);
   }
+});
+
+test('local UI matrix exposes resumable blocks and exact-case reruns', () => {
+  assert.equal(packageJson.scripts['test:matrix'], 'node scripts/run-ui-matrix.mjs blocks');
+  assert.equal(packageJson.scripts['test:matrix:block'], 'node scripts/run-ui-matrix.mjs block');
+  assert.equal(packageJson.scripts['test:matrix:case'], 'node scripts/run-ui-matrix.mjs case');
+  assert.equal(packageJson.scripts['test:matrix:range'], 'node scripts/run-ui-matrix.mjs range');
+  assert.equal(packageJson.scripts['test:matrix:raw'], 'playwright test --config playwright.matrix.config.js');
 });
 
 test('clean-install ecosystem scripts and CI enforce current and minimum rendered matrices', () => {
@@ -628,7 +640,7 @@ test('CI workflow shards the UI matrix by engine and preset group', () => {
   assert.match(ciWorkflow, /preset-shard:\s*\[1,\s*2,\s*3,\s*4\]/);
   assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARD:/);
   assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
-  assert.match(ciWorkflow, /npm run test:matrix -- --project=\$\{\{ matrix\.engine \}\}/);
+  assert.match(ciWorkflow, /npm run test:matrix:raw -- --project=\$\{\{ matrix\.engine \}\}/);
   assert.match(ciWorkflow, /playwright-report/);
   assert.match(ciWorkflow, /test-results/);
 });
@@ -648,8 +660,8 @@ function assertReleaseWorkflowShardsUiMatrix(workflowName) {
   assert.match(workflow, /for preset_shard in 1 2 3 4/);
   assert.match(workflow, /UI_MATRIX_PRESET_SHARD="\$\{preset_shard\}"/);
   assert.match(workflow, /UI_MATRIX_PRESET_SHARDS=4/);
-  assert.match(workflow, /npm run test:matrix -- --project="\$\{engine\}"/);
-  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix\s*$/m);
+  assert.match(workflow, /npm run test:matrix:raw -- --project="\$\{engine\}"/);
+  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix(?::raw)?\s*$/m);
 }
 
 test('release version alignment shards the UI matrix before creating releases', () => {
@@ -817,17 +829,21 @@ test('content overflow compatibility stays exported while 2.1 bundles use owned 
   const visualCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.visual.css'), 'utf8');
 
   assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
-  assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.match(overflowCss, /overflow-wrap:\s*break-word/);
+  assert.match(overflowCss, /word-break:\s*normal/);
   assert.match(overflowCss, /white-space:\s*normal/);
   assert.match(componentsCss, /@layer ui-style-kit\.components/);
-  assert.match(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.match(componentsCss, /overflow-wrap:\s*break-word/);
   assert.match(compatibilityCss, /@layer ui-style-kit\.compat_layout/);
-  assert.match(compatibilityCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(compatibilityCss, /overflow-wrap/);
   assert.match(bundledCss, /styles\/components\.css/);
   assert.match(bundledCss, /styles\/compat-layout\.css/);
   assert.match(visualCss, /styles\/components\.css/);
   assert.doesNotMatch(visualCss, /styles\/compat-layout\.css/);
-  assert.match(minCss, /overflow-wrap:anywhere/);
+  assert.doesNotMatch(minCss, /overflow-wrap:anywhere/);
+  assert.match(minCss, /overflow-wrap:break-word/);
 });
 
 test('native element fallback styles are shared instead of duplicated per preset', () => {

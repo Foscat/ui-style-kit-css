@@ -117,7 +117,6 @@ ${selectorList(containmentWrappers)}
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
 [data-ui][data-theme][data-mode] :where(
@@ -125,6 +124,8 @@ ${selectorList(containmentControls)}
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
 
@@ -155,7 +156,8 @@ ${selectorList(buttonPills)}
   font-weight: 850;
   text-align: center;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
@@ -171,7 +173,7 @@ ${selectorList(disabledPills)}
 
 [data-ui][data-theme][data-mode] :where(
 ${selectorList(tooltipSurfaces)}
-) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: anywhere; }
+) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: break-word; word-break: normal; }
 
 [data-ui][data-theme][data-mode] :where(
 ${selectorList(anchoredTooltips)}

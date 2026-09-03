@@ -560,7 +560,6 @@
 .organic-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--organic-card-bg);
   color: var(--organic-text);
   border: 1px solid var(--organic-border);
@@ -678,6 +677,7 @@
 
 /* Filled and framed actions use related leaf contours and relaxed centered balance. */
 .organic-button.organic-button-cut, .organic-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: center;
@@ -731,4 +731,161 @@
   [data-ui="organic-modern"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="organic-modern"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.organic_modern {
+/* Keeps semantic field states above preset-specific material paint. */
+.organic-input[aria-invalid="true"], .organic-textarea[aria-invalid="true"], .organic-select[aria-invalid="true"] { border-color: var(--organic-danger); box-shadow: 0 0 0 2px rgb(var(--organic-danger-rgb) / .18); }
+.organic-input[readonly], .organic-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+}
+
+@layer ui-style-kit.organic_modern {
+/**
+ * Defines Organic Modern's warm material surfaces and olive-like semantic hairlines.
+ * Asymmetry stays modest so editorial hierarchy remains calm and usable.
+ */
+[data-ui="organic-modern"][data-theme][data-mode] {
+  --organic-hairline: rgb(var(--organic-primary-rgb) / max(.34, calc(var(--organic-border-alpha) * .72)));
+  --organic-material-bg: radial-gradient(ellipse at 6% 2%, rgb(var(--organic-primary-rgb) / .26), transparent 42%), linear-gradient(142deg, rgb(var(--organic-secondary-rgb) / .22), rgb(var(--organic-primary-rgb) / .1)), var(--organic-surface);
+  --organic-material-soft-bg: radial-gradient(ellipse at 94% 90%, rgb(var(--organic-accent-rgb) / .22), transparent 46%), linear-gradient(128deg, rgb(var(--organic-secondary-rgb) / .2), rgb(var(--organic-surface-soft-rgb) / .88));
+  --organic-quiet-shadow: 0 .18rem .55rem rgb(var(--organic-text-rgb) / .07);
+  --organic-lift-shadow: 0 .4rem 1.2rem rgb(var(--organic-text-rgb) / .09);
+  --usk-native-card-bg: var(--organic-material-bg);
+  --usk-native-control-bg: var(--organic-surface-soft);
+  --usk-native-control-min-block-size: 2.65rem;
+  --usk-native-control-padding-block: .58rem;
+  --usk-native-control-padding-inline: .86rem;
+  --usk-native-radius-sm: .35rem .5rem .4rem .55rem;
+  --usk-native-radius: .55rem .8rem .6rem .9rem;
+  --usk-native-radius-lg: .9rem 1.25rem .8rem 1.4rem;
+  --usk-native-shadow: var(--organic-quiet-shadow);
+  --usk-native-shadow-md: var(--organic-lift-shadow);
+  --usk-native-focus-ring: 0 0 0 .16rem rgb(var(--organic-focus-rgb) / .32);
+  --usk-native-subcontrol-padding-block: .42rem;
+  --usk-native-subcontrol-padding-inline: .66rem;
+  --usk-native-choice-size: 1.08rem;
+  --usk-native-choice-background: var(--organic-material-bg);
+  --usk-native-choice-border: 1px solid var(--organic-hairline);
+  --usk-native-checkbox-radius: 42% 58% 46% 54%;
+  --usk-native-choice-shadow: inset 0 1px 2px rgb(var(--organic-text-rgb) / .1);
+  --usk-native-select-indicator-image: linear-gradient(55deg, transparent 48%, var(--organic-primary) 50%), linear-gradient(125deg, var(--organic-primary) 48%, transparent 50%);
+  --usk-native-select-indicator-size: .4rem .28rem, .28rem .4rem;
+  --usk-native-select-indicator-position: calc(100% - 1.02rem) 48%, calc(100% - .72rem) 54%;
+  --usk-native-select-padding-inline-end: 2.3rem;
+  --usk-native-range-track-size: .3rem;
+  --usk-native-range-track-background: linear-gradient(90deg, rgb(var(--organic-surface-soft-rgb) / .84), rgb(var(--organic-primary-rgb) / .14));
+  --usk-native-range-track-border: 1px solid var(--organic-hairline);
+  --usk-native-range-track-radius: 55% 45%;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--organic-primary), rgb(var(--organic-primary-rgb) / .72));
+  --usk-native-range-thumb-size: 1.15rem;
+  --usk-native-range-thumb-background: var(--organic-material-bg);
+  --usk-native-range-thumb-border: 1px solid var(--organic-hairline);
+  --usk-native-range-thumb-radius: 48% 52% 44% 56%;
+  --usk-native-range-thumb-shadow: var(--organic-quiet-shadow);
+  --usk-native-progress-size: .38rem;
+  --usk-native-progress-track-background: var(--organic-material-soft-bg);
+  --usk-native-progress-track-border: 1px solid var(--organic-hairline);
+  --usk-native-progress-track-radius: 48% 52% 46% 54%;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: linear-gradient(90deg, var(--organic-primary), rgb(var(--organic-primary-rgb) / .74));
+  --usk-native-progress-value-radius: 46% 54% 48% 52%;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-scrollbar-size: .6rem;
+  --usk-native-scrollbar-track: rgb(var(--organic-surface-soft-rgb) / .46);
+  --usk-native-scrollbar-thumb: rgb(var(--organic-primary-rgb) / .68);
+  --usk-native-scrollbar-radius: 44% 56% 48% 52%;
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="organic-modern"][data-theme][data-mode] {
+    --usk-native-control-bg: linear-gradient(118deg, color-mix(in srgb, var(--organic-surface-soft) 78%, var(--organic-accent)), var(--organic-surface-soft));
+  }
+}
+
+/** Carries the warm editorial grammar through controls, feedback, and data surfaces. */
+.organic-title { font-family: var(--organic-font-display); font-weight: 480; letter-spacing: -.025em; }
+.organic-label { font-size: .76rem; font-weight: 650; }
+.organic-button, .organic-icon-button {
+  min-height: 2.65rem;
+  padding: .58rem .86rem;
+  background: var(--organic-material-bg);
+  border: 1px solid var(--organic-hairline);
+  border-radius: .55rem .8rem .6rem .9rem;
+  box-shadow: var(--organic-quiet-shadow);
+  font-weight: 620;
+}
+.organic-icon-button { padding: 0; border-radius: 48% 52% 46% 54%; }
+.organic-button-primary { border-start-end-radius: 1.5rem 70%; }
+.organic-button:active, .organic-icon-button:active,
+.organic-button[aria-pressed="true"], .organic-icon-button[aria-pressed="true"] {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgb(var(--organic-text-rgb) / .16);
+}
+.organic-input, .organic-textarea, .organic-select {
+  min-height: 2.65rem;
+  padding: .58rem .86rem;
+  background: var(--organic-material-bg);
+  border: 1px solid var(--organic-hairline);
+  border-radius: .6rem .85rem .55rem .9rem;
+  box-shadow: none;
+}
+.organic-surface, .organic-card, .organic-panel, .organic-toolbar, .organic-table-wrap {
+  background: var(--organic-material-bg);
+  border: 1px solid var(--organic-hairline);
+  border-radius: .9rem 1.25rem .8rem 1.4rem;
+  box-shadow: var(--organic-quiet-shadow);
+}
+.organic-card, .organic-panel { padding: 1.35rem; }
+.organic-well, .organic-inset {
+  padding: 1rem;
+  background: var(--organic-material-soft-bg);
+  border: 1px solid var(--organic-hairline);
+  border-radius: .7rem 1rem .65rem 1.1rem;
+  box-shadow: inset 0 1px 2px rgb(var(--organic-text-rgb) / .08);
+}
+.organic-badge {
+  min-height: 1.45rem;
+  padding: .22rem .52rem;
+  border: 1px solid var(--organic-hairline);
+  border-radius: 48% 52% 46% 54%;
+}
+.organic-alert {
+  background: var(--organic-material-soft-bg);
+  border: 1px solid var(--organic-hairline);
+  border-inline-start-width: .2rem;
+  border-radius: .72rem 1.05rem .68rem 1.12rem;
+  box-shadow: var(--organic-quiet-shadow);
+}
+.organic-progress { height: .38rem; background: var(--organic-material-soft-bg); }
+.organic-progress-bar { background: linear-gradient(90deg, var(--organic-primary), rgb(var(--organic-primary-rgb) / .74)); border-radius: 46% 54% 48% 52%; }
+.organic-table-wrap { background: var(--organic-material-bg); border-radius: .9rem 1.25rem .8rem 1.4rem; box-shadow: var(--organic-quiet-shadow); }
+.organic-table th { padding: .72rem .82rem; background: linear-gradient(90deg, rgb(var(--organic-primary-rgb) / .1), transparent 78%); font-weight: 650; }
+.organic-table td { padding: .74rem .82rem; }
+.organic-nav { padding: .18rem; border: 0; border-block-end: 1px solid var(--organic-hairline); border-radius: 0; box-shadow: none; }
+.organic-nav-link { min-height: 2.25rem; padding: .48rem .7rem; border-radius: .45rem .7rem .42rem .75rem; }
+.organic-tooltip, [data-ui="organic-modern"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 1px solid var(--organic-hairline); border-radius: .58rem .82rem .54rem .88rem; box-shadow: var(--organic-lift-shadow); }
+.organic-card-service, .organic-card-feature, .organic-feature-strip, .organic-callout-bar {
+  padding: 1.2rem;
+  background: var(--organic-material-bg);
+  border: 1px solid var(--organic-hairline);
+  border-radius: .95rem 1.3rem .82rem 1.45rem;
+  box-shadow: var(--organic-quiet-shadow);
+}
+.organic-feature-item { padding: .85rem; border-color: var(--organic-hairline); }
+.organic-callout-bar > :where(.organic-button, a, button):last-child { border-start-end-radius: 1.5rem 70%; }
+[data-ui="organic-modern"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+  background: var(--organic-material-bg);
+  border: 1px solid var(--organic-hairline);
+  border-radius: .95rem 1.3rem .82rem 1.45rem;
+  box-shadow: var(--organic-quiet-shadow);
+}
+}
+
+@layer ui-style-kit.organic_modern {
+/* Restores semantic action paint after identity-specific geometry. */
+.organic-button-primary { background: var(--organic-primary); color: var(--organic-on-primary); border-color: var(--organic-primary); }
+.organic-button-secondary { background: var(--organic-secondary); color: var(--organic-on-secondary); border-color: var(--organic-secondary); }
+.organic-button-danger { background: var(--organic-danger); color: var(--organic-on-danger); border-color: var(--organic-danger); }
+.organic-button-ghost { background: transparent; color: var(--organic-primary); border-color: transparent; }
 }

@@ -23,11 +23,11 @@
   --saas-font-heading: var(--saas-font-display);
   --saas-font-control: var(--saas-font-display);
   --saas-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --saas-radius-xs: .25rem;
-  --saas-radius-sm: .5rem;
-  --saas-radius-md: 0.75rem;
-  --saas-radius-lg: 1.125rem;
-  --saas-radius-xl: calc(1.125rem + .5rem);
+  --saas-radius-xs: .1875rem;
+  --saas-radius-sm: .25rem;
+  --saas-radius-md: .375rem;
+  --saas-radius-lg: .5rem;
+  --saas-radius-xl: .75rem;
   --saas-radius-pill: 999px;
   --saas-space-1: .25rem;
   --saas-space-2: .5rem;
@@ -43,10 +43,10 @@
 [data-ui="minimal-saas"][data-mode="light"] {
   color-scheme: light;
   --saas-panel-alpha: .98;
-  --saas-panel-soft-alpha: .78;
-  --saas-border-alpha: .58;
-  --saas-shadow-alpha: .12;
-  --saas-focus-alpha: .34;
+  --saas-panel-soft-alpha: .74;
+  --saas-border-alpha: .44;
+  --saas-shadow-alpha: .08;
+  --saas-focus-alpha: .3;
 }
 
 [data-ui="minimal-saas"][data-mode="dark"] {
@@ -121,16 +121,16 @@
   --usk-native-focus-ring: var(--saas-focus-ring, 0 0 0 3px rgb(var(--saas-focus-rgb) / .28));
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
-  --usk-native-panel-padding: var(--saas-space-5);
-  --usk-native-control-min-block-size: 2.625rem;
-  --usk-native-control-padding-block: .68rem;
-  --usk-native-control-padding-inline: .95rem;
-  --usk-native-subcontrol-padding-block: .5rem;
-  --usk-native-subcontrol-padding-inline: .72rem;
-  --usk-native-choice-size: 1.35rem;
+  --usk-native-panel-padding: var(--saas-space-4);
+  --usk-native-control-min-block-size: 2.375rem;
+  --usk-native-control-padding-block: .5rem;
+  --usk-native-control-padding-inline: .75rem;
+  --usk-native-subcontrol-padding-block: .38rem;
+  --usk-native-subcontrol-padding-inline: .6rem;
+  --usk-native-choice-size: 1rem;
   --usk-native-choice-background: var(--saas-control-bg);
   --usk-native-choice-border: 1px solid var(--saas-border);
-  --usk-native-checkbox-radius: .2rem;
+  --usk-native-checkbox-radius: .25rem;
   --usk-native-radio-radius: 50%;
   --usk-native-choice-shadow: none;
   --usk-native-choice-checked-background: var(--saas-primary);
@@ -139,24 +139,24 @@
   --usk-native-select-indicator-size: 0.34rem 0.34rem, 0.34rem 0.34rem;
   --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - 0.72rem) 50%;
   --usk-native-select-padding-inline-end: 2.25rem;
-  --usk-native-range-track-size: .28rem;
+  --usk-native-range-track-size: .32rem;
   --usk-native-range-track-background: var(--saas-surface-soft);
-  --usk-native-range-track-border: 1px solid var(--saas-border);
-  --usk-native-range-track-radius: 2px;
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 999px;
   --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: var(--saas-primary);
-  --usk-native-range-thumb-size: 1rem;
-  --usk-native-range-thumb-background: var(--saas-surface-strong);
-  --usk-native-range-thumb-border: 1px solid var(--saas-border);
+  --usk-native-range-thumb-size: .95rem;
+  --usk-native-range-thumb-background: var(--saas-primary);
+  --usk-native-range-thumb-border: 2px solid var(--saas-surface-strong);
   --usk-native-range-thumb-radius: 50%;
-  --usk-native-range-thumb-shadow: none;
-  --usk-native-progress-size: .42rem;
+  --usk-native-range-thumb-shadow: 0 .2rem .5rem rgb(var(--saas-text-rgb) / .12);
+  --usk-native-progress-size: .35rem;
   --usk-native-progress-track-background: var(--saas-surface-soft);
-  --usk-native-progress-track-border: 1px solid var(--saas-border);
-  --usk-native-progress-track-radius: 2px;
+  --usk-native-progress-track-border: 0 solid transparent;
+  --usk-native-progress-track-radius: 999px;
   --usk-native-progress-track-shadow: none;
   --usk-native-progress-value-background: var(--saas-primary);
-  --usk-native-progress-value-radius: 2px;
+  --usk-native-progress-value-radius: inherit;
   --usk-native-progress-value-shadow: none;
   --usk-native-meter-optimum-background: var(--saas-success);
   --usk-native-meter-suboptimum-background: var(--saas-warning);
@@ -203,10 +203,12 @@
   --saas-link: rgb(var(--saas-link-rgb));
   --saas-focus: rgb(var(--saas-focus-rgb));
   --saas-focus-ring: 0 0 0 3px rgb(var(--saas-focus-rgb) / var(--saas-focus-alpha));
+  --saas-shadow-sm: 0 1px 2px rgb(var(--saas-text-rgb) / calc(var(--saas-shadow-alpha) * .65));
+  --saas-shadow-md: 0 .2rem .7rem rgb(var(--saas-text-rgb) / calc(var(--saas-shadow-alpha) * .8));
   --saas-theme-bg-size: auto;
-  --saas-theme-bg: radial-gradient(circle at 0% 0%, rgb(var(--saas-primary-rgb) / .16), transparent 32rem), radial-gradient(circle at 100% 0%, rgb(var(--saas-accent-rgb) / .12), transparent 30rem), radial-gradient(circle at 50% 100%, rgb(var(--saas-secondary-rgb) / .10), transparent 34rem), var(--saas-bg);
-  --saas-card-bg: linear-gradient(135deg, rgb(var(--saas-primary-rgb) / .10), rgb(var(--saas-accent-rgb) / .055) 42%, rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha)) 100%), var(--saas-surface);
-  --saas-control-bg: linear-gradient(180deg, rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha)), rgb(var(--saas-surface-soft-rgb) / var(--saas-panel-soft-alpha)));
+  --saas-theme-bg: linear-gradient(180deg, rgb(var(--saas-primary-rgb) / .035), transparent 18rem), var(--saas-bg);
+  --saas-card-bg: var(--saas-surface);
+  --saas-control-bg: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha));
   --saas-spinner-track: rgb(var(--saas-border-rgb) / max(.28, calc(var(--saas-border-alpha) * .7)));
   --saas-spinner-stroke: var(--saas-primary);
   --saas-spinner-accent: var(--saas-accent);
@@ -252,7 +254,7 @@
 
 [data-ui="minimal-saas"] {
   min-height: 100vh;
-  background: linear-gradient(180deg, rgb(var(--saas-primary-rgb) / .04), transparent 22rem), var(--saas-bg);
+  background: linear-gradient(180deg, rgb(var(--saas-primary-rgb) / .03), transparent 18rem), var(--saas-bg);
   color: var(--saas-text);
   font-family: var(--saas-font-body);
   line-height: 1.5;
@@ -280,10 +282,10 @@
 ========================================================= */
 
 .saas-title, .saas-heading, .saas-kicker, .saas-button, .saas-badge, .saas-nav-link { font-family: var(--saas-font-heading); }
-.saas-title { margin: 0; color: var(--saas-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.045em; }
-.saas-heading { margin: 0; color: var(--saas-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
-.saas-kicker { margin: 0; color: var(--saas-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
-.saas-subtitle, .saas-copy { margin: 0; color: var(--saas-text-muted); line-height: 1.65; }
+.saas-title { margin: 0; color: var(--saas-text); font-size: clamp(1.9rem, 4.5vw, 3.35rem); font-weight: 750; line-height: 1.08; letter-spacing: 0; }
+.saas-heading { margin: 0; color: var(--saas-text); font-size: clamp(1.15rem, 2.25vw, 1.8rem); font-weight: 750; line-height: 1.22; letter-spacing: 0; }
+.saas-kicker { margin: 0; color: var(--saas-primary); font-size: .78rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.saas-subtitle, .saas-copy { margin: 0; color: var(--saas-text-muted); line-height: 1.55; }
 .saas-text-muted { color: var(--saas-text-muted); }
 .saas-divider { width: 100%; height: 1px; border: 0; background: var(--saas-border); }
 
@@ -293,19 +295,19 @@
 
 .saas-surface, .saas-card, .saas-panel, .saas-toolbar, .saas-table-wrap {
   position: relative;
-  background: linear-gradient(180deg, rgb(255 255 255 / .05), rgb(255 255 255 / 0)), var(--saas-surface);
+  background: var(--saas-card-bg);
   color: var(--saas-text);
   border: 1px solid var(--saas-border);
   border-radius: var(--saas-radius-lg);
-  box-shadow: 0 10px 30px rgb(15 23 42 / var(--saas-shadow-alpha));
+  box-shadow: var(--saas-shadow-md);
   transition: transform var(--saas-transition-base), box-shadow var(--saas-transition-base), border-color var(--saas-transition-base), background var(--saas-transition-base);
 }
-.saas-card, .saas-panel { padding: var(--saas-space-6); }
+.saas-card, .saas-panel { padding: var(--saas-space-5); }
 .saas-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--saas-space-4); padding: var(--saas-space-4); }
-.saas-surface-sm { border-radius: var(--saas-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / calc(var(--saas-shadow-alpha) * .72)); }
-.saas-surface-lg { border-radius: var(--saas-radius-xl); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--saas-shadow-alpha) + .08)); }
-.saas-well, .saas-inset { background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid rgb(var(--saas-border-rgb) / calc(var(--saas-border-alpha) * .7)); border-radius: var(--saas-radius-md); padding: var(--saas-space-5); box-shadow: inset 0 1px 3px rgb(0 0 0 / .08); }
-.saas-hover-lift:hover { transform: translateY(-2px); box-shadow: 0 22px 60px rgb(0 0 0 / calc(var(--saas-shadow-alpha) + .12)); }
+.saas-surface-sm { border-radius: var(--saas-radius-md); box-shadow: var(--saas-shadow-sm); }
+.saas-surface-lg { border-radius: var(--saas-radius-lg); box-shadow: var(--saas-shadow-md); }
+.saas-well, .saas-inset { background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); padding: var(--saas-space-4); box-shadow: none; }
+.saas-hover-lift:hover { transform: none; border-color: rgb(var(--saas-primary-rgb) / .42); box-shadow: var(--saas-shadow-md); }
 
 /* =========================================================
    Buttons
@@ -313,20 +315,20 @@
 
 .saas-button, .saas-icon-button {
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--saas-space-2);
-  min-height: 2.75rem; padding: .75rem 1.1rem; background: var(--saas-surface); color: var(--saas-text);
-  border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); box-shadow: 0 6px 18px rgb(0 0 0 / var(--saas-shadow-alpha));
-  font: inherit; font-weight: 800; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
+  min-height: 2.375rem; padding: .5rem .78rem; background: var(--saas-control-bg); color: var(--saas-text);
+  border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); box-shadow: var(--saas-shadow-sm);
+  font: inherit; font-weight: 700; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
   transition: color var(--saas-transition-fast), background var(--saas-transition-fast), border-color var(--saas-transition-fast), box-shadow var(--saas-transition-fast), transform var(--saas-transition-fast);
 }
-.saas-button:hover, .saas-icon-button:hover { transform: translateY(-1px); border-color: var(--saas-primary); }
-.saas-button:active, .saas-icon-button:active, .saas-button[aria-pressed="true"], .saas-icon-button[aria-pressed="true"], .saas-button.is-active, .saas-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 3px 10px rgb(0 0 0 / .18); }
+.saas-button:hover, .saas-icon-button:hover { transform: none; border-color: rgb(var(--saas-primary-rgb) / .48); background: var(--saas-surface-soft); }
+.saas-button:active, .saas-icon-button:active, .saas-button[aria-pressed="true"], .saas-icon-button[aria-pressed="true"], .saas-button.is-active, .saas-icon-button.is-active { transform: none; box-shadow: inset 0 1px 2px rgb(var(--saas-text-rgb) / .12); }
 .saas-button-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
 .saas-button-primary:hover { background: var(--saas-primary-hover); border-color: var(--saas-primary-hover); }
-.saas-button-secondary { background: var(--saas-secondary); color: var(--saas-on-secondary); border-color: var(--saas-secondary); }
-.saas-button-secondary:hover { background: var(--saas-secondary-hover); border-color: var(--saas-secondary-hover); }
+.saas-button-secondary { background: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha)); color: var(--saas-primary); border-color: rgb(var(--saas-primary-rgb) / .32); box-shadow: none; }
+.saas-button-secondary:hover { background: rgb(var(--saas-primary-rgb) / .06); border-color: rgb(var(--saas-primary-rgb) / .52); }
 .saas-button-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
-.saas-button-ghost { background: transparent; color: var(--saas-text); box-shadow: none; }
-.saas-icon-button { width: 2.75rem; padding: 0; border-radius: var(--saas-radius-pill); }
+.saas-button-ghost { background: transparent; color: var(--saas-primary); border-color: transparent; box-shadow: none; }
+.saas-icon-button { width: 2.375rem; padding: 0; border-radius: var(--saas-radius-md); }
 .saas-button:disabled, .saas-icon-button:disabled, .saas-disabled { opacity: .55; cursor: not-allowed; transform: none; }
 
 /* Theme-responsive component defaults */
@@ -341,49 +343,49 @@
 ========================================================= */
 
 .saas-field { display: flex; flex-direction: column; gap: var(--saas-space-2); }
-.saas-label { color: var(--saas-text); font-size: .925rem; font-weight: 800; }
+.saas-label { color: var(--saas-text); font-size: .875rem; font-weight: 700; }
 .saas-input, .saas-textarea, .saas-select {
-  width: 100%; min-height: 2.875rem; padding: .75rem 1rem; background: var(--saas-surface-soft); color: var(--saas-text);
+  width: 100%; min-height: 2.375rem; padding: .5rem .75rem; background: var(--saas-control-bg); color: var(--saas-text);
   border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); font: inherit; outline: none;
   transition: background var(--saas-transition-fast), border-color var(--saas-transition-fast), box-shadow var(--saas-transition-fast);
 }
-.saas-textarea { min-height: 8rem; resize: vertical; }
+.saas-textarea { min-height: 7rem; resize: vertical; }
 .saas-input::placeholder, .saas-textarea::placeholder { color: var(--saas-text-muted); opacity: .82; }
-.saas-input:hover, .saas-textarea:hover, .saas-select:hover { border-color: rgb(var(--saas-primary-rgb) / .58); }
+.saas-input:hover, .saas-textarea:hover, .saas-select:hover { border-color: rgb(var(--saas-primary-rgb) / .42); }
 .saas-input:focus, .saas-textarea:focus, .saas-select:focus { border-color: var(--saas-focus); box-shadow: var(--saas-focus-ring); }
 .saas-help-text { color: var(--saas-text-muted); font-size: .875rem; line-height: 1.45; }
 
 /* Checkbox / Radio */
 .saas-check, .saas-radio { display: inline-flex; align-items: center; gap: var(--saas-space-2); color: var(--saas-text); cursor: pointer; }
 .saas-check input, .saas-radio input { position: absolute; opacity: 0; pointer-events: none; }
-.saas-check-control, .saas-radio-control { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; background: var(--saas-surface-soft); border: 1px solid var(--saas-border); transition: background var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
+.saas-check-control, .saas-radio-control { display: inline-grid; place-items: center; width: 1rem; height: 1rem; background: var(--saas-control-bg); border: 1px solid var(--saas-border); transition: background var(--saas-transition-fast), border-color var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
 .saas-check-control { border-radius: var(--saas-radius-xs); }
 .saas-radio-control { border-radius: 50%; }
-.saas-check input:checked + .saas-check-control, .saas-radio input:checked + .saas-radio-control { background: var(--saas-primary); border-color: var(--saas-primary); box-shadow: var(--saas-focus-ring); }
-.saas-check input:checked + .saas-check-control::after { content: "✓"; color: var(--saas-on-primary); font-size: .9rem; font-weight: 900; }
-.saas-radio input:checked + .saas-radio-control::after { content: ""; width: .55rem; height: .55rem; background: var(--saas-on-primary); border-radius: 50%; }
+.saas-check input:checked + .saas-check-control, .saas-radio input:checked + .saas-radio-control { background: var(--saas-primary); border-color: var(--saas-primary); box-shadow: 0 0 0 .16rem rgb(var(--saas-primary-rgb) / .18); }
+.saas-check input:checked + .saas-check-control::after { content: "✓"; color: var(--saas-on-primary); font-size: .78rem; font-weight: 900; line-height: 1; }
+.saas-radio input:checked + .saas-radio-control::after { content: ""; width: .48rem; height: .48rem; background: var(--saas-on-primary); border-radius: 50%; }
 
 /* Switch */
 .saas-switch { display: inline-flex; align-items: center; gap: var(--saas-space-3); color: var(--saas-text); cursor: pointer; }
 .saas-switch input { position: absolute; opacity: 0; pointer-events: none; }
-.saas-switch-track { position: relative; width: 3.5rem; height: 1.9rem; background: var(--saas-surface-soft); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-pill); transition: background var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
-.saas-switch-thumb { position: absolute; top: .22rem; left: .22rem; width: 1.34rem; height: 1.34rem; background: var(--saas-surface-strong); border: 1px solid var(--saas-border); border-radius: 50%; box-shadow: 0 4px 12px rgb(0 0 0 / var(--saas-shadow-alpha)); transition: left var(--saas-transition-fast), background var(--saas-transition-fast); }
+.saas-switch-track { position: relative; width: 2.6rem; height: 1.3rem; background: var(--saas-surface-soft); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-pill); transition: background var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
+.saas-switch-thumb { position: absolute; top: .14rem; left: .14rem; width: .9rem; height: .9rem; background: var(--saas-surface-strong); border: 1px solid var(--saas-border); border-radius: 50%; box-shadow: 0 1px 2px rgb(var(--saas-text-rgb) / .12); transition: left var(--saas-transition-fast), background var(--saas-transition-fast); }
 .saas-switch input:checked + .saas-switch-track { background: var(--saas-primary); border-color: var(--saas-primary); }
-.saas-switch input:checked + .saas-switch-track .saas-switch-thumb { left: calc(100% - 1.34rem - .22rem); background: var(--saas-on-primary); }
+.saas-switch input:checked + .saas-switch-track .saas-switch-thumb { left: calc(100% - .9rem - .14rem); background: var(--saas-on-primary); }
 
 /* =========================================================
    Badges / Nav / Progress / Alerts / Tables
 ========================================================= */
 
-.saas-badge { display: inline-flex; align-items: center; gap: var(--saas-space-1); min-height: 1.75rem; padding: .35rem .7rem; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-pill); font-size: .8125rem; font-weight: 850; line-height: 1; }
+.saas-badge { display: inline-flex; align-items: center; gap: var(--saas-space-1); min-height: 1.4rem; padding: .25rem .5rem; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid transparent; border-radius: var(--saas-radius-sm); font-size: .75rem; font-weight: 700; line-height: 1; }
 .saas-badge-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
-.saas-badge-secondary { background: var(--saas-secondary); color: var(--saas-on-secondary); border-color: var(--saas-secondary); }
-.saas-badge-success { background: var(--saas-success); color: var(--saas-on-success); border-color: var(--saas-success); }
-.saas-badge-warning { background: var(--saas-warning); color: var(--saas-on-warning); border-color: var(--saas-warning); }
-.saas-badge-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
+.saas-badge-secondary { background: rgb(var(--saas-primary-rgb) / .1); color: var(--saas-primary); border-color: transparent; }
+.saas-badge-success { background: rgb(var(--saas-success-rgb) / .14); color: var(--saas-success); border-color: transparent; }
+.saas-badge-warning { background: rgb(var(--saas-warning-rgb) / .14); color: var(--saas-warning); border-color: transparent; }
+.saas-badge-danger { background: rgb(var(--saas-danger-rgb) / .14); color: var(--saas-danger); border-color: transparent; }
 
-.saas-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--saas-space-2); padding: var(--saas-space-2); background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-xl); box-shadow: 0 10px 30px rgb(0 0 0 / var(--saas-shadow-alpha)); }
-.saas-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.5rem; padding: .65rem 1rem; color: var(--saas-text-muted); border-radius: var(--saas-radius-pill); text-decoration: none; font-weight: 850; transition: color var(--saas-transition-fast), background var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
+.saas-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--saas-space-1); padding: var(--saas-space-1); background: var(--saas-card-bg); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-lg); box-shadow: var(--saas-shadow-sm); }
+.saas-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.125rem; padding: .4rem .7rem; color: var(--saas-text-muted); border-radius: var(--saas-radius-md); text-decoration: none; font-weight: 700; transition: color var(--saas-transition-fast), background var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
 .saas-nav-link:hover { color: var(--saas-text); background: var(--saas-surface-soft); }
 .saas-nav-link[aria-current="page"], .saas-nav-link.is-active { color: var(--saas-on-primary); background: var(--saas-primary); }
 
@@ -395,20 +397,20 @@
 }
 .saas-tooltip-arrow { inline-size: .55rem; block-size: .55rem; flex: 0 0 auto; background: currentColor; border-radius: .12rem; opacity: .9; transform: rotate(45deg); }
 
-.saas-progress { width: 100%; height: .9rem; overflow: hidden; background: var(--saas-surface-soft); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-pill); }
-.saas-progress-bar { height: 100%; width: var(--saas-progress-value, 50%); background: linear-gradient(90deg, var(--saas-primary), var(--saas-accent)); border-radius: inherit; }
+.saas-progress { width: 100%; height: .3rem; overflow: hidden; background: var(--saas-surface-soft); border: 0 solid transparent; border-radius: var(--saas-radius-pill); }
+.saas-progress-bar { height: 100%; width: var(--saas-progress-value, 50%); background: var(--saas-primary); border-radius: inherit; }
 
-.saas-alert { display: grid; gap: var(--saas-space-2); padding: var(--saas-space-4); background: var(--saas-surface); color: var(--saas-text); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-lg); box-shadow: 0 10px 30px rgb(0 0 0 / var(--saas-shadow-alpha)); }
-.saas-alert-success { border-left-color: var(--saas-success); }
-.saas-alert-warning { border-left-color: var(--saas-warning); }
-.saas-alert-danger { border-left-color: var(--saas-danger); }
+.saas-alert { display: grid; gap: var(--saas-space-2); padding: var(--saas-space-3); background: rgb(var(--saas-primary-rgb) / .065); color: var(--saas-text); border: 1px solid rgb(var(--saas-primary-rgb) / .28); border-radius: var(--saas-radius-lg); box-shadow: none; }
+.saas-alert-success { background: rgb(var(--saas-success-rgb) / .12); border-color: rgb(var(--saas-success-rgb) / .28); }
+.saas-alert-warning { background: rgb(var(--saas-warning-rgb) / .12); border-color: rgb(var(--saas-warning-rgb) / .28); }
+.saas-alert-danger { background: rgb(var(--saas-danger-rgb) / .12); border-color: rgb(var(--saas-danger-rgb) / .28); }
 .saas-alert-title { margin: 0; font-weight: 900; }
 .saas-alert-body { margin: 0; color: var(--saas-text-muted); line-height: 1.55; }
 
 .saas-table-wrap { overflow: auto; }
 .saas-table { width: 100%; border-collapse: collapse; }
-.saas-table th, .saas-table td { padding: .95rem 1rem; text-align: left; border-bottom: 1px solid var(--saas-border); }
-.saas-table th { color: var(--saas-text); font-size: .82rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; background: rgb(var(--saas-primary-rgb) / .08); }
+.saas-table th, .saas-table td { padding: .68rem .75rem; text-align: left; border-bottom: 1px solid var(--saas-border); }
+.saas-table th { color: var(--saas-text); font-size: .78rem; font-weight: 700; text-transform: none; letter-spacing: 0; background: rgb(var(--saas-surface-soft-rgb) / .52); }
 .saas-table td { color: var(--saas-text-muted); }
 .saas-table tr:hover td { background: rgb(var(--saas-primary-rgb) / .045); }
 
@@ -560,7 +562,6 @@
 .saas-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--saas-card-bg);
   color: var(--saas-text);
   border: 1px solid var(--saas-border);
@@ -640,42 +641,60 @@
   .saas-feature-item:last-child { border-block-end: 0; }
 }
 
-.saas-card-service, .saas-card-feature, .saas-feature-strip, .saas-callout-bar { box-shadow: 0 .9rem 2rem rgb(15 23 42 / calc(var(--saas-shadow-alpha) + .03)); }
-.saas-card-accent-edge { border-inline-start-width: .3rem; }
-.saas-icon-medallion { box-shadow: 0 .55rem 1.2rem rgb(15 23 42 / calc(var(--saas-shadow-alpha) + .05)); }
+.saas-card-service, .saas-card-feature, .saas-feature-strip, .saas-callout-bar { box-shadow: var(--saas-shadow-md); }
+.saas-card-accent-edge { border-inline-start-width: .16rem; }
+.saas-icon-medallion {
+  background: var(--saas-surface-soft);
+  color: var(--saas-primary);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--saas-radius-lg);
+  box-shadow: var(--saas-shadow-sm);
+}
 
 /* Filled and framed actions share one precise fold without becoming the same control. */
 .saas-button.saas-button-cut, .saas-button-cut {
+  min-height: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
   justify-content: center;
-  clip-path: polygon(0 0, calc(100% - .55rem) 0, 100% .55rem, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - .25rem) 0, 100% .25rem, 100% 100%, 0 100%);
 }
 .saas-button.saas-button-outline-heavy, .saas-button-outline-heavy {
   border-width: 1px;
   border-radius: 0;
-  clip-path: polygon(0 0, calc(100% - .42rem) 0, 100% .42rem, 100% 100%, 0 100%);
-  box-shadow: 0 .25rem .6rem rgb(var(--saas-text-rgb) / .08);
+  clip-path: polygon(0 0, calc(100% - .2rem) 0, 100% .2rem, 100% 100%, 0 100%);
+  box-shadow: var(--saas-shadow-sm);
 }
 
-/* Marketing and native surfaces repeat the fold through a precise leading rule. */
+/* Marketing and native surfaces stay aligned with the calm, rule-driven product material. */
 .saas-card-service, .saas-media-scrim, .saas-feature-strip, .saas-callout-bar, .saas-metric {
   border: 1px solid var(--saas-border);
-  border-inline-start-width: .22rem;
-  border-inline-start-color: var(--saas-primary);
-  box-shadow: 0 .6rem 1.4rem rgb(var(--saas-text-rgb) / .1);
+  box-shadow: var(--saas-shadow-md);
 }
+[data-ui="minimal-saas"][data-theme][data-mode] :where(fieldset, article, aside) {
+  background: var(--saas-surface);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--saas-radius-lg);
+  box-shadow: none;
+}
+[data-ui="minimal-saas"][data-theme][data-mode] :where(legend) { font-weight: 750; }
+[data-ui="minimal-saas"][data-theme][data-mode] :where(label) { font-weight: 700; }
 [data-ui="minimal-saas"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
-  border: 1px solid var(--saas-primary);
+  min-block-size: var(--usk-native-control-min-block-size);
+  padding: .5rem .78rem;
+  background: var(--saas-control-bg);
+  color: var(--saas-text);
+  border: 1px solid var(--saas-border);
   border-radius: var(--saas-radius-md);
-  box-shadow: 0 .25rem .6rem rgb(var(--saas-text-rgb) / .1);
+  box-shadow: var(--saas-shadow-sm);
+  font-family: var(--saas-font-control);
+  font-weight: 700;
 }
 [data-ui="minimal-saas"][data-theme][data-mode] :where(dialog) {
   border: 1px solid var(--saas-border);
-  border-inline-start-width: .22rem;
   border-radius: var(--saas-radius-lg);
-  box-shadow: 0 1rem 2.2rem rgb(var(--saas-text-rgb) / .18);
+  box-shadow: 0 .75rem 2rem rgb(var(--saas-text-rgb) / .14);
 }
 
 /* Busy indicators retain the restrained circular progress language of Minimal SaaS. */
@@ -698,4 +717,122 @@
   [data-ui="minimal-saas"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="minimal-saas"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.minimal_saas {
+/* Keeps semantic field states above preset-specific material paint. */
+.saas-input[aria-invalid="true"], .saas-textarea[aria-invalid="true"], .saas-select[aria-invalid="true"] { border-color: var(--saas-danger); box-shadow: 0 0 0 2px rgb(var(--saas-danger-rgb) / .18); }
+.saas-input[readonly], .saas-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+}
+
+@layer ui-style-kit.minimal_saas {
+/**
+ * Locks the compact, flat Minimal SaaS identity to native controls.
+ * Fine rules, tight geometry, and negligible lift separate it from soft UI presets.
+ */
+[data-ui="minimal-saas"][data-theme][data-mode] {
+  --usk-native-control-padding-block: .46rem;
+  --usk-native-control-padding-inline: .72rem;
+  --usk-native-radius-sm: .1875rem;
+  --usk-native-radius: .375rem;
+  --usk-native-radius-lg: .5rem;
+  --usk-native-shadow: 0 1px 2px rgb(var(--saas-text-rgb) / .06);
+  --usk-native-shadow-md: 0 2px 6px rgb(var(--saas-text-rgb) / .08);
+  --usk-native-focus-ring: 0 0 0 2px rgb(var(--saas-focus-rgb) / .3);
+  --usk-native-subcontrol-padding-block: .32rem;
+  --usk-native-subcontrol-padding-inline: .52rem;
+  --usk-native-choice-size: .95rem;
+  --usk-native-choice-background: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha));
+  --usk-native-choice-border: 1px solid rgb(var(--saas-border-rgb) / .9);
+  --usk-native-checkbox-radius: .1875rem;
+  --usk-native-choice-shadow: none;
+  --usk-native-select-indicator-size: .31rem .31rem, .31rem .31rem;
+  --usk-native-select-indicator-position: calc(100% - .92rem) 50%, calc(100% - .68rem) 50%;
+  --usk-native-select-padding-inline-end: 2.1rem;
+  --usk-native-range-track-size: .28rem;
+  --usk-native-range-track-background: rgb(var(--saas-surface-soft-rgb) / .82);
+  --usk-native-range-track-border: 1px solid rgb(var(--saas-border-rgb) / .55);
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-thumb-size: .9rem;
+  --usk-native-range-thumb-border: 2px solid var(--saas-surface-strong);
+  --usk-native-range-thumb-shadow: 0 1px 3px rgb(var(--saas-text-rgb) / .14);
+  --usk-native-progress-size: .28rem;
+  --usk-native-progress-track-background: rgb(var(--saas-surface-soft-rgb) / .82);
+  --usk-native-progress-track-border: 1px solid rgb(var(--saas-border-rgb) / .5);
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-scrollbar-size: .55rem;
+  --usk-native-scrollbar-track: rgb(var(--saas-surface-soft-rgb) / .72);
+  --usk-native-scrollbar-thumb: rgb(var(--saas-primary-rgb) / .72);
+  --usk-native-scrollbar-radius: .125rem;
+}
+
+/** Carries the compact product grammar through every authored component role. */
+.saas-title { font-weight: 750; letter-spacing: .005em; }
+.saas-label { font-size: .8125rem; font-weight: 650; }
+.saas-button, .saas-icon-button {
+  min-height: 2.375rem;
+  padding: .46rem .72rem;
+  background: var(--saas-control-bg);
+  border-radius: .375rem;
+  box-shadow: none;
+  font-weight: 650;
+}
+.saas-icon-button { padding: 0; }
+.saas-input, .saas-textarea, .saas-select {
+  min-height: 2.375rem;
+  padding: .46rem .72rem;
+  border-radius: .375rem;
+  box-shadow: none;
+}
+.saas-surface, .saas-card, .saas-panel, .saas-toolbar, .saas-table-wrap {
+  background: var(--saas-surface);
+  border: 1px solid var(--saas-border);
+  border-radius: .5rem;
+  box-shadow: none;
+}
+.saas-card, .saas-panel { padding: 1rem; }
+.saas-well, .saas-inset {
+  padding: .75rem;
+  background: rgb(var(--saas-surface-soft-rgb) / .72);
+  border: 1px solid var(--saas-border);
+  border-radius: .375rem;
+  box-shadow: none;
+}
+.saas-badge { min-height: 1.35rem; padding: .18rem .45rem; border-radius: .25rem; }
+.saas-alert {
+  background: var(--saas-surface);
+  border: 1px solid var(--saas-border);
+  border-inline-start: 2px solid var(--saas-primary);
+  border-radius: .375rem;
+  box-shadow: none;
+}
+.saas-progress { height: .3rem; background: rgb(var(--saas-surface-soft-rgb) / .82); }
+.saas-progress-bar { background: var(--saas-primary); box-shadow: none; }
+.saas-table-wrap { background: var(--saas-surface); border-radius: .5rem; box-shadow: none; }
+.saas-table th { padding: .6rem .7rem; background: rgb(var(--saas-surface-soft-rgb) / .58); font-weight: 650; }
+.saas-table td { padding: .6rem .7rem; }
+.saas-nav { padding: .2rem; border-radius: .5rem; box-shadow: none; }
+.saas-nav-link { min-height: 2.125rem; padding: .4rem .62rem; border-radius: .25rem; }
+.saas-tooltip, [data-ui="minimal-saas"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border-radius: .25rem; box-shadow: 0 2px 6px rgb(var(--saas-text-rgb) / .12); }
+.saas-card-service, .saas-card-feature, .saas-feature-strip, .saas-callout-bar {
+  padding: 1rem;
+  background: var(--saas-surface);
+  border-radius: .5rem;
+  box-shadow: none;
+}
+.saas-feature-item { padding: .75rem; }
+[data-ui="minimal-saas"][data-theme][data-mode] :where(dialog) {
+  background: var(--saas-surface);
+  border-radius: .5rem;
+  box-shadow: 0 .5rem 1.25rem rgb(var(--saas-text-rgb) / .12);
+}
+}
+
+@layer ui-style-kit.minimal_saas {
+/* Restores semantic action paint after identity-specific geometry. */
+.saas-button-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
+.saas-button-secondary { background: var(--saas-secondary); color: var(--saas-on-secondary); border-color: var(--saas-secondary); }
+.saas-button-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
+.saas-button-ghost { background: transparent; color: var(--saas-primary); border-color: transparent; }
 }
