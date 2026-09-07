@@ -471,14 +471,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  // Reviewed v2.4 native backgrounds, seal paint, Organic contrast, and annotation fixes preserve alias declarations.
+  // Reviewed v2.4 native backgrounds, seal paint, Organic contrast, annotation, and matrix state fixes preserve alias declarations.
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 35721,
-    sha256: '05e8ee0b7b8df9fe8d56693c4d402600e56a801374119f64f9ed85137cbcb4a9'
+    count: 35742,
+    sha256: '800f9dc7597864dbbb29c93613f8894ec0be59c2ae5d4d02c7fa60933fa4d056'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 36172,
-    sha256: '7d5ffc17a98f3ab2ced04ca966ccf3062a0b43c58656097e1c6138b98d1c1c39'
+    count: 36193,
+    sha256: 'ff1edfe7516d56163bf2200ed3ae82ef420fabd794fea3d3d29a73c3b282b78f'
   });
 });
 
