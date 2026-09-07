@@ -4,10 +4,14 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
-## [2.4.0] - 2026-09-01
+## [2.4.0] - Unreleased
 
 ### Added
 
+- Added native light/dark/contrast palettes for every preset when `data-theme` is omitted, while preserving explicit shared-theme precedence and the typed semantic handshake.
+- Added a native-aware demo workbench with None, per-preset/mode edits, shared-theme edits, material-color inventory, scoped CSS export, and active-context reset.
+- Added a unified style-specific gallery, including Industrial Utility instruments and alarm demonstration controls; full source boards remain available through `?view=reference`.
+- Added validated `ui`, `personality`, `theme`, and `mode` demo query parameters and updated README/wiki guidance for native palettes and review links.
 - Added a frozen native-control intent contract for every preset and complete per-preset mappings for choice, select, range, progress, meter, file, color, indicator, and scrollbar tokens.
 - Added Firefox range-progress paint, distinct single/multiple select behavior, indeterminate progress treatment, and a complete native-control demo specimen.
 - Added manifest-driven unit and cross-browser computed-style coverage proving all 20 presets resolve to unique native-control signatures.
@@ -24,7 +28,19 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ### Fixed
 
+- Restored the shared background token for standalone native palettes by resolving through each preset's active background.
+- Prevented native `strong` and `small` text paint from replacing trust-seal foregrounds, including Tactile's dark instrument seal.
+- Unified demo toolbar dropdown indicators, enlarged and strengthened Maximalist medallion artwork, centered its range thumb, matched busy indicators to its spinner, and removed the large native-form grid gap.
+- Exposed actual native material variables in the color editor instead of restricting it to generic shared roles.
+- Replaced stale per-style bundle-size estimates with build-measured focused preset examples.
+- Corrected Organic Modern native-light label and control-edge contrast while retaining shared-theme precedence.
+- Completed manifest discovery for existing Bento stage, Bauhaus alert text, Clay helper, and Tactile workspace classes; no existing classes were removed.
+- Applied bounded generated-file write retries to README measurements and demo asset hashes as well as distribution CSS.
 - Replaced broad `overflow-wrap: anywhere` inheritance with targeted `break-word` containment and normal word boundaries, and removed clipping from general surfaces, feature strips, and native tables while retaining deliberate progress, media, and accessibility masks.
+
+### Security
+
+- Updated the development-only `fast-uri` override to `3.1.6`, addressing the four URI-normalization advisories reported by the release dependency audit without adding runtime dependencies.
 
 ## [2.3.0] - 2026-08-29
 

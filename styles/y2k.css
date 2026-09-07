@@ -18,12 +18,12 @@
 
 @layer ui-style-kit.y2k {
 :root {
-  --y2k-radius-xs: 0.25rem;
-  --y2k-radius-sm: 0.5rem;
-  --y2k-radius-md: 0.75rem;
-  --y2k-radius-lg: 1rem;
-  --y2k-radius-xl: 1.5rem;
-  --y2k-radius-pill: 999px;
+  --y2k-radius-xs: 0;
+  --y2k-radius-sm: 0;
+  --y2k-radius-md: 0;
+  --y2k-radius-lg: 0;
+  --y2k-radius-xl: 0;
+  --y2k-radius-pill: 0;
 
   --y2k-space-1: 0.25rem;
   --y2k-space-2: 0.5rem;
@@ -33,42 +33,121 @@
   --y2k-space-6: 1.5rem;
   --y2k-space-8: 2rem;
 
-  --y2k-transition-fast: 140ms ease;
-  --y2k-transition-base: 220ms ease;
-  --y2k-transition-slow: 360ms ease;
+  --y2k-transition-fast: 60ms steps(1, end);
+  --y2k-transition-base: 90ms steps(1, end);
+  --y2k-transition-slow: 120ms steps(1, end);
 
-  --y2k-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --y2k-font-display: Orbitron, Rajdhani, Eurostile, "Bank Gothic", var(--y2k-font-sans);
+  --y2k-font-sans: Tahoma, Verdana, Arial, sans-serif;
+  --y2k-font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   --y2k-font-body: var(--y2k-font-sans);
-  --y2k-font-heading: var(--y2k-font-display);
-  --y2k-font-control: var(--y2k-font-display);
-  --y2k-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --y2k-font-heading: var(--y2k-font-sans);
+  --y2k-font-control: var(--y2k-font-sans);
+  --y2k-font-mono: "Courier New", Courier, monospace;
 }
 
 [data-ui="y2k"][data-mode="light"] {
   color-scheme: light;
-  --y2k-panel-alpha: 0.92;
-  --y2k-panel-strong-alpha: 0.98;
-  --y2k-panel-soft-alpha: 0.74;
-  --y2k-border-alpha: 0.7;
-  --y2k-glow-alpha: 0.24;
-  --y2k-shadow-alpha: 0.18;
-  --y2k-grid-alpha: 0.075;
+  --y2k-fallback-bg-rgb: 192 192 192;
+  --y2k-fallback-surface-rgb: 236 236 236;
+  --y2k-fallback-surface-strong-rgb: 255 255 255;
+  --y2k-fallback-surface-soft-rgb: 216 216 216;
+  --y2k-fallback-text-rgb: 5 5 5;
+  --y2k-fallback-text-muted-rgb: 68 68 68;
+  --y2k-fallback-border-rgb: 119 119 119;
+  --y2k-fallback-primary-rgb: 8 24 172;
+  --y2k-fallback-primary-hover-rgb: 0 127 16;
+  --y2k-fallback-primary-text-rgb: 255 255 255;
+  --y2k-fallback-secondary-rgb: 0 127 136;
+  --y2k-fallback-secondary-hover-rgb: 0 95 102;
+  --y2k-fallback-secondary-text-rgb: 255 255 255;
+  --y2k-fallback-accent-rgb: 0 217 239;
+  --y2k-fallback-accent-text-rgb: 0 0 0;
+  --y2k-fallback-success-rgb: 0 143 19;
+  --y2k-fallback-success-text-rgb: 0 0 0;
+  --y2k-fallback-warning-rgb: 255 240 0;
+  --y2k-fallback-warning-text-rgb: 0 0 0;
+  --y2k-fallback-danger-rgb: 210 18 18;
+  --y2k-fallback-danger-text-rgb: 255 255 255;
+  --y2k-fallback-link-rgb: 0 0 204;
+  --y2k-fallback-focus-rgb: 210 18 18;
+  --y2k-panel-alpha: 1;
+  --y2k-panel-strong-alpha: 1;
+  --y2k-panel-soft-alpha: 1;
+  --y2k-border-alpha: 1;
+  --y2k-glow-alpha: 0;
+  --y2k-shadow-alpha: 0.48;
+  --y2k-grid-alpha: 0;
+  --y2k-bevel-highlight: #fff;
+  --y2k-bevel-shadow: #3d3d3d;
+  --y2k-reference-navy: #000080;
 }
 
 [data-ui="y2k"][data-mode="dark"] {
   color-scheme: dark;
-  --y2k-panel-alpha: 0.82;
-  --y2k-panel-strong-alpha: 0.94;
-  --y2k-panel-soft-alpha: 0.58;
-  --y2k-border-alpha: 0.64;
-  --y2k-glow-alpha: 0.42;
-  --y2k-shadow-alpha: 0.42;
-  --y2k-grid-alpha: 0.12;
+  --y2k-dark-fallback-bg-rgb: 2 6 7;
+  --y2k-dark-fallback-surface-rgb: 3 7 7;
+  --y2k-dark-fallback-primary-rgb: 7 20 145;
+  --y2k-dark-fallback-link-rgb: 85 167 255;
+  --y2k-fallback-bg-rgb: 2 6 7;
+  --y2k-fallback-surface-rgb: 3 7 7;
+  --y2k-fallback-surface-strong-rgb: 9 16 17;
+  --y2k-fallback-surface-soft-rgb: 9 16 17;
+  --y2k-fallback-text-rgb: 217 219 220;
+  --y2k-fallback-text-muted-rgb: 167 172 175;
+  --y2k-fallback-border-rgb: 79 90 93;
+  --y2k-fallback-primary-rgb: 7 20 145;
+  --y2k-fallback-primary-hover-rgb: 0 127 16;
+  --y2k-fallback-primary-text-rgb: 255 255 255;
+  --y2k-fallback-secondary-rgb: 7 94 101;
+  --y2k-fallback-secondary-hover-rgb: 7 94 101;
+  --y2k-fallback-secondary-text-rgb: 255 255 255;
+  --y2k-fallback-accent-rgb: 25 215 239;
+  --y2k-fallback-accent-text-rgb: 0 0 0;
+  --y2k-fallback-success-rgb: 22 209 45;
+  --y2k-fallback-success-text-rgb: 0 0 0;
+  --y2k-fallback-warning-rgb: 255 242 60;
+  --y2k-fallback-warning-text-rgb: 0 0 0;
+  --y2k-fallback-danger-rgb: 255 48 48;
+  --y2k-fallback-danger-text-rgb: 0 0 0;
+  --y2k-fallback-link-rgb: 85 167 255;
+  --y2k-fallback-focus-rgb: 255 48 48;
+  --y2k-panel-alpha: 1;
+  --y2k-panel-strong-alpha: 1;
+  --y2k-panel-soft-alpha: 1;
+  --y2k-border-alpha: 1;
+  --y2k-glow-alpha: 0;
+  --y2k-shadow-alpha: 0.72;
+  --y2k-grid-alpha: 0;
+  --y2k-bevel-highlight: #879194;
+  --y2k-bevel-shadow: #000;
+  --y2k-reference-navy: #050f7b;
 }
 
 [data-ui="y2k"][data-mode="contrast"] {
   color-scheme: dark;
+  --y2k-fallback-bg-rgb: 0 0 0;
+  --y2k-fallback-surface-rgb: 5 8 12;
+  --y2k-fallback-surface-strong-rgb: 10 19 32;
+  --y2k-fallback-surface-soft-rgb: 0 0 0;
+  --y2k-fallback-text-rgb: 255 255 255;
+  --y2k-fallback-text-muted-rgb: 242 247 255;
+  --y2k-fallback-border-rgb: 255 255 255;
+  --y2k-fallback-primary-rgb: 156 197 240;
+  --y2k-fallback-primary-hover-rgb: 255 255 255;
+  --y2k-fallback-primary-text-rgb: 0 0 0;
+  --y2k-fallback-secondary-rgb: 0 230 255;
+  --y2k-fallback-secondary-hover-rgb: 255 255 255;
+  --y2k-fallback-secondary-text-rgb: 0 0 0;
+  --y2k-fallback-accent-rgb: 230 240 255;
+  --y2k-fallback-accent-text-rgb: 0 0 0;
+  --y2k-fallback-success-rgb: 0 255 144;
+  --y2k-fallback-success-text-rgb: 0 0 0;
+  --y2k-fallback-warning-rgb: 255 212 0;
+  --y2k-fallback-warning-text-rgb: 0 0 0;
+  --y2k-fallback-danger-rgb: 255 92 92;
+  --y2k-fallback-danger-text-rgb: 0 0 0;
+  --y2k-fallback-link-rgb: 156 197 240;
+  --y2k-fallback-focus-rgb: 255 255 255;
   --y2k-panel-alpha: 1;
   --y2k-panel-strong-alpha: 1;
   --y2k-panel-soft-alpha: 0.92;
@@ -78,8 +157,8 @@
   --y2k-grid-alpha: 0.18;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="y2k"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --y2k-bg-rgb: var(--usk-bg-rgb);
   --y2k-surface-rgb: var(--usk-surface-rgb);
   --y2k-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -94,15 +173,43 @@
   --y2k-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --y2k-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --y2k-accent-rgb: var(--usk-accent-rgb);
-  --y2k-success-rgb: var(--usk-success-rgb);
-  --y2k-warning-rgb: var(--usk-warning-rgb);
-  --y2k-danger-rgb: var(--usk-danger-rgb);
-  --y2k-link-rgb: var(--usk-link-rgb);
   --y2k-accent-text-rgb: var(--usk-accent-text-rgb);
+  --y2k-success-rgb: var(--usk-success-rgb);
   --y2k-success-text-rgb: var(--usk-success-text-rgb);
+  --y2k-warning-rgb: var(--usk-warning-rgb);
   --y2k-warning-text-rgb: var(--usk-warning-text-rgb);
+  --y2k-danger-rgb: var(--usk-danger-rgb);
   --y2k-danger-text-rgb: var(--usk-danger-text-rgb);
+  --y2k-link-rgb: var(--usk-link-rgb);
   --y2k-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="y2k"][data-mode] {
+  --usk-native-bg: var(--y2k-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --y2k-bg-rgb: var(--usk-bg-rgb, var(--y2k-fallback-bg-rgb));
+  --y2k-surface-rgb: var(--usk-surface-rgb, var(--y2k-fallback-surface-rgb));
+  --y2k-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--y2k-fallback-surface-strong-rgb));
+  --y2k-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--y2k-fallback-surface-soft-rgb));
+  --y2k-text-rgb: var(--usk-text-rgb, var(--y2k-fallback-text-rgb));
+  --y2k-text-muted-rgb: var(--usk-text-muted-rgb, var(--y2k-fallback-text-muted-rgb));
+  --y2k-border-rgb: var(--usk-border-rgb, var(--y2k-fallback-border-rgb));
+  --y2k-primary-rgb: var(--usk-primary-rgb, var(--y2k-fallback-primary-rgb));
+  --y2k-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--y2k-fallback-primary-hover-rgb));
+  --y2k-primary-text-rgb: var(--usk-primary-text-rgb, var(--y2k-fallback-primary-text-rgb));
+  --y2k-secondary-rgb: var(--usk-secondary-rgb, var(--y2k-fallback-secondary-rgb));
+  --y2k-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--y2k-fallback-secondary-hover-rgb));
+  --y2k-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--y2k-fallback-secondary-text-rgb));
+  --y2k-accent-rgb: var(--usk-accent-rgb, var(--y2k-fallback-accent-rgb));
+  --y2k-accent-text-rgb: var(--usk-accent-text-rgb, var(--y2k-fallback-accent-text-rgb));
+  --y2k-success-rgb: var(--usk-success-rgb, var(--y2k-fallback-success-rgb));
+  --y2k-success-text-rgb: var(--usk-success-text-rgb, var(--y2k-fallback-success-text-rgb));
+  --y2k-warning-rgb: var(--usk-warning-rgb, var(--y2k-fallback-warning-rgb));
+  --y2k-warning-text-rgb: var(--usk-warning-text-rgb, var(--y2k-fallback-warning-text-rgb));
+  --y2k-danger-rgb: var(--usk-danger-rgb, var(--y2k-fallback-danger-rgb));
+  --y2k-danger-text-rgb: var(--usk-danger-text-rgb, var(--y2k-fallback-danger-text-rgb));
+  --y2k-link-rgb: var(--usk-link-rgb, var(--y2k-fallback-link-rgb));
+  --y2k-focus-rgb: var(--usk-focus-rgb, var(--y2k-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--y2k-surface);
   --usk-native-surface-strong: var(--y2k-surface-strong);
@@ -229,7 +336,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="y2k"][data-theme][data-mode] { --y2k-border: color-mix(in srgb, rgb(var(--y2k-border-rgb) / max(var(--y2k-border-alpha), var(--usk-border-min-alpha))), var(--y2k-text) var(--usk-border-text-mix)); }
+  [data-ui="y2k"][data-mode] { --y2k-border: color-mix(in srgb, rgb(var(--y2k-border-rgb) / max(var(--y2k-border-alpha), var(--usk-border-min-alpha))), var(--y2k-text) var(--usk-border-text-mix)); }
 }
 
 /* =========================================================
@@ -317,7 +424,7 @@
   font-family: var(--y2k-font-body);
 }
 [data-ui="y2k"] *, [data-ui="y2k"] *::before, [data-ui="y2k"] *::after { box-sizing: border-box; }
-[data-ui="y2k"][data-theme][data-mode] { background: var(--y2k-theme-bg); background-size: var(--y2k-theme-bg-size); }
+[data-ui="y2k"][data-mode] { background: var(--y2k-theme-bg); background-size: var(--y2k-theme-bg-size); }
 [data-ui="y2k"] a { color: var(--y2k-link); text-decoration-thickness: 0.11em; text-underline-offset: 0.18em; } [data-ui="y2k"] ::selection { background: var(--y2k-primary); color: var(--y2k-on-primary); }
 
 .y2k-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); background-image: radial-gradient(rgb(var(--y2k-border-rgb) / var(--y2k-grid-alpha)) 1px, transparent 1px); background-size: 22px 22px; }
@@ -351,7 +458,7 @@
 /* Theme-responsive component defaults */
 .y2k-card, .y2k-panel { background: var(--y2k-card-bg); }
 .y2k-toolbar, .y2k-table-wrap { background: var(--y2k-control-bg); }
-.y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-ghost), .y2k-icon-button { background: var(--y2k-control-bg); }
+.y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-warning):not(.y2k-button-ghost), .y2k-icon-button { background: var(--y2k-control-bg); }
 .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link { font-family: var(--y2k-font-control); }
 
 /* Spinner geometry follows the y2k preset's glossy plastic controls. */
@@ -597,12 +704,12 @@
   border-radius: var(--y2k-radius-xl);
   box-shadow: inset 0 2px 0 rgb(var(--y2k-surface-strong-rgb) / .82), 0 .75rem 1.5rem rgb(var(--y2k-secondary-rgb) / .2);
 }
-[data-ui="y2k"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="y2k"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 2px solid var(--y2k-primary);
   border-radius: var(--y2k-radius-pill);
   box-shadow: inset 0 2px 0 rgb(var(--y2k-surface-strong-rgb) / .82), 0 .35rem .8rem rgb(var(--y2k-secondary-rgb) / .2);
 }
-[data-ui="y2k"][data-theme][data-mode] :where(dialog) {
+[data-ui="y2k"][data-mode] :where(dialog) {
   background: linear-gradient(155deg, rgb(var(--y2k-surface-strong-rgb) / .82), rgb(var(--y2k-primary-rgb) / .08)), var(--y2k-surface);
   border: 1px solid var(--y2k-border);
   border-radius: var(--y2k-radius-xl);
@@ -618,7 +725,7 @@
  * Final Y2K fidelity layer.
  * Recreates dense portal panels with one-pixel operating-system bevels.
  */
-[data-ui="y2k"][data-theme][data-mode] {
+[data-ui="y2k"][data-mode] {
   --y2k-card-bg: linear-gradient(135deg, rgb(var(--y2k-primary-rgb) / .18), rgb(var(--y2k-surface-strong-rgb) / .96) 48%, rgb(var(--y2k-secondary-rgb) / .12)), var(--y2k-surface);
   --usk-native-card-bg: var(--y2k-card-bg);
   --usk-native-font-control: Tahoma, Verdana, "Segoe UI", sans-serif;
@@ -671,7 +778,7 @@
   --usk-native-scrollbar-radius: 0;
 }
 
-.y2k-title { font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-weight: 900; letter-spacing: .015em; font-style: italic; }
+.y2k-title { margin-block: .75rem; font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-weight: 900; letter-spacing: max(.024em, .5px); font-style: italic; }
 .y2k-label { font-family: Tahoma, Verdana, sans-serif; font-size: .68rem; font-weight: 700; }
 .y2k-card, .y2k-panel { padding: .66rem; background: linear-gradient(180deg, rgb(var(--y2k-primary-rgb) / .22) 0 1.2rem, transparent 1.2rem), var(--y2k-card-bg); border: 2px outset var(--y2k-border); border-radius: 0; box-shadow: inset 1px 1px 0 var(--y2k-surface-strong), inset -1px -1px 0 rgb(var(--y2k-text-rgb) / .34); }
 .y2k-card::before, .y2k-panel::before { background: linear-gradient(135deg, rgb(var(--y2k-surface-strong-rgb) / .28), transparent 34%); }
@@ -723,4 +830,586 @@
 .y2k-button-secondary { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .42), transparent 52%), var(--y2k-secondary); color: var(--y2k-on-secondary); border-color: var(--y2k-secondary); }
 .y2k-button-danger { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .38), transparent 52%), var(--y2k-danger); color: var(--y2k-on-danger); border-color: var(--y2k-danger); }
 .y2k-button-ghost { background: transparent; color: var(--y2k-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.y2k {
+/* Shared annotation fidelity: readable display rhythm and appropriately scaled text icons. */
+.y2k-feature-item > .y2k-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.y2k-callout-bar > .y2k-icon-medallion { min-inline-size: 4.5rem; min-block-size: 4.5rem; font-size: 2rem; font-weight: 800; line-height: 1; }
+}
+
+@layer ui-style-kit.y2k {
+/**
+ * Applies the retained Dial-Up Portal reference material without replacing a
+ * selected library color scheme. Geometry, bevels, density, and typography
+ * remain stable while semantic paint continues to resolve through USK tokens.
+ */
+[data-ui="y2k"][data-mode] {
+  --y2k-theme-bg: var(--y2k-bg);
+  --y2k-theme-bg-size: auto;
+  --y2k-card-bg: var(--y2k-surface);
+  --y2k-control-bg: var(--y2k-surface);
+  --y2k-focus-ring: 0 0 0 2px #d21212;
+  --y2k-titlebar-bg: linear-gradient(90deg, var(--y2k-reference-navy, var(--y2k-primary)), var(--y2k-primary) 56%, var(--y2k-reference-navy, var(--y2k-primary)));
+  --y2k-bevel-raised: inset 1px 1px 0 var(--y2k-bevel-highlight, var(--y2k-surface-strong)), inset -1px -1px 0 var(--y2k-bevel-shadow, var(--y2k-text));
+  --y2k-bevel-recessed: inset 1px 1px 0 var(--y2k-bevel-shadow, var(--y2k-text)), inset -1px -1px 0 var(--y2k-bevel-highlight, var(--y2k-surface-strong));
+  --usk-native-font-body: Tahoma, Verdana, Arial, sans-serif;
+  --usk-native-font-heading: Tahoma, Verdana, Arial, sans-serif;
+  --usk-native-font-control: Tahoma, Verdana, Arial, sans-serif;
+  --usk-native-font-mono: "Courier New", Courier, monospace;
+  --usk-native-panel-padding: .375rem;
+  --usk-native-field-gap: .25rem;
+  --usk-native-control-min-block-size: 1.375rem;
+  --usk-native-control-padding-block: .125rem;
+  --usk-native-control-padding-inline: .375rem;
+  --usk-native-subcontrol-padding-block: .125rem;
+  --usk-native-subcontrol-padding-inline: .375rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: var(--y2k-bevel-raised);
+  --usk-native-shadow-md: var(--y2k-bevel-raised), 2px 2px 0 var(--y2k-bevel-shadow, var(--y2k-text));
+  --usk-native-focus-ring: var(--y2k-focus-ring);
+  --usk-native-choice-size: .875rem;
+  --usk-native-choice-background: var(--y2k-surface);
+  --usk-native-choice-border: 1px inset var(--y2k-border);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: var(--y2k-bevel-recessed);
+  --usk-native-choice-checked-background: var(--y2k-primary);
+  --usk-native-choice-mark-color: var(--y2k-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 46%, var(--y2k-text) 46% 56%, transparent 56%), linear-gradient(135deg, transparent 46%, var(--y2k-text) 46% 56%, transparent 56%);
+  --usk-native-select-indicator-size: .375rem .375rem, .375rem .375rem;
+  --usk-native-select-indicator-position: calc(100% - .75rem) 50%, calc(100% - .5rem) 50%;
+  --usk-native-select-padding-inline-end: 1.5rem;
+  --usk-native-range-track-size: .375rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .5rem, var(--y2k-surface-soft) .5rem .5625rem);
+  --usk-native-range-track-border: 1px inset var(--y2k-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: var(--y2k-bevel-recessed);
+  --usk-native-range-progress-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .5rem, var(--y2k-surface) .5rem .5625rem);
+  --usk-native-range-thumb-size: .875rem;
+  --usk-native-range-thumb-background: var(--y2k-surface);
+  --usk-native-range-thumb-border: 1px outset var(--y2k-border);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: var(--y2k-bevel-raised);
+  --usk-native-progress-size: .875rem;
+  --usk-native-progress-track-background: var(--y2k-surface-soft);
+  --usk-native-progress-track-border: 1px inset var(--y2k-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: var(--y2k-bevel-recessed);
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .75rem, var(--y2k-surface-strong) .75rem .8125rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: inset 1px 1px 0 rgb(255 255 255 / .38);
+  --usk-native-file-button-background: var(--y2k-surface-soft);
+  --usk-native-file-button-border: 1px outset var(--y2k-border);
+  --usk-native-file-button-radius: 0;
+  --usk-native-file-button-shadow: var(--y2k-bevel-raised);
+  --usk-native-color-swatch-radius: 0;
+  --usk-native-scrollbar-size: 1rem;
+  --usk-native-scrollbar-track: var(--y2k-surface-soft);
+  --usk-native-scrollbar-thumb: var(--y2k-surface);
+  --usk-native-scrollbar-radius: 0;
+  min-height: 100vh;
+  background: var(--y2k-bg);
+  color: var(--y2k-text);
+  font: 400 11px/1.2 Tahoma, Verdana, Arial, sans-serif;
+}
+
+[data-ui="y2k"] a {
+  color: var(--y2k-link);
+  text-decoration: underline;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+}
+
+[data-ui="y2k"][data-mode] :focus-visible {
+  outline: 2px dotted #d21212;
+  outline-offset: 2px;
+}
+
+[data-ui="y2k"][data-mode] :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 .25rem;
+  color: var(--y2k-text);
+  font-family: Tahoma, Verdana, Arial, sans-serif;
+  line-height: 1.2;
+}
+
+[data-ui="y2k"][data-mode] :is(h1) { font-size: 1.25rem; }
+[data-ui="y2k"][data-mode] :is(h2) { font-size: .875rem; }
+[data-ui="y2k"][data-mode] :is(h3) { font-size: .75rem; }
+[data-ui="y2k"][data-mode] :is(h4, h5, h6) { font-size: .6875rem; }
+
+[data-ui="y2k"][data-mode] :is(p) {
+  margin: 0 0 .375rem;
+  color: var(--y2k-text-muted);
+  line-height: 1.3;
+}
+
+.y2k-page {
+  padding: .25rem;
+  background-image: none;
+}
+
+.y2k-container {
+  width: min(100%, 96rem);
+}
+
+.y2k-stack,
+.y2k-cluster,
+.y2k-grid {
+  gap: .25rem;
+}
+
+.y2k-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.y2k-section {
+  padding: .25rem;
+}
+
+[data-ui="y2k"][data-mode] .y2k-title {
+  margin: 0;
+  color: var(--y2k-text);
+  font: italic 900 clamp(2rem, 5vw, 4rem)/.9 Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: .025em;
+  -webkit-text-stroke: 1px var(--y2k-text);
+  text-shadow: 1px 1px 0 var(--y2k-bevel-highlight, var(--y2k-surface-strong)), 2px 2px 0 var(--y2k-bevel-shadow, var(--y2k-text));
+}
+
+.y2k-heading,
+.y2k-kicker,
+.y2k-button,
+.y2k-badge,
+.y2k-nav-link {
+  font-family: Tahoma, Verdana, Arial, sans-serif;
+}
+
+[data-ui="y2k"][data-mode] .y2k-heading {
+  margin: 0;
+  font-size: .75rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+[data-ui="y2k"][data-mode] .y2k-kicker,
+[data-ui="y2k"][data-mode] .y2k-eyebrow {
+  margin: 0;
+  font-size: .625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+[data-ui="y2k"][data-mode] .y2k-subtitle,
+[data-ui="y2k"][data-mode] .y2k-copy {
+  margin: 0;
+  color: var(--y2k-text-muted);
+  line-height: 1.3;
+}
+
+.y2k-card,
+.y2k-panel,
+.y2k-bubble,
+.y2k-toolbar,
+.y2k-table-wrap {
+  position: relative;
+  padding: .375rem;
+  background: var(--y2k-surface);
+  color: var(--y2k-text);
+  border: 2px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+  transition: none;
+}
+
+.y2k-card::before,
+.y2k-panel::before,
+.y2k-bubble::before {
+  content: none;
+}
+
+[data-ui="y2k"][data-mode] .y2k-card > :where(.y2k-kicker, .y2k-heading, h2, h3):first-child,
+[data-ui="y2k"][data-mode] .y2k-panel > :where(.y2k-kicker, .y2k-heading, h2, h3):first-child {
+  display: block;
+  min-height: 1.25rem;
+  margin: -.375rem -.375rem .375rem;
+  padding: .1875rem .375rem;
+  overflow: hidden;
+  background: var(--y2k-titlebar-bg);
+  color: var(--y2k-on-primary);
+  font: 700 .6875rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+  letter-spacing: .02em;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 0 rgb(0 0 0 / .52);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.y2k-hover-lift:hover {
+  transform: none;
+  box-shadow: var(--y2k-bevel-raised);
+}
+
+.y2k-well,
+.y2k-inset {
+  padding: .375rem;
+  background: var(--y2k-surface-soft);
+  border: 1px inset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-recessed);
+}
+
+.y2k-button,
+.y2k-icon-button {
+  min-height: 1.375rem;
+  padding: .125rem .75rem;
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-text);
+  border: 1px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+  font: 700 .625rem/1 Tahoma, Verdana, Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  transition: none;
+}
+
+.y2k-icon-button {
+  width: 1.375rem;
+  padding: 0;
+}
+
+.y2k-button:hover,
+.y2k-icon-button:hover {
+  background: var(--y2k-primary-hover);
+  color: var(--y2k-on-primary);
+  transform: none;
+  box-shadow: var(--y2k-bevel-raised);
+}
+
+.y2k-button:active,
+.y2k-icon-button:active,
+.y2k-button.is-active,
+.y2k-button[aria-pressed="true"] {
+  translate: 1px 1px;
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-text);
+  border-style: inset;
+  box-shadow: var(--y2k-bevel-recessed);
+}
+
+.y2k-button-primary {
+  background: linear-gradient(180deg, rgb(255 255 255 / .2), transparent 48%), var(--y2k-primary);
+  color: var(--y2k-on-primary);
+  border-color: var(--y2k-border);
+}
+
+.y2k-button-secondary {
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-text);
+  border-color: var(--y2k-border);
+}
+
+.y2k-button-danger {
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-danger);
+  border-color: var(--y2k-border);
+}
+
+.y2k-button-ghost {
+  background: transparent;
+  color: var(--y2k-link);
+  border-color: transparent;
+  box-shadow: none;
+  text-decoration: underline;
+}
+
+.y2k-button-cut,
+.y2k-button.y2k-button-cut,
+.y2k-button-outline-heavy,
+.y2k-button.y2k-button-outline-heavy {
+  min-inline-size: 0;
+  min-block-size: 1.375rem;
+  background: var(--y2k-surface-soft);
+  border: 1px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+  clip-path: none;
+}
+
+.y2k-field {
+  gap: .125rem;
+}
+
+.y2k-label {
+  font: 700 .5625rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.y2k-input,
+.y2k-textarea,
+.y2k-select {
+  min-height: 1.375rem;
+  padding: .125rem .375rem;
+  background: var(--y2k-surface);
+  color: var(--y2k-text);
+  border: 1px inset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-recessed);
+  font: 400 .625rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+}
+
+.y2k-textarea {
+  min-height: 2.75rem;
+}
+
+.y2k-input:focus,
+.y2k-textarea:focus,
+.y2k-select:focus {
+  border-color: var(--y2k-border);
+  outline: 2px dotted #d21212;
+  outline-offset: 2px;
+  box-shadow: var(--y2k-bevel-recessed);
+}
+
+.y2k-help-text {
+  color: var(--y2k-text-muted);
+  font-size: .5625rem;
+}
+
+.y2k-tooltip-arrow {
+  inline-size: .375rem;
+  block-size: .375rem;
+  flex: 0 0 auto;
+  background: #ffffc7;
+  border: 1px solid #777;
+  border-radius: 0;
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+.y2k-nav,
+.y2k-toolbar {
+  gap: 1px;
+  padding: 2px;
+  background: var(--y2k-surface-soft);
+  border: 1px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+}
+
+.y2k-nav-link {
+  min-height: 1.5625rem;
+  padding: .25rem .75rem;
+  background: var(--y2k-surface);
+  color: var(--y2k-text);
+  border: 1px outset var(--y2k-border);
+  border-radius: 0;
+  font-size: .625rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.y2k-nav-link:hover,
+.y2k-nav-link[aria-current="page"] {
+  background: var(--y2k-primary);
+  color: var(--y2k-on-primary);
+}
+
+.y2k-badge {
+  min-height: 1.125rem;
+  padding: .125rem .3125rem;
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-text);
+  border: 1px solid currentColor;
+  border-radius: 0;
+  box-shadow: 1px 1px 0 var(--y2k-bevel-shadow, var(--y2k-text));
+  font-size: .5625rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.y2k-badge-primary { background: var(--y2k-primary); color: var(--y2k-on-primary); }
+.y2k-badge-secondary { background: var(--y2k-secondary); color: var(--y2k-on-secondary); }
+.y2k-badge-success { background: var(--y2k-success); color: var(--y2k-on-success); }
+.y2k-badge-warning { background: var(--y2k-warning); color: var(--y2k-on-warning); }
+.y2k-badge-danger { background: var(--y2k-danger); color: var(--y2k-on-danger); }
+
+.y2k-alert {
+  min-height: 1.5rem;
+  padding: .25rem .375rem;
+  background: #cfe8ff;
+  color: #111;
+  border: 1px solid #6083a5;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 #fff;
+  font-size: .625rem;
+}
+
+.y2k-alert-warning { background: #fff2b2; color: #111; border-color: #9d8426; }
+.y2k-alert-danger { background: #ffd0d0; color: #111; border-color: #a05a5a; }
+.y2k-alert-success { background: #cef2ce; color: #111; border-color: #5f9665; }
+
+.y2k-progress {
+  height: .875rem;
+  padding: 1px;
+  background: var(--y2k-surface-soft);
+  border: 1px inset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-recessed);
+}
+
+.y2k-progress-bar {
+  background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .75rem, var(--y2k-surface-strong) .75rem .8125rem);
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 rgb(255 255 255 / .4);
+}
+
+.y2k-table-wrap {
+  padding: 0;
+  overflow: auto;
+  background: var(--y2k-surface);
+  border: 1px solid var(--y2k-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.y2k-table {
+  border-collapse: collapse;
+  font: 400 .5625rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+}
+
+.y2k-table th {
+  padding: .1875rem .3125rem;
+  background: var(--y2k-titlebar-bg);
+  color: var(--y2k-on-primary);
+  border: 1px solid var(--y2k-border);
+  font-weight: 700;
+  text-align: start;
+}
+
+.y2k-table td {
+  padding: .1875rem .3125rem;
+  border: 1px solid var(--y2k-border);
+}
+
+.y2k-tooltip,
+[data-ui="y2k"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  padding: .25rem .375rem;
+  background: #ffffc7;
+  color: #111;
+  border: 1px outset #777;
+  border-radius: 0;
+  box-shadow: 2px 2px 0 #3d3d3d;
+  font: 400 .625rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+}
+
+.y2k-card-service,
+.y2k-card-feature,
+.y2k-media-scrim,
+.y2k-feature-strip,
+.y2k-callout-bar {
+  background: var(--y2k-surface);
+  border: 2px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+  clip-path: none;
+}
+
+.y2k-card-service,
+.y2k-card-feature,
+.y2k-callout-bar {
+  padding: .375rem;
+  gap: .375rem;
+}
+
+.y2k-feature-strip {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+}
+
+.y2k-feature-item {
+  gap: .375rem;
+  padding: .375rem;
+  border-inline-end: 1px solid var(--y2k-border);
+  border-block-end: 1px solid var(--y2k-border);
+}
+
+.y2k-icon-medallion,
+.y2k-badge-seal {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  min-inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: .25rem;
+  background: var(--y2k-primary);
+  color: var(--y2k-on-primary);
+  border: 2px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+  font: 700 .75rem/1 Tahoma, Verdana, Arial, sans-serif;
+  text-align: center;
+}
+
+.y2k-feature-item > .y2k-icon-medallion,
+.y2k-callout-bar > .y2k-icon-medallion {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  font-size: 1.25rem;
+}
+
+.y2k-media-scrim {
+  min-block-size: 8rem;
+}
+
+[data-ui="y2k"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  min-height: 1.375rem;
+  padding: .125rem .75rem;
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-text);
+  border: 1px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-raised);
+  font: 700 .625rem/1 Tahoma, Verdana, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+[data-ui="y2k"][data-mode] :where(dialog) {
+  padding: .5rem;
+  background: var(--y2k-surface);
+  color: var(--y2k-text);
+  border: 3px outset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: 5px 5px 0 var(--y2k-bevel-shadow, #000);
+}
+
+[data-ui="y2k"][data-mode] :where(dialog)::backdrop {
+  background: rgb(0 0 0 / .48);
+}
+
+@media (pointer: coarse) {
+  .y2k-button,
+  .y2k-icon-button,
+  .y2k-input,
+  .y2k-select,
+  .y2k-nav-link,
+  [data-ui="y2k"][data-mode] :where(button, input, select) {
+    min-block-size: 2.75rem;
+  }
+}
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="y2k"][data-mode] .y2k-button.y2k-button-warning {
+  background: var(--y2k-warning);
+  color: var(--y2k-on-warning);
+  border-color: var(--y2k-warning);
+  text-shadow: none;
+}
+
 }

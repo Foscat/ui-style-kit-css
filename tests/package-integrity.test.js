@@ -14,7 +14,7 @@ const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.
 
 // Exact overrides keep the release audit deterministic without promoting transitive tooling to direct dependencies.
 const expectedSecurityOverrides = {
-  'fast-uri': '3.1.5',
+  'fast-uri': '3.1.6',
   'js-yaml': '4.3.1',
   nanoid: '3.3.18',
   postcss: '8.5.23'
@@ -88,12 +88,39 @@ function isExternalReference(reference) {
   return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(reference);
 }
 
+/**
+ * Separate a local URL's filesystem path from its query and anchor components.
+ * @param {string} reference Markdown or HTML reference.
+ * @returns {{pathname: string, hash: string}} Local path and fragment without cache parameters.
+ */
 function splitReference(reference) {
   const trimmed = reference.trim().replace(/^<|>$/g, '');
   const withoutTitle = trimmed.match(/^([^\s]+)(?:\s+["'][^"']+["'])?$/)?.[1] || trimmed;
-  const [pathname = '', hash = ''] = withoutTitle.split('#');
+  const [resource = '', hash = ''] = withoutTitle.split('#');
+  const [pathname = ''] = resource.split('?');
 
   return { pathname, hash };
+}
+
+/**
+ * Include literal IDs from local scripts that populate the HTML demo at runtime.
+ * @param {string} sourcePath Absolute HTML entrypoint path.
+ * @param {string} contents Authored entrypoint markup.
+ * @returns {string} Markup and its referenced local script sources for anchor validation.
+ */
+function localAnchorSources(sourcePath, contents) {
+  if (path.extname(sourcePath) !== '.html') return contents;
+  const sources = [contents];
+  for (const [, reference] of contents.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/g)) {
+    if (isExternalReference(reference)) continue;
+    const { pathname } = splitReference(reference);
+    const scriptPath = path.resolve(path.dirname(sourcePath), pathname);
+    const relative = path.relative(rootDir, scriptPath);
+    if (!relative.startsWith('..') && !path.isAbsolute(relative) && fs.existsSync(scriptPath)) {
+      sources.push(fs.readFileSync(scriptPath, 'utf8'));
+    }
+  }
+  return sources.join('\n');
 }
 
 function assertLocalReference(file, reference, failures) {
@@ -104,7 +131,7 @@ function assertLocalReference(file, reference, failures) {
   const sourceContents = fs.readFileSync(sourcePath, 'utf8');
 
   if (!pathname) {
-    if (hash && !new RegExp(`\\bid=["']${escapeRegExp(hash)}["']`).test(sourceContents)) {
+    if (hash && !new RegExp(`\\bid=["']${escapeRegExp(hash)}["']`).test(localAnchorSources(sourcePath, sourceContents))) {
       failures.push(`${file}: missing #${hash}`);
     }
     return;
@@ -285,11 +312,11 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
     selected: id === 'minimal-saas',
     label
   }));
-  const expectedThemes = manifest.themes.map((theme) => ({
+  const expectedThemes = ['', ...manifest.themes].map((theme) => ({
     value: theme,
     prefix: '',
-    selected: theme === 'arctic-indigo',
-    label: theme
+    selected: theme === '',
+    label: theme || 'None — style defaults'
   }));
   const expectedModes = manifest.modes.map((mode) => ({
     value: mode,
@@ -476,7 +503,7 @@ test('wiki links use rendered GitHub Wiki page routes', () => {
   for (const file of markdownFiles) {
     const contents = fs.readFileSync(path.join(wikiDir, file), 'utf8');
     for (const match of contents.matchAll(/\]\(([^)]+\.md(?:#[^)]+)?)\)/g)) {
-      rawFileLinks.push(`${file}: ${match[1]}`);
+      if (!isExternalReference(match[1])) rawFileLinks.push(`${file}: ${match[1]}`);
     }
   }
 
@@ -804,7 +831,7 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
   for (const uiName of perUiBridgeSelectors) {
     assert.doesNotMatch(
       bridgeCss,
-      new RegExp(`data-ui="${uiName}"\\]\\[data-theme\\]\\[data-mode\\]\\) \\.interactive-surface`),
+      new RegExp(`data-ui="${uiName}"\\]\\[data-mode\\]\\) \\.interactive-surface`),
       `Bridge should inherit shared --usk-* roles instead of duplicating ${uiName} token maps`
     );
   }
@@ -881,7 +908,7 @@ test('native element fallback styles are shared instead of duplicated per preset
     'dialog',
     'article, aside'
   ]) {
-    assert.match(nativeCss, new RegExp(`\\[data-ui\\]\\[data-theme\\]\\[data-mode\\] :where\\(${escapeRegExp(selector)}`));
+    assert.match(nativeCss, new RegExp(`\\[data-ui\\]\\[data-mode\\] :where\\(${escapeRegExp(selector)}`));
   }
   assert.match(nativeCss, /--usk-native-surface/);
   assert.match(nativeCss, /--usk-native-radius/);
@@ -921,7 +948,7 @@ test('every manifest preset maps the complete native-control identity contract',
 
   for (const { id } of manifest.presets) {
     const css = fs.readFileSync(path.join(rootDir, 'styles', `${id}.css`), 'utf8');
-    const block = css.match(new RegExp(`\\[data-ui="${escapeRegExp(id)}"\\]\\[data-theme\\]\\[data-mode\\]\\s*\\{([\\s\\S]*?)\\n\\}`))?.[1] ?? '';
+    const block = css.match(new RegExp(`\\[data-ui="${escapeRegExp(id)}"\\]\\[data-mode\\]\\s*\\{([\\s\\S]*?)\\n\\}`))?.[1] ?? '';
 
     for (const token of requiredTokens) {
       assert.match(block, new RegExp(`${escapeRegExp(token)}\\s*:`), `${id} should map ${token}`);
@@ -991,17 +1018,17 @@ test('demo favicon assets stay repo-local and use portable paths', () => {
   assert.match(rootDemoHtml, /href="demo\/assets\/favicon\.ico"/);
   assert.match(rootDemoHtml, /href="site\.webmanifest"/);
   assert.match(rootDemoHtml, /content="browserconfig\.xml"/);
-  assert.match(rootDemoHtml, /href="demo\/demo\.css"/);
-  assert.match(rootDemoHtml, /src="demo\/demo\.js"/);
-  assert.match(rootDemoHtml, /data-default-href="dist\/ui-style-kit\.css"/);
-  assert.match(rootDemoHtml, /data-bridge-href="dist\/ui-style-kit\.with-bridge\.css"/);
+  assert.match(rootDemoHtml, /href="demo\/demo\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /src="demo\/demo\.js\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /data-default-href="dist\/ui-style-kit\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /data-bridge-href="dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}"/);
   assert.match(packageDemoHtml, /href="assets\/favicon\.ico"/);
   assert.match(packageDemoHtml, /href="assets\/site\.webmanifest"/);
   assert.match(packageDemoHtml, /content="assets\/browserconfig\.xml"/);
-  assert.match(packageDemoHtml, /href="demo\.css"/);
-  assert.match(packageDemoHtml, /src="demo\.js"/);
-  assert.match(packageDemoHtml, /data-default-href="\.\.\/dist\/ui-style-kit\.css"/);
-  assert.match(packageDemoHtml, /data-bridge-href="\.\.\/dist\/ui-style-kit\.with-bridge\.css"/);
+  assert.match(packageDemoHtml, /href="demo\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /src="demo\.js\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /data-default-href="\.\.\/dist\/ui-style-kit\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /data-bridge-href="\.\.\/dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}"/);
   assert.doesNotMatch(packageDemoHtml, /href="\/(?:favicon|site\.webmanifest|apple-touch-icon)/);
 
   assert.equal(rootManifest.theme_color, '#070b24');

@@ -7,8 +7,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'index.html')).href;
 
 const representativeStates = [
+  { ui: 'editorial-luxe', theme: 'arctic-indigo', mode: 'light', bridge: false },
+  { ui: 'editorial-luxe', theme: 'arctic-indigo', mode: 'dark', bridge: false },
+  { ui: 'editorial-luxe', theme: 'arctic-indigo', mode: 'contrast', bridge: false },
+  { ui: 'art-deco', theme: 'arctic-indigo', mode: 'light', bridge: false },
+  { ui: 'art-deco', theme: 'arctic-indigo', mode: 'dark', bridge: false },
+  { ui: 'art-deco', theme: 'arctic-indigo', mode: 'contrast', bridge: false },
   { ui: 'minimal-saas', theme: 'arctic-indigo', mode: 'light', bridge: false },
   { ui: 'cyberpunk', theme: 'midnight-gold', mode: 'dark', bridge: true },
+  { ui: 'data-terminal', theme: 'arctic-indigo', mode: 'contrast', bridge: false },
   { ui: 'retro-glass', theme: 'royal-plum', mode: 'contrast', bridge: true }
 ];
 

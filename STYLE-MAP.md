@@ -56,7 +56,7 @@ The release registry turns those signatures into executable reference traits. Ea
 |---|---|
 | Shared native HTML element fallback selectors | `styles/native-elements.css` |
 
-Native selectors stay generic under `[data-ui][data-theme][data-mode]`. Every preset maps the complete choice, select, range, progress, meter, file, color, indicator, and scrollbar identity token set while retaining theme-owned color channels. This avoids repeating browser pseudo-element rules in every UI file and keeps vendor selectors safely separated.
+Native selectors stay generic under `[data-ui][data-mode]`; `data-theme` is optional. Every preset maps the complete choice, select, range, progress, meter, file, color, indicator, and scrollbar identity token set while retaining theme-owned color channels. The shared `--ui-color-bg` handshake uses the preset's `--usk-native-bg` mapping in both native and named-theme mode. Vendor selectors remain safely separated.
 
 ## Shared overflow layer
 

@@ -42,6 +42,29 @@
 
 [data-ui="tactile"][data-mode="light"] {
   color-scheme: light;
+  --tactile-fallback-bg-rgb: 248 242 231;
+  --tactile-fallback-surface-rgb: 255 255 255;
+  --tactile-fallback-surface-strong-rgb: 255 250 241;
+  --tactile-fallback-surface-soft-rgb: 234 223 205;
+  --tactile-fallback-text-rgb: 43 36 25;
+  --tactile-fallback-text-muted-rgb: 107 97 78;
+  --tactile-fallback-border-rgb: 215 198 167;
+  --tactile-fallback-primary-rgb: 177 60 28;
+  --tactile-fallback-primary-hover-rgb: 145 46 20;
+  --tactile-fallback-primary-text-rgb: 255 255 255;
+  --tactile-fallback-secondary-rgb: 91 104 67;
+  --tactile-fallback-secondary-hover-rgb: 71 84 50;
+  --tactile-fallback-secondary-text-rgb: 255 255 255;
+  --tactile-fallback-accent-rgb: 197 160 82;
+  --tactile-fallback-accent-text-rgb: 0 0 0;
+  --tactile-fallback-success-rgb: 91 104 67;
+  --tactile-fallback-success-text-rgb: 255 255 255;
+  --tactile-fallback-warning-rgb: 166 107 0;
+  --tactile-fallback-warning-text-rgb: 0 0 0;
+  --tactile-fallback-danger-rgb: 174 74 63;
+  --tactile-fallback-danger-text-rgb: 255 255 255;
+  --tactile-fallback-link-rgb: 112 83 47;
+  --tactile-fallback-focus-rgb: 201 151 74;
   --tactile-panel-alpha: .98;
   --tactile-panel-soft-alpha: .82;
   --tactile-border-alpha: .68;
@@ -53,6 +76,29 @@
 
 [data-ui="tactile"][data-mode="dark"] {
   color-scheme: dark;
+  --tactile-fallback-bg-rgb: 18 15 9;
+  --tactile-fallback-surface-rgb: 33 27 18;
+  --tactile-fallback-surface-strong-rgb: 47 40 27;
+  --tactile-fallback-surface-soft-rgb: 25 20 13;
+  --tactile-fallback-text-rgb: 248 239 223;
+  --tactile-fallback-text-muted-rgb: 199 186 163;
+  --tactile-fallback-border-rgb: 91 78 56;
+  --tactile-fallback-primary-rgb: 211 83 43;
+  --tactile-fallback-primary-hover-rgb: 230 107 63;
+  --tactile-fallback-primary-text-rgb: 21 16 6;
+  --tactile-fallback-secondary-rgb: 131 145 92;
+  --tactile-fallback-secondary-hover-rgb: 155 169 112;
+  --tactile-fallback-secondary-text-rgb: 9 20 7;
+  --tactile-fallback-accent-rgb: 222 181 91;
+  --tactile-fallback-accent-text-rgb: 0 0 0;
+  --tactile-fallback-success-rgb: 131 145 92;
+  --tactile-fallback-success-text-rgb: 0 0 0;
+  --tactile-fallback-warning-rgb: 255 209 102;
+  --tactile-fallback-warning-text-rgb: 0 0 0;
+  --tactile-fallback-danger-rgb: 255 136 122;
+  --tactile-fallback-danger-text-rgb: 0 0 0;
+  --tactile-fallback-link-rgb: 240 211 154;
+  --tactile-fallback-focus-rgb: 241 196 110;
   --tactile-panel-alpha: .92;
   --tactile-panel-soft-alpha: .68;
   --tactile-border-alpha: .62;
@@ -64,6 +110,29 @@
 
 [data-ui="tactile"][data-mode="contrast"] {
   color-scheme: dark;
+  --tactile-fallback-bg-rgb: 0 0 0;
+  --tactile-fallback-surface-rgb: 15 11 3;
+  --tactile-fallback-surface-strong-rgb: 26 18 5;
+  --tactile-fallback-surface-soft-rgb: 0 0 0;
+  --tactile-fallback-text-rgb: 255 255 255;
+  --tactile-fallback-text-muted-rgb: 255 248 232;
+  --tactile-fallback-border-rgb: 255 255 255;
+  --tactile-fallback-primary-rgb: 255 209 102;
+  --tactile-fallback-primary-hover-rgb: 255 255 255;
+  --tactile-fallback-primary-text-rgb: 0 0 0;
+  --tactile-fallback-secondary-rgb: 157 255 107;
+  --tactile-fallback-secondary-hover-rgb: 255 255 255;
+  --tactile-fallback-secondary-text-rgb: 0 0 0;
+  --tactile-fallback-accent-rgb: 255 176 0;
+  --tactile-fallback-accent-text-rgb: 0 0 0;
+  --tactile-fallback-success-rgb: 0 255 117;
+  --tactile-fallback-success-text-rgb: 0 0 0;
+  --tactile-fallback-warning-rgb: 255 225 0;
+  --tactile-fallback-warning-text-rgb: 0 0 0;
+  --tactile-fallback-danger-rgb: 255 77 77;
+  --tactile-fallback-danger-text-rgb: 0 0 0;
+  --tactile-fallback-link-rgb: 255 209 102;
+  --tactile-fallback-focus-rgb: 255 255 255;
   --tactile-panel-alpha: 1;
   --tactile-panel-soft-alpha: .92;
   --tactile-border-alpha: 1;
@@ -73,8 +142,8 @@
   --tactile-sidebar-alpha: 1;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="tactile"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --tactile-bg-rgb: var(--usk-bg-rgb);
   --tactile-surface-rgb: var(--usk-surface-rgb);
   --tactile-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -89,15 +158,43 @@
   --tactile-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --tactile-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --tactile-accent-rgb: var(--usk-accent-rgb);
-  --tactile-success-rgb: var(--usk-success-rgb);
-  --tactile-warning-rgb: var(--usk-warning-rgb);
-  --tactile-danger-rgb: var(--usk-danger-rgb);
-  --tactile-link-rgb: var(--usk-link-rgb);
   --tactile-accent-text-rgb: var(--usk-accent-text-rgb);
+  --tactile-success-rgb: var(--usk-success-rgb);
   --tactile-success-text-rgb: var(--usk-success-text-rgb);
+  --tactile-warning-rgb: var(--usk-warning-rgb);
   --tactile-warning-text-rgb: var(--usk-warning-text-rgb);
+  --tactile-danger-rgb: var(--usk-danger-rgb);
   --tactile-danger-text-rgb: var(--usk-danger-text-rgb);
+  --tactile-link-rgb: var(--usk-link-rgb);
   --tactile-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="tactile"][data-mode] {
+  --usk-native-bg: var(--tactile-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --tactile-bg-rgb: var(--usk-bg-rgb, var(--tactile-fallback-bg-rgb));
+  --tactile-surface-rgb: var(--usk-surface-rgb, var(--tactile-fallback-surface-rgb));
+  --tactile-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--tactile-fallback-surface-strong-rgb));
+  --tactile-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--tactile-fallback-surface-soft-rgb));
+  --tactile-text-rgb: var(--usk-text-rgb, var(--tactile-fallback-text-rgb));
+  --tactile-text-muted-rgb: var(--usk-text-muted-rgb, var(--tactile-fallback-text-muted-rgb));
+  --tactile-border-rgb: var(--usk-border-rgb, var(--tactile-fallback-border-rgb));
+  --tactile-primary-rgb: var(--usk-primary-rgb, var(--tactile-fallback-primary-rgb));
+  --tactile-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--tactile-fallback-primary-hover-rgb));
+  --tactile-primary-text-rgb: var(--usk-primary-text-rgb, var(--tactile-fallback-primary-text-rgb));
+  --tactile-secondary-rgb: var(--usk-secondary-rgb, var(--tactile-fallback-secondary-rgb));
+  --tactile-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--tactile-fallback-secondary-hover-rgb));
+  --tactile-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--tactile-fallback-secondary-text-rgb));
+  --tactile-accent-rgb: var(--usk-accent-rgb, var(--tactile-fallback-accent-rgb));
+  --tactile-accent-text-rgb: var(--usk-accent-text-rgb, var(--tactile-fallback-accent-text-rgb));
+  --tactile-success-rgb: var(--usk-success-rgb, var(--tactile-fallback-success-rgb));
+  --tactile-success-text-rgb: var(--usk-success-text-rgb, var(--tactile-fallback-success-text-rgb));
+  --tactile-warning-rgb: var(--usk-warning-rgb, var(--tactile-fallback-warning-rgb));
+  --tactile-warning-text-rgb: var(--usk-warning-text-rgb, var(--tactile-fallback-warning-text-rgb));
+  --tactile-danger-rgb: var(--usk-danger-rgb, var(--tactile-fallback-danger-rgb));
+  --tactile-danger-text-rgb: var(--usk-danger-text-rgb, var(--tactile-fallback-danger-text-rgb));
+  --tactile-link-rgb: var(--usk-link-rgb, var(--tactile-fallback-link-rgb));
+  --tactile-focus-rgb: var(--usk-focus-rgb, var(--tactile-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--tactile-surface);
   --usk-native-surface-strong: var(--tactile-surface-strong);
@@ -242,7 +339,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="tactile"][data-theme][data-mode] { --tactile-border: color-mix(in srgb, rgb(var(--tactile-border-rgb) / max(var(--tactile-border-alpha), var(--usk-border-min-alpha))), var(--tactile-text) var(--usk-border-text-mix)); }
+  [data-ui="tactile"][data-mode] { --tactile-border: color-mix(in srgb, rgb(var(--tactile-border-rgb) / max(var(--tactile-border-alpha), var(--usk-border-min-alpha))), var(--tactile-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -294,7 +391,7 @@
 [data-ui="tactile"] *::before,
 [data-ui="tactile"] *::after { box-sizing: border-box; }
 
-[data-ui="tactile"][data-theme][data-mode] { background: var(--tactile-theme-bg); background-size: var(--tactile-theme-bg-size); }
+[data-ui="tactile"][data-mode] { background: var(--tactile-theme-bg); background-size: var(--tactile-theme-bg-size); }
 
 .tactile-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .tactile-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -362,7 +459,7 @@
 /* Theme-responsive component defaults */
 .tactile-card, .tactile-panel { background: var(--tactile-card-bg); }
 .tactile-toolbar, .tactile-table-wrap { background: var(--tactile-card-bg); }
-.tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-ghost), .tactile-icon-button { background: var(--tactile-control-bg); }
+.tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-warning):not(.tactile-button-ghost), .tactile-icon-button { background: var(--tactile-control-bg); }
 .tactile-button, .tactile-icon-button, .tactile-badge, .tactile-nav-link { font-family: var(--tactile-font-control); }
 
 
@@ -700,14 +797,14 @@
   border-radius: var(--tactile-radius-lg);
   box-shadow: var(--tactile-panel-shadow);
 }
-[data-ui="tactile"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="tactile"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   background: var(--tactile-control-bg);
   color: var(--tactile-text);
   border: 1px solid var(--tactile-keyline);
   border-radius: var(--tactile-radius-md);
   box-shadow: var(--tactile-button-shadow);
 }
-[data-ui="tactile"][data-theme][data-mode] :where(dialog) {
+[data-ui="tactile"][data-mode] :where(dialog) {
   background-color: var(--tactile-surface);
   background-image: var(--tactile-card-bg);
   border: 1px solid var(--tactile-keyline);
@@ -716,7 +813,7 @@
 }
 
 /* Reference-aligned material system: paper plates, keylines, and mechanical controls. */
-[data-ui="tactile"][data-theme][data-mode] {
+[data-ui="tactile"][data-mode] {
   --tactile-card-bg: var(--tactile-paper-grain), var(--tactile-paper-bg), var(--tactile-surface);
   --tactile-control-bg: linear-gradient(180deg, var(--tactile-bevel-highlight), transparent .28rem), linear-gradient(180deg, rgb(var(--tactile-surface-strong-rgb) / .94), rgb(var(--tactile-surface-soft-rgb) / .76));
   --tactile-field-bg: linear-gradient(180deg, rgb(var(--tactile-text-rgb) / .055), transparent .2rem), linear-gradient(180deg, rgb(var(--tactile-surface-soft-rgb) / .78), rgb(var(--tactile-surface-strong-rgb) / .62));
@@ -918,14 +1015,14 @@
 }
 .tactile-callout-bar > :where(.tactile-button, a, button):last-child { justify-self: end; }
 
-[data-ui="tactile"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+[data-ui="tactile"][data-mode] :where(fieldset, article, aside, details, dialog) {
   background-color: var(--tactile-surface);
   background-image: var(--tactile-card-bg);
   border: 1px solid var(--tactile-keyline);
   border-radius: var(--tactile-radius-lg);
   box-shadow: var(--tactile-panel-shadow);
 }
-[data-ui="tactile"][data-theme][data-mode] :where(legend) {
+[data-ui="tactile"][data-mode] :where(legend) {
   padding: .32rem .58rem;
   background: var(--tactile-control-bg);
   border: 1px solid var(--tactile-keyline);
@@ -936,17 +1033,17 @@
   letter-spacing: .1em;
   text-transform: uppercase;
 }
-[data-ui="tactile"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="tactile"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 1px solid var(--tactile-keyline);
   border-radius: 0;
   box-shadow: var(--tactile-button-shadow);
   clip-path: polygon(.2rem 0, calc(100% - .2rem) 0, 100% .2rem, 100% calc(100% - .2rem), calc(100% - .2rem) 100%, .2rem 100%, 0 calc(100% - .2rem), 0 .2rem);
 }
-[data-ui="tactile"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
+[data-ui="tactile"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
   transform: translateY(2px);
   box-shadow: var(--tactile-inset-shadow);
 }
-[data-ui="tactile"][data-theme][data-mode] :where(dialog) {
+[data-ui="tactile"][data-mode] :where(dialog) {
   border: 2px solid var(--tactile-keyline);
   border-radius: var(--tactile-radius-lg);
   box-shadow: var(--tactile-panel-shadow);
@@ -985,7 +1082,7 @@
  * Reasserts the paper-plate and mechanical-control hierarchy after busy indicators.
  * Chamfered keycaps, hard keylines, and dark troughs remain legible in every theme.
  */
-.tactile-title { font-family: var(--tactile-font-display); font-weight: 750; letter-spacing: -.035em; }
+.tactile-title { margin-block: .75rem; font-family: var(--tactile-font-display); font-weight: 750; letter-spacing: max(.022em, .5px); }
 .tactile-label { font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .tactile-button, .tactile-icon-button {
   min-height: 3.05rem;
@@ -1051,7 +1148,7 @@
   box-shadow: var(--tactile-panel-shadow);
 }
 .tactile-feature-item { padding: .85rem 1rem; background: var(--tactile-inset-bg); }
-[data-ui="tactile"][data-theme][data-mode] :where(fieldset, article, aside, details, dialog) {
+[data-ui="tactile"][data-mode] :where(fieldset, article, aside, details, dialog) {
   background: var(--tactile-card-bg);
   border: 1px solid var(--tactile-keyline);
   border-radius: .4rem;
@@ -1065,4 +1162,1193 @@
 .tactile-button-secondary { background: var(--tactile-secondary); color: var(--tactile-on-secondary); border-color: var(--tactile-secondary); }
 .tactile-button-danger { background: var(--tactile-danger); color: var(--tactile-on-danger); border-color: var(--tactile-danger); }
 .tactile-button-ghost { background: transparent; color: var(--tactile-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.tactile {
+/* Shared annotation fidelity: readable display rhythm and appropriately scaled text icons. */
+.tactile-feature-item > .tactile-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.tactile-callout-bar > .tactile-icon-medallion { min-inline-size: 4.5rem; min-block-size: 4.5rem; font-size: 2rem; font-weight: 800; line-height: 1; }
+}
+
+@layer ui-style-kit.tactile {
+/**
+ * Defines the compact type, restrained geometry, and material constants from
+ * the retained Workspace Configuration reference without changing public selectors.
+ */
+:root {
+  --tactile-font-sans: "Segoe UI", Tahoma, Arial, sans-serif;
+  --tactile-font-display: Georgia, Cambria, "Times New Roman", Times, serif;
+  --tactile-font-body: var(--tactile-font-sans);
+  --tactile-font-heading: var(--tactile-font-display);
+  --tactile-font-control: "Arial Narrow", "Aptos Narrow", "Segoe UI", Tahoma, Arial, sans-serif;
+  --tactile-radius-xs: .12rem;
+  --tactile-radius-sm: .18rem;
+  --tactile-radius-md: .24rem;
+  --tactile-radius-lg: .38rem;
+  --tactile-radius-xl: .5rem;
+}
+
+/**
+ * Locks the light reference palette to warm paper, umber ink, aged brass,
+ * oxidized olive, and fired-copper indicators.
+ */
+[data-ui="tactile"][data-mode="light"] {
+  --tactile-paper-rgb: 246 240 224;
+  --tactile-paper-deep-rgb: 229 218 194;
+  --tactile-paper-highlight-rgb: 255 252 241;
+  --tactile-ink-rgb: 45 40 34;
+  --tactile-muted-ink-rgb: 96 86 73;
+  --tactile-keyline-rgb: 158 135 99;
+  --tactile-material-shadow-rgb: 74 61 43;
+  --tactile-track-rgb: 37 33 31;
+  --tactile-sidebar-rgb: 45 41 36;
+  --tactile-sidebar-text-rgb: 236 221 190;
+  --tactile-copper-rgb: 177 60 28;
+  --tactile-olive-rgb: 91 104 67;
+  --tactile-brass-rgb: 197 160 82;
+}
+
+/**
+ * Carries the same physical materials into dark mode with warm charcoal paper,
+ * readable parchment ink, and brighter hardware accents.
+ */
+[data-ui="tactile"][data-mode="dark"] {
+  --tactile-paper-rgb: 57 51 44;
+  --tactile-paper-deep-rgb: 42 38 34;
+  --tactile-paper-highlight-rgb: 84 75 63;
+  --tactile-ink-rgb: 241 232 214;
+  --tactile-muted-ink-rgb: 198 184 158;
+  --tactile-keyline-rgb: 151 128 91;
+  --tactile-material-shadow-rgb: 0 0 0;
+  --tactile-track-rgb: 25 23 21;
+  --tactile-sidebar-rgb: 27 25 23;
+  --tactile-sidebar-text-rgb: 236 218 184;
+  --tactile-copper-rgb: 211 83 43;
+  --tactile-olive-rgb: 131 145 92;
+  --tactile-brass-rgb: 222 181 91;
+}
+
+/**
+ * Preserves the reference geometry in contrast mode while reducing the
+ * material system to explicit black, white, and high-chroma state hardware.
+ */
+[data-ui="tactile"][data-mode="contrast"] {
+  --tactile-paper-rgb: 0 0 0;
+  --tactile-paper-deep-rgb: 0 0 0;
+  --tactile-paper-highlight-rgb: 255 255 255;
+  --tactile-ink-rgb: 255 255 255;
+  --tactile-muted-ink-rgb: 255 255 255;
+  --tactile-keyline-rgb: 255 255 255;
+  --tactile-material-shadow-rgb: 0 0 0;
+  --tactile-track-rgb: 0 0 0;
+  --tactile-sidebar-rgb: 0 0 0;
+  --tactile-sidebar-text-rgb: 255 255 255;
+  --tactile-copper-rgb: 255 110 48;
+  --tactile-olive-rgb: 196 232 112;
+  --tactile-brass-rgb: 255 214 102;
+}
+
+/**
+ * Repaints the retained physical materials with the selected library scheme.
+ * The mode palettes above therefore remain standalone defaults, while an
+ * explicit data-theme keeps the complete color-token contract authoritative.
+ */
+[data-ui="tactile"][data-theme][data-mode] {
+  --tactile-paper-rgb: var(--usk-bg-rgb);
+  --tactile-paper-deep-rgb: var(--usk-surface-soft-rgb);
+  --tactile-paper-highlight-rgb: var(--usk-surface-strong-rgb);
+  --tactile-ink-rgb: var(--usk-text-rgb);
+  --tactile-muted-ink-rgb: var(--usk-text-muted-rgb);
+  --tactile-keyline-rgb: var(--usk-border-rgb);
+  --tactile-material-shadow-rgb: var(--usk-text-rgb);
+  --tactile-track-rgb: var(--usk-text-rgb);
+  --tactile-sidebar-rgb: var(--usk-text-rgb);
+  --tactile-sidebar-text-rgb: var(--usk-bg-rgb);
+  --tactile-copper-rgb: var(--usk-primary-rgb);
+  --tactile-olive-rgb: var(--usk-success-rgb);
+  --tactile-brass-rgb: var(--usk-accent-rgb);
+}
+
+/**
+ * Maps the fixed Tactile materials onto theme-aware action colors and every
+ * shared native-control token consumed by the package.
+ */
+[data-ui="tactile"][data-mode] {
+  --tactile-paper: rgb(var(--tactile-paper-rgb));
+  --tactile-paper-deep: rgb(var(--tactile-paper-deep-rgb));
+  --tactile-paper-highlight: rgb(var(--tactile-paper-highlight-rgb));
+  --tactile-ink: rgb(var(--tactile-ink-rgb));
+  --tactile-muted-ink: rgb(var(--tactile-muted-ink-rgb));
+  --tactile-copper: rgb(var(--tactile-copper-rgb));
+  --tactile-olive: rgb(var(--tactile-olive-rgb));
+  --tactile-brass: rgb(var(--tactile-brass-rgb));
+  --tactile-bg: var(--tactile-paper);
+  --tactile-surface: var(--tactile-paper);
+  --tactile-surface-strong: var(--tactile-paper-highlight);
+  --tactile-surface-soft: var(--tactile-paper-deep);
+  --tactile-text: var(--tactile-ink);
+  --tactile-text-muted: var(--tactile-muted-ink);
+  --tactile-fg: var(--tactile-ink);
+  --tactile-surface-fg: var(--tactile-ink);
+  --tactile-muted: var(--tactile-muted-ink);
+  --tactile-control-fg: var(--tactile-ink);
+  --tactile-border: rgb(var(--tactile-keyline-rgb) / .72);
+  --tactile-keyline: rgb(var(--tactile-keyline-rgb) / .78);
+  --tactile-bevel-highlight: rgb(var(--tactile-paper-highlight-rgb) / .88);
+  --tactile-bevel-shadow: rgb(var(--tactile-material-shadow-rgb) / .24);
+  --tactile-paper-wash: rgb(var(--tactile-brass-rgb) / .06);
+  --tactile-paper-grain: radial-gradient(circle at 16% 22%, rgb(var(--tactile-ink-rgb) / .025) 0 1px, transparent 1.2px), radial-gradient(circle at 72% 64%, rgb(var(--tactile-brass-rgb) / .04) 0 1px, transparent 1.3px), repeating-linear-gradient(96deg, transparent 0 2.4rem, rgb(var(--tactile-ink-rgb) / .012) 2.45rem 2.5rem);
+  --tactile-paper-bg: linear-gradient(180deg, rgb(var(--tactile-paper-highlight-rgb) / .34), transparent 11rem), linear-gradient(102deg, rgb(var(--tactile-brass-rgb) / .035), transparent 32rem), var(--tactile-paper);
+  --tactile-theme-bg: var(--tactile-paper-grain), var(--tactile-paper-bg);
+  --tactile-card-bg: var(--tactile-paper-grain), var(--tactile-paper-bg);
+  --tactile-control-bg: linear-gradient(180deg, var(--tactile-paper-highlight) 0, var(--tactile-paper) 48%, var(--tactile-paper-deep) 100%);
+  --tactile-field-bg: linear-gradient(180deg, rgb(var(--tactile-material-shadow-rgb) / .075), transparent .24rem), linear-gradient(180deg, var(--tactile-paper) 0, rgb(var(--tactile-paper-highlight-rgb) / .7) 100%);
+  --tactile-inset-bg: linear-gradient(180deg, rgb(var(--tactile-material-shadow-rgb) / .1), transparent .28rem), var(--tactile-paper);
+  --tactile-recessed-track: rgb(var(--tactile-track-rgb));
+  --tactile-track-rim: rgb(var(--tactile-keyline-rgb) / .9);
+  --tactile-progress-track: linear-gradient(180deg, var(--tactile-paper-deep), var(--tactile-paper-highlight));
+  --tactile-thumb-bg: linear-gradient(90deg, var(--tactile-paper-deep), var(--tactile-paper-highlight) 42%, var(--tactile-paper) 58%, var(--tactile-paper-deep));
+  --tactile-select-endcap: linear-gradient(90deg, transparent calc(100% - 2.25rem), rgb(var(--tactile-keyline-rgb) / .56) calc(100% - 2.25rem), rgb(var(--tactile-keyline-rgb) / .56) calc(100% - 2.2rem), transparent calc(100% - 2.2rem)), linear-gradient(135deg, transparent 50%, var(--tactile-ink) 50%), linear-gradient(45deg, var(--tactile-ink) 50%, transparent 50%), linear-gradient(45deg, transparent 50%, var(--tactile-ink) 50%), linear-gradient(135deg, var(--tactile-ink) 50%, transparent 50%), var(--tactile-field-bg);
+  --tactile-sidebar-bg: linear-gradient(90deg, rgb(var(--tactile-sidebar-rgb) / .98), rgb(var(--tactile-sidebar-rgb)));
+  --tactile-sidebar-fg: rgb(var(--tactile-sidebar-text-rgb));
+  --tactile-sidebar-muted: rgb(var(--tactile-sidebar-text-rgb) / .78);
+  --tactile-rail: var(--tactile-copper);
+  --tactile-panel-shadow: inset 0 1px 0 var(--tactile-bevel-highlight), inset 0 -1px 0 rgb(var(--tactile-material-shadow-rgb) / .18), 0 1px 2px rgb(var(--tactile-material-shadow-rgb) / .2), 0 .28rem .62rem rgb(var(--tactile-material-shadow-rgb) / .09);
+  --tactile-button-shadow: inset 0 1px 0 var(--tactile-bevel-highlight), inset 0 -2px 0 rgb(var(--tactile-material-shadow-rgb) / .22), 0 1px 2px rgb(var(--tactile-material-shadow-rgb) / .22);
+  --tactile-inset-shadow: inset .1rem .12rem .22rem rgb(var(--tactile-material-shadow-rgb) / .2), inset -.04rem -.04rem .12rem rgb(var(--tactile-paper-highlight-rgb) / .34);
+  --tactile-deep-inset-shadow: inset .12rem .14rem .2rem rgb(0 0 0 / .72), inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .12);
+  --tactile-progress-fill: repeating-linear-gradient(90deg, var(--tactile-olive) 0 calc(14.285% - 1px), rgb(var(--tactile-keyline-rgb) / .84) calc(14.285% - 1px) 14.285%);
+  --usk-native-surface: var(--tactile-paper);
+  --usk-native-surface-strong: var(--tactile-paper-highlight);
+  --usk-native-surface-soft: var(--tactile-paper-deep);
+  --usk-native-card-bg: var(--tactile-card-bg);
+  --usk-native-control-bg: var(--tactile-field-bg);
+  --usk-native-text: var(--tactile-ink);
+  --usk-native-text-muted: var(--tactile-muted-ink);
+  --usk-native-border: var(--tactile-keyline);
+  --usk-native-font-body: var(--tactile-font-body);
+  --usk-native-font-heading: var(--tactile-font-heading);
+  --usk-native-font-control: var(--tactile-font-control);
+  --usk-native-shadow: var(--tactile-button-shadow);
+  --usk-native-shadow-md: var(--tactile-panel-shadow);
+  --usk-native-control-min-block-size: 2.75rem;
+  --usk-native-control-padding-block: .55rem;
+  --usk-native-control-padding-inline: .78rem;
+  --usk-native-subcontrol-padding-block: .45rem;
+  --usk-native-subcontrol-padding-inline: .66rem;
+  --usk-native-panel-padding: 1rem;
+  --usk-native-choice-size: 1.05rem;
+  --usk-native-choice-background: var(--tactile-field-bg);
+  --usk-native-choice-border: 1px solid var(--tactile-keyline);
+  --usk-native-choice-shadow: var(--tactile-inset-shadow);
+  --usk-native-choice-checked-background: var(--tactile-copper);
+  --usk-native-choice-mark-color: var(--tactile-paper-highlight);
+  --usk-native-checkbox-radius: .08rem;
+  --usk-native-select-indicator-size: .36rem .36rem, .36rem .36rem;
+  --usk-native-select-indicator-position: calc(100% - 1.05rem) calc(50% - .22rem), calc(100% - 1.05rem) calc(50% + .22rem);
+  --usk-native-select-padding-inline-end: 2.6rem;
+  --usk-native-range-track-size: .55rem;
+  --usk-native-range-track-background: var(--tactile-recessed-track);
+  --usk-native-range-track-border: 1px solid var(--tactile-track-rim);
+  --usk-native-range-track-radius: .16rem;
+  --usk-native-range-track-shadow: var(--tactile-deep-inset-shadow);
+  --usk-native-range-thumb-size: 1.35rem;
+  --usk-native-range-thumb-background: var(--tactile-thumb-bg);
+  --usk-native-range-thumb-border: 1px solid var(--tactile-keyline);
+  --usk-native-range-thumb-radius: .16rem;
+  --usk-native-range-thumb-shadow: var(--tactile-button-shadow);
+  --usk-native-progress-size: .68rem;
+  --usk-native-progress-track-background: var(--tactile-progress-track);
+  --usk-native-progress-track-border: 1px solid var(--tactile-keyline);
+  --usk-native-progress-track-radius: .14rem;
+  --usk-native-progress-track-shadow: var(--tactile-inset-shadow);
+  --usk-native-progress-value-background: var(--tactile-progress-fill);
+  --usk-native-progress-value-radius: .08rem;
+  --usk-native-progress-value-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .3);
+  --usk-native-meter-optimum-background: var(--tactile-olive);
+  --usk-native-meter-suboptimum-background: var(--tactile-brass);
+  --usk-native-meter-critical-background: var(--tactile-copper);
+  --usk-native-file-button-background: var(--tactile-control-bg);
+  --usk-native-file-button-border: 1px solid var(--tactile-keyline);
+  --usk-native-file-button-radius: .2rem;
+  --usk-native-file-button-shadow: var(--tactile-button-shadow);
+  --usk-native-color-swatch-border: 1px solid var(--tactile-keyline);
+  --usk-native-color-swatch-radius: .12rem;
+  --usk-native-scrollbar-track: var(--tactile-paper-deep);
+  --usk-native-scrollbar-thumb: var(--tactile-thumb-bg);
+  --usk-native-scrollbar-radius: .14rem;
+}
+
+/**
+ * Establishes the restrained paper page and the reference's compact text rhythm.
+ */
+[data-ui="tactile"] {
+  background: var(--tactile-theme-bg);
+  color: var(--tactile-ink);
+  font-family: var(--tactile-font-body);
+  font-size: .875rem;
+  line-height: 1.42;
+}
+
+.tactile-title {
+  margin-block: .75rem;
+  font-family: var(--tactile-font-display);
+  font-size: clamp(2rem, 4.2vw, 3.05rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: max(.022em, .5px);
+}
+
+.tactile-heading {
+  font-family: var(--tactile-font-heading);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.015em;
+}
+
+.tactile-kicker,
+.tactile-eyebrow {
+  font-family: var(--tactile-font-control);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+
+.tactile-label {
+  color: var(--tactile-ink);
+  font-family: var(--tactile-font-control);
+  font-size: .74rem;
+  font-weight: 650;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+
+.tactile-subtitle,
+.tactile-copy,
+.tactile-help-text,
+.tactile-alert-body {
+  color: var(--tactile-muted-ink);
+}
+
+.tactile-divider {
+  background: rgb(var(--tactile-keyline-rgb) / .44);
+  box-shadow: 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .58);
+}
+
+/**
+ * Gives every framed component the thin umber rule, shallow radius, and
+ * low-profile paper elevation visible in the reference panels.
+ */
+.tactile-surface,
+.tactile-card,
+.tactile-panel,
+.tactile-toolbar,
+.tactile-table-wrap {
+  background: var(--tactile-card-bg);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .38rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+.tactile-card,
+.tactile-panel {
+  padding: 1rem;
+}
+
+.tactile-toolbar {
+  padding: .72rem .82rem;
+}
+
+.tactile-well,
+.tactile-inset {
+  padding: .82rem;
+  background: var(--tactile-inset-bg);
+  border: 1px solid rgb(var(--tactile-keyline-rgb) / .64);
+  border-radius: .28rem;
+  box-shadow: var(--tactile-inset-shadow);
+}
+
+/**
+ * Recreates the shallow raised keycaps and the one-pixel pressed travel used
+ * by neutral, semantic, icon, destructive, and disabled actions.
+ */
+.tactile-button,
+.tactile-icon-button {
+  min-height: 2.75rem;
+  padding: .55rem .9rem;
+  background: var(--tactile-control-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .24rem;
+  box-shadow: var(--tactile-button-shadow);
+  clip-path: none;
+  font-family: var(--tactile-font-control);
+  font-size: .84rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .005em;
+  text-transform: none;
+}
+
+.tactile-icon-button {
+  width: 2.75rem;
+  padding: 0;
+}
+
+.tactile-button:hover,
+.tactile-icon-button:hover {
+  transform: translateY(-1px);
+  border-color: rgb(var(--tactile-keyline-rgb) / .96);
+  box-shadow: inset 0 1px 0 var(--tactile-bevel-highlight), inset 0 -2px 0 rgb(var(--tactile-material-shadow-rgb) / .26), 0 2px 3px rgb(var(--tactile-material-shadow-rgb) / .2);
+}
+
+.tactile-button:active,
+.tactile-icon-button:active,
+.tactile-button[aria-pressed="true"],
+.tactile-icon-button[aria-pressed="true"],
+.tactile-button.is-active,
+.tactile-icon-button.is-active {
+  transform: translateY(1px);
+  box-shadow: var(--tactile-inset-shadow);
+}
+
+.tactile-button-primary {
+  background: linear-gradient(180deg, var(--tactile-primary-hover), var(--tactile-primary) 48%, rgb(var(--tactile-primary-rgb) / .84));
+  color: var(--tactile-on-primary);
+  border-color: var(--tactile-primary);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .42), inset 0 -2px 0 rgb(0 0 0 / .25), 0 1px 2px rgb(var(--tactile-material-shadow-rgb) / .3);
+}
+
+.tactile-button-secondary {
+  background: var(--tactile-control-bg);
+  color: var(--tactile-ink);
+  border-color: var(--tactile-keyline);
+}
+
+.tactile-button-danger {
+  background: linear-gradient(180deg, rgb(var(--tactile-danger-rgb) / .88), var(--tactile-danger) 52%, rgb(var(--tactile-danger-rgb) / .76));
+  color: var(--tactile-on-danger);
+  border-color: var(--tactile-danger);
+}
+
+/** Enhances supported browsers with the reference's light-to-dark enamel ramp. */
+@supports (color: color-mix(in srgb, black, white)) {
+  .tactile-button-primary {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--tactile-primary), white 16%), var(--tactile-primary) 48%, color-mix(in srgb, var(--tactile-primary), black 18%));
+    border-color: color-mix(in srgb, var(--tactile-primary), black 34%);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .42), inset 0 -2px 0 rgb(0 0 0 / .25), 0 1px 2px rgb(var(--tactile-material-shadow-rgb) / .3);
+  }
+
+  .tactile-button-danger {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--tactile-danger), white 12%), var(--tactile-danger) 52%, color-mix(in srgb, var(--tactile-danger), black 18%));
+    border-color: color-mix(in srgb, var(--tactile-danger), black 30%);
+  }
+}
+
+.tactile-button-ghost {
+  background: transparent;
+  color: var(--tactile-primary);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tactile-button:disabled,
+.tactile-icon-button:disabled,
+.tactile-disabled {
+  opacity: .46;
+  transform: none;
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .38), inset 0 -1px 0 rgb(var(--tactile-material-shadow-rgb) / .12);
+}
+
+/**
+ * Applies the recessed paper field, mechanical selector end-cap, and compact
+ * type treatment to text, textarea, select, and file-entry families.
+ */
+.tactile-input,
+.tactile-textarea,
+.tactile-select {
+  min-height: 2.75rem;
+  padding: .55rem .72rem;
+  background: var(--tactile-field-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .24rem;
+  box-shadow: var(--tactile-inset-shadow);
+  font-family: var(--tactile-font-control);
+  font-size: .84rem;
+  font-weight: 500;
+}
+
+.tactile-select {
+  appearance: none;
+  padding-inline-end: 2.75rem;
+  background-image: var(--tactile-select-endcap);
+  background-repeat: no-repeat;
+  background-position: 0 0, calc(100% - 1.18rem) calc(50% - .36rem), calc(100% - .9rem) calc(50% - .36rem), calc(100% - 1.18rem) calc(50% + .34rem), calc(100% - .9rem) calc(50% + .34rem), 0 0;
+  background-size: 100% 100%, .28rem .28rem, .28rem .28rem, .28rem .28rem, .28rem .28rem, 100% 100%;
+}
+
+.tactile-input::placeholder,
+.tactile-textarea::placeholder {
+  color: var(--tactile-muted-ink);
+  opacity: .72;
+}
+
+/**
+ * Matches the small fired-copper checks and radios while retaining the native
+ * focus ring and full-label pointer target.
+ */
+.tactile-check-control,
+.tactile-radio-control {
+  width: 1.05rem;
+  height: 1.05rem;
+  background: var(--tactile-field-bg);
+  border: 1px solid var(--tactile-keyline);
+  box-shadow: var(--tactile-inset-shadow);
+}
+
+.tactile-check input:checked + .tactile-check-control,
+.tactile-radio input:checked + .tactile-radio-control {
+  background: var(--tactile-copper);
+  border-color: rgb(var(--tactile-copper-rgb) / .96);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), var(--tactile-focus-ring);
+}
+
+.tactile-radio input:checked + .tactile-radio-control {
+  background: var(--tactile-field-bg);
+}
+
+.tactile-radio input:checked + .tactile-radio-control::after {
+  width: .52rem;
+  height: .52rem;
+  background: var(--tactile-copper);
+}
+
+.tactile-switch-track {
+  width: 4.1rem;
+  height: 1.75rem;
+  background: var(--tactile-recessed-track);
+  border: 1px solid var(--tactile-track-rim);
+  border-radius: .2rem;
+  box-shadow: var(--tactile-deep-inset-shadow);
+}
+
+.tactile-switch-thumb {
+  top: .14rem;
+  left: .14rem;
+  width: 1.42rem;
+  height: 1.42rem;
+  background: var(--tactile-thumb-bg);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .16rem;
+  box-shadow: var(--tactile-button-shadow);
+}
+
+.tactile-switch input:checked + .tactile-switch-track {
+  background: linear-gradient(90deg, var(--tactile-recessed-track) 0 50%, var(--tactile-olive) 50% 100%);
+  border-color: var(--tactile-keyline);
+}
+
+.tactile-switch input:checked + .tactile-switch-track .tactile-switch-thumb {
+  left: calc(100% - 1.42rem - .14rem);
+}
+
+/**
+ * Recreates the charcoal navigation plate with brass line work, sentence-case
+ * labels, and the narrow fired-copper selection rail.
+ */
+.tactile-nav {
+  gap: .2rem;
+  padding: .35rem;
+  background: var(--tactile-sidebar-bg);
+  border: 1px solid rgb(var(--tactile-keyline-rgb) / .72);
+  border-radius: .28rem;
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-sidebar-text-rgb) / .1), inset 0 -1px 0 rgb(0 0 0 / .52), 0 2px 5px rgb(0 0 0 / .18);
+}
+
+.tactile-nav-link {
+  min-height: 2.65rem;
+  padding: .58rem .76rem;
+  color: var(--tactile-sidebar-muted);
+  border-radius: .18rem;
+  font-family: var(--tactile-font-control);
+  font-size: .84rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+
+.tactile-nav-link:hover {
+  color: var(--tactile-sidebar-fg);
+  background: rgb(var(--tactile-sidebar-text-rgb) / .055);
+  border-color: rgb(var(--tactile-sidebar-text-rgb) / .14);
+}
+
+.tactile-nav-link[aria-current="page"],
+.tactile-nav-link.is-active {
+  color: var(--tactile-brass);
+  background: rgb(var(--tactile-sidebar-text-rgb) / .06);
+  border-color: rgb(var(--tactile-sidebar-text-rgb) / .18);
+  box-shadow: inset .18rem 0 0 var(--tactile-copper), inset .08rem .08rem .18rem rgb(0 0 0 / .38);
+}
+
+/**
+ * Separates slider troughs from the paper-backed segmented progress gauge and
+ * applies the olive fill used by readiness and completion indicators.
+ */
+.tactile-progress {
+  height: .68rem;
+  padding: .08rem;
+  background: var(--tactile-progress-track);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .14rem;
+  box-shadow: var(--tactile-inset-shadow);
+}
+
+.tactile-progress-bar {
+  background: var(--tactile-progress-fill);
+  border-radius: .06rem;
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .26);
+}
+
+.tactile-badge {
+  min-height: 1.45rem;
+  padding: .22rem .48rem;
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .12rem;
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .34);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .045em;
+}
+
+.tactile-alert {
+  padding: .82rem .9rem;
+  background: var(--tactile-card-bg);
+  border: 1px solid var(--tactile-keyline);
+  border-inline-start-width: .28rem;
+  border-radius: .3rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+.tactile-alert-title {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .045em;
+}
+
+.tactile-table th,
+.tactile-table td {
+  padding: .62rem .72rem;
+  border-color: rgb(var(--tactile-keyline-rgb) / .52);
+}
+
+.tactile-table th {
+  color: var(--tactile-sidebar-fg);
+  background: var(--tactile-sidebar-bg);
+  font-family: var(--tactile-font-control);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+}
+
+.tactile-table td {
+  color: var(--tactile-ink);
+  background: var(--tactile-field-bg);
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .28);
+}
+
+.tactile-tooltip,
+[data-ui="tactile"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  background: var(--tactile-sidebar-bg);
+  color: var(--tactile-sidebar-fg);
+  border: 1px solid rgb(var(--tactile-keyline-rgb) / .72);
+  border-radius: .2rem;
+  box-shadow: 0 .28rem .6rem rgb(0 0 0 / .24);
+  font-family: var(--tactile-font-control);
+  font-size: .75rem;
+}
+
+/**
+ * Extends the same border, paper, and hardware treatment through the marketing
+ * primitives and native framed content used by direct stylesheet consumers.
+ */
+.tactile-card-service,
+.tactile-card-feature,
+.tactile-feature-strip,
+.tactile-callout-bar {
+  padding: .9rem;
+  background: var(--tactile-card-bg);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .38rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+.tactile-feature-item {
+  padding: .72rem .82rem;
+  background: var(--tactile-inset-bg);
+  border-color: rgb(var(--tactile-keyline-rgb) / .54);
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .3);
+}
+
+.tactile-icon-medallion,
+.tactile-badge-seal {
+  background: var(--tactile-sidebar-bg);
+  color: var(--tactile-brass);
+  border-color: rgb(var(--tactile-keyline-rgb) / .82);
+  box-shadow: var(--tactile-button-shadow);
+}
+
+/** Pairs the seal's small text with its dark material instead of the page's ink colors. */
+.tactile-badge-seal {
+  color: var(--tactile-sidebar-fg);
+}
+
+/** Native strong/small defaults must not repaint the two lines inside the trust seal. */
+.tactile-badge-seal > :where(strong, small) {
+  color: inherit;
+}
+
+.tactile-callout-bar {
+  color: var(--tactile-sidebar-fg);
+  background: var(--tactile-sidebar-bg);
+}
+
+[data-ui="tactile"][data-mode] :where(fieldset, article, aside, details, dialog) {
+  background-color: var(--tactile-paper);
+  background-image: var(--tactile-card-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .38rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+[data-ui="tactile"][data-mode] :where(legend) {
+  padding: .26rem .5rem;
+  background: var(--tactile-control-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .16rem;
+  box-shadow: var(--tactile-button-shadow);
+  font-family: var(--tactile-font-control);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+}
+
+[data-ui="tactile"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  min-height: 2.75rem;
+  padding: .55rem .9rem;
+  background: var(--tactile-control-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .24rem;
+  box-shadow: var(--tactile-button-shadow);
+  clip-path: none;
+  font-family: var(--tactile-font-control);
+  font-size: .84rem;
+  font-weight: 600;
+}
+
+[data-ui="tactile"][data-mode] :where(input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select) {
+  min-height: 2.75rem;
+  background-color: var(--tactile-paper);
+  background-image: var(--tactile-field-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .24rem;
+  box-shadow: var(--tactile-inset-shadow);
+  font-family: var(--tactile-font-control);
+  font-size: .84rem;
+  font-weight: 500;
+}
+
+/**
+ * Gives unclassed selectors the same divided, double-arrow hardware end cap as
+ * the prefixed selector so direct stylesheet consumers retain the reference cue.
+ */
+[data-ui="tactile"][data-mode] :where(select) {
+  appearance: none;
+  padding-inline-end: 2.75rem;
+  background-image: var(--tactile-select-endcap);
+  background-repeat: no-repeat;
+  background-position: 0 0, calc(100% - 1.18rem) calc(50% - .36rem), calc(100% - .9rem) calc(50% - .36rem), calc(100% - 1.18rem) calc(50% + .34rem), calc(100% - .9rem) calc(50% + .34rem), 0 0;
+  background-size: 100% 100%, .28rem .28rem, .28rem .28rem, .28rem .28rem, .28rem .28rem, 100% 100%;
+}
+
+[data-ui="tactile"][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--tactile-copper);
+}
+
+[data-ui="tactile"][data-mode] :where(input[type="file"])::file-selector-button {
+  background: var(--tactile-control-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .2rem;
+  box-shadow: var(--tactile-button-shadow);
+  font-family: var(--tactile-font-control);
+  font-weight: 600;
+}
+
+/**
+ * Reasserts state affordances after the late native-control material layer.
+ * Keeping these selectors last prevents the tactile paper fill from masking
+ * focus, validation, and read-only cues on prefixed form controls.
+ */
+.tactile-input:focus-visible,
+.tactile-textarea:focus-visible,
+.tactile-select:focus-visible {
+  border-color: var(--tactile-focus);
+  box-shadow: var(--tactile-inset-shadow), var(--tactile-focus-ring);
+  outline: 2px solid var(--tactile-focus);
+  outline-offset: 2px;
+}
+
+.tactile-input[aria-invalid="true"],
+.tactile-textarea[aria-invalid="true"],
+.tactile-select[aria-invalid="true"] {
+  border-color: var(--tactile-danger);
+  box-shadow: var(--tactile-inset-shadow), 0 0 0 2px rgb(var(--tactile-danger-rgb) / .24);
+}
+
+.tactile-input[readonly],
+.tactile-textarea[readonly] {
+  border-style: dashed;
+  filter: saturate(.72);
+  opacity: .78;
+}
+}
+
+@layer ui-style-kit.tactile {
+/**
+ * Reconstructs the retained workspace composition as reusable Tactile layout
+ * elements. These selectors consume material variables exclusively so theme
+ * schemes repaint the composition without changing its measured geometry.
+ */
+.tactile-workspace-shell {
+  overflow: hidden;
+  background: var(--tactile-card-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .38rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+.tactile-workspace-shell,
+.tactile-workspace-shell *,
+.tactile-workspace-shell *::before,
+.tactile-workspace-shell *::after {
+  box-sizing: border-box;
+}
+
+.tactile-workspace-shell > .tactile-workspace-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.35rem 1rem 1rem;
+  background: var(--tactile-sidebar-bg);
+  color: var(--tactile-sidebar-fg);
+  border: 0;
+  border-inline-end: 1px solid rgb(var(--tactile-keyline-rgb) / .82);
+  border-radius: 0;
+  box-shadow: inset -1px 0 0 rgb(0 0 0 / .34), inset 0 1px 0 rgb(var(--tactile-sidebar-text-rgb) / .08);
+}
+
+.tactile-workspace-brand {
+  display: grid;
+  align-items: center;
+  gap: .7rem;
+  color: var(--tactile-sidebar-fg);
+  text-decoration: none;
+}
+
+.tactile-workspace-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  background: linear-gradient(180deg, rgb(var(--tactile-copper-rgb) / .92), var(--tactile-copper));
+  color: var(--tactile-paper-highlight);
+  border: 1px solid rgb(var(--tactile-brass-rgb) / .72);
+  border-radius: .16rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .25), 0 1px 2px rgb(0 0 0 / .42);
+  font-family: var(--tactile-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tactile-workspace-brand :where(strong, small) {
+  display: block;
+}
+
+.tactile-workspace-brand strong {
+  color: var(--tactile-sidebar-fg);
+  font-family: var(--tactile-font-display);
+  font-size: 1.18rem;
+  line-height: 1.05;
+}
+
+.tactile-workspace-brand small {
+  margin-top: .18rem;
+  color: var(--tactile-sidebar-muted);
+  font-family: var(--tactile-font-control);
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.tactile-workspace-menu {
+  display: grid;
+  gap: .3rem;
+  margin-top: 2.4rem;
+}
+
+.tactile-workspace-link {
+  display: grid;
+  align-items: center;
+  gap: .68rem;
+  min-height: 2.65rem;
+  padding: .62rem .7rem;
+  color: var(--tactile-sidebar-muted);
+  border: 1px solid transparent;
+  border-radius: .14rem;
+  font-family: var(--tactile-font-control);
+  font-size: .78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tactile-workspace-link small {
+  color: inherit;
+  font-size: .6rem;
+  letter-spacing: .08em;
+}
+
+.tactile-workspace-link:hover {
+  color: var(--tactile-sidebar-fg);
+  background: rgb(var(--tactile-sidebar-text-rgb) / .055);
+  border-color: rgb(var(--tactile-sidebar-text-rgb) / .16);
+}
+
+.tactile-workspace-link.is-active,
+.tactile-workspace-link[aria-current="page"] {
+  color: var(--tactile-brass);
+  background: rgb(var(--tactile-sidebar-text-rgb) / .06);
+  border-color: rgb(var(--tactile-sidebar-text-rgb) / .14);
+  box-shadow: inset .2rem 0 0 var(--tactile-copper), inset .08rem .08rem .2rem rgb(0 0 0 / .4);
+}
+
+.tactile-workspace-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.tactile-workspace-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.7;
+}
+
+.tactile-workspace-sidebar-note {
+  margin-top: auto;
+  padding: .82rem;
+  background: rgb(0 0 0 / .16);
+  border: 1px solid rgb(var(--tactile-sidebar-text-rgb) / .13);
+  border-radius: .18rem;
+  box-shadow: inset .08rem .1rem .18rem rgb(0 0 0 / .34);
+}
+
+.tactile-workspace-sidebar-note p {
+  margin: .52rem 0 0;
+  color: var(--tactile-sidebar-muted);
+  font-size: .7rem;
+  line-height: 1.4;
+}
+
+.tactile-workspace-main {
+  background: var(--tactile-card-bg);
+}
+
+.tactile-workspace-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.6rem 1.3rem;
+  border-bottom: 1px solid rgb(var(--tactile-keyline-rgb) / .55);
+  box-shadow: 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .62);
+}
+
+.tactile-workspace-header :where(p, h2) {
+  margin: 0;
+}
+
+.tactile-workspace-title {
+  margin-top: .26rem;
+  font-family: var(--tactile-font-display);
+  font-size: clamp(2.15rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
+.tactile-workspace-header .tactile-copy {
+  max-width: 40rem;
+  margin-top: .55rem;
+  font-size: .8rem;
+}
+
+.tactile-workspace-body {
+  display: grid;
+  align-items: start;
+  gap: 1rem;
+  padding: 1.25rem 1.6rem 1.5rem;
+}
+
+.tactile-workspace-settings {
+  overflow: hidden;
+  background: var(--tactile-card-bg);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .28rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+.tactile-workspace-row {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.15rem 1.2rem;
+  border-bottom: 1px solid rgb(var(--tactile-keyline-rgb) / .46);
+  box-shadow: inset 0 1px 0 rgb(var(--tactile-paper-highlight-rgb) / .46);
+}
+
+.tactile-workspace-row:last-child {
+  border-bottom: 0;
+}
+
+.tactile-workspace-row :where(h3, p) {
+  margin: 0;
+}
+
+.tactile-workspace-row h3 {
+  font-family: var(--tactile-font-display);
+  font-size: 1rem;
+  line-height: 1.15;
+}
+
+.tactile-workspace-row > div:first-child p {
+  margin-top: .3rem;
+  color: var(--tactile-muted-ink);
+  font-size: .68rem;
+}
+
+.tactile-workspace-fields,
+.tactile-workspace-switches {
+  display: grid;
+  gap: .8rem;
+}
+
+.tactile-workspace-switches .tactile-switch {
+  width: 100%;
+  justify-content: flex-start;
+  padding: .7rem .74rem;
+  background: var(--tactile-inset-bg);
+  border: 1px solid rgb(var(--tactile-keyline-rgb) / .52);
+  border-radius: .2rem;
+  box-shadow: var(--tactile-inset-shadow);
+}
+
+.tactile-workspace-switches .tactile-switch > span:last-child {
+  display: grid;
+  gap: .08rem;
+}
+
+.tactile-workspace-switches small,
+.tactile-workspace-security small {
+  color: var(--tactile-muted-ink);
+  font-size: .66rem;
+}
+
+.tactile-workspace-security {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+}
+
+.tactile-workspace-security > div {
+  display: grid;
+  gap: .35rem;
+}
+
+.tactile-workspace-readiness {
+  padding: 1rem;
+  background: var(--tactile-card-bg);
+  color: var(--tactile-ink);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: .28rem;
+  box-shadow: var(--tactile-panel-shadow);
+}
+
+.tactile-workspace-gauge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 11rem);
+  aspect-ratio: 1;
+  margin: 1rem auto .55rem;
+  overflow: hidden;
+  background: radial-gradient(circle, var(--tactile-paper-highlight) 0 52%, transparent 52.5%), repeating-conic-gradient(from 218deg, var(--tactile-keyline) 0 1deg, transparent 1deg 11deg), var(--tactile-paper-deep);
+  border: .42rem solid var(--tactile-paper);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--tactile-keyline), inset .18rem .2rem .42rem rgb(var(--tactile-material-shadow-rgb) / .18), 0 1px 2px rgb(var(--tactile-material-shadow-rgb) / .22);
+}
+
+.tactile-workspace-gauge::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 48%;
+  width: .16rem;
+  height: 35%;
+  background: var(--tactile-copper);
+  border-radius: .08rem;
+  box-shadow: 0 0 0 1px rgb(var(--tactile-material-shadow-rgb) / .26);
+  transform: translateX(-50%) rotate(44deg);
+  transform-origin: 50% 100%;
+}
+
+.tactile-workspace-gauge > span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  background: var(--tactile-control-bg);
+  border: 1px solid var(--tactile-keyline);
+  border-radius: 999px;
+  box-shadow: var(--tactile-button-shadow);
+}
+
+.tactile-workspace-gauge :where(strong, small) {
+  display: block;
+  text-align: center;
+}
+
+.tactile-workspace-gauge strong {
+  align-self: end;
+  font-family: var(--tactile-font-display);
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.tactile-workspace-gauge small {
+  align-self: start;
+  color: var(--tactile-muted-ink);
+  font-family: var(--tactile-font-control);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.tactile-workspace-gauge-key {
+  display: flex;
+  justify-content: space-between;
+  color: var(--tactile-muted-ink);
+  font-family: var(--tactile-font-control);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.tactile-workspace-readiness .tactile-alert {
+  margin-top: 1rem;
+}
+
+.tactile-workspace-shelf {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  align-items: center;
+  gap: 1.25rem;
+  padding: .9rem 1.6rem;
+  background: var(--tactile-control-bg);
+  border-top: 1px solid var(--tactile-keyline);
+  box-shadow: inset 0 1px 0 var(--tactile-bevel-highlight), 0 -.2rem .55rem rgb(var(--tactile-material-shadow-rgb) / .12);
+}
+
+.tactile-workspace-progress {
+  display: grid;
+  align-items: center;
+  gap: .8rem;
+}
+
+.tactile-workspace-progress > span {
+  display: grid;
+  gap: .08rem;
+}
+
+.tactile-workspace-progress small {
+  color: var(--tactile-muted-ink);
+  font-size: .65rem;
+}
+
+.tactile-workspace-progress .tactile-progress {
+  width: 100%;
+}
+
+@media (max-width: 52rem) {
+  .tactile-workspace-shell > .tactile-workspace-sidebar {
+    border-inline-end: 0;
+    border-bottom: 1px solid rgb(var(--tactile-keyline-rgb) / .82);
+  }
+
+  .tactile-workspace-menu {
+    margin-top: 1rem;
+    overflow-x: auto;
+  }
+
+  .tactile-workspace-sidebar-note {
+    display: none;
+  }
+
+}
+
+@media (max-width: 38rem) {
+  .tactile-workspace-header,
+  .tactile-workspace-security {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .tactile-workspace-header,
+  .tactile-workspace-body,
+  .tactile-workspace-shelf {
+    padding-inline: 1rem;
+  }
+
+  .tactile-workspace-row { gap: .8rem; }
+
+  .tactile-workspace-shelf .tactile-cluster,
+  .tactile-workspace-shelf .tactile-button {
+    width: 100%;
+  }
+}
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="tactile"][data-mode] .tactile-button.tactile-button-warning {
+  background: var(--tactile-warning);
+  color: var(--tactile-on-warning);
+  border-color: var(--tactile-warning);
+  text-shadow: none;
+}
+
 }

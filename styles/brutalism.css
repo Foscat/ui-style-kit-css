@@ -47,6 +47,29 @@
 
 [data-ui="brutalism"][data-mode="light"] {
   color-scheme: light;
+  --brutal-fallback-bg-rgb: 245 247 250;
+  --brutal-fallback-surface-rgb: 255 255 255;
+  --brutal-fallback-surface-strong-rgb: 252 252 253;
+  --brutal-fallback-surface-soft-rgb: 232 235 240;
+  --brutal-fallback-text-rgb: 17 36 59;
+  --brutal-fallback-text-muted-rgb: 90 104 119;
+  --brutal-fallback-border-rgb: 200 207 217;
+  --brutal-fallback-primary-rgb: 13 59 102;
+  --brutal-fallback-primary-hover-rgb: 11 49 85;
+  --brutal-fallback-primary-text-rgb: 255 255 255;
+  --brutal-fallback-secondary-rgb: 214 43 43;
+  --brutal-fallback-secondary-hover-rgb: 178 35 35;
+  --brutal-fallback-secondary-text-rgb: 255 255 255;
+  --brutal-fallback-accent-rgb: 233 90 90;
+  --brutal-fallback-accent-text-rgb: 0 0 0;
+  --brutal-fallback-success-rgb: 47 125 84;
+  --brutal-fallback-success-text-rgb: 255 255 255;
+  --brutal-fallback-warning-rgb: 164 106 0;
+  --brutal-fallback-warning-text-rgb: 0 0 0;
+  --brutal-fallback-danger-rgb: 198 40 40;
+  --brutal-fallback-danger-text-rgb: 255 255 255;
+  --brutal-fallback-link-rgb: 11 49 85;
+  --brutal-fallback-focus-rgb: 214 43 43;
   --brutal-panel-alpha: 0.92;
   --brutal-panel-strong-alpha: 0.98;
   --brutal-panel-soft-alpha: 0.74;
@@ -58,6 +81,29 @@
 
 [data-ui="brutalism"][data-mode="dark"] {
   color-scheme: dark;
+  --brutal-fallback-bg-rgb: 8 17 28;
+  --brutal-fallback-surface-rgb: 16 32 48;
+  --brutal-fallback-surface-strong-rgb: 24 49 73;
+  --brutal-fallback-surface-soft-rgb: 11 23 36;
+  --brutal-fallback-text-rgb: 243 247 251;
+  --brutal-fallback-text-muted-rgb: 188 200 213;
+  --brutal-fallback-border-rgb: 71 96 121;
+  --brutal-fallback-primary-rgb: 108 169 227;
+  --brutal-fallback-primary-hover-rgb: 147 193 237;
+  --brutal-fallback-primary-text-rgb: 0 0 0;
+  --brutal-fallback-secondary-rgb: 255 106 106;
+  --brutal-fallback-secondary-hover-rgb: 255 146 146;
+  --brutal-fallback-secondary-text-rgb: 0 0 0;
+  --brutal-fallback-accent-rgb: 255 154 154;
+  --brutal-fallback-accent-text-rgb: 0 0 0;
+  --brutal-fallback-success-rgb: 143 223 182;
+  --brutal-fallback-success-text-rgb: 0 0 0;
+  --brutal-fallback-warning-rgb: 255 210 122;
+  --brutal-fallback-warning-text-rgb: 0 0 0;
+  --brutal-fallback-danger-rgb: 255 143 143;
+  --brutal-fallback-danger-text-rgb: 0 0 0;
+  --brutal-fallback-link-rgb: 165 203 241;
+  --brutal-fallback-focus-rgb: 255 106 106;
   --brutal-panel-alpha: 0.82;
   --brutal-panel-strong-alpha: 0.94;
   --brutal-panel-soft-alpha: 0.58;
@@ -69,6 +115,29 @@
 
 [data-ui="brutalism"][data-mode="contrast"] {
   color-scheme: dark;
+  --brutal-fallback-bg-rgb: 0 0 0;
+  --brutal-fallback-surface-rgb: 6 16 26;
+  --brutal-fallback-surface-strong-rgb: 10 29 48;
+  --brutal-fallback-surface-soft-rgb: 0 0 0;
+  --brutal-fallback-text-rgb: 255 255 255;
+  --brutal-fallback-text-muted-rgb: 238 244 255;
+  --brutal-fallback-border-rgb: 255 255 255;
+  --brutal-fallback-primary-rgb: 102 181 255;
+  --brutal-fallback-primary-hover-rgb: 255 255 255;
+  --brutal-fallback-primary-text-rgb: 0 0 0;
+  --brutal-fallback-secondary-rgb: 255 102 102;
+  --brutal-fallback-secondary-hover-rgb: 255 255 255;
+  --brutal-fallback-secondary-text-rgb: 0 0 0;
+  --brutal-fallback-accent-rgb: 255 170 170;
+  --brutal-fallback-accent-text-rgb: 0 0 0;
+  --brutal-fallback-success-rgb: 0 255 144;
+  --brutal-fallback-success-text-rgb: 0 0 0;
+  --brutal-fallback-warning-rgb: 255 212 0;
+  --brutal-fallback-warning-text-rgb: 0 0 0;
+  --brutal-fallback-danger-rgb: 255 92 92;
+  --brutal-fallback-danger-text-rgb: 0 0 0;
+  --brutal-fallback-link-rgb: 140 198 255;
+  --brutal-fallback-focus-rgb: 255 255 255;
   --brutal-panel-alpha: 1;
   --brutal-panel-strong-alpha: 1;
   --brutal-panel-soft-alpha: 0.92;
@@ -78,8 +147,8 @@
   --brutal-grid-alpha: 0.18;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="brutalism"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --brutal-bg-rgb: var(--usk-bg-rgb);
   --brutal-surface-rgb: var(--usk-surface-rgb);
   --brutal-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -94,15 +163,43 @@
   --brutal-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --brutal-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --brutal-accent-rgb: var(--usk-accent-rgb);
-  --brutal-success-rgb: var(--usk-success-rgb);
-  --brutal-warning-rgb: var(--usk-warning-rgb);
-  --brutal-danger-rgb: var(--usk-danger-rgb);
-  --brutal-link-rgb: var(--usk-link-rgb);
   --brutal-accent-text-rgb: var(--usk-accent-text-rgb);
+  --brutal-success-rgb: var(--usk-success-rgb);
   --brutal-success-text-rgb: var(--usk-success-text-rgb);
+  --brutal-warning-rgb: var(--usk-warning-rgb);
   --brutal-warning-text-rgb: var(--usk-warning-text-rgb);
+  --brutal-danger-rgb: var(--usk-danger-rgb);
   --brutal-danger-text-rgb: var(--usk-danger-text-rgb);
+  --brutal-link-rgb: var(--usk-link-rgb);
   --brutal-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="brutalism"][data-mode] {
+  --usk-native-bg: var(--brutal-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --brutal-bg-rgb: var(--usk-bg-rgb, var(--brutal-fallback-bg-rgb));
+  --brutal-surface-rgb: var(--usk-surface-rgb, var(--brutal-fallback-surface-rgb));
+  --brutal-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--brutal-fallback-surface-strong-rgb));
+  --brutal-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--brutal-fallback-surface-soft-rgb));
+  --brutal-text-rgb: var(--usk-text-rgb, var(--brutal-fallback-text-rgb));
+  --brutal-text-muted-rgb: var(--usk-text-muted-rgb, var(--brutal-fallback-text-muted-rgb));
+  --brutal-border-rgb: var(--usk-border-rgb, var(--brutal-fallback-border-rgb));
+  --brutal-primary-rgb: var(--usk-primary-rgb, var(--brutal-fallback-primary-rgb));
+  --brutal-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--brutal-fallback-primary-hover-rgb));
+  --brutal-primary-text-rgb: var(--usk-primary-text-rgb, var(--brutal-fallback-primary-text-rgb));
+  --brutal-secondary-rgb: var(--usk-secondary-rgb, var(--brutal-fallback-secondary-rgb));
+  --brutal-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--brutal-fallback-secondary-hover-rgb));
+  --brutal-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--brutal-fallback-secondary-text-rgb));
+  --brutal-accent-rgb: var(--usk-accent-rgb, var(--brutal-fallback-accent-rgb));
+  --brutal-accent-text-rgb: var(--usk-accent-text-rgb, var(--brutal-fallback-accent-text-rgb));
+  --brutal-success-rgb: var(--usk-success-rgb, var(--brutal-fallback-success-rgb));
+  --brutal-success-text-rgb: var(--usk-success-text-rgb, var(--brutal-fallback-success-text-rgb));
+  --brutal-warning-rgb: var(--usk-warning-rgb, var(--brutal-fallback-warning-rgb));
+  --brutal-warning-text-rgb: var(--usk-warning-text-rgb, var(--brutal-fallback-warning-text-rgb));
+  --brutal-danger-rgb: var(--usk-danger-rgb, var(--brutal-fallback-danger-rgb));
+  --brutal-danger-text-rgb: var(--usk-danger-text-rgb, var(--brutal-fallback-danger-text-rgb));
+  --brutal-link-rgb: var(--usk-link-rgb, var(--brutal-fallback-link-rgb));
+  --brutal-focus-rgb: var(--usk-focus-rgb, var(--brutal-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--brutal-surface);
   --usk-native-surface-strong: var(--brutal-surface-strong);
@@ -233,7 +330,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="brutalism"][data-theme][data-mode] { --brutal-border: color-mix(in srgb, rgb(var(--brutal-border-rgb) / max(var(--brutal-border-alpha), var(--usk-border-min-alpha))), var(--brutal-text) var(--usk-border-text-mix)); }
+  [data-ui="brutalism"][data-mode] { --brutal-border: color-mix(in srgb, rgb(var(--brutal-border-rgb) / max(var(--brutal-border-alpha), var(--usk-border-min-alpha))), var(--brutal-text) var(--usk-border-text-mix)); }
 }
 
 /* =========================================================
@@ -325,7 +422,7 @@
 [data-ui="brutalism"] *::before,
 [data-ui="brutalism"] *::after { box-sizing: border-box; }
 
-[data-ui="brutalism"][data-theme][data-mode] { background: var(--brutal-theme-bg); background-size: var(--brutal-theme-bg-size); }
+[data-ui="brutalism"][data-mode] { background: var(--brutal-theme-bg); background-size: var(--brutal-theme-bg-size); }
 
 [data-ui="brutalism"] a { color: var(--brutal-link); text-decoration-thickness: 0.14em; text-underline-offset: 0.16em; font-weight: 800; }
 [data-ui="brutalism"] ::selection { background: var(--brutal-primary); color: var(--brutal-on-primary); }
@@ -419,7 +516,7 @@
 /* Theme-responsive component defaults */
 .brutal-card, .brutal-panel { background: var(--brutal-card-bg); }
 .brutal-toolbar, .brutal-table-wrap { background: var(--brutal-control-bg); }
-.brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-ghost), .brutal-icon-button { background: var(--brutal-control-bg); }
+.brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-warning):not(.brutal-button-ghost), .brutal-icon-button { background: var(--brutal-control-bg); }
 .brutal-button, .brutal-icon-button, .brutal-badge, .brutal-nav-link { font-family: var(--brutal-font-control); }
 
 
@@ -677,12 +774,12 @@
   border-radius: 0;
   box-shadow: .38rem .38rem 0 var(--brutal-text);
 }
-[data-ui="brutalism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="brutalism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 3px solid var(--brutal-text);
   border-radius: 0;
   box-shadow: .26rem .26rem 0 var(--brutal-text);
 }
-[data-ui="brutalism"][data-theme][data-mode] :where(dialog) {
+[data-ui="brutalism"][data-mode] :where(dialog) {
   border: 3px solid var(--brutal-text);
   border-radius: 0;
   box-shadow: .48rem .48rem 0 var(--brutal-text);
@@ -697,7 +794,7 @@
  * Reasserts Brutalism as a dense control surface of numbered, full-bleed
  * modules, blunt controls, and mechanical segmented instrumentation.
  */
-[data-ui="brutalism"][data-theme][data-mode] {
+[data-ui="brutalism"][data-mode] {
   --usk-native-font-control: var(--brutal-font-mono);
   --usk-native-control-min-block-size: 2.7rem;
   --usk-native-control-padding-block: .5rem;
@@ -748,7 +845,7 @@
   --usk-native-scrollbar-radius: 0;
 }
 
-.brutal-title { font-weight: 1000; letter-spacing: .01em; }
+.brutal-title { margin-block: .75rem; font-weight: 1000; letter-spacing: max(.032em, .5px); }
 .brutal-label { font-size: .68rem; font-weight: 900; }
 .brutal-button { min-height: 2.7rem; padding: .5rem .72rem; background: var(--brutal-primary); border-radius: 0 .08rem 0 0; box-shadow: .32rem .32rem 0 var(--brutal-text); font-weight: 900; }
 .brutal-input { min-height: 2.55rem; padding: .46rem .64rem; border-radius: 0 0 .06rem 0; }
@@ -797,4 +894,18 @@
 .brutal-button-secondary { background: var(--brutal-secondary); color: var(--brutal-on-secondary); border-color: var(--brutal-secondary); }
 .brutal-button-danger { background: var(--brutal-danger); color: var(--brutal-on-danger); border-color: var(--brutal-danger); }
 .brutal-button-ghost { background: transparent; color: var(--brutal-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.brutalism {
+/* Shared annotation fidelity: readable display rhythm and appropriately scaled text icons. */
+.brutal-feature-item > .brutal-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.brutal-callout-bar > .brutal-icon-medallion { min-inline-size: 4.5rem; min-block-size: 4.5rem; font-size: 2rem; font-weight: 800; line-height: 1; }
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="brutalism"][data-mode] .brutal-button.brutal-button-warning {
+  background: var(--brutal-warning);
+  color: var(--brutal-on-warning);
+  border-color: var(--brutal-warning);
+  text-shadow: none;
+}
+
 }

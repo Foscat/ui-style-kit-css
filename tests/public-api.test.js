@@ -244,7 +244,7 @@ test('release-facing current-version surfaces identify 2.4.0', () => {
   }
 
   const changelog = fs.readFileSync(relativePath('CHANGELOG.md'), 'utf8');
-  assert.equal(changelog.includes('## [2.4.0] - 2026-09-01'), true);
+  assert.match(changelog, /^## \[2\.4\.0\] - (?:Unreleased|\d{4}-\d{2}-\d{2})$/m);
   assert.equal(changelog.includes('## [2.2.0] - 2026-08-09'), true);
 });
 
@@ -454,7 +454,7 @@ test('canonical Interactive Surface theme bridge is token and paint only', () =>
 
   const baseRule = selectorDeclarations(
     relativeFile,
-    ':where([data-ui][data-theme][data-mode]) .interactive-surface'
+    ':where([data-ui][data-mode]) .interactive-surface'
   ).find((declarations) => declarations.has('box-sizing'));
   assert.ok(baseRule, 'theme bridge should apply base paint and geometry');
   for (const property of ['box-sizing', 'background-color', 'color', 'border', 'border-radius', 'box-shadow']) {

@@ -60,7 +60,7 @@ test('every preset extends native actions and dialogs with matching identity pai
 
   for (const { id } of PRESET_IDENTITIES) {
     const ast = astFor(`styles/${id}.css`);
-    const rootSelector = `[data-ui="${id}"][data-theme][data-mode]`;
+    const rootSelector = `[data-ui="${id}"][data-mode]`;
     const actions = effectiveDeclarations(ast, (selector) => (
       selector.includes(rootSelector)
       && selector.includes('button:not([class])')
@@ -85,7 +85,7 @@ test('every preset extends native actions and dialogs with matching identity pai
 test('preset native paint overrides keep foregrounds paired with replacement backgrounds', () => {
   for (const { id } of PRESET_IDENTITIES) {
     const ast = astFor(`styles/${id}.css`);
-    const rootSelector = `[data-ui="${id}"][data-theme][data-mode]`;
+    const rootSelector = `[data-ui="${id}"][data-mode]`;
     const actions = effectiveDeclarations(ast, (selector) => (
       selector.includes(rootSelector)
       && selector.includes('button:not([class])')
@@ -102,7 +102,7 @@ test('gradient-only dialogs retain opaque fallback paint and inherit readable co
   for (const id of ['tactile', 'neo-noir']) {
     const ast = astFor(`styles/${id}.css`);
     const dialog = effectiveDeclarations(ast, (selector) => (
-      selector.includes(`[data-ui="${id}"][data-theme][data-mode]`)
+      selector.includes(`[data-ui="${id}"][data-mode]`)
       && selector.includes(':where(dialog)')
     ));
 

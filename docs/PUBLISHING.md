@@ -2,6 +2,17 @@
 
 ## 2.4.0 release workflow
 
+The current checkout is a release candidate. [Release preparation notes](RELEASE-2.4.0.md)
+record the current local scope and gates; existing visual-QA documents are historical
+evidence, not proof that subsequent edits passed browser validation. Replace the
+2.4.0 changelog's `Unreleased` marker with the actual release date at approved publication.
+
+Update the tracked `wiki/` sources with the README and docs. Publishing those pages
+to GitHub Wiki is a separate handoff, not a side effect of the CSS build. No jsdoc2md
+documentation generator is configured in this package; reusable JavaScript helpers
+use JSDoc-compatible comments, and the checked-in build owns generated CSS, manifests,
+icons, README size measurements, and demo asset hashes.
+
 Prepare `ui-style-kit-css@2.4.0` on its release branch, open a pull request against `main`, and merge only after the complete gate is green. The aligned companion set is `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`.
 
 Do not push `v2.4.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.

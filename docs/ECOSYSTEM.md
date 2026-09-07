@@ -32,7 +32,7 @@ Pairings are recommendations, never dependencies. `data-ly-layout`, `data-ui`, `
 
 ## Shared semantic theming
 
-UI Style Kit's complete, visual, and focused visual entrypoints produce the 12 package-neutral `--ui-*` control tokens under `[data-ui][data-theme][data-mode]`. A third-party theme may produce the same contract under its own scope; consumers do not need UI Style Kit-specific `--usk-*` values. Package-specific values remain first in consumer fallback chains, shared semantic values come second, and legacy values or literals remain last.
+UI Style Kit's complete, visual, and focused visual entrypoints produce the 12 package-neutral `--ui-*` control tokens under `[data-ui][data-mode]`; `data-theme` is optional. A third-party theme may produce the same contract under its own scope; consumers do not need UI Style Kit-specific `--usk-*` values. Package-specific values remain first in consumer fallback chains, shared semantic values come second, and legacy values or literals remain last.
 
 A third-party producer can theme Interactive Surface's complete standalone entry point without a package-specific adapter:
 

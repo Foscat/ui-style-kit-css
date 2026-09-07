@@ -102,7 +102,7 @@ window.UI_STYLE_KIT_MANIFEST = {
     },
     {
       "id": "editorial-luxe",
-      "label": "Editorial Luxe",
+      "label": "Editorial Lux",
       "prefix": "luxe",
       "entrypoints": {
         "default": "./editorial-luxe.css",

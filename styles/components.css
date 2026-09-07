@@ -6,7 +6,7 @@
 ========================================================= */
 
 @layer ui-style-kit.components {
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   h1,
   h2,
   h3,
@@ -39,7 +39,7 @@
   word-break: normal;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   [class~="saas-surface"],
   [class~="saas-surface-sm"],
   [class~="saas-surface-lg"],
@@ -166,7 +166,7 @@
   min-inline-size: 0;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   [class~="saas-button"],
   [class~="saas-icon-button"],
   [class~="saas-badge"],
@@ -219,7 +219,7 @@
   white-space: normal;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .saas-button,
   .saas-icon-button,
   .saas-button-pill,
@@ -265,7 +265,7 @@
   vertical-align: middle;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .saas-button-pill,
   .bento-button-pill,
   .max-button-pill,
@@ -323,7 +323,7 @@
 .y2k-button-pill:hover { border-color: var(--y2k-primary-hover); filter: brightness(1.04); }
 .rg-button-pill:hover { border-color: var(--rg-primary-hover); filter: brightness(1.04); }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .saas-button-pill:active,
   .saas-button-pill[aria-pressed="true"],
   .bento-button-pill:active,
@@ -362,7 +362,7 @@
 .y2k-button-pill:focus-visible { outline: 3px solid var(--y2k-focus); outline-offset: 3px; box-shadow: var(--y2k-focus-ring); }
 .rg-button-pill:focus-visible { outline: 3px solid var(--rg-focus); outline-offset: 3px; box-shadow: var(--rg-focus-ring); }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .saas-button-pill:disabled,
   .saas-button-pill[aria-disabled="true"],
   .bento-button-pill:disabled,
@@ -392,7 +392,7 @@
   transform: none;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .saas-tooltip,
   .saas-tooltip-top,
   .saas-tooltip-right,
@@ -456,12 +456,12 @@
 }
 
 /* Directional tooltips detach only from an explicit anchor so static tooltip chips keep normal-flow sizing. */
-[data-ui][data-theme][data-mode]:where([data-ui-tooltip-anchor]),
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor]) {
+[data-ui][data-mode]:where([data-ui-tooltip-anchor]),
+[data-ui][data-mode] :where([data-ui-tooltip-anchor]) {
   position: relative;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   [data-ui-tooltip-anchor] > .saas-tooltip-top,
   [data-ui-tooltip-anchor] > .saas-tooltip-right,
   [data-ui-tooltip-anchor] > .saas-tooltip-bottom,
@@ -511,10 +511,10 @@
   z-index: 20;
 }
 
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-top, [data-ui-tooltip-anchor] > .bento-tooltip-top, [data-ui-tooltip-anchor] > .max-tooltip-top, [data-ui-tooltip-anchor] > .bau-tooltip-top, [data-ui-tooltip-anchor] > .tactile-tooltip-top, [data-ui-tooltip-anchor] > .neo-tooltip-top, [data-ui-tooltip-anchor] > .retro-tooltip-top, [data-ui-tooltip-anchor] > .brutal-tooltip-top, [data-ui-tooltip-anchor] > .cyber-tooltip-top, [data-ui-tooltip-anchor] > .y2k-tooltip-top, [data-ui-tooltip-anchor] > .rg-tooltip-top) { inset-block-end: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-right, [data-ui-tooltip-anchor] > .bento-tooltip-right, [data-ui-tooltip-anchor] > .max-tooltip-right, [data-ui-tooltip-anchor] > .bau-tooltip-right, [data-ui-tooltip-anchor] > .tactile-tooltip-right, [data-ui-tooltip-anchor] > .neo-tooltip-right, [data-ui-tooltip-anchor] > .retro-tooltip-right, [data-ui-tooltip-anchor] > .brutal-tooltip-right, [data-ui-tooltip-anchor] > .cyber-tooltip-right, [data-ui-tooltip-anchor] > .y2k-tooltip-right, [data-ui-tooltip-anchor] > .rg-tooltip-right) { inset-inline-start: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-bottom, [data-ui-tooltip-anchor] > .bento-tooltip-bottom, [data-ui-tooltip-anchor] > .max-tooltip-bottom, [data-ui-tooltip-anchor] > .bau-tooltip-bottom, [data-ui-tooltip-anchor] > .tactile-tooltip-bottom, [data-ui-tooltip-anchor] > .neo-tooltip-bottom, [data-ui-tooltip-anchor] > .retro-tooltip-bottom, [data-ui-tooltip-anchor] > .brutal-tooltip-bottom, [data-ui-tooltip-anchor] > .cyber-tooltip-bottom, [data-ui-tooltip-anchor] > .y2k-tooltip-bottom, [data-ui-tooltip-anchor] > .rg-tooltip-bottom) { inset-block-start: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-left, [data-ui-tooltip-anchor] > .bento-tooltip-left, [data-ui-tooltip-anchor] > .max-tooltip-left, [data-ui-tooltip-anchor] > .bau-tooltip-left, [data-ui-tooltip-anchor] > .tactile-tooltip-left, [data-ui-tooltip-anchor] > .neo-tooltip-left, [data-ui-tooltip-anchor] > .retro-tooltip-left, [data-ui-tooltip-anchor] > .brutal-tooltip-left, [data-ui-tooltip-anchor] > .cyber-tooltip-left, [data-ui-tooltip-anchor] > .y2k-tooltip-left, [data-ui-tooltip-anchor] > .rg-tooltip-left) { inset-inline-end: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-top, [data-ui-tooltip-anchor] > .bento-tooltip-top, [data-ui-tooltip-anchor] > .max-tooltip-top, [data-ui-tooltip-anchor] > .bau-tooltip-top, [data-ui-tooltip-anchor] > .tactile-tooltip-top, [data-ui-tooltip-anchor] > .neo-tooltip-top, [data-ui-tooltip-anchor] > .retro-tooltip-top, [data-ui-tooltip-anchor] > .brutal-tooltip-top, [data-ui-tooltip-anchor] > .cyber-tooltip-top, [data-ui-tooltip-anchor] > .y2k-tooltip-top, [data-ui-tooltip-anchor] > .rg-tooltip-top) { inset-block-end: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-right, [data-ui-tooltip-anchor] > .bento-tooltip-right, [data-ui-tooltip-anchor] > .max-tooltip-right, [data-ui-tooltip-anchor] > .bau-tooltip-right, [data-ui-tooltip-anchor] > .tactile-tooltip-right, [data-ui-tooltip-anchor] > .neo-tooltip-right, [data-ui-tooltip-anchor] > .retro-tooltip-right, [data-ui-tooltip-anchor] > .brutal-tooltip-right, [data-ui-tooltip-anchor] > .cyber-tooltip-right, [data-ui-tooltip-anchor] > .y2k-tooltip-right, [data-ui-tooltip-anchor] > .rg-tooltip-right) { inset-inline-start: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-bottom, [data-ui-tooltip-anchor] > .bento-tooltip-bottom, [data-ui-tooltip-anchor] > .max-tooltip-bottom, [data-ui-tooltip-anchor] > .bau-tooltip-bottom, [data-ui-tooltip-anchor] > .tactile-tooltip-bottom, [data-ui-tooltip-anchor] > .neo-tooltip-bottom, [data-ui-tooltip-anchor] > .retro-tooltip-bottom, [data-ui-tooltip-anchor] > .brutal-tooltip-bottom, [data-ui-tooltip-anchor] > .cyber-tooltip-bottom, [data-ui-tooltip-anchor] > .y2k-tooltip-bottom, [data-ui-tooltip-anchor] > .rg-tooltip-bottom) { inset-block-start: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .saas-tooltip-left, [data-ui-tooltip-anchor] > .bento-tooltip-left, [data-ui-tooltip-anchor] > .max-tooltip-left, [data-ui-tooltip-anchor] > .bau-tooltip-left, [data-ui-tooltip-anchor] > .tactile-tooltip-left, [data-ui-tooltip-anchor] > .neo-tooltip-left, [data-ui-tooltip-anchor] > .retro-tooltip-left, [data-ui-tooltip-anchor] > .brutal-tooltip-left, [data-ui-tooltip-anchor] > .cyber-tooltip-left, [data-ui-tooltip-anchor] > .y2k-tooltip-left, [data-ui-tooltip-anchor] > .rg-tooltip-left) { inset-inline-end: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
 
 .saas-pill { border-radius: var(--saas-radius-pill); }
 .bento-pill { border-radius: var(--bento-radius-pill); }
@@ -664,10 +664,72 @@
 }
 }
 
+/**
+ * Normalizes the split-line trust seal hierarchy across every visual preset.
+ * Both lines inherit their seal's paired foreground instead of native page-text paint.
+ * The root attributes intentionally raise specificity within the preset layer
+ * so later style-specific defaults cannot collapse the number and caption.
+ */
+@layer ui-style-kit.presets {
+[data-ui][data-mode] :where(
+  .saas-badge-seal,
+  .bento-badge-seal,
+  .max-badge-seal,
+  .bau-badge-seal,
+  .tactile-badge-seal,
+  .neo-badge-seal,
+  .retro-badge-seal,
+  .brutal-badge-seal,
+  .cyber-badge-seal,
+  .y2k-badge-seal,
+  .rg-badge-seal,
+  .luxe-badge-seal,
+  .organic-badge-seal,
+  .utility-badge-seal,
+  .blueprint-badge-seal,
+  .deco-badge-seal,
+  .clay-badge-seal,
+  .terminal-badge-seal,
+  .paper-badge-seal,
+  .noir-badge-seal
+) > strong {
+  color: inherit;
+  font-size: 1.5rem;
+  line-height: .9;
+}
+
+[data-ui][data-mode] :where(
+  .saas-badge-seal,
+  .bento-badge-seal,
+  .max-badge-seal,
+  .bau-badge-seal,
+  .tactile-badge-seal,
+  .neo-badge-seal,
+  .retro-badge-seal,
+  .brutal-badge-seal,
+  .cyber-badge-seal,
+  .y2k-badge-seal,
+  .rg-badge-seal,
+  .luxe-badge-seal,
+  .organic-badge-seal,
+  .utility-badge-seal,
+  .blueprint-badge-seal,
+  .deco-badge-seal,
+  .clay-badge-seal,
+  .terminal-badge-seal,
+  .paper-badge-seal,
+  .noir-badge-seal
+) > small {
+  color: inherit;
+  font-size: .8125rem;
+  line-height: 1;
+}
+}
+
 /* BEGIN GENERATED 2.2 PRESET COMPONENT FOUNDATIONS */
 /* Generated by scripts/generate-expanded-components.mjs from manifest.json. */
 @layer ui-style-kit.components {
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-surface,
   .luxe-surface-sm,
   .luxe-surface-lg,
@@ -835,7 +897,7 @@
   min-inline-size: 0;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-button,
   .luxe-icon-button,
   .luxe-button-cut,
@@ -916,7 +978,7 @@
   white-space: normal;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-button,
   .luxe-icon-button,
   .luxe-button-pill,
@@ -956,7 +1018,7 @@
   vertical-align: middle;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-button-pill,
   .organic-button-pill,
   .utility-button-pill,
@@ -1065,7 +1127,7 @@
 .noir-rounded-xl { border-radius: var(--noir-radius-xl); }
 .noir-surface, .noir-surface-sm, .noir-surface-lg { color: var(--noir-text); background: var(--noir-card-bg); border: 1px solid var(--noir-border); }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-button-pill:active,
   .luxe-button-pill[aria-pressed="true"],
   .organic-button-pill:active,
@@ -1086,7 +1148,7 @@
   .noir-button-pill[aria-pressed="true"]
 ) { transform: translateY(1px); }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-button-pill:disabled,
   .luxe-button-pill[aria-disabled="true"],
   .organic-button-pill:disabled,
@@ -1107,7 +1169,7 @@
   .noir-button-pill[aria-disabled="true"]
 ) { opacity: .55; cursor: not-allowed; filter: none; transform: none; }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   .luxe-tooltip,
   .luxe-tooltip-top,
   .luxe-tooltip-right,
@@ -1155,7 +1217,7 @@
   .noir-tooltip-left
 ) { max-inline-size: min(18rem, calc(100vw - 2rem)); text-align: start; overflow-wrap: break-word; word-break: normal; }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   [data-ui-tooltip-anchor] > .luxe-tooltip-top,
   [data-ui-tooltip-anchor] > .luxe-tooltip-right,
   [data-ui-tooltip-anchor] > .luxe-tooltip-bottom,
@@ -1194,10 +1256,10 @@
   [data-ui-tooltip-anchor] > .noir-tooltip-left
 ) { position: absolute; z-index: 20; }
 
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-top, [data-ui-tooltip-anchor] > .organic-tooltip-top, [data-ui-tooltip-anchor] > .utility-tooltip-top, [data-ui-tooltip-anchor] > .blueprint-tooltip-top, [data-ui-tooltip-anchor] > .deco-tooltip-top, [data-ui-tooltip-anchor] > .clay-tooltip-top, [data-ui-tooltip-anchor] > .terminal-tooltip-top, [data-ui-tooltip-anchor] > .paper-tooltip-top, [data-ui-tooltip-anchor] > .noir-tooltip-top) { inset-block-end: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-right, [data-ui-tooltip-anchor] > .organic-tooltip-right, [data-ui-tooltip-anchor] > .utility-tooltip-right, [data-ui-tooltip-anchor] > .blueprint-tooltip-right, [data-ui-tooltip-anchor] > .deco-tooltip-right, [data-ui-tooltip-anchor] > .clay-tooltip-right, [data-ui-tooltip-anchor] > .terminal-tooltip-right, [data-ui-tooltip-anchor] > .paper-tooltip-right, [data-ui-tooltip-anchor] > .noir-tooltip-right) { inset-inline-start: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-bottom, [data-ui-tooltip-anchor] > .organic-tooltip-bottom, [data-ui-tooltip-anchor] > .utility-tooltip-bottom, [data-ui-tooltip-anchor] > .blueprint-tooltip-bottom, [data-ui-tooltip-anchor] > .deco-tooltip-bottom, [data-ui-tooltip-anchor] > .clay-tooltip-bottom, [data-ui-tooltip-anchor] > .terminal-tooltip-bottom, [data-ui-tooltip-anchor] > .paper-tooltip-bottom, [data-ui-tooltip-anchor] > .noir-tooltip-bottom) { inset-block-start: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
-[data-ui][data-theme][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-left, [data-ui-tooltip-anchor] > .organic-tooltip-left, [data-ui-tooltip-anchor] > .utility-tooltip-left, [data-ui-tooltip-anchor] > .blueprint-tooltip-left, [data-ui-tooltip-anchor] > .deco-tooltip-left, [data-ui-tooltip-anchor] > .clay-tooltip-left, [data-ui-tooltip-anchor] > .terminal-tooltip-left, [data-ui-tooltip-anchor] > .paper-tooltip-left, [data-ui-tooltip-anchor] > .noir-tooltip-left) { inset-inline-end: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-top, [data-ui-tooltip-anchor] > .organic-tooltip-top, [data-ui-tooltip-anchor] > .utility-tooltip-top, [data-ui-tooltip-anchor] > .blueprint-tooltip-top, [data-ui-tooltip-anchor] > .deco-tooltip-top, [data-ui-tooltip-anchor] > .clay-tooltip-top, [data-ui-tooltip-anchor] > .terminal-tooltip-top, [data-ui-tooltip-anchor] > .paper-tooltip-top, [data-ui-tooltip-anchor] > .noir-tooltip-top) { inset-block-end: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-right, [data-ui-tooltip-anchor] > .organic-tooltip-right, [data-ui-tooltip-anchor] > .utility-tooltip-right, [data-ui-tooltip-anchor] > .blueprint-tooltip-right, [data-ui-tooltip-anchor] > .deco-tooltip-right, [data-ui-tooltip-anchor] > .clay-tooltip-right, [data-ui-tooltip-anchor] > .terminal-tooltip-right, [data-ui-tooltip-anchor] > .paper-tooltip-right, [data-ui-tooltip-anchor] > .noir-tooltip-right) { inset-inline-start: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-bottom, [data-ui-tooltip-anchor] > .organic-tooltip-bottom, [data-ui-tooltip-anchor] > .utility-tooltip-bottom, [data-ui-tooltip-anchor] > .blueprint-tooltip-bottom, [data-ui-tooltip-anchor] > .deco-tooltip-bottom, [data-ui-tooltip-anchor] > .clay-tooltip-bottom, [data-ui-tooltip-anchor] > .terminal-tooltip-bottom, [data-ui-tooltip-anchor] > .paper-tooltip-bottom, [data-ui-tooltip-anchor] > .noir-tooltip-bottom) { inset-block-start: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%); }
+[data-ui][data-mode] :where([data-ui-tooltip-anchor] > .luxe-tooltip-left, [data-ui-tooltip-anchor] > .organic-tooltip-left, [data-ui-tooltip-anchor] > .utility-tooltip-left, [data-ui-tooltip-anchor] > .blueprint-tooltip-left, [data-ui-tooltip-anchor] > .deco-tooltip-left, [data-ui-tooltip-anchor] > .clay-tooltip-left, [data-ui-tooltip-anchor] > .terminal-tooltip-left, [data-ui-tooltip-anchor] > .paper-tooltip-left, [data-ui-tooltip-anchor] > .noir-tooltip-left) { inset-inline-end: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%); }
 
 :where(.luxe-bg-primary, .organic-bg-primary, .utility-bg-primary, .blueprint-bg-primary, .deco-bg-primary, .clay-bg-primary, .terminal-bg-primary, .paper-bg-primary, .noir-bg-primary) { background: var(--usk-native-primary); color: var(--usk-native-on-primary); }
 :where(.luxe-bg-secondary, .organic-bg-secondary, .utility-bg-secondary, .blueprint-bg-secondary, .deco-bg-secondary, .clay-bg-secondary, .terminal-bg-secondary, .paper-bg-secondary, .noir-bg-secondary) { background: var(--usk-native-surface-soft); color: var(--usk-native-text); }

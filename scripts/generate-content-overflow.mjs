@@ -63,7 +63,7 @@ export function renderContentOverflowCss(manifest) {
 ========================================================= */
 
 @layer ui-style-kit.content_overflow {
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
 ${formatSelectors(textElements)}
 ) {
   max-inline-size: 100%;
@@ -72,14 +72,14 @@ ${formatSelectors(textElements)}
   word-break: normal;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
 ${formatSelectors(wrappers)}
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
 ${formatSelectors(controls)}
 ) {
   max-inline-size: 100%;

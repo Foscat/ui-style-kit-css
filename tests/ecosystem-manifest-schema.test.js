@@ -86,7 +86,7 @@ test('ecosystem compatibility pins immutable companion sources', () => {
 
 test('ecosystem docs distinguish portable semantic theming from specialized bridge integration', () => {
   for (const value of [
-    '[data-ui][data-theme][data-mode]',
+    '[data-ui][data-mode]',
     'import "third-party-theme/tokens.css";',
     'import "interactive-surface-css/standalone-preset.css";',
     'import "ui-style-kit-css/interactive-surface-theme.css";',

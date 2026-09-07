@@ -49,7 +49,7 @@ const templateSignatureKeys = Object.freeze(['typography', 'density', 'geometry'
  * @returns {PresetIdentity['referenceTraits']} Frozen executable reference traits.
  */
 function createReferenceTraits(profile) {
-  const selectors = ['title', 'button', 'button', 'panel', 'progress', 'table th'];
+  const selectors = ['title', 'button', 'button', 'panel', 'progress-bar', 'table th'];
   const properties = ['font-family', 'min-height', 'border-radius', 'box-shadow', 'background', 'background'];
 
   return Object.freeze(Object.fromEntries(templateSignatureKeys.map((axis, index) => [
@@ -70,26 +70,26 @@ function createReferenceTraits(profile) {
  * @type {Readonly<Record<string, PresetIdentity['referenceTraits']>>}
  */
 const referenceTraits = Object.freeze(Object.fromEntries([
-  ['minimal-saas', ['--saas-font-heading', '2.375rem', '.375rem', 'none', '--saas-primary', '--saas-surface-soft-rgb']],
-  ['bento', ['--bento-font-heading', '2.75rem', '.75rem', '--bento-tile-shadow', 'linear-gradient', '--bento-primary-rgb']],
-  ['maximalist', ['--max-font-heading', '3rem', '.12rem', '--max-ink', '--max-warning', '--max-primary']],
-  ['bauhaus', ['--bau-font-heading', '3.125rem', '0', 'none', 'repeating-linear-gradient', '--bau-border']],
-  ['tactile', ['--tactile-font-display', '3.05rem', '0', '--tactile-panel-shadow', '--tactile-progress-fill', '--tactile-sidebar-bg']],
-  ['neumorphism', ['--neo-font-heading', '3.25rem', '1.55rem', '--neo-raised-shadow', '--neo-control-bg', '--neo-control-bg']],
-  ['retrofuturism', ['--retro-font-display', '2.75rem', '--retro-radius-pill', '--retro-text', '--retro-progress-fill', '--retro-instrument-bg']],
+  ['minimal-saas', ['--saas-font-heading', '2.125rem', '.375rem', '--saas-shadow-md', '--saas-primary', '--saas-surface-soft-rgb']],
+  ['bento', ['--bento-font-heading', '36px', '8px', '--bento-mosaic-shadow', '--bento-primary', '--bento-surface-soft']],
+  ['maximalist', ['--max-font-heading', '3rem', '0', '--max-pop-shadow', '--max-accent', '--max-warning']],
+  ['bauhaus', ['--bau-font-heading', '2.75rem', '0', 'none', '--bau-primary', '--bau-text']],
+  ['tactile', ['--tactile-font-display', '2.75rem', '.24rem', '--tactile-panel-shadow', '--tactile-progress-fill', '--tactile-sidebar-bg']],
+  ['neumorphism', ['--neo-font-heading', '3rem', '--neo-radius-md', '--neo-raised-shadow', 'linear-gradient', '--neo-material-inset']],
+  ['retrofuturism', ['--retro-font-display', '2.75rem', '--retro-instrument-radius-sm', '--retro-text', '--retro-progress-fill', '--retro-enamel-bg']],
   ['brutalism', ['--brutal-font-heading', '2.7rem', '.08rem', '--brutal-primary', 'repeating-linear-gradient', '--brutal-text']],
-  ['cyberpunk', ['--cyber-font-heading', '2.85rem', '.04rem', '--cyber-accent-rgb', 'repeating-linear-gradient', '--cyber-primary-rgb']],
-  ['y2k', ['Impact', '2.08rem', '1px', '--y2k-surface-strong', 'repeating-linear-gradient', '--y2k-primary']],
-  ['retro-glass', ['Segoe UI', '2.5rem', '.42rem', '--rg-surface-strong-rgb', 'repeating-linear-gradient', '--rg-primary-hover']],
-  ['editorial-luxe', ['--luxe-font-display', '2.5rem', '.02rem', '--luxe-surface-strong', '--luxe-success', 'transparent']],
-  ['organic-modern', ['--organic-font-display', '2.65rem', '.55rem', '--organic-quiet-shadow', '--organic-primary', '--organic-primary-rgb']],
-  ['industrial-utility', ['--utility-font-heading', '2.72rem', '.12rem', '--utility-surface-strong-rgb', '--utility-primary-hover', '--utility-surface-strong']],
-  ['technical-blueprint', ['--blueprint-font-display', '2.42rem', '0', '--blueprint-primary-rgb', '--blueprint-focus', 'repeating-linear-gradient']],
-  ['art-deco', ['--deco-font-display', '2.85rem', '.08rem', '--deco-surface-strong', '--deco-success', '--deco-primary']],
-  ['clay', ['--clay-font-heading', '2.85rem', '.72rem', '--clay-slab-shadow', '--clay-surface-strong-rgb', '--clay-raised-bg']],
-  ['data-terminal', ['--terminal-font-mono', '2.2rem', '0', 'none', 'repeating-linear-gradient', '--terminal-control-bg']],
-  ['paper-editorial', ['--paper-font-display', '2.35rem', '0', '--paper-text-rgb', 'repeating-linear-gradient', '--paper-primary-rgb']],
-  ['neo-noir', ['--noir-font-heading', '2.65rem', '.18rem', '--noir-focus-rgb', 'repeating-linear-gradient', '--noir-warning-rgb']]
+  ['cyberpunk', ['--cyber-font-heading', '36px', '.04rem', '--cyber-template-glow', 'repeating-linear-gradient', '--cyber-primary-rgb']],
+  ['y2k', ['Impact', '1.375rem', '0', '--y2k-bevel-raised', 'repeating-linear-gradient', '--y2k-titlebar-bg']],
+  ['retro-glass', ['--rg-font-display', '--rg-control-height', '--rg-radius-sm', '--rg-highlight', '--rg-progress-fill', '--rg-surface-strong-rgb']],
+  ['editorial-luxe', ['--luxe-font-display', '34px', '0', 'none', '--luxe-primary', 'transparent']],
+  ['organic-modern', ['--organic-font-display', '44px', '6px', '--organic-quiet-shadow', '--organic-primary', '--organic-surface-soft']],
+  ['industrial-utility', ['--utility-font-heading', '34px', '--utility-material-radius', '--utility-material-panel-shadow', '--utility-primary-hover', '--utility-material-header']],
+  ['technical-blueprint', ['--blueprint-font-display', '--blueprint-control-height', '0', 'none', '--blueprint-danger', 'transparent']],
+  ['art-deco', ['--deco-font-display', '44px', '0', '--deco-enamel-strong-rgb', '--deco-secondary', '--deco-primary']],
+  ['clay', ['--clay-font-heading', '26px', '.42rem', '--clay-slab-shadow', '--clay-molded-primary', '--clay-material-raised']],
+  ['data-terminal', ['--terminal-font-mono', '1.875rem', '0', 'none', 'repeating-linear-gradient', '--terminal-surface']],
+  ['paper-editorial', ['--paper-font-display', '44px', '1px', 'none', '--paper-sheet-blue', 'transparent']],
+  ['neo-noir', ['--noir-font-heading', '44px', '0', 'none', '--noir-primary', 'transparent']]
 ].map(([id, profile]) => [id, createReferenceTraits(profile)])));
 
 /**
@@ -128,11 +128,11 @@ const templateSignatures = Object.freeze({
     density: 'structured grid density with deliberate open fields',
     geometry: 'strict rectangles, circles, primary geometry, and heavy rules',
     material: 'flat constructed surfaces without decorative elevation',
-    feedback: 'primary-shape badges, rule-bound alerts, and segmented progress',
+    feedback: 'rectangular status labels, rule-bound alerts, circular loaders, and solid progress',
     data: 'architectural tables with heavy header bands and grid lines'
   }),
   tactile: Object.freeze({
-    typography: 'serif identity headings with compact uppercase instrument labels',
+    typography: 'serif identity headings with compact sentence-case instrument labels',
     density: 'dense physical workstation controls with deliberate grouping',
     geometry: 'shallow chamfers, keycaps, squared thumbs, and visible keylines',
     material: 'paper plates, raised bevels, recessed troughs, and mechanical depth',
@@ -140,17 +140,17 @@ const templateSignatures = Object.freeze({
     data: 'paper ledger tables with physical header plates and ruled rows'
   }),
   neumorphism: Object.freeze({
-    typography: 'quiet modern sans with generous scale and low visual noise',
-    density: 'spacious controls separated by sculpted same-surface gaps',
-    geometry: 'large soft radii and continuous rounded shells',
-    material: 'borderless extrusion shadows with concave fields and pressed states',
-    feedback: 'soft capsules, inset progress wells, and restrained semantic accents',
-    data: 'floating same-surface tables with separated softly raised rows'
+    typography: 'soft rounded system sans with calm weight and compact hierarchy',
+    density: 'open controls separated by continuous same-material spacing',
+    geometry: 'compact molded radii with circular knobs and smooth shells',
+    material: 'warm off-white or deep navy surfaces with opposing extrusion and concave relief',
+    feedback: 'depressed active states, inset tracks, and readable semantic accents',
+    data: 'sunken table rows, raised utilities, and restrained accessible keylines'
   }),
   retrofuturism: Object.freeze({
     typography: 'tall condensed atomic display type with humanist body copy',
     density: 'instrument-panel grouping with compact calibrated controls',
-    geometry: 'oval actions, rounded appliance frames, dials, and lozenges',
+    geometry: 'compact rectangular action keys, rounded appliance frames, dials, and lozenges',
     material: 'layered enamel shells, metallic rims, and recessed instrument bays',
     feedback: 'jewel-light indicators and segmented lamp gauges',
     data: 'enamel instrument tables with rimmed headers and calibrated rows'
@@ -174,9 +174,9 @@ const templateSignatures = Object.freeze({
   y2k: Object.freeze({
     typography: 'system interface typography with dense portal-era labeling',
     density: 'compact portal panels and toolbar-like control clusters',
-    geometry: 'small bevels, title bars, capsules, and segmented indicators',
-    material: 'one-pixel bevels, glossy title bars, and molded plastic depth',
-    feedback: 'candy status pills, segmented indicators, and beveled alerts',
+    geometry: 'square windows, small bevels, title bars, and segmented indicators',
+    material: 'one-pixel bevels, cobalt title bars, and molded plastic depth',
+    feedback: 'compact status labels, segmented indicators, and semantic alert rows',
     data: 'portal data grids with title bars and compact system rows'
   }),
   'retro-glass': Object.freeze({
@@ -196,12 +196,12 @@ const templateSignatures = Object.freeze({
     data: 'publication tables with elegant headers and hairline row rules'
   }),
   'organic-modern': Object.freeze({
-    typography: 'warm serif identity type paired with a calm humanist sans',
-    density: 'relaxed clusters with intentional asymmetric breathing room',
-    geometry: 'pebble curves, asymmetric corners, and leaf-tipped details',
-    material: 'warm semantic surfaces with subtle grain-like layering and hairlines',
-    feedback: 'botanical pills, softly edged alerts, and organic progress forms',
-    data: 'warm ledger surfaces with softly separated rows and serif accents'
+    typography: 'Cormorant Garamond display type with DM Sans interface text',
+    density: 'compact project workspace with readable control-lab groups',
+    geometry: 'quiet 10-14px panels, asymmetric hero corner, and pointed actions',
+    material: 'matte limestone or forest-dark surfaces with real material photography',
+    feedback: 'outlined capsule badges, tinted alerts, and thin matte progress',
+    data: 'horizontal ledger rules, numeric alignment, and serif impact metrics'
   }),
   'industrial-utility': Object.freeze({
     typography: 'condensed technical labels with numeric instrument readouts',
@@ -228,12 +228,12 @@ const templateSignatures = Object.freeze({
     data: 'formal framed tables with double keylines and geometric headers'
   }),
   clay: Object.freeze({
-    typography: 'soft friendly sans hierarchy integrated into a sculpted slab',
-    density: 'comfortable rounded controls embedded in continuous surfaces',
-    geometry: 'inflated corners, raised pills, and smoothly carved seams',
-    material: 'soft mineral slabs with broad extrusion and inset carving',
-    feedback: 'chunky badges, molded alerts, and raised capsule progress',
-    data: 'sculpted table regions with pill headers and softly carved rows'
+    typography: 'condensed medium-weight lettering pressed into the sculpted surface',
+    density: 'compact controls embedded in tightly seamed continuous slabs',
+    geometry: 'restrained asymmetric perimeter edges with shallow hand-formed rounding',
+    material: 'matte mineral slabs with fine grain, close seams, and shallow relief',
+    feedback: 'muted pigment badges, tinted alerts, and slim carved progress',
+    data: 'seamed table regions with raised mineral headers and compact rows'
   }),
   'data-terminal': Object.freeze({
     typography: 'strict monospaced command typography and terse uppercase labels',
@@ -266,19 +266,19 @@ const identityRows = [
   ['bento', 'bento', 'block', 'grid-feature', 'min(100%,14rem)', 'center', 'rounded theme-washed mosaic tiles, friendly product typography, nested highlights, and soft elevation', 'spacious rounded tile control with theme-tinted depth', 'rounded mosaic indicator', 'soft square thumb on a raised pill track', 'elevated rounded product progress'],
   ['maximalist', 'max', 'expressive', 'well', 'intrinsic', 'end', 'punk-collage paper panels, hard ink strokes, and loud condensed type', 'sharp poster-label control with offset sticker shadow', 'inked sticker indicator', 'smiley-scale thumb on a neon campaign slider', 'segmented launch-progress strip'],
   ['bauhaus', 'bau', 'block', 'well', 'min(100%,12rem)', 'start', 'strict workshop grid, heavy rulework, primary-shape blocks, and condensed uppercase typography', 'square workshop-field control with heavy bottom rule', 'architectural black chevron mark', 'circular primary thumb on an exposed structural rule', 'segmented primary-shape progress'],
-  ['tactile', 'tactile', 'expressive', 'well', 'intrinsic', 'center', 'physical paper-and-instrument UI with serif headings, compact uppercase labels, visible keylines, shallow chamfers, and mechanical depth', 'raised chamfered paper keycap control', 'stacked mechanical selector with a hard keyline', 'squared lever thumb in a dark recessed trough', 'segmented inset instrument gauge'],
-  ['neumorphism', 'neo', 'soft', 'well', 'intrinsic', 'center', 'borderless same-surface UI with quiet modern type, generous radii, opposing extrusion shadows, and deeply concave controls', 'sculpted same-surface action with a pressed inset state', 'concave selector with a restrained semantic indicator', 'floating circular thumb on a deeply inset track', 'concave rounded progress with a restrained semantic fill'],
-  ['retrofuturism', 'retro', 'elongated', 'well', 'min(100%,18rem)', 'center', 'atomic-age enamel shells, nested metallic rims, recessed instrument bays, oval actions, and condensed display typography', 'ringed oval appliance control with mechanical pressed depth', 'compact instrument chevron in a recessed selector', 'metallic dial thumb on a calibrated multicolor channel', 'segmented jewel-lamp progress gauge'],
+  ['tactile', 'tactile', 'expressive', 'well', 'intrinsic', 'center', 'physical paper-and-instrument UI with serif headings, compact sentence-case labels, visible keylines, shallow chamfers, and mechanical depth', 'raised chamfered paper keycap control', 'stacked mechanical selector with a hard keyline', 'squared lever thumb in a dark recessed trough', 'segmented inset instrument gauge'],
+  ['neumorphism', 'neo', 'soft', 'well', 'intrinsic', 'center', 'soft-rounded same-material UI with restrained accessible edges, opposing extrusion shadows, and concave controls', 'raised same-surface action with a clearly depressed inset state', 'concave selector with a restrained semantic indicator', 'raised circular thumb on a deeply inset track', 'concave rounded progress with a restrained semantic fill'],
+  ['retrofuturism', 'retro', 'elongated', 'well', 'min(100%,18rem)', 'center', 'atomic-age enamel shells, nested metallic rims, recessed instrument bays, compact action keys, and condensed display typography', 'double-rimmed rectangular appliance key with mechanical pressed depth', 'compact instrument chevron in a recessed selector', 'metallic dial thumb on a calibrated multicolor channel', 'segmented jewel-lamp progress gauge'],
   ['brutalism', 'brutal', 'block', 'well', 'min(100%,14rem)', 'start', 'blunt cut, thick border, and hard offset shadow', 'heavy blunt control', 'block arrow selector', 'rectangular thumb on thick track', 'hard-edged progress'],
   ['cyberpunk', 'cyber', 'elongated', 'well', 'min(100%,18rem)', 'end', 'multi-notch technical polygon with neon edge', 'clipped neon technical control', 'angular neon chevron', 'notched thumb and track', 'segmented neon progress'],
   ['y2k', 'y2k', 'compact', 'metric', 'min(100%,14rem)', 'start', 'dense portal frame with one-pixel operating-system bevels', 'compact beveled system control', 'pixel arrow selector', 'square thumb on segmented channel', 'segmented portal progress'],
   ['retro-glass', 'rg', 'elongated', 'well', 'min(100%,16rem)', 'center', 'frosted angular tab with inner highlight', 'frosted glass control', 'glass directional indicator', 'lens thumb in translucent channel', 'frosted progress fill'],
   ['editorial-luxe', 'luxe', 'compact', 'metric', 'intrinsic', 'start', 'slim bookplate with hairline framing', 'fine-rule editorial control', 'understated editorial chevron', 'needle thumb on ruled track', 'elegant ruled progress'],
-  ['organic-modern', 'organic', 'soft', 'metric', 'intrinsic', 'center', 'asymmetric pebble contour with soft depth', 'soft pebble control', 'leaf-like indicator', 'pebble thumb on organic track', 'organic rounded progress'],
+  ['organic-modern', 'organic', 'soft', 'metric', 'intrinsic', 'center', 'matte panels with modest corners and pointed trailing-edge actions', 'quiet rounded control', 'single native caret', 'round moss thumb on a thin matte track', 'fine matte progress'],
   ['industrial-utility', 'utility', 'compact', 'metric', 'intrinsic', 'start', 'octagonal equipment control with operational density', 'dense equipment plate', 'machine-control indicator', 'switchgear thumb on equipment track', 'operational status progress'],
   ['technical-blueprint', 'blueprint', 'compact', 'metric', 'intrinsic', 'start', 'drafting-corner outline and technical rules', 'measured drafting control', 'calibrated directional indicator', 'crosshair thumb on ticked track', 'ticked technical progress'],
   ['art-deco', 'deco', 'soft', 'metric', 'min(100%,15rem)', 'center', 'symmetric chevrons with double-rule framing', 'symmetric double-rule control', 'faceted selector mark', 'jewel thumb on stepped track', 'symmetric ruled progress'],
-  ['clay', 'clay', 'soft', 'metric', 'intrinsic', 'center', 'inflated pill with chunky soft shadow', 'inflated soft control', 'pill selector indicator', 'rounded knob on raised channel', 'chunky soft progress'],
+  ['clay', 'clay', 'compact', 'metric', 'intrinsic', 'center', 'continuous mineral slabs with irregular seamed edges, carved wells, and restrained relief', 'compact hand-pressed control with debossed lettering', 'imperfect carved selector indicator', 'formed knob on an inset mineral channel', 'slim carved progress with a raised fill'],
   ['data-terminal', 'terminal', 'compact', 'metric', 'intrinsic', 'start', 'terminal brackets with luminous outline', 'dense terminal control', 'caret bracket indicator', 'cursor thumb on segmented channel', 'luminous terminal progress'],
   ['paper-editorial', 'paper', 'compact', 'metric', 'intrinsic', 'start', 'ticket notches with inked offset edge', 'printed paper control', 'inked directional mark', 'stamp thumb on printed rule', 'ink-offset progress'],
   ['neo-noir', 'noir', 'elongated', 'metric', 'min(100%,16rem)', 'end', 'cinematic slant with edge lighting', 'slanted cinematic control', 'slash indicator', 'metallic thumb in shadow channel', 'edge-lit progress']

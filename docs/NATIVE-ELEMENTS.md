@@ -2,6 +2,14 @@
 
 UI Style Kit uses a hybrid-native policy: it themes safe element boxes and exposed subparts, uses `accent-color` and `color-scheme` as fallbacks, and leaves inaccessible browser popups to the platform.
 
+The scope is `[data-ui][data-mode]`; `data-theme` is optional. Each preset supplies
+native colors and maps `--usk-native-bg` to its functional background, so the shared
+`--ui-color-bg` remains usable by companion libraries without a named theme.
+
+Native inline elements keep their page-text defaults except inside components
+that deliberately own foreground paint, such as trust seals and media scrims.
+Keep labels, status text, and semantic attributes intact when styling these surfaces.
+
 ## Classification
 
 | Classification | Elements and surfaces |

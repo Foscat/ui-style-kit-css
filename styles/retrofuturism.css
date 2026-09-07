@@ -42,6 +42,29 @@
 
 [data-ui="retrofuturism"][data-mode="light"] {
   color-scheme: light;
+  --retro-fallback-bg-rgb: 245 247 250;
+  --retro-fallback-surface-rgb: 255 255 255;
+  --retro-fallback-surface-strong-rgb: 252 252 253;
+  --retro-fallback-surface-soft-rgb: 232 235 240;
+  --retro-fallback-text-rgb: 17 36 59;
+  --retro-fallback-text-muted-rgb: 90 104 119;
+  --retro-fallback-border-rgb: 200 207 217;
+  --retro-fallback-primary-rgb: 13 59 102;
+  --retro-fallback-primary-hover-rgb: 11 49 85;
+  --retro-fallback-primary-text-rgb: 255 255 255;
+  --retro-fallback-secondary-rgb: 214 43 43;
+  --retro-fallback-secondary-hover-rgb: 178 35 35;
+  --retro-fallback-secondary-text-rgb: 255 255 255;
+  --retro-fallback-accent-rgb: 233 90 90;
+  --retro-fallback-accent-text-rgb: 0 0 0;
+  --retro-fallback-success-rgb: 47 125 84;
+  --retro-fallback-success-text-rgb: 255 255 255;
+  --retro-fallback-warning-rgb: 164 106 0;
+  --retro-fallback-warning-text-rgb: 0 0 0;
+  --retro-fallback-danger-rgb: 198 40 40;
+  --retro-fallback-danger-text-rgb: 255 255 255;
+  --retro-fallback-link-rgb: 11 49 85;
+  --retro-fallback-focus-rgb: 214 43 43;
   --retro-panel-alpha: .98;
   --retro-panel-soft-alpha: .78;
   --retro-border-alpha: .58;
@@ -51,6 +74,29 @@
 
 [data-ui="retrofuturism"][data-mode="dark"] {
   color-scheme: dark;
+  --retro-fallback-bg-rgb: 8 17 28;
+  --retro-fallback-surface-rgb: 16 32 48;
+  --retro-fallback-surface-strong-rgb: 24 49 73;
+  --retro-fallback-surface-soft-rgb: 11 23 36;
+  --retro-fallback-text-rgb: 243 247 251;
+  --retro-fallback-text-muted-rgb: 188 200 213;
+  --retro-fallback-border-rgb: 71 96 121;
+  --retro-fallback-primary-rgb: 108 169 227;
+  --retro-fallback-primary-hover-rgb: 147 193 237;
+  --retro-fallback-primary-text-rgb: 0 0 0;
+  --retro-fallback-secondary-rgb: 255 106 106;
+  --retro-fallback-secondary-hover-rgb: 255 146 146;
+  --retro-fallback-secondary-text-rgb: 0 0 0;
+  --retro-fallback-accent-rgb: 255 154 154;
+  --retro-fallback-accent-text-rgb: 0 0 0;
+  --retro-fallback-success-rgb: 143 223 182;
+  --retro-fallback-success-text-rgb: 0 0 0;
+  --retro-fallback-warning-rgb: 255 210 122;
+  --retro-fallback-warning-text-rgb: 0 0 0;
+  --retro-fallback-danger-rgb: 255 143 143;
+  --retro-fallback-danger-text-rgb: 0 0 0;
+  --retro-fallback-link-rgb: 165 203 241;
+  --retro-fallback-focus-rgb: 255 106 106;
   --retro-panel-alpha: .92;
   --retro-panel-soft-alpha: .64;
   --retro-border-alpha: .52;
@@ -60,6 +106,29 @@
 
 [data-ui="retrofuturism"][data-mode="contrast"] {
   color-scheme: dark;
+  --retro-fallback-bg-rgb: 0 0 0;
+  --retro-fallback-surface-rgb: 6 16 26;
+  --retro-fallback-surface-strong-rgb: 10 29 48;
+  --retro-fallback-surface-soft-rgb: 0 0 0;
+  --retro-fallback-text-rgb: 255 255 255;
+  --retro-fallback-text-muted-rgb: 238 244 255;
+  --retro-fallback-border-rgb: 255 255 255;
+  --retro-fallback-primary-rgb: 102 181 255;
+  --retro-fallback-primary-hover-rgb: 255 255 255;
+  --retro-fallback-primary-text-rgb: 0 0 0;
+  --retro-fallback-secondary-rgb: 255 102 102;
+  --retro-fallback-secondary-hover-rgb: 255 255 255;
+  --retro-fallback-secondary-text-rgb: 0 0 0;
+  --retro-fallback-accent-rgb: 255 170 170;
+  --retro-fallback-accent-text-rgb: 0 0 0;
+  --retro-fallback-success-rgb: 0 255 144;
+  --retro-fallback-success-text-rgb: 0 0 0;
+  --retro-fallback-warning-rgb: 255 212 0;
+  --retro-fallback-warning-text-rgb: 0 0 0;
+  --retro-fallback-danger-rgb: 255 92 92;
+  --retro-fallback-danger-text-rgb: 0 0 0;
+  --retro-fallback-link-rgb: 140 198 255;
+  --retro-fallback-focus-rgb: 255 255 255;
   --retro-panel-alpha: 1;
   --retro-panel-soft-alpha: .92;
   --retro-border-alpha: 1;
@@ -67,8 +136,8 @@
   --retro-focus-alpha: .72;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="retrofuturism"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --retro-bg-rgb: var(--usk-bg-rgb);
   --retro-surface-rgb: var(--usk-surface-rgb);
   --retro-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -83,15 +152,43 @@
   --retro-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --retro-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --retro-accent-rgb: var(--usk-accent-rgb);
-  --retro-success-rgb: var(--usk-success-rgb);
-  --retro-warning-rgb: var(--usk-warning-rgb);
-  --retro-danger-rgb: var(--usk-danger-rgb);
-  --retro-link-rgb: var(--usk-link-rgb);
   --retro-accent-text-rgb: var(--usk-accent-text-rgb);
+  --retro-success-rgb: var(--usk-success-rgb);
   --retro-success-text-rgb: var(--usk-success-text-rgb);
+  --retro-warning-rgb: var(--usk-warning-rgb);
   --retro-warning-text-rgb: var(--usk-warning-text-rgb);
+  --retro-danger-rgb: var(--usk-danger-rgb);
   --retro-danger-text-rgb: var(--usk-danger-text-rgb);
+  --retro-link-rgb: var(--usk-link-rgb);
   --retro-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="retrofuturism"][data-mode] {
+  --usk-native-bg: var(--retro-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --retro-bg-rgb: var(--usk-bg-rgb, var(--retro-fallback-bg-rgb));
+  --retro-surface-rgb: var(--usk-surface-rgb, var(--retro-fallback-surface-rgb));
+  --retro-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--retro-fallback-surface-strong-rgb));
+  --retro-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--retro-fallback-surface-soft-rgb));
+  --retro-text-rgb: var(--usk-text-rgb, var(--retro-fallback-text-rgb));
+  --retro-text-muted-rgb: var(--usk-text-muted-rgb, var(--retro-fallback-text-muted-rgb));
+  --retro-border-rgb: var(--usk-border-rgb, var(--retro-fallback-border-rgb));
+  --retro-primary-rgb: var(--usk-primary-rgb, var(--retro-fallback-primary-rgb));
+  --retro-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--retro-fallback-primary-hover-rgb));
+  --retro-primary-text-rgb: var(--usk-primary-text-rgb, var(--retro-fallback-primary-text-rgb));
+  --retro-secondary-rgb: var(--usk-secondary-rgb, var(--retro-fallback-secondary-rgb));
+  --retro-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--retro-fallback-secondary-hover-rgb));
+  --retro-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--retro-fallback-secondary-text-rgb));
+  --retro-accent-rgb: var(--usk-accent-rgb, var(--retro-fallback-accent-rgb));
+  --retro-accent-text-rgb: var(--usk-accent-text-rgb, var(--retro-fallback-accent-text-rgb));
+  --retro-success-rgb: var(--usk-success-rgb, var(--retro-fallback-success-rgb));
+  --retro-success-text-rgb: var(--usk-success-text-rgb, var(--retro-fallback-success-text-rgb));
+  --retro-warning-rgb: var(--usk-warning-rgb, var(--retro-fallback-warning-rgb));
+  --retro-warning-text-rgb: var(--usk-warning-text-rgb, var(--retro-fallback-warning-text-rgb));
+  --retro-danger-rgb: var(--usk-danger-rgb, var(--retro-fallback-danger-rgb));
+  --retro-danger-text-rgb: var(--usk-danger-text-rgb, var(--retro-fallback-danger-text-rgb));
+  --retro-link-rgb: var(--usk-link-rgb, var(--retro-fallback-link-rgb));
+  --retro-focus-rgb: var(--usk-focus-rgb, var(--retro-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--retro-surface);
   --usk-native-surface-strong: var(--retro-surface-strong);
@@ -214,7 +311,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="retrofuturism"][data-theme][data-mode] { --retro-border: color-mix(in srgb, rgb(var(--retro-border-rgb) / max(var(--retro-border-alpha), var(--usk-border-min-alpha))), var(--retro-text) var(--usk-border-text-mix)); }
+  [data-ui="retrofuturism"][data-mode] { --retro-border: color-mix(in srgb, rgb(var(--retro-border-rgb) / max(var(--retro-border-alpha), var(--usk-border-min-alpha))), var(--retro-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -266,7 +363,7 @@
 [data-ui="retrofuturism"] *::before,
 [data-ui="retrofuturism"] *::after { box-sizing: border-box; }
 
-[data-ui="retrofuturism"][data-theme][data-mode] { background: var(--retro-theme-bg); background-size: var(--retro-theme-bg-size); }
+[data-ui="retrofuturism"][data-mode] { background: var(--retro-theme-bg); background-size: var(--retro-theme-bg-size); }
 
 .retro-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .retro-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -333,7 +430,7 @@
 /* Theme-responsive component defaults */
 .retro-card, .retro-panel { background: var(--retro-card-bg); }
 .retro-toolbar, .retro-table-wrap { background: var(--retro-control-bg); }
-.retro-button:not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
+.retro-button:not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-warning):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
 .retro-button, .retro-icon-button, .retro-badge, .retro-nav-link { font-family: var(--retro-font-control); }
 
 
@@ -430,7 +527,7 @@
 /* =========================================================
    Retrofuturism Loading Motion
 ========================================================= */
-[data-ui="retrofuturism"][data-theme][data-mode] {
+[data-ui="retrofuturism"][data-mode] {
   --retro-glow-alpha: .18;
 }
 
@@ -675,12 +772,12 @@
   border-radius: var(--retro-radius-lg);
   box-shadow: inset 0 0 0 1px rgb(var(--retro-surface-strong-rgb) / .7), 0 .75rem 1.6rem rgb(var(--retro-text-rgb) / .18);
 }
-[data-ui="retrofuturism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 3px double var(--retro-primary);
   border-radius: var(--retro-radius-pill);
   box-shadow: inset 0 0 0 1px rgb(var(--retro-surface-strong-rgb) / .72), 0 .3rem .8rem rgb(var(--retro-primary-rgb) / .2);
 }
-[data-ui="retrofuturism"][data-theme][data-mode] :where(dialog) {
+[data-ui="retrofuturism"][data-mode] :where(dialog) {
   border: 3px double var(--retro-border);
   border-radius: var(--retro-radius-lg);
   box-shadow: inset 0 0 0 1px rgb(var(--retro-surface-strong-rgb) / .72), 0 1rem 2.2rem rgb(var(--retro-text-rgb) / .24);
@@ -723,7 +820,7 @@
   --retro-depth-alpha: .5;
 }
 
-[data-ui="retrofuturism"][data-theme][data-mode] {
+[data-ui="retrofuturism"][data-mode] {
   --retro-instrument-radius-sm: .48rem;
   --retro-instrument-radius: .72rem;
   --retro-instrument-radius-lg: 1.35rem;
@@ -747,6 +844,7 @@
     rgb(var(--retro-text-rgb) / calc(var(--retro-instrument-alpha) * .72)),
     rgb(var(--retro-secondary-rgb) / var(--retro-instrument-alpha))
   ), var(--retro-surface-soft);
+  --retro-field-bg: linear-gradient(180deg, rgb(var(--retro-surface-strong-rgb) / .92), rgb(var(--retro-surface-rgb) / .98));
   --retro-instrument-bg: linear-gradient(
     180deg,
     rgb(var(--retro-secondary-rgb) / calc(var(--retro-instrument-alpha) + .1)),
@@ -782,10 +880,10 @@
   --usk-native-surface-strong: var(--retro-surface-strong);
   --usk-native-surface-soft: var(--retro-recess-bg);
   --usk-native-card-bg: var(--retro-enamel-bg);
-  --usk-native-control-bg: var(--retro-recess-bg);
+  --usk-native-control-bg: var(--retro-field-bg);
   --usk-native-border: var(--retro-metal-edge);
   --usk-native-radius-sm: var(--retro-instrument-radius-sm);
-  --usk-native-radius: var(--retro-instrument-radius);
+  --usk-native-radius: var(--retro-instrument-radius-sm);
   --usk-native-radius-lg: var(--retro-instrument-radius-lg);
   --usk-native-shadow: var(--retro-control-shadow);
   --usk-native-shadow-md: var(--retro-panel-shadow);
@@ -807,13 +905,13 @@
   --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
   --usk-native-select-indicator-position: calc(100% - 1.2rem) 50%, calc(100% - .87rem) 50%;
   --usk-native-select-padding-inline-end: 2.7rem;
-  --usk-native-range-track-size: .28rem;
+  --usk-native-range-track-size: .38rem;
   --usk-native-range-track-background: var(--retro-calibration-track);
   --usk-native-range-track-border: 1px solid var(--retro-metal-edge);
   --usk-native-range-track-radius: var(--retro-radius-pill);
   --usk-native-range-track-shadow: var(--retro-recess-shadow);
   --usk-native-range-progress-background: var(--retro-calibration-track);
-  --usk-native-range-thumb-size: 1.38rem;
+  --usk-native-range-thumb-size: 1.25rem;
   --usk-native-range-thumb-background: var(--retro-metal-rim);
   --usk-native-range-thumb-border: 3px double var(--retro-metal-edge);
   --usk-native-range-thumb-radius: 50%;
@@ -851,13 +949,13 @@
   box-shadow: inset 0 0 0 .28rem rgb(var(--retro-surface-strong-rgb) / .48), inset 0 0 0 .42rem rgb(var(--retro-border-rgb) / .32), var(--retro-panel-shadow);
 }
 
-.retro-title {
+.retro-title { margin-block: .75rem;
   font-family: var(--retro-font-display);
   font-size: clamp(2.3rem, 6vw, 4.6rem);
   font-stretch: condensed;
   font-weight: 900;
   line-height: .92;
-  letter-spacing: -.052em;
+  letter-spacing: max(.026em, .5px);
   text-transform: none;
   text-shadow: none;
 }
@@ -1258,7 +1356,7 @@
   background: var(--retro-recess-bg);
 }
 
-[data-ui="retrofuturism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   background: var(--retro-enamel-bg);
   color: var(--retro-text);
   border: 3px double var(--retro-metal-edge);
@@ -1270,11 +1368,11 @@
   text-transform: uppercase;
 }
 
-[data-ui="retrofuturism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
   box-shadow: var(--retro-pressed-shadow);
 }
 
-[data-ui="retrofuturism"][data-theme][data-mode] :where(dialog) {
+[data-ui="retrofuturism"][data-mode] :where(dialog) {
   background: var(--retro-enamel-bg);
   color: var(--retro-text);
   border: 4px double var(--retro-metal-edge);
@@ -1313,4 +1411,147 @@
 .retro-button-secondary { background: var(--retro-secondary-action-bg); color: var(--retro-on-secondary); border-color: var(--retro-secondary-hover); }
 .retro-button-danger { background: var(--retro-danger-action-bg); color: var(--retro-on-danger); border-color: var(--retro-danger); }
 .retro-button-ghost { background: transparent; color: var(--retro-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.retrofuturism {
+/** Shared annotation fidelity keeps display rhythm and icon symbols readable. */
+.retro-feature-item > .retro-icon-medallion {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  padding: 0;
+  background: var(--retro-instrument-bg);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.retro-callout-bar > .retro-icon-medallion {
+  inline-size: 3rem;
+  min-inline-size: 3rem;
+  block-size: 3rem;
+  min-block-size: 3rem;
+  padding: 0;
+  background: var(--retro-instrument-bg);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/** Renders loading as a luminous orbital instrument instead of a filled dial. */
+.retro-spinner, .retro-loading-spinner, [data-ui="retrofuturism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  background: radial-gradient(circle at center, rgb(var(--retro-surface-rgb)) 0 30%, transparent 33%), conic-gradient(from -35deg, var(--retro-primary) 0 24%, transparent 25% 48%, var(--retro-secondary) 49% 72%, transparent 73%);
+  box-shadow: inset 0 0 0 .18rem var(--retro-recess-bg), 0 0 0 .12rem rgb(var(--retro-border-rgb) / .44), 0 0 .65rem rgb(var(--retro-accent-rgb) / .34);
+}
+
+/** Centers check glyphs independently from font baseline metrics. */
+.retro-check-control { position: relative; }
+.retro-check input:checked + .retro-check-control::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+/** Gives prefixed icon actions a legible console-symbol scale. */
+.retro-icon-button { font-size: 1.25rem; line-height: 1; }
+
+/** Matches the reference console's compact rectangular action keys. */
+.retro-button {
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+}
+.retro-button-ghost {
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border-color: var(--retro-metal-edge);
+  box-shadow: var(--retro-control-shadow);
+}
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border-radius: var(--retro-instrument-radius-sm);
+}
+
+/** Coordinates recessed fields and selector indicators with calibrated hardware. */
+.retro-input, .retro-textarea, .retro-select {
+  min-height: 2.75rem;
+  background: var(--retro-field-bg);
+  border-radius: var(--retro-instrument-radius-sm);
+  box-shadow: var(--retro-recess-shadow);
+}
+[data-ui="retrofuturism"][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea, select) {
+  border-radius: var(--retro-instrument-radius-sm);
+}
+.retro-select, [data-ui="retrofuturism"][data-mode] select:not([multiple]) {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-color: rgb(var(--retro-surface-rgb));
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+/** Uses softly tinted status plates with a dedicated console lamp. */
+.retro-badge {
+  --retro-badge-lamp: var(--retro-text-muted);
+  min-height: 1.75rem;
+  padding: .32rem .62rem;
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border: 1px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+  box-shadow: var(--retro-control-shadow);
+}
+.retro-badge::before {
+  content: "";
+  inline-size: .5rem;
+  block-size: .5rem;
+  flex: 0 0 auto;
+  background: var(--retro-badge-lamp);
+  border: 1px solid var(--retro-metal-edge);
+  border-radius: 50%;
+  box-shadow: var(--retro-jewel-shadow);
+}
+.retro-badge-primary { --retro-badge-lamp: var(--retro-primary); background: linear-gradient(180deg, rgb(var(--retro-primary-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-secondary { --retro-badge-lamp: var(--retro-secondary); background: linear-gradient(180deg, rgb(var(--retro-secondary-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-success { --retro-badge-lamp: var(--retro-success); background: linear-gradient(180deg, rgb(var(--retro-success-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-warning { --retro-badge-lamp: var(--retro-warning); background: linear-gradient(180deg, rgb(var(--retro-warning-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-danger { --retro-badge-lamp: var(--retro-danger); background: linear-gradient(180deg, rgb(var(--retro-danger-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+
+/** Matches the reference summary table's compact framed ledger treatment. */
+.retro-table-wrap {
+  background: var(--retro-enamel-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius);
+  box-shadow: var(--retro-control-shadow);
+}
+.retro-table {
+  border: 1px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+}
+.retro-table th {
+  background: var(--retro-enamel-bg);
+  border-block-end: 1px solid var(--retro-metal-edge);
+  box-shadow: none;
+  font-family: var(--retro-font-control);
+}
+.retro-table :where(th, td):not(:last-child) {
+  border-inline-end: 1px solid rgb(var(--retro-border-rgb) / .46);
+}
+
+/** Keeps native dialog content clear of the metallic appliance frame. */
+[data-ui="retrofuturism"][data-mode] dialog > form {
+  display: grid;
+  gap: .85rem;
+  padding: 1.125rem;
+}
+[data-ui="retrofuturism"][data-mode] dialog > form > :where(h1, h2, h3, p) { margin: 0; }
+[data-ui="retrofuturism"][data-mode] dialog > form > :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { justify-self: start; }
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="retrofuturism"][data-mode] .retro-button.retro-button-warning {
+  background: var(--retro-warning);
+  color: var(--retro-on-warning);
+  border-color: var(--retro-warning);
+  text-shadow: none;
+}
+
 }

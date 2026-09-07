@@ -105,7 +105,7 @@ const expectedSemanticComponentApi = {
     name: 'data-ui-variant',
     neutral: 'omitted',
     valuesBySelector: {
-      '.ui-button': ['primary', 'secondary', 'danger', 'ghost'],
+      '.ui-button': ['primary', 'secondary', 'warning', 'danger', 'ghost'],
       '.ui-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
       '.ui-alert': ['success', 'warning', 'danger']
     }
@@ -471,14 +471,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  // These fingerprints include the manifest-generated containment foundation and all authored declarations.
+  // Reviewed v2.4 native backgrounds, seal paint, Organic contrast, and annotation fixes preserve alias declarations.
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 20608,
-    sha256: 'c3d33a91483b5c0b6a8ae14d3d0017eaf2534131989e830ebe76e8d78974c558'
+    count: 35721,
+    sha256: '05e8ee0b7b8df9fe8d56693c4d402600e56a801374119f64f9ed85137cbcb4a9'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 21040,
-    sha256: '8de8664bb75d1e2d2ab0c71a6f06f3109ca313083d5bcee9d3b6e699a0f026c8'
+    count: 36172,
+    sha256: '7d5ffc17a98f3ab2ced04ca966ccf3062a0b43c58656097e1c6138b98d1c1c39'
   });
 });
 
@@ -486,7 +486,7 @@ test('semantic source suffixes and contextual variants exist in every composed p
   const currentSuffixes = new Set(manifest.classApi.universalVisualSuffixes);
   const requiredSuffixes = semanticRequiredSuffixes();
 
-  assert.equal(manifest.classApi.universalVisualSuffixes.length, 94);
+  assert.equal(manifest.classApi.universalVisualSuffixes.length, 95);
   for (const suffix of requiredSuffixes) {
     assert.equal(currentSuffixes.has(suffix), true, `${suffix} must remain a current universal visual suffix`);
   }
@@ -508,7 +508,7 @@ test('partial extras and deprecated structural aliases stay outside the semantic
   const partialExtras = new Set(Object.values(manifest.classApi.presetExtras).flat());
   const deprecatedSuffixes = new Set(manifest.classApi.deprecatedStructuralSuffixes);
 
-  assert.equal(partialExtras.size, 23);
+  assert.equal(partialExtras.size, 318);
   assert.equal(deprecatedSuffixes.size, 7);
   for (const suffix of semanticSuffixes) {
     assert.equal(partialExtras.has(suffix), false, `${suffix} must not be a partial preset extra`);

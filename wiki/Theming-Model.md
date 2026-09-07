@@ -1,9 +1,9 @@
 # Theming Model
 
-UI Style Kit CSS uses three root-level attributes:
+UI Style Kit CSS uses two required root-level attributes and one optional attribute:
 
 - `data-ui` selects the style system.
-- `data-theme` selects one of the 20 color schemes.
+- `data-theme` optionally selects one of the 20 shared color schemes; omit `data-theme` for native palette colors.
 - `data-mode` selects `light`, `dark`, or `contrast`.
 
 ## Attribute Pattern
@@ -12,16 +12,20 @@ UI Style Kit CSS uses three root-level attributes:
 <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
 ```
 
+For native light, dark, or contrast colors, use `<body data-ui="tactile" data-mode="light">`
+or call `document.body.removeAttribute("data-theme");`. Do not use literal `"None"`
+or `"null"` attribute values; the demo normalizes those selections to an absent attribute.
+
 All style files follow this selector shape:
 
 - `:where([data-ui][data-theme="<theme>"][data-mode="<mode>"])` in `styles/theme-colors.css` for concrete shared RGB palette values.
 - `[data-ui="<style>"][data-mode="<mode>"]` for mode-level behavior such as `color-scheme`, alpha density, shadows, and contrast behavior.
-- `[data-ui="<style>"][data-theme][data-mode]` in each UI file for prefixed alias assembly and UI composition tokens.
+- `[data-ui="<style>"][data-mode]` for native-aware aliases and composition tokens, with `[data-theme]` seams giving explicit shared themes precedence.
 
 ## Token Flow
 
 ```txt
-Shared color scheme channels
+Native preset palette OR shared color scheme channels
   -> prefixed RGB aliases
   -> functional UI and native tokens
   -> rendered UI
@@ -99,6 +103,21 @@ All 20 styles define the same themes:
 - `contrast`: high-separation palette choices for stronger legibility.
 
 ## Safe Overrides
+
+The demo's native-palette editor exports `--<prefix>-*-rgb` variables, including
+material colors such as Tactile paper and ink. Named-theme editing exports the 23
+shared `--usk-*-rgb` roles. Native edits are scoped by preset and mode; shared edits
+follow the selected theme and mode across presets.
+
+```css
+:where([data-ui="tactile"]:not([data-theme])[data-mode="light"]) {
+  --tactile-paper-rgb: 246 240 224;
+  --tactile-ink-rgb: 45 40 34;
+}
+```
+
+The 12-token `--ui-*` handshake remains available with no theme. Its background
+token resolves through `--usk-native-bg` to the preset's active functional background.
 
 Use scoped custom properties instead of editing classes directly:
 

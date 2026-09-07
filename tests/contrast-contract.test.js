@@ -41,3 +41,26 @@ test('deprecated bridge swaps foreground and background paint atomically', () =>
 
   assert.doesNotMatch(transition, /^\s*(?:background-color|color)\b/m);
 });
+
+test('fallback contrast validation rejects an unreadable preset palette', async () => {
+  const { validateFallbackContrast } = await import('../scripts/check-contrast.mjs');
+  const roles = [
+    'bg', 'surface', 'surface-strong', 'surface-soft', 'text', 'text-muted', 'border',
+    'primary', 'primary-hover', 'primary-text', 'secondary', 'secondary-hover',
+    'secondary-text', 'accent', 'accent-text', 'success', 'success-text', 'warning',
+    'warning-text', 'danger', 'danger-text', 'link', 'focus'
+  ];
+  const unreadable = Object.fromEntries(roles.map((role) => [role, '120 120 120']));
+  const css = `[data-ui="fixture"][data-mode="light"] {\n${roles
+    .map((role) => `  --fixture-fallback-${role}-rgb: ${unreadable[role]};`)
+    .join('\n')}\n}`;
+
+  assert.equal(typeof validateFallbackContrast, 'function');
+  const failures = validateFallbackContrast(
+    new Map([['fixture', css]]),
+    [{ id: 'fixture', prefix: 'fixture' }],
+    ['light']
+  );
+
+  assert.ok(failures.some((failure) => failure.includes('text on background')));
+});

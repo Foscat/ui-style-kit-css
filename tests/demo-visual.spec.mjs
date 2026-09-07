@@ -24,6 +24,35 @@ const identityProfiles = Object.freeze(
 const identityThemes = ['arctic-indigo', 'sunset-ember'];
 
 /**
+ * Captures the visible paint, edge, focus, and movement channels for a control.
+ *
+ * Presets intentionally communicate interaction through different materials:
+ * glass uses outlines, blueprints use mechanical travel, and terminals use
+ * flat color inversion. Comparing the full signature keeps those identities
+ * accessible without requiring every preset to add a drop shadow.
+ *
+ * @param {import('@playwright/test').Locator} locator Control to inspect.
+ * @returns {Promise<string[]>} Computed visual-state signature.
+ */
+async function interactionVisualSignature(locator) {
+  return locator.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return [
+      style.backgroundColor,
+      style.backgroundImage,
+      style.borderColor,
+      style.color,
+      style.outlineColor,
+      style.outlineStyle,
+      style.outlineWidth,
+      style.outlineOffset,
+      style.boxShadow,
+      style.transform
+    ];
+  });
+}
+
+/**
  * Creates a compact visual probe from the full native-control demo specimen.
  *
  * @param {import('@playwright/test').Page} page Playwright page rendering the demo.
@@ -388,28 +417,22 @@ test.describe('all-preset identity stability and interaction states', () => {
         const busy = page.locator(`.${profile.prefix}-button[aria-busy="true"]`);
         const neutral = page.getByRole('button', { name: 'Neutral' });
         const pressed = page.locator(`.${profile.prefix}-button[aria-pressed="true"]`);
-        const restingPrimary = await primary.evaluate((element) => {
-          const style = getComputedStyle(element);
-          return [style.backgroundColor, style.boxShadow, style.transform];
-        });
-        const restingInputShadow = await input.evaluate((element) => getComputedStyle(element).boxShadow);
+        const restingPrimary = await interactionVisualSignature(primary);
+        const restingInput = await interactionVisualSignature(input);
         const restingInputSurface = await input.evaluate((element) => {
           const style = getComputedStyle(element);
           return [style.backgroundColor, style.backgroundImage, style.borderColor, style.opacity];
         });
-        const restingPressedShadow = await neutral.evaluate((element) => getComputedStyle(element).boxShadow);
+        const restingPressed = await interactionVisualSignature(neutral);
 
         if (viewport.name === 'desktop') {
           await primary.hover();
           await page.waitForTimeout(20);
-          expect(await primary.evaluate((element) => {
-            const style = getComputedStyle(element);
-            return [style.backgroundColor, style.boxShadow, style.transform];
-          }), `${profile.id} / ${viewport.name} hover state`).not.toEqual(restingPrimary);
+          expect(await interactionVisualSignature(primary), `${profile.id} / ${viewport.name} hover state`).not.toEqual(restingPrimary);
         }
         await input.focus();
-        expect(await input.evaluate((element) => getComputedStyle(element).boxShadow), `${profile.id} / ${viewport.name} focus state`).not.toBe(restingInputShadow);
-        expect(await pressed.evaluate((element) => getComputedStyle(element).boxShadow), `${profile.id} / ${viewport.name} pressed state`).not.toBe(restingPressedShadow);
+        expect(await interactionVisualSignature(input), `${profile.id} / ${viewport.name} focus state`).not.toEqual(restingInput);
+        expect(await interactionVisualSignature(pressed), `${profile.id} / ${viewport.name} pressed state`).not.toEqual(restingPressed);
         expect(Number(await disabled.evaluate((element) => getComputedStyle(element).opacity)), `${profile.id} / ${viewport.name} disabled state`).toBeLessThan(1);
         expect(await invalid.evaluate((element) => getComputedStyle(element).borderColor), `${profile.id} / ${viewport.name} invalid state`)
           .not.toBe(restingInputSurface[2]);

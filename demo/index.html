@@ -83,10 +83,10 @@
   <meta name="msapplication-TileColor" content="#070b24">
   <meta name="msapplication-config" content="assets/browserconfig.xml">
   <meta name="theme-color" content="#070b24">
-  <link id="styleKitStylesheet" rel="stylesheet" href="../dist/ui-style-kit.css" data-default-href="../dist/ui-style-kit.css" data-bridge-href="../dist/ui-style-kit.with-bridge.css">
-  <link rel="stylesheet" href="demo.css">
+  <link id="styleKitStylesheet" rel="stylesheet" href="../dist/ui-style-kit.css?v=a303b3cf7581" data-default-href="../dist/ui-style-kit.css?v=a303b3cf7581" data-bridge-href="../dist/ui-style-kit.with-bridge.css?v=f7a64f64c28b">
+  <link rel="stylesheet" href="demo.css?v=9f22680a5dd6">
 </head>
-<body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light" data-bridge="detached">
+<body data-ui="minimal-saas" data-mode="light" data-bridge="detached">
   <a id="skip" class="saas-skip-link" href="#main">Skip to content</a>
   <aside class="demo-controls" aria-label="Demo controls">
     <label>
@@ -103,7 +103,7 @@
         <option value="cyberpunk" data-prefix="cyber">Cyberpunk</option>
         <option value="y2k" data-prefix="y2k">Y2K</option>
         <option value="retro-glass" data-prefix="rg">Retro Glass</option>
-        <option value="editorial-luxe" data-prefix="luxe">Editorial Luxe</option>
+        <option value="editorial-luxe" data-prefix="luxe">Editorial Lux</option>
         <option value="organic-modern" data-prefix="organic">Organic Modern</option>
         <option value="industrial-utility" data-prefix="utility">Industrial Utility</option>
         <option value="technical-blueprint" data-prefix="blueprint">Technical Blueprint</option>
@@ -116,7 +116,8 @@
     </label>
     <label>
       Color Theme
-      <select id="themeSelect">
+      <select id="themeSelect" aria-describedby="demo-palette-help">
+        <option value="" selected>None — style defaults</option>
         <option value="midnight-gold">midnight-gold</option>
         <option value="ocean-steel">ocean-steel</option>
         <option value="forest-moss">forest-moss</option>
@@ -126,7 +127,7 @@
         <option value="desert-sage">desert-sage</option>
         <option value="rose-quartz">rose-quartz</option>
         <option value="cyber-lime">cyber-lime</option>
-        <option value="arctic-indigo" selected>arctic-indigo</option>
+        <option value="arctic-indigo">arctic-indigo</option>
         <option value="chrome-navy">chrome-navy</option>
         <option value="recycled-emerald">recycled-emerald</option>
         <option value="industrial-orange">industrial-orange</option>
@@ -150,6 +151,7 @@
   </aside>
 
   <main id="main">
+    <p id="demo-palette-help" class="demo-palette-help">UI Style sets the component design. Color Theme overrides its colors; choose <strong>None</strong> for the style’s native palette. Try light, dark, or contrast mode, then <a href="#tokens">edit the active colors</a>.</p>
     <section id="semantic-runtime" class="demo-semantic-section" data-testid="semantic-runtime-components" aria-labelledby="semantic-runtime-title">
       <div class="demo-semantic-heading">
         <p class="demo-semantic-kicker">Runtime semantic API</p>
@@ -166,9 +168,9 @@
             <button class="ui-button" data-semantic-node="button-neutral">Neutral</button>
             <button class="ui-button" data-semantic-node="button-primary" data-ui-variant="primary">Primary</button>
             <button class="ui-button" data-semantic-node="button-secondary" data-ui-variant="secondary">Secondary</button>
-            <button class="ui-button" data-semantic-node="button-danger" data-ui-variant="danger">Danger</button>
+            <button class="ui-button is-alarm" data-semantic-node="button-danger" data-ui-variant="danger">Danger</button>
             <button class="ui-button" data-semantic-node="button-ghost" data-ui-variant="ghost">Ghost</button>
-            <button class="ui-icon-button" data-semantic-node="icon-button" aria-label="Semantic settings">&#9881;</button>
+            <button class="ui-icon-button" data-semantic-node="icon-button" aria-label="Semantic settings" title="Semantic settings"><span class="demo-control-icon" data-demo-icon="settings" aria-hidden="true">&#9881;</span></button>
           </div>
           <div class="demo-semantic-row" aria-label="Semantic status badges">
             <span class="ui-badge" data-semantic-node="badge-neutral">Neutral</span>
@@ -234,7 +236,16 @@
     </div>
   </main>
 
-  <script src="demo-manifest.js"></script>
-  <script src="demo.js"></script>
+  <script src="demo-manifest.js?v=e866c6cb67ea"></script>
+  <script src="demo-icons.js?v=b92568d6bcaa"></script>
+  <script src="demo-art-deco.js?v=5ffa637a8474"></script>
+    <script src="demo-editorial-lux.js?v=6cea5a3dee41"></script>
+    <script src="demo-neo-noir.js?v=1242cf695823"></script>
+  <script src="demo-clay.js?v=8ca1067b24b7"></script>
+  <script src="demo-bento.js?v=7c5ece4e6ea7"></script>
+  <script src="demo-bauhaus.js?v=dcb8da8a2f90"></script>
+  <script src="demo-organic-icons.js?v=9a8d6adf49b3"></script>
+  <script src="demo-organic.js?v=d0d8a9bba18c"></script>
+  <script src="demo.js?v=28f5bf77774c"></script>
 </body>
 </html>

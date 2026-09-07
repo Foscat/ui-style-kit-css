@@ -25,6 +25,11 @@
 
 All styles share the same 20 color schemes through `styles/theme-colors.css`, so changing `data-theme` affects the active color scheme independently from the selected UI treatment.
 
+Omit `data-theme` to use the chosen preset's native light, dark, or contrast colors.
+The [demo guide](DEMO-SHOWCASE.md) explains the unified style-specific gallery and
+optional reference boards. Native material colors can be edited in the workbench
+without assigning a shared theme or changing geometry.
+
 Use `data-mode="contrast"` for high-contrast variants and pair it with semantic HTML for best accessibility outcomes.
 
 ## Preset identity and component roles

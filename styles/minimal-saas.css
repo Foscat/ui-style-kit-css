@@ -42,33 +42,105 @@
 
 [data-ui="minimal-saas"][data-mode="light"] {
   color-scheme: light;
+  --saas-fallback-bg-rgb: 248 249 252;
+  --saas-fallback-surface-rgb: 255 255 255;
+  --saas-fallback-surface-strong-rgb: 255 255 255;
+  --saas-fallback-surface-soft-rgb: 243 245 250;
+  --saas-fallback-text-rgb: 19 26 53;
+  --saas-fallback-text-muted-rgb: 97 105 131;
+  --saas-fallback-border-rgb: 220 225 236;
+  --saas-fallback-primary-rgb: 85 78 232;
+  --saas-fallback-primary-hover-rgb: 103 88 244;
+  --saas-fallback-primary-text-rgb: 255 255 255;
+  --saas-fallback-secondary-rgb: 49 110 219;
+  --saas-fallback-secondary-hover-rgb: 43 95 190;
+  --saas-fallback-secondary-text-rgb: 255 255 255;
+  --saas-fallback-accent-rgb: 103 88 244;
+  --saas-fallback-accent-text-rgb: 255 255 255;
+  --saas-fallback-success-rgb: 36 155 112;
+  --saas-fallback-success-text-rgb: 19 26 53;
+  --saas-fallback-warning-rgb: 215 146 31;
+  --saas-fallback-warning-text-rgb: 19 26 53;
+  --saas-fallback-danger-rgb: 214 30 70;
+  --saas-fallback-danger-text-rgb: 255 255 255;
+  --saas-fallback-link-rgb: 85 78 232;
+  --saas-fallback-focus-rgb: 85 78 232;
   --saas-panel-alpha: .98;
   --saas-panel-soft-alpha: .74;
   --saas-border-alpha: .44;
   --saas-shadow-alpha: .08;
   --saas-focus-alpha: .3;
+  --saas-reference-shadow: 0 .5rem 1.5rem rgb(40 47 83 / .045);
 }
 
 [data-ui="minimal-saas"][data-mode="dark"] {
   color-scheme: dark;
+  --saas-fallback-bg-rgb: 7 17 31;
+  --saas-fallback-surface-rgb: 13 25 42;
+  --saas-fallback-surface-strong-rgb: 27 36 80;
+  --saas-fallback-surface-soft-rgb: 17 31 51;
+  --saas-fallback-text-rgb: 241 243 251;
+  --saas-fallback-text-muted-rgb: 180 187 205;
+  --saas-fallback-border-rgb: 43 58 80;
+  --saas-fallback-primary-rgb: 112 104 255;
+  --saas-fallback-primary-hover-rgb: 135 128 255;
+  --saas-fallback-primary-text-rgb: 7 17 31;
+  --saas-fallback-secondary-rgb: 85 145 255;
+  --saas-fallback-secondary-hover-rgb: 112 166 255;
+  --saas-fallback-secondary-text-rgb: 7 17 31;
+  --saas-fallback-accent-rgb: 87 73 239;
+  --saas-fallback-accent-text-rgb: 255 255 255;
+  --saas-fallback-success-rgb: 67 190 139;
+  --saas-fallback-success-text-rgb: 7 17 31;
+  --saas-fallback-warning-rgb: 239 173 49;
+  --saas-fallback-warning-text-rgb: 7 17 31;
+  --saas-fallback-danger-rgb: 255 61 104;
+  --saas-fallback-danger-text-rgb: 7 17 31;
+  --saas-fallback-link-rgb: 135 128 255;
+  --saas-fallback-focus-rgb: 112 104 255;
   --saas-panel-alpha: .92;
   --saas-panel-soft-alpha: .64;
   --saas-border-alpha: .52;
   --saas-shadow-alpha: .34;
   --saas-focus-alpha: .42;
+  --saas-reference-shadow: 0 .75rem 2.125rem rgb(0 0 0 / .16);
 }
 
 [data-ui="minimal-saas"][data-mode="contrast"] {
   color-scheme: dark;
+  --saas-fallback-bg-rgb: 0 0 0;
+  --saas-fallback-surface-rgb: 3 8 22;
+  --saas-fallback-surface-strong-rgb: 8 18 42;
+  --saas-fallback-surface-soft-rgb: 0 0 0;
+  --saas-fallback-text-rgb: 255 255 255;
+  --saas-fallback-text-muted-rgb: 238 244 255;
+  --saas-fallback-border-rgb: 255 255 255;
+  --saas-fallback-primary-rgb: 111 140 255;
+  --saas-fallback-primary-hover-rgb: 255 255 255;
+  --saas-fallback-primary-text-rgb: 0 0 0;
+  --saas-fallback-secondary-rgb: 0 217 255;
+  --saas-fallback-secondary-hover-rgb: 255 255 255;
+  --saas-fallback-secondary-text-rgb: 0 0 0;
+  --saas-fallback-accent-rgb: 184 196 255;
+  --saas-fallback-accent-text-rgb: 0 0 0;
+  --saas-fallback-success-rgb: 0 255 144;
+  --saas-fallback-success-text-rgb: 0 0 0;
+  --saas-fallback-warning-rgb: 255 225 0;
+  --saas-fallback-warning-text-rgb: 0 0 0;
+  --saas-fallback-danger-rgb: 255 63 95;
+  --saas-fallback-danger-text-rgb: 0 0 0;
+  --saas-fallback-link-rgb: 159 178 255;
+  --saas-fallback-focus-rgb: 255 255 255;
   --saas-panel-alpha: 1;
   --saas-panel-soft-alpha: .92;
   --saas-border-alpha: 1;
   --saas-shadow-alpha: .5;
   --saas-focus-alpha: .72;
+  --saas-reference-shadow: none;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="minimal-saas"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --saas-bg-rgb: var(--usk-bg-rgb);
   --saas-surface-rgb: var(--usk-surface-rgb);
   --saas-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -83,15 +155,43 @@
   --saas-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --saas-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --saas-accent-rgb: var(--usk-accent-rgb);
-  --saas-success-rgb: var(--usk-success-rgb);
-  --saas-warning-rgb: var(--usk-warning-rgb);
-  --saas-danger-rgb: var(--usk-danger-rgb);
-  --saas-link-rgb: var(--usk-link-rgb);
   --saas-accent-text-rgb: var(--usk-accent-text-rgb);
+  --saas-success-rgb: var(--usk-success-rgb);
   --saas-success-text-rgb: var(--usk-success-text-rgb);
+  --saas-warning-rgb: var(--usk-warning-rgb);
   --saas-warning-text-rgb: var(--usk-warning-text-rgb);
+  --saas-danger-rgb: var(--usk-danger-rgb);
   --saas-danger-text-rgb: var(--usk-danger-text-rgb);
+  --saas-link-rgb: var(--usk-link-rgb);
   --saas-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="minimal-saas"][data-mode] {
+  --usk-native-bg: var(--saas-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --saas-bg-rgb: var(--usk-bg-rgb, var(--saas-fallback-bg-rgb));
+  --saas-surface-rgb: var(--usk-surface-rgb, var(--saas-fallback-surface-rgb));
+  --saas-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--saas-fallback-surface-strong-rgb));
+  --saas-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--saas-fallback-surface-soft-rgb));
+  --saas-text-rgb: var(--usk-text-rgb, var(--saas-fallback-text-rgb));
+  --saas-text-muted-rgb: var(--usk-text-muted-rgb, var(--saas-fallback-text-muted-rgb));
+  --saas-border-rgb: var(--usk-border-rgb, var(--saas-fallback-border-rgb));
+  --saas-primary-rgb: var(--usk-primary-rgb, var(--saas-fallback-primary-rgb));
+  --saas-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--saas-fallback-primary-hover-rgb));
+  --saas-primary-text-rgb: var(--usk-primary-text-rgb, var(--saas-fallback-primary-text-rgb));
+  --saas-secondary-rgb: var(--usk-secondary-rgb, var(--saas-fallback-secondary-rgb));
+  --saas-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--saas-fallback-secondary-hover-rgb));
+  --saas-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--saas-fallback-secondary-text-rgb));
+  --saas-accent-rgb: var(--usk-accent-rgb, var(--saas-fallback-accent-rgb));
+  --saas-accent-text-rgb: var(--usk-accent-text-rgb, var(--saas-fallback-accent-text-rgb));
+  --saas-success-rgb: var(--usk-success-rgb, var(--saas-fallback-success-rgb));
+  --saas-success-text-rgb: var(--usk-success-text-rgb, var(--saas-fallback-success-text-rgb));
+  --saas-warning-rgb: var(--usk-warning-rgb, var(--saas-fallback-warning-rgb));
+  --saas-warning-text-rgb: var(--usk-warning-text-rgb, var(--saas-fallback-warning-text-rgb));
+  --saas-danger-rgb: var(--usk-danger-rgb, var(--saas-fallback-danger-rgb));
+  --saas-danger-text-rgb: var(--usk-danger-text-rgb, var(--saas-fallback-danger-text-rgb));
+  --saas-link-rgb: var(--usk-link-rgb, var(--saas-fallback-link-rgb));
+  --saas-focus-rgb: var(--usk-focus-rgb, var(--saas-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--saas-surface);
   --usk-native-surface-strong: var(--saas-surface-strong);
@@ -186,6 +286,7 @@
   --saas-control-fg: var(--saas-text);
   --saas-primary: rgb(var(--saas-primary-rgb));
   --saas-primary-hover: rgb(var(--saas-primary-hover-rgb));
+  --saas-brand-2: rgb(var(--saas-primary-hover-rgb));
   --saas-primary-text: rgb(var(--saas-primary-text-rgb));
   --saas-secondary: rgb(var(--saas-secondary-rgb));
   --saas-secondary-hover: rgb(var(--saas-secondary-hover-rgb));
@@ -204,18 +305,19 @@
   --saas-focus: rgb(var(--saas-focus-rgb));
   --saas-focus-ring: 0 0 0 3px rgb(var(--saas-focus-rgb) / var(--saas-focus-alpha));
   --saas-shadow-sm: 0 1px 2px rgb(var(--saas-text-rgb) / calc(var(--saas-shadow-alpha) * .65));
-  --saas-shadow-md: 0 .2rem .7rem rgb(var(--saas-text-rgb) / calc(var(--saas-shadow-alpha) * .8));
+  --saas-shadow-md: var(--saas-reference-shadow);
   --saas-theme-bg-size: auto;
-  --saas-theme-bg: linear-gradient(180deg, rgb(var(--saas-primary-rgb) / .035), transparent 18rem), var(--saas-bg);
+  --saas-theme-bg: var(--saas-bg);
   --saas-card-bg: var(--saas-surface);
-  --saas-control-bg: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha));
+  --saas-control-bg: var(--saas-surface);
+  --saas-hover-bg: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha));
   --saas-spinner-track: rgb(var(--saas-border-rgb) / max(.28, calc(var(--saas-border-alpha) * .7)));
   --saas-spinner-stroke: var(--saas-primary);
   --saas-spinner-accent: var(--saas-accent);
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="minimal-saas"][data-theme][data-mode] { --saas-border: color-mix(in srgb, rgb(var(--saas-border-rgb) / max(var(--saas-border-alpha), var(--usk-border-min-alpha))), var(--saas-text) var(--usk-border-text-mix)); }
+  [data-ui="minimal-saas"][data-mode] { --saas-border: color-mix(in srgb, rgb(var(--saas-border-rgb) / max(var(--saas-border-alpha), var(--usk-border-min-alpha))), var(--saas-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -267,7 +369,7 @@
 [data-ui="minimal-saas"] *::before,
 [data-ui="minimal-saas"] *::after { box-sizing: border-box; }
 
-[data-ui="minimal-saas"][data-theme][data-mode] { background: var(--saas-theme-bg); background-size: var(--saas-theme-bg-size); }
+[data-ui="minimal-saas"][data-mode] { background: var(--saas-theme-bg); background-size: var(--saas-theme-bg-size); }
 
 .saas-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .saas-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -282,8 +384,8 @@
 ========================================================= */
 
 .saas-title, .saas-heading, .saas-kicker, .saas-button, .saas-badge, .saas-nav-link { font-family: var(--saas-font-heading); }
-.saas-title { margin: 0; color: var(--saas-text); font-size: clamp(1.9rem, 4.5vw, 3.35rem); font-weight: 750; line-height: 1.08; letter-spacing: 0; }
-.saas-heading { margin: 0; color: var(--saas-text); font-size: clamp(1.15rem, 2.25vw, 1.8rem); font-weight: 750; line-height: 1.22; letter-spacing: 0; }
+.saas-title { margin: 0; color: var(--saas-text); font-size: 1.5rem; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; }
+.saas-heading { margin: 0; color: var(--saas-text); font-size: 1rem; font-weight: 700; line-height: 1.2; letter-spacing: 0; }
 .saas-kicker { margin: 0; color: var(--saas-primary); font-size: .78rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 .saas-subtitle, .saas-copy { margin: 0; color: var(--saas-text-muted); line-height: 1.55; }
 .saas-text-muted { color: var(--saas-text-muted); }
@@ -315,15 +417,15 @@
 
 .saas-button, .saas-icon-button {
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--saas-space-2);
-  min-height: 2.375rem; padding: .5rem .78rem; background: var(--saas-control-bg); color: var(--saas-text);
+  min-height: 2.125rem; padding: .45rem .75rem; background: var(--saas-control-bg); color: var(--saas-text);
   border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); box-shadow: var(--saas-shadow-sm);
   font: inherit; font-weight: 700; line-height: 1; text-decoration: none; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; user-select: none;
   transition: color var(--saas-transition-fast), background var(--saas-transition-fast), border-color var(--saas-transition-fast), box-shadow var(--saas-transition-fast), transform var(--saas-transition-fast);
 }
 .saas-button:hover, .saas-icon-button:hover { transform: none; border-color: rgb(var(--saas-primary-rgb) / .48); background: var(--saas-surface-soft); }
-.saas-button:active, .saas-icon-button:active, .saas-button[aria-pressed="true"], .saas-icon-button[aria-pressed="true"], .saas-button.is-active, .saas-icon-button.is-active { transform: none; box-shadow: inset 0 1px 2px rgb(var(--saas-text-rgb) / .12); }
-.saas-button-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
-.saas-button-primary:hover { background: var(--saas-primary-hover); border-color: var(--saas-primary-hover); }
+.saas-button:active, .saas-icon-button:active, .saas-button[aria-pressed="true"], .saas-icon-button[aria-pressed="true"], .saas-button.is-active, .saas-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 1px 2px rgb(var(--saas-text-rgb) / .12); }
+.saas-button-primary { background: linear-gradient(135deg, var(--saas-primary), var(--saas-brand-2)); color: var(--saas-on-primary); border-color: var(--saas-primary); }
+.saas-button-primary:hover { background: linear-gradient(135deg, var(--saas-brand-2), var(--saas-primary)); border-color: var(--saas-primary-hover); }
 .saas-button-secondary { background: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha)); color: var(--saas-primary); border-color: rgb(var(--saas-primary-rgb) / .32); box-shadow: none; }
 .saas-button-secondary:hover { background: rgb(var(--saas-primary-rgb) / .06); border-color: rgb(var(--saas-primary-rgb) / .52); }
 .saas-button-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
@@ -334,7 +436,7 @@
 /* Theme-responsive component defaults */
 .saas-card, .saas-panel { background: var(--saas-card-bg); }
 .saas-toolbar, .saas-table-wrap { background: var(--saas-control-bg); }
-.saas-button:not(.saas-button-primary):not(.saas-button-secondary):not(.saas-button-danger):not(.saas-button-ghost), .saas-icon-button { background: var(--saas-control-bg); }
+.saas-button:not(.saas-button-primary):not(.saas-button-secondary):not(.saas-button-danger):not(.saas-button-warning):not(.saas-button-ghost), .saas-icon-button { background: var(--saas-control-bg); }
 .saas-button, .saas-icon-button, .saas-badge, .saas-nav-link { font-family: var(--saas-font-control); }
 
 
@@ -345,7 +447,7 @@
 .saas-field { display: flex; flex-direction: column; gap: var(--saas-space-2); }
 .saas-label { color: var(--saas-text); font-size: .875rem; font-weight: 700; }
 .saas-input, .saas-textarea, .saas-select {
-  width: 100%; min-height: 2.375rem; padding: .5rem .75rem; background: var(--saas-control-bg); color: var(--saas-text);
+  width: 100%; min-height: 2rem; padding: .38rem .65rem; background: var(--saas-control-bg); color: var(--saas-text);
   border: 1px solid var(--saas-border); border-radius: var(--saas-radius-md); font: inherit; outline: none;
   transition: background var(--saas-transition-fast), border-color var(--saas-transition-fast), box-shadow var(--saas-transition-fast);
 }
@@ -353,6 +455,12 @@
 .saas-input::placeholder, .saas-textarea::placeholder { color: var(--saas-text-muted); opacity: .82; }
 .saas-input:hover, .saas-textarea:hover, .saas-select:hover { border-color: rgb(var(--saas-primary-rgb) / .42); }
 .saas-input:focus, .saas-textarea:focus, .saas-select:focus { border-color: var(--saas-focus); box-shadow: var(--saas-focus-ring); }
+
+/** Keeps keyboard focus visibly distinct without changing pointer-focus paint. */
+[data-ui="minimal-saas"][data-mode] :where(a[href], button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--saas-focus);
+  outline-offset: 2px;
+}
 .saas-help-text { color: var(--saas-text-muted); font-size: .875rem; line-height: 1.45; }
 
 /* Checkbox / Radio */
@@ -373,6 +481,14 @@
 .saas-switch input:checked + .saas-switch-track { background: var(--saas-primary); border-color: var(--saas-primary); }
 .saas-switch input:checked + .saas-switch-track .saas-switch-thumb { left: calc(100% - .9rem - .14rem); background: var(--saas-on-primary); }
 
+/** Mirrors hidden native-input focus on each visible custom control surface. */
+.saas-check input:focus-visible + .saas-check-control,
+.saas-radio input:focus-visible + .saas-radio-control,
+.saas-switch input:focus-visible + .saas-switch-track {
+  outline: 2px solid var(--saas-focus);
+  outline-offset: 2px;
+}
+
 /* =========================================================
    Badges / Nav / Progress / Alerts / Tables
 ========================================================= */
@@ -380,14 +496,14 @@
 .saas-badge { display: inline-flex; align-items: center; gap: var(--saas-space-1); min-height: 1.4rem; padding: .25rem .5rem; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid transparent; border-radius: var(--saas-radius-sm); font-size: .75rem; font-weight: 700; line-height: 1; }
 .saas-badge-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
 .saas-badge-secondary { background: rgb(var(--saas-primary-rgb) / .1); color: var(--saas-primary); border-color: transparent; }
-.saas-badge-success { background: rgb(var(--saas-success-rgb) / .14); color: var(--saas-success); border-color: transparent; }
-.saas-badge-warning { background: rgb(var(--saas-warning-rgb) / .14); color: var(--saas-warning); border-color: transparent; }
-.saas-badge-danger { background: rgb(var(--saas-danger-rgb) / .14); color: var(--saas-danger); border-color: transparent; }
+.saas-badge-success { background: rgb(var(--saas-success-rgb) / .14); color: var(--saas-text); border-color: rgb(var(--saas-success-rgb) / .38); }
+.saas-badge-warning { background: rgb(var(--saas-warning-rgb) / .14); color: var(--saas-text); border-color: rgb(var(--saas-warning-rgb) / .38); }
+.saas-badge-danger { background: rgb(var(--saas-danger-rgb) / .14); color: var(--saas-text); border-color: rgb(var(--saas-danger-rgb) / .38); }
 
-.saas-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--saas-space-1); padding: var(--saas-space-1); background: var(--saas-card-bg); border: 1px solid var(--saas-border); border-radius: var(--saas-radius-lg); box-shadow: var(--saas-shadow-sm); }
+.saas-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--saas-space-1); padding: 0; background: transparent; border: 0; border-bottom: 1px solid var(--saas-border); border-radius: 0; box-shadow: none; }
 .saas-nav-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.125rem; padding: .4rem .7rem; color: var(--saas-text-muted); border-radius: var(--saas-radius-md); text-decoration: none; font-weight: 700; transition: color var(--saas-transition-fast), background var(--saas-transition-fast), box-shadow var(--saas-transition-fast); }
 .saas-nav-link:hover { color: var(--saas-text); background: var(--saas-surface-soft); }
-.saas-nav-link[aria-current="page"], .saas-nav-link.is-active { color: var(--saas-on-primary); background: var(--saas-primary); }
+.saas-nav-link[aria-current="page"], .saas-nav-link.is-active { color: var(--saas-text); background: transparent; box-shadow: inset 0 -2px 0 var(--saas-primary); }
 
 /* Tooltips use compact contrast surfaces that stay readable across theme modes. */
 .saas-tooltip, [data-ui="minimal-saas"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
@@ -401,9 +517,9 @@
 .saas-progress-bar { height: 100%; width: var(--saas-progress-value, 50%); background: var(--saas-primary); border-radius: inherit; }
 
 .saas-alert { display: grid; gap: var(--saas-space-2); padding: var(--saas-space-3); background: rgb(var(--saas-primary-rgb) / .065); color: var(--saas-text); border: 1px solid rgb(var(--saas-primary-rgb) / .28); border-radius: var(--saas-radius-lg); box-shadow: none; }
-.saas-alert-success { background: rgb(var(--saas-success-rgb) / .12); border-color: rgb(var(--saas-success-rgb) / .28); }
-.saas-alert-warning { background: rgb(var(--saas-warning-rgb) / .12); border-color: rgb(var(--saas-warning-rgb) / .28); }
-.saas-alert-danger { background: rgb(var(--saas-danger-rgb) / .12); border-color: rgb(var(--saas-danger-rgb) / .28); }
+.saas-alert-success { background: rgb(var(--saas-success-rgb) / .12); border-color: rgb(var(--saas-success-rgb) / .58); }
+.saas-alert-warning { background: rgb(var(--saas-warning-rgb) / .12); border-color: rgb(var(--saas-warning-rgb) / .58); }
+.saas-alert-danger { background: rgb(var(--saas-danger-rgb) / .12); border-color: rgb(var(--saas-danger-rgb) / .58); }
 .saas-alert-title { margin: 0; font-weight: 900; }
 .saas-alert-body { margin: 0; color: var(--saas-text-muted); line-height: 1.55; }
 
@@ -672,15 +788,15 @@
   border: 1px solid var(--saas-border);
   box-shadow: var(--saas-shadow-md);
 }
-[data-ui="minimal-saas"][data-theme][data-mode] :where(fieldset, article, aside) {
+[data-ui="minimal-saas"][data-mode] :where(fieldset, article, aside) {
   background: var(--saas-surface);
   border: 1px solid var(--saas-border);
   border-radius: var(--saas-radius-lg);
   box-shadow: none;
 }
-[data-ui="minimal-saas"][data-theme][data-mode] :where(legend) { font-weight: 750; }
-[data-ui="minimal-saas"][data-theme][data-mode] :where(label) { font-weight: 700; }
-[data-ui="minimal-saas"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="minimal-saas"][data-mode] :where(legend) { font-weight: 750; }
+[data-ui="minimal-saas"][data-mode] :where(label) { font-weight: 700; }
+[data-ui="minimal-saas"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   min-block-size: var(--usk-native-control-min-block-size);
   padding: .5rem .78rem;
   background: var(--saas-control-bg);
@@ -691,7 +807,7 @@
   font-family: var(--saas-font-control);
   font-weight: 700;
 }
-[data-ui="minimal-saas"][data-theme][data-mode] :where(dialog) {
+[data-ui="minimal-saas"][data-mode] :where(dialog) {
   border: 1px solid var(--saas-border);
   border-radius: var(--saas-radius-lg);
   box-shadow: 0 .75rem 2rem rgb(var(--saas-text-rgb) / .14);
@@ -730,9 +846,10 @@
  * Locks the compact, flat Minimal SaaS identity to native controls.
  * Fine rules, tight geometry, and negligible lift separate it from soft UI presets.
  */
-[data-ui="minimal-saas"][data-theme][data-mode] {
-  --usk-native-control-padding-block: .46rem;
-  --usk-native-control-padding-inline: .72rem;
+[data-ui="minimal-saas"][data-mode] {
+  --usk-native-control-min-block-size: 2rem;
+  --usk-native-control-padding-block: .38rem;
+  --usk-native-control-padding-inline: .65rem;
   --usk-native-radius-sm: .1875rem;
   --usk-native-radius: .375rem;
   --usk-native-radius-lg: .5rem;
@@ -767,12 +884,23 @@
   --usk-native-scrollbar-radius: .125rem;
 }
 
+/**
+ * Gives the retained custom chevron exclusive ownership of single-select chrome.
+ * Suppressing both legacy appearance and the customizable picker icon prevents
+ * browsers from painting a second platform indicator beside it.
+ */
+[data-ui="minimal-saas"][data-mode] :where(select:not([multiple])) {
+  -webkit-appearance: none;
+  appearance: none;
+}
+[data-ui="minimal-saas"][data-mode] :where(select:not([multiple]))::picker-icon { display: none; }
+
 /** Carries the compact product grammar through every authored component role. */
-.saas-title { font-weight: 750; letter-spacing: .005em; }
+.saas-title { margin: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; }
 .saas-label { font-size: .8125rem; font-weight: 650; }
 .saas-button, .saas-icon-button {
-  min-height: 2.375rem;
-  padding: .46rem .72rem;
+  min-height: 2.125rem;
+  padding: .45rem .75rem;
   background: var(--saas-control-bg);
   border-radius: .375rem;
   box-shadow: none;
@@ -780,8 +908,8 @@
 }
 .saas-icon-button { padding: 0; }
 .saas-input, .saas-textarea, .saas-select {
-  min-height: 2.375rem;
-  padding: .46rem .72rem;
+  min-height: 2rem;
+  padding: .38rem .65rem;
   border-radius: .375rem;
   box-shadow: none;
 }
@@ -789,7 +917,7 @@
   background: var(--saas-surface);
   border: 1px solid var(--saas-border);
   border-radius: .5rem;
-  box-shadow: none;
+  box-shadow: var(--saas-shadow-md);
 }
 .saas-card, .saas-panel { padding: 1rem; }
 .saas-well, .saas-inset {
@@ -803,7 +931,7 @@
 .saas-alert {
   background: var(--saas-surface);
   border: 1px solid var(--saas-border);
-  border-inline-start: 2px solid var(--saas-primary);
+  border-inline-start: 1px solid var(--saas-primary);
   border-radius: .375rem;
   box-shadow: none;
 }
@@ -812,7 +940,7 @@
 .saas-table-wrap { background: var(--saas-surface); border-radius: .5rem; box-shadow: none; }
 .saas-table th { padding: .6rem .7rem; background: rgb(var(--saas-surface-soft-rgb) / .58); font-weight: 650; }
 .saas-table td { padding: .6rem .7rem; }
-.saas-nav { padding: .2rem; border-radius: .5rem; box-shadow: none; }
+.saas-nav { padding: 0; background: transparent; border: 0; border-bottom: 1px solid var(--saas-border); border-radius: 0; box-shadow: none; }
 .saas-nav-link { min-height: 2.125rem; padding: .4rem .62rem; border-radius: .25rem; }
 .saas-tooltip, [data-ui="minimal-saas"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border-radius: .25rem; box-shadow: 0 2px 6px rgb(var(--saas-text-rgb) / .12); }
 .saas-card-service, .saas-card-feature, .saas-feature-strip, .saas-callout-bar {
@@ -822,17 +950,50 @@
   box-shadow: none;
 }
 .saas-feature-item { padding: .75rem; }
-[data-ui="minimal-saas"][data-theme][data-mode] :where(dialog) {
+[data-ui="minimal-saas"][data-mode] :where(dialog) {
   background: var(--saas-surface);
   border-radius: .5rem;
   box-shadow: 0 .5rem 1.25rem rgb(var(--saas-text-rgb) / .12);
 }
+
+/** Keeps semantic alerts fully outlined after the shared surface reset. */
+.saas-alert-success { background: rgb(var(--saas-success-rgb) / .12); border-color: rgb(var(--saas-success-rgb) / .58); }
+.saas-alert-warning { background: rgb(var(--saas-warning-rgb) / .12); border-color: rgb(var(--saas-warning-rgb) / .58); }
+.saas-alert-danger { background: rgb(var(--saas-danger-rgb) / .12); border-color: rgb(var(--saas-danger-rgb) / .58); }
 }
 
 @layer ui-style-kit.minimal_saas {
-/* Restores semantic action paint after identity-specific geometry. */
-.saas-button-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
-.saas-button-secondary { background: var(--saas-secondary); color: var(--saas-on-secondary); border-color: var(--saas-secondary); }
+/** Restores source-faithful action hierarchy after identity geometry. */
+.saas-button-primary { background: linear-gradient(135deg, var(--saas-primary), var(--saas-brand-2)); color: var(--saas-on-primary); border-color: var(--saas-primary); }
+.saas-button-secondary { background: var(--saas-surface); color: var(--saas-primary); border-color: var(--saas-primary); }
 .saas-button-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
 .saas-button-ghost { background: transparent; color: var(--saas-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.minimal_saas {
+/** Preserves compact desktop density while meeting coarse-pointer target guidance. */
+@media (pointer: coarse) {
+  [data-ui="minimal-saas"] :where(.saas-button, .saas-icon-button, .saas-input, .saas-select, .saas-nav-link) {
+    min-block-size: 2.75rem;
+  }
+}
+}
+
+@layer ui-style-kit.minimal_saas {
+/** Keeps annotated text icons readable without changing their component frames. */
+.saas-card-service > .saas-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.saas-feature-item > .saas-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.saas-callout-bar > .saas-icon-medallion { min-inline-size: 4.5rem; min-block-size: 4.5rem; padding-block: .55rem .85rem; font-size: 2rem; font-weight: 800; line-height: 1; }
+
+/** Strengthens the trust-seal hierarchy while preserving its fixed circle. */
+.saas-badge-seal > strong { font-size: 1.125rem; line-height: .9; }
+.saas-badge-seal > small { font-size: .78rem; line-height: 1; }
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="minimal-saas"][data-mode] .saas-button.saas-button-warning {
+  background: var(--saas-warning);
+  color: var(--saas-on-warning);
+  border-color: var(--saas-warning);
+  text-shadow: none;
+}
+
 }

@@ -42,6 +42,29 @@
 
 [data-ui="art-deco"][data-mode="light"] {
   color-scheme: light;
+  --deco-fallback-bg-rgb: 250 244 234;
+  --deco-fallback-surface-rgb: 255 253 249;
+  --deco-fallback-surface-strong-rgb: 255 255 255;
+  --deco-fallback-surface-soft-rgb: 239 228 207;
+  --deco-fallback-text-rgb: 42 31 26;
+  --deco-fallback-text-muted-rgb: 109 92 84;
+  --deco-fallback-border-rgb: 212 192 166;
+  --deco-fallback-primary-rgb: 107 15 26;
+  --deco-fallback-primary-hover-rgb: 91 13 22;
+  --deco-fallback-primary-text-rgb: 255 255 255;
+  --deco-fallback-secondary-rgb: 17 17 17;
+  --deco-fallback-secondary-hover-rgb: 0 0 0;
+  --deco-fallback-secondary-text-rgb: 255 255 255;
+  --deco-fallback-accent-rgb: 201 154 70;
+  --deco-fallback-accent-text-rgb: 0 0 0;
+  --deco-fallback-success-rgb: 47 125 84;
+  --deco-fallback-success-text-rgb: 255 255 255;
+  --deco-fallback-warning-rgb: 160 107 19;
+  --deco-fallback-warning-text-rgb: 0 0 0;
+  --deco-fallback-danger-rgb: 178 60 60;
+  --deco-fallback-danger-text-rgb: 255 255 255;
+  --deco-fallback-link-rgb: 91 13 22;
+  --deco-fallback-focus-rgb: 201 154 70;
   --deco-panel-alpha: .98;
   --deco-panel-soft-alpha: .78;
   --deco-border-alpha: .58;
@@ -51,6 +74,29 @@
 
 [data-ui="art-deco"][data-mode="dark"] {
   color-scheme: dark;
+  --deco-fallback-bg-rgb: 19 13 10;
+  --deco-fallback-surface-rgb: 33 24 20;
+  --deco-fallback-surface-strong-rgb: 50 36 30;
+  --deco-fallback-surface-soft-rgb: 25 18 15;
+  --deco-fallback-text-rgb: 251 245 236;
+  --deco-fallback-text-muted-rgb: 211 195 183;
+  --deco-fallback-border-rgb: 106 82 62;
+  --deco-fallback-primary-rgb: 201 138 93;
+  --deco-fallback-primary-hover-rgb: 224 169 126;
+  --deco-fallback-primary-text-rgb: 0 0 0;
+  --deco-fallback-secondary-rgb: 246 235 215;
+  --deco-fallback-secondary-hover-rgb: 255 248 235;
+  --deco-fallback-secondary-text-rgb: 0 0 0;
+  --deco-fallback-accent-rgb: 231 184 95;
+  --deco-fallback-accent-text-rgb: 0 0 0;
+  --deco-fallback-success-rgb: 152 224 182;
+  --deco-fallback-success-text-rgb: 0 0 0;
+  --deco-fallback-warning-rgb: 255 210 122;
+  --deco-fallback-warning-text-rgb: 0 0 0;
+  --deco-fallback-danger-rgb: 255 160 154;
+  --deco-fallback-danger-text-rgb: 0 0 0;
+  --deco-fallback-link-rgb: 240 200 125;
+  --deco-fallback-focus-rgb: 231 184 95;
   --deco-panel-alpha: .92;
   --deco-panel-soft-alpha: .64;
   --deco-border-alpha: .52;
@@ -60,6 +106,29 @@
 
 [data-ui="art-deco"][data-mode="contrast"] {
   color-scheme: dark;
+  --deco-fallback-bg-rgb: 0 0 0;
+  --deco-fallback-surface-rgb: 15 10 7;
+  --deco-fallback-surface-strong-rgb: 28 18 13;
+  --deco-fallback-surface-soft-rgb: 0 0 0;
+  --deco-fallback-text-rgb: 255 255 255;
+  --deco-fallback-text-muted-rgb: 255 245 232;
+  --deco-fallback-border-rgb: 255 255 255;
+  --deco-fallback-primary-rgb: 200 138 54;
+  --deco-fallback-primary-hover-rgb: 255 255 255;
+  --deco-fallback-primary-text-rgb: 0 0 0;
+  --deco-fallback-secondary-rgb: 255 243 217;
+  --deco-fallback-secondary-hover-rgb: 255 255 255;
+  --deco-fallback-secondary-text-rgb: 0 0 0;
+  --deco-fallback-accent-rgb: 255 211 107;
+  --deco-fallback-accent-text-rgb: 0 0 0;
+  --deco-fallback-success-rgb: 0 255 144;
+  --deco-fallback-success-text-rgb: 0 0 0;
+  --deco-fallback-warning-rgb: 255 212 0;
+  --deco-fallback-warning-text-rgb: 0 0 0;
+  --deco-fallback-danger-rgb: 255 107 107;
+  --deco-fallback-danger-text-rgb: 0 0 0;
+  --deco-fallback-link-rgb: 255 211 107;
+  --deco-fallback-focus-rgb: 255 255 255;
   --deco-panel-alpha: 1;
   --deco-panel-soft-alpha: .92;
   --deco-border-alpha: 1;
@@ -67,8 +136,8 @@
   --deco-focus-alpha: .72;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="art-deco"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --deco-bg-rgb: var(--usk-bg-rgb);
   --deco-surface-rgb: var(--usk-surface-rgb);
   --deco-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -83,15 +152,43 @@
   --deco-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --deco-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --deco-accent-rgb: var(--usk-accent-rgb);
-  --deco-success-rgb: var(--usk-success-rgb);
-  --deco-warning-rgb: var(--usk-warning-rgb);
-  --deco-danger-rgb: var(--usk-danger-rgb);
-  --deco-link-rgb: var(--usk-link-rgb);
   --deco-accent-text-rgb: var(--usk-accent-text-rgb);
+  --deco-success-rgb: var(--usk-success-rgb);
   --deco-success-text-rgb: var(--usk-success-text-rgb);
+  --deco-warning-rgb: var(--usk-warning-rgb);
   --deco-warning-text-rgb: var(--usk-warning-text-rgb);
+  --deco-danger-rgb: var(--usk-danger-rgb);
   --deco-danger-text-rgb: var(--usk-danger-text-rgb);
+  --deco-link-rgb: var(--usk-link-rgb);
   --deco-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="art-deco"][data-mode] {
+  --usk-native-bg: var(--deco-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --deco-bg-rgb: var(--usk-bg-rgb, var(--deco-fallback-bg-rgb));
+  --deco-surface-rgb: var(--usk-surface-rgb, var(--deco-fallback-surface-rgb));
+  --deco-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--deco-fallback-surface-strong-rgb));
+  --deco-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--deco-fallback-surface-soft-rgb));
+  --deco-text-rgb: var(--usk-text-rgb, var(--deco-fallback-text-rgb));
+  --deco-text-muted-rgb: var(--usk-text-muted-rgb, var(--deco-fallback-text-muted-rgb));
+  --deco-border-rgb: var(--usk-border-rgb, var(--deco-fallback-border-rgb));
+  --deco-primary-rgb: var(--usk-primary-rgb, var(--deco-fallback-primary-rgb));
+  --deco-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--deco-fallback-primary-hover-rgb));
+  --deco-primary-text-rgb: var(--usk-primary-text-rgb, var(--deco-fallback-primary-text-rgb));
+  --deco-secondary-rgb: var(--usk-secondary-rgb, var(--deco-fallback-secondary-rgb));
+  --deco-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--deco-fallback-secondary-hover-rgb));
+  --deco-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--deco-fallback-secondary-text-rgb));
+  --deco-accent-rgb: var(--usk-accent-rgb, var(--deco-fallback-accent-rgb));
+  --deco-accent-text-rgb: var(--usk-accent-text-rgb, var(--deco-fallback-accent-text-rgb));
+  --deco-success-rgb: var(--usk-success-rgb, var(--deco-fallback-success-rgb));
+  --deco-success-text-rgb: var(--usk-success-text-rgb, var(--deco-fallback-success-text-rgb));
+  --deco-warning-rgb: var(--usk-warning-rgb, var(--deco-fallback-warning-rgb));
+  --deco-warning-text-rgb: var(--usk-warning-text-rgb, var(--deco-fallback-warning-text-rgb));
+  --deco-danger-rgb: var(--usk-danger-rgb, var(--deco-fallback-danger-rgb));
+  --deco-danger-text-rgb: var(--usk-danger-text-rgb, var(--deco-fallback-danger-text-rgb));
+  --deco-link-rgb: var(--usk-link-rgb, var(--deco-fallback-link-rgb));
+  --deco-focus-rgb: var(--usk-focus-rgb, var(--deco-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--deco-surface);
   --usk-native-surface-strong: var(--deco-surface-strong);
@@ -122,12 +219,12 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--deco-space-5);
-  --usk-native-control-min-block-size: 3rem;
-  --usk-native-control-padding-block: .68rem;
-  --usk-native-control-padding-inline: 1rem;
-  --usk-native-subcontrol-padding-block: .5rem;
-  --usk-native-subcontrol-padding-inline: .8rem;
-  --usk-native-choice-size: 1.45rem;
+  --usk-native-control-min-block-size: 2.125rem;
+  --usk-native-control-padding-block: .35rem;
+  --usk-native-control-padding-inline: .7rem;
+  --usk-native-subcontrol-padding-block: .3rem;
+  --usk-native-subcontrol-padding-inline: .6rem;
+  --usk-native-choice-size: 1rem;
   --usk-native-choice-background: var(--deco-control-bg);
   --usk-native-choice-border: 1px solid var(--deco-border);
   --usk-native-checkbox-radius: .12rem;
@@ -213,7 +310,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="art-deco"][data-theme][data-mode] { --deco-border: color-mix(in srgb, rgb(var(--deco-border-rgb) / max(var(--deco-border-alpha), var(--usk-border-min-alpha))), var(--deco-text) var(--usk-border-text-mix)); }
+  [data-ui="art-deco"][data-mode] { --deco-border: color-mix(in srgb, rgb(var(--deco-border-rgb) / max(var(--deco-border-alpha), var(--usk-border-min-alpha))), var(--deco-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -265,7 +362,7 @@
 [data-ui="art-deco"] *::before,
 [data-ui="art-deco"] *::after { box-sizing: border-box; }
 
-[data-ui="art-deco"][data-theme][data-mode] { background: var(--deco-theme-bg); background-size: var(--deco-theme-bg-size); }
+[data-ui="art-deco"][data-mode] { background: var(--deco-theme-bg); background-size: var(--deco-theme-bg-size); }
 
 .deco-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .deco-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -332,7 +429,7 @@
 /* Theme-responsive component defaults */
 .deco-card, .deco-panel { background: var(--deco-card-bg); }
 .deco-toolbar, .deco-table-wrap { background: var(--deco-control-bg); }
-.deco-button:not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-ghost), .deco-icon-button { background: var(--deco-control-bg); }
+.deco-button:not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost), .deco-icon-button { background: var(--deco-control-bg); }
 .deco-button, .deco-icon-button, .deco-badge, .deco-nav-link { font-family: var(--deco-font-control); }
 
 
@@ -657,7 +754,7 @@
   --deco-radius-lg: .16rem;
   --deco-radius-xl: .2rem;
 }
-[data-ui="art-deco"][data-theme][data-mode] {
+[data-ui="art-deco"][data-mode] {
   --deco-theme-bg: radial-gradient(circle at 50% -8%, rgb(var(--deco-primary-rgb) / .16), transparent 28rem), linear-gradient(90deg, transparent 49.8%, rgb(var(--deco-border-rgb) / .14) 50%, transparent 50.2%), var(--deco-bg);
   --deco-card-bg: linear-gradient(135deg, rgb(var(--deco-primary-rgb) / .06), rgb(var(--deco-surface-rgb) / var(--deco-panel-alpha)) 35%, rgb(var(--deco-secondary-rgb) / .05));
 }
@@ -697,12 +794,12 @@
   border-radius: var(--deco-radius-sm);
   box-shadow: inset 0 0 0 1px rgb(var(--deco-surface-strong-rgb) / .72);
 }
-[data-ui="art-deco"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="art-deco"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 3px double var(--deco-primary);
   border-radius: 0;
   box-shadow: inset 0 0 0 1px rgb(var(--deco-surface-strong-rgb) / .74);
 }
-[data-ui="art-deco"][data-theme][data-mode] :where(dialog) {
+[data-ui="art-deco"][data-mode] :where(dialog) {
   border: 3px double var(--deco-border);
   border-radius: var(--deco-radius-sm);
   box-shadow: inset 0 0 0 1px rgb(var(--deco-surface-strong-rgb) / .74), 0 1rem 2rem rgb(var(--deco-text-rgb) / .18);
@@ -720,11 +817,11 @@
  * Extends Art Deco's stepped symmetry, metallic double keylines, fan motifs,
  * and jewel-like instrumentation through the complete component vocabulary.
  */
-[data-ui="art-deco"][data-theme][data-mode] {
-  --usk-native-font-control: var(--deco-font-heading);
-  --usk-native-control-min-block-size: 2.85rem;
-  --usk-native-control-padding-block: .68rem;
-  --usk-native-control-padding-inline: 1.3rem;
+[data-ui="art-deco"][data-mode] {
+  --usk-native-font-control: var(--deco-font-control);
+  --usk-native-control-min-block-size: 2.125rem;
+  --usk-native-control-padding-block: .35rem;
+  --usk-native-control-padding-inline: .7rem;
   --usk-native-border-width: 3px;
   --usk-native-radius-sm: .08rem;
   --usk-native-radius: .14rem;
@@ -732,9 +829,9 @@
   --usk-native-shadow: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 3px var(--deco-border);
   --usk-native-shadow-md: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 4px var(--deco-border), 0 .72rem 1.4rem rgb(var(--deco-text-rgb) / .14);
   --usk-native-focus-ring: 0 0 0 1px var(--deco-surface-strong), 0 0 0 3px var(--deco-warning), 0 0 0 5px var(--deco-primary);
-  --usk-native-subcontrol-padding-block: .44rem;
-  --usk-native-subcontrol-padding-inline: .88rem;
-  --usk-native-choice-size: 1.28rem;
+  --usk-native-subcontrol-padding-block: .3rem;
+  --usk-native-subcontrol-padding-inline: .6rem;
+  --usk-native-choice-size: 1rem;
   --usk-native-choice-background: linear-gradient(145deg, var(--deco-surface-strong), var(--deco-control-bg));
   --usk-native-choice-border: 3px double var(--deco-border);
   --usk-native-checkbox-radius: .06rem;
@@ -771,7 +868,7 @@
   --usk-native-scrollbar-radius: .06rem;
 }
 
-.deco-title { font-weight: 500; letter-spacing: .12em; }
+.deco-title { margin-block: .75rem; font-weight: 500; letter-spacing: max(.08em, .5px); }
 .deco-label { font-size: .67rem; font-weight: 700; }
 .deco-button { min-height: 2.85rem; padding: .68rem 1.3rem; background: linear-gradient(135deg, var(--deco-primary), var(--deco-success)); border-radius: .08rem; box-shadow: inset 0 0 0 1px var(--deco-surface-strong), inset 0 0 0 3px var(--deco-border); font-weight: 700; }
 .deco-input { min-height: 2.75rem; padding: .62rem 1.05rem; border-radius: 0; }
@@ -814,7 +911,7 @@
       ),
       var(--deco-card-bg);
   }
-  [data-ui="art-deco"][data-theme][data-mode] :where(fieldset, article, aside) {
+  [data-ui="art-deco"][data-mode] :where(fieldset, article, aside) {
     background:
       linear-gradient(90deg, color-mix(in srgb, var(--deco-surface) 72%, var(--deco-primary)) 0 18%, transparent 36% 64%, color-mix(in srgb, var(--deco-surface) 72%, var(--deco-warning)) 82%),
       var(--deco-surface);
@@ -847,4 +944,1060 @@
 .deco-button-secondary { background: linear-gradient(135deg, var(--deco-secondary), var(--deco-warning)); color: var(--deco-on-secondary); border-color: var(--deco-border); }
 .deco-button-danger { background: linear-gradient(135deg, var(--deco-danger), rgb(var(--deco-danger-rgb) / .72)); color: var(--deco-on-danger); border-color: var(--deco-border); }
 .deco-button-ghost { background: transparent; color: var(--deco-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.art_deco {
+/* Shared annotation fidelity: readable display rhythm and appropriately scaled text icons. */
+.deco-feature-item > .deco-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.deco-callout-bar > .deco-icon-medallion { min-inline-size: 4.5rem; min-block-size: 4.5rem; font-size: 2rem; font-weight: 800; line-height: 1; }
+}
+
+@layer ui-style-kit.art_deco {
+/**
+ * Recreates the Metropolitan Moderne material system with stable enamel
+ * surfaces and metallic keylines while semantic themes continue to own color.
+ */
+:root {
+  --deco-font-display: "Bodoni MT", Didot, "Times New Roman", serif;
+  --deco-font-body: "Arial Narrow", "Bahnschrift Condensed", "Aptos Narrow", sans-serif;
+  --deco-font-control: "Arial Narrow", "Bahnschrift Condensed", "Aptos Narrow", sans-serif;
+  --deco-font-heading: var(--deco-font-control);
+}
+
+[data-ui="art-deco"][data-mode="light"] {
+  --deco-enamel-rgb: 246 242 231;
+  --deco-enamel-strong-rgb: 255 252 244;
+  --deco-enamel-soft-rgb: 232 224 201;
+  --deco-metal-rgb: 140 111 62;
+  --deco-metal-bright-rgb: 174 132 49;
+  --deco-label-accent: rgb(112, 82, 34);
+  --deco-tooltip-bg-rgb: 10 26 31;
+  --deco-tooltip-text-rgb: 255 247 220;
+}
+
+[data-ui="art-deco"][data-mode="dark"] {
+  --deco-enamel-rgb: 10 26 31;
+  --deco-enamel-strong-rgb: 13 30 32;
+  --deco-enamel-soft-rgb: 19 37 38;
+  --deco-metal-rgb: 140 111 62;
+  --deco-metal-bright-rgb: 212 175 55;
+  --deco-label-accent: rgb(212, 175, 55);
+  --deco-tooltip-bg-rgb: 10 26 31;
+  --deco-tooltip-text-rgb: 255 247 220;
+}
+
+[data-ui="art-deco"][data-mode="contrast"] {
+  --deco-enamel-rgb: 0 0 0;
+  --deco-enamel-strong-rgb: 10 10 10;
+  --deco-enamel-soft-rgb: 22 22 22;
+  --deco-metal-rgb: 255 255 255;
+  --deco-metal-bright-rgb: 255 224 95;
+  --deco-label-accent: rgb(255, 255, 255);
+  --deco-tooltip-bg-rgb: 0 0 0;
+  --deco-tooltip-text-rgb: 255 255 255;
+}
+
+[data-ui="art-deco"][data-mode] {
+  --deco-metal: rgb(var(--deco-metal-rgb));
+  --deco-metal-bright: rgb(var(--deco-metal-bright-rgb));
+  --deco-bg: rgb(var(--deco-enamel-rgb));
+  --deco-surface: rgb(var(--deco-enamel-rgb) / var(--deco-panel-alpha));
+  --deco-surface-strong: rgb(var(--deco-enamel-strong-rgb) / var(--deco-panel-alpha));
+  --deco-surface-soft: rgb(var(--deco-enamel-soft-rgb) / var(--deco-panel-soft-alpha));
+  --deco-border: var(--deco-metal);
+  --deco-theme-bg:
+    linear-gradient(90deg, transparent 49.92%, rgb(var(--deco-metal-rgb) / .12) 50%, transparent 50.08%),
+    linear-gradient(180deg, rgb(var(--deco-enamel-strong-rgb) / .28), transparent 11rem),
+    var(--deco-bg);
+  --deco-card-bg:
+    linear-gradient(135deg, rgb(var(--deco-metal-bright-rgb) / .055), transparent 34%),
+    var(--deco-surface);
+  --deco-control-bg:
+    linear-gradient(180deg, rgb(var(--deco-enamel-strong-rgb) / .98), rgb(var(--deco-enamel-rgb) / .98));
+  --deco-jewel-on: rgb(255 247 220);
+  --deco-jewel-primary: rgb(var(--deco-primary-rgb));
+  --deco-jewel-secondary: rgb(var(--deco-secondary-rgb));
+  --deco-jewel-success: rgb(var(--deco-success-rgb));
+  --deco-jewel-warning: rgb(var(--deco-warning-rgb));
+  --deco-jewel-danger: rgb(var(--deco-danger-rgb));
+  --deco-spinner-segmented-background:
+    repeating-conic-gradient(from 0deg, var(--deco-metal-bright) 0 8deg, var(--deco-primary) 8deg 16deg, transparent 16deg 30deg);
+  --usk-native-choice-checked-background: var(--deco-jewel-primary);
+  --usk-native-choice-mark-color: var(--deco-jewel-on);
+  --usk-native-range-track-background:
+    linear-gradient(90deg, var(--deco-surface-soft), rgb(var(--deco-metal-rgb) / .52), var(--deco-surface-soft));
+  --usk-native-range-progress-background: var(--deco-jewel-primary);
+  --usk-native-range-thumb-background:
+    linear-gradient(135deg, var(--deco-jewel-warning), var(--deco-jewel-primary));
+  --usk-native-progress-size: .625rem;
+  --usk-native-progress-value-background: var(--deco-jewel-primary);
+  --usk-native-meter-optimum-background: var(--deco-jewel-success);
+  --usk-native-meter-suboptimum-background: var(--deco-jewel-warning);
+  --usk-native-meter-critical-background: var(--deco-jewel-danger);
+}
+
+/**
+ * Enhances semantic fallback colors into restrained Art Deco enamels when the
+ * browser supports perceptual color mixing.
+ */
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="art-deco"][data-mode] {
+    --deco-jewel-primary: color-mix(in srgb, rgb(var(--deco-primary-rgb)) 34%, rgb(15 70 66));
+    --deco-jewel-secondary: color-mix(in srgb, rgb(var(--deco-secondary-rgb)) 30%, rgb(21 65 75));
+    --deco-jewel-success: color-mix(in srgb, rgb(var(--deco-success-rgb)) 30%, rgb(22 67 57));
+    --deco-jewel-warning: color-mix(in srgb, rgb(var(--deco-warning-rgb)) 20%, rgb(94 59 14));
+    --deco-jewel-danger: color-mix(in srgb, rgb(var(--deco-danger-rgb)) 35%, rgb(90 23 23));
+  }
+}
+
+.deco-title,
+.deco-heading,
+.deco-kicker,
+.deco-eyebrow,
+.deco-label,
+.deco-button,
+.deco-badge,
+.deco-tooltip,
+.deco-table th {
+  font-stretch: condensed;
+  text-transform: uppercase;
+}
+
+.deco-kicker,
+.deco-eyebrow {
+  color: var(--deco-label-accent);
+  font-weight: 600;
+}
+
+[data-ui="art-deco"][data-mode] :where(h2, h3, h4, h5, h6) {
+  font-family: var(--deco-font-control);
+  font-weight: 600;
+}
+
+.deco-label { font-size: .72rem; }
+
+/**
+ * Keeps the specimen's display face exclusive to hero titles while section
+ * labels and navigation use its narrow technical lettering.
+ */
+.deco-title { font-family: var(--deco-font-display); }
+
+.deco-heading {
+  --demo-component-heading-size: .875rem;
+  font-family: var(--deco-font-control);
+  font-size: .875rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+
+.deco-nav {
+  gap: 0;
+  padding: .2rem;
+}
+
+.deco-nav-link {
+  min-height: 1.875rem;
+  padding: .35rem .7rem;
+  border-inline-start: 1px solid rgb(var(--deco-metal-rgb) / .56);
+  font-size: .75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .08em;
+}
+
+.deco-nav-link:first-child { border-inline-start: 0; }
+
+.deco-surface,
+.deco-card,
+.deco-panel,
+.deco-toolbar,
+.deco-table-wrap {
+  background: var(--deco-card-bg);
+  border: 3px double var(--deco-metal);
+  border-radius: .125rem;
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--deco-enamel-strong-rgb) / .94),
+    inset 0 0 0 4px rgb(var(--deco-metal-rgb) / .2),
+    0 .65rem 1.35rem rgb(0 0 0 / calc(var(--deco-shadow-alpha) * .72));
+}
+
+.deco-button,
+.deco-icon-button {
+  border: 3px double var(--deco-metal);
+  border-radius: 0;
+  clip-path: polygon(
+    0 .65rem,
+    .28rem .65rem,
+    .28rem .3rem,
+    .62rem .3rem,
+    .62rem 0,
+    calc(100% - .62rem) 0,
+    calc(100% - .62rem) .3rem,
+    calc(100% - .28rem) .3rem,
+    calc(100% - .28rem) .65rem,
+    100% .65rem,
+    100% calc(100% - .65rem),
+    calc(100% - .28rem) calc(100% - .65rem),
+    calc(100% - .28rem) calc(100% - .3rem),
+    calc(100% - .62rem) calc(100% - .3rem),
+    calc(100% - .62rem) 100%,
+    .62rem 100%,
+    .62rem calc(100% - .3rem),
+    .28rem calc(100% - .3rem),
+    .28rem calc(100% - .65rem),
+    0 calc(100% - .65rem)
+  );
+  letter-spacing: .115em;
+}
+
+.deco-badge {
+  border: 3px double var(--deco-metal);
+  clip-path: polygon(0 .34rem, .34rem .34rem, .34rem 0, calc(100% - .34rem) 0, calc(100% - .34rem) .34rem, 100% .34rem, 100% calc(100% - .34rem), calc(100% - .34rem) calc(100% - .34rem), calc(100% - .34rem) 100%, .34rem 100%, .34rem calc(100% - .34rem), 0 calc(100% - .34rem));
+  font-weight: 700;
+  letter-spacing: .07em;
+}
+
+.deco-tooltip,
+[data-ui="art-deco"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  min-inline-size: 8rem;
+  justify-content: center;
+  background: rgb(var(--deco-tooltip-bg-rgb));
+  color: rgb(var(--deco-tooltip-text-rgb));
+  border: 3px double var(--deco-metal);
+  border-radius: 0;
+  clip-path: polygon(.35rem 0, calc(100% - .35rem) 0, 100% .35rem, 100% calc(100% - .35rem), calc(100% - .35rem) 100%, .35rem 100%, 0 calc(100% - .35rem), 0 .35rem);
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-metal-rgb) / .34), 0 .65rem 1.25rem rgb(0 0 0 / .34);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .055em;
+}
+
+.deco-tooltip-arrow { background: var(--deco-metal-bright); }
+
+.deco-spinner,
+.deco-loading-spinner,
+[data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  background: var(--deco-spinner-segmented-background);
+  border: .18rem double var(--deco-metal);
+  border-radius: 50%;
+  clip-path: none;
+  box-shadow: inset 0 0 0 .28rem var(--deco-surface-strong), 0 0 0 .1rem rgb(var(--deco-metal-rgb) / .34);
+}
+
+.deco-table th,
+.deco-table td {
+  border-block-end: 1px solid rgb(var(--deco-metal-rgb) / .72);
+  border-inline-start: 1px solid rgb(var(--deco-metal-rgb) / .72);
+}
+
+.deco-table tr > :first-child { border-inline-start: 0; }
+}
+
+@layer ui-style-kit.art_deco {
+/**
+ * Keeps native choices and calibrated range controls optically centered while
+ * preserving their semantic foreground/background contrast pairs.
+ */
+[data-ui="art-deco"][data-mode] {
+  --usk-native-choice-mark-color: rgb(var(--deco-enamel-strong-rgb));
+}
+
+[data-ui="art-deco"][data-mode] :where(input[type="checkbox"]:checked) {
+  background-color: var(--deco-jewel-primary);
+  background-image:
+    linear-gradient(45deg, transparent 42%, var(--usk-native-choice-mark-color) 43% 58%, transparent 59%),
+    linear-gradient(-45deg, transparent 42%, var(--usk-native-choice-mark-color) 43% 58%, transparent 59%);
+  background-position: 24% 62%, 67% 42%;
+  background-size: 42% 58%, 64% 58%;
+  background-repeat: no-repeat;
+}
+
+[data-ui="art-deco"][data-mode] :where(input[type="range"]) {
+  display: block;
+  block-size: 2rem;
+  vertical-align: middle;
+}
+
+/**
+ * Includes the double keyline inside the documented thumb size so WebKit and
+ * Gecko center the same faceted diamond on the calibrated range track.
+ */
+[data-ui="art-deco"][data-mode] :where(input[type="range"])::-webkit-slider-thumb,
+[data-ui="art-deco"][data-mode] :where(input[type="range"])::-moz-range-thumb {
+  box-sizing: border-box;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+[data-ui="art-deco"][data-mode] :where(input[type="range"])::-webkit-slider-thumb {
+  margin-block-start: calc((var(--usk-native-range-track-size) - var(--usk-native-range-thumb-size)) / 2 - .1875rem);
+}
+
+.deco-card-service > .deco-icon-medallion {
+  background: var(--deco-jewel-primary);
+  color: var(--deco-jewel-on);
+}
+
+.deco-feature-item:nth-child(1) > .deco-icon-medallion {
+  background: var(--deco-jewel-success);
+  color: var(--deco-jewel-on);
+}
+
+.deco-feature-item:nth-child(2) > .deco-icon-medallion {
+  background: var(--deco-jewel-secondary);
+  color: var(--deco-jewel-on);
+}
+
+.deco-badge-seal {
+  background: var(--deco-jewel-warning);
+  color: var(--deco-jewel-on);
+}
+
+/**
+ * Keeps both seal label lines on the theme-checked warning foreground instead
+ * of allowing generic strong and muted-copy rules to override the pairing.
+ */
+.deco-badge-seal > :where(strong, small) { color: inherit; }
+
+/**
+ * Offers a visibly rounded utility without introducing the pill silhouette
+ * reserved for badges and circular instrumentation.
+ */
+.deco-rounded { border-radius: .625rem; }
+
+.deco-icon-medallion,
+.deco-badge-seal {
+  border-color: var(--deco-metal-bright);
+  box-shadow: inset 0 0 0 1px var(--deco-surface-strong), 0 0 0 .2rem rgb(var(--deco-metal-rgb) / .22);
+}
+}
+
+@layer ui-style-kit.art_deco {
+/**
+ * Extends the stepped frame through form, feedback, progress, and dialog
+ * primitives so classed and native controls share one coherent identity.
+ */
+.deco-input,
+.deco-textarea,
+.deco-select {
+  background-color: var(--deco-surface-strong);
+  border: 3px double var(--deco-metal);
+  border-radius: .1rem;
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb) / .88);
+  font-family: var(--deco-font-control);
+  letter-spacing: .035em;
+}
+
+/**
+ * Aligns classed and native form controls to the document's dense desktop
+ * rhythm while leaving semantic elements and keyboard focus behavior intact.
+ */
+.deco-input,
+.deco-select {
+  min-height: 2.125rem;
+  padding: .35rem .7rem;
+  font-size: .8125rem;
+  font-weight: 500;
+}
+
+.deco-textarea {
+  min-height: 4.75rem;
+  padding: .5rem .7rem;
+  font-size: .8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.deco-check-control,
+.deco-radio-control {
+  box-sizing: border-box;
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+[data-ui="art-deco"][data-mode] :where(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
+  select,
+  textarea
+) {
+  font-size: .8125rem;
+  font-weight: 500;
+}
+
+.deco-select,
+[data-ui="art-deco"][data-mode] :where(select:not([multiple])) {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: var(--usk-native-select-indicator-image);
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+  background-repeat: no-repeat;
+}
+
+.deco-check-control,
+.deco-radio-control {
+  background: var(--deco-surface-strong);
+  border: 3px double var(--deco-metal);
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb) / .86);
+}
+
+.deco-check-control {
+  position: relative;
+  border-radius: .05rem;
+}
+
+.deco-switch-track {
+  box-sizing: border-box;
+  inline-size: 2.5rem;
+  block-size: 1.35rem;
+  background: var(--deco-surface-soft);
+  border: 3px double var(--deco-metal);
+  border-radius: 0;
+  clip-path: polygon(.45rem 0, calc(100% - .45rem) 0, 100% 50%, calc(100% - .45rem) 100%, .45rem 100%, 0 50%);
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb) / .8);
+}
+
+.deco-switch-thumb {
+  box-sizing: border-box;
+  inset-block-start: .16rem;
+  inset-inline-start: .24rem;
+  inline-size: .85rem;
+  block-size: .85rem;
+  background: var(--deco-text);
+  border: 2px solid var(--deco-metal-bright);
+  box-shadow: 0 0 0 1px var(--deco-surface-strong);
+}
+
+.deco-switch input:checked + .deco-switch-track .deco-switch-thumb {
+  inset-inline-start: calc(100% - .85rem - .24rem);
+}
+
+.deco-check input:checked + .deco-check-control,
+.deco-radio input:checked + .deco-radio-control,
+.deco-switch input:checked + .deco-switch-track {
+  background: var(--deco-jewel-primary);
+  border-color: var(--deco-metal);
+}
+
+.deco-check input:checked + .deco-check-control::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--deco-jewel-on);
+  font-family: "Segoe UI Symbol", sans-serif;
+  font-size: .7rem;
+  line-height: 1;
+  transform: translateY(-.0625rem);
+}
+
+.deco-radio input:checked + .deco-radio-control::after {
+  background: var(--deco-jewel-on);
+}
+
+.deco-progress {
+  block-size: .55rem;
+  background: var(--deco-surface-soft);
+  border: 3px double var(--deco-metal);
+  border-radius: .1rem;
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb) / .9);
+}
+
+.deco-progress-bar {
+  background: linear-gradient(90deg, var(--deco-jewel-success), var(--deco-jewel-primary));
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - .45rem) 0, 100% 50%, calc(100% - .45rem) 100%, 0 100%);
+}
+
+.deco-alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .65rem;
+  padding: .72rem .9rem;
+  background: var(--deco-surface-strong);
+  border: 3px double var(--deco-metal);
+  border-radius: .1rem;
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb) / .9);
+}
+
+.deco-alert-success { border-inline-start-color: var(--deco-success); }
+.deco-alert-warning { border-inline-start-color: var(--deco-warning); }
+.deco-alert-danger { border-inline-start-color: var(--deco-danger); }
+.deco-alert-title { letter-spacing: .045em; text-transform: uppercase; }
+
+[data-ui="art-deco"][data-mode] :where(fieldset) {
+  background: var(--deco-surface);
+  border: 3px double var(--deco-metal);
+  border-radius: .125rem;
+  box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-strong-rgb) / .92);
+}
+
+[data-ui="art-deco"][data-mode] :where(dialog) {
+  background: var(--deco-surface-strong);
+  border-color: var(--deco-metal);
+  clip-path: polygon(0 .7rem, .35rem .7rem, .35rem .35rem, .7rem .35rem, .7rem 0, calc(100% - .7rem) 0, calc(100% - .7rem) .35rem, calc(100% - .35rem) .35rem, calc(100% - .35rem) .7rem, 100% .7rem, 100% calc(100% - .7rem), calc(100% - .35rem) calc(100% - .7rem), calc(100% - .35rem) calc(100% - .35rem), calc(100% - .7rem) calc(100% - .35rem), calc(100% - .7rem) 100%, .7rem 100%, .7rem calc(100% - .35rem), .35rem calc(100% - .35rem), .35rem calc(100% - .7rem), 0 calc(100% - .7rem));
+}
+
+.deco-card,
+.deco-panel,
+.deco-card-service,
+.deco-feature-strip,
+.deco-callout-bar,
+.deco-table-wrap,
+.deco-metric,
+[data-ui="art-deco"][data-mode] :where(article, aside, fieldset) {
+  background-color: var(--deco-surface);
+  background-image: none;
+}
+
+.deco-card,
+.deco-panel { padding: 1.2rem; }
+
+.deco-callout-bar > .deco-icon-medallion {
+  background-color: var(--deco-jewel-primary);
+  background-image: none;
+  color: var(--deco-jewel-on);
+}
+
+.deco-table th {
+  background-color: var(--deco-surface-strong);
+  background-image: none;
+  color: var(--deco-text);
+}
+
+.deco-button,
+.deco-icon-button {
+  background-color: var(--deco-surface-strong);
+  background-image: none;
+}
+
+/**
+ * Reproduces the document's long, low action silhouette without weakening
+ * coarse-pointer target sizing, which is restored by the pointer media query.
+ */
+.deco-button {
+  min-inline-size: min(100%, 12rem);
+  min-block-size: 2.125rem;
+  min-height: 2.125rem;
+  padding: .38rem .9rem;
+  font-size: .75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.deco-icon-button {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.25rem;
+  min-inline-size: 2.25rem;
+  min-block-size: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  text-indent: 0;
+}
+
+.deco-button:not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost),
+.deco-icon-button {
+  background-color: var(--deco-surface-strong);
+  background-image: none;
+}
+
+.deco-button-primary {
+  background-color: var(--deco-jewel-primary);
+  background-image: none;
+  color: var(--deco-jewel-on);
+}
+
+.deco-button-secondary {
+  background-color: var(--deco-jewel-secondary);
+  background-image: none;
+  color: var(--deco-jewel-on);
+}
+
+.deco-button-danger {
+  background-color: var(--deco-jewel-danger);
+  background-image: none;
+  color: var(--deco-jewel-on);
+}
+
+.deco-button-ghost {
+  background-color: transparent;
+  background-image: none;
+  color: var(--deco-text);
+  border-color: var(--deco-metal);
+}
+
+.deco-button-primary:hover { background-color: var(--deco-jewel-primary); filter: brightness(1.08); }
+.deco-button-secondary:hover { background-color: var(--deco-jewel-secondary); filter: brightness(1.08); }
+.deco-button-danger:hover { filter: brightness(1.08); }
+
+.deco-button.deco-button-cut,
+.deco-button-cut,
+.deco-button.deco-button-outline-heavy,
+.deco-button-outline-heavy {
+  clip-path: polygon(
+    0 .65rem,
+    .28rem .65rem,
+    .28rem .3rem,
+    .62rem .3rem,
+    .62rem 0,
+    calc(100% - .62rem) 0,
+    calc(100% - .62rem) .3rem,
+    calc(100% - .28rem) .3rem,
+    calc(100% - .28rem) .65rem,
+    100% .65rem,
+    100% calc(100% - .65rem),
+    calc(100% - .28rem) calc(100% - .65rem),
+    calc(100% - .28rem) calc(100% - .3rem),
+    calc(100% - .62rem) calc(100% - .3rem),
+    calc(100% - .62rem) 100%,
+    .62rem 100%,
+    .62rem calc(100% - .3rem),
+    .28rem calc(100% - .3rem),
+    .28rem calc(100% - .65rem),
+    0 calc(100% - .65rem)
+  );
+}
+
+.deco-button.deco-button-outline-heavy,
+.deco-button-outline-heavy {
+  background-color: transparent;
+  background-image: none;
+  color: var(--deco-text);
+  border-color: var(--deco-metal);
+  border-style: double;
+}
+
+.deco-button[aria-busy="true"]::after,
+.deco-icon-button[aria-busy="true"]::after,
+[data-ui="art-deco"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  background: var(--deco-spinner-segmented-background);
+  border: .1em double var(--deco-metal-bright);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 .18em var(--deco-surface-strong);
+  clip-path: none;
+}
+
+/* Preserve the stepped button geometry after busy-indicator pseudo-elements. */
+.deco-button { border-radius: .08rem; }
+
+.deco-alert {
+  gap: .4rem;
+  padding: .3rem .65rem;
+}
+
+.deco-alert-title,
+.deco-alert-body {
+  font-size: .76rem;
+  line-height: 1.25;
+}
+
+/**
+ * Matches the reference's low status chips, message strips, and ledger rows
+ * while preserving semantic text and border roles.
+ */
+.deco-badge {
+  min-height: 1.35rem;
+  padding: .1rem .5rem;
+  font-size: .6875rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.deco-badge-primary,
+.deco-nav-link[aria-current="page"],
+.deco-nav-link.is-active {
+  background: var(--deco-jewel-primary);
+  color: var(--deco-jewel-on);
+  border-color: var(--deco-metal);
+}
+
+.deco-badge-secondary {
+  background: var(--deco-jewel-secondary);
+  color: var(--deco-jewel-on);
+  border-color: var(--deco-metal);
+}
+
+.deco-badge-success {
+  background: var(--deco-jewel-success);
+  color: var(--deco-jewel-on);
+  border-color: var(--deco-metal);
+}
+
+.deco-badge-warning {
+  background: var(--deco-jewel-warning);
+  color: var(--deco-jewel-on);
+  border-color: var(--deco-metal);
+}
+
+.deco-badge-danger {
+  background: var(--deco-jewel-danger);
+  color: var(--deco-jewel-on);
+  border-color: var(--deco-metal);
+}
+
+.deco-table th,
+.deco-table td {
+  padding: .37rem .65rem;
+  font-size: .75rem;
+  line-height: 1.27;
+}
+
+.deco-table th { font-weight: 600; }
+
+[data-ui="art-deco"][data-mode] .deco-table { margin: 0; }
+
+[data-ui="art-deco"][data-mode] .deco-table caption {
+  padding: .45rem .65rem;
+  font-size: .7rem;
+  line-height: 1.2;
+}
+
+/**
+ * Keeps status medallions subordinate to the data they annotate and aligns
+ * native instrument tracks with the slim framed component progress bars.
+ */
+[data-ui="art-deco"][data-mode] :where(progress, meter) {
+  block-size: var(--usk-native-progress-size);
+  min-height: var(--usk-native-progress-size);
+}
+
+.deco-feature-item > .deco-icon-medallion {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  padding: .35rem;
+  font-size: .95rem;
+}
+
+.deco-card-service > .deco-icon-medallion {
+  inline-size: 3.25rem;
+  block-size: 3.25rem;
+  padding: .45rem;
+}
+
+.deco-badge-seal {
+  inline-size: 3.5rem;
+  min-inline-size: 3.5rem;
+  block-size: 3.5rem;
+  padding: .35rem;
+  font-size: .65rem;
+}
+
+.deco-callout-bar > .deco-icon-medallion {
+  inline-size: 2.75rem;
+  min-inline-size: 2.75rem;
+  block-size: 2.75rem;
+  min-block-size: 2.75rem;
+  padding: .4rem;
+  font-size: 1rem;
+}
+
+/**
+ * Restores accessible touch-target dimensions on coarse pointers without
+ * forcing the oversized mobile geometry onto mouse and keyboard layouts.
+ */
+@media (pointer: coarse) {
+  [data-ui="art-deco"][data-mode] {
+    --usk-native-control-min-block-size: 2.75rem;
+    --usk-native-choice-size: 1.5rem;
+  }
+
+  .deco-button,
+  .deco-icon-button,
+  .deco-input,
+  .deco-select {
+    min-block-size: 2.75rem;
+  }
+
+  .deco-check-control,
+  .deco-radio-control {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+  }
+}
+}
+
+@layer ui-style-kit.art_deco {
+/**
+ * Implements the retained 17-group element system. Reference defaults remain
+ * separate from semantic aliases so changing a host palette never loses state.
+ */
+[data-ui="art-deco"][data-mode="light"] {
+  --deco-fallback-bg-rgb: 246 242 231;
+  --deco-fallback-surface-rgb: 255 250 240;
+  --deco-fallback-surface-strong-rgb: 255 250 240;
+  --deco-fallback-surface-soft-rgb: 238 230 216;
+  --deco-fallback-text-rgb: 10 26 31;
+  --deco-fallback-text-muted-rgb: 92 92 86;
+  --deco-fallback-primary-rgb: 13 35 61;
+  --deco-fallback-primary-hover-rgb: 20 48 78;
+  --deco-fallback-primary-text-rgb: 246 242 231;
+  --deco-fallback-secondary-rgb: 15 101 88;
+  --deco-fallback-secondary-hover-rgb: 12 77 71;
+  --deco-fallback-secondary-text-rgb: 255 255 255;
+  --deco-fallback-accent-rgb: 184 135 47;
+  --deco-fallback-accent-text-rgb: 10 26 31;
+  --deco-fallback-success-rgb: 15 101 88;
+  --deco-fallback-success-text-rgb: 255 255 255;
+  --deco-fallback-warning-rgb: 212 175 55;
+  --deco-fallback-warning-text-rgb: 10 26 31;
+  --deco-fallback-danger-rgb: 139 50 58;
+  --deco-fallback-danger-text-rgb: 255 255 255;
+  --deco-fallback-link-rgb: 15 101 88;
+  --deco-fallback-focus-rgb: 15 101 88;
+  --deco-reference-metal-rgb: 184 135 47;
+  --deco-status-success: rgb(var(--usk-success-rgb, 15 101 88));
+  --deco-status-warning: rgb(var(--usk-warning-strong-rgb, 133 79 14));
+  --deco-status-danger: rgb(var(--usk-danger-rgb, 139 50 58));
+  --deco-info-rgb: var(--usk-info-rgb, 36 89 120);
+}
+[data-ui="art-deco"][data-mode="dark"] {
+  --deco-fallback-bg-rgb: 10 26 31;
+  --deco-fallback-surface-rgb: 10 26 31;
+  --deco-fallback-surface-strong-rgb: 13 32 38;
+  --deco-fallback-surface-soft-rgb: 21 37 42;
+  --deco-fallback-text-rgb: 246 242 231;
+  --deco-fallback-text-muted-rgb: 169 163 151;
+  --deco-fallback-primary-rgb: 8 26 47;
+  --deco-fallback-primary-hover-rgb: 18 43 66;
+  --deco-fallback-primary-text-rgb: 246 242 231;
+  --deco-fallback-secondary-rgb: 20 118 107;
+  --deco-fallback-secondary-hover-rgb: 15 79 75;
+  --deco-fallback-secondary-text-rgb: 255 255 255;
+  --deco-fallback-accent-rgb: 200 150 56;
+  --deco-fallback-accent-text-rgb: 10 26 31;
+  --deco-fallback-success-rgb: 20 118 107;
+  --deco-fallback-success-text-rgb: 255 255 255;
+  --deco-fallback-warning-rgb: 224 185 76;
+  --deco-fallback-warning-text-rgb: 10 26 31;
+  --deco-fallback-danger-rgb: 156 52 59;
+  --deco-fallback-danger-text-rgb: 255 255 255;
+  --deco-fallback-link-rgb: 110 210 188;
+  --deco-fallback-focus-rgb: 224 185 76;
+  --deco-reference-metal-rgb: 200 150 56;
+  --deco-status-success: rgb(var(--usk-success-rgb, 110 210 188));
+  --deco-status-warning: rgb(var(--usk-warning-rgb, 224 185 76));
+  --deco-status-danger: rgb(var(--usk-danger-rgb, 255 145 154));
+  --deco-info-rgb: var(--usk-info-rgb, 60 119 146);
+}
+[data-ui="art-deco"][data-mode="contrast"] {
+  --deco-reference-metal-rgb: 255 255 255;
+  --deco-status-success: var(--deco-text);
+  --deco-status-warning: var(--deco-text);
+  --deco-status-danger: var(--deco-text);
+  --deco-info-rgb: var(--usk-primary-rgb, 0 80 150);
+}
+[data-ui="art-deco"][data-mode] {
+  --deco-bg: rgb(var(--deco-bg-rgb));
+  --deco-surface: rgb(var(--deco-surface-rgb));
+  --deco-surface-strong: rgb(var(--deco-surface-strong-rgb));
+  --deco-surface-soft: rgb(var(--deco-surface-soft-rgb));
+  --deco-metal-rgb: var(--usk-accent-rgb, var(--deco-reference-metal-rgb));
+  --deco-metal: rgb(var(--deco-metal-rgb));
+  --deco-metal-bright: var(--deco-warning);
+  --deco-border: var(--deco-metal);
+  --deco-card-bg: var(--deco-surface);
+  --deco-control-bg: var(--deco-surface);
+  --deco-theme-bg: var(--deco-bg);
+  --deco-font-display: "DejaVu Serif Condensed", "Bodoni MT", Didot, Georgia, serif;
+  --deco-font-control: "Liberation Sans Narrow", "Arial Narrow", Arial, sans-serif;
+  --deco-font-body: var(--deco-font-control);
+  --deco-info: rgb(var(--deco-info-rgb));
+  --deco-on-info: rgb(var(--usk-info-text-rgb, 255 255 255));
+  --deco-step-sm: polygon(7px 0, calc(100% - 7px) 0, calc(100% - 7px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 7px) calc(100% - 3px), calc(100% - 7px) 100%, 7px 100%, 7px calc(100% - 3px), 0 calc(100% - 3px), 0 3px, 7px 3px);
+  --deco-step-lg: polygon(13px 0, calc(100% - 13px) 0, calc(100% - 13px) 5px, calc(100% - 5px) 5px, calc(100% - 5px) 13px, 100% 13px, 100% calc(100% - 13px), calc(100% - 5px) calc(100% - 13px), calc(100% - 5px) calc(100% - 5px), calc(100% - 13px) calc(100% - 5px), calc(100% - 13px) 100%, 13px 100%, 13px calc(100% - 5px), 5px calc(100% - 5px), 5px calc(100% - 13px), 0 calc(100% - 13px), 0 13px, 5px 13px, 5px 5px, 13px 5px);
+  --usk-native-choice-checked-background: var(--deco-secondary);
+  --usk-native-choice-mark-color: var(--deco-on-secondary);
+  --usk-native-range-progress-background: var(--deco-secondary);
+  --usk-native-range-thumb-background: var(--deco-secondary);
+  --usk-native-progress-value-background: var(--deco-secondary);
+}
+/** Decorative layers retain stepped borders without clipping focus or content. */
+.deco-sheet { position: relative; isolation: isolate; padding: 28px 32px; color: var(--deco-text); background: var(--deco-bg); border: 4px double var(--deco-metal); box-shadow: inset 0 0 0 4px var(--deco-bg), inset 0 0 0 5px var(--deco-metal); }
+.deco-sheet::before { content: ""; position: absolute; inset: 12px; pointer-events: none; z-index: -1; background: linear-gradient(rgb(var(--deco-metal-rgb) / .035) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--deco-metal-rgb) / .035) 1px, transparent 1px); background-size: 80px 80px; }
+.deco-fan { display: block; width: 76px; height: 36px; background: repeating-conic-gradient(from 90deg at 0 0, var(--deco-metal) 0deg 1deg, transparent 1deg 10deg); clip-path: polygon(0 0, 100% 0, 0 100%); }
+/** Native element selectors must not replace display faces or compact controls. */
+[data-ui="art-deco"][data-mode] :is(.deco-masthead-title, .deco-dialog h3, .deco-dialog h4) { font-family: var(--deco-font-display); font-weight: 400; }
+[data-ui="art-deco"][data-mode] :is(.deco-section-title, .deco-label, .deco-stat-label, .deco-meta) { font-family: Arial, sans-serif; }
+[data-ui="art-deco"][data-mode] :is(.deco-option, .deco-tab, .deco-segment, .deco-chip button, .deco-alert-close, .deco-pagination button, .deco-stepper button) { min-inline-size: 0; box-shadow: none; border-radius: 0; font-weight: 400; line-height: 1.3; }
+[data-ui="art-deco"][data-mode] :is(.deco-chip button, .deco-alert-close) { padding: 0; min-height: 28px; min-block-size: 28px; border: 0; background: transparent; }
+[data-ui="art-deco"][data-mode] :is(.deco-tab, .deco-segment, .deco-option, .deco-pagination button, .deco-stepper button) { padding: 6px; }
+[data-ui="art-deco"][data-mode] :is(.deco-check, .deco-radio, .deco-switch) { display: flex; font-weight: 400; }
+.deco-progress-bar { display: block; background: var(--deco-secondary); clip-path: none; border-radius: 0; }
+.deco-progress { height: 12px; block-size: 12px; border: 1px solid var(--deco-metal); padding: 2px; }
+[data-ui="art-deco"][data-mode] .deco-empty-state { display: block; min-height: 0; min-block-size: 0; text-align: start; }
+.deco-check input:checked + .deco-check-control, .deco-radio input:checked + .deco-radio-control { box-shadow: none; }
+.deco-frame, .deco-dialog { position: relative; padding: 16px 20px; border: 0; background: var(--deco-surface); color: var(--deco-text); isolation: isolate; clip-path: var(--deco-step-lg); }
+.deco-frame::before, .deco-dialog::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--deco-metal); clip-path: var(--deco-step-lg); }
+.deco-frame::after, .deco-dialog::after { content: ""; position: absolute; inset: 3px; z-index: -1; pointer-events: none; background: var(--deco-surface); border: 1px solid var(--deco-metal); clip-path: var(--deco-step-lg); }
+.deco-frame-navy, .deco-frame-navy::after { background: var(--deco-primary); color: var(--deco-on-primary); }
+[data-ui="art-deco"][data-mode] .deco-frame-navy .deco-section-title { color: var(--deco-on-primary); }
+.deco-masthead { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; text-align: center; padding: 0 24px 20px; }
+.deco-masthead::before, .deco-masthead::after { content: ""; height: 1px; background: var(--deco-metal); }
+.deco-masthead-title { margin: 0; color: var(--deco-text); font: 400 48px/1.05 var(--deco-font-display); text-transform: uppercase; text-shadow: none; letter-spacing: 0; }
+.deco-monogram { display: block; position: relative; width: 40px; height: 40px; margin: 16px; border: 1px solid var(--deco-metal); transform: rotate(45deg); }
+.deco-monogram::before { content: ""; position: absolute; inset: -8px 10px; border: 1px solid var(--deco-metal); transform: rotate(-45deg); }
+.deco-stat { text-align: center; border-inline-start: 1px solid var(--deco-metal); padding: 4px 12px; }
+.deco-stat-value { display: block; font: 28px/1.2 var(--deco-font-display); }
+.deco-stat-label { display: block; margin-top: 8px; font-size: 11px; text-transform: uppercase; }
+.deco-health { width: 150px; height: 82px; position: relative; display: grid; align-content: end; justify-items: center; font: 26px var(--deco-font-display); }
+.deco-health::before { content: ""; position: absolute; inset: 0; border-radius: 100px 100px 0 0; border: 1px solid var(--deco-metal); background: conic-gradient(from 270deg at 50% 100%, var(--deco-secondary) 0deg calc(var(--deco-value, 72) * 1.8deg), var(--deco-metal) 0deg 180deg, transparent 0); -webkit-mask: radial-gradient(ellipse at bottom, transparent 60%, #000 62%); mask: radial-gradient(ellipse at bottom, transparent 60%, #000 62%); }
+.deco-health small { font: 10px var(--deco-font-control); text-transform: uppercase; }
+.deco-meta-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px; }
+.deco-meta { display: grid; align-content: center; justify-items: center; gap: 12px; padding: 12px; text-align: center; border-inline-end: 1px solid var(--deco-metal); font-size: 12px; }
+.deco-meta:last-child { border: 0; }
+.deco-status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--deco-secondary); border: 1px solid var(--deco-metal); margin-inline-end: 6px; }
+.deco-performance { display: flex; align-items: end; height: 32px; gap: 4px; }
+.deco-performance i { display: block; width: 10px; height: var(--deco-bar, 10px); background: var(--deco-secondary); border: 1px solid var(--deco-metal); }
+.deco-performance i:nth-last-child(-n+2) { background: var(--deco-warning); }
+.deco-section-title { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font: 700 13px/1.3 var(--deco-font-control); text-transform: uppercase; letter-spacing: 0; }
+.deco-section-title::after { content: ""; flex: 1; height: 1px; min-width: 12px; background: var(--deco-metal); }
+.deco-number { font: 11px var(--deco-font-mono); color: var(--deco-text-muted); }
+.deco-label, .deco-kicker { font-family: var(--deco-font-control); font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: uppercase; }
+.deco-button, .deco-icon-button { position: relative; isolation: isolate; min-height: 36px; min-block-size: 36px; min-inline-size: 0; padding: 8px 14px; border: 0; border-radius: 0; clip-path: none; background: var(--deco-surface); color: var(--deco-text); box-shadow: none; font: 500 12px/1.2 var(--deco-font-control); letter-spacing: 0; text-transform: uppercase; gap: 8px; }
+.deco-button::before, .deco-icon-button::before { content: ""; position: absolute; inset: 0; z-index: 0; background: var(--deco-metal); border: 0; pointer-events: none; clip-path: polygon(evenodd, 7px 0, calc(100% - 7px) 0, calc(100% - 7px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 7px) calc(100% - 3px), calc(100% - 7px) 100%, 7px 100%, 7px calc(100% - 3px), 0 calc(100% - 3px), 0 3px, 7px 3px, 7px 0, 8px 1px, 8px 4px, 1px 4px, 1px calc(100% - 4px), 8px calc(100% - 4px), 8px calc(100% - 1px), calc(100% - 8px) calc(100% - 1px), calc(100% - 8px) calc(100% - 4px), calc(100% - 1px) calc(100% - 4px), calc(100% - 1px) 4px, calc(100% - 8px) 4px, calc(100% - 8px) 1px, 8px 1px, 7px 0); }
+.deco-button, .deco-icon-button { background-color: transparent; clip-path: var(--deco-step-sm); }
+.deco-button:focus-visible, .deco-icon-button:focus-visible { outline-offset: -6px; }
+.deco-button-primary { background-color: var(--deco-primary); color: var(--deco-on-primary); }
+.deco-button-secondary { background-color: var(--deco-secondary); color: var(--deco-on-secondary); }
+.deco-button-danger { background-color: var(--deco-danger); color: var(--deco-on-danger); }
+[data-ui="art-deco"][data-mode] :is(.deco-button, .deco-icon-button)[aria-busy="true"] { opacity: 1; filter: none; cursor: progress; }
+.deco-button-primary:hover { background-color: var(--deco-primary-hover); }
+.deco-button-secondary:hover { background-color: var(--deco-secondary-hover); }
+.deco-button:is(.is-pressed, :active) { transform: translateY(2px); }
+.deco-button:disabled, .deco-icon-button:disabled { color: var(--deco-text-muted); background: var(--deco-surface-soft); opacity: 1; filter: grayscale(1); cursor: not-allowed; }
+.deco-icon-button { width: 36px; min-width: 36px; padding: 0; }
+.deco-button-loading { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 152px; }
+.deco-button[aria-busy="true"]::after, .deco-icon-button[aria-busy="true"]::after,
+[data-ui="art-deco"] :where(button[aria-busy="true"])::after { content: ""; position: static; display: inline-block; flex: 0 0 16px; width: 16px; height: 16px; margin: 0; background: repeating-conic-gradient(currentColor 0deg 22deg, transparent 22deg 45deg); border: 0; box-shadow: none; border-radius: 50%; -webkit-mask: radial-gradient(transparent 40%, #000 43%); mask: radial-gradient(transparent 40%, #000 43%); animation: deco-spin 1.4s linear infinite; }
+/** One loader silhouette across prefixed, native, and generated semantic surfaces. */
+.deco-spinner, .deco-loading-spinner, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) { position: relative; display: inline-block; width: 48px; height: 48px; flex: 0 0 48px; border: 0; border-radius: 0; background: none; box-shadow: none; clip-path: none; animation: deco-spin 1.4s linear infinite; }
+.deco-spinner::before, .deco-loading-spinner::before, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner])::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(var(--deco-metal) 0deg 22deg, transparent 22deg 36deg); -webkit-mask: radial-gradient(transparent 49%, #000 51%); mask: radial-gradient(transparent 49%, #000 51%); }
+.deco-spinner::after, .deco-loading-spinner::after, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner])::after { content: ""; position: absolute; inset: 35%; background: var(--deco-warning); border: 1px solid var(--deco-secondary); transform: rotate(45deg); }
+.deco-spinner-sm { width: 28px; height: 28px; flex-basis: 28px; }
+.deco-spinner-lg { width: 64px; height: 64px; flex-basis: 64px; }
+.deco-input, .deco-select, .deco-textarea { border: 1px solid var(--deco-metal); border-radius: 0; box-shadow: none; padding: 8px 10px; min-height: 32px; color: var(--deco-text); background-color: var(--deco-surface); letter-spacing: 0; font-size: 12px; }
+.deco-textarea { min-height: 88px; }
+.deco-input-valid { border-inline-start: 3px solid var(--deco-success); }
+.deco-input[aria-invalid="true"] { border-color: var(--deco-status-danger); border-inline-start-width: 3px; box-shadow: none; }
+.deco-help-error { color: var(--deco-status-danger); font-size: 11px; }
+.deco-file-upload { position: relative; display: grid; align-content: center; justify-items: center; gap: 8px; padding: 16px; min-height: 92px; border: 1px solid var(--deco-metal); color: var(--deco-text); background: var(--deco-surface); cursor: pointer; text-align: center; font-size: 12px; }
+.deco-file { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.deco-file-upload:focus-within { outline: 2px solid var(--deco-focus); outline-offset: 3px; }
+.deco-select-panel { padding: 4px 0; border: 1px solid var(--deco-metal); background: var(--deco-surface); }
+.deco-option { display: flex; justify-content: space-between; gap: 8px; width: 100%; min-height: 32px; padding: 6px 12px; border: 0; background: transparent; color: var(--deco-text); font-size: 12px; text-align: start; cursor: pointer; }
+.deco-option[aria-selected="true"] { background: var(--deco-secondary); color: var(--deco-on-secondary); }
+.deco-group-label { display: block; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--deco-text-muted); }
+.deco-multi { display: flex; flex-wrap: wrap; gap: 4px; min-height: 60px; padding: 8px; border: 1px solid var(--deco-metal); background: var(--deco-surface); }
+.deco-chip { display: inline-flex; align-items: center; gap: 4px; padding: 0 8px; background: var(--deco-secondary); color: var(--deco-on-secondary); border: 1px solid var(--deco-metal); font-size: 11px; }
+.deco-chip button { padding: 4px; width: 28px; height: 28px; color: inherit; background: transparent; border: 0; cursor: pointer; }
+.deco-check, .deco-radio { min-height: 32px; font-size: 12px; gap: 8px; }
+.deco-check input:checked + .deco-check-control, .deco-radio input:checked + .deco-radio-control, .deco-switch input:checked + .deco-switch-track { background: var(--deco-secondary); }
+.deco-check input:checked + .deco-check-control::after { color: var(--deco-on-secondary); }
+.deco-radio input:checked + .deco-radio-control::after { background: var(--deco-on-secondary); }
+.deco-switch { min-height: 32px; }
+.deco-switch-track { width: 56px; height: 26px; inline-size: 56px; block-size: 26px; border-width: 1px; }
+.deco-switch-thumb { width: 18px; height: 18px; inline-size: 18px; block-size: 18px; inset-block-start: 3px; background: var(--deco-warning); border: 1px solid var(--deco-metal); }
+.deco-switch input:checked + .deco-switch-track .deco-switch-thumb { inset-inline-start: calc(100% - 24px); }
+.deco-check:has(input:disabled), .deco-radio:has(input:disabled), .deco-switch:has(input:disabled) { opacity: .72; }
+.deco-check:focus-within, .deco-radio:focus-within, .deco-switch:focus-within { outline: 2px solid var(--deco-focus); outline-offset: 2px; }
+.deco-breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; margin-block: 12px; }
+.deco-breadcrumb a { color: var(--deco-link); }
+.deco-pagination { display: flex; gap: 4px; margin-block: 12px; }
+.deco-pagination button { width: 32px; min-height: 32px; background: var(--deco-surface); color: var(--deco-text); border: 1px solid var(--deco-metal); cursor: pointer; }
+.deco-pagination [aria-current="page"] { background: var(--deco-secondary); color: var(--deco-on-secondary); }
+.deco-slider-wrap { position: relative; padding-top: 28px; }
+.deco-slider-wrap::before { content: ""; position: absolute; inset: auto 0 6px; height: 20px; pointer-events: none; background: repeating-linear-gradient(90deg, var(--deco-metal) 0 1px, transparent 1px 25%); border-inline-end: 1px solid var(--deco-metal); }
+.deco-slider-output { position: absolute; top: 0; left: clamp(22px, calc(var(--deco-value, 68) * 1%), calc(100% - 22px)); transform: translateX(-50%); width: 44px; padding: 5px; text-align: center; font: 11px var(--deco-font-mono); color: var(--deco-on-primary); background: var(--deco-primary); border: 1px solid var(--deco-metal); clip-path: var(--deco-step-sm); }
+[data-ui="art-deco"][data-mode] .deco-slider { appearance: none; width: 100%; height: 32px; margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.deco-slider::-webkit-slider-runnable-track { height: 6px; background: linear-gradient(90deg, var(--deco-secondary) calc(var(--deco-value, 68) * 1%), var(--deco-metal) 0); border: 0; }
+[data-ui="art-deco"][data-mode] .deco-slider::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; margin-top: -6px; border: 2px solid var(--deco-metal); border-radius: 0; clip-path: none; transform: rotate(45deg); background: var(--deco-secondary); }
+.deco-slider::-moz-range-track { height: 6px; background: var(--deco-metal); border: 0; }
+.deco-slider::-moz-range-progress { height: 6px; background: var(--deco-secondary); }
+[data-ui="art-deco"][data-mode] .deco-slider::-moz-range-thumb { width: 14px; height: 14px; border: 2px solid var(--deco-metal); border-radius: 0; clip-path: none; transform: rotate(45deg); background: var(--deco-secondary); }
+.deco-meter { position: relative; height: 16px; border: 1px solid var(--deco-metal); padding: 3px; background: var(--deco-surface); }
+.deco-meter::before { content: ""; display: block; height: 100%; background: linear-gradient(90deg, var(--deco-success) 0 42%, var(--deco-warning) 42% 70%, var(--deco-danger) 70%); }
+.deco-meter::after { content: ""; position: absolute; top: 0; left: clamp(0px, calc(var(--deco-value, 55) * 1%), calc(100% - 14px)); width: 14px; height: 14px; transform: rotate(45deg); border: 2px solid var(--deco-metal); background: var(--deco-secondary); }
+.deco-step-progress { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+.deco-step-progress i { display: block; height: 12px; background: var(--deco-surface-soft); border: 1px solid var(--deco-metal); clip-path: var(--deco-step-sm); }
+.deco-step-progress .is-done { background: var(--deco-secondary); }
+.deco-stage-list { list-style: none; margin: 0; padding: 8px 0; }
+.deco-stage { position: relative; display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 12px; min-height: 92px; font-size: 12px; }
+.deco-stage:not(:last-child)::after { content: ""; position: absolute; left: 18px; top: calc(50% + 19px); height: calc(100% - 38px); width: 1px; background: var(--deco-metal); }
+.deco-stage-number { display: grid; place-items: center; width: 30px; height: 30px; margin-left: 4px; transform: rotate(45deg); border: 1px solid var(--deco-metal); background: var(--deco-surface); }
+.deco-stage-number span { transform: rotate(-45deg); font: 10px var(--deco-font-mono); }
+.deco-stage small { display: block; margin-top: 6px; color: var(--deco-text-muted); font-size: 10px; }
+.deco-stage.is-done .deco-stage-number { background: var(--deco-secondary); color: var(--deco-on-secondary); }
+.deco-stage[aria-current="step"] .deco-stage-number { background: var(--deco-warning); color: var(--deco-on-warning); }
+.deco-tabs { border: 3px double var(--deco-metal); background: var(--deco-surface); }
+.deco-tab-list, .deco-segmented { display: flex; border: 1px solid var(--deco-metal); }
+.deco-tab, .deco-segment { flex: 1; min-width: 0; min-height: 36px; padding: 6px; background: var(--deco-surface); color: var(--deco-text); border: 0; border-inline-end: 1px solid var(--deco-metal); font-size: 11px; text-transform: uppercase; cursor: pointer; }
+.deco-tab:last-child, .deco-segment:last-child { border-inline-end: 0; }
+.deco-tab[aria-selected="true"], .deco-segment[aria-pressed="true"] { background: var(--deco-secondary); color: var(--deco-on-secondary); }
+.deco-tab-panel { padding: 12px; min-height: 70px; font-size: 12px; }
+.deco-stepper { display: inline-grid; grid-template-columns: 40px minmax(64px, 1fr) 40px; border: 1px solid var(--deco-metal); }
+.deco-stepper button, .deco-stepper output { display: grid; place-items: center; min-height: 36px; background: var(--deco-surface); color: var(--deco-text); border: 0; border-inline-end: 1px solid var(--deco-metal); padding: 4px; font: 14px var(--deco-font-mono); }
+.deco-stepper button { cursor: pointer; }
+.deco-stepper button:last-child { border: 0; }
+.deco-badge { border: 1px solid var(--deco-metal); border-radius: 0; clip-path: var(--deco-step-sm); box-shadow: none; padding: 5px 12px; font: 600 10px/1.2 var(--deco-font-control); letter-spacing: 0; }
+.deco-badge-primary { background: var(--deco-primary); color: var(--deco-on-primary); }
+.deco-badge-secondary { background: var(--deco-secondary); color: var(--deco-on-secondary); }
+.deco-badge-success { background: var(--deco-success); color: var(--deco-on-success); }
+.deco-badge-warning { background: var(--deco-warning); color: var(--deco-on-warning); }
+.deco-badge-danger { background: var(--deco-danger); color: var(--deco-on-danger); }
+.deco-badge-info { background: var(--deco-info); color: var(--deco-on-info); }
+.deco-badge-outline { background: transparent; color: var(--deco-text); }
+.deco-alert { display: flex; flex-wrap: nowrap; gap: 8px; border: 1px solid var(--deco-metal); border-radius: 0; box-shadow: none; background: var(--deco-surface); padding: 6px 10px; }
+.deco-alert-success { border-color: var(--deco-status-success); }
+.deco-alert-warning { border-color: var(--deco-status-warning); }
+.deco-alert-danger { border-color: var(--deco-status-danger); }
+.deco-alert-info { border-color: var(--deco-info); }
+.deco-alert-icon { flex: 0 0 10px; height: 10px; transform: rotate(45deg); background: currentColor; }
+.deco-alert-body { flex: 1; min-width: 0; color: var(--deco-text); }
+.deco-alert-title { font-size: 11px; letter-spacing: 0; margin-right: 6px; color: var(--deco-text); }
+.deco-alert-close { display: grid; place-items: center; flex: 0 0 28px; height: 28px; border: 0; background: transparent; color: var(--deco-text); cursor: pointer; }
+.deco-table-wrap { border: 3px double var(--deco-metal); border-radius: 0; clip-path: none; overflow-x: auto; }
+.deco-table th { background: var(--deco-primary); color: var(--deco-on-primary); font-size: 11px; letter-spacing: 0; }
+.deco-table td { font-size: 12px; }
+.deco-tooltip { position: relative; clip-path: none; border: 1px solid var(--deco-metal); border-radius: 0; color: var(--deco-on-primary); background: var(--deco-primary); box-shadow: none; padding: 12px; font: 12px/1.4 var(--deco-font-body); letter-spacing: 0; text-transform: none; }
+.deco-tooltip::after { content: ""; position: absolute; left: 20px; bottom: -6px; width: 10px; height: 10px; background: var(--deco-primary); border-right: 1px solid var(--deco-metal); border-bottom: 1px solid var(--deco-metal); transform: rotate(45deg); }
+[data-ui="art-deco"][data-mode] dialog.deco-dialog { position: fixed; margin: auto; width: min(480px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow: auto; clip-path: none; }
+dialog.deco-dialog:not([open]) { display: none; }
+.deco-dialog h3, .deco-dialog h4 { margin: 16px 0 8px; font: 24px var(--deco-font-display); text-align: center; text-transform: uppercase; }
+.deco-dialog p { text-align: center; font-size: 12px; }
+.deco-dialog-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.deco-details { border: 1px solid var(--deco-metal); padding: 8px 12px; font-size: 12px; }
+.deco-details summary { cursor: pointer; }
+.deco-skeleton { height: 8px; width: 100%; background: var(--deco-surface-soft); border-inline-start: 3px solid var(--deco-metal); }
+.deco-palette { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; padding: 12px; border: 3px double var(--deco-metal); }
+.deco-swatch { display: grid; gap: 6px; text-align: center; font: 9px var(--deco-font-mono); }
+.deco-swatch i { height: 28px; border: 1px solid var(--deco-metal); background: var(--deco-swatch-color, var(--deco-primary)); }
+.deco-divider { position: relative; height: 16px; background: transparent; border-block: 1px solid var(--deco-metal); }
+.deco-divider::after { content: ""; position: absolute; top: -4px; left: calc(85% - 12px); width: 22px; height: 22px; transform: rotate(45deg); border: 1px solid var(--deco-metal); background: var(--deco-bg); }
+.deco-empty-state { padding: 8px 0; background: transparent; border: 0; font-size: 12px; color: var(--deco-text-muted); }
+[data-ui="art-deco"] :where(button, a, input, select, textarea, summary):focus-visible { outline: 2px solid var(--deco-focus); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .deco-spinner, .deco-loading-spinner, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]),
+  .deco-button[aria-busy="true"]::after, .deco-icon-button[aria-busy="true"]::after, [data-ui="art-deco"] :where(button[aria-busy="true"])::after { animation: none; }
+}
+@media (pointer: coarse) {
+  .deco-button, .deco-icon-button, .deco-option, .deco-tab, .deco-segment, .deco-input, .deco-select,
+  .deco-stepper button, .deco-pagination button, .deco-alert-close, .deco-chip button { min-height: 44px; min-block-size: 44px; }
+  .deco-icon-button, .deco-pagination button, .deco-alert-close, .deco-chip button { min-width: 44px; }
+  .deco-check, .deco-radio, .deco-switch { min-height: 44px; }
+  [data-ui="art-deco"][data-mode] :is(.deco-chip button, .deco-alert-close) { min-width: 44px; min-inline-size: 44px; min-height: 44px; min-block-size: 44px; }
+  .deco-stepper { grid-template-columns: 44px minmax(64px, 1fr) 44px; }
+}
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="art-deco"][data-mode] .deco-button.deco-button-warning {
+  background: var(--deco-warning);
+  color: var(--deco-on-warning);
+  border-color: var(--deco-warning);
+  text-shadow: none;
+}
+
 }

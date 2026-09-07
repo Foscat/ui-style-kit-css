@@ -12,7 +12,7 @@ const semanticSelectors = Object.values(JSON.parse(
 // Keep the smoke-test expectations aligned with the demo's checked-in default controls.
 const defaultDemoState = {
   ui: 'minimal-saas',
-  theme: 'arctic-indigo',
+  theme: '',
   mode: 'light'
 };
 
@@ -100,7 +100,7 @@ test('demo loads with default theme settings', async ({ page }) => {
   await expect(page.locator('#modeSelect')).toHaveValue(defaultDemoState.mode);
 
   await expect(page.locator('body')).toHaveAttribute('data-ui', defaultDemoState.ui);
-  await expect(page.locator('body')).toHaveAttribute('data-theme', defaultDemoState.theme);
+  await expect(page.locator('body')).not.toHaveAttribute('data-theme');
   await expect(page.locator('body')).toHaveAttribute('data-mode', defaultDemoState.mode);
 
   await expect(page.getByRole('heading', { level: 1, name: 'UI Style Kit CSS' })).toBeVisible();
@@ -124,7 +124,7 @@ test('demo control options are populated from the manifest snapshot', async ({ p
 
   expect(manifestState.presets.map(({ id, prefix }) => [id, prefix])).toEqual(stylePresets);
   expect(manifestState.uiOptions).toEqual(manifestState.presets);
-  expect(manifestState.themeOptions).toEqual(manifestState.themes);
+  expect(manifestState.themeOptions).toEqual(['', ...manifestState.themes]);
   expect(manifestState.modeOptions).toEqual(displayModes);
   expect(manifestState.themeOptions).toContain('royal-plum');
 });
@@ -167,6 +167,7 @@ test('rendered demo links resolve to page sections or external destinations', as
 test('theme token workbench edits active RGB tokens and copies overrides', async ({ page }) => {
   await installClipboardStub(page);
   await page.goto(demoUrl);
+  await page.selectOption('#themeSelect', 'arctic-indigo');
 
   const workbench = page.getByTestId('theme-token-workbench');
   await expect(workbench).toBeVisible();
@@ -276,6 +277,81 @@ test('semantic demo nodes and classes remain unchanged through every preset swit
     expect(switchSnapshot.sameSection).toBe(true);
     expect(switchSnapshot.sameNodes).toBe(true);
     expect(switchSnapshot.nodes).toEqual(initialSnapshot);
+  }
+});
+
+/**
+ * Verifies the runtime color contract for every preset without coupling the
+ * assertion to a single preset's decorative material or component geometry.
+ */
+test('every preset resolves mode fallbacks and lets explicit themes own color roles', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const colorRoles = [
+    'bg',
+    'surface',
+    'surface-strong',
+    'surface-soft',
+    'text',
+    'text-muted',
+    'border',
+    'primary',
+    'primary-hover',
+    'primary-text',
+    'secondary',
+    'secondary-hover',
+    'secondary-text',
+    'accent',
+    'accent-text',
+    'success',
+    'success-text',
+    'warning',
+    'warning-text',
+    'danger',
+    'danger-text',
+    'link',
+    'focus'
+  ];
+
+  for (const [ui, prefix] of stylePresets) {
+    await page.selectOption('#uiSelect', ui);
+
+    for (const mode of displayModes) {
+      await page.selectOption('#modeSelect', mode);
+      await page.evaluate(() => document.body.removeAttribute('data-theme'));
+
+      const fallbackRoles = await page.evaluate(({ presetPrefix, roles }) => {
+        const styles = getComputedStyle(document.body);
+
+        return Object.fromEntries(roles.map((role) => [
+          role,
+          styles.getPropertyValue(`--${presetPrefix}-${role}-rgb`).trim()
+        ]));
+      }, { presetPrefix: prefix, roles: colorRoles });
+
+      for (const [role, channels] of Object.entries(fallbackRoles)) {
+        expect(channels, `${ui}/${mode} fallback ${role}`).toMatch(/^\d{1,3} \d{1,3} \d{1,3}$/);
+      }
+
+      await page.evaluate(() => document.body.setAttribute('data-theme', 'sunset-ember'));
+
+      const themedRoles = await page.evaluate(({ presetPrefix, roles }) => {
+        const styles = getComputedStyle(document.body);
+
+        return Object.fromEntries(roles.map((role) => [
+          role,
+          {
+            preset: styles.getPropertyValue(`--${presetPrefix}-${role}-rgb`).trim(),
+            theme: styles.getPropertyValue(`--usk-${role}-rgb`).trim()
+          }
+        ]));
+      }, { presetPrefix: prefix, roles: colorRoles });
+
+      for (const [role, channels] of Object.entries(themedRoles)) {
+        expect(channels.preset, `${ui}/${mode} themed ${role}`).toBe(channels.theme);
+        expect(channels.theme, `${ui}/${mode} theme source ${role}`).toMatch(/^\d{1,3} \d{1,3} \d{1,3}$/);
+      }
+    }
   }
 });
 
@@ -492,43 +568,44 @@ test('Retrofuturism action controls keep enamel depth and accessible sizing in b
  * Verifies that Technical Blueprint action paint remains sourced from every
  * selected color scheme instead of falling back to a preset-specific palette.
  */
-test('Technical Blueprint action colors follow every selected scheme in both sheet modes', async ({ page }) => {
+test('Technical Blueprint action colors follow every selected scheme in every display mode', async ({ page }) => {
   await page.goto(demoUrl);
   await page.selectOption('#uiSelect', 'technical-blueprint');
 
-  const themes = await page.locator('#themeSelect option').evaluateAll((options) => options.map((option) => option.value));
+  const themes = await page.locator('#themeSelect option').evaluateAll((options) => options.map((option) => option.value).filter(Boolean));
 
-  for (const mode of ['light', 'dark']) {
+  for (const mode of ['light', 'dark', 'contrast']) {
     await page.selectOption('#modeSelect', mode);
 
     for (const theme of themes) {
       await page.selectOption('#themeSelect', theme);
 
-      const colors = await page.locator('.blueprint-button-primary, .blueprint-button-secondary, .blueprint-button-danger')
-        .evaluateAll((actions) => {
-          const rootStyles = getComputedStyle(document.body);
-          const tokenColor = (token) => `rgb(${rootStyles.getPropertyValue(token).trim().split(/\s+/).join(', ')})`;
-          const [primary, secondary, danger] = actions.slice(0, 3).map((action) => getComputedStyle(action));
+      const colors = await page.evaluate(() => {
+        const rootStyles = getComputedStyle(document.body);
+        const tokenColor = (token) => `rgb(${rootStyles.getPropertyValue(token).trim().split(/\s+/).join(', ')})`;
+        const primary = getComputedStyle(document.querySelector('.blueprint-button-primary'));
+        const secondary = getComputedStyle(document.querySelector('.blueprint-button-secondary'));
+        const danger = getComputedStyle(document.querySelector('.blueprint-button-danger'));
 
-          return {
-            primary: {
-              actual: primary.backgroundColor,
-              expected: tokenColor('--usk-primary-rgb')
-            },
-            secondary: {
-              background: secondary.backgroundColor,
-              border: secondary.borderColor,
-              color: secondary.color,
-              expected: tokenColor('--usk-secondary-rgb')
-            },
-            danger: {
-              background: danger.backgroundColor,
-              border: danger.borderColor,
-              color: danger.color,
-              expected: tokenColor('--usk-danger-rgb')
-            }
-          };
-        });
+        return {
+          primary: {
+            actual: primary.backgroundColor,
+            expected: tokenColor('--usk-primary-rgb')
+          },
+          secondary: {
+            background: secondary.backgroundColor,
+            border: secondary.borderColor,
+            color: secondary.color,
+            expected: tokenColor('--usk-secondary-rgb')
+          },
+          danger: {
+            background: danger.backgroundColor,
+            border: danger.borderColor,
+            color: danger.color,
+            expected: tokenColor('--usk-danger-rgb')
+          }
+        };
+      });
 
       expect(colors.primary.actual, JSON.stringify({ mode, theme, colors }, null, 2)).toBe(colors.primary.expected);
       expect(colors.secondary.background, JSON.stringify({ mode, theme, colors }, null, 2)).toBe('rgba(0, 0, 0, 0)');
@@ -572,6 +649,209 @@ test('Technical Blueprint controls use flat drafting geometry in both sheet mode
     expect(geometry.every(({ height }) => height >= 44), JSON.stringify({ mode, geometry }, null, 2)).toBe(true);
     expect(switchGeometry, JSON.stringify({ mode, switchGeometry }, null, 2)).toEqual(['0px', '0px']);
     expect(cardShadow, JSON.stringify({ mode, cardShadow }, null, 2)).toBe('none');
+  }
+});
+
+/**
+ * Verifies that Technical Blueprint reserves line work for the drafting grid
+ * while cards and controls retain flat, scheme-derived material surfaces.
+ */
+test('Technical Blueprint surfaces avoid decorative material washes in both sheet modes', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+  await page.selectOption('#themeSelect', 'sunset-ember');
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    const materials = await page.evaluate(() => {
+      const backgroundImage = (selector) => getComputedStyle(document.querySelector(selector)).backgroundImage;
+
+      return {
+        sheet: getComputedStyle(document.body).backgroundImage,
+        card: backgroundImage('.blueprint-card'),
+        panel: backgroundImage('.blueprint-panel'),
+        input: backgroundImage('.blueprint-input'),
+        semanticCard: backgroundImage('.ui-card'),
+        semanticInput: backgroundImage('.ui-input')
+      };
+    });
+
+    expect(materials.sheet, JSON.stringify({ mode, materials }, null, 2)).toContain('linear-gradient');
+    expect(materials.sheet, JSON.stringify({ mode, materials }, null, 2)).not.toContain('radial-gradient');
+    expect(Object.entries(materials).filter(([name]) => name !== 'sheet').every(([, value]) => value === 'none'), JSON.stringify({ mode, materials }, null, 2)).toBe(true);
+  }
+});
+
+/**
+ * Verifies that the compact drafting treatment does not reduce prefixed,
+ * semantic, or native controls below an accessible pointer target height.
+ */
+test('Technical Blueprint keeps every control family square and at least 44 pixels tall', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+  await page.selectOption('#themeSelect', 'arctic-indigo');
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    const controls = await page.evaluate(() => [
+      ['prefixed button', document.querySelector('.blueprint-button-primary')],
+      ['prefixed input', document.querySelector('.blueprint-input')],
+      ['semantic button', document.querySelector('.ui-button[data-ui-variant="primary"]')],
+      ['semantic input', document.querySelector('.ui-input')],
+      ['native button', document.querySelector('[data-testid="native-buttons"] button')],
+      ['native input', document.querySelector('[data-testid="native-number"]')]
+    ].map(([name, control]) => {
+      const styles = getComputedStyle(control);
+
+      return {
+        name,
+        borderRadius: styles.borderRadius,
+        height: control.getBoundingClientRect().height
+      };
+    }));
+
+    expect(controls.every(({ borderRadius }) => borderRadius === '0px'), JSON.stringify({ mode, controls }, null, 2)).toBe(true);
+    expect(controls.every(({ height }) => height >= 44), JSON.stringify({ mode, controls }, null, 2)).toBe(true);
+  }
+});
+
+/**
+ * Verifies that framed Technical Blueprint components use line hierarchy for
+ * separation rather than raised material or offset shadow treatments.
+ */
+test('Technical Blueprint framed components remain shadowless in both sheet modes', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+  await page.selectOption('#themeSelect', 'arctic-indigo');
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    const shadows = await page.evaluate(() => [
+      ['card', '.blueprint-card'],
+      ['panel', '.blueprint-panel'],
+      ['button', '.blueprint-button-primary'],
+      ['input', '.blueprint-input'],
+      ['navigation', '.blueprint-nav'],
+      ['badge', '.blueprint-badge'],
+      ['alert', '.blueprint-alert'],
+      ['table', '.blueprint-table-wrap'],
+      ['tooltip', '.blueprint-tooltip'],
+      ['service card', '.blueprint-card-service'],
+      ['feature strip', '.blueprint-feature-strip'],
+      ['callout', '.blueprint-callout-bar'],
+      ['metric', '.blueprint-metric'],
+      ['native button', '[data-testid="native-buttons"] button']
+    ].map(([name, selector]) => {
+      const element = document.querySelector(selector);
+
+      return {
+        name,
+        shadow: element ? getComputedStyle(element).boxShadow : 'missing'
+      };
+    }));
+
+    expect(shadows.every(({ shadow }) => shadow === 'none'), JSON.stringify({ mode, shadows }, null, 2)).toBe(true);
+  }
+});
+
+/**
+ * Verifies that Technical Blueprint remains usable without a selected color
+ * scheme by falling back to the coordinated day and night reference palettes.
+ */
+test('Technical Blueprint provides a coordinated fallback palette when no scheme is selected', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+
+  for (const mode of ['light', 'dark', 'contrast']) {
+    await page.selectOption('#modeSelect', mode);
+    await page.evaluate(() => document.body.removeAttribute('data-theme'));
+
+    const palette = await page.evaluate(() => {
+      const bodyStyles = getComputedStyle(document.body);
+      const readChannels = (token) => bodyStyles.getPropertyValue(token).trim().split(/\s+/).map(Number);
+      const primary = getComputedStyle(document.querySelector('.blueprint-button-primary'));
+      const secondary = getComputedStyle(document.querySelector('.blueprint-button-secondary'));
+      const danger = getComputedStyle(document.querySelector('.blueprint-button-danger'));
+
+      return {
+        background: readChannels('--blueprint-bg-rgb'),
+        text: readChannels('--blueprint-text-rgb'),
+        primary: readChannels('--blueprint-primary-rgb'),
+        primaryPaint: primary.backgroundColor,
+        secondaryBorder: secondary.borderColor,
+        dangerBorder: danger.borderColor
+      };
+    });
+
+    expect(palette.background, JSON.stringify({ mode, palette }, null, 2)).toHaveLength(3);
+    expect(palette.text, JSON.stringify({ mode, palette }, null, 2)).toHaveLength(3);
+    expect(palette.primary, JSON.stringify({ mode, palette }, null, 2)).toHaveLength(3);
+    expect(palette.primaryPaint, JSON.stringify({ mode, palette }, null, 2)).not.toBe('rgba(0, 0, 0, 0)');
+    expect(palette.secondaryBorder, JSON.stringify({ mode, palette }, null, 2)).not.toBe('rgba(0, 0, 0, 0)');
+    expect(palette.dangerBorder, JSON.stringify({ mode, palette }, null, 2)).not.toBe('rgba(0, 0, 0, 0)');
+
+    if (mode === 'light') {
+      expect(Math.min(...palette.background), JSON.stringify({ mode, palette }, null, 2)).toBeGreaterThanOrEqual(230);
+      expect(palette.text[2], JSON.stringify({ mode, palette }, null, 2)).toBeGreaterThan(palette.text[0]);
+    } else if (mode === 'dark') {
+      expect(Math.max(...palette.background), JSON.stringify({ mode, palette }, null, 2)).toBeLessThan(80);
+      expect(Math.min(...palette.text), JSON.stringify({ mode, palette }, null, 2)).toBeGreaterThan(120);
+    } else {
+      expect(Math.max(...palette.background), JSON.stringify({ mode, palette }, null, 2)).toBeLessThanOrEqual(16);
+      expect(Math.min(...palette.text), JSON.stringify({ mode, palette }, null, 2)).toBeGreaterThanOrEqual(240);
+    }
+
+    expect(palette.primary[1], JSON.stringify({ mode, palette }, null, 2)).toBeGreaterThan(palette.primary[0]);
+    expect(palette.primary[2], JSON.stringify({ mode, palette }, null, 2)).toBeGreaterThan(palette.primary[0]);
+  }
+});
+
+/**
+ * Verifies the reference sheet's double-line frame and condensed uppercase
+ * drafting hierarchy without coupling the preset to a particular webfont.
+ */
+test('Technical Blueprint uses a drawing frame and condensed drafting headings', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#uiSelect', 'technical-blueprint');
+  await page.selectOption('#themeSelect', 'arctic-indigo');
+
+  for (const mode of ['light', 'dark']) {
+    await page.selectOption('#modeSelect', mode);
+
+    const drafting = await page.evaluate(() => {
+      const frame = getComputedStyle(document.querySelector('.blueprint-page'));
+      const heading = getComputedStyle(document.querySelector('.blueprint-title'));
+      const semanticHeading = getComputedStyle(document.querySelector('#semantic-runtime h1'));
+
+      return {
+        frame: {
+          borderStyle: frame.borderStyle,
+          borderWidth: frame.borderWidth,
+          borderRadius: frame.borderRadius
+        },
+        heading: {
+          fontStretch: Number.parseFloat(heading.fontStretch),
+          textTransform: heading.textTransform
+        },
+        semanticHeading: {
+          fontStretch: Number.parseFloat(semanticHeading.fontStretch),
+          textTransform: semanticHeading.textTransform
+        }
+      };
+    });
+
+    expect(drafting.frame, JSON.stringify({ mode, drafting }, null, 2)).toEqual({
+      borderStyle: 'double',
+      borderWidth: '3px',
+      borderRadius: '0px'
+    });
+    expect(drafting.heading.fontStretch, JSON.stringify({ mode, drafting }, null, 2)).toBeLessThan(100);
+    expect(drafting.heading.textTransform, JSON.stringify({ mode, drafting }, null, 2)).toBe('uppercase');
+    expect(drafting.semanticHeading.fontStretch, JSON.stringify({ mode, drafting }, null, 2)).toBeLessThan(100);
+    expect(drafting.semanticHeading.textTransform, JSON.stringify({ mode, drafting }, null, 2)).toBe('uppercase');
   }
 });
 

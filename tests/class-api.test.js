@@ -69,6 +69,7 @@ const coreSuffixes = [
   'button-primary',
   'button-secondary',
   'button-danger',
+  'button-warning',
   'icon-button',
   'badge',
   'badge-primary',
@@ -121,6 +122,46 @@ const extendedUtilitySuffixes = [
   'sr-only',
   'visually-hidden',
   'skip-link'
+];
+
+const cyberpunkTemplateSuffixes = [
+  'accordion',
+  'avatar',
+  'avatar-group',
+  'breadcrumb',
+  'chip',
+  'choice',
+  'code',
+  'dropdown',
+  'error-text',
+  'file',
+  'helper',
+  'input-icon',
+  'input-wrap',
+  'list',
+  'meter',
+  'modal',
+  'modal-actions',
+  'option',
+  'overline',
+  'pagination',
+  'pagination-page',
+  'popover',
+  'progress-magenta',
+  'quote',
+  'range',
+  'range-critical',
+  'section-title',
+  'segment',
+  'segmented',
+  'skeleton',
+  'step',
+  'stepper',
+  'tab',
+  'tabs',
+  'tags',
+  'toast',
+  'token-swatch'
 ];
 
 function astFor(relativeFile) {
@@ -262,6 +303,20 @@ test('documented extended utilities compose through shared components for every 
   }
 });
 
+test('Cyberpunk publishes every template-only component as preset extras', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const extras = manifest.classApi.presetExtras.cyberpunk ?? [];
+  const names = classNames(astFor(path.join('styles', 'cyberpunk.css')));
+
+  for (const suffix of cyberpunkTemplateSuffixes) {
+    assert.equal(extras.includes(suffix), true, `manifest cyberpunk extras should include ${suffix}`);
+    assert.equal(names.has(`cyber-${suffix}`), true, `cyberpunk source should expose .cyber-${suffix}`);
+  }
+
+  assert.equal(names.has('cp-button'), false, 'Cyberpunk library API should not publish cp-* aliases');
+  assert.equal(extras.includes('page'), false, 'Cyberpunk pagination item must not reuse the existing page shell suffix');
+});
+
 test('button pill components have centered 44px geometry and complete interaction hooks', () => {
   for (const [ui, prefix] of styles) {
     const className = `${prefix}-button-pill`;
@@ -374,7 +429,6 @@ test('theme defaults expose token declarations for paint, controls, and spinners
         if (
           ruleHasAttributes(rule, [
             { name: 'data-ui', value: ui },
-            { name: 'data-theme', value: null },
             { name: 'data-mode', value: null }
           ]) &&
           ruleDeclarations(rule).get('background') === `var(--${prefix}-theme-bg)`
