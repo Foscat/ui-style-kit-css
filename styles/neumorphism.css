@@ -1441,9 +1441,15 @@
 /**
  * Keeps authored invalid fields distinct after the shared native field paint is applied.
  */
-[data-ui="neumorphism"][data-mode] :where(.neo-input, .neo-textarea, .neo-select)[aria-invalid="true"] {
+[data-ui="neumorphism"][data-mode] :where(.neo-input, .neo-textarea, .neo-select)[aria-invalid="true"],
+[data-ui="neumorphism"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]) {
   border-color: var(--neo-danger);
   box-shadow: 0 0 0 2px rgb(var(--neo-danger-rgb) / .2), var(--neo-inset-shadow-sm);
+}
+
+[data-ui="neumorphism"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
+  filter: saturate(.72);
+  opacity: .78;
 }
 
 [data-ui="neumorphism"][data-mode] :where(input[type="file"])::file-selector-button,

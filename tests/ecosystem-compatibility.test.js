@@ -28,7 +28,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
   assert.equal(compatibility.ownership.status, 'temporary');
   assert.equal(
     compatibility.packageSources['interactive-surface-css'].revision,
-    'b50a60d8ffd804d8227b1a16903c394556b88511',
+    'b48b8b9080e4b1d4e344b6749ab1969a2863b3d1',
     'The ecosystem fixture must pin the Interactive commit with the reviewed release preflight.'
   );
   assert.equal(
@@ -44,7 +44,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
     },
     current: {
       'ui-style-kit-css': '2.4.0',
-      'interactive-surface-css': '1.6.0',
+      'interactive-surface-css': '1.7.0',
       'layout-style-css': '3.1.0'
     }
   });

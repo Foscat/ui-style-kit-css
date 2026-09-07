@@ -13,7 +13,7 @@ documentation generator is configured in this package; reusable JavaScript helpe
 use JSDoc-compatible comments, and the checked-in build owns generated CSS, manifests,
 icons, README size measurements, and demo asset hashes.
 
-Prepare `ui-style-kit-css@2.4.0` on its release branch, open a pull request against `main`, and merge only after the complete gate is green. The aligned companion set is `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`.
+Prepare `ui-style-kit-css@2.4.0` on its release branch, open a pull request against `main`, and merge only after the complete gate is green. The aligned companion set is `layout-style-css@3.1.0` and `interactive-surface-css@1.7.0`.
 
 Do not push `v2.4.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
 
@@ -37,13 +37,13 @@ The local UI matrix stops after the first failing 100-case block. Every case has
 
 `npm run check:ecosystem:minimum` downloads and repacks the declared minimum published runtime versions: `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`. Those tarballs predate the additive shared-manifest policy introduced on the coordinated branches, so the minimum matrix validates their exact installed versions and published CSS entry points; current packed heads retain the stricter manifest-schema and current-documentation checks. `npm run check:ecosystem:packs` runs current first and minimum second.
 
-The current matrix checks `ui-style-kit-css@2.4.0` as the active candidate only while its exact npm version is absent, `interactive-surface-css@1.6.0` as a published release, and `layout-style-css@3.1.0` as a published release. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current matrix checks `ui-style-kit-css@2.4.0` as the active candidate only while its exact npm version is absent, `interactive-surface-css@1.7.0` as a published release, and `layout-style-css@3.1.0` as a published release. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Both matrices install fresh tarball consumers for UI only, Interaction only, Layout only, every pair, and all three. Chromium then checks selected theme paint, native and prefixed components, interaction focus/disabled/loading/selected/persistent states, Layout wrappers/primitives/recipes/personalities, console cleanliness, and an empty external-request log. Three text-free baselines under `tests/snapshots/clean-install/` cover the highest-risk integrated combinations.
 
 Snapshot verification decodes PNG pixels, requires exact dimensions, ignores pixelmatch-classified antialias noise, uses a `0.1` color threshold, and permits at most `0.25%` differing pixels. The committed fixtures render at 720-721 by 261 pixels and therefore allow 469-470 changed pixels while rejecting the tested 42% meaningful change. A mismatch retains both `SCENARIO-actual.png` and `SCENARIO-diff.png` in the reported safe temporary directory. CI only validates committed baselines and never passes the generation flag. To intentionally refresh them locally, run the current checker with `--update-snapshots`, inspect all three images, and rerun without that flag.
 
-The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever a later release changes a companion contract. The current values pin the published Interactive Surface CSS merge at `b50a60d8ffd804d8227b1a16903c394556b88511` and the published Layout Style CSS merge at `afcb1fdf70d4635e35739e621ee1598400fed103`.
+The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. Advance those pins whenever a later release changes a companion contract. The current values pin the published Interactive Surface CSS merge at `b48b8b9080e4b1d4e344b6749ab1969a2863b3d1` and the published Layout Style CSS merge at `afcb1fdf70d4635e35739e621ee1598400fed103`.
 
 Use this exact bootstrap and merge sequence:
 

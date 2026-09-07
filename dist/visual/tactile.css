@@ -5248,6 +5248,17 @@
     }
   }
 
+  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
+    border-color: var(--tactile-danger);
+    box-shadow: 0 0 0 2px rgb(var(--tactile-danger-rgb)/.18);
+  }
+
+  .tactile-input[readonly], .tactile-textarea[readonly], :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
+  }
+
   .tactile-title {
     font-family: var(--tactile-font-display);
     letter-spacing: max(.022em, .5px);
@@ -6046,12 +6057,12 @@
     outline-offset: 2px;
   }
 
-  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
+  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], [data-ui="tactile"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]), :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
     border-color: var(--tactile-danger);
     box-shadow: var(--tactile-inset-shadow),0 0 0 2px rgb(var(--tactile-danger-rgb)/.24);
   }
 
-  .tactile-input[readonly], .tactile-textarea[readonly], :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
+  .tactile-input[readonly], .tactile-textarea[readonly], [data-ui="tactile"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]), :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
     filter: saturate(.72);
     opacity: .78;
     border-style: dashed;

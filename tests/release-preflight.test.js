@@ -47,7 +47,7 @@ test('an explicit later Interactive source overrides the release default', () =>
   assert.deepEqual(
     releasePreflight.parseArgs([
       '--interactive-spec',
-      'interactive-surface-css@1.6.0',
+      'interactive-surface-css@1.7.0',
       '--interactive-repo',
       '../Interactive-Surface-CSS'
     ]),
@@ -88,7 +88,7 @@ test('normal UI preflight queries all six exact minimum and current ecosystem ve
 
   assert.deepEqual(requested.sort(), [
     '/interactive-surface-css/1.5.0',
-    '/interactive-surface-css/1.6.0',
+    '/interactive-surface-css/1.7.0',
     '/layout-style-css/3.0.0',
     '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0',
@@ -126,7 +126,7 @@ test('excludes only the staged Layout 3.1.0 candidate while retaining published 
   ]);
 });
 
-test('Interactive candidate preflight excludes only unpublished 1.6.0 while checking every published floor and companion', async () => {
+test('Interactive candidate preflight excludes only unpublished 1.7.0 while checking every published floor and companion', async () => {
   assert.ok(releasePreflight, 'scripts/release-preflight.mjs must implement the release gate');
 
   const requested = [];
@@ -144,7 +144,7 @@ test('Interactive candidate preflight excludes only unpublished 1.6.0 while chec
     await releasePreflight.verifyPublishedVersions(interactiveCandidateCompatibility(), {
       registryUrl: `http://127.0.0.1:${port}`,
       candidatePackage: 'interactive-surface-css',
-      candidateVersion: '1.6.0'
+      candidateVersion: '1.7.0'
     });
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
@@ -183,7 +183,7 @@ test('excludes only the unpublished candidate current version from registry chec
 
   assert.deepEqual(requested.sort(), [
     '/interactive-surface-css/1.5.0',
-    '/interactive-surface-css/1.6.0',
+    '/interactive-surface-css/1.7.0',
     '/layout-style-css/3.0.0',
     '/layout-style-css/3.1.0',
     '/ui-style-kit-css/2.1.0'
@@ -196,7 +196,7 @@ test('still rejects a nonexistent companion current version for an unpublished c
   const server = createServer((request, response) => {
     const [, packageName, version] = request.url.split('/');
     response.setHeader('content-type', 'application/json');
-    if (decodeURIComponent(packageName) === 'interactive-surface-css' && version === '1.6.0') {
+    if (decodeURIComponent(packageName) === 'interactive-surface-css' && version === '1.7.0') {
       response.statusCode = 404;
       response.end(JSON.stringify({ error: 'version not found' }));
       return;
@@ -213,7 +213,7 @@ test('still rejects a nonexistent companion current version for an unpublished c
         candidatePackage: 'ui-style-kit-css',
         candidateVersion: '2.4.0'
       }),
-      /interactive-surface-css@1\.6\.0 does not exist exactly/
+      /interactive-surface-css@1\.7\.0 does not exist exactly/
     );
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
@@ -496,7 +496,7 @@ function interactiveCandidateCompatibility() {
       },
       current: {
         'ui-style-kit-css': '2.1.0',
-        'interactive-surface-css': '1.6.0',
+        'interactive-surface-css': '1.7.0',
         'layout-style-css': '3.1.0'
       }
     }
@@ -513,7 +513,7 @@ function futureCandidateCompatibility() {
       },
       current: {
         'ui-style-kit-css': '2.4.0',
-        'interactive-surface-css': '1.6.0',
+        'interactive-surface-css': '1.7.0',
         'layout-style-css': '3.1.0'
       }
     }

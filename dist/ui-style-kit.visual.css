@@ -9168,6 +9168,10 @@
     color: var(--bento-link);
   }
 
+  [data-ui="bento"][data-mode] .bento-media-scrim > :where(figcaption, [data-media-caption]) * {
+    color: inherit;
+  }
+
   [data-ui="bento"][data-mode] .bento-tabs button.is-active {
     background: var(--bento-surface);
     color: var(--bento-text);
@@ -17132,6 +17136,17 @@
     }
   }
 
+  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
+    border-color: var(--tactile-danger);
+    box-shadow: 0 0 0 2px rgb(var(--tactile-danger-rgb)/.18);
+  }
+
+  .tactile-input[readonly], .tactile-textarea[readonly], :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
+  }
+
   .tactile-title {
     font-family: var(--tactile-font-display);
     letter-spacing: max(.022em, .5px);
@@ -17930,12 +17945,12 @@
     outline-offset: 2px;
   }
 
-  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
+  .tactile-input[aria-invalid="true"], .tactile-textarea[aria-invalid="true"], .tactile-select[aria-invalid="true"], [data-ui="tactile"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]), :where([data-ui="tactile"]) .ui-input[aria-invalid="true"], :where([data-ui="tactile"]) .ui-textarea[aria-invalid="true"], :where([data-ui="tactile"]) .ui-select[aria-invalid="true"] {
     border-color: var(--tactile-danger);
     box-shadow: var(--tactile-inset-shadow),0 0 0 2px rgb(var(--tactile-danger-rgb)/.24);
   }
 
-  .tactile-input[readonly], .tactile-textarea[readonly], :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
+  .tactile-input[readonly], .tactile-textarea[readonly], [data-ui="tactile"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]), :where([data-ui="tactile"]) .ui-input[readonly], :where([data-ui="tactile"]) .ui-textarea[readonly] {
     filter: saturate(.72);
     opacity: .78;
     border-style: dashed;
@@ -20059,9 +20074,14 @@
     box-shadow: var(--neo-focus-ring);
   }
 
-  [data-ui="neumorphism"][data-mode] :where(.neo-input, .neo-textarea, .neo-select)[aria-invalid="true"], :where([data-ui="neumorphism"])[data-mode] :where(.ui-input,.ui-textarea,.ui-select)[aria-invalid="true"] {
+  [data-ui="neumorphism"][data-mode] :where(.neo-input, .neo-textarea, .neo-select)[aria-invalid="true"], [data-ui="neumorphism"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]), :where([data-ui="neumorphism"])[data-mode] :where(.ui-input,.ui-textarea,.ui-select)[aria-invalid="true"] {
     border-color: var(--neo-danger);
     box-shadow: 0 0 0 2px rgb(var(--neo-danger-rgb)/.2),var(--neo-inset-shadow-sm);
+  }
+
+  [data-ui="neumorphism"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
+    filter: saturate(.72);
+    opacity: .78;
   }
 
   [data-ui="neumorphism"][data-mode] :where(input[type="file"])::file-selector-button {
@@ -25250,6 +25270,17 @@
     padding-inline-end: var(--usk-native-select-padding-inline-end);
   }
 
+  [data-ui="cyberpunk"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]) {
+    border-color: var(--cyber-danger);
+    box-shadow: 0 0 0 2px rgb(var(--cyber-danger-rgb)/.2),inset .16rem 0 0 rgb(var(--cyber-danger-rgb)/.22);
+  }
+
+  [data-ui="cyberpunk"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
+  }
+
   [data-ui="cyberpunk"][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
     inline-size: var(--usk-native-choice-size);
     block-size: var(--usk-native-choice-size);
@@ -27622,6 +27653,10 @@
     font-size: .625rem;
     font-weight: 700;
     line-height: 1.2;
+  }
+
+  [data-ui="y2k"][data-mode] .y2k-media-scrim > :where(figcaption, [data-media-caption]) * {
+    color: inherit;
   }
 
   [data-ui="y2k"][data-mode] .y2k-subtitle, [data-ui="y2k"][data-mode] .y2k-copy {
@@ -30620,6 +30655,17 @@
 
   [data-ui="retro-glass"][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea, select) {
     border-radius: var(--rg-radius-sm);
+  }
+
+  [data-ui="retro-glass"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]) {
+    border-color: var(--rg-danger);
+    box-shadow: inset 0 2px 5px var(--rg-material-shadow),0 0 0 1px var(--rg-danger);
+  }
+
+  [data-ui="retro-glass"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
   }
 
   .rg-choice input[type="checkbox"] {
@@ -38348,6 +38394,10 @@
     display: block;
   }
 
+  [data-ui="industrial-utility"][data-mode] .utility-media-scrim > :where(figcaption, [data-media-caption]) * {
+    color: inherit;
+  }
+
   .utility-overline {
     color: var(--utility-material-warning);
     font-family: var(--utility-material-font-mono);
@@ -44574,6 +44624,10 @@
   .deco-kicker, .deco-eyebrow {
     color: var(--deco-label-accent);
     font-weight: 600;
+  }
+
+  [data-ui="art-deco"][data-mode] .deco-media-scrim > :where(figcaption, [data-media-caption]) * {
+    color: inherit;
   }
 
   [data-ui="art-deco"][data-mode] :where(h2, h3, h4, h5, h6) {

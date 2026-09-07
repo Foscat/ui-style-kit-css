@@ -60,7 +60,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 - Gave all 20 presets distinct CTA, card, medallion, strip, scrim, and callout identities while preserving the existing class names and theme color roles.
 - Separated filled service actions from framed callout actions so `button-cut` and `button-outline-heavy` express independent, preset-coherent roles instead of sharing one generic CTA silhouette.
 - Reworked the commercial and utility demo specimens to use active theme tokens, explicit utility composition, and container-aware native typography.
-- Aligned ecosystem verification and documentation with `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`, including the current exported manifests and `foundation.css`.
+- Aligned ecosystem verification and documentation with `layout-style-css@3.1.0` and `interactive-surface-css@1.7.0`, including the current exported manifests and `foundation.css`.
 - Expanded the commercial component documentation with composition, accessibility, and responsive-behavior guidance.
 - Routed every Lightning CSS formatting and minification pass through the shared package Browserslist targets, with stable fallbacks and guarded progressive enhancements.
 

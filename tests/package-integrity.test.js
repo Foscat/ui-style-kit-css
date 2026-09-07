@@ -345,7 +345,7 @@ test('README documents the 2.4 library system and published companion set', () =
   assert.match(readme, /v2\.4\.0/);
   assert.match(readme, /Ecosystem compatibility/);
   assert.match(readme, /ui-style-kit-css@2\.4\.0/);
-  assert.match(readme, /interactive-surface-css@1\.6\.0/);
+  assert.match(readme, /interactive-surface-css@1\.7\.0/);
   assert.match(readme, /layout-style-css@3\.1\.0/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
   assert.match(readme, /UI Style Kit `2\.4\.0` is the current release target/);
@@ -430,7 +430,7 @@ test('ecosystem fixture pins both published companions for the UI 2.4.0 release'
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
 
-  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b50a60d8ffd804d8227b1a16903c394556b88511');
+  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b48b8b9080e4b1d4e344b6749ab1969a2863b3d1');
   assert.equal(compatibility.packageSources['layout-style-css'].revision, 'afcb1fdf70d4635e35739e621ee1598400fed103');
   assert.deepEqual(compatibility.supportedCombinations, {
     minimum: {
@@ -440,14 +440,14 @@ test('ecosystem fixture pins both published companions for the UI 2.4.0 release'
     },
     current: {
       'ui-style-kit-css': '2.4.0',
-      'interactive-surface-css': '1.6.0',
+      'interactive-surface-css': '1.7.0',
       'layout-style-css': '3.1.0'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
     assert.match(contents, /ui-style-kit-css@2\.4\.0[\s\S]{0,160}current release target/i);
-    assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
+    assert.match(contents, /interactive-surface-css@1\.7\.0[\s\S]{0,120}published/i);
     assert.match(contents, /layout-style-css@3\.1\.0[\s\S]{0,160}(?:compatible structural release|published)/i);
     assert.doesNotMatch(contents, /active staged candidate/i);
   }
@@ -610,9 +610,9 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
 test('publishing docs pin published companion merge commits for the UI release', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
-  assert.match(publishingGuide, /b50a60d8ffd804d8227b1a16903c394556b88511/);
+  assert.match(publishingGuide, /b48b8b9080e4b1d4e344b6749ab1969a2863b3d1/);
   assert.match(publishingGuide, /afcb1fdf70d4635e35739e621ee1598400fed103/);
-  assert.match(publishingGuide, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
+  assert.match(publishingGuide, /interactive-surface-css@1\.7\.0[\s\S]{0,120}published/i);
   assert.match(publishingGuide, /layout-style-css@3\.1\.0[\s\S]{0,120}published/i);
   assert.match(publishingGuide, /ui-style-kit-css@2\.4\.0[\s\S]{0,160}active candidate only while/i);
   assert.doesNotMatch(publishingGuide, /active staged candidate/i);

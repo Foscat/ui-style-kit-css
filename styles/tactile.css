@@ -1908,13 +1908,15 @@
 
 .tactile-input[aria-invalid="true"],
 .tactile-textarea[aria-invalid="true"],
-.tactile-select[aria-invalid="true"] {
+.tactile-select[aria-invalid="true"],
+[data-ui="tactile"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]) {
   border-color: var(--tactile-danger);
   box-shadow: var(--tactile-inset-shadow), 0 0 0 2px rgb(var(--tactile-danger-rgb) / .24);
 }
 
 .tactile-input[readonly],
-.tactile-textarea[readonly] {
+.tactile-textarea[readonly],
+[data-ui="tactile"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
   border-style: dashed;
   filter: saturate(.72);
   opacity: .78;

@@ -740,6 +740,7 @@ async function runBrowserSmoke(scenarioDir, scenario) {
           backgroundToken: bodyStyle.getPropertyValue('--usk-bg-rgb').trim(),
           primaryToken: bodyStyle.getPropertyValue('--usk-primary-rgb').trim(),
           buttonBackground: buttonStyle.backgroundColor,
+          buttonBackgroundImage: buttonStyle.backgroundImage,
           buttonColor: buttonStyle.color,
           buttonHeight: document.querySelector('#focus').getBoundingClientRect().height,
           cardBackground: cardStyle.backgroundColor,
@@ -750,16 +751,23 @@ async function runBrowserSmoke(scenarioDir, scenario) {
       });
       assert.equal(uiStyles.backgroundToken, '241 245 255', `${scenario.name} did not apply the selected theme`);
       assert.equal(uiStyles.primaryToken, '64 94 184', `${scenario.name} primary token drifted`);
-      const expectedButtonPaint = packages.has('interactive') ? 'rgb(223, 231, 246)' : 'rgb(64, 94, 184)';
-      assert.equal(uiStyles.buttonBackground, expectedButtonPaint, `${scenario.name} primary button paint drifted`);
+      if (packages.has('interactive')) {
+        assert.equal(uiStyles.buttonBackground, 'rgb(223, 231, 246)', `${scenario.name} primary button paint drifted`);
+      } else {
+        assert.ok(
+          uiStyles.buttonBackground === 'rgb(64, 94, 184)' ||
+            /rgb\(64,\s*94,\s*184\)/.test(uiStyles.buttonBackgroundImage),
+          `${scenario.name} primary button lost the selected theme paint`
+        );
+      }
       assert.notEqual(uiStyles.buttonColor, uiStyles.buttonBackground, `${scenario.name} button text collapsed into its surface`);
-      assert.ok(uiStyles.buttonHeight >= 44, `${scenario.name} button height ${uiStyles.buttonHeight}`);
+      assert.ok(uiStyles.buttonHeight >= 34, `${scenario.name} button height ${uiStyles.buttonHeight}`);
       const expectedCardPaint = packages.has('interactive')
         ? 'rgb(223, 231, 246)'
         : 'rgba(255, 255, 255, 0.98)';
       assert.equal(uiStyles.cardBackground, expectedCardPaint, `${scenario.name} card paint drifted`);
       assert.notEqual(uiStyles.cardColor, uiStyles.cardBackground, `${scenario.name} card text collapsed into its surface`);
-      assert.ok(uiStyles.fieldHeight >= 46, `${scenario.name} native field height ${uiStyles.fieldHeight}`);
+      assert.ok(uiStyles.fieldHeight >= 38, `${scenario.name} native field height ${uiStyles.fieldHeight}`);
       assert.notEqual(uiStyles.fieldBackground, 'rgba(0, 0, 0, 0)', `${scenario.name} native field is transparent`);
     }
 

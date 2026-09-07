@@ -6343,6 +6343,17 @@
     border-radius: var(--rg-radius-sm);
   }
 
+  [data-ui="retro-glass"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]) {
+    border-color: var(--rg-danger);
+    box-shadow: inset 0 2px 5px var(--rg-material-shadow),0 0 0 1px var(--rg-danger);
+  }
+
+  [data-ui="retro-glass"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
+  }
+
   .rg-choice input[type="checkbox"] {
     appearance: auto;
   }

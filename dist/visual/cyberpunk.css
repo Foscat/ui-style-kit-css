@@ -5514,6 +5514,17 @@
     padding-inline-end: var(--usk-native-select-padding-inline-end);
   }
 
+  [data-ui="cyberpunk"][data-mode] :where(input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]) {
+    border-color: var(--cyber-danger);
+    box-shadow: 0 0 0 2px rgb(var(--cyber-danger-rgb)/.2),inset .16rem 0 0 rgb(var(--cyber-danger-rgb)/.22);
+  }
+
+  [data-ui="cyberpunk"][data-mode] :where(input[readonly]:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea[readonly]) {
+    filter: saturate(.72);
+    opacity: .78;
+    border-style: dashed;
+  }
+
   [data-ui="cyberpunk"][data-mode] :where(input[type="checkbox"], input[type="radio"]) {
     inline-size: var(--usk-native-choice-size);
     block-size: var(--usk-native-choice-size);
