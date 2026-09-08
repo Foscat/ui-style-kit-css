@@ -7,9 +7,11 @@
 
 It is separate from, but complementary to, **Interactive Surface CSS** and **Layout Style CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior. Use **Layout Style CSS** for responsive layout wrappers, grid systems, macro-structure positioning, and container scaffolding.
 
-## Current Release
+## Current release target
 
-`v2.3.0` expands the library to 20 UI style systems and 20 shared color schemes, adds a universal commercial component vocabulary and a declared modern-browser support floor, and grows the browser matrix to 3,600 preset/theme/mode/engine combinations. Existing default, focused, visual-only, and bridge entrypoints remain compatible, and parser-based minification remains exactly pinned.
+`v2.4.0` gives all 20 UI style systems a complete native-control identity across selects, choices, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars. Existing themes, modes, selectors, default/focused/visual/bridge entrypoints, and the 3,600-case browser matrix remain compatible, and parser-based minification remains exactly pinned.
+
+This is the local 2.4.0 release candidate, not a claim of npm publication. It also adds native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, and a unified demo with style-specific components. See the [2.4.0 release preparation notes](docs/RELEASE-2.4.0.md) for scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -19,7 +21,7 @@ UI Style Kit CSS owns visual identity: themes, semantic `.ui-*` component paint,
 
 ```mermaid
 flowchart LR
-  App["Application markup"] --> Attrs["data-ui + data-theme + data-mode"]
+  App["Application markup"] --> Attrs["data-ui + data-mode; optional data-theme"]
   Attrs --> USK["ui-style-kit-css"]
   USK --> Themes["Shared --usk-* theme roles"]
   USK --> Components["Prefixed component classes"]
@@ -38,11 +40,13 @@ flowchart TB
   Rgb --> Modes["Light, dark, and contrast modes"]
   Modes --> Prefixes["Per-style prefixed aliases"]
   Prefixes --> Rules["Component, utility, and native rules"]
-  Demo["Demo token workbench"] --> Overrides["Copyable :where([data-ui][data-theme][data-mode]) override block"]
+  Demo["Demo token workbench"] --> Overrides["Scoped native-palette or shared-theme overrides"]
   Overrides --> Rgb
 ```
 
-The demo page documents this flow directly: it shows computed RGB color tokens for the active theme and mode, lets developers edit them live, and copies the exact override block to drop into an app stylesheet.
+The demo shows computed RGB colors for the active native palette or shared theme, supports live edits, and copies a scoped override block. Native mode includes preset-specific material channels such as paper, ink, and brass; shared-theme mode exposes the 23 semantic RGB roles.
+
+The [demo showcase guide](docs/DEMO-SHOWCASE.md) explains the unified component gallery, Industrial Utility instruments, palette editing, and the opt-in `?view=reference` boards. Existing `?personality=maximalist` links work; `?ui=tactile&theme=None&mode=dark` selects a native-palette preview.
 
 ## Ecosystem compatibility
 
@@ -50,11 +54,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.3.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.6.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `ui-style-kit-css@2.4.0` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.7.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.1.0` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.3.0` is the current release target and is verified with Interactive Surface `1.6.0`. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.4.0` is the current release target and is verified with Interactive Surface `1.7.0`. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -69,6 +73,7 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 - 20 UI style systems
 - 20 shared color schemes
 - `light`, `dark`, and `contrast` modes
+- Native preset colors when no shared theme is selected
 - Combined CSS bundle and per-style production imports
 - Visual-only full and focused entrypoints for consumer-owned layouts
 - Machine-readable `manifest.json` preset, theme, mode, class, and native-part capabilities
@@ -162,14 +167,15 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~855 KB | ~125 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~841 KB | ~123 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~1015 KB | ~143 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1978 KB | ~379 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~1962 KB | ~377 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2309 KB | ~400 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~24 KB | ~4 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
-| `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| Single style imports | ~26-28 KB | ~5-6 KB | Production apps with one visual system |
+| `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~205 KB | ~30 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~278 KB | ~39 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 
@@ -182,7 +188,7 @@ Use the latest published NPM package:
 For production, pin the exact approved release rather than relying on `latest`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.3.0/dist/ui-style-kit.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ui-style-kit-css@2.4.0/dist/ui-style-kit.min.css" />
 ```
 
 ## Basic usage
@@ -209,6 +215,20 @@ document.body.dataset.mode = "dark";
 ```
 
 This changes the semantic components' visual preset without replacing their DOM nodes or rewriting their `.ui-*` classes.
+
+### Native palettes and None
+
+Keep `data-ui` and `data-mode`, and omit `data-theme` to display the selected style's native palette:
+
+```html
+<body data-ui="tactile" data-mode="light">
+```
+
+```js
+document.body.removeAttribute("data-theme");
+```
+
+The demo labels this choice **None — style defaults**. Do not assign the literal strings `"None"` or `"null"` to the HTML attribute. Native editor exports use `--<prefix>-*-rgb` variables scoped to the active preset/mode without a theme; named-theme exports use `--usk-*-rgb` and remain reusable across presets. Check contrast again after changing colors.
 
 ## Semantic component API
 
@@ -251,28 +271,48 @@ For example, a fixed Minimal SaaS integration may continue to use `<button class
 
 ## UI systems
 
-| UI style | `data-ui` | Class prefix | Best for |
-|---|---:|---:|---|
-| Minimal SaaS | `minimal-saas` | `saas` | dashboards, admin tools, SaaS apps |
-| Bento UI | `bento` | `bento` | landing pages, feature sections, showcases |
-| Maximalist / Playful | `maximalist` | `max` | creators, entertainment, bold client sites |
-| Bauhaus / Swiss Modern | `bauhaus` | `bau` | agencies, editorial layouts, design-forward brands |
-| Skeuomorphic / Tactile | `tactile` | `tactile` | premium tactile interfaces, control panels |
-| Neumorphism | `neumorphism` | `neo` | soft dashboards, experimental UI |
-| Retrofuturism | `retrofuturism` | `retro` | futuristic portfolios and product pages |
-| Brutalism | `brutalism` | `brutal` | bold creative websites |
-| Cyberpunk | `cyberpunk` | `cyber` | security, gaming, encryption, tech demos |
-| Y2K | `y2k` | `y2k` | nostalgic, playful, fashion/music/event sites |
-| Retro Glass | `retro-glass` | `rg` | futuristic glass dashboards and hero sections |
-| Editorial Luxe | `editorial-luxe` | `luxe` | luxury brands, architecture, hospitality, premium editorial sites |
-| Organic Modern | `organic-modern` | `organic` | wellness, sustainability, hospitality, natural product brands |
-| Industrial Utility | `industrial-utility` | `utility` | operations software, manufacturing, logistics, fleet and equipment systems |
-| Technical Blueprint | `technical-blueprint` | `blueprint` | engineering, architecture, technical documentation, scientific tools |
-| Art Deco | `art-deco` | `deco` | luxury, hospitality, heritage brands, events and distinctive showcases |
-| Clay | `clay` | `clay` | friendly SaaS, collaborative tools, education and approachable product sites |
-| Data Terminal | `data-terminal` | `terminal` | operator consoles, telemetry, infrastructure, monitoring and developer tools |
-| Paper Editorial | `paper-editorial` | `paper` | news, magazines, journals, cultural sites and story-led publishing |
-| Neo-Noir | `neo-noir` | `noir` | cinematic portfolios, nightlife, premium creative studios and dramatic product sites |
+| UI style | `data-ui` | Prefix | Defining visual contract | Best for |
+|---|---:|---:|---|---|
+| Minimal SaaS | `minimal-saas` | `saas` | compact flat modules, cool 1px rules, tight radii, restrained type, negligible elevation | dense dashboards, admin tools, focused SaaS workflows |
+| Bento UI | `bento` | `bento` | Soft Mosaic tiles, Manrope, fine borders, compact rounded controls, restrained elevation | friendly product surfaces, feature mosaics, showcase dashboards |
+| Maximalist / Playful | `maximalist` | `max` | loud poster collage, sticker offsets, hard ink strokes, expressive condensed typography | creators, entertainment, bold client sites |
+| Bauhaus / Swiss Modern | `bauhaus` | `bau` | strict grids, heavy rules, primary geometry, flat construction, condensed uppercase type | agencies, editorial layouts, design-forward brands |
+| Skeuomorphic / Tactile | `tactile` | `tactile` | paper plates, serif headings, keylines, chamfered keycaps, dark troughs, mechanical controls | physical workspace configuration and instrument-like product UI |
+| Neumorphism | `neumorphism` | `neo` | borderless same-surface shells, opposing extrusion shadows, concave fields and pressed states | sculpted dashboards and quiet configuration workflows |
+| Retrofuturism | `retrofuturism` | `retro` | atomic enamel shells, metallic rims, inset instrument bays, oval actions, dial controls | atomic-age dashboards and configuration workspaces |
+| Brutalism | `brutalism` | `brutal` | square full-bleed grids, heavy rules, numbered modules, blunt controls, segmented meters | direct operational and bold creative interfaces |
+| Cyberpunk | `cyberpunk` | `cyber` | chamfered HUD panels, clipped controls, technical condensed type, signal-colored edges | security, gaming, routing, and high-tech command tools |
+| Y2K | `y2k` | `y2k` | dense portal panels, 1px bevels, title bars, system typography, segmented indicators | nostalgic fashion, music, event, and community portals |
+| Retro Glass | `retro-glass` | `rg` | brushed application chrome, glossy navigation, beveled controls, glass panes, dark dock treatment | dense desktop-style media and productivity applications |
+| Editorial Luxe | `editorial-luxe` | `luxe` | Didone hierarchy, double rules, rigid editorial geometry, restrained couture material | luxury brands, architecture, hospitality, premium editorial sites |
+| Organic Modern | `organic-modern` | `organic` | matte limestone/forest surfaces, Cormorant Garamond + DM Sans, pointed actions, material photography, fine ledger rules | architecture, sustainable materials, natural product workspaces |
+| Industrial Utility | `industrial-utility` | `utility` | metal-framed panels, recessed instruments, mechanical actions, safety gauges, technical type | operations, manufacturing, logistics, fleet, and equipment systems |
+| Technical Blueprint | `technical-blueprint` | `blueprint` | drafting grids, technical linework, square measured controls, annotations, calibrated geometry | engineering, architecture, technical documentation, scientific tools |
+| Art Deco | `art-deco` | `deco` | stepped symmetry, metallic double keylines, fanbursts, elegant display type, jewel controls | luxury, hospitality, heritage brands, and distinctive showcases |
+| Clay | `clay` | `clay` | hand-molded imperfect edges, mineral grain, raised lower shadows, carved fields, debossed type, and clay-bead loaders | collaborative tools, education, and approachable product sites |
+| Data Terminal | `data-terminal` | `terminal` | dense 1px command grid, mono typography, bracketed actions, strict semantic signal colors | operator consoles, telemetry, infrastructure, monitoring, developer tools |
+| Paper Editorial | `paper-editorial` | `paper` | physical field-manual sheet, binder and index details, print rules, condensed and monospaced type | news, journals, cultural sites, and story-led publishing |
+| Neo-Noir | `neo-noir` | `noir` | cinematic slants, trapezoid controls, diagonal cuts, subtle grain, semantic amber/teal/red signaling | cinematic portfolios, production tools, and dramatic product sites |
+
+Each description is backed by concrete CSS declaration checks and preset-scoped visual cases. This lets a failing preset or pair be rerun directly without repeating unrelated green coverage.
+
+The demo uses one shared layout with a **Style-specific components** gallery. Industrial Utility's switchgear, instruments, and alarm workflow are showcased alongside each preset's distinctive components. Original template boards remain available for visual QA at `index.html?view=reference` (also supported by `demo/index.html`). See the [demo showcase guide](docs/DEMO-SHOWCASE.md) for the gallery, native/shared palettes, and reference-fixture workflow.
+
+See the [Retro Glass component guide](docs/RETRO-GLASS.md) for the full reference-board API, native palette selection, token customization, and accessible interaction contracts. Preset-specific demo components appear only while their owning style is selected.
+
+The [Art Deco component guide](docs/ART-DECO.md) covers the 17-group Metropolitan Moderne specimen, its complete public component inventory, paired reference palettes, theme-token integration, and keyboard interactions. Select Art Deco in the reference view to reveal its complete board.
+
+The [Editorial Lux component guide](docs/EDITORIAL-LUX.md) covers the couture reference specimen, its ten component groups, token-based palettes, accessible interactions, and responsive layout. Its existing `editorial-luxe` preset ID and `luxe-*` public API remain compatible.
+
+The [Neo Noir component guide](docs/NEO-NOIR.md) covers all 15 Midnight Cut reference groups, portable textures, canonical `noir-*` components, light/dark palettes and keyboard interactions. The complete specimen appears in the reference view when Neo-Noir is selected.
+
+The [Organic Modern component guide](docs/ORGANIC-MODERN.md) maps the architecture workspace and Control Lab to public `organic-*` classes. Both reference palettes are fallbacks only; shared themes paint the complete UI. Its complete specimen appears in the reference view when Organic Modern is selected.
+
+The [Bento component guide](docs/BENTO.md) maps the retained Soft Mosaic template one-to-one to public `bento-*` classes, including service status, quota, listbox, loading, and dialog components. Reference colors are fallbacks behind shared theme roles. Its complete interactive specimen appears in the reference view when Bento UI is selected.
+
+The [Tactile workspace guide](docs/TACTILE.md) documents its optional navigation,
+settings, and instrument-panel composition, native material colors, and theme-safe
+foregrounds. These advanced classes are included in the public manifest.
 
 ## Color themes
 
@@ -358,9 +398,9 @@ contrast
 
 ## Native HTML coverage
 
-`styles/native-elements.css` owns the shared native selectors under `[data-ui][data-theme][data-mode]`. Each style system maps those selectors to its visual identity through `--usk-native-*` tokens, so native controls keep the same coverage while inheriting each preset's radius, shadows, borders, typography, and color surfaces.
+`styles/native-elements.css` owns the shared native selectors under `[data-ui][data-mode]`; `data-theme` is optional. Each style system maps the complete `--usk-native-*` identity contract, so choices, selects, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars inherit preset-specific geometry, material, borders, depth, typography, and either the active theme or the preset's accessible fallback palette. Browser/OS popup internals remain platform-owned.
 
-`styles/content-overflow.css` owns the shared text containment contract under `[data-ui][data-theme][data-mode]`. It keeps headings, paragraphs, links, table cells, controls, badges, nav links, and common UI wrappers from widening their parent wrapper when content contains long words, hashes, URLs, or copyable tokens.
+`styles/content-overflow.css` owns the shared text containment contract under `[data-ui][data-mode]`, with or without `data-theme`. Text and compact controls use `overflow-wrap: break-word` with normal word boundaries so long hashes, URLs, and copyable tokens wrap only when necessary. Structural wrappers receive shrink constraints without inheriting a forced wrapping policy.
 
 The shared native layer covers common native elements, including:
 
@@ -391,7 +431,7 @@ Every style includes theme-driven spinner utilities:
 <button class="saas-button saas-button-primary" aria-busy="true">Saving</button>
 ```
 
-Spinner track, stroke, and accent colors come from the active `data-theme` and `data-mode`, while geometry, motion cadence, depth, and busy-button indicators follow the active UI preset. The generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks receive the same preset identity inside any `[data-ui="..."]` scope.
+Spinner track, stroke, and accent colors come from the native palette or active `data-theme` and `data-mode`, while geometry, motion cadence, depth, and busy-button indicators follow the active UI preset. The generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks receive the same preset identity inside any `[data-ui="..."]` scope.
 
 ## Tooltip surfaces
 
@@ -501,13 +541,22 @@ The checked-in demo, favicon pack, and social preview image stay in the reposito
 npm run check
 npm run check:compat
 npm run test:e2e
+npm run test:e2e:full
 npm run test:axe
-npm run test:visual
+npm run test:axe:full
+npm run test:visual:full
 npm run test:matrix
+npm run test:matrix:block -- --block 33
+npm run test:matrix:case -- --case 3245
+npm run test:matrix:range -- --from 3201 --to 3244
+npm run release:verify
+npm run release:verify:full
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata and the documented class API, validates 4.5:1 text/link/filled-component contrast plus 3:1 light-mode component-edge contrast, and invokes `check:compat` for every generated entrypoint. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `20 presets x 20 themes x 3 modes x 3 engines` matrix.
+`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata and the documented class API, validates 4.5:1 text/link/filled-component contrast plus 3:1 light-mode component-edge contrast, and invokes `check:compat` for every generated entrypoint. `npm run test:e2e` is the bounded release smoke path: a curated Chromium-only Playwright suite that covers representative accessibility scans, demo switching, semantic runtime contracts, and the regression-prone preset checks. `npm run test:e2e:full` keeps the exhaustive Chromium/Firefox/WebKit suite available for explicit manual review. `npm run test:visual:full` preserves the historical visual-baseline suite for deliberate manual demo review; it is not part of the default PR, tag, or npm publish gate.
+
+The full UI matrix is intentionally opt-in. Local matrix checks are divided into 36 stable blocks of 100 cases. `npm run test:matrix` runs the blocks in order and stops after the first failing block; use `-- --from-block N` to start at any untested block without repeating earlier green blocks. Each test title includes a stable global case number. Rerun only each failing case with `npm run test:matrix:case -- --case N`; because the other cases in that block have already completed, continue at the next block after the targeted fixes pass. Use `test:matrix:range` only when a bounded follow-up range is useful. `test:matrix:raw` is reserved for the manual sharded automation workflow.
 
 The package browser policy is the last two major Chrome, Edge, and Firefox releases plus Safari and iOS 16 or newer, excluding dead browsers. The build resolves that single `package.json` policy into Lightning CSS targets, while `check:compat` verifies required prefix pairs, stable fallbacks, guarded `color-mix()`, `text-wrap`, and `forced-color-adjust` enhancements, and the absence of obsolete intrinsic CTA sizing declarations.
 

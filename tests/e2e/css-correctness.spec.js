@@ -37,6 +37,10 @@ async function installNativeFixture(page, stylesheetPath) {
         <button id="button" type="button">Action</button>
         <input id="text-input" type="text" value="Text input">
         <select id="select"><option>Choice</option></select>
+        <input id="choice" type="checkbox" checked>
+        <input id="range" type="range" value="72">
+        <progress id="progress" max="100" value="72">72%</progress>
+        <meter id="meter" min="0" max="100" low="30" high="70" optimum="90" value="72">72%</meter>
         <input id="file-input" type="file">
         <dialog id="dialog">Modal content</dialog>
         <div id="calc-probe" style="inline-size: var(--saas-radius-xl); block-size: 1px;"></div>
@@ -73,6 +77,68 @@ async function nativeControlSnapshot(page, stylesheetPath) {
   });
 }
 
+/**
+ * Captures the token and rendered-style surface that carries native-control identity.
+ *
+ * @param {import('@playwright/test').Page} page Playwright page under test.
+ * @param {string} stylesheetPath Absolute path to the authored or minified bundle.
+ * @returns {Promise<object>} Comparable native-control fidelity snapshot.
+ */
+async function nativeFidelitySnapshot(page, stylesheetPath) {
+  await installNativeFixture(page, stylesheetPath);
+
+  return page.evaluate(() => {
+    const rootStyles = getComputedStyle(document.body);
+    const styleFor = (selector) => getComputedStyle(document.querySelector(selector));
+    const tokens = [
+      '--usk-native-choice-background',
+      '--usk-native-choice-checked-background',
+      '--usk-native-select-indicator-image',
+      '--usk-native-select-indicator-position',
+      '--usk-native-range-track-background',
+      '--usk-native-range-progress-background',
+      '--usk-native-range-thumb-background',
+      '--usk-native-progress-track-background',
+      '--usk-native-progress-value-background',
+      '--usk-native-meter-optimum-background',
+      '--usk-native-meter-suboptimum-background',
+      '--usk-native-meter-critical-background'
+    ];
+    const selectStyles = styleFor('#select');
+    const choiceStyles = styleFor('#choice');
+    const rangeStyles = styleFor('#range');
+    const progressStyles = styleFor('#progress');
+    const meterStyles = styleFor('#meter');
+
+    return {
+      tokens: Object.fromEntries(tokens.map((token) => [token, rootStyles.getPropertyValue(token).trim()])),
+      select: {
+        appearance: selectStyles.appearance,
+        backgroundImage: selectStyles.backgroundImage,
+        backgroundPosition: selectStyles.backgroundPosition
+      },
+      choice: {
+        appearance: choiceStyles.appearance,
+        backgroundColor: choiceStyles.backgroundColor,
+        borderColor: choiceStyles.borderColor
+      },
+      range: {
+        accentColor: rangeStyles.accentColor,
+        backgroundColor: rangeStyles.backgroundColor
+      },
+      progress: {
+        appearance: progressStyles.appearance,
+        accentColor: progressStyles.accentColor,
+        backgroundColor: progressStyles.backgroundColor
+      },
+      meter: {
+        appearance: meterStyles.appearance,
+        backgroundColor: meterStyles.backgroundColor
+      }
+    };
+  });
+}
+
 test('minified bundle preserves computed styles for representative native controls', async ({ page }) => {
   const authored = await nativeControlSnapshot(page, authoredBundlePath);
   const minified = await nativeControlSnapshot(page, minifiedBundlePath);
@@ -80,6 +146,16 @@ test('minified bundle preserves computed styles for representative native contro
   expect(minified.button).toEqual(authored.button);
   expect(minified.input).toEqual(authored.input);
   expect(minified.select).toEqual(authored.select);
+});
+
+test('minified bundle preserves native-control identity tokens and rendered paint', async ({ page }) => {
+  const authored = await nativeFidelitySnapshot(page, authoredBundlePath);
+  const minified = await nativeFidelitySnapshot(page, minifiedBundlePath);
+
+  for (const [token, value] of Object.entries(authored.tokens)) {
+    expect(value, `${token} should resolve in the authored bundle`).not.toBe('');
+  }
+  expect(minified).toEqual(authored);
 });
 
 test('minified bundle preserves computed calc values', async ({ page }) => {

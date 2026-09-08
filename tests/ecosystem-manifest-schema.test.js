@@ -71,7 +71,7 @@ test('ecosystem compatibility pins immutable companion sources', () => {
     'ui-style-kit-css': { checkout: 'current' },
     'interactive-surface-css': {
       repository: 'Foscat/Interactive-Surface-CSS',
-      revision: 'b50a60d8ffd804d8227b1a16903c394556b88511'
+      revision: 'b48b8b9080e4b1d4e344b6749ab1969a2863b3d1'
     },
     'layout-style-css': {
       repository: 'Foscat/Layout-Style-CSS',
@@ -86,7 +86,7 @@ test('ecosystem compatibility pins immutable companion sources', () => {
 
 test('ecosystem docs distinguish portable semantic theming from specialized bridge integration', () => {
   for (const value of [
-    '[data-ui][data-theme][data-mode]',
+    '[data-ui][data-mode]',
     'import "third-party-theme/tokens.css";',
     'import "interactive-surface-css/standalone-preset.css";',
     'import "ui-style-kit-css/interactive-surface-theme.css";',

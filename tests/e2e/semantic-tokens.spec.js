@@ -57,7 +57,7 @@ const directAdapterSourceCss = `
 `;
 
 const tokenProbes = [
-  ['--ui-color-bg', '--usk-bg-rgb', 'background-color', true],
+  ['--ui-color-bg', '--usk-native-bg', 'background-color'],
   ['--ui-color-surface', '--usk-native-surface-strong', 'background-color'],
   ['--ui-color-text', '--usk-native-text', 'color'],
   ['--ui-color-muted', '--usk-native-text-muted', 'color'],

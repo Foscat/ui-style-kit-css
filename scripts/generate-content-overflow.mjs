@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 const textElements = [
   'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'li', 'dt', 'dd',
-  'figcaption', 'blockquote', 'label', 'legend', 'summary', 'code', 'kbd',
-  'samp', 'pre', 'th', 'td'
+  'figcaption', 'blockquote', 'label', 'legend', 'summary', 'strong', 'small',
+  'em', 'code', 'kbd', 'samp', 'pre', 'th', 'td'
 ];
 
 const wrapperSuffixes = [
@@ -63,29 +63,32 @@ export function renderContentOverflowCss(manifest) {
 ========================================================= */
 
 @layer ui-style-kit.content_overflow {
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
 ${formatSelectors(textElements)}
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
 ${formatSelectors(wrappers)}
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
 ${formatSelectors(controls)}
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
+
 }
 `;
 }

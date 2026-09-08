@@ -11,6 +11,12 @@ UI Style Kit CSS provides presentation-level accessibility helpers. Semantic str
 - Theme-aware text utilities, filled-surface `on-*` colors, 4.5:1 text contrast checks, and 3:1 light-mode component-edge checks
 - Shared `--usk-*` color-scheme roles with a manifest-driven audit of all 20 presets, 20 schemes, and three modes
 
+Native palettes also work without `data-theme`. Text inside trust seals inherits
+the seal's own foreground rather than the native page-text color; Tactile pairs
+both number and caption with its dark instrument surface. Recheck contrast when
+editing either shared colors or native material variables. Token-level checks do
+not replace rendered keyboard, focus, zoom, and assistive-technology verification.
+
 The following are also present in every preset:
 
 - `prefers-contrast: more` media support

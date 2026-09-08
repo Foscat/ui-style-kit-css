@@ -1,6 +1,6 @@
 # Installation and Setup
 
-These instructions target UI Style Kit CSS `v2.3.0` and its backward-compatible v2 entrypoints.
+These instructions target UI Style Kit CSS `v2.4.0` and its backward-compatible v2 entrypoints.
 
 ## Install
 
@@ -97,7 +97,7 @@ npm run test:e2e
 
 ## Minimal Markup Contract
 
-1. Apply all three attributes on your root container (usually `<body>`): `data-ui`, `data-theme`, `data-mode`.
+1. Apply `data-ui` and `data-mode` on your root container (usually `<body>`). Add `data-theme` only for an explicit shared theme; omit `data-theme` for the style's native palette.
 2. Use classes that match the selected style prefix.
 3. Keep prefix usage consistent in a component tree.
 4. Override color schemes through shared `--usk-*` roles when changing palette values.

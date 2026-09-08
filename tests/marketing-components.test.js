@@ -63,7 +63,35 @@ function classRuleText(css, className) {
 }
 
 /**
- * Resolve the effective declarations for every rule whose selector contains a class.
+ * Check whether a selector branch targets the requested class as its subject.
+ *
+ * @param {string} selector Generated selector text from CSS Tree.
+ * @param {string} className Public class name without the leading period.
+ * @returns {boolean} True when the class is in the final selector compound.
+ */
+function selectorTargetsClass(selector, className) {
+  const escaped = className.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const classPattern = new RegExp(`\\.${escaped}(?![\\w-])`);
+
+  return selector.split(',').some((branch) => {
+    let depth = 0;
+    let lastCombinatorIndex = -1;
+
+    for (let index = 0; index < branch.length; index += 1) {
+      const char = branch[index];
+      if (char === '(' || char === '[') depth += 1;
+      if (char === ')' || char === ']') depth = Math.max(0, depth - 1);
+      if (depth === 0 && (char === '>' || char === '+' || char === '~' || /\s/.test(char))) {
+        lastCombinatorIndex = index;
+      }
+    }
+
+    return classPattern.test(branch.slice(lastCombinatorIndex + 1));
+  });
+}
+
+/**
+ * Resolve the effective declarations for every rule whose selector targets a class.
  *
  * @param {string} css Complete authored stylesheet.
  * @param {string} className Public class name without the leading period.
@@ -77,7 +105,7 @@ function effectiveClassDeclarations(css, className) {
     visit: 'Rule',
     enter(rule) {
       const selector = generate(rule.prelude);
-      if (!selector.includes(`.${className}`)) return;
+      if (!selectorTargetsClass(selector, className)) return;
 
       rule.block.children.forEach((node) => {
         if (node.type === 'Declaration') declarations.set(node.property, generate(node.value));
@@ -168,8 +196,13 @@ test('marketing primitives preserve reusable media, icon, CTA, and strip geometr
     assert.match(medallion, /place-items:\s*center/, `.${prefix}-icon-medallion should center icon content`);
 
     const cutButton = classRuleText(css, `${prefix}-button-cut`);
-    assert.match(cutButton, /clip-path:\s*(?:polygon|inset)\(/, `.${prefix}-button-cut should expose clipped CTA geometry`);
-    assert.match(cutButton, /outline-offset:\s*-3px/, `.${prefix}-button-cut should keep clipped focus indicators visible`);
+    if (ui === 'neumorphism') {
+      assert.doesNotMatch(cutButton, /clip-path/, '.neo-button-cut should retain smooth molded geometry');
+      assert.match(cutButton, /border-radius:\s*var\(--neo-radius-md\)/, '.neo-button-cut should expose rounded CTA geometry');
+    } else {
+      assert.match(cutButton, /clip-path:\s*(?:polygon|inset)\(/, `.${prefix}-button-cut should expose clipped CTA geometry`);
+      assert.match(cutButton, /outline-offset:\s*-3px/, `.${prefix}-button-cut should keep clipped focus indicators visible`);
+    }
 
     const featureStrip = classRuleText(css, `${prefix}-feature-strip`);
     assert.match(featureStrip, /display:\s*grid/, `.${prefix}-feature-strip should use component-owned grid layout`);
@@ -200,12 +233,31 @@ test('media scrim captions keep semantic descendants on the scrim foreground', (
   }
 });
 
-test('Clay CTA uses a compact inflated-pill treatment instead of a stretched faceted bar', () => {
+test('trust-seal number and caption retain each preset surface foreground', () => {
+  const ast = parse(read('styles/components.css'));
+  for (const tag of ['strong', 'small']) {
+    let inherited = false;
+    walk(ast, {
+      visit: 'Rule',
+      enter(rule) {
+        const selector = generate(rule.prelude);
+        if (!selector.endsWith(`>${tag}`) || !selector.includes('badge-seal')) return;
+        for (const [, prefix] of presets) assert.ok(selector.includes(`.${prefix}-badge-seal`));
+        rule.block.children.forEach((node) => {
+          if (node.type === 'Declaration' && node.property === 'color' && generate(node.value) === 'inherit') inherited = true;
+        });
+      }
+    });
+    assert.ok(inherited, `${tag} must inherit seal paint instead of native page text`);
+  }
+});
+
+test('Clay CTA uses a compact hand-pressed treatment instead of a smooth inflated pill', () => {
   const css = read('styles/clay.css');
   const cutButton = classRuleText(css, 'clay-button-cut');
 
-  assert.match(cutButton, /clip-path:\s*inset\([^)]*round/, '.clay-button-cut should use a softly clipped pill');
-  assert.match(cutButton, /border-radius:\s*var\(--clay-radius-pill\)/, '.clay-button-cut should follow Clay rounding');
+  assert.match(cutButton, /clip-path:\s*var\(--clay-chip-clip\)/, '.clay-button-cut should use the irregular hand-pressed perimeter');
+  assert.match(cutButton, /border-radius:\s*\.42rem \.54rem \.46rem \.5rem/, '.clay-button-cut should retain shallow asymmetric rounding');
   assert.doesNotMatch(cutButton, /(?:^|[;{]\s*)inline-size\s*:/m, '.clay-button-cut should use intrinsic inline sizing without a legacy diagnostic');
   assert.match(cutButton, /justify-self:\s*center/, '.clay-button-cut should center inside service cards');
 });
@@ -270,4 +322,32 @@ test('shared content containment covers every preset and marketing wrapper', () 
       );
     }
   }
+});
+
+test('general surfaces preserve visible content and focus while intentional masks still clip', () => {
+  const generalSurfaceSuffixes = ['page', 'surface', 'card', 'panel', 'toolbar', 'table-wrap', 'feature-strip'];
+
+  for (const [ui, prefix] of presets) {
+    const css = read(`styles/${ui}.css`);
+
+    for (const suffix of generalSurfaceSuffixes) {
+      const declarations = effectiveClassDeclarations(css, `${prefix}-${suffix}`);
+      assert.notEqual(
+        declarations.get('overflow'),
+        'hidden',
+        `${ui} ${suffix} should not clip content or focus indicators`
+      );
+    }
+
+    assert.equal(
+      effectiveClassDeclarations(css, `${prefix}-media-scrim`).get('overflow'),
+      'hidden',
+      `${ui} media scrim should retain deliberate artwork clipping`
+    );
+  }
+
+  const nativeTable = read('styles/native-elements.css').match(
+    /\[data-ui\]\[data-mode\]\s*:where\(table\)\s*\{([^}]*)\}/
+  )?.[1] ?? '';
+  assert.doesNotMatch(nativeTable, /overflow:\s*hidden/, 'native tables should not clip descendants');
 });

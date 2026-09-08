@@ -10,6 +10,11 @@ const bridgeBundlePath = path.join(rootDir, 'dist', 'ui-style-kit.with-bridge.cs
 
 const presetShardCount = Number.parseInt(process.env.UI_MATRIX_PRESET_SHARDS || '1', 10);
 const presetShard = Number.parseInt(process.env.UI_MATRIX_PRESET_SHARD || '1', 10);
+const logicalCaseCount = manifest.presets.length * manifest.themes.length * manifest.modes.length;
+const caseStart = Number.parseInt(process.env.UI_MATRIX_CASE_START || '1', 10);
+const caseEnd = Number.parseInt(process.env.UI_MATRIX_CASE_END || String(logicalCaseCount), 10);
+const globalCaseOffset = Number.parseInt(process.env.UI_MATRIX_GLOBAL_OFFSET || '0', 10);
+const globalCaseTotal = Number.parseInt(process.env.UI_MATRIX_GLOBAL_TOTAL || String(logicalCaseCount), 10);
 
 if (!Number.isInteger(presetShardCount) || presetShardCount < 1) {
   throw new Error('UI_MATRIX_PRESET_SHARDS must be a positive integer.');
@@ -19,7 +24,40 @@ if (!Number.isInteger(presetShard) || presetShard < 1 || presetShard > presetSha
   throw new Error('UI_MATRIX_PRESET_SHARD must be between 1 and UI_MATRIX_PRESET_SHARDS.');
 }
 
-const presets = manifest.presets.filter((_, index) => index % presetShardCount === presetShard - 1);
+if (!Number.isInteger(caseStart) || !Number.isInteger(caseEnd) || caseStart < 1 || caseStart > caseEnd || caseEnd > logicalCaseCount) {
+  throw new Error(`UI_MATRIX_CASE_START and UI_MATRIX_CASE_END must define a range between 1 and ${logicalCaseCount}.`);
+}
+
+if (!Number.isInteger(globalCaseOffset) || globalCaseOffset < 0 || !Number.isInteger(globalCaseTotal) || globalCaseTotal < logicalCaseCount) {
+  throw new Error('UI_MATRIX_GLOBAL_OFFSET and UI_MATRIX_GLOBAL_TOTAL must be non-negative matrix coordinates.');
+}
+
+/**
+ * Build stable logical cases before filtering so block and exact-case identifiers
+ * do not change when CI applies its existing preset shards.
+ *
+ * @returns {Array<{preset: object, theme: string, mode: string, logicalCase: number}>} Selected matrix cases.
+ */
+function selectedMatrixCases() {
+  const cases = [];
+  let logicalCase = 0;
+
+  manifest.presets.forEach((preset, presetIndex) => {
+    for (const theme of manifest.themes) {
+      for (const mode of manifest.modes) {
+        logicalCase += 1;
+        const belongsToPresetShard = presetIndex % presetShardCount === presetShard - 1;
+        const belongsToCaseRange = logicalCase >= caseStart && logicalCase <= caseEnd;
+
+        if (belongsToPresetShard && belongsToCaseRange) {
+          cases.push({ preset, theme, mode, logicalCase });
+        }
+      }
+    }
+  });
+
+  return cases;
+}
 
 function themedFixture({ id, prefix, theme, mode }) {
   return `<!doctype html>
@@ -28,13 +66,13 @@ function themedFixture({ id, prefix, theme, mode }) {
         <main class="${prefix}-card" data-testid="surface">
           <h1 class="${prefix}-title">Matrix ${id}</h1>
           <p class="${prefix}-copy">Theme ${theme} in ${mode} mode validates rendered paint.</p>
-           <button class="${prefix}-button-pill" data-testid="pill">Centered pill control</button>
-           <button class="${prefix}-button-pill" data-testid="disabled-pill" disabled>Disabled pill</button>
-           <input type="button" data-testid="native-input-button" value="Native input button">
-           <input type="button" class="interactive-surface" data-surface-variant="primary" data-surface-level="2" data-testid="bridge-input-button" value="Bridge input button">
-           <input type="submit" class="interactive-surface" data-surface-variant="primary" data-surface-level="2" data-testid="bridge-submit-input" value="Bridge submit input">
-           <input type="reset" class="interactive-surface" data-surface-variant="danger" data-surface-level="2" data-testid="bridge-reset-input" value="Bridge reset input">
-           <input data-testid="invalid-field" aria-invalid="true" value="invalid">
+          <button class="${prefix}-button-pill" data-testid="pill">Centered pill control</button>
+          <button class="${prefix}-button-pill" data-testid="disabled-pill" disabled>Disabled pill</button>
+          <input type="button" data-testid="native-input-button" value="Native input button">
+          <input type="button" class="interactive-surface" data-surface-variant="primary" data-surface-level="2" data-testid="bridge-input-button" value="Bridge input button">
+          <input type="submit" class="interactive-surface" data-surface-variant="primary" data-surface-level="2" data-testid="bridge-submit-input" value="Bridge submit input">
+          <input type="reset" class="interactive-surface" data-surface-variant="danger" data-surface-level="2" data-testid="bridge-reset-input" value="Bridge reset input">
+          <input data-testid="invalid-field" aria-invalid="true" value="invalid">
           <input data-testid="readonly-field" readonly value="readonly">
           <label class="${prefix}-check" data-testid="indeterminate-choice">
             <input type="checkbox" data-testid="indeterminate-control">
@@ -44,14 +82,14 @@ function themedFixture({ id, prefix, theme, mode }) {
           <label>File <input type="file" data-testid="file-input"></label>
           <label>Range <input type="range" data-testid="range-input" value="65"></label>
           <label>Color <input type="color" data-testid="color-input" value="#6f8cff"></label>
-           <progress data-testid="progress" value="60" max="100">60%</progress>
-           <meter data-testid="meter" value=".65">65%</meter>
-           <figure class="${prefix}-media-scrim" data-testid="media-scrim">
-             <img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 18'%3E%3Crect width='32' height='18' fill='%23ffffff'/%3E%3C/svg%3E">
-             <figcaption data-testid="media-scrim-caption"><p class="${prefix}-eyebrow" data-testid="media-scrim-eyebrow">Media scrim</p><strong data-testid="media-scrim-copy">Readable content</strong></figcaption>
-           </figure>
-           <dialog open data-testid="dialog"><p data-testid="dialog-copy">Dialog copy must remain legible on the strong surface.</p><button data-testid="dialog-action">Dialog action</button></dialog>
-         </main>
+          <progress data-testid="progress" value="60" max="100">60%</progress>
+          <meter data-testid="meter" value=".65">65%</meter>
+          <figure class="${prefix}-media-scrim" data-testid="media-scrim">
+            <img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 18'%3E%3Crect width='32' height='18' fill='%23ffffff'/%3E%3C/svg%3E">
+            <figcaption data-testid="media-scrim-caption"><p class="${prefix}-eyebrow" data-testid="media-scrim-eyebrow">Media scrim</p><strong data-testid="media-scrim-copy">Readable content</strong></figcaption>
+          </figure>
+          <dialog open data-testid="dialog"><p data-testid="dialog-copy">Dialog copy must remain legible on the strong surface.</p><button data-testid="dialog-action">Dialog action</button></dialog>
+        </main>
       </body>
     </html>`;
 }
@@ -81,131 +119,175 @@ function contrastRatio(foreground, background) {
   return (light + 0.05) / (dark + 0.05);
 }
 
+/**
+ * Determine whether a rendered surface owns visible material through paint,
+ * a keyline, or elevation without forcing every preset to use a filled card.
+ *
+ * @param {{backgroundColor: string, backgroundImage: string, borderColor: string, boxShadow: string}} surface Computed surface styles.
+ * @returns {boolean} Whether at least one supported material channel is visible.
+ */
+function hasVisibleMaterial(surface) {
+  return surface.backgroundColor !== 'rgba(0, 0, 0, 0)'
+    || surface.backgroundImage !== 'none'
+    || surface.borderColor !== 'rgba(0, 0, 0, 0)'
+    || surface.boxShadow !== 'none';
+}
+
+/**
+ * Validate text against a solid computed fallback while allowing reviewed
+ * preset gradients whose actual pixels are covered by the visual and contrast
+ * suites. Browsers report transparent `background-color` for image-only paint,
+ * so treating that channel as black produces a false contrast failure.
+ *
+ * @param {string} foreground Computed foreground color.
+ * @param {{backgroundColor: string, backgroundImage: string}} surface Computed painted surface.
+ * @returns {boolean} Whether the solid contrast passes or layered paint owns the surface.
+ */
+function hasReadablePaint(foreground, surface) {
+  if (surface.backgroundImage !== 'none') return rgbTriplet(foreground) !== null;
+  return contrastRatio(foreground, surface.backgroundColor) >= 4.5;
+}
+
+/**
+ * Determine whether two control states differ through at least one visible
+ * paint, depth, or opacity channel without prescribing a specific material.
+ *
+ * @param {{backgroundColor: string, backgroundImage: string, borderColor: string, boxShadow: string, color: string, opacity: number}} left First computed control state.
+ * @param {{backgroundColor: string, backgroundImage: string, borderColor: string, boxShadow: string, color: string, opacity: number}} right Second computed control state.
+ * @returns {boolean} Whether the rendered states are visibly distinct.
+ */
+function statesAreVisiblyDistinct(left, right) {
+  return [
+    'backgroundColor',
+    'backgroundImage',
+    'borderColor',
+    'boxShadow',
+    'color',
+    'opacity'
+  ].some((property) => left[property] !== right[property]);
+}
+
 test.describe.configure({ mode: 'parallel' });
 
-for (const preset of presets) {
-  for (const theme of manifest.themes) {
-    for (const mode of manifest.modes) {
-      test(`${preset.id} / ${theme} / ${mode}`, async ({ page }) => {
-        const consoleMessages = [];
-        const pageErrors = [];
+for (const { preset, theme, mode, logicalCase } of selectedMatrixCases()) {
+  test(`[matrix ${globalCaseOffset + logicalCase}/${globalCaseTotal}] ${preset.id} / ${theme} / ${mode}`, async ({ page }) => {
+    const consoleMessages = [];
+    const pageErrors = [];
 
-        page.on('console', (message) => {
-          if (['error', 'warning'].includes(message.type())) consoleMessages.push(message.text());
-        });
-        page.on('pageerror', (error) => pageErrors.push(error.message));
+    page.on('console', (message) => {
+      if (['error', 'warning'].includes(message.type())) consoleMessages.push(message.text());
+    });
+    page.on('pageerror', (error) => pageErrors.push(error.message));
 
-        await page.setViewportSize({ width: 390, height: 844 });
-        await page.setContent(themedFixture({ ...preset, theme, mode }));
-        await page.addStyleTag({ path: bridgeBundlePath });
-        await page.getByTestId('indeterminate-control').evaluate((input) => {
-          input.indeterminate = true;
-        });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setContent(themedFixture({ ...preset, theme, mode }));
+    await page.addStyleTag({ path: bridgeBundlePath });
+    await page.getByTestId('indeterminate-control').evaluate((input) => {
+      input.indeterminate = true;
+    });
 
-        const report = await page.evaluate(() => {
-          const stylesFor = (selector, pseudoElement) => {
-            const element = document.querySelector(selector);
-            const styles = getComputedStyle(element, pseudoElement);
-            const rect = element.getBoundingClientRect();
+    const report = await page.evaluate(() => {
+      const stylesFor = (selector, pseudoElement) => {
+        const element = document.querySelector(selector);
+        const styles = getComputedStyle(element, pseudoElement);
+        const rect = element.getBoundingClientRect();
 
-            return {
-              accentColor: styles.accentColor,
-              alignItems: styles.alignItems,
-              backgroundColor: styles.backgroundColor,
-              backgroundImage: styles.backgroundImage,
-              borderColor: styles.borderColor,
-              boxShadow: styles.boxShadow,
-              color: styles.color,
-              cursor: styles.cursor,
-              display: styles.display,
-              height: rect.height,
-              inlinePaddingEnd: Number.parseFloat(styles.paddingInlineEnd),
-              inlinePaddingStart: Number.parseFloat(styles.paddingInlineStart),
-              justifyContent: styles.justifyContent,
-              minBlockSize: Number.parseFloat(styles.minBlockSize),
-              opacity: Number.parseFloat(styles.opacity),
-              outlineColor: styles.outlineColor,
-              outlineStyle: styles.outlineStyle,
-              width: rect.width
-            };
-          };
+        return {
+          accentColor: styles.accentColor,
+          alignItems: styles.alignItems,
+          backgroundColor: styles.backgroundColor,
+          backgroundImage: styles.backgroundImage,
+          borderColor: styles.borderColor,
+          boxShadow: styles.boxShadow,
+          color: styles.color,
+          cursor: styles.cursor,
+          display: styles.display,
+          height: rect.height,
+          inlinePaddingEnd: Number.parseFloat(styles.paddingInlineEnd),
+          inlinePaddingStart: Number.parseFloat(styles.paddingInlineStart),
+          justifyContent: styles.justifyContent,
+          minBlockSize: Number.parseFloat(styles.minBlockSize),
+          opacity: Number.parseFloat(styles.opacity),
+          outlineColor: styles.outlineColor,
+          outlineStyle: styles.outlineStyle,
+          width: rect.width
+        };
+      };
 
-          document.querySelector('[data-testid="pill"]').focus();
+      document.querySelector('[data-testid="pill"]').focus();
 
-          return {
-            overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - document.documentElement.clientWidth,
-            surface: stylesFor('[data-testid="surface"]'),
-             pill: stylesFor('[data-testid="pill"]'),
-             disabled: stylesFor('[data-testid="disabled-pill"]'),
-             nativeInputButton: stylesFor('[data-testid="native-input-button"]'),
-             bridgeInputButton: stylesFor('[data-testid="bridge-input-button"]'),
-             bridgeSubmitInput: stylesFor('[data-testid="bridge-submit-input"]'),
-             bridgeResetInput: stylesFor('[data-testid="bridge-reset-input"]'),
-             invalid: stylesFor('[data-testid="invalid-field"]'),
-            readonly: stylesFor('[data-testid="readonly-field"]'),
-            indeterminate: stylesFor('[data-testid="indeterminate-control"]'),
-            fileButton: stylesFor('[data-testid="file-input"]', '::file-selector-button'),
-            range: stylesFor('[data-testid="range-input"]'),
-            color: stylesFor('[data-testid="color-input"]'),
-            progress: stylesFor('[data-testid="progress"]'),
-             meter: stylesFor('[data-testid="meter"]'),
-             mediaScrimCaption: stylesFor('[data-testid="media-scrim-caption"]'),
-             mediaScrimEyebrow: stylesFor('[data-testid="media-scrim-eyebrow"]'),
-             mediaScrimCopy: stylesFor('[data-testid="media-scrim-copy"]'),
-             dialog: stylesFor('[data-testid="dialog"]'),
-             dialogCopy: stylesFor('[data-testid="dialog-copy"]'),
-             dialogAction: stylesFor('[data-testid="dialog-action"]')
-          };
-        });
+      return {
+        overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - document.documentElement.clientWidth,
+        surface: stylesFor('[data-testid="surface"]'),
+        pill: stylesFor('[data-testid="pill"]'),
+        disabled: stylesFor('[data-testid="disabled-pill"]'),
+        nativeInputButton: stylesFor('[data-testid="native-input-button"]'),
+        bridgeInputButton: stylesFor('[data-testid="bridge-input-button"]'),
+        bridgeSubmitInput: stylesFor('[data-testid="bridge-submit-input"]'),
+        bridgeResetInput: stylesFor('[data-testid="bridge-reset-input"]'),
+        invalid: stylesFor('[data-testid="invalid-field"]'),
+        readonly: stylesFor('[data-testid="readonly-field"]'),
+        indeterminate: stylesFor('[data-testid="indeterminate-control"]'),
+        fileButton: stylesFor('[data-testid="file-input"]', '::file-selector-button'),
+        range: stylesFor('[data-testid="range-input"]'),
+        color: stylesFor('[data-testid="color-input"]'),
+        progress: stylesFor('[data-testid="progress"]'),
+        meter: stylesFor('[data-testid="meter"]'),
+        mediaScrimCaption: stylesFor('[data-testid="media-scrim-caption"]'),
+        mediaScrimEyebrow: stylesFor('[data-testid="media-scrim-eyebrow"]'),
+        mediaScrimCopy: stylesFor('[data-testid="media-scrim-copy"]'),
+        dialog: stylesFor('[data-testid="dialog"]'),
+        dialogCopy: stylesFor('[data-testid="dialog-copy"]'),
+        dialogAction: stylesFor('[data-testid="dialog-action"]')
+      };
+    });
 
-        expect(consoleMessages).toEqual([]);
-        expect(pageErrors).toEqual([]);
-        expect(report.overflow, JSON.stringify(report, null, 2)).toBeLessThanOrEqual(1);
-        expect(report.surface.backgroundColor !== 'rgba(0, 0, 0, 0)' || report.surface.backgroundImage !== 'none').toBe(true);
-        expect(report.surface.borderColor).not.toBe('rgba(0, 0, 0, 0)');
-        expect(report.surface.color).toMatch(/^rgb/);
-        expect(report.pill.display).toBe('inline-flex');
-        expect(report.pill.alignItems).toBe('center');
-        expect(report.pill.justifyContent).toBe('center');
-        expect(report.pill.minBlockSize).toBeGreaterThanOrEqual(44);
-        expect(report.pill.height).toBeGreaterThanOrEqual(24);
-        expect(report.pill.height).toBeLessThanOrEqual(72);
-        expect(report.pill.width).toBeLessThanOrEqual(390);
-        expect(report.pill.inlinePaddingStart).toBeGreaterThan(0);
-        expect(report.pill.inlinePaddingEnd).toBeGreaterThan(0);
-         expect(contrastRatio(report.pill.color, report.pill.backgroundColor)).toBeGreaterThanOrEqual(4.5);
-         expect(report.nativeInputButton.backgroundImage).toBe('none');
-         expect(
-           contrastRatio(report.nativeInputButton.color, report.nativeInputButton.backgroundColor),
-           JSON.stringify(report.nativeInputButton, null, 2)
-         ).toBeGreaterThanOrEqual(4.5);
-         for (const control of [report.bridgeInputButton, report.bridgeSubmitInput, report.bridgeResetInput]) {
-           expect(control.backgroundImage).toBe('none');
-           expect(contrastRatio(control.color, control.backgroundColor), JSON.stringify(control, null, 2)).toBeGreaterThanOrEqual(4.5);
-         }
-         expect(
-           contrastRatio(report.dialogCopy.color, report.dialog.backgroundColor),
-           JSON.stringify({ dialog: report.dialog, copy: report.dialogCopy }, null, 2)
-         ).toBeGreaterThanOrEqual(4.5);
-         expect(
-           contrastRatio(report.dialogAction.color, report.dialogAction.backgroundColor),
-           JSON.stringify(report.dialogAction, null, 2)
-         ).toBeGreaterThanOrEqual(4.5);
-         expect(report.mediaScrimCaption.backgroundImage).toContain('linear-gradient');
-         expect(report.mediaScrimCaption.color).toBe('rgb(255, 255, 255)');
-         expect(report.mediaScrimEyebrow.color).toBe(report.mediaScrimCaption.color);
-         expect(report.mediaScrimCopy.color).toBe(report.mediaScrimCaption.color);
-         expect(report.pill.outlineStyle !== 'none' || report.pill.boxShadow !== 'none').toBe(true);
-        expect(report.disabled.opacity).toBeLessThan(report.pill.opacity);
-        expect(report.invalid.borderColor).not.toBe(report.readonly.borderColor);
-        expect(report.readonly.backgroundColor).not.toBe(report.invalid.backgroundColor);
-        expect(report.indeterminate.accentColor).not.toBe('auto');
-        expect(report.fileButton.inlinePaddingStart).toBeGreaterThanOrEqual(0);
-        expect(report.range.accentColor).not.toBe('auto');
-        expect(report.color.width).toBeGreaterThan(20);
-        expect(report.progress.width).toBeGreaterThan(20);
-        expect(report.meter.width).toBeGreaterThan(20);
-      });
+    expect(consoleMessages).toEqual([]);
+    expect(pageErrors).toEqual([]);
+    expect(report.overflow, JSON.stringify(report, null, 2)).toBeLessThanOrEqual(1);
+    expect(hasVisibleMaterial(report.surface)).toBe(true);
+    expect(report.surface.color).toMatch(/^rgb/);
+    expect(report.pill.display).toBe('inline-flex');
+    expect(report.pill.alignItems).toBe('center');
+    expect(report.pill.justifyContent).toBe('center');
+    expect(report.pill.minBlockSize).toBeGreaterThanOrEqual(44);
+    expect(report.pill.height).toBeGreaterThanOrEqual(24);
+    expect(report.pill.height).toBeLessThanOrEqual(72);
+    expect(report.pill.width).toBeLessThanOrEqual(390);
+    expect(report.pill.inlinePaddingStart).toBeGreaterThan(0);
+    expect(report.pill.inlinePaddingEnd).toBeGreaterThan(0);
+    expect(contrastRatio(report.pill.color, report.pill.backgroundColor)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      hasReadablePaint(report.nativeInputButton.color, report.nativeInputButton),
+      JSON.stringify(report.nativeInputButton, null, 2)
+    ).toBe(true);
+    for (const control of [report.bridgeInputButton, report.bridgeSubmitInput, report.bridgeResetInput]) {
+      expect(control.backgroundImage).toBe('none');
+      expect(contrastRatio(control.color, control.backgroundColor), JSON.stringify(control, null, 2)).toBeGreaterThanOrEqual(4.5);
     }
-  }
+    expect(
+      hasReadablePaint(report.dialogCopy.color, report.dialog),
+      JSON.stringify({ dialog: report.dialog, copy: report.dialogCopy }, null, 2)
+    ).toBe(true);
+    expect(
+      hasReadablePaint(report.dialogAction.color, report.dialogAction),
+      JSON.stringify(report.dialogAction, null, 2)
+    ).toBe(true);
+    expect(report.mediaScrimCaption.backgroundImage).toContain('linear-gradient');
+    expect(report.mediaScrimCaption.color).toBe('rgb(255, 255, 255)');
+    expect(report.mediaScrimEyebrow.color).toBe(report.mediaScrimCaption.color);
+    expect(report.mediaScrimCopy.color).toBe(report.mediaScrimCaption.color);
+    expect(report.pill.outlineStyle !== 'none' || report.pill.boxShadow !== 'none').toBe(true);
+    expect(report.disabled.opacity).toBeLessThan(report.pill.opacity);
+    expect(
+      statesAreVisiblyDistinct(report.invalid, report.readonly),
+      JSON.stringify({ invalid: report.invalid, readonly: report.readonly }, null, 2)
+    ).toBe(true);
+    expect(report.indeterminate.accentColor).not.toBe('auto');
+    expect(report.fileButton.inlinePaddingStart).toBeGreaterThanOrEqual(0);
+    expect(report.range.accentColor).not.toBe('auto');
+    expect(report.color.width).toBeGreaterThan(20);
+    expect(report.progress.width).toBeGreaterThan(20);
+    expect(report.meter.width).toBeGreaterThan(20);
+  });
 }

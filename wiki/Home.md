@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 20 shared color themes, and 3 display modes.
 
-Version `v2.3.0` expands the library to 20 UI systems and 20 shared color themes, adds universal commercial component modifiers and a modern-browser support contract, and preserves the existing v2 entrypoint and bridge contracts.
+The `v2.4.0` release candidate adds distinct native-control identities, native palettes, and a unified style-specific demo while preserving the 20 shared color themes, v2 entrypoints, component selectors, and bridge contracts. Local preparation does not imply publication.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
@@ -29,6 +29,20 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 - [UI Systems](UI-Systems)
 - [Ecosystem Compatibility](Ecosystem-Compatibility)
 - [Accessibility](Accessibility)
+- [Demo Showcase](Demo-Showcase)
+- [Release Preparation](Release-Preparation)
+
+## Native palettes
+
+Keep `data-ui` and `data-mode`, and omit `data-theme` to use the style's native colors.
+The demo calls this **None — style defaults**:
+
+```js
+document.body.removeAttribute("data-theme");
+```
+
+The demo workbench edits actual preset material colors in native mode and shared
+semantic colors when a named theme is selected. See [Theming Model](Theming-Model).
 
 ## Companion Integration
 
@@ -42,7 +56,7 @@ Use this wiki as the canonical reference for setup, theming, class naming, and s
 ## Canonical Data Attributes
 
 - `data-ui`: selected UI system
-- `data-theme`: selected color scheme
+- `data-theme`: optional named color scheme; omit it for the native palette
 - `data-mode`: selected mode (`light`, `dark`, `contrast`)
 - `--usk-*`: shared color-scheme RGB roles provided by the active `data-theme` and `data-mode`
 

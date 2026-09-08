@@ -6,13 +6,13 @@ import { fileURLToPath } from 'node:url';
 import { generate, parse, walk } from 'css-tree';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const producerScope = '[data-ui][data-theme][data-mode]';
+const producerScope = '[data-ui][data-mode]';
 const directSurfaceBackground =
   'rgb(var(--usk-surface-strong-rgb,var(--usk-surface-rgb,255 255 255)))';
 
 // This literal contract keeps the CSS producer, manifest inventory, and public documentation aligned.
 const sharedSemanticTokens = [
-  ['--ui-color-bg', '<color>', 'rgb(var(--usk-bg-rgb))'],
+  ['--ui-color-bg', '<color>', 'var(--usk-native-bg)'],
   ['--ui-color-surface', '<color>', 'var(--usk-native-surface-strong)'],
   ['--ui-color-text', '<color>', 'var(--usk-native-text)'],
   ['--ui-color-muted', '<color>', 'var(--usk-native-text-muted)'],
@@ -78,6 +78,16 @@ test('native token root publishes the exact typed shared semantic producer contr
   }
 });
 
+/** All presets must supply the background handshake from their active native material. */
+test('shared background token resolves through every preset without a named theme', () => {
+  const native = declarationsFor('styles/native-elements.css', producerScope);
+  assert.equal(native.get('--ui-color-bg'), 'var(--usk-native-bg)');
+  for (const { id, prefix } of JSON.parse(read('manifest.json')).presets) {
+    const values = declarationsFor(`styles/${id}.css`, `[data-ui="${id}"][data-mode]`);
+    assert.equal(values.get('--usk-native-bg'), `var(--${prefix}-bg)`, id);
+  }
+});
+
 test('manifest inventories every shared semantic token without changing schema policy', () => {
   const manifest = JSON.parse(read('manifest.json'));
 
@@ -104,11 +114,11 @@ test('generated visual entrypoints publish the producer contract for standalone 
 test('canonical and deprecated adapters prefer only behavior-equivalent semantic values', () => {
   const canonical = declarationsFor(
     'styles/interactive-surface-theme.css',
-    ':where([data-ui][data-theme][data-mode]) .interactive-surface'
+    ':where([data-ui][data-mode]) .interactive-surface'
   );
   const deprecated = declarationsFor(
     'styles/interactive-surface-bridge.css',
-    ':where([data-ui][data-theme][data-mode]) .interactive-surface'
+    ':where([data-ui][data-mode]) .interactive-surface'
   );
   const canonicalSharedValues = new Map([
     ['--interactive-surface-bg', directSurfaceBackground],

@@ -105,7 +105,7 @@ const expectedSemanticComponentApi = {
     name: 'data-ui-variant',
     neutral: 'omitted',
     valuesBySelector: {
-      '.ui-button': ['primary', 'secondary', 'danger', 'ghost'],
+      '.ui-button': ['primary', 'secondary', 'warning', 'danger', 'ghost'],
       '.ui-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
       '.ui-alert': ['success', 'warning', 'danger']
     }
@@ -425,16 +425,16 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
 
 test('generated semantic aliases preserve exact class-token safety declarations', () => {
   const safetyPropertiesBySelector = {
-    '.ui-button': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-icon-button': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-card': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-field': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-badge': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-alert': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-nav': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-nav-link': ['max-inline-size', 'min-inline-size', 'white-space'],
-    '.ui-table-wrap': ['max-inline-size', 'min-inline-size', 'overflow-wrap'],
-    '.ui-toolbar': ['max-inline-size', 'min-inline-size', 'overflow-wrap']
+    '.ui-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-icon-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-card': ['max-inline-size', 'min-inline-size'],
+    '.ui-field': ['max-inline-size', 'min-inline-size'],
+    '.ui-badge': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-alert': ['max-inline-size', 'min-inline-size'],
+    '.ui-nav': ['max-inline-size', 'min-inline-size'],
+    '.ui-nav-link': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.ui-table-wrap': ['max-inline-size', 'min-inline-size'],
+    '.ui-toolbar': ['max-inline-size', 'min-inline-size']
   };
 
   for (const relativeFile of [
@@ -471,14 +471,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  // These fingerprints include the manifest-generated containment foundation and all authored declarations.
+  // Reviewed v2.4 E2E repair rules preserve generated semantic alias declarations.
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 16204,
-    sha256: '50b756124a8e4cf037b8325fe6a7060bd8e61325287bf4e21fdb97cab83e180a'
+    count: 35935,
+    sha256: '5c9d48e3352031fa5a798e1e00fc093a78b565ad3e3864a2200421c10537e418'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 16635,
-    sha256: 'ae8cbad77450c12912b434d38e36705151b26068b3c401a0dc262f6931ad2e2d'
+    count: 36386,
+    sha256: '63b8a6b8d6acbc06a011d221fa4b5bb7e8f1fa11b3a07e948376446af920cf30'
   });
 });
 
@@ -486,7 +486,7 @@ test('semantic source suffixes and contextual variants exist in every composed p
   const currentSuffixes = new Set(manifest.classApi.universalVisualSuffixes);
   const requiredSuffixes = semanticRequiredSuffixes();
 
-  assert.equal(manifest.classApi.universalVisualSuffixes.length, 94);
+  assert.equal(manifest.classApi.universalVisualSuffixes.length, 95);
   for (const suffix of requiredSuffixes) {
     assert.equal(currentSuffixes.has(suffix), true, `${suffix} must remain a current universal visual suffix`);
   }
@@ -508,7 +508,7 @@ test('partial extras and deprecated structural aliases stay outside the semantic
   const partialExtras = new Set(Object.values(manifest.classApi.presetExtras).flat());
   const deprecatedSuffixes = new Set(manifest.classApi.deprecatedStructuralSuffixes);
 
-  assert.equal(partialExtras.size, 23);
+  assert.equal(partialExtras.size, 318);
   assert.equal(deprecatedSuffixes.size, 7);
   for (const suffix of semanticSuffixes) {
     assert.equal(partialExtras.has(suffix), false, `${suffix} must not be a partial preset extra`);

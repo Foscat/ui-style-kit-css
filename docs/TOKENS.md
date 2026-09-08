@@ -8,13 +8,44 @@ shared scheme channels -> prefixed aliases -> UI rules
 
 `styles/theme-colors.css` defines the active scheme and mode once as `--usk-*` RGB channels. Each UI style maps those shared channels to its public prefix, then component rules consume prefixed functional variables. `styles/native-elements.css` owns native HTML fallback selectors and consumes `--usk-native-*` tokens that each preset maps back to its own public variables.
 
+## Demo palette workbench
+
+The demo starts with **Color Theme: None — style defaults**. This omits `data-theme`
+and displays the selected preset's native light, dark, or contrast palette. All 20
+named color themes remain available; selecting one applies the shared color roles
+without changing component classes or preset geometry.
+
+```js
+document.body.dataset.ui = "minimal-saas";
+document.body.dataset.mode = "light";
+document.body.removeAttribute("data-theme");
+```
+
+The named-theme color table reads 23 shared RGB roles. Native mode reads the preset's
+RGB inventory, including material channels such as paper, ink, brass, and enamel.
+Native exports use `--<prefix>-*-rgb`; named-theme exports use `--usk-*-rgb`.
+Native-palette edits are isolated by preset and mode; named-theme edits are shared
+across presets using the same theme and mode. Native exports are
+scoped to the selected `[data-ui]:not([data-theme])[data-mode]` combination, so they
+do not override a subsequently selected named theme.
+
+Reset a single role or use **Reset palette edits** to restore only the active
+palette. Edits are temporary until reload. Invalid values leave the last valid
+preview intact. Custom colors can reduce contrast; validate edited palettes before
+using them in production. The library's CSS expects `data-theme` to be absent, not
+the literal strings `"None"` or `"null"`; the demo normalizes empty/null selections.
+
 ## Shared semantic token handshake
 
-The existing `[data-ui][data-theme][data-mode]` native-token root publishes 12 fully typed `--ui-*` values. UI Style Kit is the primary producer, but the names are intentionally package-neutral so a third-party theme can produce the same contract. Consumer libraries treat these values as optional fallbacks: a package-specific override wins first, then the shared semantic value, then the consumer's legacy token and literal default.
+The background handshake resolves through `--usk-native-bg`, which each preset
+maps to its functional `--<prefix>-bg`. It therefore follows the actual native
+material even when shared `--usk-bg-rgb` channels are absent.
+
+The `[data-ui][data-mode]` native-token root publishes 12 fully typed `--ui-*` values whether or not `data-theme` is present. UI Style Kit is the primary producer, but the names are intentionally package-neutral so a third-party theme can produce the same contract. Consumer libraries treat these values as optional fallbacks: a package-specific override wins first, then the shared semantic value, then the consumer's legacy token and literal default.
 
 | Shared token | CSS type | UI Style Kit source |
 |---|---|---|
-| `--ui-color-bg` | `<color>` | `rgb(var(--usk-bg-rgb))` |
+| `--ui-color-bg` | `<color>` | `var(--usk-native-bg)` |
 | `--ui-color-surface` | `<color>` | `var(--usk-native-surface-strong)` |
 | `--ui-color-text` | `<color>` | `var(--usk-native-text)` |
 | `--ui-color-muted` | `<color>` | `var(--usk-native-text-muted)` |
@@ -207,9 +238,55 @@ Native HTML coverage is shared in `styles/native-elements.css` to avoid repeatin
 --usk-native-shadow
 --usk-native-shadow-md
 --usk-native-focus-ring
+--usk-native-choice-size
+--usk-native-choice-background
+--usk-native-choice-border
+--usk-native-checkbox-radius
+--usk-native-radio-radius
+--usk-native-choice-shadow
+--usk-native-choice-checked-background
+--usk-native-choice-mark-color
+--usk-native-select-indicator-image
+--usk-native-select-indicator-size
+--usk-native-select-indicator-position
+--usk-native-select-padding-inline-end
+--usk-native-range-track-size
+--usk-native-range-track-background
+--usk-native-range-track-border
+--usk-native-range-track-radius
+--usk-native-range-track-shadow
+--usk-native-range-progress-background
+--usk-native-range-thumb-size
+--usk-native-range-thumb-background
+--usk-native-range-thumb-border
+--usk-native-range-thumb-radius
+--usk-native-range-thumb-shadow
+--usk-native-progress-size
+--usk-native-progress-track-background
+--usk-native-progress-track-border
+--usk-native-progress-track-radius
+--usk-native-progress-track-shadow
+--usk-native-progress-value-background
+--usk-native-progress-value-radius
+--usk-native-progress-value-shadow
+--usk-native-meter-optimum-background
+--usk-native-meter-suboptimum-background
+--usk-native-meter-critical-background
+--usk-native-file-button-background
+--usk-native-file-button-border
+--usk-native-file-button-radius
+--usk-native-file-button-shadow
+--usk-native-color-swatch-border
+--usk-native-color-swatch-radius
+--usk-native-indicator-opacity
+--usk-native-indicator-filter
+--usk-native-scrollbar-size
+--usk-native-scrollbar-track
+--usk-native-scrollbar-thumb
+--usk-native-scrollbar-radius
 ```
 
-Consumers usually override the prefixed public tokens, not these internal bridge tokens. Use `--usk-native-*` only when intentionally customizing native fallback styling across every UI preset.
+Every preset maps the complete identity set. Consumers usually override the prefixed public tokens, not these internal bridge tokens. Use `--usk-native-*` only when intentionally customizing native fallback styling across every UI preset.
 
 Use prefixed RGB aliases for component-local alpha effects:
 

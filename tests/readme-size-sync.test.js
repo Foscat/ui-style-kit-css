@@ -3,9 +3,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { syncReadmeBundleSizes } from '../scripts/sync-readme-sizes.mjs';
+import { defaultBundleSizeEntries, syncReadmeBundleSizes } from '../scripts/sync-readme-sizes.mjs';
 
-test('syncReadmeBundleSizes refreshes tracked raw and gzip values without altering labels', () => {
+test('focused preset examples use measured generated bundle sizes', () => {
+  for (const preset of ['minimal-saas', 'industrial-utility']) {
+    assert.ok(defaultBundleSizeEntries.some(([specifier, file]) =>
+      specifier === `ui-style-kit-css/visual/${preset}.css` && file === `dist/visual/${preset}.css`
+    ));
+  }
+});
+
+test('syncReadmeBundleSizes refreshes tracked raw and gzip values without altering labels', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'usk-readme-size-'));
   fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
   fs.mkdirSync(path.join(root, 'styles'), { recursive: true });
@@ -20,7 +28,7 @@ test('syncReadmeBundleSizes refreshes tracked raw and gzip values without alteri
 | \`ui-style-kit-css/theme-colors.css\` | ~1 KB | ~1 KB | Shared color schemes for standalone style imports |
 `);
 
-  syncReadmeBundleSizes(root, [
+  await syncReadmeBundleSizes(root, [
     ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css'],
     ['ui-style-kit-css/theme-colors.css', 'styles/theme-colors.css']
   ]);

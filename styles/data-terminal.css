@@ -42,6 +42,29 @@
 
 [data-ui="data-terminal"][data-mode="light"] {
   color-scheme: light;
+  --terminal-fallback-bg-rgb: 250 250 246;
+  --terminal-fallback-surface-rgb: 255 255 252;
+  --terminal-fallback-surface-strong-rgb: 255 255 252;
+  --terminal-fallback-surface-soft-rgb: 246 246 241;
+  --terminal-fallback-text-rgb: 20 22 21;
+  --terminal-fallback-text-muted-rgb: 84 87 84;
+  --terminal-fallback-border-rgb: 137 140 136;
+  --terminal-fallback-primary-rgb: 22 82 190;
+  --terminal-fallback-primary-hover-rgb: 15 66 158;
+  --terminal-fallback-primary-text-rgb: 255 255 255;
+  --terminal-fallback-secondary-rgb: 24 111 138;
+  --terminal-fallback-secondary-hover-rgb: 16 86 108;
+  --terminal-fallback-secondary-text-rgb: 255 255 255;
+  --terminal-fallback-accent-rgb: 190 111 0;
+  --terminal-fallback-accent-text-rgb: 20 22 21;
+  --terminal-fallback-success-rgb: 36 132 55;
+  --terminal-fallback-success-text-rgb: 255 255 255;
+  --terminal-fallback-warning-rgb: 190 111 0;
+  --terminal-fallback-warning-text-rgb: 20 22 21;
+  --terminal-fallback-danger-rgb: 211 43 50;
+  --terminal-fallback-danger-text-rgb: 255 255 255;
+  --terminal-fallback-link-rgb: 22 82 190;
+  --terminal-fallback-focus-rgb: 22 82 190;
   --terminal-panel-alpha: .98;
   --terminal-panel-soft-alpha: .78;
   --terminal-border-alpha: .58;
@@ -51,6 +74,29 @@
 
 [data-ui="data-terminal"][data-mode="dark"] {
   color-scheme: dark;
+  --terminal-fallback-bg-rgb: 2 4 3;
+  --terminal-fallback-surface-rgb: 0 0 0;
+  --terminal-fallback-surface-strong-rgb: 0 0 0;
+  --terminal-fallback-surface-soft-rgb: 8 10 9;
+  --terminal-fallback-text-rgb: 236 237 232;
+  --terminal-fallback-text-muted-rgb: 164 166 160;
+  --terminal-fallback-border-rgb: 163 116 0;
+  --terminal-fallback-primary-rgb: 52 125 255;
+  --terminal-fallback-primary-hover-rgb: 100 156 255;
+  --terminal-fallback-primary-text-rgb: 0 0 0;
+  --terminal-fallback-secondary-rgb: 52 171 213;
+  --terminal-fallback-secondary-hover-rgb: 93 199 235;
+  --terminal-fallback-secondary-text-rgb: 0 0 0;
+  --terminal-fallback-accent-rgb: 255 176 0;
+  --terminal-fallback-accent-text-rgb: 0 0 0;
+  --terminal-fallback-success-rgb: 74 205 84;
+  --terminal-fallback-success-text-rgb: 0 0 0;
+  --terminal-fallback-warning-rgb: 255 176 0;
+  --terminal-fallback-warning-text-rgb: 0 0 0;
+  --terminal-fallback-danger-rgb: 255 71 78;
+  --terminal-fallback-danger-text-rgb: 0 0 0;
+  --terminal-fallback-link-rgb: 82 151 255;
+  --terminal-fallback-focus-rgb: 82 151 255;
   --terminal-panel-alpha: .92;
   --terminal-panel-soft-alpha: .64;
   --terminal-border-alpha: .52;
@@ -60,6 +106,29 @@
 
 [data-ui="data-terminal"][data-mode="contrast"] {
   color-scheme: dark;
+  --terminal-fallback-bg-rgb: 0 0 0;
+  --terminal-fallback-surface-rgb: 0 0 0;
+  --terminal-fallback-surface-strong-rgb: 0 0 0;
+  --terminal-fallback-surface-soft-rgb: 0 0 0;
+  --terminal-fallback-text-rgb: 255 255 255;
+  --terminal-fallback-text-muted-rgb: 224 224 224;
+  --terminal-fallback-border-rgb: 255 212 0;
+  --terminal-fallback-primary-rgb: 92 153 255;
+  --terminal-fallback-primary-hover-rgb: 132 179 255;
+  --terminal-fallback-primary-text-rgb: 0 0 0;
+  --terminal-fallback-secondary-rgb: 78 224 255;
+  --terminal-fallback-secondary-hover-rgb: 130 235 255;
+  --terminal-fallback-secondary-text-rgb: 0 0 0;
+  --terminal-fallback-accent-rgb: 255 212 0;
+  --terminal-fallback-accent-text-rgb: 0 0 0;
+  --terminal-fallback-success-rgb: 92 255 105;
+  --terminal-fallback-success-text-rgb: 0 0 0;
+  --terminal-fallback-warning-rgb: 255 212 0;
+  --terminal-fallback-warning-text-rgb: 0 0 0;
+  --terminal-fallback-danger-rgb: 255 96 102;
+  --terminal-fallback-danger-text-rgb: 0 0 0;
+  --terminal-fallback-link-rgb: 126 176 255;
+  --terminal-fallback-focus-rgb: 255 255 255;
   --terminal-panel-alpha: 1;
   --terminal-panel-soft-alpha: .92;
   --terminal-border-alpha: 1;
@@ -67,8 +136,8 @@
   --terminal-focus-alpha: .72;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="data-terminal"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --terminal-bg-rgb: var(--usk-bg-rgb);
   --terminal-surface-rgb: var(--usk-surface-rgb);
   --terminal-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -83,15 +152,43 @@
   --terminal-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --terminal-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --terminal-accent-rgb: var(--usk-accent-rgb);
-  --terminal-success-rgb: var(--usk-success-rgb);
-  --terminal-warning-rgb: var(--usk-warning-rgb);
-  --terminal-danger-rgb: var(--usk-danger-rgb);
-  --terminal-link-rgb: var(--usk-link-rgb);
   --terminal-accent-text-rgb: var(--usk-accent-text-rgb);
+  --terminal-success-rgb: var(--usk-success-rgb);
   --terminal-success-text-rgb: var(--usk-success-text-rgb);
+  --terminal-warning-rgb: var(--usk-warning-rgb);
   --terminal-warning-text-rgb: var(--usk-warning-text-rgb);
+  --terminal-danger-rgb: var(--usk-danger-rgb);
   --terminal-danger-text-rgb: var(--usk-danger-text-rgb);
+  --terminal-link-rgb: var(--usk-link-rgb);
   --terminal-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="data-terminal"][data-mode] {
+  --usk-native-bg: var(--terminal-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --terminal-bg-rgb: var(--usk-bg-rgb, var(--terminal-fallback-bg-rgb));
+  --terminal-surface-rgb: var(--usk-surface-rgb, var(--terminal-fallback-surface-rgb));
+  --terminal-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--terminal-fallback-surface-strong-rgb));
+  --terminal-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--terminal-fallback-surface-soft-rgb));
+  --terminal-text-rgb: var(--usk-text-rgb, var(--terminal-fallback-text-rgb));
+  --terminal-text-muted-rgb: var(--usk-text-muted-rgb, var(--terminal-fallback-text-muted-rgb));
+  --terminal-border-rgb: var(--usk-border-rgb, var(--terminal-fallback-border-rgb));
+  --terminal-primary-rgb: var(--usk-primary-rgb, var(--terminal-fallback-primary-rgb));
+  --terminal-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--terminal-fallback-primary-hover-rgb));
+  --terminal-primary-text-rgb: var(--usk-primary-text-rgb, var(--terminal-fallback-primary-text-rgb));
+  --terminal-secondary-rgb: var(--usk-secondary-rgb, var(--terminal-fallback-secondary-rgb));
+  --terminal-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--terminal-fallback-secondary-hover-rgb));
+  --terminal-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--terminal-fallback-secondary-text-rgb));
+  --terminal-accent-rgb: var(--usk-accent-rgb, var(--terminal-fallback-accent-rgb));
+  --terminal-accent-text-rgb: var(--usk-accent-text-rgb, var(--terminal-fallback-accent-text-rgb));
+  --terminal-success-rgb: var(--usk-success-rgb, var(--terminal-fallback-success-rgb));
+  --terminal-success-text-rgb: var(--usk-success-text-rgb, var(--terminal-fallback-success-text-rgb));
+  --terminal-warning-rgb: var(--usk-warning-rgb, var(--terminal-fallback-warning-rgb));
+  --terminal-warning-text-rgb: var(--usk-warning-text-rgb, var(--terminal-fallback-warning-text-rgb));
+  --terminal-danger-rgb: var(--usk-danger-rgb, var(--terminal-fallback-danger-rgb));
+  --terminal-danger-text-rgb: var(--usk-danger-text-rgb, var(--terminal-fallback-danger-text-rgb));
+  --terminal-link-rgb: var(--usk-link-rgb, var(--terminal-fallback-link-rgb));
+  --terminal-focus-rgb: var(--usk-focus-rgb, var(--terminal-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--terminal-surface);
   --usk-native-surface-strong: var(--terminal-surface-strong);
@@ -122,6 +219,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--terminal-space-5);
+  --usk-native-control-min-block-size: 2.65rem;
+  --usk-native-control-padding-block: .74rem;
+  --usk-native-control-padding-inline: 1rem;
+  --usk-native-subcontrol-padding-block: .58rem;
+  --usk-native-subcontrol-padding-inline: .8rem;
+  --usk-native-choice-size: 1.3rem;
+  --usk-native-choice-background: var(--terminal-control-bg);
+  --usk-native-choice-border: 1px solid var(--terminal-border);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 0;
+  --usk-native-choice-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-choice-checked-background: var(--terminal-primary);
+  --usk-native-choice-mark-color: var(--terminal-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(78deg, transparent 50%, var(--terminal-primary) 50%), linear-gradient(102deg, var(--terminal-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.42000000000000004rem 0.42000000000000004rem, 0.42000000000000004rem 0.42000000000000004rem;
+  --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - 0.78rem) 50%;
+  --usk-native-select-padding-inline-end: 2.4rem;
+  --usk-native-range-track-size: .5rem;
+  --usk-native-range-track-background: var(--terminal-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--terminal-border);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-range-progress-background: var(--terminal-primary);
+  --usk-native-range-thumb-size: 1.1rem;
+  --usk-native-range-thumb-background: var(--terminal-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--terminal-border);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-progress-size: .62rem;
+  --usk-native-progress-track-background: var(--terminal-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--terminal-border);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-progress-value-background: var(--terminal-primary);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-meter-optimum-background: var(--terminal-success);
+  --usk-native-meter-suboptimum-background: var(--terminal-warning);
+  --usk-native-meter-critical-background: var(--terminal-danger);
+  --usk-native-file-button-background: var(--terminal-primary);
+  --usk-native-file-button-border: 1px solid var(--terminal-border);
+  --usk-native-file-button-radius: 0;
+  --usk-native-file-button-shadow: 0 0 9px var(--terminal-primary);
+  --usk-native-color-swatch-border: 1px solid var(--terminal-border);
+  --usk-native-color-swatch-radius: 0;
+  --usk-native-indicator-opacity: 0.82;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .65rem;
+  --usk-native-scrollbar-track: var(--terminal-surface-soft);
+  --usk-native-scrollbar-thumb: var(--terminal-primary);
+  --usk-native-scrollbar-radius: 0;
   --terminal-bg: rgb(var(--terminal-bg-rgb));
   --terminal-surface: rgb(var(--terminal-surface-rgb) / var(--terminal-panel-alpha));
   --terminal-surface-strong: rgb(var(--terminal-surface-strong-rgb) / var(--terminal-panel-alpha));
@@ -162,7 +310,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="data-terminal"][data-theme][data-mode] { --terminal-border: color-mix(in srgb, rgb(var(--terminal-border-rgb) / max(var(--terminal-border-alpha), var(--usk-border-min-alpha))), var(--terminal-text) var(--usk-border-text-mix)); }
+  [data-ui="data-terminal"][data-mode] { --terminal-border: color-mix(in srgb, rgb(var(--terminal-border-rgb) / max(var(--terminal-border-alpha), var(--usk-border-min-alpha))), var(--terminal-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -214,7 +362,7 @@
 [data-ui="data-terminal"] *::before,
 [data-ui="data-terminal"] *::after { box-sizing: border-box; }
 
-[data-ui="data-terminal"][data-theme][data-mode] { background: var(--terminal-theme-bg); background-size: var(--terminal-theme-bg-size); }
+[data-ui="data-terminal"][data-mode] { background: var(--terminal-theme-bg); background-size: var(--terminal-theme-bg-size); }
 
 .terminal-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .terminal-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -281,7 +429,8 @@
 /* Theme-responsive component defaults */
 .terminal-card, .terminal-panel { background: var(--terminal-card-bg); }
 .terminal-toolbar, .terminal-table-wrap { background: var(--terminal-control-bg); }
-.terminal-button:not(.terminal-button-primary):not(.terminal-button-secondary):not(.terminal-button-danger):not(.terminal-button-ghost), .terminal-icon-button { background: var(--terminal-control-bg); }
+.terminal-button:not(.terminal-button-primary):not(.terminal-button-secondary):not(.terminal-button-danger):not(.terminal-button-warning):not(.terminal-button-ghost):not(.is-active):not([aria-pressed="true"]),
+.terminal-icon-button:not(.is-active):not([aria-pressed="true"]) { background: var(--terminal-control-bg); }
 .terminal-button, .terminal-icon-button, .terminal-badge, .terminal-nav-link { font-family: var(--terminal-font-control); }
 
 
@@ -509,7 +658,6 @@
 .terminal-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--terminal-card-bg);
   color: var(--terminal-text);
   border: 1px solid var(--terminal-border);
@@ -609,7 +757,7 @@
   --terminal-radius-xl: .2rem;
 }
 [data-ui="data-terminal"] { font-family: var(--terminal-font-body); font-size: .94rem; }
-[data-ui="data-terminal"][data-theme][data-mode] {
+[data-ui="data-terminal"][data-mode] {
   --terminal-theme-bg: linear-gradient(rgb(var(--terminal-primary-rgb) / .035) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--terminal-border-rgb) / .07) 1px, transparent 1px), var(--terminal-bg);
   --terminal-theme-bg-size: 4px 4px, 3rem 3rem, auto;
   --terminal-card-bg: rgb(var(--terminal-surface-rgb) / calc(var(--terminal-panel-alpha) * .84));
@@ -618,6 +766,7 @@
 .terminal-title { font-size: clamp(1.8rem, 4vw, 3.3rem); line-height: 1; font-weight: 700; }
 .terminal-heading { font-size: clamp(1rem, 2vw, 1.45rem); font-weight: 700; }
 .terminal-subtitle, .terminal-copy { line-height: 1.45; }
+.terminal-copy a { display: inline-flex; align-items: center; min-block-size: 1.5rem; }
 .terminal-surface, .terminal-card, .terminal-panel, .terminal-toolbar, .terminal-table-wrap { border-radius: 0; box-shadow: none; background: var(--terminal-card-bg); }
 .terminal-card, .terminal-panel { padding: var(--terminal-space-4); }
 .terminal-button, .terminal-icon-button { border-radius: 0; box-shadow: none; font-family: var(--terminal-font-mono); text-transform: uppercase; font-size: .76rem; letter-spacing: .055em; }
@@ -635,6 +784,7 @@
 
 /* Filled and framed actions share command brackets and restrained terminal glow. */
 .terminal-button.terminal-button-cut, .terminal-button-cut {
+  min-block-size: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: start;
@@ -654,12 +804,12 @@
   border-radius: 0;
   box-shadow: inset .25rem 0 0 rgb(var(--terminal-primary-rgb) / .22), 0 0 .75rem rgb(var(--terminal-primary-rgb) / .2);
 }
-[data-ui="data-terminal"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="data-terminal"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 1px solid var(--terminal-primary);
   border-radius: 0;
   box-shadow: inset .2rem 0 0 rgb(var(--terminal-primary-rgb) / .22), 0 0 .6rem rgb(var(--terminal-primary-rgb) / .24);
 }
-[data-ui="data-terminal"][data-theme][data-mode] :where(dialog) {
+[data-ui="data-terminal"][data-mode] :where(dialog) {
   border: 1px solid var(--terminal-primary);
   border-radius: 0;
   box-shadow: inset .28rem 0 0 rgb(var(--terminal-primary-rgb) / .24), 0 0 .9rem rgb(var(--terminal-primary-rgb) / .24), 0 1rem 2rem rgb(var(--terminal-text-rgb) / .22);
@@ -672,6 +822,153 @@
 .terminal-button[aria-busy="true"]::after, .terminal-icon-button[aria-busy="true"]::after, [data-ui="data-terminal"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   border: .09em solid currentColor; border-radius: 0; background: conic-gradient(currentColor 0 20%, transparent 0 32%, currentColor 0 46%, transparent 0 72%, currentColor 0 84%, transparent 0); box-shadow: 0 0 .38em currentColor; clip-path: polygon(0 0, 45% 0, 45% 18%, 18% 18%, 18% 45%, 0 45%, 0 0, 100% 0, 100% 100%, 55% 100%, 55% 82%, 82% 82%, 82% 55%, 100% 55%); animation: terminal-spin .76s steps(4, end) infinite;
 }
+
+/**
+ * Final Data Terminal fidelity layer.
+ * Keeps every control on the same dense one-pixel command grid.
+ */
+[data-ui="data-terminal"][data-mode] {
+  --terminal-command-plane:
+    repeating-linear-gradient(0deg, rgb(var(--terminal-primary-rgb) / .1) 0 1px, transparent 1px 4px),
+    linear-gradient(145deg, rgb(var(--terminal-primary-rgb) / .22), rgb(var(--terminal-surface-rgb) / .94) 52%, rgb(var(--terminal-secondary-rgb) / .16));
+  --terminal-card-bg: var(--terminal-command-plane);
+  --usk-native-card-bg: var(--terminal-command-plane);
+  --usk-native-font-control: ui-monospace, Consolas, "Liberation Mono", monospace;
+  --usk-native-control-min-block-size: 2.2rem;
+  --usk-native-control-padding-block: .31rem;
+  --usk-native-control-padding-inline: .62rem;
+  --usk-native-border-width: 1px;
+  --usk-native-radius-sm: 0;
+  --usk-native-radius: 0;
+  --usk-native-radius-lg: 0;
+  --usk-native-shadow: none;
+  --usk-native-shadow-md: none;
+  --usk-native-focus-ring: 0 0 0 1px var(--terminal-focus);
+  --usk-native-subcontrol-padding-block: .28rem;
+  --usk-native-subcontrol-padding-inline: .48rem;
+  --usk-native-choice-size: 1rem;
+  --usk-native-choice-background: var(--terminal-control-bg);
+  --usk-native-choice-border: 1px solid var(--terminal-text-muted);
+  --usk-native-checkbox-radius: 0;
+  --usk-native-radio-radius: 0;
+  --usk-native-choice-shadow: inset 0 0 0 1px var(--terminal-surface);
+  --usk-native-choice-checked-background: linear-gradient(var(--terminal-primary), var(--terminal-primary));
+  --usk-native-choice-mark-color: var(--terminal-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(90deg, transparent 38%, var(--terminal-primary) 38% 62%, transparent 62%);
+  --usk-native-select-indicator-size: .72rem .5rem;
+  --usk-native-select-indicator-position: calc(100% - .66rem) 50%;
+  --usk-native-select-padding-inline-end: 1.65rem;
+  --usk-native-range-track-size: .32rem;
+  --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 1px, transparent 1px .5rem), var(--terminal-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--terminal-text-muted);
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: linear-gradient(90deg, var(--terminal-success), var(--terminal-warning), var(--terminal-danger));
+  --usk-native-range-thumb-size: .9rem;
+  --usk-native-range-thumb-background: var(--terminal-text);
+  --usk-native-range-thumb-border: 1px solid var(--terminal-surface);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: 0 0 0 1px var(--terminal-primary);
+  --usk-native-progress-size: .58rem;
+  --usk-native-progress-track-background: repeating-linear-gradient(90deg, var(--terminal-surface-soft) 0 .48rem, var(--terminal-border) .48rem .54rem);
+  --usk-native-progress-track-border: 1px solid var(--terminal-text-muted);
+  --usk-native-progress-track-radius: 0;
+  --usk-native-progress-track-shadow: none;
+  --usk-native-progress-value-background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 .48rem, transparent .48rem .54rem);
+  --usk-native-progress-value-radius: 0;
+  --usk-native-progress-value-shadow: none;
+  --usk-native-scrollbar-size: .6rem;
+  --usk-native-scrollbar-track: var(--terminal-surface);
+  --usk-native-scrollbar-thumb: linear-gradient(var(--terminal-primary), var(--terminal-primary));
+  --usk-native-scrollbar-radius: 0;
+}
+
+.terminal-title { margin-block: .75rem;
+  font-weight: 700;
+  letter-spacing: max(.05em, .5px);
+}
+
+.terminal-label {
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.terminal-card,
+.terminal-panel {
+  padding: .78rem;
+  background: var(--terminal-card-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.terminal-well,
+.terminal-inset {
+  padding: .58rem;
+  background: var(--terminal-control-bg);
+  border: 1px dashed var(--terminal-border);
+  border-radius: 0;
+  box-shadow: inset .2rem 0 0 rgb(var(--terminal-primary-rgb) / .22);
+}
+
+.terminal-button,
+.terminal-icon-button {
+  min-height: 2.2rem;
+  padding: .38rem .62rem;
+  background: var(--terminal-control-bg);
+  border: 1px solid var(--terminal-primary);
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: 700;
+}
+
+.terminal-button::before { content: "["; margin-inline-end: .38em; }
+.terminal-button::after { content: "]"; margin-inline-start: .38em; }
+.terminal-button:active, .terminal-button[aria-pressed="true"], .terminal-button.is-active { color: var(--terminal-on-primary); background: var(--terminal-primary); }
+.terminal-button:disabled, .terminal-disabled { color: var(--terminal-text-muted); border-color: var(--terminal-text-muted); box-shadow: none; }
+
+.terminal-input,
+.terminal-textarea,
+.terminal-select {
+  min-height: 2.1rem;
+  padding: .34rem .52rem;
+  background: var(--terminal-control-bg);
+  border: 1px solid var(--terminal-text-muted);
+  border-radius: 0;
+  box-shadow: inset .16rem 0 0 rgb(var(--terminal-primary-rgb) / .28);
+}
+
+.terminal-nav, .terminal-toolbar, .terminal-feature-strip { gap: 1px; padding: 1px; border: 1px solid var(--terminal-border); border-radius: 0; box-shadow: none; }
+.terminal-nav-link { min-height: 1.9rem; padding: .3rem .52rem; border-radius: 0; }
+.terminal-badge { min-height: 1.3rem; padding: .18rem .38rem; border: 1px solid currentColor; border-radius: 0; font-family: var(--terminal-font-mono); }
+.terminal-alert { padding: .52rem .62rem; background: var(--terminal-control-bg); border: 1px solid currentColor; border-radius: 0; box-shadow: none; }
+.terminal-progress { height: .58rem; background: repeating-linear-gradient(90deg, var(--terminal-surface-soft) 0 .48rem, var(--terminal-border) .48rem .54rem); border-radius: 0; }
+.terminal-progress-bar { background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 .48rem, transparent .48rem .54rem); border-radius: 0; box-shadow: none; }
+.terminal-table-wrap { background: var(--terminal-surface); border: 1px solid var(--terminal-border); border-radius: 0; box-shadow: none; }
+.terminal-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.terminal-table th { padding: .38rem .46rem; background: var(--terminal-control-bg); border: 1px solid var(--terminal-border); font-weight: 700; }
+.terminal-table td { padding: .34rem .46rem; border: 1px solid var(--terminal-border); }
+.terminal-table tr:hover td { color: var(--terminal-on-primary); background: var(--terminal-primary); }
+.terminal-tooltip, [data-ui="data-terminal"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { border: 1px dashed var(--terminal-warning); border-radius: 0; box-shadow: none; }
+.terminal-card-service, .terminal-card-feature, .terminal-media-scrim, .terminal-callout-bar { border-radius: 0; box-shadow: none; }
+
+/* Command planes use compact signal rails instead of broad decorative striping. */
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="data-terminal"][data-mode] {
+    --usk-native-card-bg: var(--terminal-card-bg);
+    --usk-native-control-bg: color-mix(in srgb, var(--terminal-surface-soft) 88%, var(--terminal-primary));
+  }
+  .terminal-panel,
+  .terminal-card-service,
+  .terminal-feature-strip,
+  .terminal-callout-bar {
+    background:
+      linear-gradient(90deg, var(--terminal-primary) 0 28%, var(--terminal-warning) 28% 38%, transparent 38%) top / 100% 2px no-repeat,
+      var(--terminal-card-bg);
+  }
+}
+.terminal-input { border-radius: .01rem; }
+.terminal-alert { border-radius: .015rem; }
 
 @media (prefers-reduced-motion: reduce) {
   [data-ui="data-terminal"] *, [data-ui="data-terminal"] *::before, [data-ui="data-terminal"] *::after { scroll-behavior: auto !important; transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
@@ -688,4 +985,811 @@
   [data-ui="data-terminal"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="data-terminal"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.data_terminal {
+/* Keeps semantic field states above preset-specific material paint. */
+.terminal-input[aria-invalid="true"], .terminal-textarea[aria-invalid="true"], .terminal-select[aria-invalid="true"] { border-color: var(--terminal-danger); box-shadow: 0 0 0 2px rgb(var(--terminal-danger-rgb) / .2); }
+.terminal-input[readonly], .terminal-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint after identity-specific geometry. */
+.terminal-button-primary { background: var(--terminal-primary); color: var(--terminal-on-primary); border-color: var(--terminal-primary); }
+.terminal-button-secondary { background: var(--terminal-secondary); color: var(--terminal-on-secondary); border-color: var(--terminal-secondary); }
+.terminal-button-danger { background: var(--terminal-danger); color: var(--terminal-on-danger); border-color: var(--terminal-danger); }
+.terminal-button-ghost { background: transparent; color: var(--terminal-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.data_terminal {
+/* Shared annotation fidelity: readable display rhythm and appropriately scaled text icons. */
+.terminal-feature-item > .terminal-icon-medallion { font-size: 1.5rem; line-height: 1; }
+.terminal-callout-bar > .terminal-icon-medallion { min-inline-size: 4.5rem; min-block-size: 4.5rem; font-size: 2rem; font-weight: 800; line-height: 1; }
+}
+
+@layer ui-style-kit.data_terminal {
+/**
+ * Establishes the paired neutral command planes from the retained Data
+ * Terminal references while keeping interactive and semantic color roles
+ * connected to the active library theme.
+ */
+[data-ui="data-terminal"]:not([data-theme])[data-mode="light"] {
+  --terminal-text-rgb: 20 22 21;
+  --terminal-text-muted-rgb: 84 87 84;
+  --terminal-border-rgb: 137 140 136;
+  --terminal-primary-rgb: 22 82 190;
+  --terminal-primary-hover-rgb: 15 66 158;
+  --terminal-primary-text-rgb: 255 255 255;
+  --terminal-secondary-rgb: 24 111 138;
+  --terminal-secondary-hover-rgb: 16 86 108;
+  --terminal-secondary-text-rgb: 255 255 255;
+  --terminal-accent-rgb: 190 111 0;
+  --terminal-accent-text-rgb: 20 22 21;
+  --terminal-success-rgb: 36 132 55;
+  --terminal-success-text-rgb: 255 255 255;
+  --terminal-warning-rgb: 190 111 0;
+  --terminal-warning-text-rgb: 20 22 21;
+  --terminal-danger-rgb: 211 43 50;
+  --terminal-danger-text-rgb: 255 255 255;
+  --terminal-link-rgb: 22 82 190;
+  --terminal-focus-rgb: 22 82 190;
+}
+
+[data-ui="data-terminal"]:not([data-theme])[data-mode="dark"] {
+  --terminal-text-rgb: 236 237 232;
+  --terminal-text-muted-rgb: 164 166 160;
+  --terminal-border-rgb: 163 116 0;
+  --terminal-primary-rgb: 52 125 255;
+  --terminal-primary-hover-rgb: 100 156 255;
+  --terminal-primary-text-rgb: 0 0 0;
+  --terminal-secondary-rgb: 52 171 213;
+  --terminal-secondary-hover-rgb: 93 199 235;
+  --terminal-secondary-text-rgb: 0 0 0;
+  --terminal-accent-rgb: 255 176 0;
+  --terminal-accent-text-rgb: 0 0 0;
+  --terminal-success-rgb: 74 205 84;
+  --terminal-success-text-rgb: 0 0 0;
+  --terminal-warning-rgb: 255 176 0;
+  --terminal-warning-text-rgb: 0 0 0;
+  --terminal-danger-rgb: 255 71 78;
+  --terminal-danger-text-rgb: 0 0 0;
+  --terminal-link-rgb: 82 151 255;
+  --terminal-focus-rgb: 82 151 255;
+}
+
+[data-ui="data-terminal"]:not([data-theme])[data-mode="contrast"] {
+  --terminal-text-rgb: 255 255 255;
+  --terminal-text-muted-rgb: 224 224 224;
+  --terminal-border-rgb: 255 212 0;
+  --terminal-primary-rgb: 92 153 255;
+  --terminal-primary-hover-rgb: 132 179 255;
+  --terminal-primary-text-rgb: 0 0 0;
+  --terminal-secondary-rgb: 78 224 255;
+  --terminal-secondary-hover-rgb: 130 235 255;
+  --terminal-secondary-text-rgb: 0 0 0;
+  --terminal-accent-rgb: 255 212 0;
+  --terminal-accent-text-rgb: 0 0 0;
+  --terminal-success-rgb: 92 255 105;
+  --terminal-success-text-rgb: 0 0 0;
+  --terminal-warning-rgb: 255 212 0;
+  --terminal-warning-text-rgb: 0 0 0;
+  --terminal-danger-rgb: 255 96 102;
+  --terminal-danger-text-rgb: 0 0 0;
+  --terminal-link-rgb: 126 176 255;
+  --terminal-focus-rgb: 255 255 255;
+}
+
+[data-ui="data-terminal"][data-mode="light"] {
+  --terminal-document-bg-rgb: 250 250 246;
+  --terminal-document-cell-rgb: 255 255 252;
+  --terminal-document-cell-muted-rgb: 246 246 241;
+}
+
+[data-ui="data-terminal"][data-mode="dark"] {
+  --terminal-document-bg-rgb: 2 4 3;
+  --terminal-document-cell-rgb: 0 0 0;
+  --terminal-document-cell-muted-rgb: 8 10 9;
+}
+
+[data-ui="data-terminal"][data-mode="contrast"] {
+  --terminal-document-bg-rgb: 0 0 0;
+  --terminal-document-cell-rgb: 0 0 0;
+  --terminal-document-cell-muted-rgb: 0 0 0;
+}
+
+[data-ui="data-terminal"]:not([data-theme])[data-mode] {
+  --terminal-bg: rgb(var(--terminal-document-bg-rgb));
+  --terminal-surface: rgb(var(--terminal-document-cell-rgb));
+  --terminal-surface-strong: var(--terminal-surface);
+  --terminal-surface-soft: rgb(var(--terminal-document-cell-muted-rgb));
+  --terminal-border: rgb(var(--terminal-border-rgb) / max(var(--terminal-border-alpha), var(--usk-border-min-alpha)));
+  --terminal-theme-bg: var(--terminal-bg);
+  --terminal-theme-bg-size: auto;
+  --terminal-card-bg: var(--terminal-surface);
+  --terminal-control-bg: var(--terminal-surface);
+  --usk-native-surface: var(--terminal-surface);
+  --usk-native-surface-strong: var(--terminal-surface);
+  --usk-native-surface-soft: var(--terminal-surface-soft);
+  --usk-native-card-bg: var(--terminal-surface);
+  --usk-native-control-bg: var(--terminal-control-bg);
+  --usk-native-control-min-block-size: 1.75rem;
+  --usk-native-control-padding-block: .16rem;
+  --usk-native-control-padding-inline: .45rem;
+  --usk-native-subcontrol-padding-block: .2rem;
+  --usk-native-subcontrol-padding-inline: .4rem;
+  --usk-native-field-gap: .35rem;
+  --usk-native-panel-padding: .5rem;
+  --usk-native-choice-size: .875rem;
+  --usk-native-shadow: none;
+  --usk-native-shadow-md: none;
+}
+
+/**
+ * Resolves the bundled fallback channels for standalone consumers. Explicit
+ * theme selectors are more specific and therefore replace these defaults.
+ */
+[data-ui="data-terminal"]:not([data-theme])[data-mode] {
+  --terminal-text: rgb(var(--terminal-text-rgb));
+  --terminal-text-muted: rgb(var(--terminal-text-muted-rgb));
+  --terminal-fg: var(--terminal-text);
+  --terminal-surface-fg: var(--terminal-text);
+  --terminal-muted: var(--terminal-text-muted);
+  --terminal-border: rgb(var(--terminal-border-rgb));
+  --terminal-control-fg: var(--terminal-text);
+  --terminal-primary: rgb(var(--terminal-primary-rgb));
+  --terminal-primary-hover: rgb(var(--terminal-primary-hover-rgb));
+  --terminal-primary-text: rgb(var(--terminal-primary-text-rgb));
+  --terminal-secondary: rgb(var(--terminal-secondary-rgb));
+  --terminal-secondary-hover: rgb(var(--terminal-secondary-hover-rgb));
+  --terminal-secondary-text: rgb(var(--terminal-secondary-text-rgb));
+  --terminal-on-primary: var(--terminal-primary-text);
+  --terminal-on-secondary: var(--terminal-secondary-text);
+  --terminal-on-accent: rgb(var(--terminal-accent-text-rgb));
+  --terminal-on-success: rgb(var(--terminal-success-text-rgb));
+  --terminal-on-warning: rgb(var(--terminal-warning-text-rgb));
+  --terminal-on-danger: rgb(var(--terminal-danger-text-rgb));
+  --terminal-accent: rgb(var(--terminal-accent-rgb));
+  --terminal-success: rgb(var(--terminal-success-rgb));
+  --terminal-warning: rgb(var(--terminal-warning-rgb));
+  --terminal-danger: rgb(var(--terminal-danger-rgb));
+  --terminal-link: rgb(var(--terminal-link-rgb));
+  --terminal-focus: rgb(var(--terminal-focus-rgb));
+  --terminal-focus-ring: 0 0 0 2px var(--terminal-focus);
+  --terminal-bg: rgb(var(--terminal-document-bg-rgb));
+  --terminal-surface: rgb(var(--terminal-document-cell-rgb));
+  --terminal-surface-strong: var(--terminal-surface);
+  --terminal-surface-soft: rgb(var(--terminal-document-cell-muted-rgb));
+  --terminal-theme-bg: var(--terminal-bg);
+  --terminal-card-bg: var(--terminal-surface);
+  --terminal-control-bg: var(--terminal-surface);
+  --terminal-spinner-track: var(--terminal-border);
+  --terminal-spinner-stroke: var(--terminal-primary);
+  --terminal-spinner-accent: var(--terminal-accent);
+  --usk-native-surface: var(--terminal-surface);
+  --usk-native-surface-strong: var(--terminal-surface);
+  --usk-native-surface-soft: var(--terminal-surface-soft);
+  --usk-native-card-bg: var(--terminal-surface);
+  --usk-native-control-bg: var(--terminal-surface);
+  --usk-native-text: var(--terminal-text);
+  --usk-native-text-muted: var(--terminal-text-muted);
+  --usk-native-border: var(--terminal-border);
+  --usk-native-primary: var(--terminal-primary);
+  --usk-native-primary-hover: var(--terminal-primary-hover);
+  --usk-native-on-primary: var(--terminal-on-primary);
+  --usk-native-focus: var(--terminal-focus);
+  --usk-native-success: var(--terminal-success);
+  --usk-native-warning: var(--terminal-warning);
+  --usk-native-danger: var(--terminal-danger);
+  --usk-native-link: var(--terminal-link);
+  --usk-native-font-body: var(--terminal-font-body);
+  --usk-native-font-heading: var(--terminal-font-heading);
+  --usk-native-font-control: var(--terminal-font-control);
+  --usk-native-font-mono: var(--terminal-font-mono);
+  --usk-native-shadow: none;
+  --usk-native-shadow-md: none;
+}
+
+[data-ui="data-terminal"] {
+  --demo-component-heading-size: .75rem;
+  background: var(--terminal-bg);
+  font-family: "Cascadia Mono", Consolas, "Liberation Mono", ui-monospace, monospace;
+  font-size: .8125rem;
+  line-height: 1.35;
+}
+
+.terminal-title {
+  margin-block: .5rem;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.05;
+  letter-spacing: .025em;
+}
+
+.terminal-heading {
+  font-size: .75rem;
+  line-height: 1.2;
+  letter-spacing: .025em;
+}
+
+.terminal-kicker,
+.terminal-eyebrow {
+  font-size: .6875rem;
+  line-height: 1.2;
+  letter-spacing: .035em;
+  text-shadow: none;
+}
+
+.terminal-surface,
+.terminal-card,
+.terminal-panel,
+.terminal-toolbar,
+.terminal-table-wrap,
+.terminal-well,
+.terminal-inset,
+.terminal-input,
+.terminal-textarea,
+.terminal-select {
+  background: var(--terminal-surface);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/** Uses the signal channel as the one-pixel cell frame without adding elevation. */
+.terminal-card,
+.terminal-panel {
+  padding: .5rem;
+  border: 1px solid var(--terminal-primary);
+}
+
+/**
+ * Recreates the compact bracket-and-cell grammar used by the component
+ * laboratory without changing the semantic action tokens supplied by themes.
+ */
+.terminal-button,
+.terminal-icon-button {
+  min-height: 1.875rem;
+  padding: .3rem .65rem;
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+  box-shadow: none;
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .025em;
+  line-height: 1;
+  transform: none;
+}
+
+.terminal-button:hover,
+.terminal-icon-button:hover {
+  color: var(--terminal-primary);
+  background: var(--terminal-surface);
+  border-color: var(--terminal-primary);
+  box-shadow: none;
+  transform: none;
+}
+
+.terminal-button-primary {
+  color: var(--terminal-on-primary);
+  background: var(--terminal-primary);
+  border-color: var(--terminal-primary);
+}
+
+.terminal-button-primary:hover {
+  color: var(--terminal-on-primary);
+  background: var(--terminal-primary-hover);
+  border-color: var(--terminal-primary-hover);
+}
+
+.terminal-button-secondary,
+.terminal-button-secondary:hover {
+  color: var(--terminal-text);
+  background: var(--terminal-surface);
+  border-color: var(--terminal-border);
+}
+
+.terminal-button-danger,
+.terminal-button-danger:hover {
+  color: var(--terminal-danger);
+  background: var(--terminal-surface);
+  border-color: var(--terminal-danger);
+}
+
+.terminal-button-ghost,
+.terminal-button-ghost:hover {
+  color: var(--terminal-primary);
+  background: transparent;
+  border-color: transparent;
+}
+
+.terminal-button:active,
+.terminal-button[aria-pressed="true"],
+.terminal-button.is-active {
+  color: var(--terminal-on-primary);
+  background: var(--terminal-primary);
+  border-color: var(--terminal-primary);
+  box-shadow: none;
+  transform: none;
+}
+
+.terminal-icon-button {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.875rem;
+  block-size: 1.875rem;
+  padding: 0;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+}
+
+.terminal-label,
+.terminal-help-text {
+  font-size: .6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.terminal-field { gap: .3rem; }
+
+.terminal-input,
+.terminal-select {
+  min-height: 1.875rem;
+  padding: .25rem .45rem;
+  border: 1px solid var(--terminal-border);
+  box-shadow: none;
+  font-size: .75rem;
+}
+
+.terminal-select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-image: var(--usk-native-select-indicator-image);
+  background-position: var(--usk-native-select-indicator-position);
+  background-repeat: no-repeat;
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+/**
+ * Suppresses the browser-provided select affordance so native demo fields use
+ * the same single terminal chevron as the class-based select component.
+ */
+[data-ui="data-terminal"][data-mode] select:not([multiple]) {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.terminal-textarea {
+  min-height: 4.5rem;
+  padding: .35rem .45rem;
+  border: 1px solid var(--terminal-border);
+  box-shadow: none;
+  font-size: .75rem;
+  line-height: 1.3;
+}
+
+[data-ui="data-terminal"][data-mode] {
+  --usk-native-select-indicator-image:
+    linear-gradient(45deg, transparent 50%, var(--terminal-text) 50%),
+    linear-gradient(135deg, var(--terminal-text) 50%, transparent 50%);
+  --usk-native-select-indicator-size: .35rem .35rem, .35rem .35rem;
+  --usk-native-select-indicator-position: calc(100% - .8rem) 50%, calc(100% - .55rem) 50%;
+  --usk-native-select-padding-inline-end: 1.6rem;
+}
+
+.terminal-check,
+.terminal-radio,
+.terminal-switch {
+  gap: .4rem;
+  font-size: .75rem;
+}
+
+.terminal-check-control,
+.terminal-radio-control {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1rem;
+  block-size: 1rem;
+  flex: 0 0 1rem;
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.terminal-check input:checked + .terminal-check-control,
+.terminal-radio input:checked + .terminal-radio-control {
+  background: var(--terminal-surface);
+  border-color: var(--terminal-primary);
+  box-shadow: none;
+}
+
+.terminal-check input:checked + .terminal-check-control::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--terminal-primary);
+  font-family: "Segoe UI Symbol", sans-serif;
+  font-size: .7rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.terminal-radio input:checked + .terminal-radio-control::after {
+  inline-size: .38rem;
+  block-size: .38rem;
+  background: var(--terminal-primary);
+  border-radius: 0;
+}
+
+.terminal-switch-track {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  block-size: 1.25rem;
+  color: var(--terminal-text);
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.terminal-switch-track::before {
+  content: "[ OFF ]";
+  font-family: var(--terminal-font-mono);
+  font-size: .625rem;
+  line-height: 1;
+}
+
+.terminal-switch-thumb {
+  display: none;
+  border-radius: 0;
+}
+
+.terminal-switch input:checked + .terminal-switch-track {
+  color: var(--terminal-success);
+  background: var(--terminal-surface);
+  border-color: var(--terminal-success);
+}
+
+.terminal-switch input:checked + .terminal-switch-track::before { content: "[ ON ]"; }
+
+.terminal-tooltip,
+[data-ui="data-terminal"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  padding: .45rem .6rem;
+  color: var(--terminal-warning);
+  background: var(--terminal-surface);
+  border: 1px dashed var(--terminal-warning);
+  border-radius: 0;
+  box-shadow: none;
+  font-size: .75rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.terminal-tooltip-arrow {
+  align-self: center;
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-warning);
+  border-inline-end: 0;
+  border-block-end: 0;
+  border-radius: 0;
+  transform: translateY(.17rem) rotate(45deg);
+}
+
+/**
+ * Builds a five-cell activity track with a single signal cell that advances
+ * from left to right. The real inline width keeps the loader inside flex and
+ * grid calculations instead of relying on visually overflowing shadows.
+ */
+.terminal-spinner,
+.terminal-loading-spinner,
+[data-ui="data-terminal"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  --terminal-loader-cell: .48rem;
+  --terminal-loader-gap: .14rem;
+  position: relative;
+  display: inline-block;
+  inline-size: calc((var(--terminal-loader-cell) * 5) + (var(--terminal-loader-gap) * 4));
+  block-size: var(--terminal-loader-cell);
+  overflow: hidden;
+  vertical-align: -.05em;
+  background: repeating-linear-gradient(
+    90deg,
+    rgb(var(--terminal-primary-rgb) / .25) 0 var(--terminal-loader-cell),
+    transparent var(--terminal-loader-cell) calc(var(--terminal-loader-cell) + var(--terminal-loader-gap))
+  );
+  border: 0;
+  border-radius: 0;
+  clip-path: none;
+  box-shadow: none;
+  animation: none;
+}
+
+.terminal-spinner::after,
+.terminal-loading-spinner::after,
+[data-ui="data-terminal"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner])::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: var(--terminal-loader-cell);
+  background: var(--terminal-primary);
+  animation: terminal-signal-scan .8s steps(4, end) infinite;
+}
+
+.terminal-spinner-sm { --terminal-loader-cell: .34rem; --terminal-loader-gap: .1rem; }
+.terminal-spinner-lg { --terminal-loader-cell: .62rem; --terminal-loader-gap: .18rem; }
+
+/**
+ * Gives busy buttons a compact version of the same segmented status scan so
+ * their readable label remains stable while work is in progress.
+ */
+.terminal-button[aria-busy="true"]::after,
+.terminal-icon-button[aria-busy="true"]::after,
+[data-ui="data-terminal"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
+  --terminal-loader-cell: .24rem;
+  content: "]";
+  display: inline-block;
+  inline-size: 2.25rem;
+  flex: 0 0 2.25rem;
+  block-size: 1em;
+  box-sizing: border-box;
+  padding-inline-start: 1.7rem;
+  line-height: 1;
+  text-align: end;
+  background-image:
+    repeating-linear-gradient(90deg, currentColor 0 .22rem, transparent .22rem .31rem),
+    linear-gradient(90deg, transparent 0 36%, currentColor 36% 52%, transparent 52% 100%);
+  background-position: 0 50%, -100% 50%;
+  background-repeat: no-repeat;
+  background-size: 1.5rem .38rem, 3rem .38rem;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  clip-path: none;
+  animation: terminal-signal-scan .8s steps(4, end) infinite;
+}
+
+.terminal-card-service > .terminal-icon-medallion {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.terminal-feature-item > .terminal-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  min-inline-size: 2rem;
+  min-block-size: 2rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+}
+
+.terminal-callout-bar > .terminal-icon-medallion {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  min-inline-size: 2.25rem;
+  min-block-size: 2.25rem;
+  padding: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+}
+
+/**
+ * Keeps feature and callout rows structural and neutral; theme accent colors
+ * remain reserved for status and selection semantics rather than rails.
+ */
+.terminal-feature-strip,
+.terminal-callout-bar {
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  box-shadow: none;
+}
+
+/** Aligns the commercial secondary CTA with the shared terminal command grammar. */
+.terminal-button.terminal-button-outline-heavy,
+.terminal-button-outline-heavy {
+  background: var(--terminal-surface);
+  border-width: 1px;
+  clip-path: none;
+  box-shadow: none;
+}
+
+@keyframes terminal-signal-scan {
+  from {
+    inset-inline-start: 0;
+    background-position: 0 50%, -100% 50%;
+  }
+
+  to {
+    inset-inline-start: calc(100% - var(--terminal-loader-cell));
+    background-position: 0 50%, 100% 50%;
+  }
+}
+
+/**
+ * Keeps status information outline-led and reserves filled theme color for
+ * selection, progress, and active table rows as shown in the references.
+ */
+.terminal-badge {
+  min-height: 1.35rem;
+  padding: .18rem .45rem;
+  color: var(--terminal-text);
+  background: var(--terminal-surface);
+  border: 1px solid currentColor;
+  border-radius: 0;
+  font-size: .6875rem;
+  font-weight: 500;
+}
+
+.terminal-badge-primary { color: var(--terminal-primary); background: var(--terminal-surface); border-color: currentColor; }
+.terminal-badge-secondary { color: var(--terminal-secondary); background: var(--terminal-surface); border-color: currentColor; }
+.terminal-badge-success { color: var(--terminal-success); background: var(--terminal-surface); border-color: currentColor; }
+.terminal-badge-warning { color: var(--terminal-warning); background: var(--terminal-surface); border-color: currentColor; }
+.terminal-badge-danger { color: var(--terminal-danger); background: var(--terminal-surface); border-color: currentColor; }
+
+.terminal-alert {
+  gap: .15rem;
+  padding: .42rem .55rem;
+  color: var(--terminal-text);
+  background: var(--terminal-surface);
+  border: 1px solid currentColor;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: .75rem;
+}
+
+.terminal-alert-success { color: var(--terminal-success); border-color: currentColor; }
+.terminal-alert-warning { color: var(--terminal-warning); border-color: currentColor; }
+.terminal-alert-danger { color: var(--terminal-danger); border-color: currentColor; }
+.terminal-alert-title { color: inherit; font-weight: 500; }
+.terminal-alert-body { color: inherit; line-height: 1.3; }
+
+.terminal-progress {
+  block-size: .5rem;
+  background: repeating-linear-gradient(90deg, var(--terminal-surface-soft) 0 .7rem, var(--terminal-bg) .7rem .78rem);
+  border: 0;
+  border-radius: 0;
+}
+
+.terminal-progress-bar {
+  background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 .7rem, transparent .7rem .78rem);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/** Keeps dialog copy inside the preset's one-pixel command frame. */
+[data-ui="data-terminal"][data-mode] :where(dialog > form) {
+  padding: .625rem;
+}
+
+[data-ui="data-terminal"][data-mode] {
+  --usk-native-range-track-size: .7rem;
+  --usk-native-range-track-background:
+    repeating-linear-gradient(90deg, rgb(var(--terminal-text-rgb) / .62) 0 1px, transparent 1px .75rem) top / 100% 55% no-repeat,
+    linear-gradient(90deg, var(--terminal-success) 0 58%, var(--terminal-warning) 58% 78%, var(--terminal-danger) 78% 100%) bottom / 100% 3px no-repeat,
+    transparent;
+  --usk-native-range-track-border: 0 solid transparent;
+  --usk-native-range-track-radius: 0;
+  --usk-native-range-track-shadow: none;
+  --usk-native-range-progress-background: linear-gradient(var(--terminal-primary), var(--terminal-primary));
+  --usk-native-range-thumb-size: .75rem;
+  --usk-native-range-thumb-background: var(--terminal-surface);
+  --usk-native-range-thumb-border: 2px solid var(--terminal-text);
+  --usk-native-range-thumb-radius: 0;
+  --usk-native-range-thumb-shadow: none;
+}
+
+.terminal-nav {
+  gap: 0;
+  padding: 0;
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.terminal-nav-link {
+  min-height: 1.75rem;
+  padding: .28rem .6rem;
+  color: var(--terminal-text);
+  border-inline-end: 1px solid var(--terminal-border);
+  border-radius: 0;
+  font-size: .6875rem;
+  font-weight: 500;
+}
+
+.terminal-nav-link:hover { color: var(--terminal-primary); background: var(--terminal-surface); }
+.terminal-nav-link[aria-current="page"], .terminal-nav-link.is-active { color: var(--terminal-on-primary); background: var(--terminal-primary); }
+
+.terminal-table { font-size: .6875rem; }
+.terminal-table th,
+.terminal-table td {
+  padding: .2rem .4rem;
+  color: var(--terminal-text);
+  background: var(--terminal-surface);
+  border: 0;
+  border-block-end: 1px solid var(--terminal-border);
+}
+
+.terminal-table th {
+  font-size: .625rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: .025em;
+}
+
+.terminal-table tr:hover td {
+  color: var(--terminal-on-primary);
+  background: var(--terminal-primary);
+}
+
+/** Keeps hovered data rows on the same filled signal channel as active navigation. */
+[data-ui="data-terminal"][data-mode] .terminal-table tbody tr:hover > td {
+  color: var(--terminal-on-primary);
+  background: var(--terminal-primary);
+  transition: none;
+}
+
+.terminal-pill,
+.terminal-rounded,
+.terminal-rounded-lg,
+.terminal-rounded-xl { border-radius: 0; }
+
+.terminal-metric {
+  gap: .2rem;
+  padding: .5rem;
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0;
+}
+
+.terminal-metric-value { font-size: 1rem; letter-spacing: .025em; }
+.terminal-metric-label { font-size: .6875rem; font-weight: 500; }
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="data-terminal"][data-mode] .terminal-button.terminal-button-warning {
+  background: var(--terminal-warning);
+  color: var(--terminal-on-warning);
+  border-color: var(--terminal-warning);
+  text-shadow: none;
+}
+
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="data-terminal"][data-mode] .terminal-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.03em, .5px);
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-feature-item > .terminal-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/** Centers Firefox text glyph bounds inside the compact square medallion. */
+@supports (-moz-appearance: none) {
+  [data-ui="data-terminal"][data-mode] .terminal-feature-item > .terminal-icon-medallion {
+    line-height: 2rem;
+  }
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-callout-bar > .terminal-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

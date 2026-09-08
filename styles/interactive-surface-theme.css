@@ -6,7 +6,7 @@
    hover, focus, active, disabled, and reduced-motion behavior.
 ========================================================= */
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface {
+:where([data-ui][data-mode]) .interactive-surface {
   --interactive-surface-border-width: 1px;
   /* Preserve the adapter's opaque paint while semantic surfaces may retain preset alpha. */
   --interactive-surface-bg: rgb(var(--usk-surface-strong-rgb, var(--usk-surface-rgb, 255 255 255)));
@@ -59,64 +59,74 @@
   color: var(--interactive-surface-fg);
 }
 
+/**
+ * Gives bridged text links a WCAG-sized pointer target without changing button
+ * or form-control geometry.
+ */
+:where([data-ui][data-mode]) a.interactive-surface {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 24px;
+}
+
 @supports (color: color-mix(in srgb, black, white)) {
-  :where([data-ui][data-theme][data-mode]) .interactive-surface {
+  :where([data-ui][data-mode]) .interactive-surface {
     --interactive-surface-level-3-bg: color-mix(in srgb, var(--interactive-surface-bg) 82%, var(--interactive-surface-variant-primary-bg));
     --interactive-surface-level-3-border-color: color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 72%, var(--interactive-surface-border-color));
     --interactive-surface-level-3-shadow: 0 14px 34px rgb(var(--usk-bg-rgb, 0 0 0) / .3), 0 0 0 1px color-mix(in srgb, var(--interactive-surface-variant-primary-border-color) 34%, transparent);
   }
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="primary"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-variant="primary"] {
   --interactive-surface-bg: var(--interactive-surface-variant-primary-bg);
   --interactive-surface-fg: var(--interactive-surface-variant-primary-fg);
   --interactive-surface-border-color: var(--interactive-surface-variant-primary-border-color);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="secondary"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-variant="secondary"] {
   --interactive-surface-bg: var(--interactive-surface-variant-secondary-bg);
   --interactive-surface-fg: var(--interactive-surface-variant-secondary-fg);
   --interactive-surface-border-color: var(--interactive-surface-variant-secondary-border-color);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="accent"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-variant="accent"] {
   --interactive-surface-bg: var(--interactive-surface-variant-accent-bg);
   --interactive-surface-fg: var(--interactive-surface-variant-accent-fg);
   --interactive-surface-border-color: var(--interactive-surface-variant-accent-border-color);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="subtle"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-variant="subtle"] {
   --interactive-surface-bg: var(--interactive-surface-variant-subtle-bg);
   --interactive-surface-fg: var(--interactive-surface-variant-subtle-fg);
   --interactive-surface-border-color: var(--interactive-surface-variant-subtle-border-color);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="warning"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-variant="warning"] {
   --interactive-surface-bg: var(--interactive-surface-variant-warning-bg);
   --interactive-surface-fg: var(--interactive-surface-variant-warning-fg);
   --interactive-surface-border-color: var(--interactive-surface-variant-warning-border-color);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-variant="danger"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-variant="danger"] {
   --interactive-surface-bg: var(--interactive-surface-variant-danger-bg);
   --interactive-surface-fg: var(--interactive-surface-variant-danger-fg);
   --interactive-surface-border-color: var(--interactive-surface-variant-danger-border-color);
 }
 
 /* Level selectors select paint depth without taking ownership of interaction states. */
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="1"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-level="1"] {
   --interactive-surface-level-bg: var(--interactive-surface-level-1-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-1-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-1-shadow);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="2"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-level="2"] {
   --interactive-surface-level-bg: var(--interactive-surface-level-2-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-2-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-2-shadow);
 }
 
-:where([data-ui][data-theme][data-mode]) .interactive-surface[data-surface-level="3"] {
+:where([data-ui][data-mode]) .interactive-surface[data-surface-level="3"] {
   --interactive-surface-level-bg: var(--interactive-surface-level-3-bg);
   --interactive-surface-level-border-color: var(--interactive-surface-level-3-border-color);
   --interactive-surface-level-shadow: var(--interactive-surface-level-3-shadow);

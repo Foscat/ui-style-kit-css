@@ -1,8 +1,13 @@
 # UI Systems
 
-UI Style Kit CSS `v2.3.0` ships 20 style systems with a shared theme and mode model.
+UI Style Kit CSS `v2.4.0` ships 20 style systems with a shared theme and mode model plus complete preset-specific native-control identities.
 
-All UI systems use the same color scheme layer: `styles/theme-colors.css`. Individual UI files define structure, texture, typography, component treatment, and prefixed aliases for the shared `--usk-*` roles.
+All UI systems support the shared `styles/theme-colors.css` layer and provide native light/dark/contrast palettes when `data-theme` is absent. Individual UI files define texture, typography, component treatment, and palette aliases while retaining the shared-token contract.
+
+The [Demo Showcase](Demo-Showcase) presents one consistent library surface with a
+style-specific gallery. Industrial Utility includes its switchgear, pilot lights,
+meters, and local alarm acknowledgment flow. Full template boards remain available
+only in the optional `?view=reference` developer view.
 
 In `v2.1.0`, the combined builds use five ordered layers: `theme_colors`, `native_elements`, `components`, `presets`, and `compat_layout`. Visual-only entrypoints omit the deprecated prefixed structural helpers in `compat_layout`, while compatible entrypoints retain them.
 

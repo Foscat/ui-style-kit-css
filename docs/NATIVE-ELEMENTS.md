@@ -2,6 +2,14 @@
 
 UI Style Kit uses a hybrid-native policy: it themes safe element boxes and exposed subparts, uses `accent-color` and `color-scheme` as fallbacks, and leaves inaccessible browser popups to the platform.
 
+The scope is `[data-ui][data-mode]`; `data-theme` is optional. Each preset supplies
+native colors and maps `--usk-native-bg` to its functional background, so the shared
+`--ui-color-bg` remains usable by companion libraries without a named theme.
+
+Native inline elements keep their page-text defaults except inside components
+that deliberately own foreground paint, such as trust seals and media scrims.
+Keep labels, status text, and semantic attributes intact when styling these surfaces.
+
 ## Classification
 
 | Classification | Elements and surfaces |
@@ -19,9 +27,9 @@ The native layer styles safely exposed parts where engines allow it:
 
 - placeholder text
 - file selector buttons, including hover, focus, active, and disabled states
-- range tracks and thumbs
+- range tracks, Firefox range progress, and thumbs
 - color swatches
-- progress and meter tracks and values
+- determinate/indeterminate progress and meter tracks and values, including optimum, suboptimum, and critical bands
 - calendar picker indicators
 - search cancellation controls
 - number spinners
@@ -33,20 +41,18 @@ The native layer styles safely exposed parts where engines allow it:
 
 Preset files map existing `--usk-native-*` roles through their active visual system. The shared native layer also defines these sizing and paint tokens:
 
-```css
---usk-native-control-min-block-size
---usk-native-control-padding-block
---usk-native-control-padding-inline
---usk-native-subcontrol-padding-block
---usk-native-subcontrol-padding-inline
---usk-native-border-width
---usk-native-field-gap
---usk-native-panel-padding
---usk-native-track
---usk-native-track-fill
---usk-native-thumb
---usk-native-thumb-border
---usk-native-indicator
-```
+| Group | Stable tokens |
+|---|---|
+| Foundation | `--usk-native-control-bg`, `--usk-native-border-width`, `--usk-native-radius-sm`, `--usk-native-radius`, `--usk-native-shadow`, `--usk-native-focus-ring`, `--usk-native-control-min-block-size`, `--usk-native-control-padding-block`, `--usk-native-control-padding-inline`, `--usk-native-subcontrol-padding-block`, `--usk-native-subcontrol-padding-inline` |
+| Choice | `--usk-native-choice-*`, `--usk-native-checkbox-radius`, `--usk-native-radio-radius` |
+| Select | `--usk-native-select-indicator-*`, `--usk-native-select-padding-inline-end` |
+| Range | `--usk-native-range-track-*`, `--usk-native-range-progress-background`, `--usk-native-range-thumb-*` |
+| Progress and meter | `--usk-native-progress-*`, `--usk-native-meter-*-background` |
+| File and color | `--usk-native-file-button-*`, `--usk-native-color-swatch-*` |
+| Indicators and scrollbars | `--usk-native-indicator-*`, `--usk-native-scrollbar-*` |
+
+Single selects consume the preset indicator with logical LTR/RTL positioning. Multiple selects deliberately suppress it. Chromium/WebKit and Firefox pseudo-elements stay in separate safe selector blocks so one unsupported vendor selector cannot invalidate another engine's paint.
+
+Platform-owned select/datalist popups, date/time and color picker dialogs, file pickers, autofill/spellcheck menus, media internals, and operating-system chrome remain native. The library themes only their exposed launch controls and indicators.
 
 Invalid paint activates only through `[aria-invalid="true"]`, `.is-invalid`, or `:user-invalid`. Required empty controls do not get danger paint before user interaction.

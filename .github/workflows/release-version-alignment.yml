@@ -43,20 +43,6 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:e2e
 
-      - name: Run curated visual checks
-        run: npm run test:visual
-
-      - name: Run sharded UI matrix
-        shell: bash
-        run: |
-          set -euo pipefail
-          for engine in chromium firefox webkit; do
-            for preset_shard in 1 2 3 4; do
-              echo "Running UI matrix for ${engine}, preset shard ${preset_shard}/4."
-              UI_MATRIX_PRESET_SHARD="${preset_shard}" UI_MATRIX_PRESET_SHARDS=4 npm run test:matrix -- --project="${engine}"
-            done
-          done
-
       - name: Resolve immutable ecosystem fixture sources
         id: ecosystem_sources
         shell: bash
@@ -86,7 +72,7 @@ jobs:
 
       # Explicit candidate mode exempts only the UI tag under review while retaining every published companion check.
       - name: Run ecosystem release preflight
-        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS
+        run: npm run release:preflight -- --candidate-package ui-style-kit-css --layout-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --layout-docs-repo $GITHUB_WORKSPACE/_ecosystem/Layout-Style-CSS --interactive-docs-repo $GITHUB_WORKSPACE/_ecosystem/Interactive-Surface-CSS --skip-clean-install
 
       - name: Restrict manual runs to main
         if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'

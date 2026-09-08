@@ -1,10 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
+import { writeGeneratedFile } from './write-generated-file.mjs';
 
 export const defaultBundleSizeEntries = [
   ['ui-style-kit-css/dist/ui-style-kit.min.css', 'dist/ui-style-kit.min.css'],
   ['ui-style-kit-css/visual.min.css', 'dist/ui-style-kit.visual.min.css'],
+  ['ui-style-kit-css/visual/minimal-saas.css', 'dist/visual/minimal-saas.css'],
+  ['ui-style-kit-css/visual/industrial-utility.css', 'dist/visual/industrial-utility.css'],
   ['ui-style-kit-css/with-bridge.css', 'dist/ui-style-kit.with-bridge.css'],
   ['ui-style-kit-css/theme-colors.css', 'styles/theme-colors.css'],
   ['ui-style-kit-css/native-elements.css', 'styles/native-elements.css'],
@@ -37,9 +40,9 @@ function escapeRegExp(value) {
  *
  * @param {string} root Absolute repository root.
  * @param {string[][]} [entries=defaultBundleSizeEntries] Import-path and artifact-path pairs.
- * @returns {void}
+ * @returns {Promise<void>} Resolves after the measured table has been written.
  */
-export function syncReadmeBundleSizes(root, entries = defaultBundleSizeEntries) {
+export async function syncReadmeBundleSizes(root, entries = defaultBundleSizeEntries) {
   const readmePath = path.join(root, 'README.md');
   let readme = fs.readFileSync(readmePath, 'utf8');
 
@@ -56,5 +59,5 @@ export function syncReadmeBundleSizes(root, entries = defaultBundleSizeEntries) 
     readme = readme.replace(row, `$1 ${rawSize} $2 ${gzipSize} $3`);
   }
 
-  fs.writeFileSync(readmePath, readme);
+  await writeGeneratedFile(readmePath, readme);
 }

@@ -4,6 +4,44 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.4.0] - Unreleased
+
+### Added
+
+- Added native light/dark/contrast palettes for every preset when `data-theme` is omitted, while preserving explicit shared-theme precedence and the typed semantic handshake.
+- Added a native-aware demo workbench with None, per-preset/mode edits, shared-theme edits, material-color inventory, scoped CSS export, and active-context reset.
+- Added a unified style-specific gallery, including Industrial Utility instruments and alarm demonstration controls; full source boards remain available through `?view=reference`.
+- Added validated `ui`, `personality`, `theme`, and `mode` demo query parameters and updated README/wiki guidance for native palettes and review links.
+- Added a frozen native-control intent contract for every preset and complete per-preset mappings for choice, select, range, progress, meter, file, color, indicator, and scrollbar tokens.
+- Added Firefox range-progress paint, distinct single/multiple select behavior, indeterminate progress treatment, and a complete native-control demo specimen.
+- Added manifest-driven unit and cross-browser computed-style coverage proving all 20 presets resolve to unique native-control signatures.
+- Added frozen six-axis template signatures plus pairwise identity contracts across typography, density, geometry, material, feedback, data presentation, and the 48-token native-control surface.
+- Added fixed desktop and mobile component and native-control specimens for every preset, with direct pairwise visual-difference thresholds.
+- Added executable six-axis reference traits that assert concrete authored CSS for every preset, plus preset-, viewport-, mode-, and pair-scoped browser cases for exact reruns.
+- Added stable global UI-matrix case identifiers, 36 resumable 100-case blocks, exact-case reruns, and bounded range commands so passed coverage is not repeated during diagnosis.
+
+### Changed
+
+- Expanded preset identity beyond color and radius so native controls now inherit each system's typography, geometry, material, border, depth, indicator, range, progress, and loading language.
+- Reworked all 20 preset systems against the 39-image v2.4.0 reference archive and retained design contracts. Each identity now reaches components, native controls, feedback, data views, and interaction states.
+- Preserved theme-owned palette channels, semantic native HTML, v2 selectors and entrypoints, bridge ownership, forced-color behavior, reduced motion, and platform-owned picker/dialog boundaries.
+
+### Fixed
+
+- Restored the shared background token for standalone native palettes by resolving through each preset's active background.
+- Prevented native `strong` and `small` text paint from replacing trust-seal foregrounds, including Tactile's dark instrument seal.
+- Unified demo toolbar dropdown indicators, enlarged and strengthened Maximalist medallion artwork, centered its range thumb, matched busy indicators to its spinner, and removed the large native-form grid gap.
+- Exposed actual native material variables in the color editor instead of restricting it to generic shared roles.
+- Replaced stale per-style bundle-size estimates with build-measured focused preset examples.
+- Corrected Organic Modern native-light label and control-edge contrast while retaining shared-theme precedence.
+- Completed manifest discovery for existing Bento stage, Bauhaus alert text, Clay helper, and Tactile workspace classes; no existing classes were removed.
+- Applied bounded generated-file write retries to README measurements and demo asset hashes as well as distribution CSS.
+- Replaced broad `overflow-wrap: anywhere` inheritance with targeted `break-word` containment and normal word boundaries, and removed clipping from general surfaces, feature strips, and native tables while retaining deliberate progress, media, and accessibility masks.
+
+### Security
+
+- Updated the development-only `fast-uri` override to `3.1.6`, addressing the four URI-normalization advisories reported by the release dependency audit without adding runtime dependencies.
+
 ## [2.3.0] - 2026-08-29
 
 ### Added
@@ -22,7 +60,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 - Gave all 20 presets distinct CTA, card, medallion, strip, scrim, and callout identities while preserving the existing class names and theme color roles.
 - Separated filled service actions from framed callout actions so `button-cut` and `button-outline-heavy` express independent, preset-coherent roles instead of sharing one generic CTA silhouette.
 - Reworked the commercial and utility demo specimens to use active theme tokens, explicit utility composition, and container-aware native typography.
-- Aligned ecosystem verification and documentation with `layout-style-css@3.1.0` and `interactive-surface-css@1.6.0`, including the current exported manifests and `foundation.css`.
+- Aligned ecosystem verification and documentation with `layout-style-css@3.1.0` and `interactive-surface-css@1.7.0`, including the current exported manifests and `foundation.css`.
 - Expanded the commercial component documentation with composition, accessibility, and responsive-behavior guidance.
 - Routed every Lightning CSS formatting and minification pass through the shared package Browserslist targets, with stable fallbacks and guarded progressive enhancements.
 
@@ -47,7 +85,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 ### Added
 
 - Added the public 12-token shared semantic producer contract and its machine-readable manifest inventory for companion and third-party consumers.
-- Implemented the manifest-backed semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and unchanged-markup runtime switching across all 11 presets.
+- Implemented the manifest-backed semantic component API with 29 exact `.ui-*` selectors, context-constrained `data-ui-variant` values, and unchanged-markup runtime switching across every preset supported by that release.
 - Added a persistent semantic component demo whose DOM nodes and classes remain stable through every preset switch.
 - Documented native `<dialog>` as the neutral modal/dialog fallback without inventing `.ui-modal` or `.ui-dialog` selectors.
 

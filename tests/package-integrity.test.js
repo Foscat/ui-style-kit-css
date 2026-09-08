@@ -14,7 +14,7 @@ const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.
 
 // Exact overrides keep the release audit deterministic without promoting transitive tooling to direct dependencies.
 const expectedSecurityOverrides = {
-  'fast-uri': '3.1.5',
+  'fast-uri': '3.1.6',
   'js-yaml': '4.3.1',
   nanoid: '3.3.18',
   postcss: '8.5.23'
@@ -88,12 +88,39 @@ function isExternalReference(reference) {
   return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(reference);
 }
 
+/**
+ * Separate a local URL's filesystem path from its query and anchor components.
+ * @param {string} reference Markdown or HTML reference.
+ * @returns {{pathname: string, hash: string}} Local path and fragment without cache parameters.
+ */
 function splitReference(reference) {
   const trimmed = reference.trim().replace(/^<|>$/g, '');
   const withoutTitle = trimmed.match(/^([^\s]+)(?:\s+["'][^"']+["'])?$/)?.[1] || trimmed;
-  const [pathname = '', hash = ''] = withoutTitle.split('#');
+  const [resource = '', hash = ''] = withoutTitle.split('#');
+  const [pathname = ''] = resource.split('?');
 
   return { pathname, hash };
+}
+
+/**
+ * Include literal IDs from local scripts that populate the HTML demo at runtime.
+ * @param {string} sourcePath Absolute HTML entrypoint path.
+ * @param {string} contents Authored entrypoint markup.
+ * @returns {string} Markup and its referenced local script sources for anchor validation.
+ */
+function localAnchorSources(sourcePath, contents) {
+  if (path.extname(sourcePath) !== '.html') return contents;
+  const sources = [contents];
+  for (const [, reference] of contents.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/g)) {
+    if (isExternalReference(reference)) continue;
+    const { pathname } = splitReference(reference);
+    const scriptPath = path.resolve(path.dirname(sourcePath), pathname);
+    const relative = path.relative(rootDir, scriptPath);
+    if (!relative.startsWith('..') && !path.isAbsolute(relative) && fs.existsSync(scriptPath)) {
+      sources.push(fs.readFileSync(scriptPath, 'utf8'));
+    }
+  }
+  return sources.join('\n');
 }
 
 function assertLocalReference(file, reference, failures) {
@@ -104,7 +131,7 @@ function assertLocalReference(file, reference, failures) {
   const sourceContents = fs.readFileSync(sourcePath, 'utf8');
 
   if (!pathname) {
-    if (hash && !new RegExp(`\\bid=["']${escapeRegExp(hash)}["']`).test(sourceContents)) {
+    if (hash && !new RegExp(`\\bid=["']${escapeRegExp(hash)}["']`).test(localAnchorSources(sourcePath, sourceContents))) {
       failures.push(`${file}: missing #${hash}`);
     }
     return;
@@ -285,11 +312,11 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
     selected: id === 'minimal-saas',
     label
   }));
-  const expectedThemes = manifest.themes.map((theme) => ({
+  const expectedThemes = ['', ...manifest.themes].map((theme) => ({
     value: theme,
     prefix: '',
-    selected: theme === 'arctic-indigo',
-    label: theme
+    selected: theme === '',
+    label: theme || 'None — style defaults'
   }));
   const expectedModes = manifest.modes.map((mode) => ({
     value: mode,
@@ -308,20 +335,20 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.3 library system and published companion set', () => {
+test('README documents the 2.4 library system and published companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.3\.0/);
+  assert.match(readme, /v2\.4\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.3\.0/);
-  assert.match(readme, /interactive-surface-css@1\.6\.0/);
+  assert.match(readme, /ui-style-kit-css@2\.4\.0/);
+  assert.match(readme, /interactive-surface-css@1\.7\.0/);
   assert.match(readme, /layout-style-css@3\.1\.0/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /UI Style Kit `2\.3\.0` is the current release target/);
+  assert.match(readme, /UI Style Kit `2\.4\.0` is the current release target/);
   assert.match(readme, /Layout Style `3\.1\.0` is the compatible structural release/);
   assert.doesNotMatch(readme, /active staged candidate/i);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
@@ -382,7 +409,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.3\.0/);
+    assert.match(contents, /ui-style-kit-css@2\.4\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
     assert.match(contents, /layout-style-css@3\.1\.0/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
@@ -398,12 +425,12 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
-test('ecosystem fixture pins both published companions for the UI 2.3.0 release', () => {
+test('ecosystem fixture pins both published companions for the UI 2.4.0 release', () => {
   const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
 
-  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b50a60d8ffd804d8227b1a16903c394556b88511');
+  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b48b8b9080e4b1d4e344b6749ab1969a2863b3d1');
   assert.equal(compatibility.packageSources['layout-style-css'].revision, 'afcb1fdf70d4635e35739e621ee1598400fed103');
   assert.deepEqual(compatibility.supportedCombinations, {
     minimum: {
@@ -412,15 +439,15 @@ test('ecosystem fixture pins both published companions for the UI 2.3.0 release'
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.3.0',
-      'interactive-surface-css': '1.6.0',
+      'ui-style-kit-css': '2.4.0',
+      'interactive-surface-css': '1.7.0',
       'layout-style-css': '3.1.0'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.3\.0[\s\S]{0,160}current release target/i);
-    assert.match(contents, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
+    assert.match(contents, /ui-style-kit-css@2\.4\.0[\s\S]{0,160}current release target/i);
+    assert.match(contents, /interactive-surface-css@1\.7\.0[\s\S]{0,120}published/i);
     assert.match(contents, /layout-style-css@3\.1\.0[\s\S]{0,160}(?:compatible structural release|published)/i);
     assert.doesNotMatch(contents, /active staged candidate/i);
   }
@@ -462,7 +489,7 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.3\.0` is the current release target/);
+    assert.match(contents, /UI Style Kit `2\.4\.0` is the current release target/);
     assert.match(contents, /Layout Style `3\.1\.0` is the compatible structural release/);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
@@ -476,7 +503,7 @@ test('wiki links use rendered GitHub Wiki page routes', () => {
   for (const file of markdownFiles) {
     const contents = fs.readFileSync(path.join(wikiDir, file), 'utf8');
     for (const match of contents.matchAll(/\]\(([^)]+\.md(?:#[^)]+)?)\)/g)) {
-      rawFileLinks.push(`${file}: ${match[1]}`);
+      if (!isExternalReference(match[1])) rawFileLinks.push(`${file}: ${match[1]}`);
     }
   }
 
@@ -490,10 +517,17 @@ test('release automation scripts are exposed', () => {
     'test',
     'test:unit',
     'test:e2e',
+    'test:e2e:full',
     'test:axe',
+    'test:axe:full',
     'test:matrix',
-    'test:visual',
+    'test:matrix:block',
+    'test:matrix:case',
+    'test:matrix:range',
+    'test:matrix:raw',
+    'test:visual:full',
     'test:e2e:install:ci',
+    'test:e2e:install:ci:full',
     'check:contrast',
     'check:compat',
     'check:ownership',
@@ -505,7 +539,8 @@ test('release automation scripts are exposed', () => {
     'release:preflight',
     'check',
     'pack:dry-run',
-    'release:verify'
+    'release:verify',
+    'release:verify:full'
   ];
 
   for (const scriptName of requiredScripts) {
@@ -514,7 +549,15 @@ test('release automation scripts are exposed', () => {
   }
 });
 
-test('clean-install ecosystem scripts and CI enforce current and minimum rendered matrices', () => {
+test('local UI matrix exposes resumable blocks and exact-case reruns', () => {
+  assert.equal(packageJson.scripts['test:matrix'], 'node scripts/run-ui-matrix.mjs blocks');
+  assert.equal(packageJson.scripts['test:matrix:block'], 'node scripts/run-ui-matrix.mjs block');
+  assert.equal(packageJson.scripts['test:matrix:case'], 'node scripts/run-ui-matrix.mjs case');
+  assert.equal(packageJson.scripts['test:matrix:range'], 'node scripts/run-ui-matrix.mjs range');
+  assert.equal(packageJson.scripts['test:matrix:raw'], 'playwright test --config playwright.matrix.config.js');
+});
+
+test('clean-install ecosystem scripts remain explicit while CI uses fast packed preflight', () => {
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
   const currentScript = packageJson.scripts['check:ecosystem:current'] ?? '';
   const minimumScript = packageJson.scripts['check:ecosystem:minimum'] ?? '';
@@ -526,32 +569,50 @@ test('clean-install ecosystem scripts and CI enforce current and minimum rendere
     'node --test tests/clean-install-ecosystem-contract.integration.mjs'
   );
   assert.match(workflow, /npm run release:preflight/);
+  assert.match(workflow, /--skip-clean-install/);
+  assert.doesNotMatch(workflow, /ui-matrix:/);
   assert.doesNotMatch(workflow, /check:ecosystem:(?:current|minimum)[^\n]*--skip-browser/);
   assert.doesNotMatch(workflow, /--update-snapshots/);
   assert.equal(packageJson.devDependencies.pixelmatch, '7.2.0');
   assert.equal(packageJson.devDependencies.pngjs, '7.0.0');
 });
 
-test('release verification script is non-publishing and covers the full release gate', () => {
+test('release verification scripts separate the fast default from the full manual gate', () => {
   const releaseVerify = packageJson.scripts['release:verify'] ?? '';
-  const requiredCommands = [
+  const releaseVerifyFull = packageJson.scripts['release:verify:full'] ?? '';
+  const requiredFastCommands = [
     'npm run check',
     'npm run test:e2e',
-    'npm run test:axe',
-    'npm run test:visual',
+    'npm run release:preflight -- --candidate-package ui-style-kit-css --skip-clean-install',
+    'npm audit --audit-level=moderate',
+    'npm run pack:dry-run'
+  ];
+  const requiredFullCommands = [
+    'npm run check',
+    'npm run test:e2e:full',
+    'npm run test:axe:full',
+    'npm run test:visual:full',
     'npm run test:matrix',
     'npm run release:preflight -- --candidate-package ui-style-kit-css',
     'npm audit --audit-level=moderate',
     'npm run pack:dry-run'
   ];
 
-  for (const command of requiredCommands) {
+  for (const command of requiredFastCommands) {
     assert.match(releaseVerify, new RegExp(escapeRegExp(command)), `release:verify should run ${command}`);
+  }
+  for (const command of requiredFullCommands) {
+    assert.match(releaseVerifyFull, new RegExp(escapeRegExp(command)), `release:verify:full should run ${command}`);
   }
 
   // Keep the reusable verification gate safe for approval-gated release preparation.
   assert.doesNotMatch(releaseVerify, /\bnpm\s+(?:publish|version)\b/);
   assert.doesNotMatch(releaseVerify, /\bgit\s+tag\b/);
+  assert.doesNotMatch(releaseVerify, /\bnpm run test:(?:axe|matrix)(?:\s|$)/);
+  assert.doesNotMatch(releaseVerify, /\bnpm run test:e2e:full(?:\s|$)/);
+  assert.doesNotMatch(releaseVerify, /\bnpm run test:visual(?::full)?(?:\s|$)/);
+  assert.doesNotMatch(releaseVerifyFull, /\bnpm\s+(?:publish|version)\b/);
+  assert.doesNotMatch(releaseVerifyFull, /\bgit\s+tag\b/);
   assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
 });
 
@@ -571,11 +632,11 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
 test('publishing docs pin published companion merge commits for the UI release', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
 
-  assert.match(publishingGuide, /b50a60d8ffd804d8227b1a16903c394556b88511/);
+  assert.match(publishingGuide, /b48b8b9080e4b1d4e344b6749ab1969a2863b3d1/);
   assert.match(publishingGuide, /afcb1fdf70d4635e35739e621ee1598400fed103/);
-  assert.match(publishingGuide, /interactive-surface-css@1\.6\.0[\s\S]{0,120}published/i);
+  assert.match(publishingGuide, /interactive-surface-css@1\.7\.0[\s\S]{0,120}published/i);
   assert.match(publishingGuide, /layout-style-css@3\.1\.0[\s\S]{0,120}published/i);
-  assert.match(publishingGuide, /ui-style-kit-css@2\.3\.0[\s\S]{0,160}active candidate only while/i);
+  assert.match(publishingGuide, /ui-style-kit-css@2\.4\.0[\s\S]{0,160}active candidate only while/i);
   assert.doesNotMatch(publishingGuide, /active staged candidate/i);
   assert.match(publishingGuide, /current[^\n]*layout-style-css@3\.1\.0/i);
   assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
@@ -620,40 +681,45 @@ test('every repository release preflight invocation explicitly selects the UI ca
   }
 });
 
-test('CI workflow shards the UI matrix by engine and preset group', () => {
+test('manual UI matrix workflow shards the exhaustive matrix by engine and preset group', () => {
   const ciWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
+  const matrixWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ui-matrix-manual.yml'), 'utf8');
 
-  assert.match(ciWorkflow, /ui-matrix:/);
-  assert.match(ciWorkflow, /engine:\s*\[chromium,\s*firefox,\s*webkit\]/);
-  assert.match(ciWorkflow, /preset-shard:\s*\[1,\s*2,\s*3,\s*4\]/);
-  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARD:/);
-  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
-  assert.match(ciWorkflow, /npm run test:matrix -- --project=\$\{\{ matrix\.engine \}\}/);
-  assert.match(ciWorkflow, /playwright-report/);
-  assert.match(ciWorkflow, /test-results/);
+  assert.doesNotMatch(ciWorkflow, /ui-matrix:/);
+  assert.match(matrixWorkflow, /workflow_dispatch:/);
+  assert.match(matrixWorkflow, /fromJSON\(inputs\.engine == 'all'/);
+  assert.match(matrixWorkflow, /fromJSON\(inputs\.preset_shard == 'all'/);
+  assert.match(matrixWorkflow, /\["chromium","firefox","webkit"\]/);
+  assert.match(matrixWorkflow, /\[1,2,3,4\]/);
+  assert.match(matrixWorkflow, /UI_MATRIX_PRESET_SHARD:/);
+  assert.match(matrixWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
+  assert.match(matrixWorkflow, /npm run test:matrix:raw -- --project=\$\{\{ matrix\.engine \}\}/);
+  assert.match(matrixWorkflow, /playwright-report/);
+  assert.match(matrixWorkflow, /test-results/);
 });
 
 /**
- * Verifies that the release-alignment gate shards the full UI matrix before a
- * release is created.
+ * Verifies that the release-alignment gate uses the bounded browser gate before
+ * a release is created.
  *
  * @param {string} workflowName GitHub Actions workflow filename.
  * @returns {void}
  */
-function assertReleaseWorkflowShardsUiMatrix(workflowName) {
+function assertReleaseWorkflowUsesFastBrowserGate(workflowName) {
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', workflowName), 'utf8');
 
-  assert.match(workflow, /Run sharded UI matrix/);
-  assert.match(workflow, /for engine in chromium firefox webkit/);
-  assert.match(workflow, /for preset_shard in 1 2 3 4/);
-  assert.match(workflow, /UI_MATRIX_PRESET_SHARD="\$\{preset_shard\}"/);
-  assert.match(workflow, /UI_MATRIX_PRESET_SHARDS=4/);
-  assert.match(workflow, /npm run test:matrix -- --project="\$\{engine\}"/);
-  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix\s*$/m);
+  assert.match(workflow, /npm run test:e2e:install:ci/);
+  assert.match(workflow, /npm run test:e2e/);
+  assert.doesNotMatch(workflow, /\bnpm run test:visual(?::full)?(?:\s|$)/);
+  assert.match(workflow, /npm run release:preflight[\s\S]*--candidate-package ui-style-kit-css[\s\S]*--skip-clean-install/);
+  assert.doesNotMatch(workflow, /Run sharded UI matrix/);
+  assert.doesNotMatch(workflow, /for engine in chromium firefox webkit/);
+  assert.doesNotMatch(workflow, /for preset_shard in 1 2 3 4/);
+  assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix(?::raw)?\s*$/m);
 }
 
-test('release version alignment shards the UI matrix before creating releases', () => {
-  assertReleaseWorkflowShardsUiMatrix('release-version-alignment.yml');
+test('release version alignment uses the fast browser gate before creating releases', () => {
+  assertReleaseWorkflowUsesFastBrowserGate('release-version-alignment.yml');
 });
 
 test('npm publish workflow skips duplicate browser gates after release verification', () => {
@@ -792,7 +858,7 @@ test('interactive surface bridge inherits shared tokens and exposes visible stat
   for (const uiName of perUiBridgeSelectors) {
     assert.doesNotMatch(
       bridgeCss,
-      new RegExp(`data-ui="${uiName}"\\]\\[data-theme\\]\\[data-mode\\]\\) \\.interactive-surface`),
+      new RegExp(`data-ui="${uiName}"\\]\\[data-mode\\]\\) \\.interactive-surface`),
       `Bridge should inherit shared --usk-* roles instead of duplicating ${uiName} token maps`
     );
   }
@@ -817,17 +883,21 @@ test('content overflow compatibility stays exported while 2.1 bundles use owned 
   const visualCss = fs.readFileSync(path.join(rootDir, 'dist', 'ui-style-kit.visual.css'), 'utf8');
 
   assert.match(overflowCss, /@layer ui-style-kit\.content_overflow/);
-  assert.match(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(overflowCss, /overflow-wrap:\s*anywhere/);
+  assert.match(overflowCss, /overflow-wrap:\s*break-word/);
+  assert.match(overflowCss, /word-break:\s*normal/);
   assert.match(overflowCss, /white-space:\s*normal/);
   assert.match(componentsCss, /@layer ui-style-kit\.components/);
-  assert.match(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(componentsCss, /overflow-wrap:\s*anywhere/);
+  assert.match(componentsCss, /overflow-wrap:\s*break-word/);
   assert.match(compatibilityCss, /@layer ui-style-kit\.compat_layout/);
-  assert.match(compatibilityCss, /overflow-wrap:\s*anywhere/);
+  assert.doesNotMatch(compatibilityCss, /overflow-wrap/);
   assert.match(bundledCss, /styles\/components\.css/);
   assert.match(bundledCss, /styles\/compat-layout\.css/);
   assert.match(visualCss, /styles\/components\.css/);
   assert.doesNotMatch(visualCss, /styles\/compat-layout\.css/);
-  assert.match(minCss, /overflow-wrap:anywhere/);
+  assert.doesNotMatch(minCss, /overflow-wrap:anywhere/);
+  assert.match(minCss, /overflow-wrap:break-word/);
 });
 
 test('native element fallback styles are shared instead of duplicated per preset', () => {
@@ -865,7 +935,7 @@ test('native element fallback styles are shared instead of duplicated per preset
     'dialog',
     'article, aside'
   ]) {
-    assert.match(nativeCss, new RegExp(`\\[data-ui\\]\\[data-theme\\]\\[data-mode\\] :where\\(${escapeRegExp(selector)}`));
+    assert.match(nativeCss, new RegExp(`\\[data-ui\\]\\[data-mode\\] :where\\(${escapeRegExp(selector)}`));
   }
   assert.match(nativeCss, /--usk-native-surface/);
   assert.match(nativeCss, /--usk-native-radius/);
@@ -877,6 +947,39 @@ test('native element fallback styles are shared instead of duplicated per preset
     assert.match(css, /--usk-native-surface\s*:/, `${fileName} should map native surface tokens`);
     assert.doesNotMatch(css, /Native HTML Coverage \+ CSS Accessibility Layer/);
     assert.doesNotMatch(css, new RegExp(`\\[data-ui="${uiName}"\\] :where\\(fieldset\\)`));
+  }
+});
+
+test('every manifest preset maps the complete native-control identity contract', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+  const requiredTokens = [
+    'control-bg', 'border-width', 'radius-sm', 'radius', 'shadow', 'focus-ring',
+    'control-min-block-size', 'control-padding-block', 'control-padding-inline',
+    'subcontrol-padding-block', 'subcontrol-padding-inline', 'choice-size',
+    'choice-background', 'choice-border', 'checkbox-radius', 'radio-radius',
+    'choice-shadow', 'choice-checked-background', 'choice-mark-color',
+    'select-indicator-image', 'select-indicator-size', 'select-indicator-position',
+    'select-padding-inline-end', 'range-track-size', 'range-track-background',
+    'range-track-border', 'range-track-radius', 'range-track-shadow',
+    'range-progress-background', 'range-thumb-size', 'range-thumb-background',
+    'range-thumb-border', 'range-thumb-radius', 'range-thumb-shadow',
+    'progress-size', 'progress-track-background', 'progress-track-border',
+    'progress-track-radius', 'progress-track-shadow', 'progress-value-background',
+    'progress-value-radius', 'progress-value-shadow', 'meter-optimum-background',
+    'meter-suboptimum-background', 'meter-critical-background',
+    'file-button-background', 'file-button-border', 'file-button-radius',
+    'file-button-shadow', 'color-swatch-border', 'color-swatch-radius',
+    'indicator-opacity', 'indicator-filter', 'scrollbar-size', 'scrollbar-track',
+    'scrollbar-thumb', 'scrollbar-radius'
+  ].map((suffix) => `--usk-native-${suffix}`);
+
+  for (const { id } of manifest.presets) {
+    const css = fs.readFileSync(path.join(rootDir, 'styles', `${id}.css`), 'utf8');
+    const block = css.match(new RegExp(`\\[data-ui="${escapeRegExp(id)}"\\]\\[data-mode\\]\\s*\\{([\\s\\S]*?)\\n\\}`))?.[1] ?? '';
+
+    for (const token of requiredTokens) {
+      assert.match(block, new RegExp(`${escapeRegExp(token)}\\s*:`), `${id} should map ${token}`);
+    }
   }
 });
 
@@ -942,17 +1045,17 @@ test('demo favicon assets stay repo-local and use portable paths', () => {
   assert.match(rootDemoHtml, /href="demo\/assets\/favicon\.ico"/);
   assert.match(rootDemoHtml, /href="site\.webmanifest"/);
   assert.match(rootDemoHtml, /content="browserconfig\.xml"/);
-  assert.match(rootDemoHtml, /href="demo\/demo\.css"/);
-  assert.match(rootDemoHtml, /src="demo\/demo\.js"/);
-  assert.match(rootDemoHtml, /data-default-href="dist\/ui-style-kit\.css"/);
-  assert.match(rootDemoHtml, /data-bridge-href="dist\/ui-style-kit\.with-bridge\.css"/);
+  assert.match(rootDemoHtml, /href="demo\/demo\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /src="demo\/demo\.js\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /data-default-href="dist\/ui-style-kit\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /data-bridge-href="dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}"/);
   assert.match(packageDemoHtml, /href="assets\/favicon\.ico"/);
   assert.match(packageDemoHtml, /href="assets\/site\.webmanifest"/);
   assert.match(packageDemoHtml, /content="assets\/browserconfig\.xml"/);
-  assert.match(packageDemoHtml, /href="demo\.css"/);
-  assert.match(packageDemoHtml, /src="demo\.js"/);
-  assert.match(packageDemoHtml, /data-default-href="\.\.\/dist\/ui-style-kit\.css"/);
-  assert.match(packageDemoHtml, /data-bridge-href="\.\.\/dist\/ui-style-kit\.with-bridge\.css"/);
+  assert.match(packageDemoHtml, /href="demo\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /src="demo\.js\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /data-default-href="\.\.\/dist\/ui-style-kit\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /data-bridge-href="\.\.\/dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}"/);
   assert.doesNotMatch(packageDemoHtml, /href="\/(?:favicon|site\.webmanifest|apple-touch-icon)/);
 
   assert.equal(rootManifest.theme_color, '#070b24');

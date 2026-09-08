@@ -7,6 +7,12 @@ const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'u
 const { modes, presets, themes } = manifest;
 const minimumNonTextContrast = 3;
 const minimumTextContrast = 4.5;
+const fallbackColorRoles = [
+  'bg', 'surface', 'surface-strong', 'surface-soft', 'text', 'text-muted', 'border',
+  'primary', 'primary-hover', 'primary-text', 'secondary', 'secondary-hover',
+  'secondary-text', 'accent', 'accent-text', 'success', 'success-text', 'warning',
+  'warning-text', 'danger', 'danger-text', 'link', 'focus'
+];
 
 const textRoleChecks = [
   ['usk-text-rgb', 'usk-bg-rgb', 'text on background'],
@@ -125,6 +131,19 @@ function varsFromBlock(block) {
 }
 
 /**
+ * Return the fallback declarations authored for one preset display mode.
+ *
+ * @param {string} css Complete preset stylesheet text.
+ * @param {string} id Public preset identifier.
+ * @param {string} mode Display-mode identifier.
+ * @returns {string} Matching declaration block or an empty string.
+ */
+function fallbackBlockFor(css, id, mode) {
+  const re = new RegExp(`\\[data-ui="${id}"\\]\\[data-mode="${mode}"\\]\\s*\\{([\\s\\S]*?)\\}`, 'm');
+  return css.match(re)?.[1] ?? '';
+}
+
+/**
  * Check one foreground/background role pair and append any failure.
  *
  * @param {Record<string, string>} vars - Theme variables for one state.
@@ -144,6 +163,67 @@ function checkTextRole(vars, fgKey, bgKey, label, state, failures) {
   if (ratio < minimumTextContrast) {
     failures.push(`${state}: ${label} ${ratio.toFixed(2)} < ${minimumTextContrast}`);
   }
+}
+
+/**
+ * Validate every no-theme preset palette against the library text contrast contract.
+ *
+ * Explicit themes are validated separately from `styles/theme-colors.css`. This
+ * validator reads only `--<prefix>-fallback-*-rgb` channels so a preset cannot
+ * accidentally pass by inheriting a selected scheme during static verification.
+ *
+ * @param {Map<string, string>} cssByPreset Stylesheet text keyed by preset id.
+ * @param {{id: string, prefix: string}[]} [presetRecords=presets] Presets to inspect.
+ * @param {string[]} [displayModes=modes] Display modes to inspect.
+ * @returns {string[]} Human-readable contrast and completeness failures.
+ */
+export function validateFallbackContrast(
+  cssByPreset,
+  presetRecords = presets,
+  displayModes = modes
+) {
+  const fallbackFailures = [];
+
+  for (const { id, prefix } of presetRecords) {
+    const presetCss = cssByPreset.get(id) ?? '';
+
+    for (const mode of displayModes) {
+      const state = `${id}/fallback/${mode}`;
+      const authored = varsFromBlock(fallbackBlockFor(presetCss, id, mode));
+      const normalized = {};
+
+      for (const role of fallbackColorRoles) {
+        const authoredKey = `${prefix}-fallback-${role}-rgb`;
+        if (!authored[authoredKey]) {
+          fallbackFailures.push(`${state}: missing ${authoredKey}`);
+          continue;
+        }
+        normalized[`usk-${role}-rgb`] = authored[authoredKey];
+      }
+
+      for (const [fgKey, bgKey, label] of textRoleChecks) {
+        checkTextRole(normalized, fgKey, bgKey, label, state, fallbackFailures);
+      }
+
+      if (mode === 'light' && normalized['usk-border-rgb'] && normalized['usk-text-rgb']) {
+        const controlEdge = mixRgb(
+          parseRgb(normalized['usk-border-rgb']),
+          parseRgb(normalized['usk-text-rgb']),
+          0.45
+        );
+
+        for (const backgroundKey of ['usk-bg-rgb', 'usk-surface-rgb', 'usk-surface-strong-rgb', 'usk-surface-soft-rgb']) {
+          if (!normalized[backgroundKey]) continue;
+          const ratio = contrast(controlEdge, parseRgb(normalized[backgroundKey]));
+          if (ratio < minimumNonTextContrast) {
+            fallbackFailures.push(`${state}: control edge on ${backgroundKey} ${ratio.toFixed(2)} < ${minimumNonTextContrast}`);
+          }
+        }
+      }
+    }
+  }
+
+  return fallbackFailures;
 }
 
 /**
@@ -219,7 +299,7 @@ function checkPresetScrim(preset, failures) {
  * @returns {void}
  */
 function checkNativeControlOwnership(nativeCss, failures) {
-  const fieldRule = nativeCss.match(/\[data-ui\]\[data-theme\]\[data-mode\]\s+:where\((input:not\([\s\S]*?),\s*textarea,\s*select\)\s*\{/m)?.[1] ?? '';
+  const fieldRule = nativeCss.match(/\[data-ui\]\[data-mode\]\s+:where\((input:not\([\s\S]*?),\s*textarea,\s*select\)\s*\{/m)?.[1] ?? '';
   const buttonTypes = ['button', 'submit', 'reset'];
 
   if (!fieldRule) {
@@ -314,6 +394,10 @@ const failures = [];
 const css = fs.readFileSync(path.join(root, 'styles', 'theme-colors.css'), 'utf8');
 const nativeCss = fs.readFileSync(path.join(root, 'styles', 'native-elements.css'), 'utf8');
 const sharedModeVars = Object.fromEntries(modes.map((mode) => [mode, varsFromBlock(sharedModeBlock(css, mode))]));
+const cssByPreset = new Map(presets.map(({ id }) => [
+  id,
+  fs.readFileSync(path.join(root, 'styles', `${id}.css`), 'utf8')
+]));
 let checkedStates = 0;
 
 checkNativeControlOwnership(nativeCss, failures);
@@ -322,6 +406,8 @@ for (const bridgeFile of ['interactive-surface-theme.css', 'interactive-surface-
   const bridgeCss = fs.readFileSync(path.join(root, 'styles', bridgeFile), 'utf8');
   failures.push(...validateBridgePaint(bridgeCss, `styles/${bridgeFile}`));
 }
+
+failures.push(...validateFallbackContrast(cssByPreset));
 
 for (const preset of presets) {
   checkPresetAliases(preset, failures);
@@ -375,4 +461,4 @@ if (failures.length) {
   for (const f of failures) console.error(`- ${f}`);
   process.exit(1);
 }
-console.log(`Contrast check passed for ${checkedStates} preset/theme/mode states.`);
+console.log(`Contrast check passed for ${checkedStates} themed states and ${presets.length * modes.length} fallback states.`);

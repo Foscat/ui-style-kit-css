@@ -6,7 +6,7 @@
 ========================================================= */
 
 @layer ui-style-kit.content_overflow {
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   h1,
   h2,
   h3,
@@ -23,6 +23,9 @@
   label,
   legend,
   summary,
+  strong,
+  small,
+  em,
   code,
   kbd,
   samp,
@@ -32,10 +35,11 @@
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   [class~="saas-page"],
   [class~="saas-container"],
   [class~="saas-section"],
@@ -539,10 +543,9 @@
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
-  overflow-wrap: anywhere;
 }
 
-[data-ui][data-theme][data-mode] :where(
+[data-ui][data-mode] :where(
   [class~="saas-button"],
   [class~="saas-icon-button"],
   [class~="saas-button-cut"],
@@ -706,6 +709,9 @@
 ) {
   max-inline-size: 100%;
   min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
   white-space: normal;
 }
+
 }

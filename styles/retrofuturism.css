@@ -17,17 +17,17 @@
 
 @layer ui-style-kit.retrofuturism {
 :root {
-  --retro-font-sans: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --retro-font-display: Orbitron, Eurostile, "Bank Gothic", Rajdhani, Inter, ui-sans-serif, system-ui, sans-serif;
+  --retro-font-sans: "Avenir Next", Avenir, "Segoe UI", Trebuchet MS, Arial, sans-serif;
+  --retro-font-display: "Arial Narrow", "Aptos Narrow", Bahnschrift, "Roboto Condensed", "Franklin Gothic Medium", sans-serif;
   --retro-font-body: var(--retro-font-sans);
   --retro-font-heading: var(--retro-font-display);
-  --retro-font-control: var(--retro-font-display);
+  --retro-font-control: Bahnschrift, "Arial Narrow", "Aptos Narrow", "Roboto Condensed", sans-serif;
   --retro-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --retro-radius-xs: .25rem;
-  --retro-radius-sm: .5rem;
-  --retro-radius-md: 0.75rem;
-  --retro-radius-lg: 1rem;
-  --retro-radius-xl: calc(1rem + .5rem);
+  --retro-radius-xs: .3rem;
+  --retro-radius-sm: .55rem;
+  --retro-radius-md: .8rem;
+  --retro-radius-lg: 1.25rem;
+  --retro-radius-xl: 2rem;
   --retro-radius-pill: 999px;
   --retro-space-1: .25rem;
   --retro-space-2: .5rem;
@@ -42,6 +42,29 @@
 
 [data-ui="retrofuturism"][data-mode="light"] {
   color-scheme: light;
+  --retro-fallback-bg-rgb: 245 247 250;
+  --retro-fallback-surface-rgb: 255 255 255;
+  --retro-fallback-surface-strong-rgb: 252 252 253;
+  --retro-fallback-surface-soft-rgb: 232 235 240;
+  --retro-fallback-text-rgb: 17 36 59;
+  --retro-fallback-text-muted-rgb: 90 104 119;
+  --retro-fallback-border-rgb: 200 207 217;
+  --retro-fallback-primary-rgb: 13 59 102;
+  --retro-fallback-primary-hover-rgb: 11 49 85;
+  --retro-fallback-primary-text-rgb: 255 255 255;
+  --retro-fallback-secondary-rgb: 214 43 43;
+  --retro-fallback-secondary-hover-rgb: 178 35 35;
+  --retro-fallback-secondary-text-rgb: 255 255 255;
+  --retro-fallback-accent-rgb: 233 90 90;
+  --retro-fallback-accent-text-rgb: 0 0 0;
+  --retro-fallback-success-rgb: 47 125 84;
+  --retro-fallback-success-text-rgb: 255 255 255;
+  --retro-fallback-warning-rgb: 164 106 0;
+  --retro-fallback-warning-text-rgb: 0 0 0;
+  --retro-fallback-danger-rgb: 198 40 40;
+  --retro-fallback-danger-text-rgb: 255 255 255;
+  --retro-fallback-link-rgb: 11 49 85;
+  --retro-fallback-focus-rgb: 214 43 43;
   --retro-panel-alpha: .98;
   --retro-panel-soft-alpha: .78;
   --retro-border-alpha: .58;
@@ -51,6 +74,29 @@
 
 [data-ui="retrofuturism"][data-mode="dark"] {
   color-scheme: dark;
+  --retro-fallback-bg-rgb: 8 17 28;
+  --retro-fallback-surface-rgb: 16 32 48;
+  --retro-fallback-surface-strong-rgb: 24 49 73;
+  --retro-fallback-surface-soft-rgb: 11 23 36;
+  --retro-fallback-text-rgb: 243 247 251;
+  --retro-fallback-text-muted-rgb: 188 200 213;
+  --retro-fallback-border-rgb: 71 96 121;
+  --retro-fallback-primary-rgb: 108 169 227;
+  --retro-fallback-primary-hover-rgb: 147 193 237;
+  --retro-fallback-primary-text-rgb: 0 0 0;
+  --retro-fallback-secondary-rgb: 255 106 106;
+  --retro-fallback-secondary-hover-rgb: 255 146 146;
+  --retro-fallback-secondary-text-rgb: 0 0 0;
+  --retro-fallback-accent-rgb: 255 154 154;
+  --retro-fallback-accent-text-rgb: 0 0 0;
+  --retro-fallback-success-rgb: 143 223 182;
+  --retro-fallback-success-text-rgb: 0 0 0;
+  --retro-fallback-warning-rgb: 255 210 122;
+  --retro-fallback-warning-text-rgb: 0 0 0;
+  --retro-fallback-danger-rgb: 255 143 143;
+  --retro-fallback-danger-text-rgb: 0 0 0;
+  --retro-fallback-link-rgb: 165 203 241;
+  --retro-fallback-focus-rgb: 255 106 106;
   --retro-panel-alpha: .92;
   --retro-panel-soft-alpha: .64;
   --retro-border-alpha: .52;
@@ -60,6 +106,29 @@
 
 [data-ui="retrofuturism"][data-mode="contrast"] {
   color-scheme: dark;
+  --retro-fallback-bg-rgb: 0 0 0;
+  --retro-fallback-surface-rgb: 6 16 26;
+  --retro-fallback-surface-strong-rgb: 10 29 48;
+  --retro-fallback-surface-soft-rgb: 0 0 0;
+  --retro-fallback-text-rgb: 255 255 255;
+  --retro-fallback-text-muted-rgb: 238 244 255;
+  --retro-fallback-border-rgb: 255 255 255;
+  --retro-fallback-primary-rgb: 102 181 255;
+  --retro-fallback-primary-hover-rgb: 255 255 255;
+  --retro-fallback-primary-text-rgb: 0 0 0;
+  --retro-fallback-secondary-rgb: 255 102 102;
+  --retro-fallback-secondary-hover-rgb: 255 255 255;
+  --retro-fallback-secondary-text-rgb: 0 0 0;
+  --retro-fallback-accent-rgb: 255 170 170;
+  --retro-fallback-accent-text-rgb: 0 0 0;
+  --retro-fallback-success-rgb: 0 255 144;
+  --retro-fallback-success-text-rgb: 0 0 0;
+  --retro-fallback-warning-rgb: 255 212 0;
+  --retro-fallback-warning-text-rgb: 0 0 0;
+  --retro-fallback-danger-rgb: 255 92 92;
+  --retro-fallback-danger-text-rgb: 0 0 0;
+  --retro-fallback-link-rgb: 140 198 255;
+  --retro-fallback-focus-rgb: 255 255 255;
   --retro-panel-alpha: 1;
   --retro-panel-soft-alpha: .92;
   --retro-border-alpha: 1;
@@ -67,8 +136,8 @@
   --retro-focus-alpha: .72;
 }
 
+/** Preserves direct aliases for static extraction when a scheme is selected. */
 [data-ui="retrofuturism"][data-theme][data-mode] {
-  /* Shared scheme aliases preserve the existing prefixed token API. */
   --retro-bg-rgb: var(--usk-bg-rgb);
   --retro-surface-rgb: var(--usk-surface-rgb);
   --retro-surface-strong-rgb: var(--usk-surface-strong-rgb);
@@ -83,15 +152,43 @@
   --retro-secondary-hover-rgb: var(--usk-secondary-hover-rgb);
   --retro-secondary-text-rgb: var(--usk-secondary-text-rgb);
   --retro-accent-rgb: var(--usk-accent-rgb);
-  --retro-success-rgb: var(--usk-success-rgb);
-  --retro-warning-rgb: var(--usk-warning-rgb);
-  --retro-danger-rgb: var(--usk-danger-rgb);
-  --retro-link-rgb: var(--usk-link-rgb);
   --retro-accent-text-rgb: var(--usk-accent-text-rgb);
+  --retro-success-rgb: var(--usk-success-rgb);
   --retro-success-text-rgb: var(--usk-success-text-rgb);
+  --retro-warning-rgb: var(--usk-warning-rgb);
   --retro-warning-text-rgb: var(--usk-warning-text-rgb);
+  --retro-danger-rgb: var(--usk-danger-rgb);
   --retro-danger-text-rgb: var(--usk-danger-text-rgb);
+  --retro-link-rgb: var(--usk-link-rgb);
   --retro-focus-rgb: var(--usk-focus-rgb);
+}
+
+[data-ui="retrofuturism"][data-mode] {
+  --usk-native-bg: var(--retro-bg);
+  /* Explicit schemes win; reference colors are used only when no scheme exists. */
+  --retro-bg-rgb: var(--usk-bg-rgb, var(--retro-fallback-bg-rgb));
+  --retro-surface-rgb: var(--usk-surface-rgb, var(--retro-fallback-surface-rgb));
+  --retro-surface-strong-rgb: var(--usk-surface-strong-rgb, var(--retro-fallback-surface-strong-rgb));
+  --retro-surface-soft-rgb: var(--usk-surface-soft-rgb, var(--retro-fallback-surface-soft-rgb));
+  --retro-text-rgb: var(--usk-text-rgb, var(--retro-fallback-text-rgb));
+  --retro-text-muted-rgb: var(--usk-text-muted-rgb, var(--retro-fallback-text-muted-rgb));
+  --retro-border-rgb: var(--usk-border-rgb, var(--retro-fallback-border-rgb));
+  --retro-primary-rgb: var(--usk-primary-rgb, var(--retro-fallback-primary-rgb));
+  --retro-primary-hover-rgb: var(--usk-primary-hover-rgb, var(--retro-fallback-primary-hover-rgb));
+  --retro-primary-text-rgb: var(--usk-primary-text-rgb, var(--retro-fallback-primary-text-rgb));
+  --retro-secondary-rgb: var(--usk-secondary-rgb, var(--retro-fallback-secondary-rgb));
+  --retro-secondary-hover-rgb: var(--usk-secondary-hover-rgb, var(--retro-fallback-secondary-hover-rgb));
+  --retro-secondary-text-rgb: var(--usk-secondary-text-rgb, var(--retro-fallback-secondary-text-rgb));
+  --retro-accent-rgb: var(--usk-accent-rgb, var(--retro-fallback-accent-rgb));
+  --retro-accent-text-rgb: var(--usk-accent-text-rgb, var(--retro-fallback-accent-text-rgb));
+  --retro-success-rgb: var(--usk-success-rgb, var(--retro-fallback-success-rgb));
+  --retro-success-text-rgb: var(--usk-success-text-rgb, var(--retro-fallback-success-text-rgb));
+  --retro-warning-rgb: var(--usk-warning-rgb, var(--retro-fallback-warning-rgb));
+  --retro-warning-text-rgb: var(--usk-warning-text-rgb, var(--retro-fallback-warning-text-rgb));
+  --retro-danger-rgb: var(--usk-danger-rgb, var(--retro-fallback-danger-rgb));
+  --retro-danger-text-rgb: var(--usk-danger-text-rgb, var(--retro-fallback-danger-text-rgb));
+  --retro-link-rgb: var(--usk-link-rgb, var(--retro-fallback-link-rgb));
+  --retro-focus-rgb: var(--usk-focus-rgb, var(--retro-fallback-focus-rgb));
   /* Native fallback selectors inherit visual identity through shared tokens. */
   --usk-native-surface: var(--retro-surface);
   --usk-native-surface-strong: var(--retro-surface-strong);
@@ -122,6 +219,57 @@
   --usk-native-border-width: 1px;
   --usk-native-field-gap: .5rem;
   --usk-native-panel-padding: var(--retro-space-5);
+  --usk-native-control-min-block-size: 3.1rem;
+  --usk-native-control-padding-block: .68rem;
+  --usk-native-control-padding-inline: .95rem;
+  --usk-native-subcontrol-padding-block: .5rem;
+  --usk-native-subcontrol-padding-inline: .72rem;
+  --usk-native-choice-size: 1.55rem;
+  --usk-native-choice-background: var(--retro-control-bg);
+  --usk-native-choice-border: 1px solid var(--retro-border);
+  --usk-native-checkbox-radius: .2rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: 0 0 10px var(--retro-primary);
+  --usk-native-choice-checked-background: var(--retro-primary);
+  --usk-native-choice-mark-color: var(--retro-on-primary);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--retro-primary) 50%), linear-gradient(135deg, var(--retro-primary) 50%, transparent 50%);
+  --usk-native-select-indicator-size: 0.38rem 0.38rem, 0.38rem 0.38rem;
+  --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - 0.84rem) 50%;
+  --usk-native-select-padding-inline-end: 2.55rem;
+  --usk-native-range-track-size: .72rem;
+  --usk-native-range-track-background: var(--retro-surface-soft);
+  --usk-native-range-track-border: 1px solid var(--retro-border);
+  --usk-native-range-track-radius: .18rem;
+  --usk-native-range-track-shadow: 0 0 10px var(--retro-primary);
+  --usk-native-range-progress-background: var(--retro-primary);
+  --usk-native-range-thumb-size: 1.55rem;
+  --usk-native-range-thumb-background: var(--retro-surface-strong);
+  --usk-native-range-thumb-border: 1px solid var(--retro-border);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: 0 0 10px var(--retro-primary);
+  --usk-native-progress-size: .82rem;
+  --usk-native-progress-track-background: var(--retro-surface-soft);
+  --usk-native-progress-track-border: 1px solid var(--retro-border);
+  --usk-native-progress-track-radius: .16rem;
+  --usk-native-progress-track-shadow: 0 0 10px var(--retro-primary);
+  --usk-native-progress-value-background: var(--retro-primary);
+  --usk-native-progress-value-radius: .16rem;
+  --usk-native-progress-value-shadow: 0 0 10px var(--retro-primary);
+  --usk-native-meter-optimum-background: var(--retro-success);
+  --usk-native-meter-suboptimum-background: var(--retro-warning);
+  --usk-native-meter-critical-background: var(--retro-danger);
+  --usk-native-file-button-background: var(--retro-primary);
+  --usk-native-file-button-border: 1px solid var(--retro-border);
+  --usk-native-file-button-radius: .2rem;
+  --usk-native-file-button-shadow: 0 0 10px var(--retro-primary);
+  --usk-native-color-swatch-border: 1px solid var(--retro-border);
+  --usk-native-color-swatch-radius: .2rem;
+  --usk-native-indicator-opacity: 0.77;
+  --usk-native-indicator-filter: none;
+  --usk-native-scrollbar-size: .78rem;
+  --usk-native-scrollbar-track: var(--retro-surface-soft);
+  --usk-native-scrollbar-thumb: var(--retro-primary);
+  --usk-native-scrollbar-radius: .16rem;
   --usk-native-shadow: 0 10px 30px rgb(0 0 0 / calc(var(--retro-shadow-alpha) * .72));
   --retro-bg: rgb(var(--retro-bg-rgb));
   --retro-surface: rgb(var(--retro-surface-rgb) / var(--retro-panel-alpha));
@@ -163,7 +311,7 @@
 }
 
 @supports (color: color-mix(in srgb, black, white)) {
-  [data-ui="retrofuturism"][data-theme][data-mode] { --retro-border: color-mix(in srgb, rgb(var(--retro-border-rgb) / max(var(--retro-border-alpha), var(--usk-border-min-alpha))), var(--retro-text) var(--usk-border-text-mix)); }
+  [data-ui="retrofuturism"][data-mode] { --retro-border: color-mix(in srgb, rgb(var(--retro-border-rgb) / max(var(--retro-border-alpha), var(--usk-border-min-alpha))), var(--retro-text) var(--usk-border-text-mix)); }
 }
 
 
@@ -215,7 +363,7 @@
 [data-ui="retrofuturism"] *::before,
 [data-ui="retrofuturism"] *::after { box-sizing: border-box; }
 
-[data-ui="retrofuturism"][data-theme][data-mode] { background: var(--retro-theme-bg); background-size: var(--retro-theme-bg-size); }
+[data-ui="retrofuturism"][data-mode] { background: var(--retro-theme-bg); background-size: var(--retro-theme-bg-size); }
 
 .retro-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
 .retro-container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
@@ -282,7 +430,7 @@
 /* Theme-responsive component defaults */
 .retro-card, .retro-panel { background: var(--retro-card-bg); }
 .retro-toolbar, .retro-table-wrap { background: var(--retro-control-bg); }
-.retro-button:not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
+.retro-button:not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-warning):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
 .retro-button, .retro-icon-button, .retro-badge, .retro-nav-link { font-family: var(--retro-font-control); }
 
 
@@ -377,44 +525,10 @@
 
 
 /* =========================================================
-   Retrofuturism Console/Grid Overrides
+   Retrofuturism Loading Motion
 ========================================================= */
-[data-ui="retrofuturism"][data-theme][data-mode] {
-  --retro-scanline-alpha: .055;
-  --retro-grid-alpha: .12;
-  --retro-glow-alpha: .34;
-}
-[data-ui="retrofuturism"] {
-  background:
-    radial-gradient(circle at 50% -10%, rgb(var(--retro-accent-rgb) / .16), transparent 34rem),
-    radial-gradient(circle at 85% 12%, rgb(var(--retro-secondary-rgb) / .12), transparent 28rem),
-    linear-gradient(180deg, rgb(255 255 255 / .025), rgb(0 0 0 / .08)),
-    var(--retro-bg);
-}
-.retro-page {
-  background-image:
-    linear-gradient(to bottom, rgb(255 255 255 / var(--retro-scanline-alpha)) 0 1px, transparent 1px 4px),
-    linear-gradient(90deg, rgb(var(--retro-border-rgb) / var(--retro-grid-alpha)) 1px, transparent 1px),
-    linear-gradient(rgb(var(--retro-border-rgb) / var(--retro-grid-alpha)) 1px, transparent 1px);
-  background-size: 100% 4px, 44px 44px, 44px 44px;
-}
-.retro-title, .retro-heading {
-  text-transform: uppercase;
-  letter-spacing: .07em;
-  text-shadow: 0 0 12px rgb(var(--retro-primary-rgb) / .24), 0 0 26px rgb(var(--retro-accent-rgb) / .16);
-}
-.retro-surface, .retro-card, .retro-panel, .retro-toolbar, .retro-table-wrap {
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / .1), rgb(255 255 255 / .02)),
-    linear-gradient(135deg, rgb(var(--retro-primary-rgb) / .08), transparent 46%),
-    var(--retro-surface);
-  box-shadow:
-    0 18px 48px rgb(0 0 0 / var(--retro-shadow-alpha)),
-    0 0 0 1px rgb(var(--retro-border-rgb) / .2),
-    0 0 26px rgb(var(--retro-primary-rgb) / .14);
-}
-.retro-button-primary, .retro-badge-primary, .retro-nav-link.is-active {
-  box-shadow: 0 0 0 1px rgb(var(--retro-primary-rgb) / .34), 0 0 22px rgb(var(--retro-primary-rgb) / .22);
+[data-ui="retrofuturism"][data-mode] {
+  --retro-glow-alpha: .18;
 }
 
 /* Spinner geometry follows the retrofuturism preset's radar-style motion. */
@@ -551,7 +665,6 @@
 .retro-feature-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  overflow: hidden;
   background: var(--retro-card-bg);
   color: var(--retro-text);
   border: 1px solid var(--retro-border);
@@ -637,7 +750,9 @@
 
 /* Filled and framed actions read as paired instrument-panel controls. */
 .retro-button.retro-button-cut, .retro-button-cut {
+  min-block-size: 2.75rem;
   inline-size: min(100%, 18rem);
+  min-height: 2.75rem;
   min-inline-size: 6rem;
   max-inline-size: 100%;
   justify-self: center;
@@ -657,12 +772,12 @@
   border-radius: var(--retro-radius-lg);
   box-shadow: inset 0 0 0 1px rgb(var(--retro-surface-strong-rgb) / .7), 0 .75rem 1.6rem rgb(var(--retro-text-rgb) / .18);
 }
-[data-ui="retrofuturism"][data-theme][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   border: 3px double var(--retro-primary);
   border-radius: var(--retro-radius-pill);
   box-shadow: inset 0 0 0 1px rgb(var(--retro-surface-strong-rgb) / .72), 0 .3rem .8rem rgb(var(--retro-primary-rgb) / .2);
 }
-[data-ui="retrofuturism"][data-theme][data-mode] :where(dialog) {
+[data-ui="retrofuturism"][data-mode] :where(dialog) {
   border: 3px double var(--retro-border);
   border-radius: var(--retro-radius-lg);
   box-shadow: inset 0 0 0 1px rgb(var(--retro-surface-strong-rgb) / .72), 0 1rem 2.2rem rgb(var(--retro-text-rgb) / .24);
@@ -671,6 +786,603 @@
 /* Busy indicators become a luminous console dial with a central locator. */
 .retro-button[aria-busy="true"]::after, .retro-icon-button[aria-busy="true"]::after, [data-ui="retrofuturism"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
   border: .09em solid currentColor; border-radius: 50%; background: radial-gradient(circle, currentColor 0 .1em, transparent .12em), conic-gradient(currentColor, transparent 45%, currentColor); box-shadow: 0 0 0 .1em rgb(var(--retro-primary-rgb) / .2), 0 0 .45em rgb(var(--retro-accent-rgb) / .6); clip-path: circle(50%); animation: retro-spin 1.08s linear infinite;
+}
+
+/* =========================================================
+   Atomic-Age Instrument Refinement
+   Theme channels supply paint while appliance geometry,
+   enamel depth, and calibrated controls establish identity.
+========================================================= */
+[data-ui="retrofuturism"][data-mode="light"] {
+  --retro-enamel-opacity: .98;
+  --retro-recess-opacity: .82;
+  --retro-metal-highlight-alpha: .88;
+  --retro-metal-shadow-alpha: .3;
+  --retro-instrument-alpha: .22;
+  --retro-depth-alpha: .12;
+}
+
+[data-ui="retrofuturism"][data-mode="dark"] {
+  --retro-enamel-opacity: .94;
+  --retro-recess-opacity: .72;
+  --retro-metal-highlight-alpha: .56;
+  --retro-metal-shadow-alpha: .72;
+  --retro-instrument-alpha: .34;
+  --retro-depth-alpha: .3;
+}
+
+[data-ui="retrofuturism"][data-mode="contrast"] {
+  --retro-enamel-opacity: 1;
+  --retro-recess-opacity: 1;
+  --retro-metal-highlight-alpha: 1;
+  --retro-metal-shadow-alpha: 1;
+  --retro-instrument-alpha: .5;
+  --retro-depth-alpha: .5;
+}
+
+[data-ui="retrofuturism"][data-mode] {
+  --retro-instrument-radius-sm: .48rem;
+  --retro-instrument-radius: .72rem;
+  --retro-instrument-radius-lg: 1.35rem;
+  --retro-metal-edge: rgb(var(--retro-border-rgb) / max(.76, var(--retro-border-alpha)));
+  --retro-metal-rim: linear-gradient(
+    180deg,
+    rgb(var(--retro-surface-strong-rgb) / var(--retro-metal-highlight-alpha)),
+    rgb(var(--retro-border-rgb) / .92) 28%,
+    rgb(var(--retro-text-rgb) / var(--retro-metal-shadow-alpha)) 52%,
+    rgb(var(--retro-surface-strong-rgb) / .78) 74%,
+    rgb(var(--retro-border-rgb) / .9)
+  );
+  --retro-enamel-bg: linear-gradient(
+    155deg,
+    rgb(var(--retro-surface-strong-rgb) / var(--retro-enamel-opacity)),
+    rgb(var(--retro-surface-rgb) / var(--retro-panel-alpha)) 52%,
+    rgb(var(--retro-surface-soft-rgb) / var(--retro-recess-opacity))
+  );
+  --retro-recess-bg: linear-gradient(
+    180deg,
+    rgb(var(--retro-text-rgb) / calc(var(--retro-instrument-alpha) * .72)),
+    rgb(var(--retro-secondary-rgb) / var(--retro-instrument-alpha))
+  ), var(--retro-surface-soft);
+  --retro-field-bg: linear-gradient(180deg, rgb(var(--retro-surface-strong-rgb) / .92), rgb(var(--retro-surface-rgb) / .98));
+  --retro-instrument-bg: linear-gradient(
+    180deg,
+    rgb(var(--retro-secondary-rgb) / calc(var(--retro-instrument-alpha) + .1)),
+    rgb(var(--retro-primary-rgb) / var(--retro-instrument-alpha))
+  ), var(--retro-surface-soft);
+  --retro-action-bg: linear-gradient(
+    180deg,
+    rgb(var(--retro-primary-hover-rgb)),
+    rgb(var(--retro-primary-rgb)) 62%,
+    rgb(var(--retro-primary-hover-rgb))
+  );
+  --retro-secondary-action-bg: linear-gradient(
+    180deg,
+    rgb(var(--retro-surface-strong-rgb) / .22),
+    transparent 42%
+  ), var(--retro-secondary);
+  --retro-danger-action-bg: linear-gradient(
+    180deg,
+    rgb(var(--retro-surface-strong-rgb) / .22),
+    transparent 42%
+  ), var(--retro-danger);
+  --retro-panel-shadow: inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / var(--retro-metal-highlight-alpha)), inset 0 -2px 0 rgb(var(--retro-text-rgb) / .14), 0 .45rem 1rem rgb(var(--retro-text-rgb) / var(--retro-depth-alpha));
+  --retro-control-shadow: inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / .82), inset 0 -2px 0 rgb(var(--retro-text-rgb) / .18), 0 .18rem .42rem rgb(var(--retro-text-rgb) / calc(var(--retro-depth-alpha) * .82));
+  --retro-recess-shadow: inset 0 .24rem .55rem rgb(var(--retro-text-rgb) / calc(var(--retro-depth-alpha) + .08)), inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / .48);
+  --retro-pressed-shadow: inset 0 .3rem .65rem rgb(var(--retro-text-rgb) / calc(var(--retro-depth-alpha) + .16)), inset 0 -1px 0 rgb(var(--retro-surface-strong-rgb) / .36);
+  --retro-jewel-shadow: inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / .76), 0 0 .55rem rgb(var(--retro-accent-rgb) / .34);
+  --retro-calibration-track: linear-gradient(90deg, var(--retro-secondary), var(--retro-primary) 48%, var(--retro-warning) 74%, var(--retro-danger));
+  --retro-progress-fill: repeating-linear-gradient(90deg, var(--retro-primary) 0 .82rem, rgb(var(--retro-accent-rgb) / .82) .82rem .94rem, rgb(var(--retro-surface-strong-rgb) / .34) .94rem 1.04rem);
+  --retro-theme-bg: linear-gradient(135deg, rgb(var(--retro-primary-rgb) / .11), transparent 38%), linear-gradient(315deg, rgb(var(--retro-secondary-rgb) / .09), transparent 42%), var(--retro-bg);
+  --retro-card-bg: var(--retro-enamel-bg);
+  --retro-control-bg: var(--retro-recess-bg);
+  --usk-native-surface: var(--retro-enamel-bg);
+  --usk-native-surface-strong: var(--retro-surface-strong);
+  --usk-native-surface-soft: var(--retro-recess-bg);
+  --usk-native-card-bg: var(--retro-enamel-bg);
+  --usk-native-control-bg: var(--retro-field-bg);
+  --usk-native-border: var(--retro-metal-edge);
+  --usk-native-radius-sm: var(--retro-instrument-radius-sm);
+  --usk-native-radius: var(--retro-instrument-radius-sm);
+  --usk-native-radius-lg: var(--retro-instrument-radius-lg);
+  --usk-native-shadow: var(--retro-control-shadow);
+  --usk-native-shadow-md: var(--retro-panel-shadow);
+  --usk-native-border-width: 2px;
+  --usk-native-panel-padding: 1.125rem;
+  --usk-native-control-min-block-size: 2.75rem;
+  --usk-native-control-padding-block: .58rem;
+  --usk-native-control-padding-inline: .82rem;
+  --usk-native-subcontrol-padding-block: .42rem;
+  --usk-native-subcontrol-padding-inline: .62rem;
+  --usk-native-choice-size: 1.18rem;
+  --usk-native-choice-background: var(--retro-recess-bg);
+  --usk-native-choice-border: 2px solid var(--retro-metal-edge);
+  --usk-native-checkbox-radius: .16rem;
+  --usk-native-radio-radius: 50%;
+  --usk-native-choice-shadow: var(--retro-recess-shadow);
+  --usk-native-choice-checked-background: var(--retro-action-bg);
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 48%, var(--retro-text) 50%), linear-gradient(135deg, var(--retro-text) 50%, transparent 52%);
+  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
+  --usk-native-select-indicator-position: calc(100% - 1.2rem) 50%, calc(100% - .87rem) 50%;
+  --usk-native-select-padding-inline-end: 2.7rem;
+  --usk-native-range-track-size: .38rem;
+  --usk-native-range-track-background: var(--retro-calibration-track);
+  --usk-native-range-track-border: 1px solid var(--retro-metal-edge);
+  --usk-native-range-track-radius: var(--retro-radius-pill);
+  --usk-native-range-track-shadow: var(--retro-recess-shadow);
+  --usk-native-range-progress-background: var(--retro-calibration-track);
+  --usk-native-range-thumb-size: 1.25rem;
+  --usk-native-range-thumb-background: var(--retro-metal-rim);
+  --usk-native-range-thumb-border: 3px double var(--retro-metal-edge);
+  --usk-native-range-thumb-radius: 50%;
+  --usk-native-range-thumb-shadow: var(--retro-control-shadow);
+  --usk-native-progress-size: 1rem;
+  --usk-native-progress-track-background: var(--retro-recess-bg);
+  --usk-native-progress-track-border: 3px double var(--retro-metal-edge);
+  --usk-native-progress-track-radius: var(--retro-radius-pill);
+  --usk-native-progress-track-shadow: var(--retro-recess-shadow);
+  --usk-native-progress-value-background: var(--retro-progress-fill);
+  --usk-native-progress-value-radius: var(--retro-radius-pill);
+  --usk-native-progress-value-shadow: var(--retro-jewel-shadow);
+  --usk-native-file-button-background: var(--retro-enamel-bg);
+  --usk-native-file-button-border: 2px solid var(--retro-metal-edge);
+  --usk-native-file-button-radius: var(--retro-instrument-radius-sm);
+  --usk-native-file-button-shadow: var(--retro-control-shadow);
+  --usk-native-color-swatch-border: 3px double var(--retro-metal-edge);
+  --usk-native-color-swatch-radius: 50%;
+  --usk-native-indicator-opacity: .9;
+  --usk-native-scrollbar-size: .9rem;
+  --usk-native-scrollbar-track: var(--retro-recess-bg);
+  --usk-native-scrollbar-thumb: var(--retro-metal-rim);
+  --usk-native-scrollbar-radius: var(--retro-radius-pill);
+}
+
+[data-ui="retrofuturism"] {
+  background: var(--retro-theme-bg);
+}
+
+.retro-page {
+  background-color: var(--retro-surface);
+  background-image: none;
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-radius-xl);
+  box-shadow: inset 0 0 0 .28rem rgb(var(--retro-surface-strong-rgb) / .48), inset 0 0 0 .42rem rgb(var(--retro-border-rgb) / .32), var(--retro-panel-shadow);
+}
+
+.retro-title { margin-block: .75rem;
+  font-family: var(--retro-font-display);
+  font-size: clamp(2.3rem, 6vw, 4.6rem);
+  font-stretch: condensed;
+  font-weight: 900;
+  line-height: .92;
+  letter-spacing: max(.026em, .5px);
+  text-transform: none;
+  text-shadow: none;
+}
+
+.retro-heading {
+  font-family: var(--retro-font-display);
+  font-stretch: condensed;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -.018em;
+  text-transform: none;
+  text-shadow: none;
+}
+
+.retro-kicker, .retro-eyebrow {
+  font-family: var(--retro-font-control);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.retro-label {
+  font-family: var(--retro-font-control);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.retro-surface, .retro-card, .retro-panel, .retro-toolbar, .retro-table-wrap {
+  background: var(--retro-enamel-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-radius-lg);
+  box-shadow: var(--retro-panel-shadow);
+}
+
+.retro-card, .retro-panel {
+  padding: 1.125rem;
+}
+
+.retro-toolbar {
+  padding: .82rem 1rem;
+}
+
+.retro-well, .retro-inset {
+  background: var(--retro-recess-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius);
+  padding: .92rem;
+  box-shadow: var(--retro-recess-shadow);
+}
+
+.retro-hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / .9), 0 .7rem 1.15rem rgb(var(--retro-text-rgb) / calc(var(--retro-depth-alpha) + .06));
+}
+
+.retro-button, .retro-icon-button {
+  min-height: 2.75rem;
+  padding: .62rem 1.15rem;
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-radius-pill);
+  box-shadow: var(--retro-control-shadow);
+  font-family: var(--retro-font-control);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.retro-button:hover, .retro-icon-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--retro-primary);
+  box-shadow: inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / .92), 0 .38rem .78rem rgb(var(--retro-primary-rgb) / .24);
+}
+
+.retro-button:active, .retro-icon-button:active, .retro-button[aria-pressed="true"], .retro-icon-button[aria-pressed="true"], .retro-button.is-active, .retro-icon-button.is-active {
+  transform: translateY(1px);
+  box-shadow: var(--retro-pressed-shadow);
+}
+
+.retro-button-primary {
+  background: var(--retro-action-bg);
+  color: var(--retro-on-primary);
+  border-color: rgb(var(--retro-primary-hover-rgb) / .94);
+  box-shadow: var(--retro-control-shadow), 0 0 0 1px rgb(var(--retro-primary-text-rgb) / .2);
+}
+
+.retro-button-secondary {
+  background: var(--retro-secondary-action-bg);
+  color: var(--retro-on-secondary);
+  border-color: var(--retro-secondary-hover);
+}
+
+.retro-button-danger {
+  background: var(--retro-danger-action-bg);
+  color: var(--retro-on-danger);
+  border-color: var(--retro-danger);
+}
+
+.retro-button-ghost {
+  background: transparent;
+  color: var(--retro-text);
+  box-shadow: inset 0 0 0 1px rgb(var(--retro-border-rgb) / .42);
+}
+
+.retro-icon-button {
+  inline-size: 2.75rem;
+  padding: 0;
+}
+
+.retro-input, .retro-textarea, .retro-select {
+  min-height: 2.55rem;
+  padding: .55rem .8rem;
+  background: var(--retro-recess-bg);
+  color: var(--retro-text);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+  box-shadow: var(--retro-recess-shadow);
+  font-family: var(--retro-font-body);
+}
+
+.retro-input:focus, .retro-textarea:focus, .retro-select:focus {
+  border-color: var(--retro-focus);
+  box-shadow: var(--retro-recess-shadow), var(--retro-focus-ring);
+}
+
+.retro-check-control, .retro-radio-control {
+  inline-size: 1.18rem;
+  block-size: 1.18rem;
+  background: var(--retro-recess-bg);
+  border: 2px solid var(--retro-metal-edge);
+  box-shadow: var(--retro-recess-shadow);
+}
+
+.retro-check input:checked + .retro-check-control, .retro-radio input:checked + .retro-radio-control {
+  background: var(--retro-action-bg);
+  border-color: var(--retro-primary);
+  box-shadow: var(--retro-jewel-shadow), var(--retro-focus-ring);
+}
+
+.retro-switch-track {
+  inline-size: 3.35rem;
+  block-size: 1.65rem;
+  background: var(--retro-recess-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-radius-pill);
+  box-shadow: var(--retro-recess-shadow);
+}
+
+.retro-switch-thumb {
+  inset-block-start: .12rem;
+  inset-inline-start: .14rem;
+  inline-size: 1.18rem;
+  block-size: 1.18rem;
+  background: var(--retro-metal-rim);
+  border: 2px solid var(--retro-metal-edge);
+  box-shadow: var(--retro-control-shadow);
+}
+
+.retro-switch input:checked + .retro-switch-track {
+  background: var(--retro-instrument-bg);
+  border-color: var(--retro-primary);
+}
+
+.retro-switch input:checked + .retro-switch-track .retro-switch-thumb {
+  left: calc(100% - 1.18rem - .14rem);
+  background: var(--retro-action-bg);
+}
+
+.retro-badge {
+  min-height: 1.55rem;
+  padding: .28rem .62rem;
+  background: var(--retro-enamel-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-radius-pill);
+  box-shadow: var(--retro-control-shadow);
+  font-family: var(--retro-font-control);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.retro-badge-primary {
+  background: linear-gradient(180deg, rgb(var(--retro-surface-rgb) / .22), transparent 48%), var(--retro-primary);
+  color: var(--retro-on-primary);
+  border-color: var(--retro-primary-hover);
+}
+
+.retro-badge-secondary {
+  background: linear-gradient(180deg, rgb(var(--retro-surface-rgb) / .22), transparent 48%), var(--retro-secondary);
+  color: var(--retro-on-secondary);
+  border-color: var(--retro-secondary-hover);
+}
+
+.retro-badge-success {
+  background: linear-gradient(180deg, rgb(var(--retro-surface-rgb) / .22), transparent 48%), var(--retro-success);
+  color: var(--retro-on-success);
+  border-color: var(--retro-success);
+}
+
+.retro-badge-warning {
+  background: linear-gradient(180deg, rgb(var(--retro-surface-rgb) / .22), transparent 48%), var(--retro-warning);
+  color: var(--retro-on-warning);
+  border-color: var(--retro-warning);
+}
+
+.retro-badge-danger {
+  background: linear-gradient(180deg, rgb(var(--retro-surface-rgb) / .22), transparent 48%), var(--retro-danger);
+  color: var(--retro-on-danger);
+  border-color: var(--retro-danger);
+}
+
+.retro-nav {
+  gap: .2rem;
+  padding: .3rem;
+  background: var(--retro-enamel-bg);
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-lg);
+  box-shadow: var(--retro-panel-shadow);
+}
+
+.retro-nav-link {
+  min-height: 2.45rem;
+  padding: .58rem .9rem;
+  border: 1px solid transparent;
+  border-radius: var(--retro-instrument-radius);
+  font-family: var(--retro-font-control);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.retro-nav-link:hover {
+  background: var(--retro-recess-bg);
+  border-color: rgb(var(--retro-border-rgb) / .54);
+}
+
+.retro-nav-link[aria-current="page"], .retro-nav-link.is-active {
+  background: var(--retro-action-bg);
+  color: var(--retro-on-primary);
+  border-color: var(--retro-primary-hover);
+  box-shadow: var(--retro-control-shadow);
+}
+
+.retro-tooltip, [data-ui="retrofuturism"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
+  background: var(--retro-recess-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius);
+  box-shadow: var(--retro-panel-shadow);
+  font-family: var(--retro-font-control);
+  font-size: .7rem;
+  letter-spacing: .08em;
+}
+
+.retro-progress {
+  height: 1.05rem;
+  padding: .14rem;
+  background: var(--retro-recess-bg);
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-radius-pill);
+  box-shadow: var(--retro-recess-shadow);
+}
+
+.retro-progress-bar {
+  height: 100%;
+  background: var(--retro-progress-fill);
+  border-radius: var(--retro-radius-pill);
+  box-shadow: var(--retro-jewel-shadow);
+}
+
+.retro-alert {
+  padding: .9rem 1rem;
+  background: var(--retro-enamel-bg);
+  border: 3px double var(--retro-metal-edge);
+  border-radius: 1rem;
+  box-shadow: var(--retro-panel-shadow);
+}
+
+.retro-alert-success { border-inline-start: .45rem solid var(--retro-success); }
+.retro-alert-warning { border-inline-start: .45rem solid var(--retro-warning); }
+.retro-alert-danger { border-inline-start: .45rem solid var(--retro-danger); }
+
+.retro-table-wrap {
+  overflow: auto;
+  background: var(--retro-enamel-bg);
+  border-radius: var(--retro-radius-lg);
+  box-shadow: var(--retro-panel-shadow);
+}
+
+.retro-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.retro-table th {
+  padding: .62rem .78rem;
+  background: var(--retro-instrument-bg);
+  color: var(--retro-text);
+  border-block-end: 2px solid var(--retro-metal-edge);
+  box-shadow: inset 0 1px 0 rgb(var(--retro-surface-strong-rgb) / .58), inset 0 -1px 0 rgb(var(--retro-text-rgb) / .18);
+  font-family: var(--retro-font-control);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.retro-table td {
+  padding: .68rem .78rem;
+  color: var(--retro-text);
+  border-block-end: 1px solid rgb(var(--retro-border-rgb) / .46);
+}
+
+.retro-table tr:hover td {
+  background: rgb(var(--retro-secondary-rgb) / .12);
+}
+
+.retro-spinner, .retro-loading-spinner, [data-ui="retrofuturism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  border: 3px double var(--retro-metal-edge);
+  border-block-start-color: var(--retro-primary);
+  border-inline-end-color: var(--retro-accent);
+  background: var(--retro-recess-bg);
+  box-shadow: var(--retro-control-shadow);
+}
+
+.retro-card-service, .retro-card-feature, .retro-media-scrim, .retro-feature-strip, .retro-callout-bar {
+  background: var(--retro-enamel-bg);
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-radius-lg);
+  box-shadow: var(--retro-panel-shadow);
+}
+
+.retro-card-service {
+  padding: 1.1rem;
+  text-align: start;
+}
+
+.retro-card-feature {
+  padding: 1rem;
+}
+
+.retro-card-accent-edge {
+  border-inline-start: .42rem solid var(--retro-primary);
+}
+
+.retro-icon-medallion {
+  background: var(--retro-metal-rim);
+  color: var(--retro-text);
+  border: 3px double var(--retro-metal-edge);
+  box-shadow: var(--retro-control-shadow);
+}
+
+.retro-button.retro-button-cut, .retro-button-cut {
+  inline-size: min(100%, 18rem);
+  min-inline-size: 6rem;
+  max-inline-size: 100%;
+  justify-self: center;
+  justify-content: center;
+  border-radius: var(--retro-radius-pill);
+  clip-path: inset(0 round var(--retro-radius-pill));
+}
+
+.retro-button.retro-button-outline-heavy, .retro-button-outline-heavy {
+  background: var(--retro-enamel-bg);
+  color: var(--retro-primary);
+  border: 4px double var(--retro-metal-edge);
+  border-radius: var(--retro-radius-pill);
+  clip-path: inset(0 round var(--retro-radius-pill));
+  box-shadow: var(--retro-control-shadow);
+}
+
+.retro-badge-seal {
+  inline-size: 5.5rem;
+  min-inline-size: 5.5rem;
+  aspect-ratio: 1.35;
+  background: var(--retro-recess-bg);
+  border: 4px double var(--retro-metal-edge);
+  border-radius: 50%;
+  box-shadow: var(--retro-recess-shadow);
+}
+
+.retro-feature-item {
+  padding: .82rem 1rem;
+  border-inline-end: 1px solid var(--retro-metal-edge);
+}
+
+.retro-callout-bar {
+  padding: .9rem 1.1rem;
+}
+
+.retro-media-scrim {
+  background: var(--retro-recess-bg);
+}
+
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-radius-pill);
+  box-shadow: var(--retro-control-shadow);
+  font-family: var(--retro-font-control);
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])):active {
+  box-shadow: var(--retro-pressed-shadow);
+}
+
+[data-ui="retrofuturism"][data-mode] :where(dialog) {
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border: 4px double var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-lg);
+  box-shadow: var(--retro-panel-shadow);
+}
+
+[data-ui="retrofuturism"][data-mode="contrast"] :where(.retro-surface, .retro-card, .retro-panel, .retro-toolbar, .retro-table-wrap, .retro-well, .retro-input, .retro-textarea, .retro-select, .retro-alert) {
+  border-color: var(--retro-text);
+  box-shadow: inset 0 0 0 2px var(--retro-text);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -688,4 +1400,180 @@
   [data-ui="retrofuturism"] * { box-shadow: none !important; text-shadow: none !important; }
   [data-ui="retrofuturism"] a { color: #000 !important; text-decoration: underline; }
 }
+}
+
+@layer ui-style-kit.retrofuturism {
+/* Keeps semantic field states above preset-specific material paint. */
+.retro-input[aria-invalid="true"], .retro-textarea[aria-invalid="true"], .retro-select[aria-invalid="true"] { border-color: var(--retro-danger); box-shadow: 0 0 0 2px rgb(var(--retro-danger-rgb) / .2); }
+.retro-input[readonly], .retro-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+/* Restores semantic action paint without flattening the enamel material. */
+.retro-button-primary { background: var(--retro-action-bg); color: var(--retro-on-primary); border-color: var(--retro-primary); }
+.retro-button-secondary { background: var(--retro-secondary-action-bg); color: var(--retro-on-secondary); border-color: var(--retro-secondary-hover); }
+.retro-button-danger { background: var(--retro-danger-action-bg); color: var(--retro-on-danger); border-color: var(--retro-danger); }
+.retro-button-ghost { background: transparent; color: var(--retro-primary); border-color: transparent; }
+}
+
+@layer ui-style-kit.retrofuturism {
+/** Shared annotation fidelity keeps display rhythm and icon symbols readable. */
+.retro-feature-item > .retro-icon-medallion {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  padding: 0;
+  background: var(--retro-instrument-bg);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.retro-callout-bar > .retro-icon-medallion {
+  inline-size: 3rem;
+  min-inline-size: 3rem;
+  block-size: 3rem;
+  min-block-size: 3rem;
+  padding: 0;
+  background: var(--retro-instrument-bg);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/** Renders loading as a luminous orbital instrument instead of a filled dial. */
+.retro-spinner, .retro-loading-spinner, [data-ui="retrofuturism"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+  background: radial-gradient(circle at center, rgb(var(--retro-surface-rgb)) 0 30%, transparent 33%), conic-gradient(from -35deg, var(--retro-primary) 0 24%, transparent 25% 48%, var(--retro-secondary) 49% 72%, transparent 73%);
+  box-shadow: inset 0 0 0 .18rem var(--retro-recess-bg), 0 0 0 .12rem rgb(var(--retro-border-rgb) / .44), 0 0 .65rem rgb(var(--retro-accent-rgb) / .34);
+}
+
+/** Centers check glyphs independently from font baseline metrics. */
+.retro-check-control { position: relative; }
+.retro-check input:checked + .retro-check-control::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+/** Gives prefixed icon actions a legible console-symbol scale. */
+.retro-icon-button { font-size: 1.25rem; line-height: 1; }
+
+/** Matches the reference console's compact rectangular action keys. */
+.retro-button {
+  border: 3px double var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+}
+.retro-button-ghost {
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border-color: var(--retro-metal-edge);
+  box-shadow: var(--retro-control-shadow);
+}
+[data-ui="retrofuturism"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
+  border-radius: var(--retro-instrument-radius-sm);
+}
+
+/** Coordinates recessed fields and selector indicators with calibrated hardware. */
+.retro-input, .retro-textarea, .retro-select {
+  min-height: 2.75rem;
+  background: var(--retro-field-bg);
+  border-radius: var(--retro-instrument-radius-sm);
+  box-shadow: var(--retro-recess-shadow);
+}
+[data-ui="retrofuturism"][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea, select) {
+  border-radius: var(--retro-instrument-radius-sm);
+}
+.retro-select, [data-ui="retrofuturism"][data-mode] select:not([multiple]) {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-color: rgb(var(--retro-surface-rgb));
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+/** Uses softly tinted status plates with a dedicated console lamp. */
+.retro-badge {
+  --retro-badge-lamp: var(--retro-text-muted);
+  min-height: 1.75rem;
+  padding: .32rem .62rem;
+  background: var(--retro-enamel-bg);
+  color: var(--retro-text);
+  border: 1px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+  box-shadow: var(--retro-control-shadow);
+}
+.retro-badge::before {
+  content: "";
+  inline-size: .5rem;
+  block-size: .5rem;
+  flex: 0 0 auto;
+  background: var(--retro-badge-lamp);
+  border: 1px solid var(--retro-metal-edge);
+  border-radius: 50%;
+  box-shadow: var(--retro-jewel-shadow);
+}
+.retro-badge-primary { --retro-badge-lamp: var(--retro-primary); background: linear-gradient(180deg, rgb(var(--retro-primary-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-secondary { --retro-badge-lamp: var(--retro-secondary); background: linear-gradient(180deg, rgb(var(--retro-secondary-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-success { --retro-badge-lamp: var(--retro-success); background: linear-gradient(180deg, rgb(var(--retro-success-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-warning { --retro-badge-lamp: var(--retro-warning); background: linear-gradient(180deg, rgb(var(--retro-warning-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+.retro-badge-danger { --retro-badge-lamp: var(--retro-danger); background: linear-gradient(180deg, rgb(var(--retro-danger-rgb) / .18), transparent 62%), var(--retro-enamel-bg); color: var(--retro-text); }
+
+/** Matches the reference summary table's compact framed ledger treatment. */
+.retro-table-wrap {
+  background: var(--retro-enamel-bg);
+  border: 2px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius);
+  box-shadow: var(--retro-control-shadow);
+}
+.retro-table {
+  border: 1px solid var(--retro-metal-edge);
+  border-radius: var(--retro-instrument-radius-sm);
+}
+.retro-table th {
+  background: var(--retro-enamel-bg);
+  border-block-end: 1px solid var(--retro-metal-edge);
+  box-shadow: none;
+  font-family: var(--retro-font-control);
+}
+.retro-table :where(th, td):not(:last-child) {
+  border-inline-end: 1px solid rgb(var(--retro-border-rgb) / .46);
+}
+
+/** Keeps native dialog content clear of the metallic appliance frame. */
+[data-ui="retrofuturism"][data-mode] dialog > form {
+  display: grid;
+  gap: .85rem;
+  padding: 1.125rem;
+}
+[data-ui="retrofuturism"][data-mode] dialog > form > :where(h1, h2, h3, p) { margin: 0; }
+[data-ui="retrofuturism"][data-mode] dialog > form > :where(button, input[type="button"], input[type="submit"], input[type="reset"]) { justify-self: start; }
+/** Warning actions inherit preset geometry and use the paired semantic warning colors. */
+[data-ui="retrofuturism"][data-mode] .retro-button.retro-button-warning {
+  background: linear-gradient(180deg, rgb(var(--retro-surface-rgb) / .22), transparent 48%), var(--retro-warning);
+  color: var(--retro-on-warning);
+  border-color: var(--retro-warning);
+  text-shadow: none;
+}
+
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="retrofuturism"][data-mode] .retro-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.026em, .5px);
+}
+
+[data-ui="retrofuturism"][data-mode] .retro-feature-item > .retro-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="retrofuturism"][data-mode] .retro-callout-bar > .retro-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }
