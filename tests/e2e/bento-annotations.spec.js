@@ -10,6 +10,60 @@ async function openBento(page) {
   await page.selectOption('#modeSelect', 'light');
 }
 
+/**
+ * Reads Bento's packed native sample grid after the current viewport change.
+ * @param {import('@playwright/test').Page} page Browser page.
+ * @param {number} width Expected viewport width.
+ * @returns {Promise<{columns: number, gaps: number[], maxGap: number, bottomGap: number, overflow: number}>}
+ */
+async function readNativeGridFacts(page, width) {
+  return page.locator('.demo-native-grid').evaluate((grid, viewportWidth) => {
+    const rects = [...grid.children].map(node => {
+      const r = node.getBoundingClientRect();
+      return { x: Math.round(r.x), top: r.top, bottom: r.bottom };
+    });
+    const columns = new Map();
+    for (const rect of rects) {
+      if (!columns.has(rect.x)) columns.set(rect.x, []);
+      columns.get(rect.x).push(rect);
+    }
+    const gaps = [...columns.values()].flatMap(column => column
+      .sort((a, b) => a.top - b.top)
+      .slice(1)
+      .map((rect, i) => rect.top - column[i].bottom));
+    const bottoms = [...columns.values()].map(column => Math.max(...column.map(rect => rect.bottom)));
+    return {
+      columns: columns.size,
+      gaps,
+      maxGap: Math.max(0, ...gaps),
+      bottomGap: Math.max(...bottoms) - Math.min(...bottoms),
+      overflow: grid.scrollWidth - grid.clientWidth,
+      expectedColumns: viewportWidth > 800 ? 2 : 1,
+    };
+  }, width);
+}
+
+/**
+ * Waits for Bento's ResizeObserver masonry spans to settle after viewport changes.
+ * @param {import('@playwright/test').Page} page Browser page.
+ * @param {number} width Expected viewport width.
+ * @returns {Promise<{columns: number, gaps: number[], maxGap: number, bottomGap: number, overflow: number}>}
+ */
+async function waitForNativeGridFlow(page, width) {
+  let facts = await readNativeGridFacts(page, width);
+  await expect.poll(async () => {
+    facts = await readNativeGridFacts(page, width);
+    return facts.columns === facts.expectedColumns
+      && facts.bottomGap < 700
+      && facts.maxGap <= 24
+      && facts.overflow <= 1;
+  }, {
+    message: `Bento native sample grid should settle at ${width}px`,
+    timeout: 5000,
+  }).toBe(true);
+  return facts;
+}
+
 test('Bento labeled switches keep readable labels and operable tracks', async ({ page }) => {
   await openBento(page);
   for (const selector of ['label.ui-switch', 'label.bento-switch']) {
@@ -99,14 +153,7 @@ test('Bento native samples flow without row-height gaps on desktop and mobile', 
   await openBento(page);
   for (const width of [1012, 390]) {
     await page.setViewportSize({ width, height: 792 });
-    const facts = await page.locator('.demo-native-grid').evaluate(grid => {
-      const rects = [...grid.children].map(node => { const r = node.getBoundingClientRect(); return { x: Math.round(r.x), top: r.top, bottom: r.bottom }; });
-      const columns = new Map();
-      for (const rect of rects) { if (!columns.has(rect.x)) columns.set(rect.x, []); columns.get(rect.x).push(rect); }
-      const gaps = [...columns.values()].flatMap(column => column.sort((a, b) => a.top - b.top).slice(1).map((rect, i) => rect.top - column[i].bottom));
-      const bottoms = [...columns.values()].map(column => Math.max(...column.map(rect => rect.bottom)));
-      return { columns: columns.size, gaps, bottomGap: Math.max(...bottoms) - Math.min(...bottoms), overflow: grid.scrollWidth - grid.clientWidth };
-    });
+    const facts = await waitForNativeGridFlow(page, width);
     expect(facts.columns).toBe(width > 800 ? 2 : 1);
     expect(facts.bottomGap).toBeLessThan(700);
     for (const gap of facts.gaps) expect(gap).toBeLessThanOrEqual(24);
