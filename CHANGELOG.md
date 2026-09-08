@@ -4,7 +4,7 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
-## [2.4.0] - Unreleased
+## [2.4.0] - 2026-09-08
 
 ### Added
 
