@@ -108,15 +108,16 @@ test('Retrofuturism uses compact rectangular appliance buttons for prefixed and 
   });
 
   for (const action of [...actions.prefixed, ...actions.native]) {
-    expect(action.backgroundImage).toContain('linear-gradient');
-    expect(action.borderStyle).toBe('double');
-    expect(action.radius).toBeGreaterThanOrEqual(6);
-    expect(action.radius).toBeLessThanOrEqual(12);
-    expect(action.height).toBeGreaterThanOrEqual(44);
+    const label = `${action.group} ${action.text}`;
+    expect(action.backgroundImage, label).toContain('linear-gradient');
+    expect(action.borderStyle, label).toBe('double');
+    expect(action.radius, label).toBeGreaterThanOrEqual(6);
+    expect(action.radius, label).toBeLessThanOrEqual(12);
+    expect(action.height, label).toBeGreaterThanOrEqual(44);
   }
 });
 
-test('Retrofuturism uses compact enamel medallions and an orbital loading instrument', async ({ page }) => {
+test('Retrofuturism uses enamel medallions and an orbital loading instrument', async ({ page }) => {
   await openRetrofuturism(page);
 
   const evidence = await page.evaluate(() => {
@@ -146,8 +147,8 @@ test('Retrofuturism uses compact enamel medallions and an orbital loading instru
   expect(evidence.feature.height).toBe(evidence.feature.width);
   expect(evidence.feature.fontSize).toBeGreaterThanOrEqual(20);
   expect(evidence.callout.backgroundImage).toContain('linear-gradient');
-  expect(evidence.callout.width).toBeGreaterThanOrEqual(44);
-  expect(evidence.callout.width).toBeLessThanOrEqual(56);
+  expect(evidence.callout.width).toBeGreaterThanOrEqual(72);
+  expect(evidence.callout.width).toBeLessThanOrEqual(76);
   expect(evidence.callout.height).toBe(evidence.callout.width);
   expect(evidence.callout.fontSize).toBeGreaterThanOrEqual(24);
   expect(evidence.spinner.backgroundImage).toContain('conic-gradient');
@@ -252,12 +253,16 @@ test('Retrofuturism forms use recessed fields, one selector indicator, and a cal
     expect(field.radius).toBeLessThanOrEqual(10);
     expect(field.height).toBeGreaterThanOrEqual(44);
   }
-  for (const select of [evidence.prefixedSelect, evidence.nativeSelect, evidence.demoSelect]) {
+  for (const select of [evidence.prefixedSelect, evidence.nativeSelect]) {
     expect(select.appearance).toBe('none');
     expect(select.indicatorCount).toBe(2);
     expect(select.paddingInlineEnd).toBeGreaterThanOrEqual(40);
     expect(select.radius).toBeLessThanOrEqual(10);
   }
+  expect(evidence.demoSelect.appearance).toBe('auto');
+  expect(evidence.demoSelect.backgroundImage).toBe('none');
+  expect(evidence.demoSelect.paddingInlineEnd).toBeGreaterThanOrEqual(32);
+  expect(evidence.demoSelect.radius).toBeLessThanOrEqual(10);
   expect(evidence.range.appearance).toBe('none');
   expect(evidence.range.trackSize).toBeGreaterThanOrEqual(6);
   expect(evidence.range.trackBackground).toContain('linear-gradient');

@@ -1938,7 +1938,8 @@
 
 .utility-toast-stack { display: grid; gap: 7px; }
 
-.utility-tooltip {
+.utility-tooltip,
+[data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
   background: #111718;
   border: 1px solid #697173;
   box-shadow: 0 5px 12px rgba(0,0,0,.45);
@@ -2155,7 +2156,8 @@
 .utility-stage.is-complete b { color: var(--utility-on-success); }
 .utility-stage.is-current b { color: var(--utility-on-primary); }
 .utility-alert { box-shadow: var(--utility-material-bevel); }
-.utility-alert, .utility-alert strong, .utility-dialog p, .utility-tooltip { font-size: 14px; line-height: 1.4; }
+.utility-alert, .utility-alert strong, .utility-dialog p, .utility-tooltip,
+[data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { font-size: 14px; line-height: 1.4; }
 .utility-spinner { display: inline-block; flex: 0 0 20px; height: 20px; width: 20px; background: none; clip-path: none; box-shadow: none; }
 .utility-dropdown { background: var(--utility-material-input); border: 1px solid var(--utility-material-line-strong); box-shadow: var(--utility-material-inset-shadow); padding: 0; }
 .utility-option { display: block; width: 100%; padding: 8px; border: 0; border-radius: 0; background: transparent; color: var(--utility-material-text); text-align: left; font: 14px var(--utility-font-body); }
@@ -2173,7 +2175,8 @@
 [data-ui="industrial-utility"] :is(.utility-three-position, .utility-pagination, .utility-segmented) button { background: var(--utility-material-surface-low); border: 1px solid var(--utility-material-line-strong); color: var(--utility-material-text-soft); box-shadow: none; }
 [data-ui="industrial-utility"] :is(.utility-three-position, .utility-pagination, .utility-segmented) button.is-active { background: var(--utility-material-safety-amber); color: var(--utility-material-safety-ink); }
 [data-ui="industrial-utility"] .utility-input[aria-invalid="true"] { border: 2px solid var(--utility-material-hazard-red); }
-.utility-tooltip { opacity: 1; visibility: visible; inset: auto; transform: none; }
+.utility-tooltip,
+[data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { opacity: 1; visibility: visible; inset: auto; transform: none; }
 .utility-toast { display: flex; align-items: center; gap: 8px; padding: 12px; }
 .utility-dialog::backdrop { background: rgb(0 0 0 / .65); }
 dialog.utility-dialog:not([open]) { display: none; }

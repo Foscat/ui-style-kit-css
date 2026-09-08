@@ -12,6 +12,34 @@ async function openUtility(page) {
   await page.selectOption('#modeSelect', 'light');
 }
 
+/** @param {import('@playwright/test').Page} page Demo page after a control change. @returns {Promise<void>} */
+async function settleLayout(page) {
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+
+/**
+ * Captures a stable element screenshot after WebKit has applied demo rerenders.
+ *
+ * @param {import('@playwright/test').Page} page Demo page.
+ * @param {string} selector Element selector to inspect.
+ * @param {string} pathName Screenshot output path.
+ * @returns {Promise<number>} Horizontal overflow in CSS pixels.
+ */
+async function captureStableNode(page, selector, pathName) {
+  const node = page.locator(selector).first();
+  await expect(node).toBeAttached();
+  await node.scrollIntoViewIfNeeded();
+  await expect(node).toBeVisible();
+  const overflow = await node.evaluate((element) => element.scrollWidth - element.clientWidth);
+  await settleLayout(page);
+  await page.locator(selector).first().screenshot({
+    path: pathName,
+    style: '.demo-controls { visibility: hidden; }',
+    animations: 'disabled',
+  });
+  return overflow;
+}
+
 test('Industrial alarms pulse while destructive commands stay steady', async ({ page }) => {
   await openUtility(page);
   const signals = ['[data-semantic-node="button-danger"]', '.demo-iu-status-bank .is-red', '.demo-iu-status-badges .utility-badge-danger'];
@@ -88,16 +116,18 @@ test('Native audio inherits every preset surface without replacing accessible pl
 });
 
 test('Industrial review surfaces remain readable at desktop and mobile widths', async ({ page }) => {
+  test.setTimeout(90_000);
   await openUtility(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const mode of ['light', 'dark', 'contrast']) {
     await page.selectOption('#modeSelect', mode);
+    await settleLayout(page);
     for (const width of [1115, 390]) {
       await page.setViewportSize({ width, height: 844 });
+      await settleLayout(page);
       for (const [name, selector] of [['inputs', '.demo-iu-panel-inputs'], ['buttons', '.demo-iu-panel-buttons'], ['status', '.demo-iu-panel-status'], ['marketing', '.utility-card-service'], ['table', '[data-testid="native-table"]'], ['audio', '#native audio[controls]'], ['typography', '.demo-native-sample.utility-panel:first-child']]) {
-        const node = page.locator(selector).first();
-        expect(await node.evaluate((element) => element.scrollWidth - element.clientWidth), `${name}/${mode}/${width}`).toBeLessThanOrEqual(2);
-        await node.screenshot({ path: `.tmp/industrial-review-${name}-${mode}-${width}.png`, style: '.demo-controls { visibility: hidden; }' });
+        const overflow = await captureStableNode(page, selector, `.tmp/industrial-review-${name}-${mode}-${width}.png`);
+        expect(overflow, `${name}/${mode}/${width}`).toBeLessThanOrEqual(2);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(2);
     }

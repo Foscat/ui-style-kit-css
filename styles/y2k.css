@@ -1407,6 +1407,39 @@
   background: rgb(0 0 0 / .48);
 }
 
+/** Keeps unclassed native fields on the compact Y2K bevel metrics. */
+[data-ui="y2k"][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), select) {
+  box-sizing: border-box;
+  min-block-size: 1.375rem;
+  padding: .125rem .375rem;
+  color: var(--y2k-text);
+  background: var(--y2k-surface);
+  border: 1px inset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-recessed);
+  font: 400 .625rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+}
+
+/** Textareas share Y2K field material while retaining usable multiline height. */
+[data-ui="y2k"][data-mode] :where(textarea) {
+  box-sizing: border-box;
+  min-block-size: 2.75rem;
+  padding: .125rem .375rem;
+  color: var(--y2k-text);
+  background: var(--y2k-surface);
+  border: 1px inset var(--y2k-border);
+  border-radius: 0;
+  box-shadow: var(--y2k-bevel-recessed);
+  font: 400 .625rem/1.2 Tahoma, Verdana, Arial, sans-serif;
+}
+
+/** Keeps native progress tracks within the same 14px portal-era slot. */
+[data-ui="y2k"][data-mode] :where(progress, meter) {
+  box-sizing: border-box;
+  block-size: .875rem;
+  min-block-size: .875rem;
+}
+
 @media (pointer: coarse) {
   .y2k-button,
   .y2k-icon-button,

@@ -23,8 +23,8 @@ test('Neo Noir annotation geometry and directional tooltips', async ({ page }) =
   if (await medallion.locator('svg').count()) {
     const outer = await medallion.boundingBox();
     const inner = await medallion.locator('svg').boundingBox();
-    expect.soft(outer.width).toBe(72);
-    expect.soft(outer.height).toBe(72);
+    expect.soft(outer.width).toBeCloseTo(72, 3);
+    expect.soft(outer.height).toBeCloseTo(72, 3);
     expect.soft(Math.abs(outer.y + outer.height / 2 - inner.y - inner.height / 2)).toBeLessThan(0.5);
     expect.soft(Math.abs(outer.x + outer.width / 2 - inner.x - inner.width / 2)).toBeLessThan(0.5);
   }

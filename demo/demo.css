@@ -668,6 +668,18 @@ body[data-ui="y2k"][data-mode] .demo-control-panel h4 {
   column-gap: 1rem;
 }
 
+/** Mobile Bento native samples use normal flow because masonry spans add no value in one column. */
+@media (max-width: 800px) {
+  [data-ui="bento"] .demo-native-grid[data-bento-layout] {
+    grid-auto-rows: auto;
+    row-gap: 1rem;
+  }
+
+  [data-ui="bento"] .demo-native-grid[data-bento-layout] > * {
+    grid-row-end: auto !important;
+  }
+}
+
 @media (max-width: 1000px) {
   [data-ui="retro-glass"] .demo-native-grid { grid-template-columns: minmax(0, 1fr); }
 }
@@ -2511,7 +2523,9 @@ body[data-ui="y2k"][data-mode] .demo-native-sample > h3 {
   .demo-neo-noir-specimen .noir-workflow .noir-button { flex-basis: 30%; }
   .demo-nn-progress-row { grid-template-columns: 4.5rem minmax(0,1fr) 2.5rem; gap: .4rem; }
   .demo-neo-noir-specimen .noir-table { min-width: 640px; }
-  .demo-nn-nav-top { align-items: start; }
+  /** Allows the reference palette action to keep its label width on narrow viewports. */
+  .demo-nn-nav-top { align-items: start; flex-wrap: wrap; }
+  .demo-nn-nav-top .noir-button { flex: 0 0 auto; min-inline-size: max-content; }
 }
 
 /* Maximalist reference board layout; visual paint remains in maximalist.css. */

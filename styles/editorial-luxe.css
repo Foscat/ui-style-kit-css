@@ -1224,4 +1224,28 @@ dialog.luxe-dialog[open] { position: fixed; inset: 0; margin: auto; width: min(5
   text-shadow: none;
 }
 
+/** Keeps small contrast-mode danger actions on their AA foreground token. */
+[data-ui="editorial-luxe"][data-theme][data-mode="contrast"] .luxe-button.luxe-button-danger {
+  background: #ff5270;
+  color: rgb(var(--usk-danger-text-rgb, 0 0 0));
+  border-color: #ff5270;
+  text-shadow: none;
+}
+
+}
+
+@layer ui-style-kit.presets {
+/**
+ * Preserves Editorial Lux's numeral-first seal hierarchy after shared seal
+ * normalization runs in the preset layer.
+ */
+[data-ui="editorial-luxe"][data-mode] .luxe-badge-seal > strong {
+  font-size: 28px;
+  line-height: 1;
+}
+
+[data-ui="editorial-luxe"][data-mode] .luxe-badge-seal > small {
+  font-size: 12px;
+  line-height: 1.25;
+}
 }

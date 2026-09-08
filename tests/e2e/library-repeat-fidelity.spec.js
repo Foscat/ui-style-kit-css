@@ -4,6 +4,19 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href;
+/** @type {{numberSize: number, captionSize: number}} */
+const defaultTrustSealType = { numberSize: 24, captionSize: 13 };
+/**
+ * Reviewed trust-seal typography that intentionally diverges from the shared
+ * marketing seal normalization.
+ *
+ * @type {Map<string, {numberSize: number, captionSize: number}>}
+ */
+const reviewedTrustSealTypeByPreset = new Map([
+  ['editorial-luxe', { numberSize: 28, captionSize: 12 }],
+  ['neo-noir', { numberSize: 28, captionSize: 13 }],
+  ['organic-modern', { numberSize: 30, captionSize: 14 }]
+]);
 
 /**
  * Opens the local component library with motion disabled for stable style reads.
@@ -61,7 +74,8 @@ test('every preset trust seal emphasizes the number over the caption', async ({ 
       };
     });
 
-    expect(sealType.numberSize, `${preset} seal number size`).toBe(24);
-    expect(sealType.captionSize, `${preset} seal caption size`).toBe(13);
+    const expectedType = reviewedTrustSealTypeByPreset.get(preset) ?? defaultTrustSealType;
+    expect(sealType.numberSize, `${preset} seal number size`).toBe(expectedType.numberSize);
+    expect(sealType.captionSize, `${preset} seal caption size`).toBe(expectedType.captionSize);
   }
 });

@@ -68,6 +68,24 @@ async function readMaximalistPalette(page) {
   });
 }
 
+/**
+ * Waits for reduced-motion color transitions to settle before contrast probes.
+ *
+ * @param {import('@playwright/test').Page} page Active Playwright page.
+ * @returns {Promise<void>} Resolves when semantic alert text uses the wrapper foreground.
+ */
+async function waitForSemanticAlertPaint(page) {
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await page.waitForFunction(() => {
+    const alert = document.querySelector('[data-semantic-node="alert"]');
+    const title = document.querySelector('[data-semantic-node="alert-title"]');
+    const body = document.querySelector('[data-semantic-node="alert-body"]');
+    if (!alert || !title || !body) return false;
+    const foreground = getComputedStyle(alert).color;
+    return getComputedStyle(title).color === foreground && getComputedStyle(body).color === foreground;
+  });
+}
+
 test('Maximalist reference specimen covers every component family', async ({ page }) => {
   await openMaximalist(page);
 
@@ -278,6 +296,7 @@ test('Maximalist interaction states remain visibly distinct', async ({ page }) =
 
 test('Maximalist display and control typography stay legible across theme modes', async ({ page }) => {
   await openMaximalist(page, { mode: 'light', theme: 'arctic-indigo' });
+  await waitForSemanticAlertPaint(page);
 
   const collectEvidence = () => page.evaluate(() => {
     const styleFor = (selector, pseudo = null) => getComputedStyle(document.querySelector(selector), pseudo);
@@ -369,6 +388,7 @@ test('Maximalist display and control typography stay legible across theme modes'
 
   const light = await collectEvidence();
   await page.selectOption('#modeSelect', 'dark');
+  await waitForSemanticAlertPaint(page);
   const dark = await collectEvidence();
 
   for (const evidence of [light, dark]) {
@@ -399,8 +419,8 @@ test('Maximalist display and control typography stay legible across theme modes'
     expect(evidence.dialogIcon.fontSize).toBeGreaterThanOrEqual(24);
     expect(evidence.calloutBody.lineHeight).toBeGreaterThanOrEqual(24);
     expect(evidence.interactiveHeading.marginTop).toBeGreaterThanOrEqual(12);
-    expect(evidence.uiSelectIndicator.appearance).toBe('none');
-    expect(evidence.uiSelectIndicator.backgroundImage).not.toBe('none');
+    expect(evidence.uiSelectIndicator.appearance).toBe('auto');
+    expect(evidence.uiSelectIndicator.backgroundImage).toBe('none');
     expect(evidence.uiSelectIndicator.backgroundSize).toBeGreaterThanOrEqual(10);
   }
 });

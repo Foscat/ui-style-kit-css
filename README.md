@@ -167,13 +167,13 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1974 KB | ~379 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~1958 KB | ~377 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2304 KB | ~400 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1978 KB | ~379 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~1962 KB | ~377 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2309 KB | ~400 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
-| `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
+| `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
 | `ui-style-kit-css/visual/minimal-saas.css` | ~205 KB | ~30 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
 | `ui-style-kit-css/visual/industrial-utility.css` | ~278 KB | ~39 KB | Focused Industrial Utility, including its instrumentation styles |
 
@@ -541,18 +541,22 @@ The checked-in demo, favicon pack, and social preview image stay in the reposito
 npm run check
 npm run check:compat
 npm run test:e2e
+npm run test:e2e:full
 npm run test:axe
-npm run test:visual
+npm run test:axe:full
+npm run test:visual:full
 npm run test:matrix
 npm run test:matrix:block -- --block 33
 npm run test:matrix:case -- --case 3245
 npm run test:matrix:range -- --from 3201 --to 3244
+npm run release:verify
+npm run release:verify:full
 npm run pack:dry-run
 ```
 
-`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata and the documented class API, validates 4.5:1 text/link/filled-component contrast plus 3:1 light-mode component-edge contrast, and invokes `check:compat` for every generated entrypoint. Browser release gates add all-engine Playwright coverage, representative Axe scans, curated visual smoke checks, and the sharded `20 presets x 20 themes x 3 modes x 3 engines` matrix.
+`npm run check` rebuilds the bundles, runs stylelint, verifies package metadata and the documented class API, validates 4.5:1 text/link/filled-component contrast plus 3:1 light-mode component-edge contrast, and invokes `check:compat` for every generated entrypoint. `npm run test:e2e` is the bounded release smoke path: a curated Chromium-only Playwright suite that covers representative accessibility scans, demo switching, semantic runtime contracts, and the regression-prone preset checks. `npm run test:e2e:full` keeps the exhaustive Chromium/Firefox/WebKit suite available for explicit manual review. `npm run test:visual:full` preserves the historical visual-baseline suite for deliberate manual demo review; it is not part of the default PR, tag, or npm publish gate.
 
-The local matrix is divided into 36 stable blocks of 100 cases. `npm run test:matrix` runs the blocks in order and stops after the first failing block; use `-- --from-block N` to start at any untested block without repeating earlier green blocks. Each test title includes a stable global case number. Rerun only each failing case with `npm run test:matrix:case -- --case N`; because the other cases in that block have already completed, continue at the next block after the targeted fixes pass. Use `test:matrix:range` only when a bounded follow-up range is useful. `test:matrix:raw` is reserved for the already sharded automation jobs.
+The full UI matrix is intentionally opt-in. Local matrix checks are divided into 36 stable blocks of 100 cases. `npm run test:matrix` runs the blocks in order and stops after the first failing block; use `-- --from-block N` to start at any untested block without repeating earlier green blocks. Each test title includes a stable global case number. Rerun only each failing case with `npm run test:matrix:case -- --case N`; because the other cases in that block have already completed, continue at the next block after the targeted fixes pass. Use `test:matrix:range` only when a bounded follow-up range is useful. `test:matrix:raw` is reserved for the manual sharded automation workflow.
 
 The package browser policy is the last two major Chrome, Edge, and Firefox releases plus Safari and iOS 16 or newer, excluding dead browsers. The build resolves that single `package.json` policy into Lightning CSS targets, while `check:compat` verifies required prefix pairs, stable fallbacks, guarded `color-mix()`, `text-wrap`, and `forced-color-adjust` enhancements, and the absence of obsolete intrinsic CTA sizing declarations.
 

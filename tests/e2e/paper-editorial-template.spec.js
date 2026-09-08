@@ -19,6 +19,26 @@ async function openBoard(page, mode = 'dark') {
   return page.getByTestId('paper-editorial-template-specimen');
 }
 
+/**
+ * Waits for primary button foregrounds to settle after live token changes.
+ *
+ * @param {import('@playwright/test').Page} page Active Playwright page.
+ * @returns {Promise<void>} Resolves when the hovered primary button uses the active foreground token.
+ */
+async function waitForPaperPrimaryPaint(page) {
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await page.waitForFunction(() => {
+    const button = document.querySelector('.paper-button-primary.is-hovered');
+    if (!button) return false;
+    const probe = document.createElement('span');
+    probe.style.color = 'var(--paper-on-primary)';
+    document.body.append(probe);
+    const expected = getComputedStyle(probe).color;
+    probe.remove();
+    return getComputedStyle(button).color === expected;
+  });
+}
+
 test('Paper Editorial covers all components and isolates every preset-only region', async ({ page }) => {
   test.setTimeout(60000);
   const root = await openBoard(page);
@@ -62,8 +82,14 @@ for (const mode of ['dark', 'light']) {
 }
 
 test('Paper Editorial keyboard, dialogs, tokens, and responsive containment', async ({ page }) => {
+  test.setTimeout(60_000);
   const errors = [];
-  page.on('pageerror', (error) => errors.push(error.message));
+  /** Identifies delayed axe stylesheet diagnostics that WebKit emits for local file URLs. */
+  const isScannerCorsDiagnostic = (text) => text.includes('access control checks') ||
+    text.includes('Origin null is not allowed by Access-Control-Allow-Origin');
+  page.on('pageerror', (error) => {
+    if (!isScannerCorsDiagnostic(error.message)) errors.push(error.message);
+  });
   const root = await openBoard(page);
   await root.locator('#paper-measure').focus();
   await page.keyboard.press('ArrowRight');
@@ -91,6 +117,7 @@ test('Paper Editorial keyboard, dialogs, tokens, and responsive containment', as
     document.body.style.removeProperty('--usk-primary-rgb');
     document.body.style.removeProperty('--usk-primary-text-rgb');
   });
+  await waitForPaperPrimaryPaint(page);
   expect((await new AxeBuilder({ page }).include('#paper-editorial-template').analyze()).violations).toEqual([]);
   for (const width of [602, 390]) {
     await page.setViewportSize({ width, height: 844 });

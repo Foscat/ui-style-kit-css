@@ -517,14 +517,17 @@ test('release automation scripts are exposed', () => {
     'test',
     'test:unit',
     'test:e2e',
+    'test:e2e:full',
     'test:axe',
+    'test:axe:full',
     'test:matrix',
     'test:matrix:block',
     'test:matrix:case',
     'test:matrix:range',
     'test:matrix:raw',
-    'test:visual',
+    'test:visual:full',
     'test:e2e:install:ci',
+    'test:e2e:install:ci:full',
     'check:contrast',
     'check:compat',
     'check:ownership',
@@ -536,7 +539,8 @@ test('release automation scripts are exposed', () => {
     'release:preflight',
     'check',
     'pack:dry-run',
-    'release:verify'
+    'release:verify',
+    'release:verify:full'
   ];
 
   for (const scriptName of requiredScripts) {
@@ -553,7 +557,7 @@ test('local UI matrix exposes resumable blocks and exact-case reruns', () => {
   assert.equal(packageJson.scripts['test:matrix:raw'], 'playwright test --config playwright.matrix.config.js');
 });
 
-test('clean-install ecosystem scripts and CI enforce current and minimum rendered matrices', () => {
+test('clean-install ecosystem scripts remain explicit while CI uses fast packed preflight', () => {
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
   const currentScript = packageJson.scripts['check:ecosystem:current'] ?? '';
   const minimumScript = packageJson.scripts['check:ecosystem:minimum'] ?? '';
@@ -565,32 +569,50 @@ test('clean-install ecosystem scripts and CI enforce current and minimum rendere
     'node --test tests/clean-install-ecosystem-contract.integration.mjs'
   );
   assert.match(workflow, /npm run release:preflight/);
+  assert.match(workflow, /--skip-clean-install/);
+  assert.doesNotMatch(workflow, /ui-matrix:/);
   assert.doesNotMatch(workflow, /check:ecosystem:(?:current|minimum)[^\n]*--skip-browser/);
   assert.doesNotMatch(workflow, /--update-snapshots/);
   assert.equal(packageJson.devDependencies.pixelmatch, '7.2.0');
   assert.equal(packageJson.devDependencies.pngjs, '7.0.0');
 });
 
-test('release verification script is non-publishing and covers the full release gate', () => {
+test('release verification scripts separate the fast default from the full manual gate', () => {
   const releaseVerify = packageJson.scripts['release:verify'] ?? '';
-  const requiredCommands = [
+  const releaseVerifyFull = packageJson.scripts['release:verify:full'] ?? '';
+  const requiredFastCommands = [
     'npm run check',
     'npm run test:e2e',
-    'npm run test:axe',
-    'npm run test:visual',
+    'npm run release:preflight -- --candidate-package ui-style-kit-css --skip-clean-install',
+    'npm audit --audit-level=moderate',
+    'npm run pack:dry-run'
+  ];
+  const requiredFullCommands = [
+    'npm run check',
+    'npm run test:e2e:full',
+    'npm run test:axe:full',
+    'npm run test:visual:full',
     'npm run test:matrix',
     'npm run release:preflight -- --candidate-package ui-style-kit-css',
     'npm audit --audit-level=moderate',
     'npm run pack:dry-run'
   ];
 
-  for (const command of requiredCommands) {
+  for (const command of requiredFastCommands) {
     assert.match(releaseVerify, new RegExp(escapeRegExp(command)), `release:verify should run ${command}`);
+  }
+  for (const command of requiredFullCommands) {
+    assert.match(releaseVerifyFull, new RegExp(escapeRegExp(command)), `release:verify:full should run ${command}`);
   }
 
   // Keep the reusable verification gate safe for approval-gated release preparation.
   assert.doesNotMatch(releaseVerify, /\bnpm\s+(?:publish|version)\b/);
   assert.doesNotMatch(releaseVerify, /\bgit\s+tag\b/);
+  assert.doesNotMatch(releaseVerify, /\bnpm run test:(?:axe|matrix)(?:\s|$)/);
+  assert.doesNotMatch(releaseVerify, /\bnpm run test:e2e:full(?:\s|$)/);
+  assert.doesNotMatch(releaseVerify, /\bnpm run test:visual(?::full)?(?:\s|$)/);
+  assert.doesNotMatch(releaseVerifyFull, /\bnpm\s+(?:publish|version)\b/);
+  assert.doesNotMatch(releaseVerifyFull, /\bgit\s+tag\b/);
   assert.equal(packageJson.scripts.prepublishOnly, 'npm run release:verify');
 });
 
@@ -659,40 +681,45 @@ test('every repository release preflight invocation explicitly selects the UI ca
   }
 });
 
-test('CI workflow shards the UI matrix by engine and preset group', () => {
+test('manual UI matrix workflow shards the exhaustive matrix by engine and preset group', () => {
   const ciWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ci.yml'), 'utf8');
+  const matrixWorkflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', 'ui-matrix-manual.yml'), 'utf8');
 
-  assert.match(ciWorkflow, /ui-matrix:/);
-  assert.match(ciWorkflow, /engine:\s*\[chromium,\s*firefox,\s*webkit\]/);
-  assert.match(ciWorkflow, /preset-shard:\s*\[1,\s*2,\s*3,\s*4\]/);
-  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARD:/);
-  assert.match(ciWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
-  assert.match(ciWorkflow, /npm run test:matrix:raw -- --project=\$\{\{ matrix\.engine \}\}/);
-  assert.match(ciWorkflow, /playwright-report/);
-  assert.match(ciWorkflow, /test-results/);
+  assert.doesNotMatch(ciWorkflow, /ui-matrix:/);
+  assert.match(matrixWorkflow, /workflow_dispatch:/);
+  assert.match(matrixWorkflow, /fromJSON\(inputs\.engine == 'all'/);
+  assert.match(matrixWorkflow, /fromJSON\(inputs\.preset_shard == 'all'/);
+  assert.match(matrixWorkflow, /\["chromium","firefox","webkit"\]/);
+  assert.match(matrixWorkflow, /\[1,2,3,4\]/);
+  assert.match(matrixWorkflow, /UI_MATRIX_PRESET_SHARD:/);
+  assert.match(matrixWorkflow, /UI_MATRIX_PRESET_SHARDS:\s*4/);
+  assert.match(matrixWorkflow, /npm run test:matrix:raw -- --project=\$\{\{ matrix\.engine \}\}/);
+  assert.match(matrixWorkflow, /playwright-report/);
+  assert.match(matrixWorkflow, /test-results/);
 });
 
 /**
- * Verifies that the release-alignment gate shards the full UI matrix before a
- * release is created.
+ * Verifies that the release-alignment gate uses the bounded browser gate before
+ * a release is created.
  *
  * @param {string} workflowName GitHub Actions workflow filename.
  * @returns {void}
  */
-function assertReleaseWorkflowShardsUiMatrix(workflowName) {
+function assertReleaseWorkflowUsesFastBrowserGate(workflowName) {
   const workflow = fs.readFileSync(path.join(rootDir, '.github', 'workflows', workflowName), 'utf8');
 
-  assert.match(workflow, /Run sharded UI matrix/);
-  assert.match(workflow, /for engine in chromium firefox webkit/);
-  assert.match(workflow, /for preset_shard in 1 2 3 4/);
-  assert.match(workflow, /UI_MATRIX_PRESET_SHARD="\$\{preset_shard\}"/);
-  assert.match(workflow, /UI_MATRIX_PRESET_SHARDS=4/);
-  assert.match(workflow, /npm run test:matrix:raw -- --project="\$\{engine\}"/);
+  assert.match(workflow, /npm run test:e2e:install:ci/);
+  assert.match(workflow, /npm run test:e2e/);
+  assert.doesNotMatch(workflow, /\bnpm run test:visual(?::full)?(?:\s|$)/);
+  assert.match(workflow, /npm run release:preflight[\s\S]*--candidate-package ui-style-kit-css[\s\S]*--skip-clean-install/);
+  assert.doesNotMatch(workflow, /Run sharded UI matrix/);
+  assert.doesNotMatch(workflow, /for engine in chromium firefox webkit/);
+  assert.doesNotMatch(workflow, /for preset_shard in 1 2 3 4/);
   assert.doesNotMatch(workflow, /^\s*run:\s*npm run test:matrix(?::raw)?\s*$/m);
 }
 
-test('release version alignment shards the UI matrix before creating releases', () => {
-  assertReleaseWorkflowShardsUiMatrix('release-version-alignment.yml');
+test('release version alignment uses the fast browser gate before creating releases', () => {
+  assertReleaseWorkflowUsesFastBrowserGate('release-version-alignment.yml');
 });
 
 test('npm publish workflow skips duplicate browser gates after release verification', () => {

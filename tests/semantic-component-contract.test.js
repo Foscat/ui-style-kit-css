@@ -473,12 +473,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   // Reviewed v2.4 E2E repair rules preserve generated semantic alias declarations.
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 35890,
-    sha256: 'd2449cc707c3eeb45ea608269940850c19a7342f82268d5d1477db4fa7755ab5'
+    count: 35935,
+    sha256: '5c9d48e3352031fa5a798e1e00fc093a78b565ad3e3864a2200421c10537e418'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 36341,
-    sha256: '9072eee486ca6a33f4275ee7cfa23d4434cbad3163358edd309e5b88c2f58e80'
+    count: 36386,
+    sha256: '63b8a6b8d6acbc06a011d221fa4b5bb7e8f1fa11b3a07e948376446af920cf30'
   });
 });
 

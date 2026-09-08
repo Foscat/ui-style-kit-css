@@ -1093,7 +1093,8 @@
 .organic-table td:last-child, .organic-table th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
 .organic-progress { height: 5px; border: 0; background: var(--organic-surface-soft); border-radius: 99px; box-shadow: none; }
 .organic-progress-bar { background: var(--organic-primary); border-radius: inherit; }
-.organic-tooltip { background: var(--organic-tooltip-bg); color: var(--organic-tooltip-text); border: 0; border-radius: 6px; padding: 12px; font-family: var(--organic-font-sans); font-size: 12px; }
+.organic-tooltip,
+[data-ui="organic-modern"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { background: var(--organic-tooltip-bg); color: var(--organic-tooltip-text); border: 0; border-radius: 6px; padding: 12px; font-family: var(--organic-font-sans); font-size: 12px; }
 .organic-alert { background: var(--organic-surface); color: var(--organic-text); border: 1px solid var(--organic-border); border-radius: 6px; box-shadow: none; }
 @supports (background: color-mix(in srgb, black, white)) {
   .organic-alert { background: color-mix(in srgb, var(--organic-alert-color, var(--organic-primary)) 12%, var(--organic-surface)); }
@@ -1333,4 +1334,20 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
+}
+
+@layer ui-style-kit.presets {
+/**
+ * Preserves Organic Modern's seal hierarchy after shared seal normalization
+ * runs in the preset layer.
+ */
+[data-ui="organic-modern"][data-mode] .organic-badge-seal > strong {
+  font-size: 30px;
+  line-height: 1;
+}
+
+[data-ui="organic-modern"][data-mode] .organic-badge-seal > small {
+  font-size: 14px;
+  line-height: 1.2;
+}
 }

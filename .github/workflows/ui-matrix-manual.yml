@@ -1,0 +1,73 @@
+name: Manual UI Matrix
+
+on:
+  workflow_dispatch:
+    inputs:
+      engine:
+        description: Browser engine to run
+        required: true
+        default: chromium
+        type: choice
+        options:
+          - chromium
+          - firefox
+          - webkit
+          - all
+      preset_shard:
+        description: Preset shard to run
+        required: true
+        default: "1"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - all
+
+permissions:
+  contents: read
+
+jobs:
+  ui-matrix:
+    name: UI Matrix (${{ matrix.engine }} shard ${{ matrix.preset-shard }}/4)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: ${{ fromJSON(inputs.engine == 'all' && '["chromium","firefox","webkit"]' || format('["{0}"]', inputs.engine)) }}
+        preset-shard: ${{ fromJSON(inputs.preset_shard == 'all' && '[1,2,3,4]' || format('[{0}]', inputs.preset_shard)) }}
+    env:
+      UI_MATRIX_PRESET_SHARD: ${{ matrix.preset-shard }}
+      UI_MATRIX_PRESET_SHARDS: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dist assets
+        run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.engine }}
+
+      - name: Run UI matrix shard
+        run: npm run test:matrix:raw -- --project=${{ matrix.engine }}
+
+      - name: Upload matrix artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-matrix-${{ matrix.engine }}-${{ matrix.preset-shard }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore

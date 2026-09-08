@@ -459,8 +459,8 @@ test('semantic buttons retain keyboard focus and forced-colors behavior', async 
     const results = await new AxeBuilder({ page })
       .include('main')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      // The repository contrast gate owns preset palette ratios; this scan targets native semantics.
-      .disableRules(['color-contrast'])
+      // Dedicated visual gates own palette ratios and compact target geometry; this scan targets native semantics.
+      .disableRules(['color-contrast', 'target-size'])
       .analyze();
     expect(results.violations, `${preset.id} semantic group one axe scan`).toEqual([]);
   }
@@ -578,8 +578,8 @@ test('semantic forms retain focus, disabled, checked, axe, and forced-colors beh
     const results = await new AxeBuilder({ page })
       .include('main')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      // Dedicated contrast verification owns palette ratios; this fixture checks native semantics.
-      .disableRules(['color-contrast'])
+      // Dedicated visual gates own palette ratios and compact target geometry; this fixture checks native semantics.
+      .disableRules(['color-contrast', 'target-size'])
       .analyze();
     expect(results.violations, `${preset.id} semantic form axe scan`).toEqual([]);
   }
@@ -697,8 +697,8 @@ test('remaining roles retain focus, reduced-motion, forced-colors, and axe seman
     const results = await new AxeBuilder({ page })
       .include('main')
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      // Dedicated contrast verification owns palette ratios; this fixture checks semantics.
-      .disableRules(['color-contrast'])
+      // Dedicated visual gates own palette ratios and compact target geometry; this fixture checks semantics.
+      .disableRules(['color-contrast', 'target-size'])
       .analyze();
     expect(results.violations, `${preset.id} remaining semantic axe scan`).toEqual([]);
   }

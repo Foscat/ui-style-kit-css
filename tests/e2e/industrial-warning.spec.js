@@ -12,7 +12,36 @@ async function open(page) {
   await page.selectOption('#modeSelect', 'light');
 }
 
+/** @param {import('@playwright/test').Page} page Demo page after a control change. @returns {Promise<void>} */
+async function settleLayout(page) {
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+
+/**
+ * Captures a stable element screenshot after WebKit has applied demo rerenders.
+ *
+ * @param {import('@playwright/test').Page} page Demo page.
+ * @param {string} selector Element selector to inspect.
+ * @param {string} pathName Screenshot output path.
+ * @returns {Promise<number>} Horizontal overflow in CSS pixels.
+ */
+async function captureStableNode(page, selector, pathName) {
+  const node = page.locator(selector).first();
+  await expect(node).toBeAttached();
+  await node.scrollIntoViewIfNeeded();
+  await expect(node).toBeVisible();
+  const overflow = await node.evaluate((element) => element.scrollWidth - element.clientWidth);
+  await settleLayout(page);
+  await page.locator(selector).first().screenshot({
+    path: pathName,
+    style: '.demo-controls { visibility:hidden; }',
+    animations: 'disabled',
+  });
+  return overflow;
+}
+
 test('Industrial warning signals use warning paint and danger examples opt into alarms', async ({ page }) => {
+  test.setTimeout(90_000);
   await open(page);
   const lamp = page.locator('.demo-iu-lamp-row .utility-pilot-light.is-warning');
   await expect(lamp).toHaveCount(1);
@@ -36,12 +65,13 @@ test('Industrial warning signals use warning paint and danger examples opt into 
   await expect(alertLamp).toHaveCSS('animation-name', 'none');
   for (const mode of ['light', 'dark', 'contrast']) {
     await page.selectOption('#modeSelect', mode);
+    await settleLayout(page);
     for (const width of [1115, 390]) {
       await page.setViewportSize({ width, height: 844 });
+      await settleLayout(page);
       for (const [name, selector] of [['bank', '.demo-iu-panel-toggles'], ['alerts', '.demo-iu-panel-alerts'], ['buttons', '[data-testid="component-buttons"]'], ['messages', '.demo-component-grid > article:has(> .utility-alert-info)']]) {
-        const node = page.locator(selector);
-        expect(await node.evaluate((element) => element.scrollWidth - element.clientWidth)).toBeLessThanOrEqual(2);
-        await node.screenshot({ path: `.tmp/industrial-warning-${name}-${mode}-${width}.png`, style: '.demo-controls { visibility:hidden; }' });
+        const overflow = await captureStableNode(page, selector, `.tmp/industrial-warning-${name}-${mode}-${width}.png`);
+        expect(overflow).toBeLessThanOrEqual(2);
       }
     }
   }

@@ -1324,7 +1324,14 @@
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button.is-busy { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-primary); }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button:hover:not(:disabled) { transform: none; }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar { height: auto; border-color: var(--bau-border); overflow: visible; }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar .bau-button-secondary { color: var(--bau-workshop-rail-text); border-color: currentColor; margin: .75rem; }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar .bau-button-secondary { color: var(--bau-workshop-rail-text); border-color: currentColor; margin: .75rem; transition: none; }
+/** Keeps sidebar reference actions legible when Firefox preserves click hover. */
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar .bau-button-secondary:hover:not(:disabled),
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar .bau-button-secondary:focus-visible {
+  background: var(--bau-warning);
+  color: var(--bau-on-warning);
+  border-color: var(--bau-on-warning);
+}
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar-note { min-height: 0; }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-brand-mark { flex: 0 0 auto; }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-brand strong,

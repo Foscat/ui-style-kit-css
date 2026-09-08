@@ -1887,7 +1887,7 @@
 .deco-button-secondary:hover { background-color: var(--deco-jewel-secondary); }
 .deco-button:is(.is-pressed, :active) { transform: translateY(2px); }
 .deco-button:disabled, .deco-icon-button:disabled { color: var(--deco-text-muted); background: var(--deco-surface-soft); opacity: .55; filter: grayscale(1); cursor: not-allowed; }
-.deco-icon-button { width: 36px; min-width: 36px; padding: 0; font-size: 16px; }
+.deco-icon-button { width: 36px; min-width: 36px; padding: 0; font-family: "Segoe UI Symbol", Arial, sans-serif; font-size: 16px; line-height: 1; }
 .deco-button-loading { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 152px; }
 .deco-button[aria-busy="true"]::after, .deco-icon-button[aria-busy="true"]::after,
 [data-ui="art-deco"] :where(button[aria-busy="true"])::after { content: ""; position: static; display: inline-block; box-sizing: border-box; flex: 0 0 16px; width: 16px; height: 16px; margin: 0; background: var(--deco-spinner-segmented-background); border: 3px double var(--deco-metal); box-shadow: none; border-radius: 50%; -webkit-mask: none; mask: none; animation: deco-spin 1.4s linear infinite; }
@@ -1917,6 +1917,22 @@
 .deco-check input:checked + .deco-check-control::after { color: var(--deco-on-secondary); }
 /** Keeps prefixed checkbox rasterization centered without generating semantic aliases. */
 :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"])::after { transform: translate(calc(-50% - 5px), calc(-62% + 4px)) rotate(-45deg); }
+
+/**
+ * Aligns the stroked checkbox mark with Firefox and WebKit rasterization while
+ * preserving Chromium's established pixel center.
+ */
+@supports (-moz-appearance: none) {
+  :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"])::after {
+    transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
+  }
+}
+
+@supports (-webkit-hyphens: none) {
+  .deco-check input:checked + .deco-check-control::after {
+    transform: translate(calc(-50% - 5px), calc(-62% + 3px)) rotate(-45deg);
+  }
+}
 .deco-radio input:checked + .deco-radio-control::after { background: var(--deco-on-secondary); }
 .deco-switch { min-height: 32px; }
 .deco-switch-track { width: 40px; height: 22px; inline-size: 40px; block-size: 22px; border-width: 3px; }
@@ -1982,7 +1998,8 @@
 .deco-table-wrap { border: 3px double var(--deco-metal); border-radius: 0; clip-path: none; overflow-x: auto; }
 .deco-table th { background: var(--deco-primary); color: var(--deco-on-primary); font-size: 11px; letter-spacing: 0; }
 .deco-table td { font-size: 12px; }
-.deco-tooltip { position: relative; clip-path: polygon(.35rem 0, calc(100% - .35rem) 0, 100% .35rem, 100% calc(100% - .35rem), calc(100% - .35rem) 100%, .35rem 100%, 0 calc(100% - .35rem), 0 .35rem); border: 3px double var(--deco-metal); border-radius: 0; color: rgb(var(--deco-tooltip-text-rgb)); background: rgb(var(--deco-tooltip-bg-rgb)); box-shadow: none; padding: 12px; font: 12px/1.4 var(--deco-font-body); letter-spacing: 0; text-transform: none; }
+.deco-tooltip,
+[data-ui="art-deco"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { position: relative; clip-path: polygon(.35rem 0, calc(100% - .35rem) 0, 100% .35rem, 100% calc(100% - .35rem), calc(100% - .35rem) 100%, .35rem 100%, 0 calc(100% - .35rem), 0 .35rem); border: 3px double var(--deco-metal); border-radius: 0; color: rgb(var(--deco-tooltip-text-rgb)); background: rgb(var(--deco-tooltip-bg-rgb)); box-shadow: none; padding: 12px; font: 12px/1.4 var(--deco-font-body); letter-spacing: 0; text-transform: none; }
 .deco-tooltip::after { content: ""; position: absolute; left: 20px; bottom: -6px; width: 10px; height: 10px; background: rgb(var(--deco-tooltip-bg-rgb)); border-right: 1px solid var(--deco-metal); border-bottom: 1px solid var(--deco-metal); transform: rotate(45deg); }
 [data-ui="art-deco"][data-mode] dialog.deco-dialog { position: fixed; margin: auto; width: min(480px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow: auto; clip-path: none; }
 dialog.deco-dialog:not([open]) { display: none; }
@@ -2034,6 +2051,7 @@ dialog.deco-dialog:not([open]) { display: none; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-family: "Segoe UI Symbol", Arial, sans-serif;
   font-size: 1.5rem;
   line-height: 1;
 }

@@ -5596,6 +5596,36 @@
     background: #0000007a;
   }
 
+  [data-ui="y2k"][data-mode] :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), select) {
+    box-sizing: border-box;
+    min-block-size: 1.375rem;
+    color: var(--y2k-text);
+    background: var(--y2k-surface);
+    border: 1px inset var(--y2k-border);
+    box-shadow: var(--y2k-bevel-recessed);
+    border-radius: 0;
+    padding: .125rem .375rem;
+    font: 400 .625rem / 1.2 Tahoma, Verdana, Arial, sans-serif;
+  }
+
+  [data-ui="y2k"][data-mode] :where(textarea) {
+    box-sizing: border-box;
+    min-block-size: 2.75rem;
+    color: var(--y2k-text);
+    background: var(--y2k-surface);
+    border: 1px inset var(--y2k-border);
+    box-shadow: var(--y2k-bevel-recessed);
+    border-radius: 0;
+    padding: .125rem .375rem;
+    font: 400 .625rem / 1.2 Tahoma, Verdana, Arial, sans-serif;
+  }
+
+  [data-ui="y2k"][data-mode] :where(progress, meter) {
+    box-sizing: border-box;
+    block-size: .875rem;
+    min-block-size: .875rem;
+  }
+
   @media (pointer: coarse) {
     .y2k-button, .y2k-icon-button, .y2k-input, .y2k-select, .y2k-nav-link, [data-ui="y2k"][data-mode] :where(button, input, select), :where([data-ui="y2k"]) .ui-button, :where([data-ui="y2k"]) .ui-icon-button, :where([data-ui="y2k"]) .ui-input, :where([data-ui="y2k"]) .ui-select, :where([data-ui="y2k"]) .ui-nav-link {
       min-block-size: 2.75rem;

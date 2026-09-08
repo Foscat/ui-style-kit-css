@@ -6460,7 +6460,7 @@
     display: grid;
   }
 
-  .utility-tooltip {
+  .utility-tooltip, [data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
     color: #dde0db;
     font: 9px/1.35 var(--utility-material-font-body);
     background: #111718;
@@ -6827,7 +6827,7 @@
     box-shadow: var(--utility-material-bevel);
   }
 
-  .utility-alert, .utility-alert strong, .utility-dialog p, .utility-tooltip, :where([data-ui="industrial-utility"]) .ui-alert, :where([data-ui="industrial-utility"]) .ui-alert strong {
+  .utility-alert, .utility-alert strong, .utility-dialog p, .utility-tooltip, [data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]), :where([data-ui="industrial-utility"]) .ui-alert, :where([data-ui="industrial-utility"]) .ui-alert strong {
     font-size: 14px;
     line-height: 1.4;
   }
@@ -6938,7 +6938,7 @@
     border: 2px solid var(--utility-material-hazard-red);
   }
 
-  .utility-tooltip {
+  .utility-tooltip, [data-ui="industrial-utility"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
     opacity: 1;
     visibility: visible;
     inset: auto;

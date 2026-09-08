@@ -6450,7 +6450,9 @@
     width: 36px;
     min-width: 36px;
     padding: 0;
+    font-family: Segoe UI Symbol, Arial, sans-serif;
     font-size: 16px;
+    line-height: 1;
   }
 
   .deco-button-loading {
@@ -6665,6 +6667,18 @@
 
   :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"]):after {
     transform: translate(calc(-50% - 5px), calc(4px - 62%)) rotate(-45deg);
+  }
+
+  @supports ((-moz-appearance: none)) {
+    :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"]):after {
+      transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
+    }
+  }
+
+  @supports ((-webkit-hyphens: none)) {
+    .deco-check input:checked + .deco-check-control:after, :where([data-ui="art-deco"]) .ui-check input:checked+.ui-check-control:after {
+      transform: translate(calc(-50% - 5px), calc(3px - 62%)) rotate(-45deg);
+    }
   }
 
   .deco-radio input:checked + .deco-radio-control:after, :where([data-ui="art-deco"]) .ui-radio input:checked+.ui-radio-control:after {
@@ -7108,7 +7122,7 @@
     font-size: 12px;
   }
 
-  .deco-tooltip {
+  .deco-tooltip, [data-ui="art-deco"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
     clip-path: polygon(.35rem 0, calc(100% - .35rem) 0, 100% .35rem, 100% calc(100% - .35rem), calc(100% - .35rem) 100%, .35rem 100%, 0 calc(100% - .35rem), 0 .35rem);
     border: 3px double var(--deco-metal);
     color: rgb(var(--deco-tooltip-text-rgb));
@@ -7286,6 +7300,7 @@
 [data-ui="art-deco"][data-mode] .deco-feature-item > .deco-icon-medallion {
   justify-content: center;
   align-items: center;
+  font-family: Segoe UI Symbol, Arial, sans-serif;
   font-size: 1.5rem;
   line-height: 1;
   display: inline-flex;

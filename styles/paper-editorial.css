@@ -1544,7 +1544,8 @@
 .paper-dialog .paper-dialog-body { font: .74rem var(--paper-sheet-serif); padding: 12px 14px; }
 .paper-dialog footer { border-top: 1px solid var(--paper-sheet-rule-soft); display: flex; gap: 7px; justify-content: flex-end; padding: 9px 14px; }
 .paper-popover,
-.paper-tooltip {
+.paper-tooltip,
+[data-ui="paper-editorial"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) {
   background: var(--paper-sheet-ink);
   color: var(--paper-sheet-paper);
   font: .66rem/1.35 var(--paper-sheet-serif);
@@ -1646,7 +1647,8 @@
 dialog.paper-dialog { margin: auto; }
 dialog.paper-dialog:not([open]) { display: none; }
 .paper-dialog h3 { margin: 0; font: 700 16px var(--paper-sheet-display); text-transform: uppercase; }
-.paper-tooltip { box-shadow: none; border: 0; border-radius: 0; }
+.paper-tooltip,
+[data-ui="paper-editorial"] :where(.ui-tooltip, [role="tooltip"], [data-tooltip]) { box-shadow: none; border: 0; border-radius: 0; }
 .paper-dropcap { display: flow-root; }
 .paper-marginalia { background: transparent; }
 [data-ui="paper-editorial"] .paper-section-index button { border: 0; border-right: 1px solid var(--paper-sheet-rule); box-shadow: none; background: transparent; color: var(--paper-sheet-ink-soft); }

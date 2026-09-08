@@ -1079,7 +1079,7 @@
   border-radius: 0; clip-path: none; box-shadow: none; font: 11px/1.4 var(--noir-font-mono);
 }
 .noir-select { appearance: auto; background-image: none; padding-right: .5rem; }
-.noir-input:focus, .noir-textarea:focus, .noir-select:focus, .noir-field-row[data-noir-state="focus"] :is(input,textarea) { border-color: var(--noir-focus); box-shadow: none; outline: 1px solid var(--noir-focus); outline-offset: 1px; }
+.noir-input:focus, .noir-textarea:focus, .noir-select:focus, .noir-field-row[data-noir-state="focus"] :is(input,textarea) { border-color: var(--noir-focus); box-shadow: none; outline: 2px solid var(--noir-focus); outline-offset: 1px; }
 .noir-input[aria-invalid="true"], .noir-textarea[aria-invalid="true"] { border-color: var(--noir-danger); color: var(--noir-danger); box-shadow: none; }
 .noir-field-row[data-noir-state="success"] input { border-color: var(--noir-success); color: var(--noir-success); }
 .noir-input:disabled, .noir-textarea:disabled { background: var(--noir-surface-soft); opacity: .55; }
@@ -1318,4 +1318,15 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
+}
+
+@layer ui-style-kit.presets {
+/**
+ * Preserves Neo Noir's oversized seal numeral after shared seal normalization
+ * raises root-scoped selector specificity in the preset layer.
+ */
+[data-ui="neo-noir"][data-mode] .noir-badge-seal > strong {
+  font-size: 28px;
+  line-height: 1;
+}
 }

@@ -835,7 +835,7 @@
   --usk-native-card-bg: var(--terminal-command-plane);
   --usk-native-font-control: ui-monospace, Consolas, "Liberation Mono", monospace;
   --usk-native-control-min-block-size: 2.2rem;
-  --usk-native-control-padding-block: .38rem;
+  --usk-native-control-padding-block: .31rem;
   --usk-native-control-padding-inline: .62rem;
   --usk-native-border-width: 1px;
   --usk-native-radius-sm: 0;
@@ -1777,6 +1777,13 @@
 [data-ui="data-terminal"][data-mode] .terminal-feature-item > .terminal-icon-medallion {
   font-size: 1.5rem;
   line-height: 1;
+}
+
+/** Centers Firefox text glyph bounds inside the compact square medallion. */
+@supports (-moz-appearance: none) {
+  [data-ui="data-terminal"][data-mode] .terminal-feature-item > .terminal-icon-medallion {
+    line-height: 2rem;
+  }
 }
 
 [data-ui="data-terminal"][data-mode] .terminal-callout-bar > .terminal-icon-medallion {
