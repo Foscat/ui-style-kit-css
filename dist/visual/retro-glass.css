@@ -5455,6 +5455,10 @@
     border-color: var(--rg-danger);
   }
 
+  [data-ui="retro-glass"][data-mode][style*="--rg-on-danger"] .rg-button-danger, :where([data-ui="retro-glass"])[data-mode][style*="--rg-on-danger"] .ui-button:where([data-ui-variant="danger"]) {
+    color: var(--rg-on-danger);
+  }
+
   .rg-button-ghost, :where([data-ui="retro-glass"]) .ui-button:where([data-ui-variant="ghost"]) {
     color: var(--rg-text-soft);
     border-color: var(--rg-line-color);
@@ -6425,4 +6429,22 @@
     border-color: var(--rg-warning);
     text-shadow: none;
   }
+}
+
+[data-ui="retro-glass"][data-mode] .rg-title {
+  letter-spacing: max(.06em, .5px);
+  margin-block: max(.75rem, 12px);
+}
+
+[data-ui="retro-glass"][data-mode] .rg-feature-item > .rg-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="retro-glass"][data-mode] .rg-callout-bar > .rg-icon-medallion {
+  min-block-size: 4.5rem;
+  min-inline-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

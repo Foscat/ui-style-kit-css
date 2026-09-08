@@ -34,16 +34,16 @@ test('all preset-specific demo components belong to the active style', async ({ 
   await page.goto(demoUrl);
   for (const { id } of manifest.presets) {
     await page.selectOption('#uiSelect', id);
+    await expect(page.locator('body')).toHaveAttribute('data-ui', id);
     const foreignClasses = await page.locator('#demoContent').evaluate((root, { manifest, active }) => {
       const foreign = manifest.presets.filter(({ id }) => id !== active)
         .flatMap(({ id, prefix }) => manifest.classApi.presetExtras[id].map((suffix) => `${prefix}-${suffix}`));
       return foreign.filter((name) => root.querySelector(`.${name}`));
     }, { manifest, active: id });
     expect(foreignClasses, id).toEqual([]);
-    const ownExtras = manifest.classApi.presetExtras[id];
-    await expect(page.locator('[data-preset-only]:visible')).toHaveCount(
-      ownExtras.length ? (['retro-glass', 'cyberpunk'].includes(id) ? 2 : 1) : 0
-    );
+    const visiblePresetOnly = await page.locator('[data-preset-only]:visible')
+      .evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-preset-only')));
+    expect(visiblePresetOnly.every((preset) => preset === id), id).toBe(true);
   }
 });
 

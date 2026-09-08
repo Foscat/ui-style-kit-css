@@ -987,6 +987,11 @@
 .rg-button-primary { background: var(--rg-gloss); color: var(--rg-gloss-ink); border-color: var(--rg-primary); }
 .rg-button-secondary { background: var(--rg-control-material); color: var(--rg-text); border-color: var(--rg-line-strong); }
 .rg-button-danger { background: var(--rg-danger-gloss); color: rgb(var(--usk-danger-text-rgb, 255 255 255)); border-color: var(--rg-danger); }
+/**
+ * Lets explicit runtime foreground edits win without changing the default
+ * Retro Glass danger gloss treatment used by the reference specimen.
+ */
+[data-ui="retro-glass"][data-mode][style*="--rg-on-danger"] .rg-button-danger { color: var(--rg-on-danger); }
 .rg-button-ghost { background: transparent; color: var(--rg-text-soft); border-color: var(--rg-line-color); box-shadow: none; }
 .rg-button:hover, .rg-icon-button:hover, .rg-button.is-hover, .rg-segment:hover, .rg-pagination-page:hover { transform: none; border-color: var(--rg-focus); box-shadow: inset 0 1px 0 var(--rg-highlight), 0 0 0 1px var(--rg-focus); }
 .rg-button:active, .rg-icon-button:active, .rg-button.is-pressed, .rg-button[aria-pressed="true"] { background: linear-gradient(180deg, rgb(0 0 0 / .22), rgb(255 255 255 / .1)), var(--rg-surface-soft); color: var(--rg-text); box-shadow: inset 0 2px 5px var(--rg-recess); transform: translateY(1px); }
@@ -1149,4 +1154,26 @@
   text-shadow: none;
 }
 
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="retro-glass"][data-mode] .rg-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.06em, .5px);
+}
+
+[data-ui="retro-glass"][data-mode] .rg-feature-item > .rg-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="retro-glass"][data-mode] .rg-callout-bar > .rg-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

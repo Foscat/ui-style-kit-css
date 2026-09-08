@@ -41,7 +41,7 @@ for (const mode of ['dark', 'light']) {
     await expect(page.locator('body')).toHaveCSS('background-color', mode === 'dark' ? 'rgb(6, 31, 53)' : 'rgb(237, 236, 232)');
     const button = root.locator('.blueprint-button-primary').first();
     await expect(button).toHaveCSS('border-radius', '0px');
-    await expect(button).toHaveCSS('min-height', '36px');
+    await expect(button).toHaveCSS('min-height', '44px');
     await expect(button).toHaveCSS('clip-path', 'none');
     await expect(root.locator('.blueprint-spinner')).toHaveCSS('border-radius', '50%');
     await expect(root.locator('.blueprint-panel').first()).toHaveCSS('box-shadow', 'none');

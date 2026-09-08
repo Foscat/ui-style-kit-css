@@ -766,6 +766,7 @@
 .terminal-title { font-size: clamp(1.8rem, 4vw, 3.3rem); line-height: 1; font-weight: 700; }
 .terminal-heading { font-size: clamp(1rem, 2vw, 1.45rem); font-weight: 700; }
 .terminal-subtitle, .terminal-copy { line-height: 1.45; }
+.terminal-copy a { display: inline-flex; align-items: center; min-block-size: 1.5rem; }
 .terminal-surface, .terminal-card, .terminal-panel, .terminal-toolbar, .terminal-table-wrap { border-radius: 0; box-shadow: none; background: var(--terminal-card-bg); }
 .terminal-card, .terminal-panel { padding: var(--terminal-space-4); }
 .terminal-button, .terminal-icon-button { border-radius: 0; box-shadow: none; font-family: var(--terminal-font-mono); text-transform: uppercase; font-size: .76rem; letter-spacing: .055em; }
@@ -1732,6 +1733,13 @@
   background: var(--terminal-primary);
 }
 
+/** Keeps hovered data rows on the same filled signal channel as active navigation. */
+[data-ui="data-terminal"][data-mode] .terminal-table tbody tr:hover > td {
+  color: var(--terminal-on-primary);
+  background: var(--terminal-primary);
+  transition: none;
+}
+
 .terminal-pill,
 .terminal-rounded,
 .terminal-rounded-lg,
@@ -1755,4 +1763,26 @@
   text-shadow: none;
 }
 
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="data-terminal"][data-mode] .terminal-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.03em, .5px);
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-feature-item > .terminal-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-callout-bar > .terminal-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

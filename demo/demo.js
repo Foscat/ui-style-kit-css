@@ -797,7 +797,7 @@ function renderStyleSpecificSurface(ui, p) {
       <div class="${p}-empty-state"><strong>No drawings in this package</strong><span>Add a drawing to begin the review.</span></div>
       <pre class="${p}-code"><code>--blueprint-grid-size: 16px;
 --blueprint-line-heavy: 2px;
---blueprint-control-height: 36px;</code></pre>
+--blueprint-control-height: 44px;</code></pre>
       <blockquote class="${p}-quote">Line weight and section hatching communicate state.</blockquote>`,
     "art-deco": `
       <div class="${p}-metric"><span class="${p}-metric-value">◆</span><span class="${p}-metric-label">Deco detail</span></div>

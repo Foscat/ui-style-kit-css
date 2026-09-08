@@ -1051,7 +1051,8 @@
   text-overflow: ellipsis;
   text-shadow: 1px 1px 0 rgb(0 0 0 / .52);
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .y2k-hover-lift:hover {
@@ -1123,6 +1124,14 @@
   background: var(--y2k-surface-soft);
   color: var(--y2k-danger);
   border-color: var(--y2k-border);
+}
+
+/**
+ * Lets explicit runtime foreground edits win without changing the default
+ * Y2K danger-outline treatment used by the reference specimen.
+ */
+[data-ui="y2k"][data-mode][style*="--y2k-on-danger"] .y2k-button-danger {
+  color: var(--y2k-on-danger);
 }
 
 .y2k-button-ghost {
@@ -1416,4 +1425,32 @@
   text-shadow: none;
 }
 
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="y2k"][data-mode] .y2k-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.025em, .5px);
+}
+
+[data-ui="y2k"][data-mode] .y2k-feature-item > .y2k-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="y2k"][data-mode] .y2k-callout-bar > .y2k-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/** Keeps native Y2K fields on the compact portal-era dotted focus ring. */
+[data-ui="y2k"][data-mode] :is(input, select, textarea):focus-visible {
+  outline: 2px dotted #d21212;
+  outline-offset: 2px;
 }

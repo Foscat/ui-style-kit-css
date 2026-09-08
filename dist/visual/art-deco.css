@@ -5374,7 +5374,7 @@
     --deco-card-bg: linear-gradient(135deg, rgb(var(--deco-metal-bright-rgb) / .055), transparent 34%),
     var(--deco-surface);
     --deco-control-bg: linear-gradient(180deg, rgb(var(--deco-enamel-strong-rgb) / .98), rgb(var(--deco-enamel-rgb) / .98));
-    --deco-jewel-on: #fff7dc;
+    --deco-jewel-on: #f6f2e7;
     --deco-jewel-primary: rgb(var(--deco-primary-rgb));
     --deco-jewel-secondary: rgb(var(--deco-secondary-rgb));
     --deco-jewel-success: rgb(var(--deco-success-rgb));
@@ -5401,6 +5401,11 @@
       --deco-jewel-warning: color-mix(in srgb, rgb(var(--deco-warning-rgb)) 20%, #5e3b0e);
       --deco-jewel-danger: color-mix(in srgb, rgb(var(--deco-danger-rgb)) 35%, #5a1717);
     }
+  }
+
+  [data-ui="art-deco"][data-mode][style*="--usk-primary-rgb"] {
+    --deco-jewel-primary: rgb(var(--deco-primary-rgb));
+    --deco-jewel-on: var(--deco-on-primary);
   }
 
   .deco-title, .deco-heading, .deco-kicker, .deco-eyebrow, .deco-label, .deco-button, .deco-badge, .deco-tooltip, .deco-table th, :where([data-ui="art-deco"]) .ui-label, :where([data-ui="art-deco"]) .ui-button, :where([data-ui="art-deco"]) .ui-badge, :where([data-ui="art-deco"]) .ui-table th {
@@ -5660,15 +5665,18 @@
   }
 
   .deco-check input:checked + .deco-check-control:after, :where([data-ui="art-deco"]) .ui-check input:checked+.ui-check-control:after {
+    content: "";
+    block-size: .3rem;
+    inline-size: .5rem;
     color: var(--deco-jewel-on);
-    place-items: center;
-    font-family: Segoe UI Symbol, sans-serif;
-    font-size: .7rem;
-    line-height: 1;
-    display: grid;
+    transform-origin: center;
+    border-block-end: 2px solid;
+    border-inline-start: 2px solid;
+    display: block;
     position: absolute;
-    inset: 0;
-    transform: translateY(-.0625rem);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
   }
 
   .deco-progress, :where([data-ui="art-deco"]) .ui-progress {
@@ -5680,7 +5688,7 @@
   }
 
   .deco-progress-bar, :where([data-ui="art-deco"]) .ui-progress-bar {
-    background: linear-gradient(90deg,var(--deco-jewel-success),var(--deco-jewel-primary));
+    background: linear-gradient(90deg,var(--deco-jewel-success),var(--deco-secondary),var(--deco-jewel-primary));
     clip-path: polygon(0 0, calc(100% - .45rem) 0, 100% 50%, calc(100% - .45rem) 100%, 0 100%);
     border-radius: 0;
   }
@@ -6122,17 +6130,19 @@
   }
 
   .deco-progress-bar, :where([data-ui="art-deco"]) .ui-progress-bar {
-    background: var(--deco-secondary);
+    background: linear-gradient(90deg,var(--deco-jewel-success),var(--deco-secondary),var(--deco-jewel-primary));
     clip-path: none;
     border-radius: 0;
     display: block;
   }
 
   .deco-progress, :where([data-ui="art-deco"]) .ui-progress {
-    height: 12px;
-    border: 1px solid var(--deco-metal);
-    block-size: 12px;
-    padding: 2px;
+    height: 10px;
+    border: 3px double var(--deco-metal);
+    block-size: 10px;
+    box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb)/.9);
+    border-radius: .1rem;
+    padding: 0;
   }
 
   [data-ui="art-deco"][data-mode] .deco-empty-state {
@@ -6387,23 +6397,27 @@
     background-color: #0000;
   }
 
+  .deco-button, :where([data-ui="art-deco"]) .ui-button {
+    min-inline-size: 12rem;
+  }
+
   .deco-button:focus-visible, .deco-icon-button:focus-visible, :where([data-ui="art-deco"]) .ui-button:focus-visible, :where([data-ui="art-deco"]) .ui-icon-button:focus-visible {
     outline-offset: -6px;
   }
 
   .deco-button-primary, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="primary"]) {
-    background-color: var(--deco-primary);
-    color: var(--deco-on-primary);
+    background-color: var(--deco-jewel-primary);
+    color: var(--deco-jewel-on);
   }
 
   .deco-button-secondary, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="secondary"]) {
-    background-color: var(--deco-secondary);
-    color: var(--deco-on-secondary);
+    background-color: var(--deco-jewel-secondary);
+    color: var(--deco-jewel-on);
   }
 
   .deco-button-danger, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="danger"]) {
-    background-color: var(--deco-danger);
-    color: var(--deco-on-danger);
+    background-color: var(--deco-jewel-danger);
+    color: var(--deco-jewel-on);
   }
 
   [data-ui="art-deco"][data-mode] :is(.deco-button, .deco-icon-button)[aria-busy="true"], :where([data-ui="art-deco"])[data-mode] :is(.ui-button,.ui-icon-button)[aria-busy="true"] {
@@ -6413,11 +6427,11 @@
   }
 
   .deco-button-primary:hover, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="primary"]):hover {
-    background-color: var(--deco-primary-hover);
+    background-color: var(--deco-jewel-primary);
   }
 
   .deco-button-secondary:hover, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="secondary"]):hover {
-    background-color: var(--deco-secondary-hover);
+    background-color: var(--deco-jewel-secondary);
   }
 
   .deco-button:is(.is-pressed, :active), :where([data-ui="art-deco"]) .ui-button:is(.is-pressed,:active) {
@@ -6427,7 +6441,7 @@
   .deco-button:disabled, .deco-icon-button:disabled, :where([data-ui="art-deco"]) .ui-button:disabled, :where([data-ui="art-deco"]) .ui-icon-button:disabled {
     color: var(--deco-text-muted);
     background: var(--deco-surface-soft);
-    opacity: 1;
+    opacity: .55;
     filter: grayscale();
     cursor: not-allowed;
   }
@@ -6436,6 +6450,7 @@
     width: 36px;
     min-width: 36px;
     padding: 0;
+    font-size: 16px;
   }
 
   .deco-button-loading {
@@ -6447,28 +6462,29 @@
 
   .deco-button[aria-busy="true"]:after, .deco-icon-button[aria-busy="true"]:after, [data-ui="art-deco"] :where(button[aria-busy="true"]):after, :where([data-ui="art-deco"]) .ui-button[aria-busy="true"]:after, :where([data-ui="art-deco"]) .ui-icon-button[aria-busy="true"]:after {
     content: "";
+    box-sizing: border-box;
+    background: var(--deco-spinner-segmented-background);
+    border: 3px double var(--deco-metal);
     width: 16px;
     height: 16px;
     box-shadow: none;
-    background: repeating-conic-gradient(currentColor 0deg 22deg, #0000 22deg 45deg);
-    border: 0;
     border-radius: 50%;
     flex: 0 0 16px;
     margin: 0;
     animation: 1.4s linear infinite deco-spin;
     display: inline-block;
     position: static;
-    mask: radial-gradient(#0000 40%, #000 43%);
+    mask: none;
   }
 
   .deco-spinner, .deco-loading-spinner, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
+    border: 3px double var(--deco-metal);
+    background: var(--deco-spinner-segmented-background);
     width: 48px;
     height: 48px;
     box-shadow: none;
     clip-path: none;
-    background: none;
-    border: 0;
-    border-radius: 0;
+    border-radius: 50%;
     flex: 0 0 48px;
     animation: 1.4s linear infinite deco-spin;
     display: inline-block;
@@ -6506,14 +6522,14 @@
   }
 
   .deco-input, .deco-select, .deco-textarea, :where([data-ui="art-deco"]) .ui-input, :where([data-ui="art-deco"]) .ui-select, :where([data-ui="art-deco"]) .ui-textarea {
-    border: 1px solid var(--deco-metal);
-    box-shadow: none;
+    border: 3px double var(--deco-metal);
+    box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb)/.88);
     min-height: 32px;
     color: var(--deco-text);
     background-color: var(--deco-surface);
     letter-spacing: 0;
-    border-radius: 0;
-    padding: 8px 10px;
+    border-radius: .1rem;
+    padding: 5px 10px;
     font-size: 12px;
   }
 
@@ -6522,12 +6538,13 @@
   }
 
   .deco-input-valid {
-    border-inline-start: 3px solid var(--deco-success);
+    border-inline-start: 3px double var(--deco-success);
   }
 
   .deco-input[aria-invalid="true"], :where([data-ui="art-deco"]) .ui-input[aria-invalid="true"] {
     border-color: var(--deco-status-danger);
     box-shadow: none;
+    border-inline-start-style: double;
     border-inline-start-width: 3px;
   }
 
@@ -6646,6 +6663,10 @@
     color: var(--deco-on-secondary);
   }
 
+  :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"]):after {
+    transform: translate(calc(-50% - 5px), calc(4px - 62%)) rotate(-45deg);
+  }
+
   .deco-radio input:checked + .deco-radio-control:after, :where([data-ui="art-deco"]) .ui-radio input:checked+.ui-radio-control:after {
     background: var(--deco-on-secondary);
   }
@@ -6655,25 +6676,25 @@
   }
 
   .deco-switch-track, :where([data-ui="art-deco"]) .ui-switch-track {
-    width: 56px;
-    height: 26px;
-    border-width: 1px;
-    block-size: 26px;
-    inline-size: 56px;
+    width: 40px;
+    height: 22px;
+    border-width: 3px;
+    block-size: 22px;
+    inline-size: 40px;
   }
 
   .deco-switch-thumb, :where([data-ui="art-deco"]) .ui-switch-thumb {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     background: var(--deco-warning);
     border: 1px solid var(--deco-metal);
-    block-size: 18px;
-    inline-size: 18px;
+    block-size: 16px;
+    inline-size: 16px;
     inset-block-start: 3px;
   }
 
   .deco-switch input:checked + .deco-switch-track .deco-switch-thumb, :where([data-ui="art-deco"]) .ui-switch input:checked+.ui-switch-track .ui-switch-thumb {
-    inset-inline-start: calc(100% - 24px);
+    inset-inline-start: calc(100% - 21px);
   }
 
   .deco-check:has(input:disabled), .deco-radio:has(input:disabled), .deco-switch:has(input:disabled), :where([data-ui="art-deco"]) .ui-check:has(input:disabled), :where([data-ui="art-deco"]) .ui-radio:has(input:disabled), :where([data-ui="art-deco"]) .ui-switch:has(input:disabled) {
@@ -7012,10 +7033,10 @@
   }
 
   .deco-alert, :where([data-ui="art-deco"]) .ui-alert {
-    border: 1px solid var(--deco-metal);
-    box-shadow: none;
+    border: 3px double var(--deco-metal);
+    box-shadow: inset 0 0 0 1px rgb(var(--deco-enamel-rgb)/.9);
     background: var(--deco-surface);
-    border-radius: 0;
+    border-radius: .1rem;
     flex-wrap: nowrap;
     gap: 8px;
     padding: 6px 10px;
@@ -7088,10 +7109,10 @@
   }
 
   .deco-tooltip {
-    clip-path: none;
-    border: 1px solid var(--deco-metal);
-    color: var(--deco-on-primary);
-    background: var(--deco-primary);
+    clip-path: polygon(.35rem 0, calc(100% - .35rem) 0, 100% .35rem, 100% calc(100% - .35rem), calc(100% - .35rem) 100%, .35rem 100%, 0 calc(100% - .35rem), 0 .35rem);
+    border: 3px double var(--deco-metal);
+    color: rgb(var(--deco-tooltip-text-rgb));
+    background: rgb(var(--deco-tooltip-bg-rgb));
     box-shadow: none;
     font: 12px/1.4 var(--deco-font-body);
     letter-spacing: 0;
@@ -7103,7 +7124,7 @@
 
   .deco-tooltip:after {
     content: "";
-    background: var(--deco-primary);
+    background: rgb(var(--deco-tooltip-bg-rgb));
     border-right: 1px solid var(--deco-metal);
     border-bottom: 1px solid var(--deco-metal);
     width: 10px;
@@ -7255,4 +7276,28 @@
     border-color: var(--deco-warning);
     text-shadow: none;
   }
+}
+
+[data-ui="art-deco"][data-mode] .deco-title {
+  letter-spacing: max(.08em, .5px);
+  margin-block: max(.75rem, 12px);
+}
+
+[data-ui="art-deco"][data-mode] .deco-feature-item > .deco-icon-medallion {
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: inline-flex;
+}
+
+[data-ui="art-deco"][data-mode] .deco-callout-bar > .deco-icon-medallion {
+  justify-content: center;
+  align-items: center;
+  min-block-size: 4.5rem;
+  min-inline-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  display: inline-flex;
 }

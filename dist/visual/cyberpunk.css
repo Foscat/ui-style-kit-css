@@ -5763,6 +5763,10 @@
     box-shadow: var(--cyber-template-danger-glow);
   }
 
+  [data-ui="cyberpunk"][data-mode][style*="--cyber-on-danger"] .cyber-button-danger, :where([data-ui="cyberpunk"])[data-mode][style*="--cyber-on-danger"] .ui-button:where([data-ui-variant="danger"]) {
+    color: var(--cyber-on-danger);
+  }
+
   .cyber-input, .cyber-select, .cyber-textarea, .cyber-file, :where([data-ui="cyberpunk"]) .ui-input, :where([data-ui="cyberpunk"]) .ui-select, :where([data-ui="cyberpunk"]) .ui-textarea {
     width: 100%;
     min-block-size: 36px;
@@ -6449,4 +6453,22 @@
     border-color: var(--cyber-warning);
     text-shadow: none;
   }
+}
+
+[data-ui="cyberpunk"][data-mode] .cyber-title {
+  letter-spacing: max(.08em, .5px);
+  margin-block: max(.75rem, 12px);
+}
+
+[data-ui="cyberpunk"][data-mode] .cyber-feature-item > .cyber-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="cyberpunk"][data-mode] .cyber-callout-bar > .cyber-icon-medallion {
+  min-block-size: 4.5rem;
+  min-inline-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

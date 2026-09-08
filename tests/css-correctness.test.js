@@ -474,7 +474,7 @@ test('remaining presets expose template-specific CSS signatures instead of arbit
     ]],
     ['clay', [
       /--clay-material-slab:\s*#e9e2d9/,
-      /--clay-panel-clip:\s*polygon\([^;]*calc\(100% - 12px\) calc\(100% - 2px\)/,
+      /--clay-panel-clip:\s*polygon\([^;]*calc\(100% - 13px\) calc\(100% - 2px\)/,
       /--clay-carved-shadow:\s*inset/,
       /--clay-label-relief:\s*0 -\.7px \.45px/,
       /--clay-pigment-primary:\s*color-mix/,

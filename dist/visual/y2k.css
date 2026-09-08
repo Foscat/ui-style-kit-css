@@ -5230,7 +5230,8 @@
     text-overflow: ellipsis;
     text-shadow: 1px 1px #00000085;
     text-transform: uppercase;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
     margin: -.375rem -.375rem .375rem;
     padding: .1875rem .375rem;
     font: 700 .6875rem / 1.2 Tahoma, Verdana, Arial, sans-serif;
@@ -5301,6 +5302,10 @@
     background: var(--y2k-surface-soft);
     color: var(--y2k-danger);
     border-color: var(--y2k-border);
+  }
+
+  [data-ui="y2k"][data-mode][style*="--y2k-on-danger"] .y2k-button-danger, :where([data-ui="y2k"])[data-mode][style*="--y2k-on-danger"] .ui-button:where([data-ui-variant="danger"]) {
+    color: var(--y2k-on-danger);
   }
 
   .y2k-button-ghost, :where([data-ui="y2k"]) .ui-button:where([data-ui-variant="ghost"]) {
@@ -5603,4 +5608,27 @@
     border-color: var(--y2k-warning);
     text-shadow: none;
   }
+}
+
+[data-ui="y2k"][data-mode] .y2k-title {
+  letter-spacing: max(.025em, .5px);
+  margin-block: max(.75rem, 12px);
+}
+
+[data-ui="y2k"][data-mode] .y2k-feature-item > .y2k-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="y2k"][data-mode] .y2k-callout-bar > .y2k-icon-medallion {
+  min-block-size: 4.5rem;
+  min-inline-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+[data-ui="y2k"][data-mode] :is(input, select, textarea):focus-visible {
+  outline-offset: 2px;
+  outline: 2px dotted #d21212;
 }

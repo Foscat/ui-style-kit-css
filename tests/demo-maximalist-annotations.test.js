@@ -29,19 +29,31 @@ function declarations(root, selector) {
   return result;
 }
 
-test('demo toolbar delegates its sole dropdown indicator to the native select', () => {
+test('demo toolbar keeps one dropdown indicator per select treatment', () => {
   const root = stylesheet('demo/demo.css');
   const base = declarations(root, '.demo-controls select');
   assert.equal(base.get('appearance'), 'auto');
   assert.equal(base.get('-webkit-appearance'), 'auto');
   assert.equal(base.get('background-image'), 'none');
   assert.equal(base.get('padding-inline-end'), '2rem');
+  const presetIndicatorSelectors = new Set([
+    '[data-ui="art-deco"] .demo-controls select',
+    '[data-ui="clay"] .demo-controls select',
+    '[data-ui="data-terminal"] .demo-controls select'
+  ]);
   root.walkRules((rule) => {
     if (!rule.selectors.some((selector) => selector.endsWith('.demo-controls select'))) return;
     rule.walkDecls((decl) => {
-      if (decl.prop.endsWith('appearance')) assert.equal(decl.value, 'auto', rule.selector);
+      if (decl.prop.endsWith('appearance')) {
+        assert.equal(decl.value, presetIndicatorSelectors.has(rule.selector) ? 'none' : 'auto', rule.selector);
+      }
       if (decl.prop === 'background-image') {
-        assert.ok(['none', 'var(--clay-grain-image)'].includes(decl.value), rule.selector);
+        assert.ok(
+          decl.value === 'none'
+            || decl.value === 'var(--clay-grain-image)'
+            || decl.value.startsWith('var(--usk-native-select-indicator-image)'),
+          rule.selector
+        );
       }
     });
   });

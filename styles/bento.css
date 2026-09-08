@@ -1208,7 +1208,7 @@
   font-weight: 750;
   gap: 7px;
   justify-content: center;
-  min-height: 34px;
+  min-height: 44px;
   padding: 0 16px;
   transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
@@ -1725,4 +1725,26 @@
   [data-ui=bento][data-mode] .bento-sheet { padding: 4px; }
   [data-ui=bento][data-mode] .bento-sheet .bento-sidebar nav button { width: auto; }
 }
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="bento"][data-mode] .bento-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.018em, .5px);
+}
+
+[data-ui="bento"][data-mode] .bento-feature-item > .bento-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="bento"][data-mode] .bento-callout-bar > .bento-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

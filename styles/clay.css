@@ -839,13 +839,14 @@
  * Pixel-scale deviations keep the imperfect perimeter visible on compact controls and wide slabs.
  */
 [data-ui="clay"][data-mode] {
-  --clay-panel-clip: polygon(10px 2px, 31% 0, 68% 2px, calc(100% - 12px) 1px, calc(100% - 3px) 5px, 100% 13px, calc(100% - 2px) 36%, 100% 72%, calc(100% - 3px) calc(100% - 8px), calc(100% - 12px) calc(100% - 2px), 64% calc(100% - 1px), 30% 100%, 9px calc(100% - 2px), 2px calc(100% - 8px), 0 62%, 2px 24%, 1px 10px, 4px 4px);
+  --clay-panel-clip: polygon(10px 2px, 36% 0, calc(100% - 12px) 1px, calc(100% - 3px) 6px, 100% 68%, calc(100% - 4px) calc(100% - 8px), calc(100% - 13px) calc(100% - 2px), 30% 100%, 9px calc(100% - 2px), 2px calc(100% - 8px), 0 28%, 4px 4px);
   --clay-control-clip: polygon(7px 1px, 28% 0, 68% 1px, calc(100% - 8px) 0, calc(100% - 3px) 3px, 100% 8px, calc(100% - 1px) 56%, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 3px), calc(100% - 9px) 100%, 64% calc(100% - 1px), 30% 100%, 7px calc(100% - 1px), 2px calc(100% - 4px), 0 calc(100% - 9px), 1px 38%, 0 8px, 3px 3px);
   --clay-chip-clip: polygon(.12rem .06rem, 30% .01rem, 68% .08rem, calc(100% - .12rem) .02rem, calc(100% - .01rem) 22%, calc(100% - .07rem) 72%, calc(100% - .14rem) calc(100% - .04rem), 64% calc(100% - .08rem), 28% 100%, .1rem calc(100% - .06rem), .02rem 76%, .06rem 18%);
   --clay-track-clip: polygon(.12rem .03rem, 24% 0, 52% .02rem, calc(100% - .1rem) 0, 100% .1rem, calc(100% - .02rem) calc(100% - .08rem), calc(100% - .12rem) 100%, 70% calc(100% - .02rem), 38% 100%, .08rem calc(100% - .02rem), 0 calc(100% - .1rem), .02rem .11rem);
   --clay-value-clip: polygon(.1rem .02rem, 26% 0, 54% .03rem, calc(100% - .11rem) .01rem, 100% .09rem, calc(100% - .02rem) calc(100% - .09rem), calc(100% - .11rem) 100%, 72% calc(100% - .02rem), 40% 100%, .09rem calc(100% - .01rem), 0 calc(100% - .1rem), .02rem .1rem);
   --clay-cell-clip: polygon(.35% .9%, 29% .2%, 65% .7%, 99.55% .1%, 100% 48%, 99.5% 99%, 68% 99.6%, 31% 99.2%, .2% 99.8%, 0 46%);
   --clay-thumb-clip: ellipse(48% 49% at 50% 50%);
+  --clay-knob-clip: polygon(14% 5%, 38% 0, 73% 4%, 94% 18%, 100% 54%, 88% 86%, 58% 100%, 22% 93%, 3% 68%, 0 30%);
   --clay-grain-image: radial-gradient(circle at 28% 32%, var(--clay-grain-dark) 0 .22px, transparent .42px), radial-gradient(circle at 72% 64%, var(--clay-grain-light) 0 .24px, transparent .46px);
   --clay-grain-size: 17px 19px, 23px 29px;
   --clay-pigment-primary: var(--clay-primary);
@@ -1172,7 +1173,8 @@
   background: var(--clay-molded-raised);
 }
 .clay-check-control { clip-path: var(--clay-chip-clip); }
-.clay-radio-control, .clay-switch-thumb { clip-path: var(--clay-thumb-clip); }
+.clay-radio-control { clip-path: var(--clay-thumb-clip); }
+.clay-switch-thumb { clip-path: var(--clay-knob-clip); }
 .clay-check input:checked + .clay-check-control, .clay-radio input:checked + .clay-radio-control { background: var(--clay-molded-primary); border-color: var(--clay-pigment-primary); }
 .clay-switch input:checked + .clay-switch-track { background: var(--clay-molded-primary); border-color: var(--clay-pigment-primary); }
 .clay-switch-track { background: var(--clay-molded-track); border-radius: 46% 54% 48% 52%; clip-path: var(--clay-control-clip); }
@@ -1254,6 +1256,12 @@
   background: var(--clay-molded-primary);
   color: var(--clay-pigment-ink);
   border-radius: 46% 54% 48% 52% / 52% 46% 54% 48%;
+  clip-path: var(--clay-knob-clip);
+}
+[data-ui="clay"][data-mode]:not([data-theme]) .clay-icon-medallion {
+  clip-path: var(--clay-thumb-clip);
+}
+[data-ui="clay"][data-mode] :where(.clay-card-service, .clay-feature-item, .clay-callout-bar) > .clay-icon-medallion {
   clip-path: var(--clay-thumb-clip);
 }
 .clay-badge-seal {
@@ -1894,4 +1902,26 @@
   text-shadow: none;
 }
 
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="clay"][data-mode] .clay-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.03em, .5px);
+}
+
+[data-ui="clay"][data-mode] .clay-feature-item > .clay-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="clay"][data-mode] .clay-callout-bar > .clay-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

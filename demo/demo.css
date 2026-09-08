@@ -368,19 +368,41 @@
   filter: none;
 }
 
-/** Preserves Clay's material texture without adding another dropdown indicator. */
+/** Preserves Clay's material texture while using the preset-owned select indicator. */
 [data-ui="clay"] .demo-controls select {
-  background-image: var(--clay-grain-image);
-  background-position: 0 0;
-  background-size: var(--clay-grain-size);
-  background-repeat: repeat;
-  background-blend-mode: soft-light;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: var(--usk-native-select-indicator-image), var(--clay-grain-image);
+  background-position: var(--usk-native-select-indicator-position), 0 0;
+  background-size: var(--usk-native-select-indicator-size), var(--clay-grain-size);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal, soft-light;
 }
 
 /** Retains the Retrofuturism console surface around the shared native indicator. */
 [data-ui="retrofuturism"] .demo-controls select {
   background-color: rgb(var(--retro-surface-rgb));
   border-radius: var(--retro-instrument-radius-sm);
+}
+
+/** Keeps Art Deco demo controls aligned with the preset's faceted select indicator. */
+[data-ui="art-deco"] .demo-controls select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: var(--usk-native-select-indicator-image);
+  background-position: var(--usk-native-select-indicator-position);
+  background-repeat: no-repeat;
+  background-size: var(--usk-native-select-indicator-size);
+}
+
+/** Keeps Data Terminal demo controls on the same single-indicator select contract as native fields. */
+[data-ui="data-terminal"] .demo-controls select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: var(--usk-native-select-indicator-image);
+  background-position: var(--usk-native-select-indicator-position);
+  background-repeat: no-repeat;
+  background-size: var(--usk-native-select-indicator-size);
 }
 
 .demo-switch-control {
@@ -652,6 +674,15 @@ body[data-ui="y2k"][data-mode] .demo-control-panel h4 {
 
 .demo-marketing-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/** Keeps compact preset CTAs inside the shared marketing target contract. */
+[data-ui="tactile"] [data-testid="marketing-secondary-cta"],
+[data-ui="industrial-utility"] [data-testid="marketing-secondary-cta"],
+[data-ui="clay"] [data-testid="marketing-primary-cta"],
+[data-ui="y2k"] :where([data-testid="marketing-primary-cta"], [data-testid="marketing-secondary-cta"]) {
+  min-inline-size: 6rem;
+  min-block-size: 2.75rem;
 }
 
 .demo-theme-art {
@@ -1074,7 +1105,7 @@ body[data-ui="y2k"][data-mode] .demo-native-sample > h3 {
   border: 1px solid var(--clay-material-seam);
   border-radius: 44% 56% 47% 53% / 52% 45% 55% 48%;
   box-shadow: inset .06rem .06rem .08rem var(--clay-material-highlight), inset -.07rem -.08rem .1rem var(--clay-material-deep), 0 .1rem .1rem var(--clay-material-contact);
-  clip-path: var(--clay-thumb-clip);
+  clip-path: var(--clay-knob-clip);
 }
 
 [data-ui="clay"] :where(.demo-badge-label, .demo-utility-label),

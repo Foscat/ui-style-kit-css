@@ -4989,6 +4989,12 @@
     line-height: 1.45;
   }
 
+  .terminal-copy a {
+    align-items: center;
+    min-block-size: 1.5rem;
+    display: inline-flex;
+  }
+
   .terminal-surface, .terminal-card, .terminal-panel, .terminal-toolbar, .terminal-table-wrap, :where([data-ui="data-terminal"]) .ui-card, :where([data-ui="data-terminal"]) .ui-toolbar, :where([data-ui="data-terminal"]) .ui-table-wrap {
     box-shadow: none;
     background: var(--terminal-card-bg);
@@ -6115,6 +6121,12 @@
     background: var(--terminal-primary);
   }
 
+  [data-ui="data-terminal"][data-mode] .terminal-table tbody tr:hover > td, :where([data-ui="data-terminal"])[data-mode] .ui-table tbody tr:hover>td {
+    color: var(--terminal-on-primary);
+    background: var(--terminal-primary);
+    transition: none;
+  }
+
   .terminal-pill, .terminal-rounded, .terminal-rounded-lg, .terminal-rounded-xl {
     border-radius: 0;
   }
@@ -6143,4 +6155,22 @@
     border-color: var(--terminal-warning);
     text-shadow: none;
   }
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-title {
+  letter-spacing: max(.03em, .5px);
+  margin-block: max(.75rem, 12px);
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-feature-item > .terminal-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="data-terminal"][data-mode] .terminal-callout-bar > .terminal-icon-medallion {
+  min-block-size: 4.5rem;
+  min-inline-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

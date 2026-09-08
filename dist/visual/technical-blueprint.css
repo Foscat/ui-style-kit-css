@@ -3818,10 +3818,10 @@
     --blueprint-fallback-secondary-text-rgb: 255 255 255;
     --blueprint-fallback-accent-rgb: 31 166 204;
     --blueprint-fallback-accent-text-rgb: 0 29 44;
-    --blueprint-fallback-success-rgb: 34 130 79;
+    --blueprint-fallback-success-rgb: 24 111 64;
     --blueprint-fallback-success-text-rgb: 255 255 255;
-    --blueprint-fallback-warning-rgb: 196 119 24;
-    --blueprint-fallback-warning-text-rgb: 27 17 0;
+    --blueprint-fallback-warning-rgb: 132 76 0;
+    --blueprint-fallback-warning-text-rgb: 255 255 255;
     --blueprint-fallback-danger-rgb: 209 58 54;
     --blueprint-fallback-danger-text-rgb: 255 255 255;
     --blueprint-fallback-link-rgb: 0 92 148;
@@ -5478,12 +5478,6 @@
     border-style: dashed;
   }
 
-  .blueprint-button-secondary, :where([data-ui="technical-blueprint"]) .ui-button:where([data-ui-variant="secondary"]) {
-    color: var(--blueprint-secondary);
-    border-color: var(--blueprint-secondary);
-    background: none;
-  }
-
   .blueprint-button-danger, :where([data-ui="technical-blueprint"]) .ui-button:where([data-ui-variant="danger"]) {
     color: var(--blueprint-danger);
     border-color: var(--blueprint-danger);
@@ -5578,8 +5572,8 @@
     --blueprint-fallback-primary-rgb: 7 95 157;
     --blueprint-fallback-primary-hover-rgb: 6 76 124;
     --blueprint-fallback-danger-rgb: 201 49 44;
-    --blueprint-fallback-success-rgb: 36 123 67;
-    --blueprint-fallback-warning-rgb: 169 101 0;
+    --blueprint-fallback-success-rgb: 24 111 64;
+    --blueprint-fallback-warning-rgb: 132 76 0;
     --blueprint-fallback-warning-text-rgb: 255 255 255;
     --blueprint-fallback-link-rgb: 7 95 157;
     --blueprint-fallback-focus-rgb: 0 109 181;
@@ -5601,7 +5595,7 @@
     --blueprint-radius-sm: 0;
     --blueprint-radius-md: 0;
     --blueprint-radius-lg: 0;
-    --blueprint-control-height: 36px;
+    --blueprint-control-height: 44px;
     --blueprint-grid-size: 16px;
     --blueprint-line-heavy: 2px;
     --blueprint-space-5: 24px;
@@ -5617,7 +5611,7 @@
     --blueprint-theme-bg: var(--blueprint-grid-image), var(--blueprint-bg);
     --blueprint-theme-bg-size: 16px 16px, 16px 16px, auto;
     --blueprint-control-bg: var(--blueprint-surface-input);
-    --usk-native-control-min-block-size: 36px;
+    --usk-native-control-min-block-size: 44px;
     --usk-native-font-body: var(--blueprint-font-body);
     --usk-native-font-heading: var(--blueprint-font-display);
     --usk-native-font-control: var(--blueprint-font-control);
@@ -5678,11 +5672,11 @@
   }
 
   .blueprint-card, .blueprint-panel, .blueprint-toolbar, :where([data-ui="technical-blueprint"]) .ui-card, :where([data-ui="technical-blueprint"]) .ui-toolbar {
-    background: var(--blueprint-grid-image),rgb(var(--blueprint-surface-rgb));
+    background: rgb(var(--blueprint-surface-rgb));
     border: 1px solid var(--blueprint-line-color);
     box-shadow: none;
     clip-path: none;
-    background-size: 16px 16px;
+    background-image: none;
     border-radius: 0;
     position: relative;
   }
@@ -5757,7 +5751,8 @@
   }
 
   .blueprint-button-secondary, :where([data-ui="technical-blueprint"]) .ui-button:where([data-ui-variant="secondary"]) {
-    color: var(--blueprint-text);
+    color: var(--blueprint-secondary);
+    border-color: var(--blueprint-secondary);
     background: none;
   }
 
@@ -5803,14 +5798,14 @@
 
   .blueprint-input, .blueprint-select, .blueprint-textarea, :where([data-ui="technical-blueprint"]) .ui-input, :where([data-ui="technical-blueprint"]) .ui-select, :where([data-ui="technical-blueprint"]) .ui-textarea {
     inline-size: 100%;
-    min-height: 36px;
-    background: var(--blueprint-grid-image),var(--blueprint-surface-input);
-    min-block-size: 36px;
+    min-height: var(--blueprint-control-height);
+    min-block-size: var(--blueprint-control-height);
+    background: var(--blueprint-surface-input);
     color: var(--blueprint-text);
     border: 1px solid var(--blueprint-line-strong);
     box-shadow: none;
     font: 14px/1.3 var(--blueprint-font-body);
-    background-size: 8px 8px;
+    background-image: none;
     border-radius: 0;
     padding: 8px 11px;
   }
@@ -6697,4 +6692,22 @@
     border-color: var(--blueprint-warning);
     text-shadow: none;
   }
+}
+
+[data-ui="technical-blueprint"][data-mode] .blueprint-title {
+  letter-spacing: max(.045em, .5px);
+  margin-block: max(.75rem, 12px);
+}
+
+[data-ui="technical-blueprint"][data-mode] .blueprint-feature-item > .blueprint-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="technical-blueprint"][data-mode] .blueprint-callout-bar > .blueprint-icon-medallion {
+  min-block-size: 4.5rem;
+  min-inline-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

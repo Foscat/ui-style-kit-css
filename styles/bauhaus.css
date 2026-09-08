@@ -1396,3 +1396,25 @@
   [data-ui="bauhaus"] *, [data-ui="bauhaus"] *::before, [data-ui="bauhaus"] *::after { animation: none !important; transition: none !important; }
 }
 }
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="bauhaus"][data-mode] .bau-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.03em, .5px);
+}
+
+[data-ui="bauhaus"][data-mode] .bau-feature-item > .bau-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="bauhaus"][data-mode] .bau-callout-bar > .bau-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}

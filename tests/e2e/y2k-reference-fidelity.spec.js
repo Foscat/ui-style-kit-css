@@ -163,6 +163,8 @@ test('Y2K native controls and dialogs use the same compact bevel system', async 
   await openY2K(page, { mode: 'dark' });
   const input = page.locator('[data-testid="native-forms"] input[type="text"]');
   await input.focus();
+  await expect(input).toHaveCSS('outline-style', 'dotted');
+  await expect(input).toHaveCSS('outline-width', '2px');
 
   const evidence = await page.evaluate(() => {
     const element = (selector) => document.querySelector(selector);

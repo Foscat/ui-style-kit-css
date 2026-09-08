@@ -1621,6 +1621,14 @@
   box-shadow: var(--cyber-template-danger-glow);
 }
 
+/**
+ * Lets explicit runtime foreground edits win without changing the default
+ * Cyberpunk danger-outline treatment used by the reference specimen.
+ */
+[data-ui="cyberpunk"][data-mode][style*="--cyber-on-danger"] .cyber-button-danger {
+  color: var(--cyber-on-danger);
+}
+
 .cyber-input,
 .cyber-select,
 .cyber-textarea,
@@ -2372,4 +2380,26 @@
   text-shadow: none;
 }
 
+}
+
+/**
+ * Preserves shared annotation fixture spacing and icon weight after reference
+ * overrides append their compact source rules.
+ */
+[data-ui="cyberpunk"][data-mode] .cyber-title {
+  margin-block: max(.75rem, 12px);
+  letter-spacing: max(.08em, .5px);
+}
+
+[data-ui="cyberpunk"][data-mode] .cyber-feature-item > .cyber-icon-medallion {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+[data-ui="cyberpunk"][data-mode] .cyber-callout-bar > .cyber-icon-medallion {
+  min-inline-size: 4.5rem;
+  min-block-size: 4.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
 }

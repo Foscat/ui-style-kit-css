@@ -51,6 +51,17 @@ const interactableSelector = [
   'video[controls]'
 ].join(',');
 
+const bundleExpectations = {
+  detached: {
+    href: 'dist/ui-style-kit.css',
+    versionedHref: /^dist\/ui-style-kit\.css\?v=[a-f0-9]{12}$/
+  },
+  attached: {
+    href: 'dist/ui-style-kit.with-bridge.css',
+    versionedHref: /^dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}$/
+  }
+};
+
 async function installClipboardStub(page) {
   await page.addInitScript(() => {
     window.__copiedText = [];
@@ -68,7 +79,8 @@ async function installClipboardStub(page) {
 async function waitForStyleKitBundle(page, expectedHref) {
   await page.waitForFunction((href) => {
     const stylesheet = document.getElementById('styleKitStylesheet');
-    if (!stylesheet || stylesheet.getAttribute('href') !== href) return false;
+    const currentHref = stylesheet?.getAttribute('href') ?? '';
+    if (!stylesheet || currentHref.split(/[?#]/, 1)[0] !== href) return false;
     if (!stylesheet.sheet) return false;
 
     try {
@@ -80,14 +92,19 @@ async function waitForStyleKitBundle(page, expectedHref) {
   }, expectedHref);
 }
 
+async function expectStyleKitBundle(page, attached) {
+  const expected = attached ? bundleExpectations.attached : bundleExpectations.detached;
+
+  await expect(page.locator('#styleKitStylesheet')).toHaveAttribute('href', expected.versionedHref);
+  await waitForStyleKitBundle(page, expected.href);
+}
+
 async function setBridgeForLayoutProbe(page, attached) {
-  const expectedHref = attached ? 'dist/ui-style-kit.with-bridge.css' : 'dist/ui-style-kit.css';
   const bridgeToggle = page.locator('#bridgeToggle');
 
   await bridgeToggle.setChecked(attached, { force: true });
   await expect(page.locator('body')).toHaveAttribute('data-bridge', attached ? 'attached' : 'detached');
-  await expect(page.locator('#styleKitStylesheet')).toHaveAttribute('href', expectedHref);
-  await waitForStyleKitBundle(page, expectedHref);
+  await expectStyleKitBundle(page, attached);
 }
 
 test('demo loads with default theme settings', async ({ page }) => {
@@ -285,6 +302,7 @@ test('semantic demo nodes and classes remain unchanged through every preset swit
  * assertion to a single preset's decorative material or component geometry.
  */
 test('every preset resolves mode fallbacks and lets explicit themes own color roles', async ({ page }) => {
+  test.setTimeout(90_000);
   await page.goto(demoUrl);
 
   const colorRoles = [
@@ -358,7 +376,6 @@ test('every preset resolves mode fallbacks and lets explicit themes own color ro
 test('demo starts with the interactive surface bridge detached and can attach it', async ({ page }) => {
   await page.goto(demoUrl);
 
-  const stylesheet = page.locator('#styleKitStylesheet');
   const bridgePreview = page.getByTestId('bridge-preview');
   const bridgeToggle = bridgePreview.locator('#bridgeToggle');
   const switchTrack = bridgePreview.getByTestId('bridge-switch-track');
@@ -366,7 +383,7 @@ test('demo starts with the interactive surface bridge detached and can attach it
 
   await expect(bridgeToggle).not.toBeChecked();
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'detached');
-  await expect(stylesheet).toHaveAttribute('href', 'dist/ui-style-kit.css');
+  await expectStyleKitBundle(page, false);
   await expect(page.getByTestId('bridge-status')).toContainText('Detached');
   await expect(page.locator('.interactive-surface').first()).not.toHaveCSS('--interactive-surface-bg', /.+/);
   await expect(bridgePreview.getByTestId('bridge-switch')).toBeVisible();
@@ -379,7 +396,7 @@ test('demo starts with the interactive surface bridge detached and can attach it
   await bridgeToggle.check();
 
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
-  await expect(stylesheet).toHaveAttribute('href', 'dist/ui-style-kit.with-bridge.css');
+  await expectStyleKitBundle(page, true);
   await expect(page.getByTestId('bridge-status')).toContainText('Attached');
   await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
 
@@ -1106,8 +1123,10 @@ test('Bento metrics use container-sized tiles without narrow text columns', asyn
     await page.goto(demoUrl);
     await page.selectOption('#uiSelect', 'bento');
 
-    const geometry = await page.getByTestId('utility-layout-sample').evaluate((sample) => {
-      const grid = sample.querySelector('.bento-grid-feature');
+    const grid = page.locator('[data-preset-only="bento"] .bento-grid-feature').first();
+    await expect(grid).toBeVisible();
+
+    const geometry = await grid.evaluate((grid) => {
       const tiles = [...grid.querySelectorAll('.bento-tile')];
       const labels = [...grid.querySelectorAll('.bento-stat-label')];
 

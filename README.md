@@ -167,14 +167,14 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1967 KB | ~378 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~1951 KB | ~376 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2296 KB | ~399 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1974 KB | ~379 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~1958 KB | ~377 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2304 KB | ~400 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~8 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~204 KB | ~30 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~205 KB | ~30 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
 | `ui-style-kit-css/visual/industrial-utility.css` | ~278 KB | ~39 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
