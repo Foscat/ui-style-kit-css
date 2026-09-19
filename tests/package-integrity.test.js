@@ -14,8 +14,9 @@ const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.
 
 // Exact overrides keep the release audit deterministic without promoting transitive tooling to direct dependencies.
 const expectedSecurityOverrides = {
+  colord: '2.9.4',
   'fast-uri': '3.1.6',
-  'js-yaml': '4.3.1',
+  'js-yaml': '4.3.2',
   nanoid: '3.3.18',
   postcss: '8.5.23'
 };
