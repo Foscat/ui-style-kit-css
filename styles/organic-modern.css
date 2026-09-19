@@ -380,7 +380,7 @@
 .organic-title, .organic-heading, .organic-kicker, .organic-button, .organic-badge, .organic-nav-link { font-family: var(--organic-font-heading); }
 .organic-title { margin: 0; color: var(--organic-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.045em; }
 .organic-heading { margin: 0; color: var(--organic-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
-.organic-kicker { margin: 0; color: var(--organic-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.organic-kicker { margin: 0; color: var(--usk-primary-ink, var(--organic-primary)); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
 .organic-subtitle, .organic-copy { margin: 0; color: var(--organic-text-muted); line-height: 1.65; }
 .organic-text-muted { color: var(--organic-text-muted); }
 .organic-divider { width: 100%; height: 1px; border: 0; background: var(--organic-border); }
@@ -514,7 +514,7 @@
    Utilities
 ========================================================= */
 
-.organic-text-primary { color: var(--organic-primary); } .organic-text-secondary { color: var(--organic-secondary); } .organic-text-accent { color: var(--organic-accent); } .organic-text-success { color: var(--organic-success); } .organic-text-warning { color: var(--organic-warning); } .organic-text-danger { color: var(--organic-danger); }
+.organic-text-primary { color: var(--usk-primary-ink, var(--organic-primary)); } .organic-text-secondary { color: var(--organic-secondary); } .organic-text-accent { color: var(--usk-accent-ink, var(--organic-accent)); } .organic-text-success { color: var(--organic-success); } .organic-text-warning { color: var(--organic-warning); } .organic-text-danger { color: var(--organic-danger); }
 .organic-bg-primary { background: var(--organic-primary); color: var(--organic-on-primary); } .organic-bg-secondary { background: var(--organic-secondary); color: var(--organic-on-secondary); }
 .organic-border { border: 1px solid var(--organic-border); } .organic-rounded { border-radius: var(--organic-radius-md); } .organic-rounded-lg { border-radius: var(--organic-radius-lg); } .organic-rounded-xl { border-radius: var(--organic-radius-xl); } .organic-pill { border-radius: var(--organic-radius-pill); }
 .organic-sr-only, .organic-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
@@ -622,7 +622,7 @@
 .organic-button.organic-button-outline-heavy,
 .organic-button-outline-heavy {
   background: transparent;
-  color: var(--organic-primary);
+  color: var(--usk-primary-ink, var(--organic-primary));
   border-style: solid;
   border-width: 2px;
   border-color: var(--organic-primary);
@@ -692,7 +692,7 @@
 
 .organic-eyebrow {
   margin: 0;
-  color: var(--organic-primary);
+  color: var(--usk-primary-ink, var(--organic-primary));
   font-family: var(--organic-font-heading);
   font-size: .76rem;
   font-weight: 900;
@@ -768,7 +768,7 @@
 .organic-input, .organic-textarea, .organic-select { border-radius: var(--organic-radius-lg); }
 .organic-card-media { border-radius: 42% 58% 36% 64% / 50% 36% 64% 50%; }
 .organic-media-scrim { border-radius: 2.8rem 1.2rem 3.2rem 1.8rem; }
-.organic-icon-medallion { border-radius: 46% 54% 43% 57% / 56% 43% 57% 44%; background: rgb(var(--organic-primary-rgb) / .14); color: var(--organic-primary); border-color: rgb(var(--organic-primary-rgb) / .3); box-shadow: 0 .5rem 1.4rem rgb(var(--organic-primary-rgb) / .12); }
+.organic-icon-medallion { border-radius: 46% 54% 43% 57% / 56% 43% 57% 44%; background: rgb(var(--organic-primary-rgb) / .14); color: var(--usk-primary-ink, var(--organic-primary)); border-color: rgb(var(--organic-primary-rgb) / .3); box-shadow: 0 .5rem 1.4rem rgb(var(--organic-primary-rgb) / .12); }
 .organic-badge-seal { border-radius: 45% 55% 48% 52% / 55% 44% 56% 45%; }
 .organic-feature-strip, .organic-callout-bar { border-radius: 2.2rem 1.35rem 2.5rem 1.5rem; }
 .organic-card-accent-edge { border-inline-start: 0; background: linear-gradient(100deg, rgb(var(--organic-primary-rgb) / .11), transparent 38%), var(--organic-card-bg); }
@@ -985,7 +985,7 @@
 .organic-button-primary { background: var(--organic-primary); color: var(--organic-on-primary); border-color: var(--organic-primary); }
 .organic-button-secondary { background: var(--organic-secondary); color: var(--organic-on-secondary); border-color: var(--organic-secondary); }
 .organic-button-danger { background: var(--organic-danger); color: var(--organic-on-danger); border-color: var(--organic-danger); }
-.organic-button-ghost { background: transparent; color: var(--organic-primary); border-color: transparent; }
+.organic-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--organic-primary)); border-color: transparent; }
 }
 
 @layer ui-style-kit.organic_modern {
@@ -1124,7 +1124,7 @@
 .organic-masthead { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 8px 4px 20px; border-bottom: 1px solid var(--organic-border); }
 .organic-brand { display: flex; gap: 12px; align-items: center; }
 .organic-brand strong { display: block; font: 500 30px/1 var(--organic-font-display); }
-.organic-brand .organic-icon { color: var(--organic-accent); width: 30px; height: 30px; }
+.organic-brand .organic-icon { color: var(--usk-accent-ink, var(--organic-accent)); width: 30px; height: 30px; }
 .organic-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
 .organic-section-heading :where(h3, h4), .organic-section-heading { font-family: var(--organic-font-sans); font-size: 11px; font-weight: 600; text-transform: uppercase; }
 .organic-workspace { display: grid; grid-template-columns: minmax(170px, .75fr) minmax(0, 2.7fr) minmax(0, 2.25fr); gap: 12px; padding-top: 12px; }
@@ -1170,7 +1170,7 @@
 .organic-performance meter { width: 100%; }
 .organic-notices { display: flex; gap: 12px; flex-wrap: wrap; }
 .organic-notice { display: flex; flex: 1 1 130px; gap: 10px; padding: 12px; background: var(--organic-surface); border-radius: 8px; color: var(--organic-text); }
-.organic-notice > .organic-icon { color: var(--organic-accent); }
+.organic-notice > .organic-icon { color: var(--usk-accent-ink, var(--organic-accent)); }
 .organic-notice small { display: block; margin-top: 4px; }
 .organic-add-material { padding: 16px; background: var(--organic-surface); border: 1px solid var(--organic-border); border-radius: 12px; }
 .organic-control-lab { padding: 16px; min-width: 0; background: var(--organic-surface); color: var(--organic-text); border: 1px solid var(--organic-border); border-radius: 14px 14px 14px 26px; box-shadow: var(--organic-quiet-shadow); }

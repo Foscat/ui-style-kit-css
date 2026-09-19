@@ -96,6 +96,11 @@ The bridge inherits from shared `--usk-*` color roles, then applies `.interactiv
 - `foundry-amber`
 - `soft-orchid`
 - `electric-noir`
+- `signal-yellow`
+- `botanical-green`
+- `cobalt-electric`
+- `stone-graphite`
+- `walnut-clay`
 
 ## Modes
 

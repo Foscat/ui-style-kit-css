@@ -379,7 +379,7 @@
 .terminal-title, .terminal-heading, .terminal-kicker, .terminal-button, .terminal-badge, .terminal-nav-link { font-family: var(--terminal-font-heading); }
 .terminal-title { margin: 0; color: var(--terminal-text); font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.02; letter-spacing: -0.045em; }
 .terminal-heading { margin: 0; color: var(--terminal-text); font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.03em; }
-.terminal-kicker { margin: 0; color: var(--terminal-primary); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.terminal-kicker { margin: 0; color: var(--usk-primary-ink, var(--terminal-primary)); font-size: .82rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
 .terminal-subtitle, .terminal-copy { margin: 0; color: var(--terminal-text-muted); line-height: 1.65; }
 .terminal-text-muted { color: var(--terminal-text-muted); }
 .terminal-divider { width: 100%; height: 1px; border: 0; background: var(--terminal-border); }
@@ -514,7 +514,7 @@
    Utilities
 ========================================================= */
 
-.terminal-text-primary { color: var(--terminal-primary); } .terminal-text-secondary { color: var(--terminal-secondary); } .terminal-text-accent { color: var(--terminal-accent); } .terminal-text-success { color: var(--terminal-success); } .terminal-text-warning { color: var(--terminal-warning); } .terminal-text-danger { color: var(--terminal-danger); }
+.terminal-text-primary { color: var(--usk-primary-ink, var(--terminal-primary)); } .terminal-text-secondary { color: var(--terminal-secondary); } .terminal-text-accent { color: var(--usk-accent-ink, var(--terminal-accent)); } .terminal-text-success { color: var(--terminal-success); } .terminal-text-warning { color: var(--terminal-warning); } .terminal-text-danger { color: var(--terminal-danger); }
 .terminal-bg-primary { background: var(--terminal-primary); color: var(--terminal-on-primary); } .terminal-bg-secondary { background: var(--terminal-secondary); color: var(--terminal-on-secondary); }
 .terminal-border { border: 1px solid var(--terminal-border); } .terminal-rounded { border-radius: var(--terminal-radius-md); } .terminal-rounded-lg { border-radius: var(--terminal-radius-lg); } .terminal-rounded-xl { border-radius: var(--terminal-radius-xl); } .terminal-pill { border-radius: var(--terminal-radius-pill); }
 .terminal-sr-only, .terminal-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
@@ -622,7 +622,7 @@
 .terminal-button.terminal-button-outline-heavy,
 .terminal-button-outline-heavy {
   background: transparent;
-  color: var(--terminal-primary);
+  color: var(--usk-primary-ink, var(--terminal-primary));
   border-style: solid;
   border-width: 2px;
   border-color: var(--terminal-primary);
@@ -692,7 +692,7 @@
 
 .terminal-eyebrow {
   margin: 0;
-  color: var(--terminal-primary);
+  color: var(--usk-primary-ink, var(--terminal-primary));
   font-family: var(--terminal-font-heading);
   font-size: .76rem;
   font-weight: 900;
@@ -775,10 +775,10 @@
 .terminal-input, .terminal-textarea, .terminal-select, .terminal-badge, .terminal-alert, .terminal-metric, .terminal-well, .terminal-inset { border-radius: 0; font-family: var(--terminal-font-mono); }
 .terminal-table { font-family: var(--terminal-font-mono); font-size: .78rem; }
 .terminal-table th, .terminal-table td { padding: .5rem .6rem; }
-.terminal-metric-value { font-family: var(--terminal-font-mono); font-size: clamp(1.35rem, 2.6vw, 2rem); color: var(--terminal-primary); }
+.terminal-metric-value { font-family: var(--terminal-font-mono); font-size: clamp(1.35rem, 2.6vw, 2rem); color: var(--usk-primary-ink, var(--terminal-primary)); }
 .terminal-text-primary, .terminal-kicker, .terminal-eyebrow { text-shadow: 0 0 .75rem rgb(var(--terminal-primary-rgb) / .28); }
 .terminal-card-media, .terminal-media-scrim, .terminal-feature-strip, .terminal-callout-bar { border-radius: 0; }
-.terminal-icon-medallion, .terminal-badge-seal { border-radius: 0; background: transparent; color: var(--terminal-primary); font-family: var(--terminal-font-mono); box-shadow: none; }
+.terminal-icon-medallion, .terminal-badge-seal { border-radius: 0; background: transparent; color: var(--usk-primary-ink, var(--terminal-primary)); font-family: var(--terminal-font-mono); box-shadow: none; }
 .terminal-feature-item { padding: .75rem; }
 .terminal-card-accent-edge { border-inline-start-width: 2px; }
 
@@ -995,7 +995,7 @@
 .terminal-button-primary { background: var(--terminal-primary); color: var(--terminal-on-primary); border-color: var(--terminal-primary); }
 .terminal-button-secondary { background: var(--terminal-secondary); color: var(--terminal-on-secondary); border-color: var(--terminal-secondary); }
 .terminal-button-danger { background: var(--terminal-danger); color: var(--terminal-on-danger); border-color: var(--terminal-danger); }
-.terminal-button-ghost { background: transparent; color: var(--terminal-primary); border-color: transparent; }
+.terminal-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--terminal-primary)); border-color: transparent; }
 }
 
 @layer ui-style-kit.data_terminal {
@@ -1258,7 +1258,7 @@
 
 .terminal-button:hover,
 .terminal-icon-button:hover {
-  color: var(--terminal-primary);
+  color: var(--usk-primary-ink, var(--terminal-primary));
   background: var(--terminal-surface);
   border-color: var(--terminal-primary);
   box-shadow: none;
@@ -1293,7 +1293,7 @@
 
 .terminal-button-ghost,
 .terminal-button-ghost:hover {
-  color: var(--terminal-primary);
+  color: var(--usk-primary-ink, var(--terminal-primary));
   background: transparent;
   border-color: transparent;
 }
@@ -1408,7 +1408,7 @@
   inset: 0;
   display: grid;
   place-items: center;
-  color: var(--terminal-primary);
+  color: var(--usk-primary-ink, var(--terminal-primary));
   font-family: "Segoe UI Symbol", sans-serif;
   font-size: .7rem;
   font-weight: 700;
@@ -1631,7 +1631,7 @@
   font-weight: 500;
 }
 
-.terminal-badge-primary { color: var(--terminal-primary); background: var(--terminal-surface); border-color: currentColor; }
+.terminal-badge-primary { color: var(--usk-primary-ink, var(--terminal-primary)); background: var(--terminal-surface); border-color: currentColor; }
 .terminal-badge-secondary { color: var(--terminal-secondary); background: var(--terminal-surface); border-color: currentColor; }
 .terminal-badge-success { color: var(--terminal-success); background: var(--terminal-surface); border-color: currentColor; }
 .terminal-badge-warning { color: var(--terminal-warning); background: var(--terminal-surface); border-color: currentColor; }
@@ -1708,7 +1708,7 @@
   font-weight: 500;
 }
 
-.terminal-nav-link:hover { color: var(--terminal-primary); background: var(--terminal-surface); }
+.terminal-nav-link:hover { color: var(--usk-primary-ink, var(--terminal-primary)); background: var(--terminal-surface); }
 .terminal-nav-link[aria-current="page"], .terminal-nav-link.is-active { color: var(--terminal-on-primary); background: var(--terminal-primary); }
 
 .terminal-table { font-size: .6875rem; }

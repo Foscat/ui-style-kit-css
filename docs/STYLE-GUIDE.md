@@ -23,7 +23,7 @@
 | Paper Editorial | News, magazines, journals, cultural sites and story-led publishing |
 | Neo-Noir | Cinematic portfolios, nightlife, premium creative studios and dramatic product sites |
 
-All styles share the same 20 color schemes through `styles/theme-colors.css`, so changing `data-theme` affects the active color scheme independently from the selected UI treatment.
+All styles share the same 25 color schemes through `styles/theme-colors.css`, so changing `data-theme` affects the active color scheme independently from the selected UI treatment.
 
 Omit `data-theme` to use the chosen preset's native light, dark, or contrast colors.
 The [demo guide](DEMO-SHOWCASE.md) explains the unified style-specific gallery and

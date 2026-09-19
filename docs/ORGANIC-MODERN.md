@@ -85,7 +85,7 @@ and a left-aligned caption. Demo toolbar selects show one custom chevron.
 ## Verification Evidence
 
 Focused tests cover public class coverage and isolation, both fallback palettes,
-20 themes across light/dark/contrast, live RGB overrides, keyboard/native control
+25 themes across light/dark/contrast, live RGB overrides, keyboard/native control
 behavior, responsive screenshots, local asset loading, and scoped accessibility.
 Supplied template QA is historical evidence only; see the repository QA log for
 fresh implementation results.

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UI Style Kit CSS | CSS Theme and Component Preset Library</title>
-  <meta name="description" content="CSS-only UI style kit with 20 visual systems, 20 color themes, light/dark/contrast modes, native HTML styling, editable theme tokens, and an optional Interactive Surface bridge.">
+  <meta name="description" content="CSS-only UI style kit with 20 visual systems, 25 color themes, light/dark/contrast modes, native HTML styling, editable theme tokens, and an optional Interactive Surface bridge.">
   <meta name="keywords" content="CSS library, design system, CSS themes, UI style presets, native HTML styling, CSS variables, design tokens, dark mode, high contrast, component styling">
   <meta name="author" content="Kyle Foster">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,19 +16,19 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="UI Style Kit CSS">
   <meta property="og:title" content="UI Style Kit CSS | CSS Theme and Component Preset Library">
-  <meta property="og:description" content="Explore a CSS-only library with 20 UI systems, shared color tokens, native HTML coverage, and copyable theme overrides.">
+  <meta property="og:description" content="Explore a CSS-only library with 20 UI systems, 25 color themes, native HTML coverage, and copyable theme overrides.">
   <meta property="og:url" content="https://foscat.github.io/ui-style-kit-css/">
-  <meta property="og:image" content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card.png">
+  <meta property="og:image" content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card-25-themes.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1774">
   <meta property="og:image:height" content="887">
-  <meta property="og:image:alt" content="UI Style Kit CSS library preview with theme, style, and mode highlights.">
-  <meta property="og:updated_time" content="2026-08-29T00:00:00-05:00">
+  <meta property="og:image:alt" content="UI Style Kit CSS preview featuring 20 UI systems, 25 color themes, and light, dark, and contrast modes.">
+  <meta property="og:updated_time" content="2026-09-19T00:00:00-05:00">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="UI Style Kit CSS | CSS Theme and Component Preset Library">
-  <meta name="twitter:description" content="CSS-only UI presets, shared color tokens, native element styling, and theme override tooling for accessible web interfaces.">
-  <meta name="twitter:image" content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card.png">
-  <meta name="twitter:image:alt" content="UI Style Kit CSS library preview with theme, style, and mode highlights.">
+  <meta name="twitter:description" content="CSS-only library with 20 UI systems, 25 color themes, native element styling, and accessible light, dark, and contrast modes.">
+  <meta name="twitter:image" content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card-25-themes.png">
+  <meta name="twitter:image:alt" content="UI Style Kit CSS preview featuring 20 UI systems, 25 color themes, and light, dark, and contrast modes.">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,14 +38,14 @@
       "@id": "https://foscat.github.io/ui-style-kit-css/#website",
       "url": "https://foscat.github.io/ui-style-kit-css/",
       "name": "UI Style Kit CSS",
-      "description": "Interactive documentation and demo for UI Style Kit CSS.",
+      "description": "Interactive documentation and demo for 20 UI systems and 25 color themes in UI Style Kit CSS.",
       "inLanguage": "en-US"
     },
     {
       "@type": "SoftwareSourceCode",
       "@id": "https://foscat.github.io/ui-style-kit-css/#software",
       "name": "UI Style Kit CSS",
-      "description": "CSS-only theme and UI style preset library for accessible websites, dashboards, admin interfaces, and client-facing pages.",
+      "description": "CSS-only library with 20 UI systems and 25 color themes for accessible websites, dashboards, admin interfaces, and client-facing pages.",
       "codeRepository": "https://github.com/Foscat/ui-style-kit-css",
       "programmingLanguage": "CSS",
       "runtimePlatform": "Web browser",
@@ -72,8 +72,9 @@
   ]
 }
   </script>
-  <!-- Favicons stay under demo/assets so the GitHub Pages root and packaged demo share one asset pack. -->
-  <link rel="icon" href="demo/assets/favicon.ico" sizes="any">
+  <!-- The crawler-facing PNG stays stable and large enough for search surfaces; ICO remains a root fallback. -->
+  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256x256.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="demo/assets/favicon.svg">
   <link rel="icon" type="image/png" sizes="16x16" href="demo/assets/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="demo/assets/favicon-32x32.png">
@@ -83,8 +84,8 @@
   <meta name="msapplication-TileColor" content="#070b24">
   <meta name="msapplication-config" content="browserconfig.xml">
   <meta name="theme-color" content="#070b24">
-  <link id="styleKitStylesheet" rel="stylesheet" href="dist/ui-style-kit.css?v=a898883d7c0b" data-default-href="dist/ui-style-kit.css?v=a898883d7c0b" data-bridge-href="dist/ui-style-kit.with-bridge.css?v=5ceaaf150e4a">
-  <link rel="stylesheet" href="demo/demo.css?v=1fcd3b8aec2a">
+  <link id="styleKitStylesheet" rel="stylesheet" href="dist/ui-style-kit.css?v=5b08ba75f792" data-default-href="dist/ui-style-kit.css?v=5b08ba75f792" data-bridge-href="dist/ui-style-kit.with-bridge.css?v=9e21a09ea6fb">
+  <link rel="stylesheet" href="demo/demo.css?v=f10cfd022f44">
 </head>
 <body data-ui="minimal-saas" data-mode="light" data-bridge="detached">
   <a id="skip" class="saas-skip-link" href="#main">Skip to content</a>
@@ -138,6 +139,11 @@
         <option value="foundry-amber">foundry-amber</option>
         <option value="soft-orchid">soft-orchid</option>
         <option value="electric-noir">electric-noir</option>
+        <option value="signal-yellow">signal-yellow</option>
+        <option value="botanical-green">botanical-green</option>
+        <option value="cobalt-electric">cobalt-electric</option>
+        <option value="stone-graphite">stone-graphite</option>
+        <option value="walnut-clay">walnut-clay</option>
       </select>
     </label>
     <label>
@@ -224,7 +230,7 @@
         <article class="saas-card">
           <p class="saas-kicker">CSS theme and preset library</p>
           <h1 class="saas-title">UI Style Kit CSS</h1>
-          <p class="saas-subtitle">A CSS-only library with 20 visual systems, 20 shared color themes, light, dark, and contrast modes, scoped native HTML styling, editable RGB theme tokens, and an optional Interactive Surface bridge.</p>
+          <p class="saas-subtitle">A CSS-only library with 20 visual systems, 25 shared color themes, light, dark, and contrast modes, scoped native HTML styling, editable RGB theme tokens, and an optional Interactive Surface bridge.</p>
           <div class="saas-cluster" aria-label="Project resources">
             <a class="saas-button saas-button-primary" href="https://github.com/Foscat/ui-style-kit-css">GitHub</a>
             <a class="saas-button saas-button-secondary" href="https://www.npmjs.com/package/ui-style-kit-css">npm</a>
@@ -236,7 +242,7 @@
     </div>
   </main>
 
-  <script src="demo/demo-manifest.js?v=e866c6cb67ea"></script>
+  <script src="demo/demo-manifest.js?v=2a6c202396cd"></script>
   <script src="demo/demo-icons.js?v=b92568d6bcaa"></script>
   <script src="demo/demo-art-deco.js?v=5ffa637a8474"></script>
     <script src="demo/demo-editorial-lux.js?v=6cea5a3dee41"></script>
@@ -246,6 +252,6 @@
   <script src="demo/demo-bauhaus.js?v=dcb8da8a2f90"></script>
   <script src="demo/demo-organic-icons.js?v=9a8d6adf49b3"></script>
   <script src="demo/demo-organic.js?v=d0d8a9bba18c"></script>
-  <script src="demo/demo.js?v=b566ee4cd2da"></script>
+  <script src="demo/demo.js?v=bb904e50b543"></script>
 </body>
 </html>

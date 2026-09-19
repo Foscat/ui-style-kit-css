@@ -3,7 +3,7 @@
 UI Style Kit CSS uses two required root-level attributes and one optional attribute:
 
 - `data-ui` selects the style system.
-- `data-theme` optionally selects one of the 20 shared color schemes; omit `data-theme` for native palette colors.
+- `data-theme` optionally selects one of the 25 shared color schemes; omit `data-theme` for native palette colors.
 - `data-mode` selects `light`, `dark`, or `contrast`.
 
 ## Attribute Pattern

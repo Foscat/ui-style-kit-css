@@ -292,7 +292,7 @@ function validateRepositoryWorkflows(root, candidatePackage) {
 function packCandidate(candidateRoot, tempRoot) {
   const packRoot = path.join(tempRoot, 'pack');
   fs.mkdirSync(packRoot, { recursive: true });
-  const output = runNpm(['pack', '--ignore-scripts', '--json', '--pack-destination', packRoot], {
+  const output = runNpm(['pack', '--silent', '--ignore-scripts', '--json', '--pack-destination', packRoot], {
     cwd: candidateRoot,
     // An outer npm pack --dry-run propagates this flag; verification must still materialize its isolated tarball.
     env: { ...process.env, npm_config_dry_run: 'false' }

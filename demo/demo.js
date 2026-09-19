@@ -2480,7 +2480,7 @@ function render() {
         <header id="overview" class="${p}-card ${p}-hover-lift">
           <p class="${p}-kicker">${title}</p>
           <h1 class="${p}-title">UI Style Kit CSS</h1>
-          <p class="${p}-subtitle demo-section-lede">A CSS-only style kit with 20 UI systems, 20 shared color themes, light/dark/contrast modes, component classes, native HTML coverage, and an optional Interactive Surface bridge.</p>
+          <p class="${p}-subtitle demo-section-lede">A CSS-only style kit with 20 UI systems, 25 shared color themes, light/dark/contrast modes, component classes, native HTML coverage, and an optional Interactive Surface bridge.</p>
           <p class="${p}-copy"><a href="${isTemplateReferenceView() ? "#components" : "#style-specific"}">Explore ${title}’s distinctive components</a></p>
           <div class="${p}-cluster">
             <button class="${p}-button ${p}-button-primary">Primary</button>

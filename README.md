@@ -7,11 +7,13 @@
 
 It is separate from, but complementary to, **Interactive Surface CSS** and **Layout Style CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior. Use **Layout Style CSS** for responsive layout wrappers, grid systems, macro-structure positioning, and container scaffolding.
 
-## Current release target
+## Current development scope
 
-`v2.4.0` gives all 20 UI style systems a complete native-control identity across selects, choices, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars. Existing themes, modes, selectors, default/focused/visual/bridge entrypoints, and the 3,600-case browser matrix remain compatible, and parser-based minification remains exactly pinned.
+The `v2.4.0` baseline gives all 20 UI style systems a complete native-control identity across selects, choices, ranges, progress, meters, file/color/date launch controls, indicators, and scrollbars. Existing themes, modes, selectors, and default/focused/visual/bridge entrypoints remain compatible, and parser-based minification remains exactly pinned.
 
-This is the local 2.4.0 release candidate, not a claim of npm publication. It also adds native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, and a unified demo with style-specific components. See the [2.4.0 release preparation notes](docs/RELEASE-2.4.0.md) for scope and verification boundaries.
+The working tree adds five unreleased color themes, bringing the registry to 25 themes and the available browser matrix to 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). Package metadata remains at `2.4.0` pending a separately prepared release; the five additions are recorded under [Unreleased](CHANGELOG.md#unreleased).
+
+The baseline also provides native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, and a unified demo with style-specific components. See the [2.4.0 release preparation notes](docs/RELEASE-2.4.0.md) for historical scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -71,7 +73,7 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 ## Features
 
 - 20 UI style systems
-- 20 shared color schemes
+- 25 shared color schemes
 - `light`, `dark`, and `contrast` modes
 - Native preset colors when no shared theme is selected
 - Combined CSS bundle and per-style production imports
@@ -167,15 +169,15 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1978 KB | ~379 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~1962 KB | ~377 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2309 KB | ~400 KB | Deprecated runtime switcher plus stateful bridge |
-| `ui-style-kit-css/theme-colors.css` | ~50 KB | ~6 KB | Shared color schemes for standalone style imports |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1994 KB | ~381 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~1977 KB | ~379 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2327 KB | ~402 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~205 KB | ~30 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
-| `ui-style-kit-css/visual/industrial-utility.css` | ~278 KB | ~39 KB | Focused Industrial Utility, including its instrumentation styles |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~219 KB | ~32 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~291 KB | ~41 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 
@@ -337,9 +339,16 @@ newsprint-crimson
 foundry-amber
 soft-orchid
 electric-noir
+signal-yellow
+botanical-green
+cobalt-electric
+stone-graphite
+walnut-clay
 ```
 
 Color schemes are defined once in `styles/theme-colors.css` as shared `--usk-*` RGB roles. Each UI style maps those shared roles back to its public prefix, so existing component rules still consume variables such as `--saas-primary`, `--bau-surface`, and `--rg-on-primary`.
+
+See the [color-theme reference](docs/COLOR-THEMES.md) for the five gap-filling palettes, their intended roles, and representative light/dark values.
 
 ## Commercial component modifiers
 

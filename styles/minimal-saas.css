@@ -386,7 +386,7 @@
 .saas-title, .saas-heading, .saas-kicker, .saas-button, .saas-badge, .saas-nav-link { font-family: var(--saas-font-heading); }
 .saas-title { margin: 0; color: var(--saas-text); font-size: 1.5rem; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; }
 .saas-heading { margin: 0; color: var(--saas-text); font-size: 1rem; font-weight: 700; line-height: 1.2; letter-spacing: 0; }
-.saas-kicker { margin: 0; color: var(--saas-primary); font-size: .78rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.saas-kicker { margin: 0; color: var(--usk-primary-ink, var(--saas-primary)); font-size: .78rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 .saas-subtitle, .saas-copy { margin: 0; color: var(--saas-text-muted); line-height: 1.55; }
 .saas-text-muted { color: var(--saas-text-muted); }
 .saas-divider { width: 100%; height: 1px; border: 0; background: var(--saas-border); }
@@ -426,10 +426,10 @@
 .saas-button:active, .saas-icon-button:active, .saas-button[aria-pressed="true"], .saas-icon-button[aria-pressed="true"], .saas-button.is-active, .saas-icon-button.is-active { transform: translateY(1px); box-shadow: inset 0 1px 2px rgb(var(--saas-text-rgb) / .12); }
 .saas-button-primary { background: linear-gradient(135deg, var(--saas-primary), var(--saas-brand-2)); color: var(--saas-on-primary); border-color: var(--saas-primary); }
 .saas-button-primary:hover { background: linear-gradient(135deg, var(--saas-brand-2), var(--saas-primary)); border-color: var(--saas-primary-hover); }
-.saas-button-secondary { background: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha)); color: var(--saas-primary); border-color: rgb(var(--saas-primary-rgb) / .32); box-shadow: none; }
+.saas-button-secondary { background: rgb(var(--saas-surface-strong-rgb) / var(--saas-panel-alpha)); color: var(--usk-primary-ink, var(--saas-primary)); border-color: rgb(var(--saas-primary-rgb) / .32); box-shadow: none; }
 .saas-button-secondary:hover { background: rgb(var(--saas-primary-rgb) / .06); border-color: rgb(var(--saas-primary-rgb) / .52); }
 .saas-button-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
-.saas-button-ghost { background: transparent; color: var(--saas-primary); border-color: transparent; box-shadow: none; }
+.saas-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--saas-primary)); border-color: transparent; box-shadow: none; }
 .saas-icon-button { width: 2.375rem; padding: 0; border-radius: var(--saas-radius-md); }
 .saas-button:disabled, .saas-icon-button:disabled, .saas-disabled { opacity: .55; cursor: not-allowed; transform: none; }
 
@@ -495,7 +495,7 @@
 
 .saas-badge { display: inline-flex; align-items: center; gap: var(--saas-space-1); min-height: 1.4rem; padding: .25rem .5rem; background: var(--saas-surface-soft); color: var(--saas-text); border: 1px solid transparent; border-radius: var(--saas-radius-sm); font-size: .75rem; font-weight: 700; line-height: 1; }
 .saas-badge-primary { background: var(--saas-primary); color: var(--saas-on-primary); border-color: var(--saas-primary); }
-.saas-badge-secondary { background: rgb(var(--saas-primary-rgb) / .1); color: var(--saas-primary); border-color: transparent; }
+.saas-badge-secondary { background: rgb(var(--saas-primary-rgb) / .1); color: var(--usk-primary-ink, var(--saas-primary)); border-color: transparent; }
 .saas-badge-success { background: rgb(var(--saas-success-rgb) / .14); color: var(--saas-text); border-color: rgb(var(--saas-success-rgb) / .38); }
 .saas-badge-warning { background: rgb(var(--saas-warning-rgb) / .14); color: var(--saas-text); border-color: rgb(var(--saas-warning-rgb) / .38); }
 .saas-badge-danger { background: rgb(var(--saas-danger-rgb) / .14); color: var(--saas-text); border-color: rgb(var(--saas-danger-rgb) / .38); }
@@ -520,8 +520,9 @@
 .saas-alert-success { background: rgb(var(--saas-success-rgb) / .12); border-color: rgb(var(--saas-success-rgb) / .58); }
 .saas-alert-warning { background: rgb(var(--saas-warning-rgb) / .12); border-color: rgb(var(--saas-warning-rgb) / .58); }
 .saas-alert-danger { background: rgb(var(--saas-danger-rgb) / .12); border-color: rgb(var(--saas-danger-rgb) / .58); }
-.saas-alert-title { margin: 0; font-weight: 900; }
-.saas-alert-body { margin: 0; color: var(--saas-text-muted); line-height: 1.55; }
+/** Keeps classed alert copy readable above the native paragraph color layer. */
+.saas-alert-title { margin: 0; color: var(--saas-text); font-weight: 900; }
+.saas-alert-body { margin: 0; color: var(--saas-text); line-height: 1.55; }
 
 .saas-table-wrap { overflow: auto; }
 .saas-table { width: 100%; border-collapse: collapse; }
@@ -534,7 +535,7 @@
    Utilities
 ========================================================= */
 
-.saas-text-primary { color: var(--saas-primary); } .saas-text-secondary { color: var(--saas-secondary); } .saas-text-accent { color: var(--saas-accent); } .saas-text-success { color: var(--saas-success); } .saas-text-warning { color: var(--saas-warning); } .saas-text-danger { color: var(--saas-danger); }
+.saas-text-primary { color: var(--usk-primary-ink, var(--saas-primary)); } .saas-text-secondary { color: var(--saas-secondary); } .saas-text-accent { color: var(--usk-accent-ink, var(--saas-accent)); } .saas-text-success { color: var(--saas-success); } .saas-text-warning { color: var(--saas-warning); } .saas-text-danger { color: var(--saas-danger); }
 .saas-bg-primary { background: var(--saas-primary); color: var(--saas-on-primary); } .saas-bg-secondary { background: var(--saas-secondary); color: var(--saas-on-secondary); }
 .saas-border { border: 1px solid var(--saas-border); } .saas-rounded { border-radius: var(--saas-radius-md); } .saas-rounded-lg { border-radius: var(--saas-radius-lg); } .saas-rounded-xl { border-radius: var(--saas-radius-xl); } .saas-pill { border-radius: var(--saas-radius-pill); }
 .saas-sr-only, .saas-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
@@ -642,7 +643,7 @@
 .saas-button.saas-button-outline-heavy,
 .saas-button-outline-heavy {
   background: transparent;
-  color: var(--saas-primary);
+  color: var(--usk-primary-ink, var(--saas-primary));
   border-style: solid;
   border-width: 2px;
   border-color: var(--saas-primary);
@@ -712,7 +713,7 @@
 
 .saas-eyebrow {
   margin: 0;
-  color: var(--saas-primary);
+  color: var(--usk-primary-ink, var(--saas-primary));
   font-family: var(--saas-font-heading);
   font-size: .76rem;
   font-weight: 900;
@@ -761,7 +762,7 @@
 .saas-card-accent-edge { border-inline-start-width: .16rem; }
 .saas-icon-medallion {
   background: var(--saas-surface-soft);
-  color: var(--saas-primary);
+  color: var(--usk-primary-ink, var(--saas-primary));
   border: 1px solid var(--saas-border);
   border-radius: var(--saas-radius-lg);
   box-shadow: var(--saas-shadow-sm);
@@ -965,9 +966,9 @@
 @layer ui-style-kit.minimal_saas {
 /** Restores source-faithful action hierarchy after identity geometry. */
 .saas-button-primary { background: linear-gradient(135deg, var(--saas-primary), var(--saas-brand-2)); color: var(--saas-on-primary); border-color: var(--saas-primary); }
-.saas-button-secondary { background: var(--saas-surface); color: var(--saas-primary); border-color: var(--saas-primary); }
+.saas-button-secondary { background: var(--saas-surface); color: var(--usk-primary-ink, var(--saas-primary)); border-color: var(--saas-primary); }
 .saas-button-danger { background: var(--saas-danger); color: var(--saas-on-danger); border-color: var(--saas-danger); }
-.saas-button-ghost { background: transparent; color: var(--saas-primary); border-color: transparent; }
+.saas-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--saas-primary)); border-color: transparent; }
 }
 
 @layer ui-style-kit.minimal_saas {

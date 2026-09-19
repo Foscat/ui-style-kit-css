@@ -449,10 +449,10 @@
 .tactile-button:active, .tactile-icon-button:active, .tactile-button[aria-pressed="true"], .tactile-icon-button[aria-pressed="true"], .tactile-button.is-active, .tactile-icon-button.is-active { transform: translateY(1px); box-shadow: var(--tactile-inset-shadow); }
 .tactile-button-primary { background: var(--tactile-action-bg); color: var(--tactile-on-primary); border-color: var(--tactile-primary); box-shadow: var(--tactile-button-shadow); }
 .tactile-button-primary:hover { background: var(--tactile-action-hover-bg); border-color: var(--tactile-primary-hover); }
-.tactile-button-secondary { background: var(--tactile-control-bg); color: var(--tactile-primary); border-color: rgb(var(--tactile-primary-rgb) / .48); }
+.tactile-button-secondary { background: var(--tactile-control-bg); color: var(--usk-primary-ink, var(--tactile-primary)); border-color: rgb(var(--tactile-primary-rgb) / .48); }
 .tactile-button-secondary:hover { background: var(--tactile-field-bg); border-color: var(--tactile-primary); }
 .tactile-button-danger { background: linear-gradient(180deg, var(--tactile-danger), rgb(var(--tactile-danger-rgb) / .82)); color: var(--tactile-on-danger); border-color: var(--tactile-danger); }
-.tactile-button-ghost { background: transparent; color: var(--tactile-primary); border-color: transparent; box-shadow: none; }
+.tactile-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--tactile-primary)); border-color: transparent; box-shadow: none; }
 .tactile-icon-button { width: 3rem; padding: 0; border-radius: var(--tactile-radius-sm); }
 .tactile-button:disabled, .tactile-icon-button:disabled, .tactile-disabled { opacity: .55; cursor: not-allowed; transform: none; }
 
@@ -544,7 +544,7 @@
    Utilities
 ========================================================= */
 
-.tactile-text-primary { color: var(--tactile-primary); } .tactile-text-secondary { color: var(--tactile-secondary); } .tactile-text-accent { color: var(--tactile-accent); } .tactile-text-success { color: var(--tactile-success); } .tactile-text-warning { color: var(--tactile-warning); } .tactile-text-danger { color: var(--tactile-danger); }
+.tactile-text-primary { color: var(--usk-primary-ink, var(--tactile-primary)); } .tactile-text-secondary { color: var(--tactile-secondary); } .tactile-text-accent { color: var(--usk-accent-ink, var(--tactile-accent)); } .tactile-text-success { color: var(--tactile-success); } .tactile-text-warning { color: var(--tactile-warning); } .tactile-text-danger { color: var(--tactile-danger); }
 .tactile-bg-primary { background: var(--tactile-primary); color: var(--tactile-on-primary); } .tactile-bg-secondary { background: var(--tactile-secondary); color: var(--tactile-on-secondary); }
 .tactile-border { border: 1px solid var(--tactile-border); } .tactile-rounded { border-radius: var(--tactile-radius-md); } .tactile-rounded-lg { border-radius: var(--tactile-radius-lg); } .tactile-rounded-xl { border-radius: var(--tactile-radius-xl); } .tactile-pill { border-radius: var(--tactile-radius-pill); }
 .tactile-sr-only, .tactile-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
@@ -655,7 +655,7 @@
 .tactile-button.tactile-button-outline-heavy,
 .tactile-button-outline-heavy {
   background: transparent;
-  color: var(--tactile-primary);
+  color: var(--usk-primary-ink, var(--tactile-primary));
   border-style: solid;
   border-width: 2px;
   border-color: var(--tactile-primary);
@@ -725,7 +725,7 @@
 
 .tactile-eyebrow {
   margin: 0;
-  color: var(--tactile-primary);
+  color: var(--usk-primary-ink, var(--tactile-primary));
   font-family: var(--tactile-font-heading);
   font-size: .76rem;
   font-weight: 900;
@@ -1161,7 +1161,7 @@
 .tactile-button-primary { background: var(--tactile-primary); color: var(--tactile-on-primary); border-color: var(--tactile-primary); }
 .tactile-button-secondary { background: var(--tactile-secondary); color: var(--tactile-on-secondary); border-color: var(--tactile-secondary); }
 .tactile-button-danger { background: var(--tactile-danger); color: var(--tactile-on-danger); border-color: var(--tactile-danger); }
-.tactile-button-ghost { background: transparent; color: var(--tactile-primary); border-color: transparent; }
+.tactile-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--tactile-primary)); border-color: transparent; }
 }
 
 @layer ui-style-kit.tactile {
@@ -1549,7 +1549,7 @@
 
 .tactile-button-ghost {
   background: transparent;
-  color: var(--tactile-primary);
+  color: var(--usk-primary-ink, var(--tactile-primary));
   border-color: transparent;
   box-shadow: none;
 }

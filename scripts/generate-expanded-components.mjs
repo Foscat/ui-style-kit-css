@@ -187,7 +187,7 @@ ${directions}
 :where(${classes(presets, ['divider']).join(', ')}) { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 :where(${classes(presets, ['disabled']).join(', ')}) { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-:where(${classes(presets, ['button-ghost']).join(', ')}) { color: var(--usk-native-primary); background: transparent; border-color: var(--usk-native-border); }
+:where(${classes(presets, ['button-ghost']).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); background: transparent; border-color: var(--usk-native-border); }
 
 :where(${classes(presets, ['check', 'radio', 'switch']).join(', ')}) {
   display: inline-flex;

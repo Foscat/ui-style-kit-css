@@ -23,7 +23,12 @@ const newThemes = [
   'newsprint-crimson',
   'foundry-amber',
   'soft-orchid',
-  'electric-noir'
+  'electric-noir',
+  'signal-yellow',
+  'botanical-green',
+  'cobalt-electric',
+  'stone-graphite',
+  'walnut-clay'
 ];
 
 const requiredThemeRoles = [
@@ -47,10 +52,10 @@ function hasClass(css, className) {
   return new RegExp(`\\.${className}(?![\\w-])`).test(css);
 }
 
-test('manifest exposes the approved 20 preset and 20 theme registry', () => {
+test('manifest exposes the approved 20 preset and 25 theme registry', () => {
   const manifest = JSON.parse(read('manifest.json'));
   assert.equal(manifest.presets.length, 20);
-  assert.equal(manifest.themes.length, 20);
+  assert.equal(manifest.themes.length, 25);
   assert.deepEqual(manifest.modes, ['light', 'dark', 'contrast']);
 
   for (const [id, prefix] of newPresets) {

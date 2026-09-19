@@ -202,7 +202,12 @@ window.UI_STYLE_KIT_MANIFEST = {
     "newsprint-crimson",
     "foundry-amber",
     "soft-orchid",
-    "electric-noir"
+    "electric-noir",
+    "signal-yellow",
+    "botanical-green",
+    "cobalt-electric",
+    "stone-graphite",
+    "walnut-clay"
   ],
   "modes": [
     "light",

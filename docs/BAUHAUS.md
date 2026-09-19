@@ -146,7 +146,7 @@ does not claim to reproduce missing decorative artwork. Responsive layouts and
 readable control sizes replace the source's fixed 1536 x 1024 export geometry.
 
 Focused tests cover the public mapping and fonts, existing component geometry,
-native loaders, all 20 themes in three modes, ancestor-token inheritance,
+native loaders, all 25 themes in three modes, ancestor-token inheritance,
 reference palettes, responsive widths, reduced motion, keyboard controls, and
 accessibility. These are fresh library tests, not the source package's historical
 QA claims.

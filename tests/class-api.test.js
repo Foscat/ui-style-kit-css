@@ -375,18 +375,31 @@ test('tooltip direction helpers position all preset tooltip surfaces', () => {
   }
 });
 
-test('semantic text utility declarations consume their direct palette tokens', () => {
+test('semantic text utility declarations consume readable ink with direct palette fallbacks', () => {
   const roles = ['primary', 'secondary', 'accent', 'success', 'warning', 'danger'];
+  const readableInkTokens = new Map([
+    ['primary', '--usk-primary-ink'],
+    ['accent', '--usk-accent-ink']
+  ]);
 
   for (const [ui, prefix] of styles) {
     const ast = astFor(path.join('styles', `${ui}.css`));
 
     for (const role of roles) {
       const className = `${prefix}-text-${role}`;
+      const directPaletteToken = `var(--${prefix}-${role})`;
+      const readableInkToken = readableInkTokens.get(role);
+      const expectedColor = readableInkToken
+        ? `var(${readableInkToken}, ${directPaletteToken})`
+        : directPaletteToken;
       const hasDirectColor = rulesWithClass(ast, className)
-        .some((rule) => ruleDeclarations(rule).get('color') === `var(--${prefix}-${role})`);
+        .some((rule) => ruleDeclarations(rule).get('color') === expectedColor);
 
-      assert.equal(hasDirectColor, true, `.${className} should consume --${prefix}-${role}`);
+      assert.equal(
+        hasDirectColor,
+        true,
+        `.${className} should use readable theme ink while retaining --${prefix}-${role}`
+      );
     }
   }
 });
