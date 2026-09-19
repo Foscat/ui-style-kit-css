@@ -393,7 +393,7 @@
 .bau-title, .bau-heading, .bau-kicker, .bau-button, .bau-badge, .bau-nav-link { font-family: var(--bau-font-heading); }
 .bau-title { margin: 0; color: var(--bau-text); font-size: clamp(2.35rem, 6vw, 4.65rem); font-stretch: condensed; font-weight: 950; line-height: .94; letter-spacing: -0.075em; text-transform: uppercase; }
 .bau-heading { margin: 0; color: var(--bau-text); font-size: clamp(1.15rem, 2.4vw, 2rem); font-stretch: condensed; font-weight: 950; line-height: 1.05; letter-spacing: .02em; text-transform: uppercase; }
-.bau-kicker { margin: 0; color: var(--bau-primary); font-size: .82rem; font-weight: 950; letter-spacing: .16em; text-transform: uppercase; }
+.bau-kicker { margin: 0; color: var(--usk-primary-ink, var(--bau-primary)); font-size: .82rem; font-weight: 950; letter-spacing: .16em; text-transform: uppercase; }
 .bau-subtitle, .bau-copy { margin: 0; color: var(--bau-text-muted); line-height: 1.65; }
 .bau-text-muted { color: var(--bau-text-muted); }
 .bau-divider { width: 100%; height: var(--bau-rule-width); border: 0; background: var(--bau-text); }
@@ -540,7 +540,7 @@
    Utilities
 ========================================================= */
 
-.bau-text-primary { color: var(--bau-primary); } .bau-text-secondary { color: var(--bau-secondary); } .bau-text-accent { color: var(--bau-accent); } .bau-text-success { color: var(--bau-success); } .bau-text-warning { color: var(--bau-warning); } .bau-text-danger { color: var(--bau-danger); }
+.bau-text-primary { color: var(--usk-primary-ink, var(--bau-primary)); } .bau-text-secondary { color: var(--bau-secondary); } .bau-text-accent { color: var(--usk-accent-ink, var(--bau-accent)); } .bau-text-success { color: var(--bau-success); } .bau-text-warning { color: var(--bau-warning); } .bau-text-danger { color: var(--bau-danger); }
 .bau-bg-primary { background: var(--bau-primary); color: var(--bau-on-primary); } .bau-bg-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); }
 .bau-border { border: 2px solid var(--bau-border); } .bau-rounded { border-radius: var(--bau-radius-md); } .bau-rounded-lg { border-radius: var(--bau-radius-lg); } .bau-rounded-xl { border-radius: var(--bau-radius-xl); } .bau-pill { border-radius: var(--bau-radius-pill); }
 .bau-sr-only, .bau-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
@@ -653,7 +653,7 @@
 .bau-button.bau-button-outline-heavy,
 .bau-button-outline-heavy {
   background: transparent;
-  color: var(--bau-primary);
+  color: var(--usk-primary-ink, var(--bau-primary));
   border-style: solid;
   border-width: 2px;
   border-color: var(--bau-primary);
@@ -725,7 +725,7 @@
 
 .bau-eyebrow {
   margin: 0;
-  color: var(--bau-primary);
+  color: var(--usk-primary-ink, var(--bau-primary));
   font-family: var(--bau-font-heading);
   font-size: .76rem;
   font-weight: 900;
@@ -941,7 +941,7 @@
 .bau-button-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-primary); }
 .bau-button-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-secondary); }
 .bau-button-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-danger); }
-.bau-button-ghost { background: transparent; color: var(--bau-primary); border-color: transparent; }
+.bau-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--bau-primary)); border-color: transparent; }
 }
 
 @layer ui-style-kit.bauhaus {
@@ -970,7 +970,7 @@
 [data-ui="bauhaus"][data-mode] .bau-sheet svg { display:block; flex:0 0 auto }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-panel { background:var(--bau-surface); border:2px solid var(--bau-border); border-radius:0; box-shadow:none; min-height:0; overflow:hidden; padding:14px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-panel>header { align-items:center; border-bottom:2px solid currentColor; display:flex; justify-content:space-between; margin-bottom:10px; padding-bottom:6px }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-panel>header>svg { color:var(--bau-primary); height:18px; width:18px }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-panel>header>svg { color:var(--usk-primary-ink, var(--bau-primary)); height:18px; width:18px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-sidebar { background:var(--bau-workshop-rail-bg); border-right:3px solid var(--bau-workshop-rail-text); color:var(--bau-workshop-rail-text); display:flex; flex-direction:column; height:100%; overflow:hidden; padding:24px 0 14px }
 [data-ui="bauhaus"][data-mode] .bau-sheet[data-mode="light"] .bau-sidebar { border-right-color:var(--bau-on-warning) }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-brand { align-items:center; display:flex; gap:10px; padding:0 18px 24px }
@@ -1005,9 +1005,9 @@
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-bottom-grid { grid-template-columns:5.6fr 2.05fr 4.15fr }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-hero { background:var(--bau-surface); padding:0; position:relative }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-hero-copy { left:34px; position:absolute; top:48px; z-index:2 }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-eyebrow { color:var(--bau-primary); font-family:var(--bau-font-heading); font-size:12px; font-weight:700; letter-spacing:0 }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-eyebrow { color:var(--usk-primary-ink, var(--bau-primary)); font-family:var(--bau-font-heading); font-size:12px; font-weight:700; letter-spacing:0 }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-hero h1 { font-family:var(--bau-font-heading); font-size:57px; font-weight:800; letter-spacing:0; line-height:0.83; margin:14px 0 17px; max-width:490px; text-transform:uppercase }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-hero h1 span { color:var(--bau-primary); font-size:37px; letter-spacing:0 }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-hero h1 span { color:var(--usk-primary-ink, var(--bau-primary)); font-size:37px; letter-spacing:0 }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-hero p { font-size:12px; font-weight:600; letter-spacing:0; max-width:350px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-inline-actions { display:flex; gap:8px; margin-top:24px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button { align-items:center; background:var(--bau-surface); border:2px solid var(--bau-border); border-radius:0; display:inline-flex; font-family:var(--bau-font-heading); font-size:12px; font-weight:700; gap:7px; justify-content:center; letter-spacing:0; min-height:35px; padding:0 15px; text-transform:uppercase; transition:background-color 100ms linear,color 100ms linear,transform 100ms linear }
@@ -1017,7 +1017,7 @@
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button.is-hover { background:var(--bau-primary-hover); transform:translate(-2px,-2px) }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button.is-secondary { background:transparent; border-color:var(--bau-border); color:var(--bau-text) }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button.is-danger { background:var(--bau-danger); border-color:var(--bau-danger); color:var(--bau-on-primary) }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-button.is-ghost { background:transparent; border-color:transparent; color:var(--bau-primary) }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-button.is-ghost { background:transparent; border-color:transparent; color:var(--usk-primary-ink, var(--bau-primary)) }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-button:disabled { background:var(--bau-surface-soft); border-color:var(--bau-surface-soft); color:var(--bau-on-primary); cursor:not-allowed; opacity:0.7 }
 [data-ui="bauhaus"][data-mode] .bau-sheet[data-mode="dark"] .bau-button:disabled { background:var(--bau-surface-soft); border-color:var(--bau-surface-soft); color:var(--bau-text-muted) }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-actions { display:grid; gap:6px; grid-template-rows:auto repeat(7,1fr) }
@@ -1072,7 +1072,7 @@
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-input-icon.is-end>button svg { height:12px; width:12px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-field input[type="color"] { padding:2px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-file input { height:27px; opacity:0; position:absolute; top:13px; z-index:2 }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-file>span:last-child { align-items:center; background:var(--bau-surface); border:1px dashed var(--bau-border); color:var(--bau-primary); display:flex; font-size:12px; font-weight:700; gap:5px; height:27px; justify-content:center; text-transform:uppercase }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-file>span:last-child { align-items:center; background:var(--bau-surface); border:1px dashed var(--bau-border); color:var(--usk-primary-ink, var(--bau-primary)); display:flex; font-size:12px; font-weight:700; gap:5px; height:27px; justify-content:center; text-transform:uppercase }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-file>span:last-child svg { height:12px; width:12px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-choices fieldset { border:0; margin:0 0 7px; padding:0 }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-choices legend { font-size:12px; font-weight:800; margin-bottom:4px }
@@ -1118,7 +1118,7 @@
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-tooltip-panel [role="tooltip"] { background:var(--bau-workshop-rail-bg); border:2px solid var(--bau-warning); bottom:9px; color:var(--bau-on-primary); font-size:12px; left:39px; line-height:1.45; padding:8px; position:absolute; width:105px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-loading { align-items:center; display:flex; flex-wrap:wrap; gap:.75rem }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-loading>header { flex:1 0 100% }
-[data-ui="bauhaus"][data-mode] .bau-sheet .bau-spinner { color:var(--bau-primary); height:31px; width:31px }
+[data-ui="bauhaus"][data-mode] .bau-sheet .bau-spinner { color:var(--usk-primary-ink, var(--bau-primary)); height:31px; width:31px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-spin { animation:bau-spin 1s linear infinite }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-skeleton { display:grid; gap:5px }
 [data-ui="bauhaus"][data-mode] .bau-sheet .bau-skeleton span { animation:bau-workshop-pulse 1.5s steps(2,end) infinite; background:var(--bau-border); display:block; height:7px }
@@ -1285,7 +1285,7 @@
 [data-ui="bauhaus"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) { box-shadow: none; border-color: var(--bau-border); }
 [data-ui="bauhaus"][data-mode] :where(dialog) { background: var(--bau-surface-strong); color: var(--bau-text); border: 2px solid var(--bau-border); box-shadow: .5rem .5rem 0 var(--bau-warning); }
 .bau-spinner, [data-ui="bauhaus"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) {
-  display: inline-block; flex: 0 0 auto; inline-size: 1.75rem; block-size: 1.75rem; border: 2px solid currentColor; border-block-start-color: transparent; border-radius: 50%; background: none; color: var(--bau-primary); box-shadow: none; clip-path: none; animation: bau-spin 1s linear infinite;
+  display: inline-block; flex: 0 0 auto; inline-size: 1.75rem; block-size: 1.75rem; border: 2px solid currentColor; border-block-start-color: transparent; border-radius: 50%; background: none; color: var(--usk-primary-ink, var(--bau-primary)); box-shadow: none; clip-path: none; animation: bau-spin 1s linear infinite;
 }
 .bau-spinner-sm { inline-size: 1rem; block-size: 1rem; }
 .bau-spinner-lg { inline-size: 2.5rem; block-size: 2.5rem; }

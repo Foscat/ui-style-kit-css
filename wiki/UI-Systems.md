@@ -148,7 +148,7 @@ The shared containment layer keeps these components shrinkable inside consumer g
 
 All 20 styles implement:
 
-- 20 themes (`midnight-gold`, `ocean-steel`, `forest-moss`, `sunset-ember`, `royal-plum`, `graphite-cyan`, `desert-sage`, `rose-quartz`, `cyber-lime`, `arctic-indigo`, `chrome-navy`, `recycled-emerald`, `industrial-orange`, `performance-red`, `heritage-brass`, `service-blue-red`, `newsprint-crimson`, `foundry-amber`, `soft-orchid`, `electric-noir`)
+- 25 themes (`midnight-gold`, `ocean-steel`, `forest-moss`, `sunset-ember`, `royal-plum`, `graphite-cyan`, `desert-sage`, `rose-quartz`, `cyber-lime`, `arctic-indigo`, `chrome-navy`, `recycled-emerald`, `industrial-orange`, `performance-red`, `heritage-brass`, `service-blue-red`, `newsprint-crimson`, `foundry-amber`, `soft-orchid`, `electric-noir`, `signal-yellow`, `botanical-green`, `cobalt-electric`, `stone-graphite`, `walnut-clay`)
 - 3 modes (`light`, `dark`, `contrast`)
 
 ## Generic Hooks

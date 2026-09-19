@@ -1036,13 +1036,17 @@ test('demo favicon assets stay repo-local and use portable paths', () => {
 
   assert.ok(!packageJson.files.includes('demo'), 'package.json files[] should exclude the demo asset pack');
   assertFileExists('demo/assets/seo/social-card.png');
+  assertFileExists('demo/assets/seo/social-card-25-themes.png');
+  assertFileExists('favicon.ico');
+  assertFileExists('favicon-256x256.png');
   assertFileExists('demo/demo.css');
   assertFileExists('demo/demo.js');
   for (const asset of faviconAssets) {
     assertFileExists(path.join('demo', 'assets', asset));
   }
 
-  assert.match(rootDemoHtml, /href="demo\/assets\/favicon\.ico"/);
+  assert.match(rootDemoHtml, /href="favicon-256x256\.png"/);
+  assert.match(rootDemoHtml, /href="favicon\.ico"/);
   assert.match(rootDemoHtml, /href="site\.webmanifest"/);
   assert.match(rootDemoHtml, /content="browserconfig\.xml"/);
   assert.match(rootDemoHtml, /href="demo\/demo\.css\?v=[a-f0-9]{12}"/);
@@ -1064,14 +1068,14 @@ test('demo favicon assets stay repo-local and use portable paths', () => {
     rootManifest.icons.map((icon) => icon.src),
     ['demo/assets/android-chrome-192x192.png', 'demo/assets/android-chrome-512x512.png']
   );
-  assert.deepEqual(rootManifest.screenshots.map((screenshot) => screenshot.src), ['demo/assets/seo/social-card.png']);
+  assert.deepEqual(rootManifest.screenshots.map((screenshot) => screenshot.src), ['demo/assets/seo/social-card-25-themes.png']);
   assert.equal(packageDemoManifest.start_url, '../');
   assert.equal(packageDemoManifest.lang, 'en-US');
   assert.deepEqual(
     packageDemoManifest.icons.map((icon) => icon.src),
     ['android-chrome-192x192.png', 'android-chrome-512x512.png']
   );
-  assert.deepEqual(packageDemoManifest.screenshots.map((screenshot) => screenshot.src), ['seo/social-card.png']);
+  assert.deepEqual(packageDemoManifest.screenshots.map((screenshot) => screenshot.src), ['seo/social-card-25-themes.png']);
 });
 
 test('published demo HTML exposes search and social metadata', () => {
@@ -1084,7 +1088,7 @@ test('published demo HTML exposes search and social metadata', () => {
   assert.match(rootDemoHtml, /<meta name="description" content="CSS-only UI style kit/);
   assert.match(rootDemoHtml, /<meta name="robots" content="index, follow, max-image-preview:large">/);
   assert.match(rootDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/">/);
-  assert.match(rootDemoHtml, /<meta property="og:image" content="https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card\.png">/);
+  assert.match(rootDemoHtml, /<meta property="og:image" content="https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card-25-themes\.png">/);
   assert.match(rootDemoHtml, /<meta name="twitter:card" content="summary_large_image">/);
   assert.match(rootDemoHtml, /A CSS-only library with 20 visual systems/);
   assert.ok(jsonLdMatch, 'Root demo should include JSON-LD structured data');
@@ -1106,7 +1110,7 @@ test('robots and sitemap describe the canonical demo URL', () => {
 
   assert.match(robots, /Sitemap: https:\/\/foscat\.github\.io\/ui-style-kit-css\/sitemap\.xml/);
   assert.match(sitemap, /<loc>https:\/\/foscat\.github\.io\/ui-style-kit-css\/<\/loc>/);
-  assert.match(sitemap, /<lastmod>2026-08-29<\/lastmod>/);
-  assert.match(sitemap, /<image:loc>https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card\.png<\/image:loc>/);
+  assert.match(sitemap, /<lastmod>2026-09-19<\/lastmod>/);
+  assert.match(sitemap, /<image:loc>https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card-25-themes\.png<\/image:loc>/);
   assert.doesNotMatch(sitemap, /ui-style-kit-css\/index\.html/);
 });

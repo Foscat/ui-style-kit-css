@@ -13,8 +13,21 @@
 ========================================================= */
 
 @layer ui-style-kit.theme_colors {
+/**
+ * Optional text inks let bright palette fills retain their color without making
+ * text on neutral surfaces unreadable. Initial values preserve preset colors and
+ * prevent an outer palette's text override from leaking into a nested UI root.
+ */
+:where([data-ui]) {
+  --usk-primary-ink: initial;
+  --usk-accent-ink: initial;
+}
+
 /* Shared RGB roles keep visual presets focused on layout, texture, and component treatment. */
 :where([data-ui][data-mode="light"]) {
+  /* Keep vivid fills intact while using the darker link role for text treatments. */
+  --usk-primary-ink: rgb(var(--usk-link-rgb));
+  --usk-accent-ink: rgb(var(--usk-link-rgb));
   --usk-border-text-mix: 45%;
   --usk-border-min-alpha: 1;
 }
@@ -1584,6 +1597,403 @@
   --usk-danger-text-rgb: 0 0 0;
   --usk-focus-rgb: 255 255 255;
 }
+
+/** Signal Yellow pairs vivid yellow actions with ink-navy supporting roles. */
+:where([data-ui][data-theme="signal-yellow"][data-mode="light"]) {
+  --usk-primary-ink: rgb(var(--usk-link-rgb));
+  --usk-accent-ink: rgb(var(--usk-link-rgb));
+  --usk-bg-rgb: 255 251 232;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 255 254 245;
+  --usk-surface-soft-rgb: 247 237 187;
+  --usk-text-rgb: 33 29 12;
+  --usk-text-muted-rgb: 100 91 55;
+  --usk-border-rgb: 217 199 111;
+  --usk-primary-rgb: 255 204 0;
+  --usk-primary-hover-rgb: 222 175 0;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 37 50 78;
+  --usk-secondary-hover-rgb: 25 37 61;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 255 228 92;
+  --usk-success-rgb: 34 122 75;
+  --usk-warning-rgb: 144 92 0;
+  --usk-danger-rgb: 177 54 54;
+  --usk-link-rgb: 112 79 0;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 255 204 0;
+}
+
+:where([data-ui][data-theme="signal-yellow"][data-mode="dark"]) {
+  --usk-bg-rgb: 18 15 3;
+  --usk-surface-rgb: 32 27 7;
+  --usk-surface-strong-rgb: 48 40 10;
+  --usk-surface-soft-rgb: 25 21 5;
+  --usk-text-rgb: 255 249 222;
+  --usk-text-muted-rgb: 207 195 145;
+  --usk-border-rgb: 104 88 31;
+  --usk-primary-rgb: 255 216 59;
+  --usk-primary-hover-rgb: 255 234 130;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 142 198 255;
+  --usk-secondary-hover-rgb: 182 220 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 232 102;
+  --usk-success-rgb: 103 217 151;
+  --usk-warning-rgb: 255 194 62;
+  --usk-danger-rgb: 255 119 119;
+  --usk-link-rgb: 255 232 102;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 232 102;
+}
+
+:where([data-ui][data-theme="signal-yellow"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 13 11 0;
+  --usk-surface-strong-rgb: 26 22 0;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 255 250 222;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 214 0;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 0 217 255;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 234 0;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 191 0;
+  --usk-danger-rgb: 255 77 77;
+  --usk-link-rgb: 255 234 0;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+/** Botanical Green pairs leaf-green actions with restrained berry support. */
+:where([data-ui][data-theme="botanical-green"][data-mode="light"]) {
+  --usk-bg-rgb: 239 249 242;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 248 253 249;
+  --usk-surface-soft-rgb: 214 237 220;
+  --usk-text-rgb: 14 38 23;
+  --usk-text-muted-rgb: 75 98 81;
+  --usk-border-rgb: 176 207 185;
+  --usk-primary-rgb: 13 126 66;
+  --usk-primary-hover-rgb: 8 97 50;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 121 48 88;
+  --usk-secondary-hover-rgb: 91 35 65;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 64 201 117;
+  --usk-success-rgb: 24 116 65;
+  --usk-warning-rgb: 150 96 0;
+  --usk-danger-rgb: 178 60 70;
+  --usk-link-rgb: 8 97 50;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 64 201 117;
+}
+
+:where([data-ui][data-theme="botanical-green"][data-mode="dark"]) {
+  --usk-bg-rgb: 4 17 9;
+  --usk-surface-rgb: 10 32 18;
+  --usk-surface-strong-rgb: 17 48 28;
+  --usk-surface-soft-rgb: 7 24 14;
+  --usk-text-rgb: 235 252 241;
+  --usk-text-muted-rgb: 173 205 182;
+  --usk-border-rgb: 49 91 63;
+  --usk-primary-rgb: 82 222 139;
+  --usk-primary-hover-rgb: 128 240 169;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 238 148 199;
+  --usk-secondary-hover-rgb: 255 187 222;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 107 240 164;
+  --usk-success-rgb: 100 218 149;
+  --usk-warning-rgb: 255 205 91;
+  --usk-danger-rgb: 255 126 137;
+  --usk-link-rgb: 128 240 169;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 107 240 164;
+}
+
+:where([data-ui][data-theme="botanical-green"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 0 14 5;
+  --usk-surface-strong-rgb: 0 29 11;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 238 255 244;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 0 255 112;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 92 178;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 103 255 166;
+  --usk-success-rgb: 0 255 117;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 77 91;
+  --usk-link-rgb: 103 255 166;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+/** Cobalt Electric pairs saturated blue actions with coral supporting roles. */
+:where([data-ui][data-theme="cobalt-electric"][data-mode="light"]) {
+  --usk-bg-rgb: 240 244 255;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 248 250 255;
+  --usk-surface-soft-rgb: 220 229 250;
+  --usk-text-rgb: 14 27 57;
+  --usk-text-muted-rgb: 73 89 123;
+  --usk-border-rgb: 177 195 232;
+  --usk-primary-rgb: 0 82 204;
+  --usk-primary-hover-rgb: 0 61 158;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 181 57 72;
+  --usk-secondary-hover-rgb: 143 41 54;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 82 121 255;
+  --usk-success-rgb: 35 121 78;
+  --usk-warning-rgb: 151 96 0;
+  --usk-danger-rgb: 180 55 74;
+  --usk-link-rgb: 0 64 163;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 82 121 255;
+}
+
+:where([data-ui][data-theme="cobalt-electric"][data-mode="dark"]) {
+  --usk-bg-rgb: 4 9 25;
+  --usk-surface-rgb: 10 20 48;
+  --usk-surface-strong-rgb: 16 32 72;
+  --usk-surface-soft-rgb: 7 14 36;
+  --usk-text-rgb: 239 244 255;
+  --usk-text-muted-rgb: 174 188 218;
+  --usk-border-rgb: 49 70 122;
+  --usk-primary-rgb: 111 149 255;
+  --usk-primary-hover-rgb: 164 188 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 133 147;
+  --usk-secondary-hover-rgb: 255 173 183;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 143 170 255;
+  --usk-success-rgb: 105 219 159;
+  --usk-warning-rgb: 255 205 91;
+  --usk-danger-rgb: 255 121 139;
+  --usk-link-rgb: 164 188 255;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 143 170 255;
+}
+
+:where([data-ui][data-theme="cobalt-electric"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 0 7 22;
+  --usk-surface-strong-rgb: 0 15 44;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 239 245 255;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 76 133 255;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 255 105 125;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 132 168 255;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 92 112;
+  --usk-link-rgb: 132 168 255;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+/** Stone Graphite uses neutral surfaces while preserving semantic status colors. */
+:where([data-ui][data-theme="stone-graphite"][data-mode="light"]) {
+  --usk-bg-rgb: 244 244 242;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 250 250 248;
+  --usk-surface-soft-rgb: 227 229 225;
+  --usk-text-rgb: 27 29 28;
+  --usk-text-muted-rgb: 86 91 88;
+  --usk-border-rgb: 184 189 185;
+  --usk-primary-rgb: 56 60 58;
+  --usk-primary-hover-rgb: 37 40 38;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 91 97 93;
+  --usk-secondary-hover-rgb: 69 74 71;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 184 190 186;
+  --usk-success-rgb: 48 115 79;
+  --usk-warning-rgb: 145 94 0;
+  --usk-danger-rgb: 168 60 60;
+  --usk-link-rgb: 52 60 56;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 112 121 116;
+}
+
+:where([data-ui][data-theme="stone-graphite"][data-mode="dark"]) {
+  --usk-bg-rgb: 12 13 13;
+  --usk-surface-rgb: 25 27 26;
+  --usk-surface-strong-rgb: 40 43 41;
+  --usk-surface-soft-rgb: 18 20 19;
+  --usk-text-rgb: 245 246 245;
+  --usk-text-muted-rgb: 189 193 190;
+  --usk-border-rgb: 78 84 80;
+  --usk-primary-rgb: 208 212 209;
+  --usk-primary-hover-rgb: 235 237 235;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 164 170 166;
+  --usk-secondary-hover-rgb: 194 199 196;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 230 232 231;
+  --usk-success-rgb: 130 210 165;
+  --usk-warning-rgb: 242 197 112;
+  --usk-danger-rgb: 240 137 137;
+  --usk-link-rgb: 220 224 221;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+:where([data-ui][data-theme="stone-graphite"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 8 8 8;
+  --usk-surface-strong-rgb: 20 20 20;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 245 245 245;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 255 255;
+  --usk-primary-hover-rgb: 221 221 221;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 205 205 205;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 245 245 245;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 92 92;
+  --usk-link-rgb: 255 255 255;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
+
+/** Walnut Clay pairs deep brown actions with clay accents and muted foliage. */
+:where([data-ui][data-theme="walnut-clay"][data-mode="light"]) {
+  --usk-bg-rgb: 248 241 233;
+  --usk-surface-rgb: 255 255 255;
+  --usk-surface-strong-rgb: 253 249 245;
+  --usk-surface-soft-rgb: 232 216 202;
+  --usk-text-rgb: 49 36 29;
+  --usk-text-muted-rgb: 102 84 74;
+  --usk-border-rgb: 199 172 154;
+  --usk-primary-rgb: 112 67 48;
+  --usk-primary-hover-rgb: 83 47 34;
+  --usk-primary-text-rgb: 255 255 255;
+  --usk-secondary-rgb: 88 98 78;
+  --usk-secondary-hover-rgb: 66 75 57;
+  --usk-secondary-text-rgb: 255 255 255;
+  --usk-accent-rgb: 190 111 82;
+  --usk-success-rgb: 53 117 76;
+  --usk-warning-rgb: 147 91 0;
+  --usk-danger-rgb: 173 61 55;
+  --usk-link-rgb: 105 60 43;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 255 255 255;
+  --usk-warning-text-rgb: 255 255 255;
+  --usk-danger-text-rgb: 255 255 255;
+  --usk-focus-rgb: 190 111 82;
+}
+
+:where([data-ui][data-theme="walnut-clay"][data-mode="dark"]) {
+  --usk-bg-rgb: 18 12 9;
+  --usk-surface-rgb: 35 24 19;
+  --usk-surface-strong-rgb: 51 34 26;
+  --usk-surface-soft-rgb: 27 18 14;
+  --usk-text-rgb: 250 241 233;
+  --usk-text-muted-rgb: 205 184 169;
+  --usk-border-rgb: 107 78 61;
+  --usk-primary-rgb: 218 158 124;
+  --usk-primary-hover-rgb: 240 188 156;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 178 192 157;
+  --usk-secondary-hover-rgb: 207 217 190;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 235 169 136;
+  --usk-success-rgb: 133 214 164;
+  --usk-warning-rgb: 255 203 100;
+  --usk-danger-rgb: 255 135 128;
+  --usk-link-rgb: 240 188 156;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 235 169 136;
+}
+
+:where([data-ui][data-theme="walnut-clay"][data-mode="contrast"]) {
+  --usk-bg-rgb: 0 0 0;
+  --usk-surface-rgb: 15 7 3;
+  --usk-surface-strong-rgb: 31 15 7;
+  --usk-surface-soft-rgb: 0 0 0;
+  --usk-text-rgb: 255 255 255;
+  --usk-text-muted-rgb: 255 244 237;
+  --usk-border-rgb: 255 255 255;
+  --usk-primary-rgb: 255 174 128;
+  --usk-primary-hover-rgb: 255 255 255;
+  --usk-primary-text-rgb: 0 0 0;
+  --usk-secondary-rgb: 208 234 166;
+  --usk-secondary-hover-rgb: 255 255 255;
+  --usk-secondary-text-rgb: 0 0 0;
+  --usk-accent-rgb: 255 194 160;
+  --usk-success-rgb: 0 255 144;
+  --usk-warning-rgb: 255 212 0;
+  --usk-danger-rgb: 255 102 96;
+  --usk-link-rgb: 255 194 160;
+  --usk-accent-text-rgb: 0 0 0;
+  --usk-success-text-rgb: 0 0 0;
+  --usk-warning-text-rgb: 0 0 0;
+  --usk-danger-text-rgb: 0 0 0;
+  --usk-focus-rgb: 255 255 255;
+}
 }
 
 
@@ -1735,7 +2145,7 @@
   text-underline-offset: .18em;
 }
 
-[data-ui][data-mode] :where(a:hover) { color: var(--usk-native-primary-hover); }
+[data-ui][data-mode] :where(a:hover) { color: var(--usk-primary-ink, var(--usk-native-primary-hover)); }
 
 [data-ui][data-mode] :where(ul, ol, menu) {
   margin: 0 0 1rem;
@@ -2994,7 +3404,7 @@
 .saas-disabled, .bento-disabled, .max-disabled, .bau-disabled, .tactile-disabled, .neo-disabled, .retro-disabled, .brutal-disabled, .cyber-disabled, .y2k-disabled, .rg-disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
 .saas-button-ghost, .bento-button-ghost, .max-button-ghost, .bau-button-ghost, .tactile-button-ghost, .neo-button-ghost, .retro-button-ghost, .brutal-button-ghost, .cyber-button-ghost, .y2k-button-ghost, .rg-button-ghost, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="ghost"]) {
-  color: var(--usk-native-primary);
+  color: var(--usk-primary-ink, var(--usk-native-primary));
   background: transparent;
   border-color: var(--usk-native-border);
 }
@@ -3681,7 +4091,7 @@
 :where(.luxe-divider, .organic-divider, .utility-divider, .blueprint-divider, .deco-divider, .clay-divider, .terminal-divider, .paper-divider, .noir-divider) { inline-size: 100%; block-size: 1px; border: 0; background: var(--usk-native-border); }
 :where(.luxe-disabled, .organic-disabled, .utility-disabled, .blueprint-disabled, .deco-disabled, .clay-disabled, .terminal-disabled, .paper-disabled, .noir-disabled) { opacity: .55; cursor: not-allowed; pointer-events: none; }
 
-:where(.luxe-button-ghost, .organic-button-ghost, .utility-button-ghost, .blueprint-button-ghost, .deco-button-ghost, .clay-button-ghost, .terminal-button-ghost, .paper-button-ghost, .noir-button-ghost), :where([data-ui="art-deco"]) :where(.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"])) { color: var(--usk-native-primary); background: transparent; border-color: var(--usk-native-border); }
+:where(.luxe-button-ghost, .organic-button-ghost, .utility-button-ghost, .blueprint-button-ghost, .deco-button-ghost, .clay-button-ghost, .terminal-button-ghost, .paper-button-ghost, .noir-button-ghost), :where([data-ui="art-deco"]) :where(.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"]),.ui-button:where([data-ui-variant="ghost"])) { color: var(--usk-primary-ink, var(--usk-native-primary)); background: transparent; border-color: var(--usk-native-border); }
 
 :where(.luxe-check, .luxe-radio, .luxe-switch, .organic-check, .organic-radio, .organic-switch, .utility-check, .utility-radio, .utility-switch, .blueprint-check, .blueprint-radio, .blueprint-switch, .deco-check, .deco-radio, .deco-switch, .clay-check, .clay-radio, .clay-switch, .terminal-check, .terminal-radio, .terminal-switch, .paper-check, .paper-radio, .paper-switch, .noir-check, .noir-radio, .noir-switch), :where([data-ui="art-deco"]) :where(.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch,.ui-check,.ui-radio,.ui-switch) {
   display: inline-flex;
@@ -4094,7 +4504,7 @@
   }
 
   .deco-kicker {
-    color: var(--deco-primary);
+    color: var(--usk-primary-ink, var(--deco-primary));
     letter-spacing: .12em;
     text-transform: uppercase;
     margin: 0;
@@ -4550,7 +4960,7 @@
   }
 
   .deco-text-primary {
-    color: var(--deco-primary);
+    color: var(--usk-primary-ink, var(--deco-primary));
   }
 
   .deco-text-secondary {
@@ -4558,7 +4968,7 @@
   }
 
   .deco-text-accent {
-    color: var(--deco-accent);
+    color: var(--usk-accent-ink, var(--deco-accent));
   }
 
   .deco-text-success {
@@ -4779,7 +5189,7 @@
   }
 
   .deco-button.deco-button-outline-heavy, .deco-button-outline-heavy, :where([data-ui="art-deco"]) .ui-button.deco-button-outline-heavy {
-    color: var(--deco-primary);
+    color: var(--usk-primary-ink, var(--deco-primary));
     border-style: solid;
     border-width: 2px;
     border-color: var(--deco-primary);
@@ -4858,7 +5268,7 @@
   }
 
   .deco-eyebrow {
-    color: var(--deco-primary);
+    color: var(--usk-primary-ink, var(--deco-primary));
     font-family: var(--deco-font-heading);
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -4999,7 +5409,7 @@
   }
 
   .deco-icon-medallion, .deco-badge-seal {
-    color: var(--deco-primary);
+    color: var(--usk-primary-ink, var(--deco-primary));
     box-shadow: 0 0 0 .25rem rgb(var(--deco-primary-rgb)/.07);
     background: none;
     border-style: double;
@@ -5302,7 +5712,7 @@
   }
 
   .deco-button-ghost, :where([data-ui="art-deco"]) .ui-button:where([data-ui-variant="ghost"]) {
-    color: var(--deco-primary);
+    color: var(--usk-primary-ink, var(--deco-primary));
     background: none;
     border-color: #0000;
   }

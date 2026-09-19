@@ -117,7 +117,7 @@ views deliberately reflow the desktop matrix instead of shrinking its labels.
 - `node --test tests/clay-template.test.js`
 - `npx playwright test tests/e2e/clay-template.spec.js --project=chromium --workers=1`
 - Existing Clay material test in `tests/e2e/clay-reference-fidelity.spec.js`
-- `tests/e2e/clay-theme-colors.spec.js` checks all 20 themes in three modes,
+- `tests/e2e/clay-theme-colors.spec.js` checks all 25 themes in three modes,
   live RGB overrides, stable material geometry, and desktop/mobile containment
 - `tests/e2e/clay-unified-material.spec.js` compares rendered public and sheet
   controls, reading-surface typography, keyboard/pressed states, and responsive views

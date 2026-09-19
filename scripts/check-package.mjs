@@ -53,8 +53,8 @@ if (manifest.schemaVersion !== 1 || manifest.name !== pkg.name || manifest.versi
 if (JSON.stringify(manifest.cascadeLayers) !== JSON.stringify(publicLayerOrder)) {
   throw new Error('manifest.json must declare the five public cascade layers in order.');
 }
-if (manifest.presets.length !== 20 || manifest.themes.length !== 20 || manifest.modes.length !== 3) {
-  throw new Error('manifest.json must describe all 20 presets, 20 themes, and 3 modes.');
+if (manifest.presets.length !== 20 || manifest.themes.length !== 25 || manifest.modes.length !== 3) {
+  throw new Error('manifest.json must describe all 20 presets, 25 themes, and 3 modes.');
 }
 
 const requiredScripts = [

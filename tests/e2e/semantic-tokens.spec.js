@@ -193,7 +193,7 @@ test('canonical and deprecated adapter backgrounds preserve direct source behavi
     mismatchSamples.push(...audit.samples.map((sample) => ({ adapterName, ...sample })));
   }
 
-  expect(configurationCount).toBe(1200);
+  expect(configurationCount).toBe(1500);
   expect([...alphaExampleModes].sort(), 'matrix should exercise light and dark alpha sources')
     .toEqual(['dark', 'light']);
   expect(mismatchCounts, JSON.stringify(mismatchSamples, null, 2)).toEqual({

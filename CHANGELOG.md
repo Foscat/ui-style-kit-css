@@ -4,6 +4,21 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Added five gap-filling shared color themes—`signal-yellow`, `botanical-green`, `cobalt-electric`, `stone-graphite`, and `walnut-clay`—with complete light, dark, and contrast role sets.
+
+### Changed
+
+- Expanded the manifest-driven browser matrix to 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations).
+- Refreshed demo search, Open Graph, Twitter, JSON-LD, sitemap, web-manifest, favicon, and social-preview metadata for the current 20-system and 25-theme inventory.
+
+### Fixed
+
+- Preserved vivid Signal Yellow fills while giving primary and accent text readable light-mode ink across prefixed and semantic components.
+- Extended theme-owned ink selection to every light theme while keeping decorative fills vivid, and corrected demo utility surfaces and Minimal SaaS alert copy across every shared theme and mode.
+- Pinned patched `colord` and `js-yaml` transitive tooling releases after the final release audit identified newly disclosed denial-of-service advisories.
+
 ## [2.4.0] - 2026-09-08
 
 ### Added

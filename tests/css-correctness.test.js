@@ -205,7 +205,7 @@ test('minimal SaaS preset follows the calm product reference styling', () => {
   assert.match(lastExactBlockFor(css, '.saas-input, .saas-textarea, .saas-select'), /min-height:\s*2rem/);
   assert.match(lastExactBlockFor(css, '.saas-surface, .saas-card, .saas-panel, .saas-toolbar, .saas-table-wrap'), /box-shadow:\s*var\(--saas-shadow-md\)/);
   assert.match(lastExactBlockFor(css, '.saas-button-secondary'), /background:\s*var\(--saas-surface\);/);
-  assert.match(lastExactBlockFor(css, '.saas-button-secondary'), /color:\s*var\(--saas-primary\);/);
+  assert.match(lastExactBlockFor(css, '.saas-button-secondary'), /color:\s*var\(--usk-primary-ink,\s*var\(--saas-primary\)\);/);
   assert.doesNotMatch(exactBlockFor(css, '.saas-table th'), /text-transform:\s*uppercase/);
   assert.match(exactBlockFor(css, '.saas-table th'), /letter-spacing:\s*0/);
 
@@ -258,7 +258,7 @@ test('Bento preset follows the soft mosaic product reference styling', () => {
   assert.match(blockFor(css, '.bento-surface, .bento-card, .bento-panel, .bento-toolbar, .bento-table-wrap'), /border-radius:\s*var\(--bento-tile-radius\)/);
   assert.match(blockFor(css, '.bento-surface, .bento-card, .bento-panel, .bento-toolbar, .bento-table-wrap'), /box-shadow:\s*var\(--bento-tile-shadow\)/);
   assert.match(blockFor(css, '.bento-button-secondary'), /background:\s*rgb\(var\(--bento-surface-strong-rgb\) \/ var\(--bento-panel-alpha\)\);/);
-  assert.match(blockFor(css, '.bento-button-secondary'), /color:\s*var\(--bento-primary\);/);
+  assert.match(blockFor(css, '.bento-button-secondary'), /color:\s*var\(--usk-primary-ink,\s*var\(--bento-primary\)\);/);
   assert.doesNotMatch(exactBlockFor(css, '.bento-table th'), /text-transform:\s*uppercase/);
   assert.match(exactBlockFor(css, '.bento-table th'), /letter-spacing:\s*0/);
   assert.match(blockFor(css, '.bento-alert-danger'), /background:\s*linear-gradient\(145deg,\s*rgb\(var\(--bento-danger-rgb\) \/ \.18\)/);
