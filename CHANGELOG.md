@@ -4,6 +4,8 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.4.1] - 2026-09-20
+
 ### Added
 
 - Added five gap-filling shared color themes—`signal-yellow`, `botanical-green`, `cobalt-electric`, `stone-graphite`, and `walnut-clay`—with complete light, dark, and contrast role sets.
