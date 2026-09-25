@@ -7,13 +7,13 @@
 
 It is separate from, but complementary to, **Interactive Surface CSS** and **Layout Style CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior. Use **Layout Style CSS** for responsive layout wrappers, grid systems, macro-structure positioning, and container scaffolding.
 
-## Current release
+## Current release candidate
 
-Version `v2.4.1` adds Signal Yellow, Botanical Green, Cobalt Electric, Stone Graphite, and Walnut Clay, bringing the registry to 25 shared color themes. Every added theme includes light, dark, and contrast modes, while existing palettes, selectors, and default/focused/visual/bridge entrypoints remain compatible.
+Version `v2.4.2` is a compatibility patch candidate for consumer-owned responsive geometry. It adds focused proof for 320-390px semantic cards, short-height sticky and internally scrolling regions, wide tables, long content, native controls, and neutral or subtle icon-only actions without changing the public selector or variant API.
 
-The available browser matrix now covers 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). Signal Yellow keeps its vivid yellow fills while using readable light-mode ink across prefixed and semantic components.
+The available browser matrix continues to cover 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). The `v2.4.1` theme additions and Signal Yellow contrast corrections remain unchanged.
 
-The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.4.1 release notes](docs/RELEASE-2.4.1.md) for the current scope and verification boundaries.
+The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.4.2 release notes](docs/RELEASE-2.4.2.md) for the current candidate scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -56,11 +56,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.4.1` | current release target | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.7.0` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@3.1.0` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.4.2` | current release candidate | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.7.1` | compatible state candidate | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.2.1` | compatible structural candidate | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.4.1` is the current release target and is verified with Interactive Surface `1.7.0`. Layout Style `3.1.0` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.4.2` is the current release candidate and is locally aligned with Interactive Surface `1.7.1`. Layout Style `3.2.1` is the compatible structural candidate. These exact candidate versions are not represented as published registry releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -170,7 +170,7 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
 | `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1994 KB | ~381 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~1977 KB | ~379 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/visual.min.css` | ~1978 KB | ~379 KB | Runtime visual switching with consumer-owned layout |
 | `ui-style-kit-css/with-bridge.css` | ~2327 KB | ~402 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |

@@ -448,7 +448,7 @@
 .deco-input::placeholder, .deco-textarea::placeholder { color: var(--deco-text-muted); opacity: .82; }
 .deco-input:hover, .deco-textarea:hover, .deco-select:hover { border-color: rgb(var(--deco-primary-rgb) / .58); }
 .deco-input:focus, .deco-textarea:focus, .deco-select:focus { border-color: var(--deco-focus); box-shadow: var(--deco-focus-ring); }
-.deco-help-text { color: var(--deco-text-muted); font-size: .875rem; line-height: 1.45; }
+.deco-help-text { color: var(--deco-text); font-size: .875rem; line-height: 1.45; }
 
 /* Checkbox / Radio */
 .deco-check, .deco-radio { display: inline-flex; align-items: center; gap: var(--deco-space-2); color: var(--deco-text); cursor: pointer; }
@@ -1877,7 +1877,8 @@
 .deco-button, .deco-icon-button { position: relative; isolation: isolate; min-height: 36px; min-block-size: 36px; min-inline-size: 0; padding: 8px 14px; border: 0; border-radius: 0; clip-path: none; background: var(--deco-surface); color: var(--deco-text); box-shadow: none; font: 500 12px/1.2 var(--deco-font-control); letter-spacing: 0; text-transform: uppercase; gap: 8px; }
 .deco-button::before, .deco-icon-button::before { content: ""; position: absolute; inset: 0; z-index: 0; background: var(--deco-metal); border: 0; pointer-events: none; clip-path: polygon(evenodd, 7px 0, calc(100% - 7px) 0, calc(100% - 7px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 7px) calc(100% - 3px), calc(100% - 7px) 100%, 7px 100%, 7px calc(100% - 3px), 0 calc(100% - 3px), 0 3px, 7px 3px, 7px 0, 8px 1px, 8px 4px, 1px 4px, 1px calc(100% - 4px), 8px calc(100% - 4px), 8px calc(100% - 1px), calc(100% - 8px) calc(100% - 1px), calc(100% - 8px) calc(100% - 4px), calc(100% - 1px) calc(100% - 4px), calc(100% - 1px) 4px, calc(100% - 8px) 4px, calc(100% - 8px) 1px, 8px 1px, 7px 0); }
 .deco-button, .deco-icon-button { background-color: transparent; clip-path: var(--deco-step-sm); }
-.deco-button { min-inline-size: 12rem; }
+/** Caps the 12rem Deco action measure when text zoom leaves a narrower flex line. */
+.deco-button { min-inline-size: min(100%, 12rem); max-inline-size: 100%; }
 .deco-button:focus-visible, .deco-icon-button:focus-visible { outline-offset: -6px; }
 .deco-button-primary { background-color: var(--deco-jewel-primary); color: var(--deco-jewel-on); }
 .deco-button-secondary { background-color: var(--deco-jewel-secondary); color: var(--deco-jewel-on); }

@@ -4,6 +4,28 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.4.2] - 2026-09-24
+
+### Changed
+
+- Aligned the local candidate matrix with `interactive-surface-css@1.7.1` and `layout-style-css@3.2.1` while retaining the published minimum support floor.
+- Expanded migration guidance for preset-prefixed hooks, preset-private tokens, and legacy `variant-*` state classes without adding a public variant API.
+- Restored Organic Modern's authored select indicator, preserved Y2K's indicator through its late field material, aligned Retro Glass info icons with their semantic status color, and strengthened small Art Deco copy over layered dark cards.
+- Scoped Bento's retained Soft Mosaic tokens to its sheet, and restored state-specific specificity for its invalid and read-only controls.
+- Capped Art Deco's 12rem action measure at the available flex width so 200% text zoom remains contained.
+- Preserved distinct Y2K invalid and read-only paint for both prefixed and unclassed native fields after its late bevel reset.
+
+### Tests
+
+- Added focused Chromium coverage for semantic cards at 320px and 390px with native controls, long content, internally scrolling wide tables, and icon-only actions.
+- Added a short-height fixture proving consumer-owned sticky positioning and internal scrolling survive the visual bundle.
+- Added representative preset coverage proving icon-only actions retain neutral or subtle paint rather than inheriting primary action treatment.
+- Added an exact-version coordinated-candidate preflight so unpublished local companion packages can be verified without weakening the registry-backed minimum matrix.
+- Made WebKit's exhaustive Neumorphism pass use an engine-appropriate timeout and sampled Technical Blueprint connector geometry atomically to avoid cross-frame reflow noise.
+- Refreshed the fixed visual baselines after the verified identity corrections and calibrated pairwise comparison floors against the closest valid preset pairs.
+- Extended the visual state probes to include material-bearing pseudo-elements, covering Neo Noir's themed and pressed action faces.
+- Verified the complete 4,500-case preset, theme, mode, and browser matrix with resumable one-case recovery for the Y2K state regression.
+
 ## [2.4.1] - 2026-09-20
 
 ### Added

@@ -272,8 +272,8 @@ test('Neumorphism light controls keep a visible three-to-one boundary', async ({
   }
 });
 
-test('Neumorphism role controls stay readable across every theme and mode', async ({ page }) => {
-  test.setTimeout(90_000);
+test('Neumorphism role controls stay readable across every theme and mode', async ({ page, browserName }) => {
+  test.setTimeout(browserName === 'webkit' ? 150_000 : 90_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(demoUrl);
   await page.selectOption('#uiSelect', 'neumorphism');

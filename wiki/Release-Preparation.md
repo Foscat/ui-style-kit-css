@@ -1,12 +1,12 @@
 # Release Preparation
 
-The current local target is `ui-style-kit-css@2.4.1`. The package version, lockfile,
+The current local target is `ui-style-kit-css@2.4.2`. The package version, lockfile,
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
-The release adds five shared themes with complete light, dark, and contrast palettes,
-including readable Signal Yellow foreground treatment. Existing native palettes,
-default, visual, focused, and optional bridge compositions remain supported.
+The patch candidate adds focused consumer-geometry and migration regression proof.
+It retains the 25-theme inventory, existing native palettes, default, visual,
+focused, and optional bridge compositions without adding public API.
 
 Run focused regressions during development. At final verification, rebuild assets,
 check CSS lint, documented imports, semantic contracts, contrast, compatibility,
