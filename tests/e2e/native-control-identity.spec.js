@@ -65,7 +65,7 @@ test('all presets expose complete unique rendered native-control identities', as
       expect(evidence.signature, `${id} should resolve ${token}`).not.toContain(`${token}:;`);
     }
     expect(signatures.has(evidence.signature), `${id} duplicates ${signatures.get(evidence.signature) ?? 'another preset'}`).toBe(false);
-    expect(evidence.select.background).not.toBe('none');
+    expect(evidence.select.background, `${id} should render a select indicator`).not.toBe('none');
     expect(evidence.range.blockSize).not.toBe('0px');
     expect(evidence.progress.blockSize).not.toBe('0px');
     expect(evidence.choice.blockSize).not.toBe('0px');

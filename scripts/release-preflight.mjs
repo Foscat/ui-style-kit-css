@@ -15,24 +15,42 @@ const packageKeys = {
   'layout-style-css': 'layout'
 };
 
+/**
+ * Verifies every compatibility version that is not an exact coordinated local candidate.
+ *
+ * @param {object} contract - The authoritative ecosystem compatibility contract.
+ * @param {object} [options] - Registry and candidate-selection options.
+ * @param {string} [options.registryUrl] - Registry base URL used for exact version lookups.
+ * @param {string|null} [options.candidatePackage] - Primary unpublished candidate package name.
+ * @param {string|null} [options.candidateVersion] - Primary unpublished candidate version.
+ * @param {Record<string, string>} [options.candidateVersions] - Exact companion candidate versions keyed by package name.
+ * @returns {Promise<void>} Resolves after all required registry versions are verified.
+ */
 export async function verifyPublishedVersions(
   contract,
   {
     registryUrl = 'https://registry.npmjs.org',
     candidatePackage = null,
-    candidateVersion = null
+    candidateVersion = null,
+    candidateVersions = {}
   } = {}
 ) {
   const queries = new Map();
   const documentedCandidateCurrent = contract.supportedCombinations?.current?.[candidatePackage];
-  // Only the exact release candidate may be absent before its first publish.
+  // Only exact current-matrix candidates may be absent before their first publish.
   const excludedCandidate = candidateVersion === documentedCandidateCurrent
     ? `${candidatePackage}@${candidateVersion}`
     : null;
+  const excludedCandidates = new Set(excludedCandidate ? [excludedCandidate] : []);
+  for (const [packageName, version] of Object.entries(candidateVersions)) {
+    if (contract.supportedCombinations?.current?.[packageName] === version) {
+      excludedCandidates.add(`${packageName}@${version}`);
+    }
+  }
   for (const combination of Object.values(contract.supportedCombinations ?? {})) {
     for (const [packageName, version] of Object.entries(combination)) {
       const packageVersion = `${packageName}@${version}`;
-      if (packageVersion !== excludedCandidate) {
+      if (!excludedCandidates.has(packageVersion)) {
         queries.set(packageVersion, { packageName, version });
       }
     }
@@ -201,11 +219,33 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
     `${candidatePackage} candidate version must equal the documented current version.`
   );
 
+  const coordinatedCandidateVersions = {};
+  for (const companionRoot of options.companionCandidateRoots ?? []) {
+    const resolvedCompanionRoot = path.resolve(companionRoot);
+    const companionPackageJson = readJson(path.join(resolvedCompanionRoot, 'package.json'));
+    const companionManifest = readJson(path.join(resolvedCompanionRoot, 'manifest.json'));
+    schema.validateSharedManifest(companionManifest);
+    assert.ok(packageKeys[companionPackageJson.name], `Unsupported companion candidate package: ${companionPackageJson.name}`);
+    assert.equal(companionManifest.name, companionPackageJson.name, 'Companion manifest name must match package.json.');
+    assert.equal(companionManifest.version, companionPackageJson.version, 'Companion manifest version must match package.json.');
+    assert.equal(
+      companionPackageJson.version,
+      contract.supportedCombinations.current[companionPackageJson.name],
+      `${companionPackageJson.name} companion version must equal the documented current version.`
+    );
+    assert.ok(
+      !Object.hasOwn(coordinatedCandidateVersions, companionPackageJson.name),
+      `Duplicate companion candidate package: ${companionPackageJson.name}`
+    );
+    coordinatedCandidateVersions[companionPackageJson.name] = companionPackageJson.version;
+  }
+
   validateRepositoryWorkflows(candidateRoot, candidatePackage);
   await verifyPublishedVersions(contract, {
     registryUrl: options.registryUrl,
     candidatePackage: activeCandidatePackage,
-    candidateVersion: activeCandidatePackage ? candidatePackageJson.version : null
+    candidateVersion: activeCandidatePackage ? candidatePackageJson.version : null,
+    candidateVersions: coordinatedCandidateVersions
   });
 
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), tempPrefix));
@@ -246,12 +286,25 @@ export async function runReleasePreflight(rawArgs = process.argv.slice(2)) {
  * Parses release-preflight command-line options without inferring companion sources.
  *
  * @param {string[]} args - Command-line arguments following the script name.
- * @returns {Record<string, string | boolean>} Normalized release-preflight options.
+ * @returns {Record<string, string | boolean | string[]>} Normalized release-preflight options.
+ */
+/**
+ * Parses release-preflight command-line options without broadening candidate exemptions.
+ *
+ * @param {string[]} args - Command-line arguments excluding the Node executable and script path.
+ * @returns {{skipCleanInstall: boolean, candidatePackage: string|null, companionCandidateRoots?: string[]}} Parsed options.
  */
 export function parseArgs(args) {
   const parsed = { skipCleanInstall: false };
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
+    if (arg === '--companion-candidate-root') {
+      const value = args[(index += 1)];
+      if (!value || value.startsWith('--')) throw new Error(`${arg} requires a value.`);
+      parsed.companionCandidateRoots ??= [];
+      parsed.companionCandidateRoots.push(value);
+      continue;
+    }
     const optionNames = {
       '--fixture-root': 'fixtureRoot',
       '--candidate-root': 'candidateRoot',

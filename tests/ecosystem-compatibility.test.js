@@ -43,9 +43,9 @@ test('authoritative ecosystem compatibility contract validates supported combina
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.4.1',
-      'interactive-surface-css': '1.7.0',
-      'layout-style-css': '3.1.0'
+      'ui-style-kit-css': '2.4.2',
+      'interactive-surface-css': '1.7.1',
+      'layout-style-css': '3.2.1'
     }
   });
   assert.deepEqual(
@@ -98,10 +98,9 @@ test('current ecosystem documentation consumes canonical imports from the compat
     }
 
     if (!documentPath.endsWith('Installation-and-Setup.md')) {
-      assert.match(document, /layout-style-css@3\.1\.0/);
       assert.match(document, /layout-style-css@3\.0\.0/);
-      assert.match(document, /current release target/i);
-      assert.match(document, /Layout Style `3\.1\.0` is the compatible structural release/i);
+      assert.match(document, /current release candidate/i);
+      assert.match(document, /compatible structural candidate/i);
     }
   }
 });

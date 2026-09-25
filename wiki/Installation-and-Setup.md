@@ -1,6 +1,6 @@
 # Installation and Setup
 
-These instructions target UI Style Kit CSS `v2.4.1` and its backward-compatible v2 entrypoints.
+These instructions target the UI Style Kit CSS `v2.4.2` release candidate and its backward-compatible v2 entrypoints.
 
 ## Install
 
