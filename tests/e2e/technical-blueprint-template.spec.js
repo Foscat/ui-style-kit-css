@@ -89,14 +89,19 @@ test('Technical Blueprint annotation geometry keeps loaders and status markers a
         expect.soft(geometry.occupied, `${context}: loader and label fit`).toBeLessThanOrEqual(geometry.available + 1);
         expect.soft(geometry.width, `${context}: loading column is wider`).toBeGreaterThan(geometry.normal);
       }
-      const stepper = root.locator('.blueprint-stepper');
-      const lineCenter = await stepper.evaluate((node) => {
+      const alignment = await root.locator('.blueprint-stepper').evaluate((node) => {
         const line = getComputedStyle(node, '::before');
-        return node.getBoundingClientRect().top + parseFloat(line.top) + parseFloat(line.height) / 2;
+        const rootBounds = node.getBoundingClientRect();
+        return {
+          lineCenter: parseFloat(line.top) + parseFloat(line.height) / 2,
+          markerCenters: [...node.querySelectorAll('.blueprint-step > b')].map((marker) => {
+            const markerBounds = marker.getBoundingClientRect();
+            return markerBounds.top - rootBounds.top + markerBounds.height / 2;
+          })
+        };
       });
-      for (const marker of await stepper.locator('.blueprint-step > b').all()) {
-        const box = await marker.boundingBox();
-        expect.soft(Math.abs(box.y + box.height / 2 - lineCenter), `${context}: marker centered on connector`).toBeLessThanOrEqual(1);
+      for (const markerCenter of alignment.markerCenters) {
+        expect.soft(Math.abs(markerCenter - alignment.lineCenter), `${context}: marker centered on connector`).toBeLessThanOrEqual(1);
       }
       const toast = root.locator('.blueprint-toast');
       const outer = await toast.boundingBox();

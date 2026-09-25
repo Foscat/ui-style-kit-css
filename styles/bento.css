@@ -882,8 +882,8 @@
 
 @layer ui-style-kit.bento {
 /* Keeps semantic field states above preset-specific material paint. */
-.bento-input[aria-invalid="true"], .bento-textarea[aria-invalid="true"], .bento-select[aria-invalid="true"] { border-color: var(--bento-danger); box-shadow: 0 0 0 2px rgb(var(--bento-danger-rgb) / .18); }
-.bento-input[readonly], .bento-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+[data-ui="bento"][data-mode] :is(.bento-input, .bento-textarea, .bento-select)[aria-invalid="true"] { border-color: var(--bento-danger); box-shadow: 0 0 0 2px rgb(var(--bento-danger-rgb) / .18); }
+[data-ui="bento"][data-mode] :is(.bento-input, .bento-textarea)[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
 }
 
 @layer ui-style-kit.bento {
@@ -1520,7 +1520,12 @@
   --bento-fallback-focus-rgb: 122 107 233;
   --bento-success-ink: var(--bento-success);
 }
-[data-ui="bento"][data-mode] {
+/**
+ * Keeps Soft Mosaic reference overrides inside the retained reference sheet.
+ * The canonical Bento and native-element tokens continue to use the public
+ * preset material outside that specimen.
+ */
+[data-ui="bento"][data-mode] .bento-sheet {
   --bento-panel-alpha: 1;
   --bento-panel-soft-alpha: 1;
   --bento-border-alpha: 1;

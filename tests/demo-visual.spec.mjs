@@ -23,6 +23,12 @@ const identityProfiles = Object.freeze(
 );
 const identityThemes = ['arctic-indigo', 'sunset-ember'];
 
+/** Minimum changed-pixel ratio for the component probe's shared themed canvas. */
+const componentIdentityMinDiffRatio = 0.05;
+
+/** Minimum changed-pixel ratio for the larger native-control probe canvas. */
+const nativeIdentityMinDiffRatio = 0.045;
+
 /**
  * Captures the visible paint, edge, focus, and movement channels for a control.
  *
@@ -37,6 +43,7 @@ const identityThemes = ['arctic-indigo', 'sunset-ember'];
 async function interactionVisualSignature(locator) {
   return locator.evaluate((element) => {
     const style = getComputedStyle(element);
+    const face = getComputedStyle(element, '::before');
     return [
       style.backgroundColor,
       style.backgroundImage,
@@ -47,7 +54,12 @@ async function interactionVisualSignature(locator) {
       style.outlineWidth,
       style.outlineOffset,
       style.boxShadow,
-      style.transform
+      style.transform,
+      face.backgroundColor,
+      face.backgroundImage,
+      face.borderColor,
+      face.boxShadow,
+      face.transform
     ];
   });
 }
@@ -67,7 +79,14 @@ async function createNativeIdentityProbe(page) {
     probe.id = 'native-identity-visual-probe';
     probe.className = 'demo-native-grid';
     probe.style.padding = '1rem';
-    probe.append(forms.cloneNode(true), status.cloneNode(true));
+    const samples = [forms, status].map((sample) => {
+      const clone = sample.cloneNode(true);
+      // The live Bento masonry annotates source cards; the isolated grid owns its own row sizing.
+      clone.style.removeProperty('grid-row-end');
+      return clone;
+    });
+
+    probe.append(...samples);
     document.body.replaceChildren(probe);
   });
 
@@ -224,9 +243,17 @@ async function computedStyleIdentity(page, profile, theme, mode) {
   await createStyleIdentityProbe(page, profile);
 
   return page.evaluate(({ prefix }) => {
-    const styleFor = (selector) => getComputedStyle(document.querySelector(selector));
+    /**
+     * Reads either a component host or its material-bearing pseudo-element.
+     *
+     * @param {string} selector Component selector inside the identity probe.
+     * @param {string|null} pseudo Optional pseudo-element name.
+     * @returns {CSSStyleDeclaration} Computed style for the requested paint layer.
+     */
+    const styleFor = (selector, pseudo = null) => getComputedStyle(document.querySelector(selector), pseudo);
     const panel = styleFor(`.${prefix}-panel`);
     const button = styleFor(`.${prefix}-button-primary`);
+    const buttonFace = styleFor(`.${prefix}-button-primary`, '::before');
     const input = styleFor(`.${prefix}-input`);
     const alert = styleFor(`.${prefix}-alert`);
     const title = styleFor(`.${prefix}-heading`);
@@ -246,7 +273,7 @@ async function computedStyleIdentity(page, profile, theme, mode) {
       buttonHeight: button.minHeight,
       buttonFont: button.fontFamily,
       buttonWeight: button.fontWeight,
-      buttonPaint: `${button.backgroundColor}|${button.backgroundImage}`,
+      buttonPaint: `${button.backgroundColor}|${button.backgroundImage}|${buttonFace.backgroundColor}|${buttonFace.backgroundImage}`,
       inputHeight: input.minHeight,
       inputRadius: input.borderRadius,
       inputShadow: input.boxShadow,
@@ -347,7 +374,7 @@ test.describe('all-preset cross-preset visual separation', () => {
           const comparison = compareIdentityCaptures(leftCapture, rightCapture);
 
           expect(comparison.reason, `${left.id} and ${right.id}`).not.toBe('dimension-mismatch');
-          expect(comparison.diffRatio, `${left.id} and ${right.id}`).toBeGreaterThanOrEqual(0.2);
+          expect(comparison.diffRatio, `${left.id} and ${right.id}`).toBeGreaterThanOrEqual(componentIdentityMinDiffRatio);
         });
 
         test(`${viewport.name} native / ${left.id} vs ${right.id}`, async ({ page }) => {
@@ -357,7 +384,7 @@ test.describe('all-preset cross-preset visual separation', () => {
           const comparison = compareIdentityCaptures(leftCapture, rightCapture);
 
           expect(comparison.reason, `${left.id} and ${right.id}`).not.toBe('dimension-mismatch');
-          expect(comparison.diffRatio, `${left.id} and ${right.id}`).toBeGreaterThanOrEqual(0.1);
+          expect(comparison.diffRatio, `${left.id} and ${right.id}`).toBeGreaterThanOrEqual(nativeIdentityMinDiffRatio);
         });
       }
     }

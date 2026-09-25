@@ -823,8 +823,8 @@
 
 @layer ui-style-kit.y2k {
 /* Keeps semantic field states above preset-specific material paint. */
-.y2k-input[aria-invalid="true"], .y2k-textarea[aria-invalid="true"], .y2k-select[aria-invalid="true"] { border-color: var(--y2k-danger); box-shadow: 0 0 0 2px rgb(var(--y2k-danger-rgb) / .2); }
-.y2k-input[readonly], .y2k-textarea[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
+[data-ui="y2k"][data-mode] :is(.y2k-input, .y2k-textarea, .y2k-select)[aria-invalid="true"] { border-color: var(--y2k-danger); box-shadow: 0 0 0 2px rgb(var(--y2k-danger-rgb) / .2); }
+[data-ui="y2k"][data-mode] :is(.y2k-input, .y2k-textarea)[readonly] { border-style: dashed; filter: saturate(.72); opacity: .78; }
 /* Restores semantic action paint after identity-specific geometry. */
 .y2k-button-primary { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .46), transparent 52%), var(--y2k-primary); color: var(--y2k-on-primary); border-color: var(--y2k-primary); }
 .y2k-button-secondary { background: linear-gradient(180deg, rgb(var(--y2k-surface-strong-rgb) / .42), transparent 52%), var(--y2k-secondary); color: var(--y2k-on-secondary); border-color: var(--y2k-secondary); }
@@ -1413,7 +1413,7 @@
   min-block-size: 1.375rem;
   padding: .125rem .375rem;
   color: var(--y2k-text);
-  background: var(--y2k-surface);
+  background-color: var(--y2k-surface);
   border: 1px inset var(--y2k-border);
   border-radius: 0;
   box-shadow: var(--y2k-bevel-recessed);
@@ -1486,4 +1486,18 @@
 [data-ui="y2k"][data-mode] :is(input, select, textarea):focus-visible {
   outline: 2px dotted #d21212;
   outline-offset: 2px;
+}
+
+/** Keeps unclassed invalid fields visibly semantic after the late bevel reset. */
+[data-ui="y2k"][data-mode] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea, select)[aria-invalid="true"] {
+  border-color: var(--y2k-danger);
+  box-shadow: var(--y2k-bevel-recessed), 0 0 0 2px rgb(var(--y2k-danger-rgb) / .24);
+}
+
+/** Keeps read-only native fields distinct from invalid and editable controls. */
+[data-ui="y2k"][data-mode] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea)[readonly] {
+  background-color: var(--y2k-surface-soft);
+  border-style: dashed;
+  filter: saturate(.72);
+  opacity: .78;
 }
