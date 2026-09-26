@@ -18,19 +18,28 @@ function countPolygonVertices(clipPath) {
 }
 
 /**
- * Finds the visual center of the warm-ivory check glyph in a rendered control.
+ * Finds the visual center of the warm-ivory check glyph while excluding the
+ * control perimeter, whose metal border can share the glyph's color range.
  *
  * @param {Buffer} buffer Element screenshot encoded as PNG.
  * @returns {{ horizontalOffset: number, verticalOffset: number, horizontalDelta: number, verticalDelta: number }} Pixel-center offsets and signed deltas from the control center.
  */
 function readCheckGlyphOffset(buffer) {
   const image = PNG.sync.read(buffer);
+  const perimeterInset = Math.round(Math.min(image.width, image.height) * .19);
   let weightedX = 0;
   let weightedY = 0;
   let pixelCount = 0;
 
   for (let y = 0; y < image.height; y += 1) {
     for (let x = 0; x < image.width; x += 1) {
+      if (
+        x < perimeterInset ||
+        y < perimeterInset ||
+        x >= image.width - perimeterInset ||
+        y >= image.height - perimeterInset
+      ) continue;
+
       const offset = (y * image.width + x) * 4;
       const red = image.data[offset];
       const green = image.data[offset + 1];

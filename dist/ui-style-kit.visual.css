@@ -45629,7 +45629,7 @@
     position: absolute;
     inset-block-start: 50%;
     inset-inline-start: 50%;
-    transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
 
   .deco-progress, :where([data-ui="art-deco"]) .ui-progress {
@@ -46617,22 +46617,6 @@
 
   .deco-check input:checked + .deco-check-control:after, :where([data-ui="art-deco"]) .ui-check input:checked+.ui-check-control:after {
     color: var(--deco-on-secondary);
-  }
-
-  :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"]):after {
-    transform: translate(calc(-50% - 5px), calc(-62% - .75px)) rotate(-45deg);
-  }
-
-  @supports ((-moz-appearance: none)) {
-    :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"]):after {
-      transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
-    }
-  }
-
-  @supports ((-webkit-hyphens: none)) {
-    .deco-check input:checked + .deco-check-control:after, :where([data-ui="art-deco"]) .ui-check input:checked+.ui-check-control:after {
-      transform: translate(calc(-50% - 5px), calc(3px - 62%)) rotate(-45deg);
-    }
   }
 
   .deco-radio input:checked + .deco-radio-control:after, :where([data-ui="art-deco"]) .ui-radio input:checked+.ui-radio-control:after {

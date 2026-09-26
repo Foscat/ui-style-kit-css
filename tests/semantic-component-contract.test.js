@@ -601,12 +601,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   /** Reviewed 25-theme output includes text-ink fallbacks and preserves other declarations. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36520,
-    sha256: 'fb683d7c968e48ba817c5b447a2c3b7ff40235860093d0a468229ee4ea251774'
+    count: 36517,
+    sha256: '026888addc76df691d3f8ca1aa9e7c614f508c4b3fc4583268a79a437088aa93'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 36971,
-    sha256: 'e805bc4bada863e88425123fae4e7bf8b556084c74af3b90d54bcc4c0cfd2cc0'
+    count: 36968,
+    sha256: 'd78b06639e984f4805f61800a92d47bc3ea7cb0e785a182a555d27b40c9f7f9a'
   });
 });
 
