@@ -7,13 +7,13 @@
 
 It is separate from, but complementary to, **Interactive Surface CSS** and **Layout Style CSS**. Use **UI Style Kit CSS** for visual identity, color themes, UI presets, layout mood, and native HTML styling. Use **Interactive Surface CSS** for interaction-state animation systems and surface behavior. Use **Layout Style CSS** for responsive layout wrappers, grid systems, macro-structure positioning, and container scaffolding.
 
-## Current release candidate
+## Current release
 
-Version `v2.4.2` is a compatibility patch candidate for consumer-owned responsive geometry. It adds focused proof for 320-390px semantic cards, short-height sticky and internally scrolling regions, wide tables, long content, native controls, and neutral or subtle icon-only actions without changing the public selector or variant API.
+Version `v2.5.0` is a backward-compatible semantic-component release. It promotes reusable tabs, pagination, breadcrumb, skeleton, empty-state, metric, chip, avatar, stepper, toast, popover, menu, segmented-control, file-upload, dropzone, and listbox patterns into the stable `.ui-*` API while preserving preset-owned paint.
 
 The available browser matrix continues to cover 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). The `v2.4.1` theme additions and Signal Yellow contrast corrections remain unchanged.
 
-The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.4.2 release notes](docs/RELEASE-2.4.2.md) for the current candidate scope and verification boundaries.
+The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.5.0 release notes](docs/RELEASE-2.5.0.md) for the release scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -56,11 +56,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.4.2` | current release candidate | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.7.1` | compatible state candidate | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@3.2.1` | compatible structural candidate | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.5.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.4.2` is the current release candidate and is locally aligned with Interactive Surface `1.7.1`. Layout Style `3.2.1` is the compatible structural candidate. These exact candidate versions are not represented as published registry releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.5.0` is the current release and is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -115,7 +115,7 @@ Use the generated default bundle for semantic components that can switch across 
 import "ui-style-kit-css";
 ```
 
-Use `ui-style-kit-css/visual.css` for the same 29-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 20 `data-ui` values.
+Use `ui-style-kit-css/visual.css` for the same 75-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 20 `data-ui` values.
 
 Applications fixed to one preset can use a generated focused visual entrypoint. It includes semantic aliases scoped to that preset only:
 
@@ -169,15 +169,15 @@ When the bridge is attached, add `.interactive-surface` to interactable elements
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~1994 KB | ~381 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~1978 KB | ~379 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2327 KB | ~402 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2151 KB | ~394 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~2135 KB | ~392 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2494 KB | ~418 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~219 KB | ~32 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
-| `ui-style-kit-css/visual/industrial-utility.css` | ~291 KB | ~41 KB | Focused Industrial Utility, including its instrumentation styles |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~334 KB | ~43 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~409 KB | ~53 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 
@@ -234,7 +234,7 @@ The demo labels this choice **None — style defaults**. Do not assign the liter
 
 ## Semantic component API
 
-`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 29 selectors keep the same class names while `data-ui` changes across all 20 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 27 generated semantic aliases, and an empty pending set.
+`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 75 selectors keep the same class names while `data-ui` changes across all 20 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 73 generated semantic aliases, and an empty pending set.
 
 | Role | Generic selectors | Switching coverage |
 |---|---|---|
@@ -248,15 +248,34 @@ The demo labels this choice **None — style defaults**. Do not assign the liter
 | Table | `.ui-table`, `.ui-table-wrap` | all 20 presets |
 | Progress | `.ui-progress`, `.ui-progress-bar` | all 20 presets |
 | Toolbar | `.ui-toolbar` | all 20 presets |
+| Tabs | `.ui-tabs`, `.ui-tab-list`, `.ui-tab`, `.ui-tab-panel` | all 20 presets |
+| Pagination | `.ui-pagination`, `.ui-pagination-item`, `.ui-pagination-link` | all 20 presets |
+| Breadcrumb | `.ui-breadcrumb`, `.ui-breadcrumb-list`, `.ui-breadcrumb-item`, `.ui-breadcrumb-link`, `.ui-breadcrumb-separator` | all 20 presets |
+| Skeleton | `.ui-skeleton` | all 20 presets |
+| Empty state | `.ui-empty-state`, `.ui-empty-state-icon`, `.ui-empty-state-title`, `.ui-empty-state-body`, `.ui-empty-state-actions` | all 20 presets |
+| Metric | `.ui-metric`, `.ui-metric-label`, `.ui-metric-value`, `.ui-metric-detail` | all 20 presets |
+| Chip | `.ui-chip`, `.ui-chip-group` | all 20 presets |
+| Avatar | `.ui-avatar`, `.ui-avatar-group` | all 20 presets |
+| Stepper | `.ui-stepper`, `.ui-step`, `.ui-step-marker`, `.ui-step-label` | all 20 presets |
+| Toast | `.ui-toast-stack`, `.ui-toast`, `.ui-toast-title`, `.ui-toast-body`, `.ui-toast-actions` | all 20 presets |
+| Popover | `.ui-popover` | all 20 presets |
+| Menu | `.ui-menu`, `.ui-menu-item`, `.ui-menu-group`, `.ui-menu-separator` | all 20 presets |
+| Segmented control | `.ui-segmented-control`, `.ui-segment` | all 20 presets |
+| File upload | `.ui-file-upload`, `.ui-dropzone` | all 20 presets |
+| Listbox | `.ui-listbox`, `.ui-listbox-option` | all 20 presets |
 | Existing generic hooks | `.ui-spinner`, `.ui-tooltip` | all 20 presets |
 
-The only new attribute is context-constrained `data-ui-variant`. Omit it for the neutral treatment.
+Semantic paint variants use context-constrained `data-ui-variant`. Omit it for the neutral treatment.
 
 | Selector | `data-ui-variant` values |
 |---|---|
-| `.ui-button` | `primary`, `secondary`, `danger`, `ghost` |
+| `.ui-button` | `primary`, `secondary`, `warning`, `danger`, `ghost` |
 | `.ui-badge` | `primary`, `secondary`, `success`, `warning`, `danger` |
 | `.ui-alert` | `success`, `warning`, `danger` |
+| `.ui-chip` | `primary`, `secondary`, `success`, `warning`, `danger` |
+| `.ui-toast` | `info`, `success`, `warning`, `danger` |
+
+Skeleton shape uses `data-shape="text|circle|block"`. Step workflow presentation uses `data-state="complete|current|upcoming|error"`; React and application code remain responsible for behavior and ARIA state.
 
 ```html
 <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">

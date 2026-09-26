@@ -1,6 +1,6 @@
 # UI Systems
 
-UI Style Kit CSS `v2.4.2` retains 20 style systems and 25 shared themes with a shared mode model plus complete preset-specific native-control identities.
+UI Style Kit CSS `v2.5.0` retains 20 style systems and 25 shared themes with a shared mode model plus complete preset-specific native-control identities.
 
 All UI systems support the shared `styles/theme-colors.css` layer and provide native light/dark/contrast palettes when `data-theme` is absent. Individual UI files define texture, typography, component treatment, and palette aliases while retaining the shared-token contract.
 

@@ -33,10 +33,33 @@ export const semanticComponentMarkup = `
   <div class="ui-toolbar" role="toolbar" aria-label="Contract toolbar"></div>
   <span class="ui-spinner" aria-label="Loading"></span>
   <span class="ui-tooltip">Tooltip</span>
+  <div class="ui-tabs">
+    <div class="ui-tab-list" role="tablist"><button class="ui-tab" role="tab" aria-selected="true">Overview</button></div>
+    <section class="ui-tab-panel" role="tabpanel">Tab panel</section>
+  </div>
+  <nav aria-label="Pagination"><ul class="ui-pagination"><li class="ui-pagination-item"><a class="ui-pagination-link" href="#semantic-table" aria-current="page">1</a></li></ul></nav>
+  <nav class="ui-breadcrumb" aria-label="Breadcrumb"><ol class="ui-breadcrumb-list"><li class="ui-breadcrumb-item"><a class="ui-breadcrumb-link" href="#semantic-table">Home</a><span class="ui-breadcrumb-separator" aria-hidden="true">/</span></li></ol></nav>
+  <span class="ui-skeleton" data-shape="text" aria-hidden="true"></span>
+  <section class="ui-empty-state"><span class="ui-empty-state-icon" aria-hidden="true">&#9734;</span><h2 class="ui-empty-state-title">Empty state</h2><p class="ui-empty-state-body">No records</p><div class="ui-empty-state-actions"></div></section>
+  <article class="ui-metric"><span class="ui-metric-label">Requests</span><strong class="ui-metric-value">24</strong><span class="ui-metric-detail">Today</span></article>
+  <div class="ui-chip-group"><span class="ui-chip" data-ui-variant="primary">Primary chip</span></div>
+  <div class="ui-avatar-group"><span class="ui-avatar" aria-label="Alex">A</span></div>
+  <ol class="ui-stepper"><li class="ui-step" data-state="current"><span class="ui-step-marker">1</span><span class="ui-step-label">Current step</span></li></ol>
+  <div class="ui-toast-stack"><aside class="ui-toast" data-ui-variant="info"><strong class="ui-toast-title">Toast</strong><p class="ui-toast-body">Saved</p><div class="ui-toast-actions"></div></aside></div>
+  <div class="ui-popover">Popover</div>
+  <div class="ui-menu" role="menu"><div class="ui-menu-group"><button class="ui-menu-item" role="menuitem">Action</button></div><div class="ui-menu-separator" role="separator"></div></div>
+  <div class="ui-segmented-control"><button class="ui-segment" aria-pressed="true">Grid</button></div>
+  <div class="ui-file-upload"><label class="ui-dropzone">Upload<input type="file" /></label></div>
+  <div class="ui-listbox" role="listbox"><div class="ui-listbox-option" role="option" aria-selected="true">Option</div></div>
   <dialog open>Native modal and dialog fallback</dialog>
 </section>`;
 
-// Task 11 can consume these cases directly; only the preset root value changes.
+/**
+ * Produces deterministic semantic markup for every runtime-selectable preset.
+ *
+ * @param {{presets: {id: string}[]}} manifest Public UI Style Kit manifest.
+ * @returns {{preset: string, rootAttributes: {'data-ui': string}, markup: string}[]} Runtime cases.
+ */
 export function semanticRuntimeCases(manifest) {
   return manifest.presets.map(({ id }) => ({
     preset: id,

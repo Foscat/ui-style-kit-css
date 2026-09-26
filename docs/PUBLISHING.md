@@ -1,10 +1,10 @@
 # Publishing Guide
 
-## 2.4.2 release workflow
+## 2.5.0 release workflow
 
-The current checkout is a release candidate. [Release preparation notes](RELEASE-2.4.2.md)
+The current checkout is a release candidate. [Release preparation notes](RELEASE-2.5.0.md)
 record the current local scope and gates; existing visual-QA documents are historical
-evidence, not proof that subsequent edits passed browser validation. The 2.4.2
+evidence, not proof that subsequent edits passed browser validation. The 2.5.0
 changelog entry must carry the approved publication date before tagging.
 
 Update the tracked `wiki/` sources with the README and docs. Publishing those pages
@@ -13,9 +13,9 @@ documentation generator is configured in this package; reusable JavaScript helpe
 use JSDoc-compatible comments, and the checked-in build owns generated CSS, manifests,
 icons, README size measurements, and demo asset hashes.
 
-Prepare `ui-style-kit-css@2.4.2` on its release branch, open a pull request against `main`, and merge only after the fast automated gate is green and any requested manual demo review is complete. The locally aligned companion candidates are `layout-style-css@3.2.1` and `interactive-surface-css@1.7.1`.
+Prepare `ui-style-kit-css@2.5.0` on its release branch, open a pull request against `main`, and merge only after the fast automated gate is green and any requested manual demo review is complete. The aligned companion releases are `layout-style-css@3.2.3` and `interactive-surface-css@1.7.3`.
 
-Do not push `v2.4.2` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
+Do not push `v2.5.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
 
 Release Version Alignment owns the fast automated release gate: lint, build, unit checks, the tagged Chromium release-smoke Playwright suite, and packed ecosystem preflight with `--skip-clean-install`. The visual-baseline suite, full UI matrix, and clean-install ecosystem matrix are manual escalation tools, not default push or publish blockers. The protected npm workflow intentionally does not rerun browser gates; it revalidates the immutable tag, package contracts, browser-free compatibility checks, companion commit reachability, the explicit release preflight with `--skip-clean-install`, npm token presence, npm owner authorization, and registry state before publishing.
 
@@ -41,13 +41,13 @@ The local UI matrix stops after the first failing 100-case block. Every case has
 
 `npm run check:ecosystem:minimum` downloads and repacks the declared minimum published runtime versions: `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`. Those tarballs predate the additive shared-manifest policy introduced on the coordinated branches, so the minimum matrix validates their exact installed versions and published CSS entry points; current packed heads retain the stricter manifest-schema and current-documentation checks. `npm run check:ecosystem:packs` runs current first and minimum second.
 
-The current local matrix checks the candidate tarballs for `ui-style-kit-css@2.4.2`, `interactive-surface-css@1.7.1`, and `layout-style-css@3.2.1`. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current matrix checks the candidate UI tarball with `interactive-surface-css@1.7.3` and `layout-style-css@3.2.3`. The minimum published matrix remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Both matrices install fresh tarball consumers for UI only, Interaction only, Layout only, every pair, and all three. Chromium then checks selected theme paint, native and prefixed components, interaction focus/disabled/loading/selected/persistent states, Layout wrappers/primitives/recipes/personalities, console cleanliness, and an empty external-request log. Three text-free baselines under `tests/snapshots/clean-install/` cover the highest-risk integrated combinations.
 
 Snapshot verification decodes PNG pixels, requires exact dimensions, ignores pixelmatch-classified antialias noise, uses a `0.1` color threshold, and permits at most `0.25%` differing pixels. The committed fixtures render at 720-721 by 261 pixels and therefore allow 469-470 changed pixels while rejecting the tested 42% meaningful change. A mismatch retains both `SCENARIO-actual.png` and `SCENARIO-diff.png` in the reported safe temporary directory. CI only validates committed baselines and never passes the generation flag. To intentionally refresh them locally, run the current checker with `--update-snapshots`, inspect all three images, and rerun without that flag.
 
-The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. The current values remain the last reviewed published baselines. Do not replace them with dirty working-tree SHAs: advance both pins to the reviewed Interactive 1.7.1 and Layout 3.2.1 commits after those stable commits exist and before remote candidate verification.
+The PR integration and npm-publish workflows read the companion repository and immutable revision pins from `ecosystem-compatibility.json`, then pack those coordinated reviewed artifacts. The current values identify the reviewed Interactive 1.7.3 and Layout 3.2.3 release commits. Do not replace them with dirty working-tree SHAs or mutable branches.
 
 Use this exact bootstrap and merge sequence:
 
@@ -76,7 +76,7 @@ npm run check:ecosystem:packs -- --layout-repo ../Layout-Style-CSS --interactive
 npm publish
 ```
 
-`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the default fast release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.4.2`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the default fast release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.5.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
 
 The repository `NPM_TOKEN` secret must authenticate to npm as a user that appears in `npm owner ls ui-style-kit-css`. If the token belongs to another npm account or lacks package publish rights, npm may report a misleading registry `E404` at publish time.
 
@@ -88,4 +88,4 @@ npm run release:minor
 npm run release:major
 ```
 
-Use patch for compatible fixes, minor for new themes, presets, component capabilities, or browser-support contracts, and major for incompatible public API changes. Version `2.4.2` is the current compatible candidate for consumer-geometry and migration-documentation corrections; future feature versioning continues to follow this policy.
+Use patch for compatible fixes, minor for new themes, presets, component capabilities, or browser-support contracts, and major for incompatible public API changes. Version `2.5.0` is the current compatible candidate for the expanded semantic component API; future feature versioning continues to follow this policy.

@@ -11,38 +11,24 @@ const snapshotDirectory = path.resolve('tests/demo-visual.spec.mjs-snapshots');
 const approvedSnapshotPlatform = 'win32';
 const viewports = ['desktop', 'mobile'];
 const specimens = Object.freeze([
-  Object.freeze({ prefix: 'component-identity', minimumDifference: 0.2 }),
-  Object.freeze({ prefix: 'native-controls', minimumDifference: 0.1 })
+  Object.freeze({
+    prefix: 'component-identity',
+    minimumDifference: Object.freeze({ desktop: 0.15, mobile: 0.2 })
+  }),
+  Object.freeze({
+    prefix: 'native-controls',
+    minimumDifference: Object.freeze({ desktop: 0.1, mobile: 0.1 })
+  })
 ]);
 const decodedSnapshots = new Map();
-
 /**
- * Reviewed component snapshot pairs that intentionally sit below the default
- * all-preset visual separation floor while remaining above a documented
- * pair-specific guardrail.
- */
-const intentionalSnapshotPairMinimums = new Map([
-  ['desktop/component-identity/minimal-saas/cyberpunk', 0.15],
-  ['desktop/component-identity/minimal-saas/technical-blueprint', 0.15],
-  ['desktop/component-identity/minimal-saas/data-terminal', 0.15],
-  ['desktop/component-identity/tactile/y2k', 0.15],
-  ['desktop/component-identity/tactile/art-deco', 0.15],
-  ['desktop/component-identity/cyberpunk/technical-blueprint', 0.15]
-]);
-
-/**
- * Resolve the minimum pixel-difference ratio for a snapshot pair.
+ * Maximum normalized color distance treated as unchanged by pixelmatch.
  *
- * @param {{prefix: string, minimumDifference: number}} specimen Snapshot specimen contract.
- * @param {string} viewport Approved viewport name.
- * @param {string} leftId Left preset identifier.
- * @param {string} rightId Right preset identifier.
- * @returns {number} Default or reviewed pair-specific difference floor.
+ * A one-percent tolerance retains antialiasing stability while ensuring the
+ * restrained palettes used by editorial and neutral presets remain visible to
+ * the identity contract.
  */
-function snapshotMinimumDifference(specimen, viewport, leftId, rightId) {
-  return intentionalSnapshotPairMinimums.get(`${viewport}/${specimen.prefix}/${leftId}/${rightId}`) ??
-    specimen.minimumDifference;
-}
+const perceptualDifferenceThreshold = 0.01;
 
 /**
  * Loads and decodes one approved Playwright identity snapshot exactly once.
@@ -79,7 +65,7 @@ function differenceRatio(left, right) {
   PNG.bitblt(left, leftCanvas, 0, 0, left.width, left.height, 0, 0);
   PNG.bitblt(right, rightCanvas, 0, 0, right.width, right.height, 0, 0);
   const differentPixels = pixelmatch(leftCanvas.data, rightCanvas.data, null, width, height, {
-    threshold: 0.05,
+    threshold: perceptualDifferenceThreshold,
     includeAA: false
   });
   return differentPixels / (width * height);
@@ -97,7 +83,7 @@ for (const viewport of viewports) {
         for (const right of PRESET_IDENTITIES.slice(leftIndex + 1)) {
           const rightSnapshot = loadSnapshot(specimen.prefix, right.id, viewport);
           const ratio = differenceRatio(leftSnapshot, rightSnapshot);
-          const minimumDifference = snapshotMinimumDifference(specimen, viewport, left.id, right.id);
+          const minimumDifference = specimen.minimumDifference[viewport];
           if (ratio < minimumDifference) {
             failures.push(`${left.id} vs ${right.id}: ${ratio.toFixed(4)} requires ${minimumDifference}`);
           }

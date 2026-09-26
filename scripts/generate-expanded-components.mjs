@@ -13,6 +13,20 @@ const tooltipDirections = Object.freeze({
   bottom: 'inset-block-start: calc(100% + .5rem); inset-inline-start: 50%; transform: translateX(-50%);',
   left: 'inset-inline-end: calc(100% + .5rem); inset-block-start: 50%; transform: translateY(-50%);'
 });
+const promotedSemanticSuffixes = Object.freeze([
+  'tabs', 'tab-list', 'tab', 'tab-panel',
+  'pagination', 'pagination-item', 'pagination-link',
+  'breadcrumb', 'breadcrumb-list', 'breadcrumb-item', 'breadcrumb-link',
+  'breadcrumb-separator', 'skeleton',
+  'empty-state', 'empty-state-icon', 'empty-state-title', 'empty-state-body',
+  'empty-state-actions', 'metric', 'metric-label', 'metric-value', 'metric-detail',
+  'chip', 'chip-group', 'avatar', 'avatar-group',
+  'stepper', 'step', 'step-marker', 'step-label',
+  'toast-stack', 'toast', 'toast-title', 'toast-body', 'toast-actions',
+  'popover', 'menu', 'menu-item', 'menu-group', 'menu-separator',
+  'segmented-control', 'segment', 'file-upload', 'dropzone',
+  'listbox', 'listbox-option'
+]);
 
 /**
  * Formats selectors as a stable comma-separated list.
@@ -54,8 +68,8 @@ export function renderExpandedComponents(manifest) {
     throw new TypeError('manifest.presets must contain at least one preset.');
   }
 
-  const presets = manifest.presets.filter(({ prefix }) => !originalPrefixes.has(prefix));
-  if (presets.length === 0) return `${startMarker}\n${endMarker}`;
+  const allPresets = manifest.presets;
+  const presets = allPresets.filter(({ prefix }) => !originalPrefixes.has(prefix));
 
   const buttons = classes(presets, ['button', 'icon-button', 'button-pill']);
   const buttonPills = classes(presets, ['button-pill']);
@@ -90,6 +104,7 @@ export function renderExpandedComponents(manifest) {
   const checkedTracks = presets.map(
     ({ prefix }) => `.${prefix}-switch:has(input:checked) .${prefix}-switch-track`
   );
+  const promoted = (suffixes, decorate) => classes(allPresets, suffixes, decorate);
 
   const perPreset = presets.map(({ prefix }) => `
 .${prefix}-button-pill { color: var(--${prefix}-on-primary); background: var(--${prefix}-primary); border-color: var(--${prefix}-primary); border-radius: var(--${prefix}-radius-pill); }
@@ -252,6 +267,85 @@ ${directions}
 }
 
 :where(${classes(presets, ['skip-link'], (className) => `.${className}:focus-visible`).join(', ')}) { transform: translateY(0); }
+
+/* Stable semantic component sources shared by every preset. Paint resolves
+   through each preset's --usk-native-* bridge while behavior stays in React. */
+:where(${promoted(promotedSemanticSuffixes).join(', ')}) { box-sizing: border-box; min-inline-size: 0; }
+
+:where(${promoted(['tabs']).join(', ')}) { display: grid; gap: .75rem; }
+:where(${promoted(['tab-list']).join(', ')}) { display: flex; flex-wrap: wrap; gap: .25rem; border-block-end: var(--usk-native-border-width) solid var(--usk-native-border); }
+:where(${promoted(['tab']).join(', ')}) { min-block-size: 44px; padding: .6rem .9rem; color: var(--usk-native-text-muted); background: transparent; border: 0; border-block-end: calc(var(--usk-native-border-width) * 2) solid transparent; font: inherit; cursor: pointer; }
+:where(${promoted(['tab'], (className) => `.${className}[aria-selected="true"]`).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); border-block-end-color: var(--usk-native-primary); }
+:where(${promoted(['tab-panel']).join(', ')}) { padding-block: .75rem; color: var(--usk-native-text); }
+
+:where(${promoted(['pagination', 'breadcrumb-list', 'chip-group', 'avatar-group']).join(', ')}) { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+:where(${promoted(['pagination-item', 'breadcrumb-item']).join(', ')}) { display: inline-flex; align-items: center; min-inline-size: 0; }
+:where(${promoted(['pagination-link']).join(', ')}) { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 44px; min-block-size: 44px; padding: .5rem .75rem; color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); text-decoration: none; }
+:where(${promoted(['pagination-link'], (className) => `.${className}[aria-current="page"]`).join(', ')}) { color: var(--usk-native-on-primary); background: var(--usk-native-primary); border-color: var(--usk-native-primary); }
+:where(${promoted(['pagination-link'], (className) => `.${className}:disabled`).join(', ')}, ${promoted(['pagination-link'], (className) => `.${className}[aria-disabled="true"]`).join(', ')}) { opacity: .55; cursor: not-allowed; }
+
+:where(${promoted(['breadcrumb']).join(', ')}) { max-inline-size: 100%; }
+:where(${promoted(['breadcrumb-link']).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); text-decoration-thickness: .08em; text-underline-offset: .16em; }
+:where(${promoted(['breadcrumb-separator']).join(', ')}) { color: var(--usk-native-text-muted); user-select: none; }
+
+:where(${promoted(['skeleton']).join(', ')}) { display: block; min-block-size: 1rem; color: transparent; background: linear-gradient(100deg, var(--usk-native-surface-soft) 30%, var(--usk-native-surface) 50%, var(--usk-native-surface-soft) 70%); background-size: 200% 100%; border-radius: var(--usk-native-radius); animation: usk-skeleton-shimmer 1.4s linear infinite; }
+:where(${promoted(['skeleton'], (className) => `.${className}[data-shape="circle"]`).join(', ')}) { aspect-ratio: 1; border-radius: 50%; }
+:where(${promoted(['skeleton'], (className) => `.${className}[data-shape="text"]`).join(', ')}) { block-size: 1em; }
+:where(${promoted(['skeleton'], (className) => `.${className}[data-shape="block"]`).join(', ')}) { min-block-size: 6rem; }
+
+@keyframes usk-skeleton-shimmer { to { background-position-x: -200%; } }
+@media (prefers-reduced-motion: reduce) { :where(${promoted(['skeleton']).join(', ')}) { animation: none; } }
+
+:where(${promoted(['empty-state']).join(', ')}) { display: grid; justify-items: center; gap: .75rem; max-inline-size: 42rem; padding: clamp(1.25rem, 4vw, 3rem); color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); text-align: center; }
+:where(${promoted(['empty-state-icon']).join(', ')}) { display: grid; place-items: center; color: var(--usk-primary-ink, var(--usk-native-primary)); }
+:where(${promoted(['empty-state-title', 'toast-title']).join(', ')}) { margin: 0; color: var(--usk-native-text); font-weight: 750; }
+:where(${promoted(['empty-state-body', 'toast-body', 'metric-detail']).join(', ')}) { margin: 0; color: var(--usk-native-text-muted); }
+:where(${promoted(['empty-state-actions', 'toast-actions']).join(', ')}) { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+
+:where(${promoted(['metric']).join(', ')}) { display: grid; gap: .25rem; padding: 1rem; color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); }
+:where(${promoted(['metric-label']).join(', ')}) { color: var(--usk-native-text-muted); font-size: .875em; }
+:where(${promoted(['metric-value']).join(', ')}) { color: var(--usk-native-text); font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800; line-height: 1; }
+
+:where(${promoted(['chip']).join(', ')}) { display: inline-flex; align-items: center; gap: .35rem; max-inline-size: 100%; min-block-size: 2rem; padding: .25rem .65rem; color: var(--usk-native-text); background: var(--usk-native-surface-soft); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: 999px; overflow-wrap: break-word; }
+:where(${promoted(['chip-primary', 'chip-secondary', 'chip-success', 'chip-warning', 'chip-danger']).join(', ')}) { color: var(--usk-native-text); border-color: currentColor; }
+:where(${promoted(['chip-primary']).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); }
+:where(${promoted(['chip-secondary']).join(', ')}) { color: var(--usk-secondary-ink, var(--usk-native-text-muted)); }
+:where(${promoted(['chip-success']).join(', ')}) { color: var(--usk-success-ink, var(--usk-native-success)); }
+:where(${promoted(['chip-warning']).join(', ')}) { color: var(--usk-warning-ink, var(--usk-native-warning)); }
+:where(${promoted(['chip-danger']).join(', ')}) { color: var(--usk-danger-ink, var(--usk-native-danger)); }
+
+:where(${promoted(['avatar']).join(', ')}) { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; inline-size: 2.5rem; block-size: 2.5rem; color: var(--usk-native-on-primary); background: var(--usk-native-primary); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: 50%; font-weight: 750; overflow: hidden; }
+:where(${promoted(['avatar'], (className) => `.${className} > img`).join(', ')}) { inline-size: 100%; block-size: 100%; object-fit: cover; }
+:where(${promoted(['avatar-group'], (className) => `.${className} > * + *`).join(', ')}) { margin-inline-start: -.65rem; }
+
+:where(${promoted(['stepper']).join(', ')}) { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+:where(${promoted(['step']).join(', ')}) { display: inline-flex; align-items: center; gap: .5rem; color: var(--usk-native-text-muted); }
+:where(${promoted(['step-marker']).join(', ')}) { display: inline-grid; place-items: center; min-inline-size: 2rem; block-size: 2rem; border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: 50%; }
+:where(${promoted(['step'], (className) => `.${className}[data-state="current"]`).join(', ')}, ${promoted(['step'], (className) => `.${className}[data-state="complete"]`).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); }
+:where(${promoted(['step'], (className) => `.${className}[data-state="error"]`).join(', ')}) { color: var(--usk-danger-ink, var(--usk-native-danger)); }
+:where(${promoted(['step-label']).join(', ')}) { font-weight: 650; }
+
+:where(${promoted(['toast-stack']).join(', ')}) { display: grid; gap: .75rem; pointer-events: none; }
+:where(${promoted(['toast']).join(', ')}) { display: grid; gap: .5rem; padding: 1rem; color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-inline-start: .3rem solid var(--usk-native-primary); border-radius: var(--usk-native-radius); box-shadow: var(--usk-native-shadow); pointer-events: auto; }
+:where(${promoted(['toast-info']).join(', ')}) { border-inline-start-color: var(--usk-native-primary); }
+:where(${promoted(['toast-success']).join(', ')}) { border-inline-start-color: var(--usk-native-success); }
+:where(${promoted(['toast-warning']).join(', ')}) { border-inline-start-color: var(--usk-native-warning); }
+:where(${promoted(['toast-danger']).join(', ')}) { border-inline-start-color: var(--usk-native-danger); }
+
+:where(${promoted(['popover', 'menu', 'listbox']).join(', ')}) { max-inline-size: min(24rem, calc(100vw - 2rem)); padding: .5rem; color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); box-shadow: var(--usk-native-shadow); }
+:where(${promoted(['menu', 'listbox']).join(', ')}) { display: grid; gap: .2rem; margin: 0; list-style: none; }
+:where(${promoted(['menu-item', 'listbox-option']).join(', ')}) { display: flex; align-items: center; gap: .5rem; min-block-size: 44px; padding: .55rem .7rem; border-radius: var(--usk-native-radius); cursor: default; }
+:where(${promoted(['menu-item'], (className) => `.${className}:is(:hover, :focus-visible)`).join(', ')}, ${promoted(['listbox-option'], (className) => `.${className}:is(:hover, :focus-visible, [aria-selected="true"])`).join(', ')}) { color: var(--usk-native-on-primary); background: var(--usk-native-primary); outline: none; }
+:where(${promoted(['menu-group']).join(', ')}) { display: grid; gap: .2rem; }
+:where(${promoted(['menu-separator']).join(', ')}) { block-size: var(--usk-native-border-width); margin-block: .25rem; background: var(--usk-native-border); }
+
+:where(${promoted(['segmented-control']).join(', ')}) { display: inline-flex; max-inline-size: 100%; padding: .2rem; background: var(--usk-native-surface-soft); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); overflow-x: auto; }
+:where(${promoted(['segment']).join(', ')}) { min-block-size: 40px; padding: .45rem .75rem; color: var(--usk-native-text); background: transparent; border: 0; border-radius: calc(var(--usk-native-radius) * .75); font: inherit; white-space: nowrap; }
+:where(${promoted(['segment'], (className) => `.${className}[aria-pressed="true"]`).join(', ')}) { color: var(--usk-native-on-primary); background: var(--usk-native-primary); }
+
+:where(${promoted(['file-upload']).join(', ')}) { display: grid; gap: .75rem; }
+:where(${promoted(['dropzone']).join(', ')}) { display: grid; place-items: center; gap: .5rem; min-block-size: 8rem; padding: 1.25rem; color: var(--usk-native-text-muted); background: var(--usk-native-surface-soft); border: calc(var(--usk-native-border-width) * 2) dashed var(--usk-native-border); border-radius: var(--usk-native-radius); text-align: center; }
+:where(${promoted(['dropzone'], (className) => `.${className}[data-drag-active="true"]`).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); border-color: var(--usk-native-primary); }
 }
 ${endMarker}`;
 }

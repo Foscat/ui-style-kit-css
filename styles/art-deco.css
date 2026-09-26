@@ -1402,7 +1402,7 @@
   border-block-end: 2px solid currentColor;
   border-inline-start: 2px solid currentColor;
   color: var(--deco-jewel-on);
-  transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
+  transform: translate(-50%, -50%) rotate(-45deg);
   transform-origin: center;
 }
 
@@ -1916,24 +1916,6 @@
 .deco-check, .deco-radio { min-height: 32px; font-size: 12px; gap: 8px; }
 .deco-check input:checked + .deco-check-control, .deco-radio input:checked + .deco-radio-control, .deco-switch input:checked + .deco-switch-track { background: var(--deco-secondary); }
 .deco-check input:checked + .deco-check-control::after { color: var(--deco-on-secondary); }
-/** Keeps prefixed checkbox rasterization centered without generating semantic aliases. */
-:is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"])::after { transform: translate(calc(-50% - 5px), calc(-62% + 4px)) rotate(-45deg); }
-
-/**
- * Aligns the stroked checkbox mark with Firefox and WebKit rasterization while
- * preserving Chromium's established pixel center.
- */
-@supports (-moz-appearance: none) {
-  :is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"])::after {
-    transform: translate(calc(-50% - 5px), calc(-62% - 5px)) rotate(-45deg);
-  }
-}
-
-@supports (-webkit-hyphens: none) {
-  .deco-check input:checked + .deco-check-control::after {
-    transform: translate(calc(-50% - 5px), calc(-62% + 3px)) rotate(-45deg);
-  }
-}
 .deco-radio input:checked + .deco-radio-control::after { background: var(--deco-on-secondary); }
 .deco-switch { min-height: 32px; }
 .deco-switch-track { width: 40px; height: 22px; inline-size: 40px; block-size: 22px; border-width: 3px; }

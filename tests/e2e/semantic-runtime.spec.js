@@ -181,8 +181,8 @@ function groupOneFixture(preset) {
           ${buttonMarkup(preset.prefix, null, 'disabled')}
           <button id="semantic-icon" class="ui-icon-button" aria-label="Semantic settings">S</button>
           <button id="prefixed-icon" class="${preset.prefix}-icon-button" aria-label="Prefixed settings">P</button>
-          <article id="semantic-card" class="ui-card">Semantic card</article>
-          <article id="prefixed-card" class="${preset.prefix}-card">Prefixed card</article>
+          <div><article id="semantic-card" class="ui-card">Semantic card</article></div>
+          <div><article id="prefixed-card" class="${preset.prefix}-card">Prefixed card</article></div>
         </main>
       </body>
     </html>`;

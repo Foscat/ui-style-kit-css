@@ -17,11 +17,15 @@ const templateComponents = [
 
 test('Retro Glass publishes the complete rounded-glass template component surface', () => {
   const classes = new Set();
+  const publicApi = new Set([
+    ...manifest.classApi.universalVisualSuffixes,
+    ...manifest.classApi.presetExtras['retro-glass']
+  ]);
   walk(parse(css), (node) => {
     if (node.type === 'ClassSelector') classes.add(node.name);
   });
   for (const suffix of templateComponents) {
-    assert.ok(manifest.classApi.presetExtras['retro-glass'].includes(suffix), `Manifest missing rg-${suffix}`);
+    assert.ok(publicApi.has(suffix), `Manifest missing rg-${suffix}`);
     assert.ok(classes.has(`rg-${suffix}`), `Styles missing rg-${suffix}`);
   }
   assert.ok(![...classes].some((name) => name.startsWith('rg-button--')), 'Keep canonical modifier names');

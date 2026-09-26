@@ -18,19 +18,28 @@ function countPolygonVertices(clipPath) {
 }
 
 /**
- * Finds the visual center of the warm-ivory check glyph in a rendered control.
+ * Finds the visual center of the warm-ivory check glyph while excluding the
+ * control perimeter, whose metal border can share the glyph's color range.
  *
  * @param {Buffer} buffer Element screenshot encoded as PNG.
- * @returns {{ horizontalOffset: number, verticalOffset: number }} Pixel-center offsets from the control center.
+ * @returns {{ horizontalOffset: number, verticalOffset: number, horizontalDelta: number, verticalDelta: number }} Pixel-center offsets and signed deltas from the control center.
  */
 function readCheckGlyphOffset(buffer) {
   const image = PNG.sync.read(buffer);
+  const perimeterInset = Math.round(Math.min(image.width, image.height) * .19);
   let weightedX = 0;
   let weightedY = 0;
   let pixelCount = 0;
 
   for (let y = 0; y < image.height; y += 1) {
     for (let x = 0; x < image.width; x += 1) {
+      if (
+        x < perimeterInset ||
+        y < perimeterInset ||
+        x >= image.width - perimeterInset ||
+        y >= image.height - perimeterInset
+      ) continue;
+
       const offset = (y * image.width + x) * 4;
       const red = image.data[offset];
       const green = image.data[offset + 1];
@@ -47,9 +56,14 @@ function readCheckGlyphOffset(buffer) {
 
   if (pixelCount === 0) throw new Error('Expected the rendered check glyph to contain warm-ivory pixels.');
 
+  const horizontalDelta = weightedX / pixelCount - image.width / 2;
+  const verticalDelta = weightedY / pixelCount - image.height / 2;
+
   return {
-    horizontalOffset: Math.abs(weightedX / pixelCount - image.width / 2),
-    verticalOffset: Math.abs(weightedY / pixelCount - image.height / 2)
+    horizontalOffset: Math.abs(horizontalDelta),
+    verticalOffset: Math.abs(verticalDelta),
+    horizontalDelta,
+    verticalDelta
   };
 }
 
@@ -135,15 +149,29 @@ test('Art Deco authored checkbox marks are optically centered', async ({ page })
   await page.selectOption('#modeSelect', 'light');
 
   const captures = [
-    await page.locator('.ui-check-control').screenshot(),
-    await page.locator('[data-testid="component-fields"] .deco-check input:checked + .deco-check-control').screenshot()
+    {
+      label: 'semantic checkbox',
+      buffer: await page.locator('.ui-check-control').screenshot()
+    },
+    {
+      label: 'prefixed checkbox',
+      buffer: await page.locator('[data-testid="component-fields"] .deco-check input:checked + .deco-check-control').screenshot()
+    }
   ];
   const deviceScaleFactor = await page.evaluate(() => devicePixelRatio);
+  const offsets = captures.map(({ label, buffer }) => {
+    const offset = readCheckGlyphOffset(buffer);
+    return {
+      label,
+      horizontalDelta: offset.horizontalDelta / deviceScaleFactor,
+      verticalDelta: offset.verticalDelta / deviceScaleFactor
+    };
+  });
 
-  for (const capture of captures) {
-    const offset = readCheckGlyphOffset(capture);
-    expect(offset.horizontalOffset / deviceScaleFactor).toBeLessThanOrEqual(1.5);
-    expect(offset.verticalOffset / deviceScaleFactor).toBeLessThanOrEqual(1.5);
+  for (const { label, horizontalDelta, verticalDelta } of offsets) {
+    const evidence = JSON.stringify(offsets);
+    expect(Math.abs(horizontalDelta), `${label} horizontal offset (${horizontalDelta}px signed); ${evidence}`).toBeLessThanOrEqual(1.5);
+    expect(Math.abs(verticalDelta), `${label} vertical offset (${verticalDelta}px signed); ${evidence}`).toBeLessThanOrEqual(1.5);
   }
 });
 

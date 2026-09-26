@@ -336,21 +336,22 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.4.2 library system and candidate companion set', () => {
+test('README documents the 2.5.0 library system and released companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.4\.2/);
+  assert.match(readme, /v2\.5\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.4\.2/);
-  assert.match(readme, /interactive-surface-css@1\.7\.1/);
-  assert.match(readme, /layout-style-css@3\.2\.1/);
+  assert.match(readme, /ui-style-kit-css@2\.5\.0/);
+  assert.match(readme, /interactive-surface-css@1\.7\.3/);
+  assert.match(readme, /layout-style-css@3\.2\.3/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /UI Style Kit `2\.4\.2` is the current release candidate/);
-  assert.match(readme, /Layout Style `3\.2\.1` is the compatible structural candidate/);
+  assert.match(readme, /UI Style Kit `2\.5\.0` is the current release/);
+  assert.doesNotMatch(readme, /current release candidate/);
+  assert.match(readme, /Layout Style `3\.2\.3` release/);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   assert.match(readme, /ui-style-kit-css\/visual\.css/);
   assert.match(readme, /ui-style-kit-css\/manifest\.json/);
@@ -409,9 +410,9 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.4\.2/);
+    assert.match(contents, /ui-style-kit-css@2\.5\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
-    assert.match(contents, /layout-style-css@3\.2\.1/);
+    assert.match(contents, /layout-style-css@3\.2\.3/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
     assert.match(contents, /Use one/);
     assert.match(contents, /Use two/);
@@ -425,13 +426,13 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
-test('ecosystem fixture records the UI 2.4.2 candidate train without inventing companion commits', () => {
+test('ecosystem fixture records the UI 2.5.0 candidate train with reviewed companion release commits', () => {
   const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
 
-  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'b48b8b9080e4b1d4e344b6749ab1969a2863b3d1');
-  assert.equal(compatibility.packageSources['layout-style-css'].revision, 'afcb1fdf70d4635e35739e621ee1598400fed103');
+  assert.equal(compatibility.packageSources['interactive-surface-css'].revision, 'fb02679842e8d4b76c9762891a2a84f8a0a63bc9');
+  assert.equal(compatibility.packageSources['layout-style-css'].revision, 'b383c248c0685bc92ce95864e5b3c9a7f303e554');
   assert.deepEqual(compatibility.supportedCombinations, {
     minimum: {
       'ui-style-kit-css': '2.1.0',
@@ -439,16 +440,17 @@ test('ecosystem fixture records the UI 2.4.2 candidate train without inventing c
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.4.2',
-      'interactive-surface-css': '1.7.1',
-      'layout-style-css': '3.2.1'
+      'ui-style-kit-css': '2.5.0',
+      'interactive-surface-css': '1.7.3',
+      'layout-style-css': '3.2.3'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.4\.2[\s\S]{0,160}current release candidate/i);
-    assert.match(contents, /interactive-surface-css@1\.7\.1[\s\S]{0,160}candidate/i);
-    assert.match(contents, /layout-style-css@3\.2\.1[\s\S]{0,160}candidate/i);
+    assert.match(contents, /ui-style-kit-css@2\.5\.0[\s\S]{0,160}current release/i);
+    assert.doesNotMatch(contents, /current release candidate/i);
+    assert.match(contents, /interactive-surface-css@1\.7\.3[\s\S]{0,160}release/i);
+    assert.match(contents, /layout-style-css@3\.2\.3[\s\S]{0,160}release/i);
   }
 });
 
@@ -488,10 +490,28 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.4\.2` is the current release candidate/);
-    assert.match(contents, /layout-style-css@3\.2\.1[\s\S]{0,160}candidate/i);
+    assert.match(contents, /UI Style Kit `2\.5\.0` is the current release/);
+    assert.doesNotMatch(contents, /current release candidate/i);
+    assert.match(contents, /layout-style-css@3\.2\.3[\s\S]{0,160}release/i);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
+});
+
+test('current public wiki pages describe 2.5.0 as the semantic component release', () => {
+  const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');
+  const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
+  const releasePreparationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Release-Preparation.md'), 'utf8');
+
+  for (const contents of [wikiHome, installationWiki, releasePreparationWiki]) {
+    assert.match(contents, /2\.5\.0/);
+    assert.doesNotMatch(contents, /2\.5\.0[^\n]*(?:release|patch) candidate/i);
+  }
+
+  assert.match(wikiHome, /backward-compatible semantic-component release/i);
+  assert.match(
+    releasePreparationWiki,
+    /expands the stable semantic component API\s+from 29 to 75 selectors/i,
+  );
 });
 
 test('wiki links use rendered GitHub Wiki page routes', () => {
@@ -637,7 +657,7 @@ test('publishing docs expose the coordinated packed ecosystem compatibility gate
   assert.match(publishingGuide, /minimum versions remain registry-backed/i);
 });
 
-test('publishing docs preserve reviewed baseline pins until candidate commits exist', () => {
+test('publishing docs preserve reviewed companion release pins', () => {
   const publishingGuide = fs.readFileSync(path.join(rootDir, 'docs', 'PUBLISHING.md'), 'utf8');
   const compatibility = JSON.parse(
     fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'),
@@ -645,21 +665,21 @@ test('publishing docs preserve reviewed baseline pins until candidate commits ex
 
   assert.equal(
     compatibility.packageSources['interactive-surface-css'].revision,
-    'b48b8b9080e4b1d4e344b6749ab1969a2863b3d1',
+    'fb02679842e8d4b76c9762891a2a84f8a0a63bc9',
   );
   assert.equal(
     compatibility.packageSources['layout-style-css'].revision,
-    'afcb1fdf70d4635e35739e621ee1598400fed103',
+    'b383c248c0685bc92ce95864e5b3c9a7f303e554',
   );
   assert.match(
     publishingGuide,
-    /locally aligned companion candidates are `layout-style-css@3\.2\.1` and `interactive-surface-css@1\.7\.1`/i,
+    /aligned companion releases are `layout-style-css@3\.2\.3` and `interactive-surface-css@1\.7\.3`/i,
   );
   assert.match(publishingGuide, /The current checkout is a release candidate/i);
-  assert.match(publishingGuide, /Prepare `ui-style-kit-css@2\.4\.2` on its release branch/i);
-  assert.match(publishingGuide, /last reviewed published baselines/i);
+  assert.match(publishingGuide, /Prepare `ui-style-kit-css@2\.5\.0` on its release branch/i);
+  assert.match(publishingGuide, /reviewed Interactive 1\.7\.3 and Layout 3\.2\.3 release commits/i);
   assert.doesNotMatch(publishingGuide, /active staged candidate/i);
-  assert.match(publishingGuide, /current local matrix[^\n]*layout-style-css@3\.2\.1/i);
+  assert.match(publishingGuide, /current matrix[^\n]*layout-style-css@3\.2\.3/i);
   assert.match(publishingGuide, /minimum[^\n]*layout-style-css@3\.0\.0/i);
 });
 
