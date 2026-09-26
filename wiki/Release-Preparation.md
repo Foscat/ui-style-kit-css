@@ -4,9 +4,10 @@ The current local target is `ui-style-kit-css@2.5.0`. The package version, lockf
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
-The patch candidate adds focused consumer-geometry and migration regression proof.
-It retains the 25-theme inventory, existing native palettes, default, visual,
-focused, and optional bridge compositions without adding public API.
+The backward-compatible minor release expands the stable semantic component API
+from 29 to 75 selectors across all 20 presets. It retains the 25-theme inventory,
+existing native palettes, preset-prefixed compatibility classes, and default,
+visual, focused, and optional bridge compositions.
 
 Run focused regressions during development. At final verification, rebuild assets,
 check CSS lint, documented imports, semantic contracts, contrast, compatibility,

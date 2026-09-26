@@ -497,6 +497,23 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
   }
 });
 
+test('current public wiki pages describe 2.5.0 as the semantic component release', () => {
+  const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');
+  const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
+  const releasePreparationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Release-Preparation.md'), 'utf8');
+
+  for (const contents of [wikiHome, installationWiki, releasePreparationWiki]) {
+    assert.match(contents, /2\.5\.0/);
+    assert.doesNotMatch(contents, /2\.5\.0[^\n]*(?:release|patch) candidate/i);
+  }
+
+  assert.match(wikiHome, /backward-compatible semantic-component release/i);
+  assert.match(
+    releasePreparationWiki,
+    /expands the stable semantic component API\s+from 29 to 75 selectors/i,
+  );
+});
+
 test('wiki links use rendered GitHub Wiki page routes', () => {
   const wikiDir = path.join(rootDir, 'wiki');
   const markdownFiles = fs.readdirSync(wikiDir).filter((file) => file.endsWith('.md'));
