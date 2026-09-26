@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 25 shared color themes, and 3 display modes.
 
-Version `v2.4.2` is a compatibility patch candidate that adds narrow-card, short-height, internal-scroll, wide-table, long-content, native-control, and neutral icon-action regression proof while preserving the existing palettes, v2 entrypoints, component selectors, and bridge contracts.
+Version `v2.5.0` is a compatibility patch candidate that adds narrow-card, short-height, internal-scroll, wide-table, long-content, native-control, and neutral icon-action regression proof while preserving the existing palettes, v2 entrypoints, component selectors, and bridge contracts.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 

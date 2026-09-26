@@ -17,9 +17,13 @@ const required = [
 
 test('Technical Blueprint publishes the complete drafting component surface', () => {
   const classes = new Set();
+  const publicApi = new Set([
+    ...manifest.classApi.universalVisualSuffixes,
+    ...manifest.classApi.presetExtras['technical-blueprint']
+  ]);
   walk(parse(css), (node) => { if (node.type === 'ClassSelector') classes.add(node.name); });
   for (const suffix of required) {
-    assert.ok(manifest.classApi.presetExtras['technical-blueprint'].includes(suffix), `Manifest missing blueprint-${suffix}`);
+    assert.ok(publicApi.has(suffix), `Manifest missing blueprint-${suffix}`);
     assert.ok(classes.has(`blueprint-${suffix}`), `CSS missing blueprint-${suffix}`);
   }
   assert.ok(![...classes].some((name) => name.startsWith('tb-')), 'No source-only aliases');

@@ -4,21 +4,21 @@ UI Style Kit CSS is the visual layer in the three-library CSS ecosystem. It can 
 
 `ecosystem-compatibility.json` is the authoritative source for supported ranges, validated combinations, canonical imports, and deprecated bridge metadata. UI Style Kit owns this file temporarily until a dedicated ecosystem fixture repository is introduced.
 
-Its companion source records currently pin the last reviewed published merge revisions used by integration and release verification. The 1.7.1 and 3.2.1 candidate checkouts do not yet have immutable release commits, so these pins must not be invented from dirty working trees. Refresh them after the candidate commits exist and before remote release verification.
+Its companion source records pin the reviewed Interactive Surface 1.7.3 and Layout Style 3.2.3 release commits used by integration and release verification. These immutable revisions must remain remotely reachable; never replace them with mutable branches or dirty working trees.
 
 ## Remote Validation Sequence
 
-Before a UI branch or pull request is expected to validate, replace the baseline companion pins with the reviewed Interactive Surface 1.7.1 and Layout 3.2.1 commit SHAs, then verify each object remains fetchable from its GitHub repository. The CI and publish workflows intentionally fail rather than silently substituting a mutable branch, dirty checkout, or stale registry artifact.
+Before a UI branch or pull request is expected to validate, verify the reviewed Interactive Surface 1.7.3 and Layout 3.2.3 commit objects remain fetchable from their GitHub repositories. The CI and publish workflows intentionally fail rather than silently substituting a mutable branch, dirty checkout, or stale registry artifact.
 
 ## Aligned Versions
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.4.2` | current release candidate | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
-| `interactive-surface-css@1.7.1` | compatible state candidate | interaction-state primitives, surface behavior, state layers, and input affordances |
-| `layout-style-css@3.2.1` | compatible structural candidate | structural wrappers, grids, sections, app shells, and layout recipes |
+| `ui-style-kit-css@2.5.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
+| `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The current local combination is `ui-style-kit-css@2.4.2`, `interactive-surface-css@1.7.1`, and `layout-style-css@3.2.1`. UI Style Kit `2.4.2` is the current release candidate; the companion versions are locally prepared candidates, not published registry proof. Layout Style `3.2.1` is the compatible structural candidate. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.5.0`, `interactive-surface-css@1.7.3`, and `layout-style-css@3.2.3`. UI Style Kit `2.5.0` is the current release; the companion versions are reviewed releases. Layout Style `3.2.3` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 
@@ -91,4 +91,4 @@ The canonical theme bridge does not make Interactive Surface a dependency of UI 
 
 ## Canonical ownership order
 
-Load UI visual CSS first, UI interaction-theme paint second, Interactive Surface state core third, Layout CSS fourth, and application overrides last. Layout `3.2.1` does not export `integrations/ui-style-kit.css` or `legacy.css`; use its root or supported `foundation.css`, wrapper, primitive, recipe, utility, and personality entrypoints.
+Load UI visual CSS first, UI interaction-theme paint second, Interactive Surface state core third, Layout CSS fourth, and application overrides last. Layout `3.2.3` does not export `integrations/ui-style-kit.css` or `legacy.css`; use its root or supported `foundation.css`, wrapper, primitive, recipe, utility, and personality entrypoints.

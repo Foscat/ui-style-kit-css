@@ -232,7 +232,11 @@ export function validateAllowlist({ target, entries, expectedOwner, now = new Da
 }
 
 function manifestComponentClasses(manifest) {
-  const componentClasses = new Set();
+  const componentClasses = new Set(
+    Object.values(manifest.semanticComponentApi?.selectorsByRole ?? {})
+      .flat()
+      .map(({ selector }) => selector.replace(/^\./, ''))
+  );
   const universalSuffixes = manifest.classApi?.universalVisualSuffixes ?? [];
 
   for (const preset of manifest.presets ?? []) {

@@ -4,6 +4,30 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-09-26
+
+### Added
+
+- Promoted 46 reusable Tier A and Tier B selectors for tabs, pagination, breadcrumb, skeleton, empty state, metric, chip, avatar, stepper, toast, popover, menu, segmented control, file upload, dropzone, and listbox patterns.
+- Added semantic chip and toast variants plus explicit skeleton-shape and step-state hooks.
+- Added deterministic generic-markup coverage for every promoted selector across all 20 runtime-selectable presets.
+
+### Changed
+
+- Extended the generated universal component foundation so each promoted semantic selector resolves through preset-native paint tokens without moving behavioral state into CSS.
+- Reclassified promoted suffixes from preset-only extras into the universal class inventory while retaining existing prefixed compatibility classes.
+- Aligned the current compatibility matrix with the reviewed `interactive-surface-css@1.7.3` and `layout-style-css@3.2.3` release commits.
+
+### Fixed
+
+- Recalibrated the pairwise identity snapshot metric to retain subtle palette differences and use viewport-specific component floors, replacing accumulating pair exceptions with one documented comparison contract.
+
+### Tests
+
+- Added a focused promotion contract covering manifest roles, universal source suffixes, implementation status, variants, and state hooks.
+- Expanded semantic alias, fixture, and declaration-artifact checks for the 75-selector stable component API.
+- Verified all approved desktop and mobile component and native-control snapshot pairs against the repaired identity contract.
+
 ## [2.4.2] - 2026-09-24
 
 ### Changed

@@ -303,13 +303,18 @@ test('documented extended utilities compose through shared components for every 
   }
 });
 
-test('Cyberpunk publishes every template-only component as preset extras', () => {
+test('Cyberpunk publishes template components through the universal or preset-only inventory', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
   const extras = manifest.classApi.presetExtras.cyberpunk ?? [];
+  const universal = manifest.classApi.universalVisualSuffixes ?? [];
   const names = classNames(astFor(path.join('styles', 'cyberpunk.css')));
 
   for (const suffix of cyberpunkTemplateSuffixes) {
-    assert.equal(extras.includes(suffix), true, `manifest cyberpunk extras should include ${suffix}`);
+    assert.equal(
+      universal.includes(suffix) || extras.includes(suffix),
+      true,
+      `manifest public inventory should include cyberpunk ${suffix}`
+    );
     assert.equal(names.has(`cyber-${suffix}`), true, `cyberpunk source should expose .cyber-${suffix}`);
   }
 

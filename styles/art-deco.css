@@ -1917,7 +1917,7 @@
 .deco-check input:checked + .deco-check-control, .deco-radio input:checked + .deco-radio-control, .deco-switch input:checked + .deco-switch-track { background: var(--deco-secondary); }
 .deco-check input:checked + .deco-check-control::after { color: var(--deco-on-secondary); }
 /** Keeps prefixed checkbox rasterization centered without generating semantic aliases. */
-:is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"])::after { transform: translate(calc(-50% - 5px), calc(-62% + 4px)) rotate(-45deg); }
+:is([class="deco-check"], [class^="deco-check "], [class*=" deco-check "], [class$=" deco-check"]) input:checked + :is([class="deco-check-control"], [class^="deco-check-control "], [class*=" deco-check-control "], [class$=" deco-check-control"])::after { transform: translate(calc(-50% - 5px), calc(-62% + 1.25px)) rotate(-45deg); }
 
 /**
  * Aligns the stroked checkbox mark with Firefox and WebKit rasterization while

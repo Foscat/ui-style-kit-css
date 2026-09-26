@@ -42,7 +42,53 @@ const expectedImplementedSelectors = [
   '.ui-table-wrap',
   '.ui-progress',
   '.ui-progress-bar',
-  '.ui-toolbar'
+  '.ui-toolbar',
+  '.ui-tabs',
+  '.ui-tab-list',
+  '.ui-tab',
+  '.ui-tab-panel',
+  '.ui-pagination',
+  '.ui-pagination-item',
+  '.ui-pagination-link',
+  '.ui-breadcrumb',
+  '.ui-breadcrumb-list',
+  '.ui-breadcrumb-item',
+  '.ui-breadcrumb-link',
+  '.ui-breadcrumb-separator',
+  '.ui-skeleton',
+  '.ui-empty-state',
+  '.ui-empty-state-icon',
+  '.ui-empty-state-title',
+  '.ui-empty-state-body',
+  '.ui-empty-state-actions',
+  '.ui-metric',
+  '.ui-metric-label',
+  '.ui-metric-value',
+  '.ui-metric-detail',
+  '.ui-chip',
+  '.ui-chip-group',
+  '.ui-avatar',
+  '.ui-avatar-group',
+  '.ui-stepper',
+  '.ui-step',
+  '.ui-step-marker',
+  '.ui-step-label',
+  '.ui-toast-stack',
+  '.ui-toast',
+  '.ui-toast-title',
+  '.ui-toast-body',
+  '.ui-toast-actions',
+  '.ui-popover',
+  '.ui-menu',
+  '.ui-menu-item',
+  '.ui-menu-group',
+  '.ui-menu-separator',
+  '.ui-segmented-control',
+  '.ui-segment',
+  '.ui-file-upload',
+  '.ui-dropzone',
+  '.ui-listbox',
+  '.ui-listbox-option'
 ];
 const expectedPendingSelectors = [];
 
@@ -99,6 +145,82 @@ const expectedSemanticComponentApi = {
     ],
     tooltip: [
       { selector: '.ui-tooltip', sourceSuffix: 'tooltip' }
+    ],
+    tabs: [
+      { selector: '.ui-tabs', sourceSuffix: 'tabs' },
+      { selector: '.ui-tab-list', sourceSuffix: 'tab-list' },
+      { selector: '.ui-tab', sourceSuffix: 'tab' },
+      { selector: '.ui-tab-panel', sourceSuffix: 'tab-panel' }
+    ],
+    pagination: [
+      { selector: '.ui-pagination', sourceSuffix: 'pagination' },
+      { selector: '.ui-pagination-item', sourceSuffix: 'pagination-item' },
+      { selector: '.ui-pagination-link', sourceSuffix: 'pagination-link' }
+    ],
+    breadcrumb: [
+      { selector: '.ui-breadcrumb', sourceSuffix: 'breadcrumb' },
+      { selector: '.ui-breadcrumb-list', sourceSuffix: 'breadcrumb-list' },
+      { selector: '.ui-breadcrumb-item', sourceSuffix: 'breadcrumb-item' },
+      { selector: '.ui-breadcrumb-link', sourceSuffix: 'breadcrumb-link' },
+      { selector: '.ui-breadcrumb-separator', sourceSuffix: 'breadcrumb-separator' }
+    ],
+    skeleton: [
+      { selector: '.ui-skeleton', sourceSuffix: 'skeleton' }
+    ],
+    emptyState: [
+      { selector: '.ui-empty-state', sourceSuffix: 'empty-state' },
+      { selector: '.ui-empty-state-icon', sourceSuffix: 'empty-state-icon' },
+      { selector: '.ui-empty-state-title', sourceSuffix: 'empty-state-title' },
+      { selector: '.ui-empty-state-body', sourceSuffix: 'empty-state-body' },
+      { selector: '.ui-empty-state-actions', sourceSuffix: 'empty-state-actions' }
+    ],
+    metric: [
+      { selector: '.ui-metric', sourceSuffix: 'metric' },
+      { selector: '.ui-metric-label', sourceSuffix: 'metric-label' },
+      { selector: '.ui-metric-value', sourceSuffix: 'metric-value' },
+      { selector: '.ui-metric-detail', sourceSuffix: 'metric-detail' }
+    ],
+    chip: [
+      { selector: '.ui-chip', sourceSuffix: 'chip' },
+      { selector: '.ui-chip-group', sourceSuffix: 'chip-group' }
+    ],
+    avatar: [
+      { selector: '.ui-avatar', sourceSuffix: 'avatar' },
+      { selector: '.ui-avatar-group', sourceSuffix: 'avatar-group' }
+    ],
+    stepper: [
+      { selector: '.ui-stepper', sourceSuffix: 'stepper' },
+      { selector: '.ui-step', sourceSuffix: 'step' },
+      { selector: '.ui-step-marker', sourceSuffix: 'step-marker' },
+      { selector: '.ui-step-label', sourceSuffix: 'step-label' }
+    ],
+    toast: [
+      { selector: '.ui-toast-stack', sourceSuffix: 'toast-stack' },
+      { selector: '.ui-toast', sourceSuffix: 'toast' },
+      { selector: '.ui-toast-title', sourceSuffix: 'toast-title' },
+      { selector: '.ui-toast-body', sourceSuffix: 'toast-body' },
+      { selector: '.ui-toast-actions', sourceSuffix: 'toast-actions' }
+    ],
+    popover: [
+      { selector: '.ui-popover', sourceSuffix: 'popover' }
+    ],
+    menu: [
+      { selector: '.ui-menu', sourceSuffix: 'menu' },
+      { selector: '.ui-menu-item', sourceSuffix: 'menu-item' },
+      { selector: '.ui-menu-group', sourceSuffix: 'menu-group' },
+      { selector: '.ui-menu-separator', sourceSuffix: 'menu-separator' }
+    ],
+    segmentedControl: [
+      { selector: '.ui-segmented-control', sourceSuffix: 'segmented-control' },
+      { selector: '.ui-segment', sourceSuffix: 'segment' }
+    ],
+    fileUpload: [
+      { selector: '.ui-file-upload', sourceSuffix: 'file-upload' },
+      { selector: '.ui-dropzone', sourceSuffix: 'dropzone' }
+    ],
+    listbox: [
+      { selector: '.ui-listbox', sourceSuffix: 'listbox' },
+      { selector: '.ui-listbox-option', sourceSuffix: 'listbox-option' }
     ]
   },
   variantAttribute: {
@@ -107,8 +229,14 @@ const expectedSemanticComponentApi = {
     valuesBySelector: {
       '.ui-button': ['primary', 'secondary', 'warning', 'danger', 'ghost'],
       '.ui-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
-      '.ui-alert': ['success', 'warning', 'danger']
+      '.ui-alert': ['success', 'warning', 'danger'],
+      '.ui-chip': ['primary', 'secondary', 'success', 'warning', 'danger'],
+      '.ui-toast': ['info', 'success', 'warning', 'danger']
     }
+  },
+  stateAttributes: {
+    '.ui-skeleton': { 'data-shape': ['text', 'circle', 'block'] },
+    '.ui-step': { 'data-state': ['complete', 'current', 'upcoming', 'error'] }
   },
   nativeFallbacks: [
     {
@@ -298,7 +426,7 @@ test('manifest specifies the exact generic semantic component API', () => {
   assert.deepEqual(manifest.semanticComponentApi, expectedSemanticComponentApi);
 
   const entries = semanticEntries();
-  assert.equal(entries.length, 29);
+  assert.equal(entries.length, 75);
   assert.equal(new Set(entries.map(({ selector }) => selector)).size, entries.length);
   assert.equal(new Set(entries.map(({ sourceSuffix }) => sourceSuffix)).size, entries.length);
   assert.equal(entries.every(({ selector }) => /^\.ui-[a-z]+(?:-[a-z]+)*$/.test(selector)), true);
@@ -314,7 +442,7 @@ test('manifest partitions retained, implemented, and pending Task 11 selectors',
   assert.deepEqual(implementationStatus.pending.selectors, expectedPendingSelectors);
   assert.equal(implementationStatus.pending.targetTask, 11);
   assert.equal(implementationStatus.retained.selectors.length, 2);
-  assert.equal(implementationStatus.implemented.selectors.length, 27);
+  assert.equal(implementationStatus.implemented.selectors.length, 73);
   assert.equal(implementationStatus.pending.selectors.length, 0);
   assert.deepEqual(
     new Set([
@@ -473,12 +601,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   /** Reviewed 25-theme output includes text-ink fallbacks and preserves other declarations. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36287,
-    sha256: '2730f159147c08554c61a334ea190ea8e52e14907f446791e3a85386411f5cba'
+    count: 36520,
+    sha256: '4033d449e70bb925d3157f7dbb5890db0f548ba46d8f45915f855edae08f4ab3'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 36738,
-    sha256: 'c32eb64cd6f323b0090fa8c8007d587d7f459b33c0e3084f47d1bcb851ab8550'
+    count: 36971,
+    sha256: '505f1425669fd120086a83d9f7603b4621aa1e92663cb6fc594795aa4f7501d1'
   });
 });
 
@@ -486,7 +614,7 @@ test('semantic source suffixes and contextual variants exist in every composed p
   const currentSuffixes = new Set(manifest.classApi.universalVisualSuffixes);
   const requiredSuffixes = semanticRequiredSuffixes();
 
-  assert.equal(manifest.classApi.universalVisualSuffixes.length, 95);
+  assert.equal(manifest.classApi.universalVisualSuffixes.length, 150);
   for (const suffix of requiredSuffixes) {
     assert.equal(currentSuffixes.has(suffix), true, `${suffix} must remain a current universal visual suffix`);
   }
@@ -508,7 +636,7 @@ test('partial extras and deprecated structural aliases stay outside the semantic
   const partialExtras = new Set(Object.values(manifest.classApi.presetExtras).flat());
   const deprecatedSuffixes = new Set(manifest.classApi.deprecatedStructuralSuffixes);
 
-  assert.equal(partialExtras.size, 318);
+  assert.equal(partialExtras.size, 293);
   assert.equal(deprecatedSuffixes.size, 7);
   for (const suffix of semanticSuffixes) {
     assert.equal(partialExtras.has(suffix), false, `${suffix} must not be a partial preset extra`);
@@ -539,7 +667,7 @@ test('data-ui-variant is the only semantic component attribute added to the pres
   assert.equal(api.presetSwitchAttribute, 'data-ui');
   assert.equal(api.variantAttribute.name, 'data-ui-variant');
   assert.equal(api.variantAttribute.neutral, 'omitted');
-  assert.equal(variantContexts.length, 3);
+  assert.equal(variantContexts.length, 5);
   assert.equal(variantContexts.every((selector) => selectors.has(selector)), true);
   for (const values of Object.values(api.variantAttribute.valuesBySelector)) {
     assert.equal(new Set(values).size, values.length, 'variant values must be unique within their selector context');

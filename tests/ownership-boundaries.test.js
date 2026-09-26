@@ -138,6 +138,30 @@ test('visual-only permits component-internal grids declared by the public manife
   assert.deepEqual(result.violations, []);
 });
 
+test('visual-only recognizes stable semantic selectors as component vocabulary', () => {
+  const result = auditOwnership({
+    target: 'ui-visual',
+    css: '.ui-stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }',
+    manifest: {
+      semanticComponentApi: {
+        selectorsByRole: {
+          stepper: [{ selector: '.ui-stepper', sourceSuffix: 'stepper' }]
+        }
+      },
+      presets: [{ id: 'minimal-saas', prefix: 'saas' }],
+      classApi: {
+        deprecatedStructuralSuffixes: [],
+        universalVisualSuffixes: ['stepper'],
+        presetExtras: { 'minimal-saas': [] }
+      }
+    },
+    allowlist: [],
+    now: reviewedAt
+  });
+
+  assert.deepEqual(result.violations, []);
+});
+
 test('visual-only rejects structural flex topology and preserves manifest component flex', () => {
   const css = `
     html { flex: 1; }
