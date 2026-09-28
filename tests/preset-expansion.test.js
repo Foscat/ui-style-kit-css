@@ -64,7 +64,8 @@ test('manifest exposes the approved 20 preset and 25 theme registry', () => {
     assert.equal(preset.prefix, prefix);
     assert.deepEqual(preset.entrypoints, {
       default: `./${id}.css`,
-      visual: `./visual/${id}.css`
+      visual: `./visual/${id}.css`,
+      standalone: `./presets/${id}.css`
     });
   }
 

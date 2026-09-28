@@ -29,7 +29,7 @@ test('Bento native busy buttons use the same ring as classed and semantic contro
     await page.selectOption('#modeSelect', mode);
     const native = page.getByRole('button', { name: 'Busy native', exact: true });
     const authored = page.locator('.demo-state-grid .bento-button[aria-busy="true"]').first();
-    const semantic = page.locator('.ui-button').first();
+    const semantic = page.locator('.usk-button').first();
     await semantic.evaluate(node => node.setAttribute('aria-busy', 'true'));
     for (const button of [native, authored, semantic]) {
       const facts = await loaderFacts(button);

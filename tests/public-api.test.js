@@ -63,7 +63,8 @@ const cascadeLayers = [
   'ui-style-kit.native_elements',
   'ui-style-kit.components',
   'ui-style-kit.presets',
-  'ui-style-kit.compat_layout'
+  'ui-style-kit.compat_layout',
+  'ui-style-kit.clean_defaults'
 ];
 const deprecatedStructuralSuffixes = [
   'page',
@@ -197,7 +198,7 @@ function selectorDeclarations(relativeFile, selector, layerName) {
   return declarations;
 }
 
-test('2.5.0 package exports resolve the visual, focused, manifest, and bridge API', () => {
+test('2.6.0 package exports resolve the full, standalone preset, manifest, and bridge API', () => {
   const packageJson = readJson('package.json');
   const packageLock = readJson('package-lock.json');
   const expectedExports = new Map([
@@ -211,11 +212,12 @@ test('2.5.0 package exports resolve the visual, focused, manifest, and bridge AP
 
   for (const [id] of presets) {
     expectedExports.set(`./visual/${id}.css`, `./dist/visual/${id}.css`);
+    expectedExports.set(`./presets/${id}.css`, `./dist/visual/${id}.css`);
   }
 
-  assert.equal(packageJson.version, '2.5.0');
-  assert.equal(packageLock.version, '2.5.0');
-  assert.equal(packageLock.packages[''].version, '2.5.0');
+  assert.equal(packageJson.version, '2.6.0');
+  assert.equal(packageLock.version, '2.6.0');
+  assert.equal(packageLock.packages[''].version, '2.6.0');
 
   for (const [exportPath, target] of expectedExports) {
     assert.equal(packageJson.exports[exportPath], target, `${exportPath} should resolve to ${target}`);
@@ -224,13 +226,18 @@ test('2.5.0 package exports resolve the visual, focused, manifest, and bridge AP
 
   for (const [id] of presets) {
     assert.equal(packageJson.exports[`./${id}.css`], `./styles/${id}.css`);
+
+    const standaloneCss = readCss(path.join('dist', 'visual', `${id}.css`));
+    assert.doesNotMatch(standaloneCss, /@import\s/u, `${id} standalone preset should be self-contained`);
+    assert.match(standaloneCss, new RegExp(`\\[data-ui="${id}"\\]`));
+    assert.match(standaloneCss, /\.usk-button\b/u, `${id} standalone preset should expose canonical semantic classes`);
   }
 
   assert.equal(packageJson.exports['./interactive-surface-bridge'], './styles/interactive-surface-bridge.css');
   assert.equal(packageJson.exports['./with-bridge'], './dist/ui-style-kit.with-bridge.css');
 });
 
-test('release-facing current-version surfaces identify 2.5.0', () => {
+test('release-facing current-version surfaces identify 2.6.0', () => {
   const currentVersionFiles = [
     'README.md',
     'index.html',
@@ -245,11 +252,11 @@ test('release-facing current-version surfaces identify 2.5.0', () => {
 
   for (const relativeFile of currentVersionFiles) {
     const contents = fs.readFileSync(relativePath(relativeFile), 'utf8');
-    assert.equal(contents.includes('2.5.0'), true, `${relativeFile} should identify the current version`);
+    assert.equal(contents.includes('2.6.0'), true, `${relativeFile} should identify the current version`);
   }
 
   const changelog = fs.readFileSync(relativePath('CHANGELOG.md'), 'utf8');
-  assert.match(changelog, /^## \[2\.4\.2\] - (?:Unreleased|\d{4}-\d{2}-\d{2})$/m);
+  assert.match(changelog, /^## \[2\.6\.0\] - 2026-09-28$/m);
   assert.equal(changelog.includes('## [2.2.0] - 2026-08-09'), true);
 });
 
@@ -258,7 +265,7 @@ test('manifest describes every preset, scheme, mode, class capability, and nativ
 
   assert.equal(manifest.schemaVersion, 1);
   assert.equal(manifest.name, 'ui-style-kit-css');
-  assert.equal(manifest.version, '2.5.0');
+  assert.equal(manifest.version, '2.6.0');
   assert.deepEqual(manifest.cascadeLayers, cascadeLayers);
   assert.deepEqual(manifest.themes, themes);
   assert.deepEqual(manifest.modes, modes);
@@ -275,7 +282,8 @@ test('manifest describes every preset, scheme, mode, class capability, and nativ
     assert.ok(preset.label.length > 0, `${preset.id} label should not be empty`);
     assert.deepEqual(preset.entrypoints, {
       default: `./${preset.id}.css`,
-      visual: `./visual/${preset.id}.css`
+      visual: `./visual/${preset.id}.css`,
+      standalone: `./presets/${preset.id}.css`
     });
   }
 

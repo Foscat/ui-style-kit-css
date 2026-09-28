@@ -14,11 +14,11 @@ Before a UI branch or pull request is expected to validate, verify the reviewed 
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.5.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.6.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The current combination is `ui-style-kit-css@2.5.0`, `interactive-surface-css@1.7.3`, and `layout-style-css@3.2.3`. UI Style Kit `2.5.0` is the current release; the companion versions are reviewed releases. Layout Style `3.2.3` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.6.0`, `interactive-surface-css@1.7.3`, and `layout-style-css@3.2.3`. UI Style Kit `2.6.0` is the current release; the companion versions are reviewed releases. Layout Style `3.2.3` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 
@@ -50,7 +50,7 @@ UI Style Kit can use the same portable path by loading `ui-style-kit-css/visual.
 Use UI Style Kit by itself when an app needs visual identity, theme roles, native element styling, and long-text containment without layout primitives or richer interaction-state behavior.
 
 ```js
-import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css/presets/minimal-saas.css";
 ```
 
 ### Use two
@@ -58,7 +58,7 @@ import "ui-style-kit-css/minimal-saas.css";
 Pair UI Style Kit with Interactive Surface CSS when controls need the sibling interaction-state primitives. Import UI paint first, its public token bridge second, and the sibling state core third.
 
 ```js
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/presets/minimal-saas.css";
 import "ui-style-kit-css/interactive-surface-theme.css";
 import "interactive-surface-css/state-core.css";
 ```
@@ -66,7 +66,7 @@ import "interactive-surface-css/state-core.css";
 Pair UI Style Kit with Layout Style CSS when the app already has interaction behavior but needs structural wrappers, grids, and sections.
 
 ```js
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/presets/minimal-saas.css";
 import "layout-style-css";
 ```
 
@@ -87,7 +87,7 @@ import "layout-style-css";
 - Interactive Surface CSS owns interaction-state semantics, input affordances, state layers, and surface behavior.
 - Layout Style CSS owns structural wrappers, layout recipes, grids, app shells, and section composition.
 
-The canonical theme bridge does not make Interactive Surface a dependency of UI Style Kit. It only maps shared `--usk-*` roles to `--interactive-surface-*` tokens and provides paint; `state-core.css` continues to own interaction mechanics. The older `interactive-surface-bridge` and `with-bridge` exports are deprecated compatibility paths whose stateful behavior remains unchanged.
+The canonical theme bridge does not make Interactive Surface a dependency of UI Style Kit. It maps resolved `--usk-native-*` paint pairs and radius geometry to `--interactive-surface-*` tokens, falling back to shared `--usk-*` roles only when needed; this keeps reference palettes readable and preserves preset-specific clipped or squared controls when `data-theme` is omitted. `state-core.css` continues to own interaction mechanics. The older `interactive-surface-bridge` and `with-bridge` exports are deprecated compatibility paths whose stateful behavior remains unchanged.
 
 ## Canonical ownership order
 

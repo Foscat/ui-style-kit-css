@@ -14,229 +14,233 @@ import {
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
 
-const expectedRetainedSelectors = ['.ui-spinner', '.ui-tooltip'];
+const expectedRetainedSelectors = ['.usk-spinner', '.usk-tooltip'];
 const expectedImplementedSelectors = [
-  '.ui-button',
-  '.ui-icon-button',
-  '.ui-card',
-  '.ui-field',
-  '.ui-label',
-  '.ui-help-text',
-  '.ui-input',
-  '.ui-select',
-  '.ui-textarea',
-  '.ui-check',
-  '.ui-check-control',
-  '.ui-radio',
-  '.ui-radio-control',
-  '.ui-switch',
-  '.ui-switch-track',
-  '.ui-switch-thumb',
-  '.ui-badge',
-  '.ui-alert',
-  '.ui-alert-title',
-  '.ui-alert-body',
-  '.ui-nav',
-  '.ui-nav-link',
-  '.ui-table',
-  '.ui-table-wrap',
-  '.ui-progress',
-  '.ui-progress-bar',
-  '.ui-toolbar',
-  '.ui-tabs',
-  '.ui-tab-list',
-  '.ui-tab',
-  '.ui-tab-panel',
-  '.ui-pagination',
-  '.ui-pagination-item',
-  '.ui-pagination-link',
-  '.ui-breadcrumb',
-  '.ui-breadcrumb-list',
-  '.ui-breadcrumb-item',
-  '.ui-breadcrumb-link',
-  '.ui-breadcrumb-separator',
-  '.ui-skeleton',
-  '.ui-empty-state',
-  '.ui-empty-state-icon',
-  '.ui-empty-state-title',
-  '.ui-empty-state-body',
-  '.ui-empty-state-actions',
-  '.ui-metric',
-  '.ui-metric-label',
-  '.ui-metric-value',
-  '.ui-metric-detail',
-  '.ui-chip',
-  '.ui-chip-group',
-  '.ui-avatar',
-  '.ui-avatar-group',
-  '.ui-stepper',
-  '.ui-step',
-  '.ui-step-marker',
-  '.ui-step-label',
-  '.ui-toast-stack',
-  '.ui-toast',
-  '.ui-toast-title',
-  '.ui-toast-body',
-  '.ui-toast-actions',
-  '.ui-popover',
-  '.ui-menu',
-  '.ui-menu-item',
-  '.ui-menu-group',
-  '.ui-menu-separator',
-  '.ui-segmented-control',
-  '.ui-segment',
-  '.ui-file-upload',
-  '.ui-dropzone',
-  '.ui-listbox',
-  '.ui-listbox-option'
+  '.usk-button',
+  '.usk-icon-button',
+  '.usk-card',
+  '.usk-field',
+  '.usk-label',
+  '.usk-help-text',
+  '.usk-input',
+  '.usk-select',
+  '.usk-textarea',
+  '.usk-check',
+  '.usk-check-control',
+  '.usk-radio',
+  '.usk-radio-control',
+  '.usk-switch',
+  '.usk-switch-track',
+  '.usk-switch-thumb',
+  '.usk-badge',
+  '.usk-alert',
+  '.usk-alert-title',
+  '.usk-alert-body',
+  '.usk-nav',
+  '.usk-nav-link',
+  '.usk-table',
+  '.usk-table-wrap',
+  '.usk-progress',
+  '.usk-progress-bar',
+  '.usk-toolbar',
+  '.usk-tabs',
+  '.usk-tab-list',
+  '.usk-tab',
+  '.usk-tab-panel',
+  '.usk-pagination',
+  '.usk-pagination-item',
+  '.usk-pagination-link',
+  '.usk-breadcrumb',
+  '.usk-breadcrumb-list',
+  '.usk-breadcrumb-item',
+  '.usk-breadcrumb-link',
+  '.usk-breadcrumb-separator',
+  '.usk-skeleton',
+  '.usk-empty-state',
+  '.usk-empty-state-icon',
+  '.usk-empty-state-title',
+  '.usk-empty-state-body',
+  '.usk-empty-state-actions',
+  '.usk-metric',
+  '.usk-metric-label',
+  '.usk-metric-value',
+  '.usk-metric-detail',
+  '.usk-chip',
+  '.usk-chip-group',
+  '.usk-avatar',
+  '.usk-avatar-group',
+  '.usk-stepper',
+  '.usk-step',
+  '.usk-step-marker',
+  '.usk-step-label',
+  '.usk-toast-stack',
+  '.usk-toast',
+  '.usk-toast-title',
+  '.usk-toast-body',
+  '.usk-toast-actions',
+  '.usk-popover',
+  '.usk-menu',
+  '.usk-menu-item',
+  '.usk-menu-group',
+  '.usk-menu-separator',
+  '.usk-segmented-control',
+  '.usk-segment',
+  '.usk-file-upload',
+  '.usk-dropzone',
+  '.usk-listbox',
+  '.usk-listbox-option'
 ];
 const expectedPendingSelectors = [];
 
 const expectedSemanticComponentApi = {
   presetSwitchAttribute: 'data-ui',
+  classNamespaces: {
+    canonical: 'usk',
+    compatibility: ['ui']
+  },
   selectorsByRole: {
     button: [
-      { selector: '.ui-button', sourceSuffix: 'button' },
-      { selector: '.ui-icon-button', sourceSuffix: 'icon-button' }
+      { selector: '.usk-button', sourceSuffix: 'button' },
+      { selector: '.usk-icon-button', sourceSuffix: 'icon-button' }
     ],
     card: [
-      { selector: '.ui-card', sourceSuffix: 'card' }
+      { selector: '.usk-card', sourceSuffix: 'card' }
     ],
     form: [
-      { selector: '.ui-field', sourceSuffix: 'field' },
-      { selector: '.ui-label', sourceSuffix: 'label' },
-      { selector: '.ui-help-text', sourceSuffix: 'help-text' },
-      { selector: '.ui-input', sourceSuffix: 'input' },
-      { selector: '.ui-select', sourceSuffix: 'select' },
-      { selector: '.ui-textarea', sourceSuffix: 'textarea' },
-      { selector: '.ui-check', sourceSuffix: 'check' },
-      { selector: '.ui-check-control', sourceSuffix: 'check-control' },
-      { selector: '.ui-radio', sourceSuffix: 'radio' },
-      { selector: '.ui-radio-control', sourceSuffix: 'radio-control' },
-      { selector: '.ui-switch', sourceSuffix: 'switch' },
-      { selector: '.ui-switch-track', sourceSuffix: 'switch-track' },
-      { selector: '.ui-switch-thumb', sourceSuffix: 'switch-thumb' }
+      { selector: '.usk-field', sourceSuffix: 'field' },
+      { selector: '.usk-label', sourceSuffix: 'label' },
+      { selector: '.usk-help-text', sourceSuffix: 'help-text' },
+      { selector: '.usk-input', sourceSuffix: 'input' },
+      { selector: '.usk-select', sourceSuffix: 'select' },
+      { selector: '.usk-textarea', sourceSuffix: 'textarea' },
+      { selector: '.usk-check', sourceSuffix: 'check' },
+      { selector: '.usk-check-control', sourceSuffix: 'check-control' },
+      { selector: '.usk-radio', sourceSuffix: 'radio' },
+      { selector: '.usk-radio-control', sourceSuffix: 'radio-control' },
+      { selector: '.usk-switch', sourceSuffix: 'switch' },
+      { selector: '.usk-switch-track', sourceSuffix: 'switch-track' },
+      { selector: '.usk-switch-thumb', sourceSuffix: 'switch-thumb' }
     ],
     badge: [
-      { selector: '.ui-badge', sourceSuffix: 'badge' }
+      { selector: '.usk-badge', sourceSuffix: 'badge' }
     ],
     alert: [
-      { selector: '.ui-alert', sourceSuffix: 'alert' },
-      { selector: '.ui-alert-title', sourceSuffix: 'alert-title' },
-      { selector: '.ui-alert-body', sourceSuffix: 'alert-body' }
+      { selector: '.usk-alert', sourceSuffix: 'alert' },
+      { selector: '.usk-alert-title', sourceSuffix: 'alert-title' },
+      { selector: '.usk-alert-body', sourceSuffix: 'alert-body' }
     ],
     navigation: [
-      { selector: '.ui-nav', sourceSuffix: 'nav' },
-      { selector: '.ui-nav-link', sourceSuffix: 'nav-link' }
+      { selector: '.usk-nav', sourceSuffix: 'nav' },
+      { selector: '.usk-nav-link', sourceSuffix: 'nav-link' }
     ],
     table: [
-      { selector: '.ui-table', sourceSuffix: 'table' },
-      { selector: '.ui-table-wrap', sourceSuffix: 'table-wrap' }
+      { selector: '.usk-table', sourceSuffix: 'table' },
+      { selector: '.usk-table-wrap', sourceSuffix: 'table-wrap' }
     ],
     progress: [
-      { selector: '.ui-progress', sourceSuffix: 'progress' },
-      { selector: '.ui-progress-bar', sourceSuffix: 'progress-bar' }
+      { selector: '.usk-progress', sourceSuffix: 'progress' },
+      { selector: '.usk-progress-bar', sourceSuffix: 'progress-bar' }
     ],
     toolbar: [
-      { selector: '.ui-toolbar', sourceSuffix: 'toolbar' }
+      { selector: '.usk-toolbar', sourceSuffix: 'toolbar' }
     ],
     loading: [
-      { selector: '.ui-spinner', sourceSuffix: 'spinner' }
+      { selector: '.usk-spinner', sourceSuffix: 'spinner' }
     ],
     tooltip: [
-      { selector: '.ui-tooltip', sourceSuffix: 'tooltip' }
+      { selector: '.usk-tooltip', sourceSuffix: 'tooltip' }
     ],
     tabs: [
-      { selector: '.ui-tabs', sourceSuffix: 'tabs' },
-      { selector: '.ui-tab-list', sourceSuffix: 'tab-list' },
-      { selector: '.ui-tab', sourceSuffix: 'tab' },
-      { selector: '.ui-tab-panel', sourceSuffix: 'tab-panel' }
+      { selector: '.usk-tabs', sourceSuffix: 'tabs' },
+      { selector: '.usk-tab-list', sourceSuffix: 'tab-list' },
+      { selector: '.usk-tab', sourceSuffix: 'tab' },
+      { selector: '.usk-tab-panel', sourceSuffix: 'tab-panel' }
     ],
     pagination: [
-      { selector: '.ui-pagination', sourceSuffix: 'pagination' },
-      { selector: '.ui-pagination-item', sourceSuffix: 'pagination-item' },
-      { selector: '.ui-pagination-link', sourceSuffix: 'pagination-link' }
+      { selector: '.usk-pagination', sourceSuffix: 'pagination' },
+      { selector: '.usk-pagination-item', sourceSuffix: 'pagination-item' },
+      { selector: '.usk-pagination-link', sourceSuffix: 'pagination-link' }
     ],
     breadcrumb: [
-      { selector: '.ui-breadcrumb', sourceSuffix: 'breadcrumb' },
-      { selector: '.ui-breadcrumb-list', sourceSuffix: 'breadcrumb-list' },
-      { selector: '.ui-breadcrumb-item', sourceSuffix: 'breadcrumb-item' },
-      { selector: '.ui-breadcrumb-link', sourceSuffix: 'breadcrumb-link' },
-      { selector: '.ui-breadcrumb-separator', sourceSuffix: 'breadcrumb-separator' }
+      { selector: '.usk-breadcrumb', sourceSuffix: 'breadcrumb' },
+      { selector: '.usk-breadcrumb-list', sourceSuffix: 'breadcrumb-list' },
+      { selector: '.usk-breadcrumb-item', sourceSuffix: 'breadcrumb-item' },
+      { selector: '.usk-breadcrumb-link', sourceSuffix: 'breadcrumb-link' },
+      { selector: '.usk-breadcrumb-separator', sourceSuffix: 'breadcrumb-separator' }
     ],
     skeleton: [
-      { selector: '.ui-skeleton', sourceSuffix: 'skeleton' }
+      { selector: '.usk-skeleton', sourceSuffix: 'skeleton' }
     ],
     emptyState: [
-      { selector: '.ui-empty-state', sourceSuffix: 'empty-state' },
-      { selector: '.ui-empty-state-icon', sourceSuffix: 'empty-state-icon' },
-      { selector: '.ui-empty-state-title', sourceSuffix: 'empty-state-title' },
-      { selector: '.ui-empty-state-body', sourceSuffix: 'empty-state-body' },
-      { selector: '.ui-empty-state-actions', sourceSuffix: 'empty-state-actions' }
+      { selector: '.usk-empty-state', sourceSuffix: 'empty-state' },
+      { selector: '.usk-empty-state-icon', sourceSuffix: 'empty-state-icon' },
+      { selector: '.usk-empty-state-title', sourceSuffix: 'empty-state-title' },
+      { selector: '.usk-empty-state-body', sourceSuffix: 'empty-state-body' },
+      { selector: '.usk-empty-state-actions', sourceSuffix: 'empty-state-actions' }
     ],
     metric: [
-      { selector: '.ui-metric', sourceSuffix: 'metric' },
-      { selector: '.ui-metric-label', sourceSuffix: 'metric-label' },
-      { selector: '.ui-metric-value', sourceSuffix: 'metric-value' },
-      { selector: '.ui-metric-detail', sourceSuffix: 'metric-detail' }
+      { selector: '.usk-metric', sourceSuffix: 'metric' },
+      { selector: '.usk-metric-label', sourceSuffix: 'metric-label' },
+      { selector: '.usk-metric-value', sourceSuffix: 'metric-value' },
+      { selector: '.usk-metric-detail', sourceSuffix: 'metric-detail' }
     ],
     chip: [
-      { selector: '.ui-chip', sourceSuffix: 'chip' },
-      { selector: '.ui-chip-group', sourceSuffix: 'chip-group' }
+      { selector: '.usk-chip', sourceSuffix: 'chip' },
+      { selector: '.usk-chip-group', sourceSuffix: 'chip-group' }
     ],
     avatar: [
-      { selector: '.ui-avatar', sourceSuffix: 'avatar' },
-      { selector: '.ui-avatar-group', sourceSuffix: 'avatar-group' }
+      { selector: '.usk-avatar', sourceSuffix: 'avatar' },
+      { selector: '.usk-avatar-group', sourceSuffix: 'avatar-group' }
     ],
     stepper: [
-      { selector: '.ui-stepper', sourceSuffix: 'stepper' },
-      { selector: '.ui-step', sourceSuffix: 'step' },
-      { selector: '.ui-step-marker', sourceSuffix: 'step-marker' },
-      { selector: '.ui-step-label', sourceSuffix: 'step-label' }
+      { selector: '.usk-stepper', sourceSuffix: 'stepper' },
+      { selector: '.usk-step', sourceSuffix: 'step' },
+      { selector: '.usk-step-marker', sourceSuffix: 'step-marker' },
+      { selector: '.usk-step-label', sourceSuffix: 'step-label' }
     ],
     toast: [
-      { selector: '.ui-toast-stack', sourceSuffix: 'toast-stack' },
-      { selector: '.ui-toast', sourceSuffix: 'toast' },
-      { selector: '.ui-toast-title', sourceSuffix: 'toast-title' },
-      { selector: '.ui-toast-body', sourceSuffix: 'toast-body' },
-      { selector: '.ui-toast-actions', sourceSuffix: 'toast-actions' }
+      { selector: '.usk-toast-stack', sourceSuffix: 'toast-stack' },
+      { selector: '.usk-toast', sourceSuffix: 'toast' },
+      { selector: '.usk-toast-title', sourceSuffix: 'toast-title' },
+      { selector: '.usk-toast-body', sourceSuffix: 'toast-body' },
+      { selector: '.usk-toast-actions', sourceSuffix: 'toast-actions' }
     ],
     popover: [
-      { selector: '.ui-popover', sourceSuffix: 'popover' }
+      { selector: '.usk-popover', sourceSuffix: 'popover' }
     ],
     menu: [
-      { selector: '.ui-menu', sourceSuffix: 'menu' },
-      { selector: '.ui-menu-item', sourceSuffix: 'menu-item' },
-      { selector: '.ui-menu-group', sourceSuffix: 'menu-group' },
-      { selector: '.ui-menu-separator', sourceSuffix: 'menu-separator' }
+      { selector: '.usk-menu', sourceSuffix: 'menu' },
+      { selector: '.usk-menu-item', sourceSuffix: 'menu-item' },
+      { selector: '.usk-menu-group', sourceSuffix: 'menu-group' },
+      { selector: '.usk-menu-separator', sourceSuffix: 'menu-separator' }
     ],
     segmentedControl: [
-      { selector: '.ui-segmented-control', sourceSuffix: 'segmented-control' },
-      { selector: '.ui-segment', sourceSuffix: 'segment' }
+      { selector: '.usk-segmented-control', sourceSuffix: 'segmented-control' },
+      { selector: '.usk-segment', sourceSuffix: 'segment' }
     ],
     fileUpload: [
-      { selector: '.ui-file-upload', sourceSuffix: 'file-upload' },
-      { selector: '.ui-dropzone', sourceSuffix: 'dropzone' }
+      { selector: '.usk-file-upload', sourceSuffix: 'file-upload' },
+      { selector: '.usk-dropzone', sourceSuffix: 'dropzone' }
     ],
     listbox: [
-      { selector: '.ui-listbox', sourceSuffix: 'listbox' },
-      { selector: '.ui-listbox-option', sourceSuffix: 'listbox-option' }
+      { selector: '.usk-listbox', sourceSuffix: 'listbox' },
+      { selector: '.usk-listbox-option', sourceSuffix: 'listbox-option' }
     ]
   },
   variantAttribute: {
     name: 'data-ui-variant',
     neutral: 'omitted',
     valuesBySelector: {
-      '.ui-button': ['primary', 'secondary', 'warning', 'danger', 'ghost'],
-      '.ui-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
-      '.ui-alert': ['success', 'warning', 'danger'],
-      '.ui-chip': ['primary', 'secondary', 'success', 'warning', 'danger'],
-      '.ui-toast': ['info', 'success', 'warning', 'danger']
+      '.usk-button': ['primary', 'secondary', 'warning', 'danger', 'ghost'],
+      '.usk-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
+      '.usk-alert': ['success', 'warning', 'danger'],
+      '.usk-chip': ['primary', 'secondary', 'success', 'warning', 'danger'],
+      '.usk-toast': ['info', 'success', 'warning', 'danger']
     }
   },
   stateAttributes: {
-    '.ui-skeleton': { 'data-shape': ['text', 'circle', 'block'] },
-    '.ui-step': { 'data-state': ['complete', 'current', 'upcoming', 'error'] }
+    '.usk-skeleton': { 'data-shape': ['text', 'circle', 'block'] },
+    '.usk-step': { 'data-state': ['complete', 'current', 'upcoming', 'error'] }
   },
   nativeFallbacks: [
     {
@@ -429,7 +433,45 @@ test('manifest specifies the exact generic semantic component API', () => {
   assert.equal(entries.length, 75);
   assert.equal(new Set(entries.map(({ selector }) => selector)).size, entries.length);
   assert.equal(new Set(entries.map(({ sourceSuffix }) => sourceSuffix)).size, entries.length);
-  assert.equal(entries.every(({ selector }) => /^\.ui-[a-z]+(?:-[a-z]+)*$/.test(selector)), true);
+  assert.equal(entries.every(({ selector }) => /^\.usk-[a-z]+(?:-[a-z]+)*$/.test(selector)), true);
+});
+
+/** Verifies the namespaced semantic API without removing the published compatibility namespace. */
+test('semantic components publish canonical usk classes with ui compatibility aliases', () => {
+  assert.deepEqual(manifest.semanticComponentApi.classNamespaces, {
+    canonical: 'usk',
+    compatibility: ['ui']
+  });
+
+  for (const relativeFile of [
+    'dist/ui-style-kit.visual.css',
+    ...manifest.presets.map(({ id }) => `dist/visual/${id}.css`)
+  ]) {
+    const selectors = selectorTexts(relativeFile);
+    for (const { sourceSuffix } of semanticEntries()) {
+      assert.equal(
+        selectors.some((selector) => selector.includes(`.usk-${sourceSuffix}`)),
+        true,
+        `${relativeFile} must implement .usk-${sourceSuffix}`
+      );
+      assert.equal(
+        selectors.some((selector) => selector.includes(`.ui-${sourceSuffix}`)),
+        true,
+        `${relativeFile} must retain .ui-${sourceSuffix}`
+      );
+    }
+  }
+});
+
+/** Verifies that the public proof page exercises the canonical namespace consumers should copy. */
+test('library demos render the canonical usk semantic component namespace', () => {
+  for (const relativeFile of ['index.html', 'demo/index.html']) {
+    const markup = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+    assert.match(markup, /class="[^"]*\busk-button\b/);
+    assert.match(markup, /class="[^"]*\busk-stepper\b/);
+    assert.doesNotMatch(markup, /class="[^"]*\bui-[a-z]/);
+    assert.match(markup, /Every component below keeps its <code>\.usk-\*<\/code> class/);
+  }
 });
 
 test('manifest partitions retained, implemented, and pending Task 11 selectors', () => {
@@ -454,7 +496,7 @@ test('manifest partitions retained, implemented, and pending Task 11 selectors',
   );
 });
 
-test('authored CSS retains only the two implemented semantic hooks and all legacy aliases', () => {
+test('authored preset CSS retains only the two historical ui compatibility hooks', () => {
   const authoredSemanticClasses = new Set();
 
   for (const preset of manifest.presets) {
@@ -496,7 +538,7 @@ test('authored CSS retains only the two implemented semantic hooks and all legac
     true,
     'the authored anchor hook must continue to establish positioning behavior'
   );
-  assert.deepEqual(authoredSemanticClasses, new Set(expectedRetainedSelectors));
+  assert.deepEqual(authoredSemanticClasses, new Set(['.ui-spinner', '.ui-tooltip']));
 });
 
 test('generated entrypoints scope implemented aliases while raw preset exports stay advanced', () => {
@@ -553,16 +595,16 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
 
 test('generated semantic aliases preserve exact class-token safety declarations', () => {
   const safetyPropertiesBySelector = {
-    '.ui-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
-    '.ui-icon-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
-    '.ui-card': ['max-inline-size', 'min-inline-size'],
-    '.ui-field': ['max-inline-size', 'min-inline-size'],
-    '.ui-badge': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
-    '.ui-alert': ['max-inline-size', 'min-inline-size'],
-    '.ui-nav': ['max-inline-size', 'min-inline-size'],
-    '.ui-nav-link': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
-    '.ui-table-wrap': ['max-inline-size', 'min-inline-size'],
-    '.ui-toolbar': ['max-inline-size', 'min-inline-size']
+    '.usk-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.usk-icon-button': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.usk-card': ['max-inline-size', 'min-inline-size'],
+    '.usk-field': ['max-inline-size', 'min-inline-size'],
+    '.usk-badge': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.usk-alert': ['max-inline-size', 'min-inline-size'],
+    '.usk-nav': ['max-inline-size', 'min-inline-size'],
+    '.usk-nav-link': ['max-inline-size', 'min-inline-size', 'white-space', 'overflow-wrap', 'word-break'],
+    '.usk-table-wrap': ['max-inline-size', 'min-inline-size'],
+    '.usk-toolbar': ['max-inline-size', 'min-inline-size']
   };
 
   for (const relativeFile of [
@@ -579,6 +621,26 @@ test('generated semantic aliases preserve exact class-token safety declarations'
         );
       }
     }
+  }
+});
+
+test('generated semantic selector lists collapse duplicate namespace aliases', () => {
+  for (const relativeFile of [
+    'dist/ui-style-kit.visual.css',
+    ...manifest.presets.map(({ id }) => `dist/visual/${id}.css`)
+  ]) {
+    const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+
+    assert.doesNotMatch(
+      css,
+      /:where\(\.usk-([a-z-]+)(?:,\s*\.usk-\1)+\)/,
+      `${relativeFile} must not repeat canonical aliases inside selector lists`
+    );
+    assert.doesNotMatch(
+      css,
+      /:where\(\.ui-([a-z-]+)(?:,\s*\.ui-\1)+\)/,
+      `${relativeFile} must not repeat compatibility aliases inside selector lists`
+    );
   }
 });
 
@@ -601,12 +663,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   /** Reviewed 25-theme output includes text-ink fallbacks and preserves other declarations. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36520,
-    sha256: 'afa708e3e00b7c2adeda7d94a7d745696a1cbcebca41255f88f75d3e00b54eed'
+    count: 36840,
+    sha256: 'f476e41ff21d23a8670cff41f39d55dabe70b855d28f2bdeded0ed6291c080a3'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 36971,
-    sha256: '1f435b6b9e96e004e75f70e7c405ad49cfdb13f4950d0466f53eec7d77d96321'
+    count: 37291,
+    sha256: 'ca60ab67b365532c5622813a8d63cd117dbc4e2fcac8348ed2cd13b18c73e044'
   });
 });
 
@@ -629,6 +691,25 @@ test('semantic source suffixes and contextual variants exist in every composed p
       );
     }
   }
+});
+
+test('foreground-only semantic states receive surface-readable ink in every mode', () => {
+  const themeColorsCss = fs.readFileSync(path.join(rootDir, 'styles/theme-colors.css'), 'utf8');
+  const darkAndContrastMode = themeColorsCss.match(
+    /:where\(\[data-ui\]\[data-mode="dark"\],\s*\[data-ui\]\[data-mode="contrast"\]\)\s*{([^}]+)}/
+  );
+
+  assert.ok(darkAndContrastMode, 'dark and contrast modes must share an explicit text-ink contract');
+  assert.match(
+    darkAndContrastMode[1],
+    /--usk-primary-ink:\s*rgb\(var\(--usk-link-rgb\)\);/,
+    'primary text treatments must use the surface-readable link role'
+  );
+  assert.match(
+    darkAndContrastMode[1],
+    /--usk-accent-ink:\s*rgb\(var\(--usk-link-rgb\)\);/,
+    'accent text treatments must use the surface-readable link role'
+  );
 });
 
 test('partial extras and deprecated structural aliases stay outside the semantic contract', () => {
@@ -654,8 +735,8 @@ test('modal and dialog use one native fallback without inventing generic selecto
   assert.deepEqual(manifest.semanticComponentApi.nativeFallbacks, [
     { roles: ['modal', 'dialog'], element: 'dialog', genericSelectors: [] }
   ]);
-  assert.equal(selectors.has('.ui-modal'), false);
-  assert.equal(selectors.has('.ui-dialog'), false);
+  assert.equal(selectors.has('.usk-modal'), false);
+  assert.equal(selectors.has('.usk-dialog'), false);
 });
 
 test('data-ui-variant is the only semantic component attribute added to the preset switch', () => {

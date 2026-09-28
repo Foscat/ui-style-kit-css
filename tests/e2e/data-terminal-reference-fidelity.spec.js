@@ -452,7 +452,7 @@ test('Data Terminal table headers use compact neutral ledger rules', async ({ pa
 
     return {
       classed: read('[data-testid="component-table"] .terminal-table th', '[data-testid="component-table"] .terminal-table td'),
-      semantic: read('#semantic-runtime .ui-table th', '#semantic-runtime .ui-table td')
+      semantic: read('#semantic-runtime .usk-table th', '#semantic-runtime .usk-table td')
     };
   });
 

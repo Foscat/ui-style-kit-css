@@ -12,7 +12,8 @@ const publicLayerOrder = [
   'ui-style-kit.native_elements',
   'ui-style-kit.components',
   'ui-style-kit.presets',
-  'ui-style-kit.compat_layout'
+  'ui-style-kit.compat_layout',
+  'ui-style-kit.clean_defaults'
 ];
 const required = [
   'dist/ui-style-kit.css',
@@ -29,6 +30,8 @@ const required = [
   'styles/theme-colors.css',
   'styles/native-elements.css',
   'styles/components.css',
+  'styles/component-composition.css',
+  'styles/clean-defaults.css',
   'styles/compat-layout.css',
   'styles/content-overflow.css',
   'styles/interactive-surface-theme.css',
@@ -51,7 +54,7 @@ if (manifest.schemaVersion !== 1 || manifest.name !== pkg.name || manifest.versi
   throw new Error('manifest.json identity and schema version must match the package release.');
 }
 if (JSON.stringify(manifest.cascadeLayers) !== JSON.stringify(publicLayerOrder)) {
-  throw new Error('manifest.json must declare the five public cascade layers in order.');
+  throw new Error('manifest.json must declare the six public cascade layers in order.');
 }
 if (manifest.presets.length !== 20 || manifest.themes.length !== 25 || manifest.modes.length !== 3) {
   throw new Error('manifest.json must describe all 20 presets, 25 themes, and 3 modes.');
@@ -96,6 +99,10 @@ const requiredExports = [
   './theme-colors.css',
   './styles/content-overflow.css',
   './content-overflow.css',
+  './styles/component-composition.css',
+  './component-composition.css',
+  './styles/clean-defaults.css',
+  './clean-defaults.css',
   './styles/minimal-saas.css',
   './cyberpunk.css',
   './styles/interactive-surface-bridge.css',
@@ -103,7 +110,10 @@ const requiredExports = [
   './interactive-surface-theme',
   './interactive-surface-theme.css',
   './manifest.json',
-  ...manifest.presets.map(({ id }) => `./visual/${id}.css`)
+  ...manifest.presets.flatMap(({ id }) => [
+    `./visual/${id}.css`,
+    `./presets/${id}.css`
+  ])
 ];
 for (const key of requiredExports) {
   if (!pkg.exports[key]) throw new Error(`Missing export: ${key}`);

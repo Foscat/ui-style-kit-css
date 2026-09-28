@@ -49,7 +49,7 @@ test('theme ink overrides stay scoped and preserve other palette text colors', a
   await expect(page.locator('#yellow')).toHaveCSS('color', 'rgb(112, 79, 0)');
   await expect(page.locator('#cobalt')).toHaveCSS('color', 'rgb(0, 64, 163)');
   await page.locator('[data-ui]').first().evaluate(element => { element.dataset.mode = 'dark'; });
-  await expect(page.locator('#yellow')).toHaveCSS('color', 'rgb(255, 216, 59)');
+  await expect(page.locator('#yellow')).toHaveCSS('color', 'rgb(255, 232, 102)');
   await page.locator('[data-ui]').first().evaluate(element => {
     element.dataset.mode = 'light';
     element.dataset.theme = 'arctic-indigo';

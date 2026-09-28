@@ -82,7 +82,7 @@ test('Clay recreates the reference material in light and dark modes', async ({ p
   await page.selectOption('#uiSelect', 'clay');
   await useReferencePalette(page);
   await page.selectOption('#modeSelect', 'light');
-  const demoSemanticCard = await page.locator('.ui-card').first().evaluate((card) => {
+  const demoSemanticCard = await page.locator('.usk-card').first().evaluate((card) => {
     const style = getComputedStyle(card);
     return {
       background: style.backgroundColor,
@@ -93,7 +93,7 @@ test('Clay recreates the reference material in light and dark modes', async ({ p
   expect(demoSemanticCard.clip).toContain('polygon(');
   await page.selectOption('#modeSelect', 'dark');
   await expect
-    .poll(async () => page.locator('.ui-card').first().evaluate((card) => getComputedStyle(card).backgroundColor))
+    .poll(async () => page.locator('.usk-card').first().evaluate((card) => getComputedStyle(card).backgroundColor))
     .toBe('rgb(32, 35, 36)');
   await page.selectOption('#modeSelect', 'light');
   await page.evaluate(() => {

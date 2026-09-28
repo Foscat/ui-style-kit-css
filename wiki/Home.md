@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 25 shared color themes, and 3 display modes.
 
-Version `v2.5.0` is a backward-compatible semantic-component release that expands the stable API from 29 to 75 selectors while preserving the existing palettes, v2 entrypoints, preset-prefixed classes, and bridge contracts.
+Version `v2.6.0` is a backward-compatible component-quality and delivery release with canonical self-contained preset imports, all-style runtime switching, and a hardened 75-selector `.usk-*` API across every visual system.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
@@ -48,7 +48,7 @@ semantic colors when a named theme is selected. See [Theming Model](Theming-Mode
 
 - Canonical theme bridge: `ui-style-kit-css/interactive-surface-theme.css`
 - Interaction mechanics: `interactive-surface-css/state-core.css`
-- Consumer-owned layout entrypoints: `ui-style-kit-css/visual.css` and `ui-style-kit-css/visual/<preset>.css`
+- Consumer-owned layout entrypoints: `ui-style-kit-css/visual.css` and `ui-style-kit-css/presets/<preset>.css`
 - Capability discovery: `ui-style-kit-css/manifest.json`
 - The default and visual-only bundles remain bridge-free.
 - The older `interactive-surface-bridge` and `with-bridge` exports are deprecated compatibility paths whose behavior remains unchanged.

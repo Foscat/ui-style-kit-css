@@ -46,15 +46,15 @@ test('Tier A and Tier B patterns are promoted through universal semantic sources
   for (const [role, suffixes] of Object.entries(promotedSelectorsByRole)) {
     assert.deepEqual(
       manifest.semanticComponentApi.selectorsByRole[role],
-      suffixes.map((sourceSuffix) => ({ selector: `.ui-${sourceSuffix}`, sourceSuffix }))
+      suffixes.map((sourceSuffix) => ({ selector: `.usk-${sourceSuffix}`, sourceSuffix }))
     );
 
     for (const suffix of suffixes) {
       assert.equal(universalSuffixes.has(suffix), true, `${suffix} must be universal`);
       assert.equal(
-        implementedSelectors.has(`.ui-${suffix}`),
+        implementedSelectors.has(`.usk-${suffix}`),
         true,
-        `.ui-${suffix} must be implemented`
+        `.usk-${suffix} must be implemented`
       );
     }
   }
@@ -63,10 +63,10 @@ test('Tier A and Tier B patterns are promoted through universal semantic sources
 test('promoted semantic variants and state hooks remain explicit', () => {
   const variants = manifest.semanticComponentApi.variantAttribute.valuesBySelector;
 
-  assert.deepEqual(variants['.ui-chip'], ['primary', 'secondary', 'success', 'warning', 'danger']);
-  assert.deepEqual(variants['.ui-toast'], ['info', 'success', 'warning', 'danger']);
+  assert.deepEqual(variants['.usk-chip'], ['primary', 'secondary', 'success', 'warning', 'danger']);
+  assert.deepEqual(variants['.usk-toast'], ['info', 'success', 'warning', 'danger']);
   assert.deepEqual(manifest.semanticComponentApi.stateAttributes, {
-    '.ui-skeleton': { 'data-shape': ['text', 'circle', 'block'] },
-    '.ui-step': { 'data-state': ['complete', 'current', 'upcoming', 'error'] }
+    '.usk-skeleton': { 'data-shape': ['text', 'circle', 'block'] },
+    '.usk-step': { 'data-state': ['complete', 'current', 'upcoming', 'error'] }
   });
 });

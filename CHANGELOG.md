@@ -4,6 +4,35 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-09-28
+
+### Added
+
+- Added library-wide clean defaults with a 2px element spacing fallback, compact control padding floors, `.usk-flush`/`.flush`, and `.usk-underline` utilities.
+- Added canonical self-contained `presets/<name>.css` exports for all 20 UI styles while retaining the combined runtime-switching bundle and existing focused aliases.
+
+### Changed
+
+- Made decorative underlines opt-in while preserving native edit-notation elements such as `u`, `ins`, `del`, and `s`.
+- Extended preset-native paint with complete secondary, accent, and semantic foreground pairs for companion surface integrations.
+- Made the Interactive Surface bridge inherit each preset's native radius so clipped and squared identities are not rounded by the integration layer.
+
+### Fixed
+
+- Corrected Interactive Surface reference-palette resolution so omitted `data-theme` values use each preset's native surface and foreground pairs instead of mismatched light fallbacks.
+- Repaired late Bento and Clay reference colors identified by the rendered all-preset contrast audit.
+- Prevented semantic checkbox, radio, and switch markup from painting a second native choice control beside its authored control surface.
+- Protected current-page pagination foregrounds from broad preset anchor rules.
+- Centered semantic avatar fallback content and constrained nested chip remove actions without requiring React-specific styling hooks.
+- Normalized semantic SVG icon geometry through `data-ui-icon` so close marks and other reusable icons align without framework-owned CSS.
+- Insets checkbox, radio, and switch surfaces; vertically centers controls; optically centers avatar initials; and keeps nested chip actions subordinate to their labels.
+- Added `data-pagination-kind="page|direction"` geometry so page numbers remain slightly smaller than Previous and Next bookends.
+
+### Tests
+
+- Added release contracts proving every standalone preset resolves without CSS imports, scopes itself to the correct `data-ui` value, and exposes the canonical `.usk-*` component API.
+- Expanded rendered contrast, component-composition, semantic-layout, and reference-palette coverage for the corrected library-owned styles.
+
 ## [2.5.0] - 2026-09-26
 
 ### Added

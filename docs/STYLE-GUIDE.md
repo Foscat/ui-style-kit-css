@@ -32,6 +32,16 @@ without assigning a shared theme or changing geometry.
 
 Use `data-mode="contrast"` for high-contrast variants and pair it with semantic HTML for best accessibility outcomes.
 
+## Clean spacing and decoration defaults
+
+Every element inside a themed UI root starts with a 2px margin and padding fallback unless a preset supplies a roomier value. Technical Blueprint is exempt because its measured drafting structures intentionally adjoin. Use `.usk-flush` (recommended) or `.flush` only for an intentionally edge-to-edge element in the remaining styles. Buttons and badges retain at least 2px of block padding and 4px of inline padding.
+
+Links and component text are not underlined by default. Apply `.usk-underline` when an underline is deliberately part of the design. Semantic edit notation remains available through native `u`, `ins`, `del`, and `s` elements.
+
+Semantic choice wrappers expose one visual affordance. Their native checkbox or radio remains focusable and form-associated, while `.usk-check-control`, `.usk-radio-control`, or `.usk-switch-track` owns the visible, vertically centered geometry. The wrapper supplies its own inset so the affordance never touches the painted edge. Do not reveal both surfaces with a local override.
+
+Mark reusable SVG artwork with `data-ui-icon`. The library supplies `1em` square geometry, block alignment, and visible overflow so React, Vue, and plain-HTML consumers do not need framework-specific icon CSS. Nested chip remove controls remain 24px square with a 12px glyph. Use `data-pagination-kind="page"` for compact number controls and `data-pagination-kind="direction"` for the larger Previous and Next bookends.
+
 ## Preset identity and component roles
 
 UI presets own geometry, material, spacing, depth, and typographic character. Color schemes own semantic color roles. A preset should therefore remain recognizable when its `data-theme` changes, while every component continues to consume the active theme tokens instead of fixed artwork colors.

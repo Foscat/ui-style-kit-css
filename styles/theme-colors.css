@@ -24,6 +24,9 @@
 }
 
 :where([data-ui][data-mode="dark"], [data-ui][data-mode="contrast"]) {
+  /* Foreground-only semantic accents must never fall back to a fill color. */
+  --usk-primary-ink: rgb(var(--usk-link-rgb));
+  --usk-accent-ink: rgb(var(--usk-link-rgb));
   --usk-border-text-mix: 0%;
   --usk-border-min-alpha: 0;
 }

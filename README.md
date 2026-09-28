@@ -9,17 +9,17 @@ It is separate from, but complementary to, **Interactive Surface CSS** and **Lay
 
 ## Current release
 
-Version `v2.5.0` is a backward-compatible semantic-component release. It promotes reusable tabs, pagination, breadcrumb, skeleton, empty-state, metric, chip, avatar, stepper, toast, popover, menu, segmented-control, file-upload, dropzone, and listbox patterns into the stable `.ui-*` API while preserving preset-owned paint.
+Version `v2.6.0` is a backward-compatible component-quality and delivery release. It gives every UI system a canonical self-contained `presets/<name>.css` import, keeps the all-style runtime-switching bundles, and hardens the universal `.usk-*` component contract across all 20 presets. New markup should use `.usk-*`; generated `.ui-*` aliases remain available for existing consumers.
 
 The available browser matrix continues to cover 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). The `v2.4.1` theme additions and Signal Yellow contrast corrections remain unchanged.
 
-The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.5.0 release notes](docs/RELEASE-2.5.0.md) for the release scope and verification boundaries.
+The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.6.0 release notes](docs/RELEASE-2.6.0.md) for the current scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
 ## How the library fits together
 
-UI Style Kit CSS owns visual identity: themes, semantic `.ui-*` component paint, native HTML styling, and the advanced prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
+UI Style Kit CSS owns visual identity: themes, semantic `.usk-*` component paint, native HTML styling, and the advanced prefixed class API. It can be used alone, or paired with the sibling libraries when a project needs structural layout primitives or richer interaction-state behavior.
 
 ```mermaid
 flowchart LR
@@ -56,11 +56,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.5.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.6.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.5.0` is the current release and is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.6.0` is the current release and is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -76,7 +76,7 @@ For import order, ownership boundaries, and adoption paths, see the [Ecosystem g
 - 25 shared color schemes
 - `light`, `dark`, and `contrast` modes
 - Native preset colors when no shared theme is selected
-- Combined CSS bundle and per-style production imports
+- Combined CSS bundle and canonical self-contained per-style imports
 - Visual-only full and focused entrypoints for consumer-owned layouts
 - Machine-readable `manifest.json` preset, theme, mode, class, and native-part capabilities
 - Shared `theme-colors.css`, `native-elements.css`, and `content-overflow.css` layers for all UI systems
@@ -117,10 +117,22 @@ import "ui-style-kit-css";
 
 Use `ui-style-kit-css/visual.css` for the same 75-selector semantic runtime API without the deprecated prefixed layout selectors. The generated default, visual, and with-bridge bundles all support all 20 `data-ui` values.
 
-Applications fixed to one preset can use a generated focused visual entrypoint. It includes semantic aliases scoped to that preset only:
+Applications fixed to one preset can use its canonical self-contained entrypoint. It includes the shared foundations, preset paint, and semantic aliases scoped to that preset, with no unresolved CSS `@import` statements:
 
 ```js
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/presets/minimal-saas.css";
+```
+
+The existing `ui-style-kit-css/visual/<preset>.css` paths remain supported aliases to the same generated files.
+
+For applications that let a user switch styles at runtime, import the all-style bundle once and update `data-ui`. Theme and mode remain independent attributes:
+
+```js
+import "ui-style-kit-css";
+
+document.documentElement.dataset.ui = "cyberpunk";
+document.documentElement.dataset.theme = "arctic-indigo";
+document.documentElement.dataset.mode = "dark";
 ```
 
 The exact preset, theme, mode, class, and native-part capability matrix is available from `ui-style-kit-css/manifest.json`.
@@ -135,12 +147,14 @@ import "ui-style-kit-css/minimal-saas.css";
 import "ui-style-kit-css/styles/minimal-saas.css";
 ```
 
-Compatible standalone style files continue to import the shared color-scheme, native-element fallback, and content-overflow layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
+Compatible standalone style files continue to import the shared color-scheme, native-element fallback, content-overflow, and clean-default layers. Bundlers that understand CSS `@import` resolve them automatically. If your build pipeline does not resolve CSS imports, import the shared dependencies before the style file:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
 import "ui-style-kit-css/native-elements.css";
 import "ui-style-kit-css/content-overflow.css";
+import "ui-style-kit-css/component-composition.css";
+import "ui-style-kit-css/clean-defaults.css";
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
@@ -163,21 +177,32 @@ The older stateful bridge and combined bundle remain public, deprecated compatib
 
 The default and visual-only bundles do **not** include either bridge. That keeps UI paint independent and prevents accidental duplicate bridge imports.
 
-When the bridge is attached, add `.interactive-surface` to interactable elements and use `data-surface-variant` plus `data-surface-level="1"`, `"2"`, or `"3"` to opt into the visible rest, hover, active, and focus treatments. The bridge inherits from shared `--usk-*` roles instead of duplicating per-theme or per-preset token maps.
+When the bridge is attached, add `.interactive-surface` to interactable elements and use `data-surface-variant` plus `data-surface-level="1"`, `"2"`, or `"3"` to opt into the visible rest, hover, active, and focus treatments. The bridge inherits resolved `--usk-native-*` paint pairs and radius geometry first, so both shared themes and a preset's reference palette retain matched foregrounds, backgrounds, and corner identity.
+
+### Clean defaults
+
+Every element inside a themed UI root receives a 2px margin and padding fallback before preset-specific declarations are applied. Preset spacing still wins when it is roomier. Technical Blueprint is exempt because its drafting grammar intentionally joins controls and measured structures. Add `.usk-flush` (recommended) or its concise `.flush` alias to an element that intentionally needs zero margin and padding in every other style. Buttons and badges receive a 2px block and 4px inline padding floor when a preset does not provide roomier values.
+
+Decorative underlines are disabled by default across UI roots. Add `.usk-underline` to opt an element back into an underline. Native `u`, `ins`, `del`, and `s` elements keep their semantic text decoration.
+
+Semantic `.usk-check`, `.usk-radio`, and `.usk-switch` wrappers keep their native input focusable but visually hide it, leaving the authored control or switch track as the only painted affordance. Their visible controls are vertically centered and inset from the wrapper edge.
+
+SVG icons marked with `data-ui-icon` receive stable `1em` square geometry, block alignment, and visible overflow from the CSS library. Component libraries can provide semantic SVG markup without adding framework-specific icon classes or styles. Avatar initials receive optical centering, removable chips constrain their nested action to a subordinate 24px square, and pagination can distinguish compact page numbers from larger bookends with `data-pagination-kind="page|direction"`.
 
 ### Bundle size guide
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2151 KB | ~394 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~2135 KB | ~392 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2494 KB | ~418 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2445 KB | ~419 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~2429 KB | ~417 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2814 KB | ~444 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~31 KB | ~5 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~32 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
+| `ui-style-kit-css/clean-defaults.css` | <10 KB | <2 KB | Shared spacing floors and opt-in flush/underline utilities |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~334 KB | ~43 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
-| `ui-style-kit-css/visual/industrial-utility.css` | ~409 KB | ~53 KB | Focused Industrial Utility, including its instrumentation styles |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~314 KB | ~46 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~403 KB | ~56 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 
@@ -198,11 +223,11 @@ For production, pin the exact approved release rather than relying on `latest`:
 ```html
 <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
   <main>
-    <article class="ui-card">
+    <article class="usk-card">
       <h1>UI Style Kit CSS</h1>
       <p>Switch UI systems, themes, and modes without changing component classes.</p>
-      <button class="ui-button" data-ui-variant="primary">Primary Action</button>
-      <span class="ui-spinner" role="status" aria-label="Loading"></span>
+      <button class="usk-button" data-ui-variant="primary">Primary Action</button>
+      <span class="usk-spinner" role="status" aria-label="Loading"></span>
     </article>
   </main>
 </body>
@@ -216,7 +241,7 @@ document.body.dataset.theme = "midnight-gold";
 document.body.dataset.mode = "dark";
 ```
 
-This changes the semantic components' visual preset without replacing their DOM nodes or rewriting their `.ui-*` classes.
+This changes the semantic components' visual preset without replacing their DOM nodes or rewriting their `.usk-*` classes.
 
 ### Native palettes and None
 
@@ -234,61 +259,61 @@ The demo labels this choice **None — style defaults**. Do not assign the liter
 
 ## Semantic component API
 
-`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 75 selectors keep the same class names while `data-ui` changes across all 20 presets. `implementationStatus` records the two retained `.ui-spinner` and `.ui-tooltip` hooks, the 73 generated semantic aliases, and an empty pending set.
+`manifest.json#semanticComponentApi` is the authoritative specification for the implemented generic component API. Its 75 canonical `.usk-*` selectors keep the same class names while `data-ui` changes across all 20 presets. `classNamespaces.compatibility` records the generated `.ui-*` migration alias. `implementationStatus` records the two retained `.usk-spinner` and `.usk-tooltip` hooks, the 73 generated semantic aliases, and an empty pending set.
 
 | Role | Generic selectors | Switching coverage |
 |---|---|---|
-| Buttons | `.ui-button`, `.ui-icon-button` | all 20 presets |
-| Card | `.ui-card` | all 20 presets |
-| Forms | `.ui-field`, `.ui-label`, `.ui-help-text`, `.ui-input`, `.ui-select`, `.ui-textarea` | all 20 presets |
-| Choice controls | `.ui-check`, `.ui-check-control`, `.ui-radio`, `.ui-radio-control`, `.ui-switch`, `.ui-switch-track`, `.ui-switch-thumb` | all 20 presets |
-| Badge | `.ui-badge` | all 20 presets |
-| Alert | `.ui-alert`, `.ui-alert-title`, `.ui-alert-body` | all 20 presets |
-| Navigation | `.ui-nav`, `.ui-nav-link` | all 20 presets |
-| Table | `.ui-table`, `.ui-table-wrap` | all 20 presets |
-| Progress | `.ui-progress`, `.ui-progress-bar` | all 20 presets |
-| Toolbar | `.ui-toolbar` | all 20 presets |
-| Tabs | `.ui-tabs`, `.ui-tab-list`, `.ui-tab`, `.ui-tab-panel` | all 20 presets |
-| Pagination | `.ui-pagination`, `.ui-pagination-item`, `.ui-pagination-link` | all 20 presets |
-| Breadcrumb | `.ui-breadcrumb`, `.ui-breadcrumb-list`, `.ui-breadcrumb-item`, `.ui-breadcrumb-link`, `.ui-breadcrumb-separator` | all 20 presets |
-| Skeleton | `.ui-skeleton` | all 20 presets |
-| Empty state | `.ui-empty-state`, `.ui-empty-state-icon`, `.ui-empty-state-title`, `.ui-empty-state-body`, `.ui-empty-state-actions` | all 20 presets |
-| Metric | `.ui-metric`, `.ui-metric-label`, `.ui-metric-value`, `.ui-metric-detail` | all 20 presets |
-| Chip | `.ui-chip`, `.ui-chip-group` | all 20 presets |
-| Avatar | `.ui-avatar`, `.ui-avatar-group` | all 20 presets |
-| Stepper | `.ui-stepper`, `.ui-step`, `.ui-step-marker`, `.ui-step-label` | all 20 presets |
-| Toast | `.ui-toast-stack`, `.ui-toast`, `.ui-toast-title`, `.ui-toast-body`, `.ui-toast-actions` | all 20 presets |
-| Popover | `.ui-popover` | all 20 presets |
-| Menu | `.ui-menu`, `.ui-menu-item`, `.ui-menu-group`, `.ui-menu-separator` | all 20 presets |
-| Segmented control | `.ui-segmented-control`, `.ui-segment` | all 20 presets |
-| File upload | `.ui-file-upload`, `.ui-dropzone` | all 20 presets |
-| Listbox | `.ui-listbox`, `.ui-listbox-option` | all 20 presets |
-| Existing generic hooks | `.ui-spinner`, `.ui-tooltip` | all 20 presets |
+| Buttons | `.usk-button`, `.usk-icon-button` | all 20 presets |
+| Card | `.usk-card` | all 20 presets |
+| Forms | `.usk-field`, `.usk-label`, `.usk-help-text`, `.usk-input`, `.usk-select`, `.usk-textarea` | all 20 presets |
+| Choice controls | `.usk-check`, `.usk-check-control`, `.usk-radio`, `.usk-radio-control`, `.usk-switch`, `.usk-switch-track`, `.usk-switch-thumb` | all 20 presets |
+| Badge | `.usk-badge` | all 20 presets |
+| Alert | `.usk-alert`, `.usk-alert-title`, `.usk-alert-body` | all 20 presets |
+| Navigation | `.usk-nav`, `.usk-nav-link` | all 20 presets |
+| Table | `.usk-table`, `.usk-table-wrap` | all 20 presets |
+| Progress | `.usk-progress`, `.usk-progress-bar` | all 20 presets |
+| Toolbar | `.usk-toolbar` | all 20 presets |
+| Tabs | `.usk-tabs`, `.usk-tab-list`, `.usk-tab`, `.usk-tab-panel` | all 20 presets |
+| Pagination | `.usk-pagination`, `.usk-pagination-item`, `.usk-pagination-link` | all 20 presets |
+| Breadcrumb | `.usk-breadcrumb`, `.usk-breadcrumb-list`, `.usk-breadcrumb-item`, `.usk-breadcrumb-link`, `.usk-breadcrumb-separator` | all 20 presets |
+| Skeleton | `.usk-skeleton` | all 20 presets |
+| Empty state | `.usk-empty-state`, `.usk-empty-state-icon`, `.usk-empty-state-title`, `.usk-empty-state-body`, `.usk-empty-state-actions` | all 20 presets |
+| Metric | `.usk-metric`, `.usk-metric-label`, `.usk-metric-value`, `.usk-metric-detail` | all 20 presets |
+| Chip | `.usk-chip`, `.usk-chip-group` | all 20 presets |
+| Avatar | `.usk-avatar`, `.usk-avatar-group` | all 20 presets |
+| Stepper | `.usk-stepper`, `.usk-step`, `.usk-step-marker`, `.usk-step-label` | all 20 presets |
+| Toast | `.usk-toast-stack`, `.usk-toast`, `.usk-toast-title`, `.usk-toast-body`, `.usk-toast-actions` | all 20 presets |
+| Popover | `.usk-popover` | all 20 presets |
+| Menu | `.usk-menu`, `.usk-menu-item`, `.usk-menu-group`, `.usk-menu-separator` | all 20 presets |
+| Segmented control | `.usk-segmented-control`, `.usk-segment` | all 20 presets |
+| File upload | `.usk-file-upload`, `.usk-dropzone` | all 20 presets |
+| Listbox | `.usk-listbox`, `.usk-listbox-option` | all 20 presets |
+| Existing generic hooks | `.usk-spinner`, `.usk-tooltip` | all 20 presets |
 
 Semantic paint variants use context-constrained `data-ui-variant`. Omit it for the neutral treatment.
 
 | Selector | `data-ui-variant` values |
 |---|---|
-| `.ui-button` | `primary`, `secondary`, `warning`, `danger`, `ghost` |
-| `.ui-badge` | `primary`, `secondary`, `success`, `warning`, `danger` |
-| `.ui-alert` | `success`, `warning`, `danger` |
-| `.ui-chip` | `primary`, `secondary`, `success`, `warning`, `danger` |
-| `.ui-toast` | `info`, `success`, `warning`, `danger` |
+| `.usk-button` | `primary`, `secondary`, `warning`, `danger`, `ghost` |
+| `.usk-badge` | `primary`, `secondary`, `success`, `warning`, `danger` |
+| `.usk-alert` | `success`, `warning`, `danger` |
+| `.usk-chip` | `primary`, `secondary`, `success`, `warning`, `danger` |
+| `.usk-toast` | `info`, `success`, `warning`, `danger` |
 
 Skeleton shape uses `data-shape="text|circle|block"`. Step workflow presentation uses `data-state="complete|current|upcoming|error"`; React and application code remain responsible for behavior and ARIA state.
 
 ```html
 <body data-ui="minimal-saas" data-theme="arctic-indigo" data-mode="light">
-  <button class="ui-button" data-ui-variant="primary">Save</button>
-  <article class="ui-card">...</article>
+  <button class="usk-button" data-ui-variant="primary">Save</button>
+  <article class="usk-card">...</article>
 </body>
 ```
 
-Modal and dialog roles deliberately use a neutral native `<dialog>` fallback. There is no `.ui-modal` or `.ui-dialog` selector. The semantic API also does not define `data-ui-state`, `data-ui-size`, or `data-ui-placement`; continue to use native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` where supported.
+Modal and dialog roles deliberately stay outside the 75-selector preset-paint alias contract and use native `<dialog>` semantics. The optional `component-composition.css` entrypoint supplies framework-neutral `.usk-modal` geometry; there is no generic `.usk-dialog` paint alias. The semantic API also does not define `data-ui-state`, `data-ui-size`, or `data-ui-placement`; continue to use native and ARIA state hooks, `.is-active`, and `[data-ui-tooltip-anchor]` where supported.
 
 Preset-prefixed classes remain supported compatibility and advanced APIs. Partial preset extras, typography and paint utilities, surface/size/placement helpers, shape and accessibility utilities, and the deprecated `page`, `container`, `section`, `grid`, `stack`, `cluster`, and `split` structural aliases remain prefix-bound rather than entering the generic contract.
 
-For example, a fixed Minimal SaaS integration may continue to use `<button class="saas-button saas-button-primary">`. Prefer `.ui-button` plus `data-ui-variant="primary"` when markup must survive runtime preset changes.
+For example, a fixed Minimal SaaS integration may continue to use `<button class="saas-button saas-button-primary">`. Prefer `.usk-button` plus `data-ui-variant="primary"` when markup must survive runtime preset changes.
 
 ## UI systems
 
@@ -441,7 +466,7 @@ The shared native layer covers common native elements, including:
 - tables and captions
 - `details`, `summary`, `dialog`, `progress`, `meter`, `menu`, `search`, `optgroup`, and `option`
 - loading indicators through `<prefix>-spinner`, `<prefix>-loading-spinner`, and busy native buttons with `aria-busy="true"`
-- tooltip surfaces through `<prefix>-tooltip`, `<prefix>-tooltip-arrow`, `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]`
+- tooltip surfaces through `<prefix>-tooltip`, `<prefix>-tooltip-arrow`, `.usk-tooltip`, `[role="tooltip"]`, and `[data-tooltip]`
 
 CSS improves accessibility presentation, but it cannot guarantee accessibility by itself. Use semantic HTML, real labels, keyboard-safe JavaScript, meaningful link/button text, and correct ARIA state management.
 
@@ -459,7 +484,7 @@ Every style includes theme-driven spinner utilities:
 <button class="saas-button saas-button-primary" aria-busy="true">Saving</button>
 ```
 
-Spinner track, stroke, and accent colors come from the native palette or active `data-theme` and `data-mode`, while geometry, motion cadence, depth, and busy-button indicators follow the active UI preset. The generic `.ui-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks receive the same preset identity inside any `[data-ui="..."]` scope.
+Spinner track, stroke, and accent colors come from the native palette or active `data-theme` and `data-mode`, while geometry, motion cadence, depth, and busy-button indicators follow the active UI preset. The generic `.usk-spinner`, `.loading-spinner`, and `[data-loading-spinner]` hooks receive the same preset identity inside any `[data-ui="..."]` scope.
 
 ## Tooltip surfaces
 
@@ -472,7 +497,7 @@ Every style includes visible tooltip utilities with the same API and preset-spec
 </span>
 ```
 
-Inside a `[data-ui="..."]` scope, generic `.ui-tooltip`, `[role="tooltip"]`, and `[data-tooltip]` hooks inherit the active UI system.
+Inside a `[data-ui="..."]` scope, generic `.usk-tooltip`, `[role="tooltip"]`, and `[data-tooltip]` hooks inherit the active UI system.
 
 ## Font overrides
 

@@ -7,7 +7,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "saas",
       "entrypoints": {
         "default": "./minimal-saas.css",
-        "visual": "./visual/minimal-saas.css"
+        "visual": "./visual/minimal-saas.css",
+        "standalone": "./presets/minimal-saas.css"
       }
     },
     {
@@ -16,7 +17,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "bento",
       "entrypoints": {
         "default": "./bento.css",
-        "visual": "./visual/bento.css"
+        "visual": "./visual/bento.css",
+        "standalone": "./presets/bento.css"
       }
     },
     {
@@ -25,7 +27,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "max",
       "entrypoints": {
         "default": "./maximalist.css",
-        "visual": "./visual/maximalist.css"
+        "visual": "./visual/maximalist.css",
+        "standalone": "./presets/maximalist.css"
       }
     },
     {
@@ -34,7 +37,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "bau",
       "entrypoints": {
         "default": "./bauhaus.css",
-        "visual": "./visual/bauhaus.css"
+        "visual": "./visual/bauhaus.css",
+        "standalone": "./presets/bauhaus.css"
       }
     },
     {
@@ -43,7 +47,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "tactile",
       "entrypoints": {
         "default": "./tactile.css",
-        "visual": "./visual/tactile.css"
+        "visual": "./visual/tactile.css",
+        "standalone": "./presets/tactile.css"
       }
     },
     {
@@ -52,7 +57,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "neo",
       "entrypoints": {
         "default": "./neumorphism.css",
-        "visual": "./visual/neumorphism.css"
+        "visual": "./visual/neumorphism.css",
+        "standalone": "./presets/neumorphism.css"
       }
     },
     {
@@ -61,7 +67,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "retro",
       "entrypoints": {
         "default": "./retrofuturism.css",
-        "visual": "./visual/retrofuturism.css"
+        "visual": "./visual/retrofuturism.css",
+        "standalone": "./presets/retrofuturism.css"
       }
     },
     {
@@ -70,7 +77,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "brutal",
       "entrypoints": {
         "default": "./brutalism.css",
-        "visual": "./visual/brutalism.css"
+        "visual": "./visual/brutalism.css",
+        "standalone": "./presets/brutalism.css"
       }
     },
     {
@@ -79,7 +87,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "cyber",
       "entrypoints": {
         "default": "./cyberpunk.css",
-        "visual": "./visual/cyberpunk.css"
+        "visual": "./visual/cyberpunk.css",
+        "standalone": "./presets/cyberpunk.css"
       }
     },
     {
@@ -88,7 +97,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "y2k",
       "entrypoints": {
         "default": "./y2k.css",
-        "visual": "./visual/y2k.css"
+        "visual": "./visual/y2k.css",
+        "standalone": "./presets/y2k.css"
       }
     },
     {
@@ -97,7 +107,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "rg",
       "entrypoints": {
         "default": "./retro-glass.css",
-        "visual": "./visual/retro-glass.css"
+        "visual": "./visual/retro-glass.css",
+        "standalone": "./presets/retro-glass.css"
       }
     },
     {
@@ -106,7 +117,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "luxe",
       "entrypoints": {
         "default": "./editorial-luxe.css",
-        "visual": "./visual/editorial-luxe.css"
+        "visual": "./visual/editorial-luxe.css",
+        "standalone": "./presets/editorial-luxe.css"
       }
     },
     {
@@ -115,7 +127,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "organic",
       "entrypoints": {
         "default": "./organic-modern.css",
-        "visual": "./visual/organic-modern.css"
+        "visual": "./visual/organic-modern.css",
+        "standalone": "./presets/organic-modern.css"
       }
     },
     {
@@ -124,7 +137,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "utility",
       "entrypoints": {
         "default": "./industrial-utility.css",
-        "visual": "./visual/industrial-utility.css"
+        "visual": "./visual/industrial-utility.css",
+        "standalone": "./presets/industrial-utility.css"
       }
     },
     {
@@ -133,7 +147,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "blueprint",
       "entrypoints": {
         "default": "./technical-blueprint.css",
-        "visual": "./visual/technical-blueprint.css"
+        "visual": "./visual/technical-blueprint.css",
+        "standalone": "./presets/technical-blueprint.css"
       }
     },
     {
@@ -142,7 +157,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "deco",
       "entrypoints": {
         "default": "./art-deco.css",
-        "visual": "./visual/art-deco.css"
+        "visual": "./visual/art-deco.css",
+        "standalone": "./presets/art-deco.css"
       }
     },
     {
@@ -151,7 +167,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "clay",
       "entrypoints": {
         "default": "./clay.css",
-        "visual": "./visual/clay.css"
+        "visual": "./visual/clay.css",
+        "standalone": "./presets/clay.css"
       }
     },
     {
@@ -160,7 +177,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "terminal",
       "entrypoints": {
         "default": "./data-terminal.css",
-        "visual": "./visual/data-terminal.css"
+        "visual": "./visual/data-terminal.css",
+        "standalone": "./presets/data-terminal.css"
       }
     },
     {
@@ -169,7 +187,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "paper",
       "entrypoints": {
         "default": "./paper-editorial.css",
-        "visual": "./visual/paper-editorial.css"
+        "visual": "./visual/paper-editorial.css",
+        "standalone": "./presets/paper-editorial.css"
       }
     },
     {
@@ -178,7 +197,8 @@ window.UI_STYLE_KIT_MANIFEST = {
       "prefix": "noir",
       "entrypoints": {
         "default": "./neo-noir.css",
-        "visual": "./visual/neo-noir.css"
+        "visual": "./visual/neo-noir.css",
+        "standalone": "./presets/neo-noir.css"
       }
     }
   ],

@@ -121,46 +121,51 @@ test('canonical and deprecated adapters prefer only behavior-equivalent semantic
     ':where([data-ui][data-mode]) .interactive-surface'
   );
   const canonicalSharedValues = new Map([
-    ['--interactive-surface-bg', directSurfaceBackground],
-    ['--interactive-surface-fg', 'var(--ui-color-text,rgb(var(--usk-text-rgb,18 18 18)))'],
+    ['--interactive-surface-bg', `var(--usk-native-surface-strong,${directSurfaceBackground})`],
+    ['--interactive-surface-fg', 'var(--usk-native-text,var(--ui-color-text,rgb(var(--usk-text-rgb,18 18 18))))'],
     [
       '--interactive-surface-focus-ring-color',
-      'var(--ui-focus-color,rgb(var(--usk-focus-rgb,var(--usk-primary-rgb,72 120 255))))'
+      'var(--usk-native-focus,var(--ui-focus-color,rgb(var(--usk-focus-rgb,var(--usk-primary-rgb,72 120 255)))))'
     ],
     [
       '--interactive-surface-variant-primary-bg',
-      'var(--ui-color-primary,rgb(var(--usk-primary-rgb,72 120 255)))'
+      'var(--usk-native-primary,var(--ui-color-primary,rgb(var(--usk-primary-rgb,72 120 255))))'
     ],
     [
       '--interactive-surface-variant-primary-fg',
-      'var(--ui-color-on-primary,rgb(var(--usk-primary-text-rgb,var(--usk-bg-rgb,255 255 255))))'
+      'var(--usk-native-on-primary,var(--ui-color-on-primary,rgb(var(--usk-primary-text-rgb,var(--usk-bg-rgb,255 255 255)))))'
     ],
     [
       '--interactive-surface-variant-subtle-fg',
-      'var(--ui-color-text,rgb(var(--usk-text-rgb,18 18 18)))'
+      'var(--usk-native-text,var(--ui-color-text,rgb(var(--usk-text-rgb,18 18 18))))'
     ]
   ]);
 
-  const deprecatedSharedValues = new Map(canonicalSharedValues);
+  const deprecatedSharedValues = new Map([
+    ['--interactive-surface-bg', directSurfaceBackground],
+    ['--interactive-surface-focus-ring-color', 'var(--ui-focus-color,rgb(var(--usk-focus-rgb,var(--usk-primary-rgb,72 120 255))))'],
+    ['--interactive-surface-variant-primary-fg', 'var(--ui-color-on-primary,rgb(var(--usk-primary-text-rgb,var(--usk-bg-rgb,255 255 255))))'],
+    ['--interactive-surface-variant-subtle-fg', 'var(--ui-color-text,rgb(var(--usk-text-rgb,18 18 18)))']
+  ]);
   deprecatedSharedValues.set('--interactive-surface-fg', 'var(--ui-color-text,rgb(var(--usk-text-rgb)))');
   deprecatedSharedValues.set(
     '--interactive-surface-variant-primary-bg',
     'var(--ui-color-primary,rgb(var(--usk-primary-rgb)))'
   );
 
-  for (const [declarations, expectedValues] of [
-    [canonical, canonicalSharedValues],
-    [deprecated, deprecatedSharedValues]
+  for (const [declarations, expectedValues, expectedBorder, expectedRadius] of [
+    [canonical, canonicalSharedValues, 'var(--usk-native-border,rgb(var(--usk-border-rgb,128 128 128)/.72))', 'var(--usk-native-radius,.85rem)'],
+    [deprecated, deprecatedSharedValues, 'rgb(var(--usk-border-rgb,128 128 128)/.72)', '.85rem']
   ]) {
     for (const [property, value] of expectedValues) {
       assert.equal(declarations.get(property), value, `${property} should retain its direct --usk-* fallback`);
     }
     assert.equal(
       declarations.get('--interactive-surface-border-color'),
-      'rgb(var(--usk-border-rgb,128 128 128)/.72)',
+      expectedBorder,
       'The adapter must preserve border alpha math.'
     );
-    assert.equal(declarations.get('--interactive-surface-radius'), '.85rem');
+    assert.equal(declarations.get('--interactive-surface-radius'), expectedRadius);
     assert.equal(
       declarations.get('--interactive-surface-level-3-shadow'),
       '0 14px 34px rgb(var(--usk-bg-rgb,0 0 0)/.3),0 0 0 1px color-mix(in srgb,var(--interactive-surface-variant-primary-border-color) 34%,transparent)'

@@ -5,7 +5,7 @@
 window.EditorialLuxSpecimen = (() => {
   const portrait = new URL('./assets/editorial-portrait.png', document.currentScript.src).href;
   /** @param {string} name Licensed Lucide icon name. @returns {string} Decorative icon markup. */
-  const icon = (name) => `<span aria-hidden="true" class="demo-el-icon">${window.UI_STYLE_KIT_ICONS[name === 'circle-alert' ? 'circle-x' : name] || ''}</span>`;
+  const icon = (name) => `<span aria-hidden="true" class="demo-el-icon usk-flush">${window.UI_STYLE_KIT_ICONS[name === 'circle-alert' ? 'circle-x' : name] || ''}</span>`;
   /** @param {string} text Authored copy. @param {string} variant Public variant. @param {string} attrs Authored attributes. @returns {string} Button markup. */
   const button = (text, variant = 'secondary', attrs = '') => `<button type="button" class="luxe-button luxe-button-${variant}" ${attrs}>${text}</button>`;
   /** @param {number} n Reference group number. @param {string} name Group title. @param {string} body Authored content. @returns {string} Ruled group. */

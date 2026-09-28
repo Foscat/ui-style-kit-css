@@ -143,19 +143,19 @@ test('Retro Glass carries the application material through semantic and native c
 
     return {
       prefixedCard: materialFor('.rg-card'),
-      semanticCard: materialFor('.ui-card'),
-      semanticToolbar: materialFor('.ui-toolbar'),
-      semanticButton: materialFor('.ui-button'),
-      semanticInput: materialFor('.ui-input'),
-      semanticProgress: materialFor('.ui-progress'),
-      semanticProgressBar: materialFor('.ui-progress-bar'),
-      semanticTableHeader: materialFor('.ui-table th'),
+      semanticCard: materialFor('.usk-card'),
+      semanticToolbar: materialFor('.usk-toolbar'),
+      semanticButton: materialFor('.usk-button'),
+      semanticInput: materialFor('.usk-input'),
+      semanticProgress: materialFor('.usk-progress'),
+      semanticProgressBar: materialFor('.usk-progress-bar'),
+      semanticTableHeader: materialFor('.usk-table th'),
       nativeFieldset: materialFor('[data-testid="native-forms"] fieldset'),
       nativeButton: materialFor('[data-testid="native-buttons"] button:not([class])'),
       nativeInput: materialFor('[data-testid="native-forms"] input[type="text"]'),
       nativeSelect: materialFor('[data-testid="native-forms"] select'),
-      switchTrack: materialFor('.ui-switch-track'),
-      switchThumb: materialFor('.ui-switch-thumb')
+      switchTrack: materialFor('.usk-switch-track'),
+      switchThumb: materialFor('.usk-switch-thumb')
     };
   });
 

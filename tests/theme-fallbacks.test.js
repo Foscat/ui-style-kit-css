@@ -91,6 +91,28 @@ for (const { id, prefix } of manifest.presets) {
       }
     }
   });
+
+  test(`${id} exposes complete preset-native interactive paint`, () => {
+    const css = fs.readFileSync(path.join(rootDir, 'styles', `${id}.css`), 'utf8');
+    const resolver = blockFor(css, `[data-ui="${id}"][data-mode]`);
+    const nativeRoles = [
+      ['secondary', 'secondary'],
+      ['on-secondary', 'on-secondary'],
+      ['accent', 'accent'],
+      ['on-accent', 'on-accent'],
+      ['on-success', 'on-success'],
+      ['on-warning', 'on-warning'],
+      ['on-danger', 'on-danger']
+    ];
+
+    for (const [nativeRole, presetRole] of nativeRoles) {
+      assert.match(
+        resolver,
+        new RegExp(`--usk-native-${nativeRole}:\\s*var\\(--${prefix}-${presetRole}\\);`),
+        `${id} must expose ${nativeRole} to shared interactive surfaces`
+      );
+    }
+  });
 }
 
 test('shared accessibility and component layers activate without an explicit theme', () => {

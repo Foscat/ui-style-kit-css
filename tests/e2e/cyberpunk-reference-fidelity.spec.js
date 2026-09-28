@@ -312,10 +312,10 @@ test('Cyberpunk token treatment reaches semantic and native controls', async ({ 
       };
     };
     const prefixedCard = read('.cyber-card');
-    const semanticCard = read('.ui-card');
-    const semanticPrimary = read('.ui-button[data-ui-variant="primary"]');
-    const semanticProgress = read('.ui-progress');
-    const semanticProgressBar = read('.ui-progress-bar');
+    const semanticCard = read('.usk-card');
+    const semanticPrimary = read('.usk-button[data-ui-variant="primary"]');
+    const semanticProgress = read('.usk-progress');
+    const semanticProgressBar = read('.usk-progress-bar');
     const nativeButton = read('[data-testid="native-buttons"] button:not([class])');
     const nativeInput = read('[data-testid="native-forms"] input[type="text"]');
     const nativeSelect = read('[data-testid="native-forms"] select:not([multiple])');

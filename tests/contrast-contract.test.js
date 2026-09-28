@@ -42,6 +42,31 @@ test('deprecated bridge swaps foreground and background paint atomically', () =>
   assert.doesNotMatch(transition, /^\s*(?:background-color|color)\b/m);
 });
 
+test('interactive bridge resolves reference palettes through preset-native paint', () => {
+  const bridgeCss = fs.readFileSync(path.join(rootDir, 'styles/interactive-surface-theme.css'), 'utf8');
+
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-bg:\s*var\(--usk-native-surface-strong,/,
+    'reference palettes must not fall back to a hard-coded light surface'
+  );
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-variant-subtle-bg:\s*var\(--usk-native-surface-soft,/,
+    'subtle controls must inherit the active preset fallback surface'
+  );
+  assert.match(
+    bridgeCss,
+    /--interactive-surface-variant-primary-bg:\s*var\(--usk-native-primary,/,
+    'primary controls must inherit the active preset fallback primary'
+  );
+  assert.doesNotMatch(
+    bridgeCss,
+    /--interactive-surface-(?:bg|variant-[\w-]+-bg):\s*rgb\(var\(--usk-(?:surface|primary|secondary|accent|warning|danger)-rgb,/,
+    'bridge backgrounds must not bypass preset-native fallback resolution'
+  );
+});
+
 test('fallback contrast validation rejects an unreadable preset palette', async () => {
   const { validateFallbackContrast } = await import('../scripts/check-contrast.mjs');
   const roles = [

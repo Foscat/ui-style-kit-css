@@ -66,9 +66,9 @@ test('Retrofuturism centers checked marks and gives icon actions readable symbol
 
     return {
       prefixedMark: readMark('.retro-check input:checked + .retro-check-control'),
-      semanticMark: readMark('.ui-check input:checked + .ui-check-control'),
+      semanticMark: readMark('.usk-check input:checked + .usk-check-control'),
       prefixedIcon: readIcon('.retro-icon-button'),
-      semanticIcon: readIcon('.ui-icon-button')
+      semanticIcon: readIcon('.usk-icon-button')
     };
   });
 

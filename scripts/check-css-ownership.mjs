@@ -232,11 +232,16 @@ export function validateAllowlist({ target, entries, expectedOwner, now = new Da
 }
 
 function manifestComponentClasses(manifest) {
-  const componentClasses = new Set(
-    Object.values(manifest.semanticComponentApi?.selectorsByRole ?? {})
-      .flat()
-      .map(({ selector }) => selector.replace(/^\./, ''))
-  );
+  const semanticEntries = Object.values(manifest.semanticComponentApi?.selectorsByRole ?? {}).flat();
+  const classNamespaces = manifest.semanticComponentApi?.classNamespaces;
+  const namespaces = classNamespaces
+    ? [classNamespaces.canonical, ...(classNamespaces.compatibility ?? [])]
+    : [];
+  const componentClasses = new Set(semanticEntries.map(({ selector }) => selector.replace(/^\./, '')));
+
+  for (const { sourceSuffix } of semanticEntries) {
+    for (const namespace of namespaces) componentClasses.add(`${namespace}-${sourceSuffix}`);
+  }
   const universalSuffixes = manifest.classApi?.universalVisualSuffixes ?? [];
 
   for (const preset of manifest.presets ?? []) {
@@ -249,6 +254,37 @@ function manifestComponentClasses(manifest) {
   }
 
   return componentClasses;
+}
+
+/**
+ * Determines whether a selector subject node resolves exclusively to declared
+ * component classes, including zero-specificity selector lists and exact class
+ * token attributes emitted by the clean-defaults layer.
+ *
+ * @param {object} node CSS Tree selector node.
+ * @param {Set<string>} componentClasses Manifest-declared component classes.
+ * @returns {boolean} Whether the node represents component-owned topology.
+ */
+function subjectNodeOwnsComponentTopology(node, componentClasses) {
+  if (node.type === 'ClassSelector') return componentClasses.has(node.name);
+
+  if (node.type === 'AttributeSelector' && node.name?.name === 'class' && node.matcher === '~=') {
+    const className = node.value?.value ?? node.value?.name;
+    return componentClasses.has(className);
+  }
+
+  if (node.type === 'PseudoClassSelector' && ['is', 'where'].includes(node.name.toLowerCase())) {
+    const selectorLists = [...(node.children ?? [])].filter((child) => child.type === 'SelectorList');
+    return selectorLists.length > 0 && selectorLists.every((selectorList) =>
+      [...selectorList.children].every((selector) =>
+        rightmostCompound(selector).some((child) =>
+          subjectNodeOwnsComponentTopology(child, componentClasses)
+        )
+      )
+    );
+  }
+
+  return false;
 }
 
 function rightmostCompound(selector) {
@@ -328,7 +364,7 @@ function selectorOwnsComponentTopology(rule, manifest) {
 
   for (const selector of rule.prelude.children) {
     const ownsComponent = rightmostCompound(selector).some((node) =>
-      node.type === 'ClassSelector' && componentClasses.has(node.name)
+      subjectNodeOwnsComponentTopology(node, componentClasses)
     );
     if (!ownsComponent) return false;
   }

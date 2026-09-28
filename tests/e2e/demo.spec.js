@@ -272,9 +272,9 @@ test('semantic demo nodes and classes remain unchanged through every preset swit
   });
 
   expect(initialSnapshot.length).toBeGreaterThan(10);
-  expect(initialSnapshot.some(({ className }) => className.includes('ui-button'))).toBe(true);
-  expect(initialSnapshot.some(({ className }) => className.includes('ui-input'))).toBe(true);
-  expect(initialSnapshot.some(({ className }) => className.includes('ui-alert'))).toBe(true);
+  expect(initialSnapshot.some(({ className }) => className.includes('usk-button'))).toBe(true);
+  expect(initialSnapshot.some(({ className }) => className.includes('usk-input'))).toBe(true);
+  expect(initialSnapshot.some(({ className }) => className.includes('usk-alert'))).toBe(true);
 
   for (const [ui] of stylePresets) {
     await page.selectOption('#uiSelect', ui);
@@ -689,8 +689,8 @@ test('Technical Blueprint surfaces avoid decorative material washes in both shee
         card: backgroundImage('.blueprint-card'),
         panel: backgroundImage('.blueprint-panel'),
         input: backgroundImage('.blueprint-input'),
-        semanticCard: backgroundImage('.ui-card'),
-        semanticInput: backgroundImage('.ui-input')
+        semanticCard: backgroundImage('.usk-card'),
+        semanticInput: backgroundImage('.usk-input')
       };
     });
 
@@ -715,8 +715,8 @@ test('Technical Blueprint keeps every control family square and at least 44 pixe
     const controls = await page.evaluate(() => [
       ['prefixed button', document.querySelector('.blueprint-button-primary')],
       ['prefixed input', document.querySelector('.blueprint-input')],
-      ['semantic button', document.querySelector('.ui-button[data-ui-variant="primary"]')],
-      ['semantic input', document.querySelector('.ui-input')],
+      ['semantic button', document.querySelector('.usk-button[data-ui-variant="primary"]')],
+      ['semantic input', document.querySelector('.usk-input')],
       ['native button', document.querySelector('[data-testid="native-buttons"] button')],
       ['native input', document.querySelector('[data-testid="native-number"]')]
     ].map(([name, control]) => {

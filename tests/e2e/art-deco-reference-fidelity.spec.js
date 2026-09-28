@@ -151,7 +151,7 @@ test('Art Deco authored checkbox marks are optically centered', async ({ page })
   const captures = [
     {
       label: 'semantic checkbox',
-      buffer: await page.locator('.ui-check-control').screenshot()
+      buffer: await page.locator('#semantic-runtime .usk-check-control').screenshot()
     },
     {
       label: 'prefixed checkbox',

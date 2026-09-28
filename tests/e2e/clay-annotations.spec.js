@@ -34,7 +34,7 @@ test('Clay annotations retain molded surfaces and centered marks', async ({ page
   expect.soft(threshold.image).toContain('clay-grain.png');
   expect.soft(threshold.clip).toContain('polygon(');
   await expect.soft(page.locator('#clay-masthead h2')).toHaveCSS('font-family', /Clay Rounded/);
-  for (const selector of ['.ui-table', '[data-testid="native-table"] table']) {
+  for (const selector of ['.usk-table', '[data-testid="native-table"] table']) {
     expect.soft(await page.locator(selector).first().evaluate((node) => getComputedStyle(node).clipPath)).toContain('polygon(');
     expect.soft(await page.locator(`${selector} th`).first().evaluate((node) => getComputedStyle(node).backgroundImage)).toContain('clay-grain.png');
   }
