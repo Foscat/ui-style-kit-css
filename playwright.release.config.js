@@ -35,6 +35,7 @@ const releaseSmokePatterns = [
   /Signal Yellow light text stays readable across presets while retaining vivid fills/,
   /theme ink overrides stay scoped and preserve other palette text colors/,
   /demo content retains readable contrast across every shared theme and mode/,
+  /semantic chip labels remain readable on shared soft surfaces/,
   /Editorial Lux annotation fixes/,
   /Editorial Lux light warning foregrounds retain readable contrast/,
   /Maximalist display and control typography stay legible across theme modes/,

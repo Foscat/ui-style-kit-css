@@ -310,9 +310,9 @@ ${directions}
 :where(${promoted(['chip-primary', 'chip-secondary', 'chip-success', 'chip-warning', 'chip-danger']).join(', ')}) { color: var(--usk-native-text); border-color: currentColor; }
 :where(${promoted(['chip-primary']).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); }
 :where(${promoted(['chip-secondary']).join(', ')}) { color: var(--usk-secondary-ink, var(--usk-native-text-muted)); }
-:where(${promoted(['chip-success']).join(', ')}) { color: var(--usk-success-ink, var(--usk-native-success)); }
-:where(${promoted(['chip-warning']).join(', ')}) { color: var(--usk-warning-ink, var(--usk-native-warning)); }
-:where(${promoted(['chip-danger']).join(', ')}) { color: var(--usk-danger-ink, var(--usk-native-danger)); }
+:where(${promoted(['chip-success']).join(', ')}) { color: var(--usk-success-ink, var(--usk-native-text)); border-color: var(--usk-native-success); }
+:where(${promoted(['chip-warning']).join(', ')}) { color: var(--usk-warning-ink, var(--usk-native-text)); border-color: var(--usk-native-warning); }
+:where(${promoted(['chip-danger']).join(', ')}) { color: var(--usk-danger-ink, var(--usk-native-text)); border-color: var(--usk-native-danger); }
 
 :where(${promoted(['avatar']).join(', ')}) { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; inline-size: 2.5rem; block-size: 2.5rem; color: var(--usk-native-on-primary); background: var(--usk-native-primary); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: 50%; font-weight: 750; overflow: hidden; }
 :where(${promoted(['avatar'], (className) => `.${className} > img`).join(', ')}) { inline-size: 100%; block-size: 100%; object-fit: cover; }
