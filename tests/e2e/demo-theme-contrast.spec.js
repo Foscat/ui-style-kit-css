@@ -52,3 +52,28 @@ test('demo content retains readable contrast across every shared theme and mode'
 
   expect(failures).toEqual([]);
 });
+
+test('semantic chip labels remain readable on shared soft surfaces', async ({ page }) => {
+  await page.goto(demoUrl);
+  await page.selectOption('#themeSelect', 'arctic-indigo');
+  await page.selectOption('#modeSelect', 'light');
+  await waitForSettledColorTransitions(page);
+  await page.evaluate(() => {
+    const fixture = document.createElement('section');
+    fixture.id = 'semantic-chip-contrast-fixture';
+    fixture.className = 'ui-card';
+    fixture.innerHTML = `
+      <span class="ui-chip" data-ui-variant="success">Success</span>
+      <span class="ui-chip" data-ui-variant="warning">Warning</span>
+      <span class="ui-chip" data-ui-variant="danger">Danger</span>
+    `;
+    document.querySelector('main')?.prepend(fixture);
+  });
+
+  const results = await new AxeBuilder({ page })
+    .include('#semantic-chip-contrast-fixture')
+    .withRules(['color-contrast'])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+});

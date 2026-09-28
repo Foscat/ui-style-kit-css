@@ -14,6 +14,7 @@
 @import url("./theme-colors.css");
 @import url("./native-elements.css");
 @import url("./content-overflow.css");
+@import url("./clean-defaults.css");
 
 @layer ui-style-kit.art_deco {
 :root {
@@ -201,6 +202,13 @@
   --usk-native-primary: var(--deco-primary);
   --usk-native-primary-hover: var(--deco-primary-hover);
   --usk-native-on-primary: var(--deco-on-primary);
+  --usk-native-secondary: var(--deco-secondary);
+  --usk-native-on-secondary: var(--deco-on-secondary);
+  --usk-native-accent: var(--deco-accent);
+  --usk-native-on-accent: var(--deco-on-accent);
+  --usk-native-on-success: var(--deco-on-success);
+  --usk-native-on-warning: var(--deco-on-warning);
+  --usk-native-on-danger: var(--deco-on-danger);
   --usk-native-focus: var(--deco-focus);
   --usk-native-success: var(--deco-success);
   --usk-native-warning: var(--deco-warning);
@@ -1394,7 +1402,7 @@
 .deco-check input:checked + .deco-check-control::after {
   content: "";
   position: absolute;
-  inset-block-start: 50%;
+  inset-block-start: calc(50% - 1px);
   inset-inline-start: 50%;
   display: block;
   inline-size: .5rem;
@@ -1806,6 +1814,8 @@
   --deco-status-warning: var(--deco-text);
   --deco-status-danger: var(--deco-text);
   --deco-info-rgb: var(--usk-primary-rgb, 0 80 150);
+  --deco-link: var(--deco-text);
+  --usk-native-link: var(--deco-text);
 }
 [data-ui="art-deco"][data-mode] {
   --deco-bg: rgb(var(--deco-bg-rgb));
@@ -2048,4 +2058,57 @@ dialog.deco-dialog:not([open]) { display: none; }
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
+}
+
+/**
+ * Restores the reference action silhouette after shared semantic controls are
+ * promoted. The double metallic keyline and stepped frame remain structural,
+ * while each semantic variant continues to own its accessible paint pairing.
+ */
+[data-ui="art-deco"][data-mode] :is(.deco-button, .deco-icon-button) {
+  border: 3px double var(--deco-metal);
+  border-radius: 0;
+  clip-path: var(--deco-step-sm);
+  box-shadow:
+    inset 0 0 0 1px var(--deco-surface-strong),
+    0 3px 0 var(--deco-metal);
+}
+
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui="art-deco"][data-mode] :is(.deco-button, .deco-icon-button) {
+    box-shadow:
+      inset 0 0 0 1px var(--deco-surface-strong),
+      0 3px 0 color-mix(in srgb, var(--deco-metal) 52%, var(--deco-text));
+  }
+}
+
+/**
+ * Uses the system's diamond motif for compact identities while keeping initials,
+ * photographs, and status metadata upright and independently readable.
+ */
+[data-ui="art-deco"][data-mode] .deco-avatar {
+  inline-size: 3rem;
+  block-size: 3rem;
+  overflow: visible;
+  background: var(--deco-jewel-primary);
+  color: var(--deco-jewel-on);
+  border: 3px double var(--deco-metal-bright);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px var(--deco-surface-strong);
+  transform: rotate(45deg) scale(.78);
+}
+
+[data-ui="art-deco"][data-mode] .deco-avatar > :where(img, [aria-hidden="true"]) {
+  transform: rotate(-45deg) scale(1.12);
+}
+
+[data-ui="art-deco"][data-mode] .deco-avatar > [role="status"] {
+  inset-block-end: -.15rem;
+  inset-inline-end: -.15rem;
+  color: var(--deco-jewel-on);
+  transform: rotate(-45deg);
+}
+
+[data-ui="art-deco"][data-mode] .deco-avatar-group > * + * {
+  margin-inline-start: .25rem;
 }

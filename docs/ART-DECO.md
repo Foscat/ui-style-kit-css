@@ -1,6 +1,6 @@
 # Art Deco Element System
 
-The Art Deco preset implements the retained light and dark **Art Deco UI Element System** boards using the canonical `deco-*` namespace. No public `ad-*` source aliases are introduced. All shared semantic components remain part of the unchanged `.ui-*` API.
+The Art Deco preset implements the retained light and dark **Art Deco UI Element System** boards using the canonical `deco-*` namespace. No public `ad-*` source aliases are introduced. All shared semantic components remain part of the unchanged `.usk-*` API.
 
 ## Loading And Palettes
 
@@ -77,4 +77,4 @@ Focused coverage lives in `tests/art-deco-template.test.js` and `tests/e2e/art-d
 
 Full-demo Art Deco accessibility states are included in `tests/e2e/accessibility.spec.js`. Reference screenshots are written to the operating system's temporary `usk-art-deco-template` directory. Repository build, CSS lint, palette contrast, compatibility, ownership, and package checks remain the project's standard commands.
 
-The semantic authored-hook test currently detects additional `.ui-*` hooks in existing Retrofuturism source, independent of this Art Deco implementation. That source is not changed here. Generated declaration fingerprints and the distinct preset-extras count are updated for the intentional Art Deco expansion; no release, commit, push, or full CI run is implied.
+The semantic authored-hook test currently detects additional `.usk-*` hooks in existing Retrofuturism source, independent of this Art Deco implementation. That source is not changed here. Generated declaration fingerprints and the distinct preset-extras count are updated for the intentional Art Deco expansion; no release, commit, push, or full CI run is implied.

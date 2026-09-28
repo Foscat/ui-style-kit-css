@@ -138,14 +138,23 @@ test('visual-only permits component-internal grids declared by the public manife
   assert.deepEqual(result.violations, []);
 });
 
-test('visual-only recognizes stable semantic selectors as component vocabulary', () => {
+test('visual-only recognizes canonical and compatibility semantic component subjects', () => {
   const result = auditOwnership({
     target: 'ui-visual',
-    css: '.ui-stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }',
+    css: `
+      .usk-stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .ui-stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      :where(.usk-stepper, .ui-stepper) { grid-template-columns: repeat(3, 1fr); }
+      [class~="usk-stepper"], [class~="ui-stepper"] { grid-template-columns: repeat(3, 1fr); }
+    `,
     manifest: {
       semanticComponentApi: {
+        classNamespaces: {
+          canonical: 'usk',
+          compatibility: ['ui']
+        },
         selectorsByRole: {
-          stepper: [{ selector: '.ui-stepper', sourceSuffix: 'stepper' }]
+          stepper: [{ selector: '.usk-stepper', sourceSuffix: 'stepper' }]
         }
       },
       presets: [{ id: 'minimal-saas', prefix: 'saas' }],

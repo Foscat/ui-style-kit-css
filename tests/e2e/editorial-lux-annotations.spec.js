@@ -36,7 +36,7 @@ for (const mode of ['light', 'dark']) {
       expect.soft(Math.abs(a.x + a.width / 2 - b.x - b.width / 2)).toBeLessThanOrEqual(0.5);
       expect.soft(Math.abs(a.y + a.height / 2 - b.y - b.height / 2)).toBeLessThanOrEqual(0.5);
     }
-    await expect.soft(page.locator('.ui-badge').filter({ hasText: 'Review' })).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect.soft(page.locator('.usk-badge').filter({ hasText: 'Review' })).toHaveCSS('color', 'rgb(255, 255, 255)');
     await expect.soft(page.locator('.luxe-alert-warning .luxe-alert-mark')).toHaveCSS('color', 'rgb(255, 255, 255)');
     await page.locator('#luxe-group-6').screenshot({ path: path.join(os.tmpdir(), `luxe-annotations-${mode}.png`) });
   });
@@ -68,7 +68,7 @@ test('Editorial Lux light warning foregrounds retain readable contrast', async (
   await openAnnotations(page, 'light');
   for (const mode of ['light', 'dark', 'contrast']) {
     await page.selectOption('#modeSelect', mode);
-    for (const selector of ['.ui-badge[data-ui-variant="warning"]', '.luxe-alert-warning .luxe-alert-mark']) {
+    for (const selector of ['.usk-badge[data-ui-variant="warning"]', '.luxe-alert-warning .luxe-alert-mark']) {
       const contrast = await page.locator(selector).evaluate((node) => {
         const ctx = document.createElement('canvas').getContext('2d');
         const luminance = (color) => {

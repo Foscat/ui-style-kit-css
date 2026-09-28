@@ -1,6 +1,6 @@
 # Installation and Setup
 
-These instructions target the UI Style Kit CSS `v2.5.0` release and its backward-compatible v2 entrypoints.
+These instructions target the UI Style Kit CSS `v2.6.0` release and its backward-compatible v2 entrypoints.
 
 ## Install
 
@@ -13,10 +13,10 @@ npm install ui-style-kit-css
 Recommended for production apps that use one visual system:
 
 ```js
-import "ui-style-kit-css/minimal-saas.css";
+import "ui-style-kit-css/presets/minimal-saas.css";
 ```
 
-In `v2.1.0`, compatible standalone style files import `theme-colors.css`, `native-elements.css`, and `content-overflow.css` internally. If your CSS pipeline does not follow `@import`, import the shared layers first:
+The canonical `presets/*` entrypoint is generated as one self-contained CSS file. The older raw preset path remains available for compatibility and for consumers that deliberately compose the shared layers themselves:
 
 ```js
 import "ui-style-kit-css/theme-colors.css";
@@ -25,7 +25,7 @@ import "ui-style-kit-css/content-overflow.css";
 import "ui-style-kit-css/minimal-saas.css";
 ```
 
-The explicit `styles/*` path is also available:
+The explicit raw `styles/*` path is also available:
 
 ```js
 import "ui-style-kit-css/styles/minimal-saas.css";
@@ -45,7 +45,15 @@ Applications that own layout should use the visual-only full or focused entrypoi
 
 ```js
 import "ui-style-kit-css/visual.css";
-import "ui-style-kit-css/visual/minimal-saas.css";
+import "ui-style-kit-css/presets/minimal-saas.css";
+```
+
+The combined bundle supports runtime switching without reloading CSS:
+
+```js
+document.documentElement.dataset.ui = "cyberpunk";
+document.documentElement.dataset.theme = "arctic-indigo";
+document.documentElement.dataset.mode = "dark";
 ```
 
 ## Integration with interactive-surface-css

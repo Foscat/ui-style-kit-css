@@ -17,8 +17,46 @@ const adapterSources = {
   )
 };
 
-// These literals reproduce the adapters' reviewed direct source expressions independently.
-const directAdapterSourceCss = `
+// These literals reproduce each adapter's reviewed direct source expressions independently.
+const directAdapterSourceCss = {
+  canonical: `
+  *, *::before, *::after {
+    transition: none !important;
+  }
+
+  .direct-surface-source {
+    background-color: var(--usk-native-surface-soft);
+  }
+
+  .direct-surface-source[data-surface-level="1"] {
+    background-color: var(--usk-native-surface-soft);
+  }
+
+  .direct-surface-source[data-surface-level="2"] {
+    background-color: var(--usk-native-surface-strong);
+  }
+
+  .direct-surface-source[data-surface-level="3"] {
+    background-color: color-mix(
+      in srgb,
+      var(--usk-native-surface-strong) 82%,
+      var(--usk-native-primary)
+    );
+  }
+
+  .adapter-surface-token-source {
+    background-color: var(--interactive-surface-bg) !important;
+  }
+
+  .direct-surface-token-source {
+    background-color: var(--usk-native-surface-strong);
+  }
+
+  .semantic-surface-source {
+    background-color: var(--ui-color-surface);
+  }
+`,
+  deprecated: `
   *, *::before, *::after {
     transition: none !important;
   }
@@ -54,7 +92,8 @@ const directAdapterSourceCss = `
   .semantic-surface-source {
     background-color: var(--ui-color-surface);
   }
-`;
+`
+};
 
 const tokenProbes = [
   ['--ui-color-bg', '--usk-native-bg', 'background-color'],
@@ -137,7 +176,7 @@ test('canonical and deprecated adapter backgrounds preserve direct source behavi
     await page.setContent(`
       <style>${visualCss}</style>
       <style>${adapterCss}</style>
-      <style>${directAdapterSourceCss}</style>
+      <style>${directAdapterSourceCss[adapterName]}</style>
       <body>
         <div id="adapter-base" class="interactive-surface"></div>
         <div id="adapter-level-1" class="interactive-surface" data-surface-level="1"></div>

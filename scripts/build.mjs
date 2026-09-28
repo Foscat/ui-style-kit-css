@@ -17,9 +17,15 @@ const publicManifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json
 const themeColorFile = 'styles/theme-colors.css';
 const nativeElementsFile = 'styles/native-elements.css';
 const componentsFile = 'styles/components.css';
+const cleanDefaultsFile = 'styles/clean-defaults.css';
 const compatibilityLayoutFile = 'styles/compat-layout.css';
 const legacyBridgeFile = 'styles/interactive-surface-bridge.css';
-const foundationFiles = [themeColorFile, nativeElementsFile, componentsFile];
+const foundationFiles = [
+  themeColorFile,
+  nativeElementsFile,
+  componentsFile,
+  cleanDefaultsFile
+];
 const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
   id,
   prefix,
@@ -27,31 +33,38 @@ const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
 }));
 const stylePrefixes = new Map(presetFiles.map(({ file, id, prefix }) => [file, [id, prefix]]));
 const semanticEntries = Object.values(publicManifest.semanticComponentApi.selectorsByRole).flat();
-const implementedSemanticSelectors = new Set(
-  publicManifest.semanticComponentApi.implementationStatus.implemented?.selectors ?? []
+const semanticClassNamespaces = [
+  publicManifest.semanticComponentApi.classNamespaces.canonical,
+  ...publicManifest.semanticComponentApi.classNamespaces.compatibility
+];
+const supportedSemanticSelectors = new Set(
+  ['implemented', 'retained'].flatMap(
+    (status) => publicManifest.semanticComponentApi.implementationStatus[status]?.selectors ?? []
+  )
 );
 const semanticAliases = semanticEntries
-  .filter(({ selector }) => implementedSemanticSelectors.has(selector))
+  .filter(({ selector }) => supportedSemanticSelectors.has(selector))
   .map(({ selector, sourceSuffix }) => ({
     selector,
     sourceSuffix,
     variants: publicManifest.semanticComponentApi.variantAttribute.valuesBySelector[selector] ?? []
   }));
-const semanticAliasBySourceClass = new Map();
-for (const preset of presetFiles) {
-  for (const semanticAlias of semanticAliases) {
-    semanticAliasBySourceClass.set(
-      `${preset.prefix}-${semanticAlias.sourceSuffix}`,
-      semanticAlias.selector
-    );
-    for (const variant of semanticAlias.variants) {
-      semanticAliasBySourceClass.set(
-        `${preset.prefix}-${semanticAlias.sourceSuffix}-${variant}`,
-        `${semanticAlias.selector}:where([data-ui-variant="${variant}"])`
-      );
+const semanticAliasMaps = semanticClassNamespaces.map((namespace) => {
+  const aliases = new Map();
+  for (const preset of presetFiles) {
+    for (const semanticAlias of semanticAliases) {
+      const namespacedSelector = `.${namespace}-${semanticAlias.sourceSuffix}`;
+      aliases.set(`${preset.prefix}-${semanticAlias.sourceSuffix}`, namespacedSelector);
+      for (const variant of semanticAlias.variants) {
+        aliases.set(
+          `${preset.prefix}-${semanticAlias.sourceSuffix}-${variant}`,
+          `${namespacedSelector}:where([data-ui-variant="${variant}"])`
+        );
+      }
     }
   }
-}
+  return aliases;
+});
 const colorRoles = [
   'bg',
   'surface',
@@ -111,11 +124,22 @@ const banner = `/*!
 @layer ${layerOrder};
 `;
 
+/**
+ * Normalizes authored source text before CSS Tree offsets are used for selector
+ * edits, keeping generated artifacts identical across Windows and Linux.
+ *
+ * @param {string} source Authored CSS source text.
+ * @returns {string} Source text with canonical line-feed separators.
+ */
+function normalizeSourceText(source) {
+  return source.replace(/\r\n?/g, '\n');
+}
+
 function readSource(file) {
   const absolute = path.join(root, file);
   if (!fs.existsSync(absolute)) throw new Error(`Missing stylesheet: ${file}`);
 
-  return prepareUiCss(file, fs.readFileSync(absolute, 'utf8'));
+  return prepareUiCss(file, normalizeSourceText(fs.readFileSync(absolute, 'utf8')));
 }
 
 function minifyCss(css, filename) {
@@ -207,7 +231,33 @@ function addPresetConstraintToRoot(selector, selectedRoot) {
   return true;
 }
 
-function aliasSemanticSelector(selector, selectedRoot) {
+/**
+ * Removes selector-list duplicates created when several preset classes collapse
+ * to the same public namespace alias.
+ *
+ * @param {import('css-tree').CssNode} selector Selector AST to normalize.
+ * @returns {void}
+ */
+function dedupeNestedSelectorLists(selector) {
+  walk(selector, {
+    visit: 'SelectorList',
+    leave(selectorList) {
+      const seen = new Set();
+
+      selectorList.children.forEach((child, item, list) => {
+        const selectorText = generate(child);
+        if (seen.has(selectorText)) {
+          list.remove(item);
+          return;
+        }
+
+        seen.add(selectorText);
+      });
+    }
+  });
+}
+
+function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClass) {
   const aliased = clone(selector);
   let changed = false;
 
@@ -224,6 +274,7 @@ function aliasSemanticSelector(selector, selectedRoot) {
   });
 
   if (!changed) return null;
+  dedupeNestedSelectorLists(aliased);
   const hasRoot = addPresetConstraintToRoot(aliased, selectedRoot);
   return hasRoot ? generate(aliased) : `${selectedRoot} ${generate(aliased)}`;
 }
@@ -240,10 +291,15 @@ function addSemanticAliases(css, filename, selectedPresets) {
   walk(ast, {
     visit: 'Rule',
     enter(rule) {
-      const originalSelectorList = generate(rule.prelude);
-      const aliases = rule.prelude.children.toArray()
-        .map((selector) => aliasSemanticSelector(selector, selectedRoot))
-        .filter(Boolean);
+      const aliases = semanticAliasMaps.flatMap((semanticAliasBySourceClass) =>
+        rule.prelude.children.toArray()
+          .map((selector) => aliasSemanticSelector(
+            selector,
+            selectedRoot,
+            semanticAliasBySourceClass
+          ))
+          .filter(Boolean)
+      );
 
       if (aliases.length === 0) return;
       selectorEdits.push({
@@ -450,13 +506,23 @@ async function syncDemoManifest() {
 }
 
 /**
+ * Adds the public icon-geometry hook to an embedded SVG without changing its
+ * licensed paths, accessible naming, or other source attributes.
+ * @param {string} svg Licensed SVG source markup.
+ * @returns {string} SVG markup carrying the universal UI icon hook.
+ */
+function withUiIconContract(svg) {
+  return svg.replace('<svg', '<svg data-ui-icon');
+}
+
+/**
  * Embeds licensed Lucide source icons so both file and HTTP demos render offline.
  * @returns {Promise<void>} Resolves after the generated icon module is written.
  */
 async function syncDemoIcons() {
   const iconDir = path.join(root, 'demo', 'assets', 'lucide');
   const icons = Object.fromEntries(fs.readdirSync(iconDir).filter((name) => name.endsWith('.svg')).sort()
-    .map((name) => [name.slice(0, -4), fs.readFileSync(path.join(iconDir, name), 'utf8')]));
+    .map((name) => [name.slice(0, -4), withUiIconContract(fs.readFileSync(path.join(iconDir, name), 'utf8'))]));
   await writeGeneratedFile(
     path.join(root, 'demo', 'demo-icons.js'),
     `/* Generated by scripts/build.mjs from licensed Lucide icons in assets/lucide. */\nwindow.UI_STYLE_KIT_ICONS = ${JSON.stringify(icons, null, 2)};\n`
@@ -465,6 +531,8 @@ async function syncDemoIcons() {
 
 /**
  * Embeds the Organic reference's licensed Phosphor icons for offline and HTTP parity.
+ * These icons intentionally retain preset-owned geometry instead of opting into
+ * the generic `data-ui-icon` sizing contract used by reusable control glyphs.
  * @returns {Promise<void>} Resolves after the generated icon module is written.
  */
 async function syncOrganicIcons() {

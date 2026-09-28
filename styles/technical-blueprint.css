@@ -14,6 +14,7 @@
 @import url("./theme-colors.css");
 @import url("./native-elements.css");
 @import url("./content-overflow.css");
+@import url("./clean-defaults.css");
 
 @layer ui-style-kit.technical_blueprint {
 :root {
@@ -200,6 +201,13 @@
   --usk-native-primary: var(--blueprint-primary);
   --usk-native-primary-hover: var(--blueprint-primary-hover);
   --usk-native-on-primary: var(--blueprint-on-primary);
+  --usk-native-secondary: var(--blueprint-secondary);
+  --usk-native-on-secondary: var(--blueprint-on-secondary);
+  --usk-native-accent: var(--blueprint-accent);
+  --usk-native-on-accent: var(--blueprint-on-accent);
+  --usk-native-on-success: var(--blueprint-on-success);
+  --usk-native-on-warning: var(--blueprint-on-warning);
+  --usk-native-on-danger: var(--blueprint-on-danger);
   --usk-native-focus: var(--blueprint-focus);
   --usk-native-success: var(--blueprint-success);
   --usk-native-warning: var(--blueprint-warning);
@@ -310,6 +318,13 @@
   --usk-native-primary: var(--blueprint-primary);
   --usk-native-primary-hover: var(--blueprint-primary-hover);
   --usk-native-on-primary: var(--blueprint-on-primary);
+  --usk-native-secondary: var(--blueprint-secondary);
+  --usk-native-on-secondary: var(--blueprint-on-secondary);
+  --usk-native-accent: var(--blueprint-accent);
+  --usk-native-on-accent: var(--blueprint-on-accent);
+  --usk-native-on-success: var(--blueprint-on-success);
+  --usk-native-on-warning: var(--blueprint-on-warning);
+  --usk-native-on-danger: var(--blueprint-on-danger);
   --usk-native-focus: var(--blueprint-focus);
   --usk-native-success: var(--blueprint-success);
   --usk-native-warning: var(--blueprint-warning);
@@ -1225,7 +1240,7 @@
 .blueprint-stepper::before { content: ""; position: absolute; inset-inline: 12%; inset-block-start: 12px; block-size: 1px; background: var(--blueprint-line-strong); }
 /** Reset native list spacing so marker centers remain on the connector axis. */
 .blueprint-step { position: relative; flex: 1; margin-block: 0; color: var(--blueprint-text-soft); text-align: center; font: 12px/1.4 var(--blueprint-font-mono); }
-.blueprint-step b { display: flex; align-items: center; justify-content: center; inline-size: 24px; block-size: 24px; margin: 0 auto 8px; background: var(--blueprint-bg); border: 1px solid var(--blueprint-line-strong); }
+.blueprint-step b { display: flex; align-items: center; justify-content: center; box-sizing: border-box; inline-size: 24px; block-size: 24px; margin: 0 auto 8px; background: var(--blueprint-bg); border: 1px solid var(--blueprint-line-strong); }
 .blueprint-step.is-complete b { background: var(--blueprint-fill); color: var(--blueprint-fill-ink); border-color: var(--blueprint-primary); }
 .blueprint-step.is-active b { color: var(--usk-primary-ink, var(--blueprint-primary)); border: 2px solid var(--blueprint-primary); }
 .blueprint-alert { display: flex; align-items: center; gap: 8px; min-block-size: 40px; padding: 8px; border: 1px solid var(--blueprint-primary); border-radius: 0; background: transparent; color: var(--blueprint-text-soft); box-shadow: none; font: 14px/1.4 var(--blueprint-font-body); }

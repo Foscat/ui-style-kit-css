@@ -47,9 +47,9 @@ test('Organic annotations share a leaf loader and center marketing details', asy
     await expect(outline).toHaveCSS('background-image', 'none');
     await expect(outline).toHaveCSS('clip-path', 'none');
   }
-  await expect(page.locator('#semantic-runtime .ui-table th').first()).toHaveCSS('font-family', /Organic DM Sans/);
-  await expect(page.locator('#semantic-runtime .ui-table th').first()).toHaveCSS('background-color', 'rgb(223, 231, 246)');
-  await expect(page.locator('#semantic-runtime .ui-table caption')).toHaveCSS('text-align', 'left');
+  await expect(page.locator('#semantic-runtime .usk-table th').first()).toHaveCSS('font-family', /Organic DM Sans/);
+  await expect(page.locator('#semantic-runtime .usk-table th').first()).toHaveCSS('background-color', 'rgb(223, 231, 246)');
+  await expect(page.locator('#semantic-runtime .usk-table caption')).toHaveCSS('text-align', 'left');
 });
 
 test('Organic annotation surfaces preserve motion preferences and responsive theme geometry', async ({ page }) => {
@@ -63,12 +63,12 @@ test('Organic annotation surfaces preserve motion preferences and responsive the
     const leaf = page.locator('.demo-control-showcase .organic-spinner-lg');
     await expect(leaf).toHaveCSS('animation-name', 'none');
     expect(await page.locator('.demo-state-grid .organic-button[aria-busy="true"]').evaluate((node) => getComputedStyle(node, '::after').animationName)).toBe('none');
-    for (const [name, selector] of [['loader', '.demo-control-showcase .demo-button-row:has(.organic-spinner-lg)'], ['busy', '.demo-state-grid .organic-button[aria-busy="true"]'], ['features', '.organic-feature-strip'], ['callout', '.organic-callout-bar'], ['table', '#semantic-runtime .ui-table-wrap']]) {
+    for (const [name, selector] of [['loader', '.demo-control-showcase .demo-button-row:has(.organic-spinner-lg)'], ['busy', '.demo-state-grid .organic-button[aria-busy="true"]'], ['features', '.organic-feature-strip'], ['callout', '.organic-callout-bar'], ['table', '#semantic-runtime .usk-table-wrap']]) {
       await page.locator(selector).first().screenshot({ path: `.tmp/organic-annotations-${name}-${mode}.png` });
     }
     for (const width of [768, 390]) {
       await page.setViewportSize({ width, height: 844 });
-      for (const selector of ['.organic-feature-strip', '.organic-callout-bar', '#semantic-runtime .ui-table-wrap']) {
+      for (const selector of ['.organic-feature-strip', '.organic-callout-bar', '#semantic-runtime .usk-table-wrap']) {
         expect(await page.locator(selector).evaluate((node) => node.scrollWidth - node.clientWidth), selector).toBeLessThanOrEqual(2);
       }
     }

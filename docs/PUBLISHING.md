@@ -1,10 +1,10 @@
 # Publishing Guide
 
-## 2.5.0 release workflow
+## 2.6.0 release workflow
 
-The current checkout is a release candidate. [Release preparation notes](RELEASE-2.5.0.md)
+The current checkout is a release candidate. [Release preparation notes](RELEASE-2.6.0.md)
 record the current local scope and gates; existing visual-QA documents are historical
-evidence, not proof that subsequent edits passed browser validation. The 2.5.0
+evidence, not proof that subsequent edits passed browser validation. The 2.6.0
 changelog entry must carry the approved publication date before tagging.
 
 Update the tracked `wiki/` sources with the README and docs. Publishing those pages
@@ -13,9 +13,9 @@ documentation generator is configured in this package; reusable JavaScript helpe
 use JSDoc-compatible comments, and the checked-in build owns generated CSS, manifests,
 icons, README size measurements, and demo asset hashes.
 
-Prepare `ui-style-kit-css@2.5.0` on its release branch, open a pull request against `main`, and merge only after the fast automated gate is green and any requested manual demo review is complete. The aligned companion releases are `layout-style-css@3.2.3` and `interactive-surface-css@1.7.3`.
+Prepare `ui-style-kit-css@2.6.0` on its release branch, open a pull request against `main`, and merge only after the fast automated gate is green and any requested manual demo review is complete. The aligned companion releases are `layout-style-css@3.2.3` and `interactive-surface-css@1.7.3`.
 
-Do not push `v2.5.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
+Do not push `v2.6.0` before the reviewed release commit is on `main`. A pushed version tag runs Release Version Alignment, which validates the tag/package/changelog contract and creates the GitHub Release; publishing that release triggers the protected npm workflow.
 
 Release Version Alignment owns the fast automated release gate: lint, build, unit checks, the tagged Chromium release-smoke Playwright suite, and packed ecosystem preflight with `--skip-clean-install`. The visual-baseline suite, full UI matrix, and clean-install ecosystem matrix are manual escalation tools, not default push or publish blockers. The protected npm workflow intentionally does not rerun browser gates; it revalidates the immutable tag, package contracts, browser-free compatibility checks, companion commit reachability, the explicit release preflight with `--skip-clean-install`, npm token presence, npm owner authorization, and registry state before publishing.
 
@@ -76,7 +76,7 @@ npm run check:ecosystem:packs -- --layout-repo ../Layout-Style-CSS --interactive
 npm publish
 ```
 
-`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the default fast release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.5.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
+`prepublishOnly` runs `npm run release:verify`, so a direct `npm publish` still has the default fast release gate. For GitHub releases, push or dispatch the matching package tag, such as `v2.6.0`, only after the release PR is merged. The release workflows verify that `package.json`, `package-lock.json`, `CHANGELOG.md`, generated dist banners, and ecosystem pins are aligned before publishing. Dispatch the protected npm workflow from the current `main` workflow file when recovering publication for a release that has already passed Release Version Alignment.
 
 The repository `NPM_TOKEN` secret must authenticate to npm as a user that appears in `npm owner ls ui-style-kit-css`. If the token belongs to another npm account or lacks package publish rights, npm may report a misleading registry `E404` at publish time.
 
@@ -88,4 +88,4 @@ npm run release:minor
 npm run release:major
 ```
 
-Use patch for compatible fixes, minor for new themes, presets, component capabilities, or browser-support contracts, and major for incompatible public API changes. Version `2.5.0` is the current compatible candidate for the expanded semantic component API; future feature versioning continues to follow this policy.
+Use patch for compatible fixes, minor for new themes, presets, component capabilities, or browser-support contracts, and major for incompatible public API changes. Version `2.6.0` is the current compatible candidate for self-contained preset delivery and the hardened semantic component API; future feature versioning continues to follow this policy.

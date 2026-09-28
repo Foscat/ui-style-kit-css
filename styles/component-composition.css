@@ -1,0 +1,829 @@
+/* =========================================================
+   UI Style Kit CSS - Component Composition
+
+   Framework-neutral geometry for reusable usk-* component
+   classes. Visual paint remains preset-owned.
+========================================================= */
+
+@layer ui-style-kit.components {
+/* Shared component composition keeps icon content aligned without overriding preset paint. */
+.usk-button__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.usk-button-scope,
+.usk-tooltip-anchor {
+  display: inline-flex;
+}
+
+.usk-toolbar__spacer {
+  flex: 1 1 auto;
+}
+
+/* Typography and media composition stays responsive while preset CSS owns paint. */
+.usk-heading,
+.usk-text,
+.usk-small,
+.usk-blockquote {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.usk-image,
+.usk-video,
+.usk-audio,
+.usk-iframe,
+.usk-embed,
+.usk-object,
+.usk-canvas,
+.usk-svg {
+  max-inline-size: 100%;
+}
+
+.usk-image,
+.usk-video,
+.usk-iframe,
+.usk-embed,
+.usk-object,
+.usk-canvas,
+.usk-svg {
+  display: block;
+}
+
+.usk-image,
+.usk-video {
+  block-size: auto;
+}
+
+/* Form composition supplements library-owned paint, interaction, and flow contracts. */
+.usk-form-field,
+.usk-form-control {
+  min-inline-size: 0;
+}
+
+.usk-form-choice {
+  max-inline-size: 100%;
+}
+
+.usk-form-choice-label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.usk-form-error {
+  color: rgb(var(--usk-danger-rgb, 185 63 63));
+}
+
+/* Table composition keeps the native semantics usable within responsive layouts. */
+.usk-table-wrap,
+.usk-table {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.usk-table-wrap {
+  overscroll-behavior-inline: contain;
+}
+
+.usk-table__caption,
+.usk-table__header-cell,
+.usk-table__cell {
+  overflow-wrap: anywhere;
+}
+
+.usk-table__caption {
+  text-align: start;
+}
+
+/* Shared composition for compact feedback and status primitives. */
+.usk-badge,
+.usk-alert__title,
+.usk-alert__body {
+  overflow-wrap: anywhere;
+}
+
+.usk-loader {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  gap: 0.5rem;
+}
+
+.usk-loader--sm {
+  --usk-loader-size: 0.875rem;
+}
+
+.usk-loader--md {
+  --usk-loader-size: 1.25rem;
+}
+
+.usk-loader--lg {
+  --usk-loader-size: 1.75rem;
+}
+
+.usk-loader__spinner {
+  inline-size: var(--usk-loader-size);
+  block-size: var(--usk-loader-size);
+  flex: 0 0 auto;
+}
+
+.usk-loader__label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.usk-visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.usk-skip-link {
+  position: fixed;
+  z-index: var(--usk-skip-link-z-index, 1100);
+  inset-block-start: -10rem;
+  inset-inline-start: 1rem;
+}
+
+.usk-skip-link:focus-visible {
+  inset-block-start: 1rem;
+}
+
+/* Value-bearing controls use preset paint while this library owns composition. */
+.usk-progress-field {
+  display: grid;
+  min-inline-size: 0;
+  gap: 0.375rem;
+}
+
+.usk-progress__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  min-inline-size: 0;
+  gap: 1rem;
+}
+
+.usk-progress__label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.usk-progress__value {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.usk-meter-field {
+  display: grid;
+  min-inline-size: 0;
+  gap: 0.375rem;
+}
+
+.usk-meter__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  min-inline-size: 0;
+  gap: 1rem;
+}
+
+.usk-meter__label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.usk-meter__value {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.usk-meter {
+  inline-size: 100%;
+}
+
+.usk-toast-stack {
+  position: fixed;
+  inset-block-end: 1rem;
+  inset-inline-end: 1rem;
+  z-index: var(--usk-toast-stack-z-index, 1000);
+  inline-size: min(24rem, calc(100vw - 2rem));
+}
+
+.usk-progress {
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+.usk-progress__bar {
+  display: block;
+  block-size: 100%;
+  transition: width 160ms ease;
+}
+
+.usk-progress--indeterminate .usk-progress__bar {
+  inline-size: 40%;
+  animation: usk-progress-indeterminate 1.2s ease-in-out infinite;
+}
+
+.usk-slider {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.375rem 0.75rem;
+}
+
+.usk-slider .usk-form-label,
+.usk-slider .usk-form-help,
+.usk-slider .usk-form-error {
+  grid-column: 1 / -1;
+}
+
+.usk-slider__control {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.usk-slider__value {
+  min-inline-size: 3ch;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+@keyframes usk-progress-indeterminate {
+  from {
+    transform: translateX(-110%);
+  }
+
+  to {
+    transform: translateX(260%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .usk-progress__bar {
+    transition: none;
+  }
+
+  .usk-progress--indeterminate .usk-progress__bar {
+    animation: none;
+  }
+}
+
+/* Generic tooltip geometry complements the preset-owned `.usk-tooltip` appearance. */
+.usk-tooltip-anchor {
+  position: relative;
+}
+
+.usk-tooltip {
+  position: absolute;
+  z-index: var(--usk-tooltip-z-index, 1000);
+  inline-size: max-content;
+  max-inline-size: min(20rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.usk-tooltip--top,
+.usk-tooltip--bottom {
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.usk-tooltip--top {
+  inset-block-end: calc(100% + var(--usk-tooltip-offset, 0.5rem));
+}
+
+.usk-tooltip--bottom {
+  inset-block-start: calc(100% + var(--usk-tooltip-offset, 0.5rem));
+}
+
+.usk-tooltip--right,
+.usk-tooltip--left {
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.usk-tooltip--right {
+  inset-inline-start: calc(100% + var(--usk-tooltip-offset, 0.5rem));
+}
+
+.usk-tooltip--left {
+  inset-inline-end: calc(100% + var(--usk-tooltip-offset, 0.5rem));
+}
+
+/* Native dialog geometry preserves UI Style Kit paint and platform top-layer behavior. */
+.usk-modal {
+  inline-size: min(var(--usk-modal-width, 42rem), calc(100vw - 2rem));
+  max-inline-size: calc(100vw - 2rem);
+  max-block-size: calc(100svh - 2rem);
+  margin: auto;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.usk-modal--sm {
+  --usk-modal-width: 28rem;
+}
+
+.usk-modal--md {
+  --usk-modal-width: 42rem;
+}
+
+.usk-modal--lg {
+  --usk-modal-width: 64rem;
+}
+
+.usk-modal--full {
+  --usk-modal-width: calc(100vw - 2rem);
+}
+
+.usk-modal__surface {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  max-block-size: calc(100svh - 2rem);
+  gap: 0;
+}
+
+.usk-modal__header,
+.usk-modal__footer {
+  min-inline-size: 0;
+  padding: var(--usk-modal-padding, 1rem);
+}
+
+.usk-modal__header {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border-block-end: 1px solid var(--usk-native-border, currentColor);
+}
+
+.usk-modal__title {
+  min-inline-size: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.usk-modal__close {
+  flex: 0 0 auto;
+}
+
+.usk-modal__description {
+  margin: 0;
+  padding: var(--usk-modal-padding, 1rem);
+  padding-block-end: 0;
+  overflow-wrap: anywhere;
+}
+
+.usk-modal__body {
+  min-block-size: 0;
+  min-inline-size: 0;
+  padding: var(--usk-modal-padding, 1rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.usk-modal__footer {
+  justify-content: flex-end;
+  border-block-start: 1px solid var(--usk-native-border, currentColor);
+}
+
+/* Drawers reuse modal behavior and only replace the top-layer edge geometry. */
+.usk-drawer {
+  --usk-modal-width: min(24rem, calc(100vw - 2rem));
+
+  border-radius: 0;
+}
+
+.usk-drawer--left,
+.usk-drawer--right {
+  inline-size: min(var(--usk-modal-width), calc(100vw - 2rem));
+  block-size: 100svh;
+  max-block-size: 100svh;
+}
+
+.usk-drawer--left {
+  margin: 0 auto 0 0;
+}
+
+.usk-drawer--right {
+  margin: 0 0 0 auto;
+}
+
+.usk-drawer--top,
+.usk-drawer--bottom {
+  inline-size: 100vw;
+  max-inline-size: 100vw;
+  max-block-size: min(80svh, 40rem);
+}
+
+.usk-drawer--top {
+  margin: 0 auto auto;
+}
+
+.usk-drawer--bottom {
+  margin: auto auto 0;
+}
+
+.usk-drawer .usk-modal__surface {
+  block-size: 100%;
+  max-block-size: inherit;
+}
+
+/* Screen-edge navigation uses Layout Style flow and UI Style Kit toolbar paint. */
+.usk-navigation {
+  z-index: var(--usk-navigation-z-index, 900);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  gap: var(--usk-navigation-gap, 0.5rem);
+  padding: var(--usk-navigation-padding, 0.5rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.usk-navigation--top,
+.usk-navigation--bottom {
+  inline-size: 100%;
+  flex-wrap: nowrap;
+}
+
+.usk-navigation--left,
+.usk-navigation--right {
+  align-self: start;
+  max-block-size: 100svh;
+}
+
+.usk-navigation--sticky {
+  position: sticky;
+}
+
+.usk-navigation--top.usk-navigation--sticky {
+  inset-block-start: 0;
+}
+
+.usk-navigation--bottom.usk-navigation--sticky {
+  inset-block-end: 0;
+}
+
+.usk-navigation--left.usk-navigation--sticky,
+.usk-navigation--right.usk-navigation--sticky {
+  inset-block-start: 0;
+}
+
+.usk-navigation--left.usk-navigation--sticky {
+  inset-inline-start: 0;
+}
+
+.usk-navigation--right.usk-navigation--sticky {
+  inset-inline-end: 0;
+}
+
+.usk-navigation--top.usk-navigation--safe-area {
+  padding-block-start: max(
+    var(--usk-navigation-padding, 0.5rem),
+    env(safe-area-inset-top)
+  );
+}
+
+.usk-navigation--right.usk-navigation--safe-area {
+  padding-inline-end: max(
+    var(--usk-navigation-padding, 0.5rem),
+    env(safe-area-inset-right)
+  );
+}
+
+.usk-navigation--bottom.usk-navigation--safe-area {
+  padding-block-end: max(
+    var(--usk-navigation-padding, 0.5rem),
+    env(safe-area-inset-bottom)
+  );
+}
+
+.usk-navigation--left.usk-navigation--safe-area {
+  padding-inline-start: max(
+    var(--usk-navigation-padding, 0.5rem),
+    env(safe-area-inset-left)
+  );
+}
+
+/* Section navigation switches one content tree between persistent and drawer modes. */
+.usk-section-navigation {
+  inline-size: min(var(--usk-section-navigation-width, 18rem), 100%);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.usk-section-navigation__title {
+  padding: var(--usk-navigation-padding, 0.5rem);
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.usk-section-navigation__navigation {
+  inline-size: 100%;
+  align-items: stretch;
+}
+
+.usk-section-navigation-mobile {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+
+.usk-section-navigation__trigger {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}
+
+.usk-section-navigation__drawer .usk-navigation {
+  inline-size: 100%;
+  max-block-size: none;
+  padding: 0;
+  overflow: visible;
+  scrollbar-gutter: auto;
+}
+
+/* Portable content shells retain Layout Style flow while UI Style Kit owns paint. */
+.usk-content-section,
+.usk-accordion,
+.usk-content-renderer,
+.usk-rich-text {
+  min-inline-size: 0;
+}
+
+.usk-content-section {
+  overflow: clip;
+}
+
+.usk-content-section__header,
+.usk-content-section__body,
+.usk-accordion__panel {
+  padding: var(--usk-content-padding, 1rem);
+}
+
+.usk-content-section__heading-content,
+.usk-content-section__heading-copy {
+  display: flex;
+  min-inline-size: 0;
+}
+
+.usk-content-section__heading-content {
+  inline-size: 100%;
+  align-items: center;
+  gap: var(--usk-content-gap, 0.75rem);
+  text-align: start;
+}
+
+.usk-content-section__heading-copy {
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.usk-content-section__title,
+.usk-accordion__title,
+.usk-accordion__heading {
+  margin: 0;
+}
+
+.usk-content-section__eyebrow {
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.usk-content-section__subtitle,
+.usk-content-section__title,
+.usk-accordion__trigger {
+  overflow-wrap: anywhere;
+}
+
+.usk-content-section__trigger,
+.usk-accordion__trigger {
+  inline-size: 100%;
+  justify-content: space-between;
+  text-align: start;
+}
+
+.usk-content-section__indicator,
+.usk-content-section__icon {
+  flex: 0 0 auto;
+}
+
+.usk-accordion__items {
+  gap: var(--usk-accordion-gap, 0.75rem);
+}
+
+.usk-accordion__item {
+  overflow: clip;
+}
+
+.usk-accordion__heading .usk-accordion__trigger {
+  border-radius: inherit;
+}
+
+.usk-rich-text {
+  overflow-wrap: anywhere;
+}
+
+.usk-rich-text > :first-child {
+  margin-block-start: 0;
+}
+
+.usk-rich-text > :last-child {
+  margin-block-end: 0;
+}
+
+.usk-rich-text pre {
+  max-inline-size: 100%;
+  overflow: auto;
+}
+
+/* Preview surfaces provide responsive geometry without replacing theme paint. */
+.usk-document-preview__viewport,
+.usk-image-preview__viewport {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.usk-document-preview__paper {
+  inline-size: min(100%, var(--usk-document-preview-width, 52rem));
+  min-block-size: var(--usk-document-preview-min-height, 36rem);
+  margin-inline: auto;
+  padding: var(--usk-document-preview-padding, clamp(1rem, 4vw, 3rem));
+  background: var(--usk-native-surface, Canvas);
+  color: var(--usk-native-text, CanvasText);
+  box-shadow: var(--usk-native-shadow, 0 0.5rem 2rem rgb(0 0 0 / 15%));
+}
+
+.usk-document-preview__actions,
+.usk-image-preview__controls {
+  justify-content: flex-end;
+}
+
+.usk-image-preview {
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.usk-image-preview__trigger {
+  inline-size: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.usk-image-preview__thumbnail {
+  inline-size: 100%;
+}
+
+.usk-image-preview__caption,
+.usk-image-preview__modal-caption {
+  margin-block-start: 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.usk-image-preview__viewport {
+  display: grid;
+  min-block-size: min(60svh, 32rem);
+  place-items: center;
+}
+
+.usk-image-preview__expanded {
+  max-inline-size: 100%;
+  max-block-size: 70svh;
+  transform-origin: center;
+}
+
+/* Application framing and global utilities remain product-neutral. */
+.usk-footer {
+  min-inline-size: 0;
+  gap: var(--usk-footer-gap, 1rem);
+  padding: var(--usk-footer-padding, 1rem);
+}
+
+.usk-footer__content,
+.usk-footer__meta {
+  min-inline-size: 0;
+}
+
+.usk-footer__meta {
+  justify-content: space-between;
+}
+
+.usk-footer__actions {
+  justify-content: flex-end;
+}
+
+.usk-back-to-top {
+  position: fixed;
+  z-index: var(--usk-back-to-top-z-index, 850);
+  inset-inline-end: max(1rem, env(safe-area-inset-right));
+  inset-block-end: max(1rem, env(safe-area-inset-bottom));
+  transition:
+    opacity 160ms ease-out,
+    visibility 160ms ease-out;
+}
+
+.usk-back-to-top.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.usk-back-to-top.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.usk-accessibility-menu {
+  gap: var(--usk-accessibility-menu-gap, 1rem);
+}
+
+@media print {
+  .usk-document-preview__actions,
+  .usk-back-to-top {
+    display: none;
+  }
+
+  .usk-document-preview__paper {
+    inline-size: 100%;
+    min-block-size: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .usk-modal[open] {
+    animation: usk-modal-enter 160ms ease-out;
+  }
+
+  .usk-drawer--left[open] {
+    animation-name: usk-drawer-enter-left;
+  }
+
+  .usk-drawer--right[open] {
+    animation-name: usk-drawer-enter-right;
+  }
+
+  .usk-drawer--top[open] {
+    animation-name: usk-drawer-enter-top;
+  }
+
+  .usk-drawer--bottom[open] {
+    animation-name: usk-drawer-enter-bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .usk-back-to-top {
+    transition: none;
+  }
+}
+
+@keyframes usk-modal-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes usk-drawer-enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(-1.5rem);
+  }
+}
+
+@keyframes usk-drawer-enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+}
+
+@keyframes usk-drawer-enter-top {
+  from {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+}
+
+@keyframes usk-drawer-enter-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+}
