@@ -395,7 +395,9 @@ function dataUiRootCompounds(selector) {
 }
 
 function declarationArtifactFacts(relativeFile) {
-  const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
+  // Git may materialize tracked CSS with platform-native newlines; normalize
+  // before position-based slices so the reviewed artifact digest stays portable.
+  const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8').replace(/\r\n?/g, '\n');
   const declarationBlocks = [];
   let count = 0;
 
@@ -414,6 +416,14 @@ function declarationArtifactFacts(relativeFile) {
     sha256: crypto.createHash('sha256').update(declarationBlocks.join('\n')).digest('hex')
   };
 }
+
+test('build normalizes authored CSS line endings before offset-based selector edits', () => {
+  const buildSource = fs.readFileSync(path.join(rootDir, 'scripts/build.mjs'), 'utf8');
+
+  assert.match(buildSource, /function normalizeSourceText\(source\)/);
+  assert.match(buildSource, /source\.replace\(\/\\r\\n\?\/g, '\\n'\)/);
+  assert.match(buildSource, /prepareUiCss\(file, normalizeSourceText\(/);
+});
 
 function selectorHasAttributeValue(selector, name, value) {
   return new RegExp(`\\[${name}=(?:"${value}"|${value})\\]`).test(selector);
@@ -663,12 +673,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   /** Reviewed 25-theme output includes text-ink fallbacks and preserves other declarations. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36840,
-    sha256: 'f476e41ff21d23a8670cff41f39d55dabe70b855d28f2bdeded0ed6291c080a3'
+    count: 36813,
+    sha256: '5c91bc6b2e7420344712301403b7484903d506fd04ad10a3ce414a805b532ce8'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37291,
-    sha256: 'ca60ab67b365532c5622813a8d63cd117dbc4e2fcac8348ed2cd13b18c73e044'
+    count: 37264,
+    sha256: '638774eef02572309c557769bb3ed4161d9b7b7d83723e0f0056a22087e9bacd'
   });
 });
 

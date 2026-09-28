@@ -124,11 +124,22 @@ const banner = `/*!
 @layer ${layerOrder};
 `;
 
+/**
+ * Normalizes authored source text before CSS Tree offsets are used for selector
+ * edits, keeping generated artifacts identical across Windows and Linux.
+ *
+ * @param {string} source Authored CSS source text.
+ * @returns {string} Source text with canonical line-feed separators.
+ */
+function normalizeSourceText(source) {
+  return source.replace(/\r\n?/g, '\n');
+}
+
 function readSource(file) {
   const absolute = path.join(root, file);
   if (!fs.existsSync(absolute)) throw new Error(`Missing stylesheet: ${file}`);
 
-  return prepareUiCss(file, fs.readFileSync(absolute, 'utf8'));
+  return prepareUiCss(file, normalizeSourceText(fs.readFileSync(absolute, 'utf8')));
 }
 
 function minifyCss(css, filename) {
