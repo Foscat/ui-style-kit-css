@@ -16,8 +16,8 @@ const resourceLinks = [
   { label: "GitHub", href: "https://github.com/Foscat/ui-style-kit-css" },
   { label: "Wiki", href: "https://github.com/Foscat/ui-style-kit-css/wiki" },
   { label: "npm", href: "https://www.npmjs.com/package/ui-style-kit-css" },
-  { label: "Interactive Surface demo", href: "https://foscat.github.io/interactive-surface-css/" },
-  { label: "Layout Style demo", href: "https://foscat.github.io/layout-style-css/" }
+  { label: "Interactive Surface demo", href: "https://foscat.github.io/Interactive-Surface-CSS/" },
+  { label: "Layout Style demo", href: "https://foscat.github.io/Layout-Style-CSS/" }
 ];
 const colorTokenRoles = [
   "bg",

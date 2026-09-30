@@ -1,6 +1,6 @@
 # Release Preparation
 
-The current local target is `ui-style-kit-css@2.6.0`. The package version, lockfile,
+The current local target is `ui-style-kit-css@2.6.1`. The package version, lockfile,
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
