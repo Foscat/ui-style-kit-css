@@ -198,7 +198,7 @@ function selectorDeclarations(relativeFile, selector, layerName) {
   return declarations;
 }
 
-test('2.6.0 package exports resolve the full, standalone preset, manifest, and bridge API', () => {
+test('2.6.1 package exports resolve the full, standalone preset, manifest, and bridge API', () => {
   const packageJson = readJson('package.json');
   const packageLock = readJson('package-lock.json');
   const expectedExports = new Map([
@@ -215,9 +215,9 @@ test('2.6.0 package exports resolve the full, standalone preset, manifest, and b
     expectedExports.set(`./presets/${id}.css`, `./dist/visual/${id}.css`);
   }
 
-  assert.equal(packageJson.version, '2.6.0');
-  assert.equal(packageLock.version, '2.6.0');
-  assert.equal(packageLock.packages[''].version, '2.6.0');
+  assert.equal(packageJson.version, '2.6.1');
+  assert.equal(packageLock.version, '2.6.1');
+  assert.equal(packageLock.packages[''].version, '2.6.1');
 
   for (const [exportPath, target] of expectedExports) {
     assert.equal(packageJson.exports[exportPath], target, `${exportPath} should resolve to ${target}`);
@@ -237,7 +237,7 @@ test('2.6.0 package exports resolve the full, standalone preset, manifest, and b
   assert.equal(packageJson.exports['./with-bridge'], './dist/ui-style-kit.with-bridge.css');
 });
 
-test('release-facing current-version surfaces identify 2.6.0', () => {
+test('release-facing current-version surfaces identify 2.6.1', () => {
   const currentVersionFiles = [
     'README.md',
     'index.html',
@@ -252,7 +252,7 @@ test('release-facing current-version surfaces identify 2.6.0', () => {
 
   for (const relativeFile of currentVersionFiles) {
     const contents = fs.readFileSync(relativePath(relativeFile), 'utf8');
-    assert.equal(contents.includes('2.6.0'), true, `${relativeFile} should identify the current version`);
+    assert.equal(contents.includes('2.6.1'), true, `${relativeFile} should identify the current version`);
   }
 
   const changelog = fs.readFileSync(relativePath('CHANGELOG.md'), 'utf8');
@@ -265,7 +265,7 @@ test('manifest describes every preset, scheme, mode, class capability, and nativ
 
   assert.equal(manifest.schemaVersion, 1);
   assert.equal(manifest.name, 'ui-style-kit-css');
-  assert.equal(manifest.version, '2.6.0');
+  assert.equal(manifest.version, '2.6.1');
   assert.deepEqual(manifest.cascadeLayers, cascadeLayers);
   assert.deepEqual(manifest.themes, themes);
   assert.deepEqual(manifest.modes, modes);

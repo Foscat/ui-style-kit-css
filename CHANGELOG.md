@@ -4,6 +4,13 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.6.1] - 2026-09-30
+
+### Fixed
+
+- Corrected the Interactive Surface and Layout Style demo links so their case-sensitive GitHub Pages paths resolve instead of returning 404 responses.
+- Updated the development-only fast-uri override to 3.1.8 to clear the current URI authority and host-confusion advisories without adding runtime dependencies.
+
 ## [2.6.0] - 2026-09-28
 
 ### Added

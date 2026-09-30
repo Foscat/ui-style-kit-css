@@ -9,11 +9,11 @@ It is separate from, but complementary to, **Interactive Surface CSS** and **Lay
 
 ## Current release
 
-Version `v2.6.0` is a backward-compatible component-quality and delivery release. It gives every UI system a canonical self-contained `presets/<name>.css` import, keeps the all-style runtime-switching bundles, and hardens the universal `.usk-*` component contract across all 20 presets. New markup should use `.usk-*`; generated `.ui-*` aliases remain available for existing consumers.
+Version `v2.6.1` is a backward-compatible component-quality and delivery release. It gives every UI system a canonical self-contained `presets/<name>.css` import, keeps the all-style runtime-switching bundles, and hardens the universal `.usk-*` component contract across all 20 presets. New markup should use `.usk-*`; generated `.ui-*` aliases remain available for existing consumers.
 
 The available browser matrix continues to cover 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). The `v2.4.1` theme additions and Signal Yellow contrast corrections remain unchanged.
 
-The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.6.0 release notes](docs/RELEASE-2.6.0.md) for the current scope and verification boundaries.
+The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.6.1 release notes](docs/RELEASE-2.6.1.md) for the current scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -56,11 +56,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.6.0` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.6.1` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.6.0` is the current release and is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.6.1` is the current release and is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
