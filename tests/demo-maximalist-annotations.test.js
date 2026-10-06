@@ -29,34 +29,29 @@ function declarations(root, selector) {
   return result;
 }
 
-test('demo toolbar keeps one dropdown indicator per select treatment', () => {
+test('demo toolbar uses semantic fields with one shared platform indicator rule', () => {
   const root = stylesheet('demo/demo.css');
-  const base = declarations(root, '.demo-controls select');
-  assert.equal(base.get('appearance'), 'auto');
+  for (const entry of ['index.html', 'demo/index.html']) {
+    const html = fs.readFileSync(new URL(`../${entry}`, import.meta.url), 'utf8');
+    assert.match(html, /class="demo-controls usk-toolbar"/);
+    for (const id of ['uiSelect', 'themeSelect', 'modeSelect']) {
+      assert.match(html, new RegExp(`<select id="${id}" class="usk-select"`), `${entry}: ${id}`);
+    }
+  }
+
+  const base = declarations(root, '.demo-controls .usk-select');
   assert.equal(base.get('-webkit-appearance'), 'auto');
-  assert.equal(base.get('background-image'), 'none');
+  assert.equal(base.get('appearance'), 'auto');
+  assert.equal(base.get('inline-size'), '100%');
   assert.equal(base.get('padding-inline-end'), '2rem');
-  const presetIndicatorSelectors = new Set([
-    '[data-ui="art-deco"] .demo-controls select',
-    '[data-ui="clay"] .demo-controls select',
-    '[data-ui="data-terminal"] .demo-controls select'
-  ]);
+  assert.equal(base.get('background-image'), 'none');
+  const presetSpecificOverrides = [];
   root.walkRules((rule) => {
-    if (!rule.selectors.some((selector) => selector.endsWith('.demo-controls select'))) return;
-    rule.walkDecls((decl) => {
-      if (decl.prop.endsWith('appearance')) {
-        assert.equal(decl.value, presetIndicatorSelectors.has(rule.selector) ? 'none' : 'auto', rule.selector);
-      }
-      if (decl.prop === 'background-image') {
-        assert.ok(
-          decl.value === 'none'
-            || decl.value === 'var(--clay-grain-image)'
-            || decl.value.startsWith('var(--usk-native-select-indicator-image)'),
-          rule.selector
-        );
-      }
-    });
+    if (rule.selectors.some((selector) => selector.startsWith('[data-ui=') && selector.includes('.demo-controls'))) {
+      presetSpecificOverrides.push(rule.selector);
+    }
   });
+  assert.deepEqual(presetSpecificOverrides, []);
 });
 
 test('Maximalist medallions use scalable artwork for the star, check and arrow only', () => {

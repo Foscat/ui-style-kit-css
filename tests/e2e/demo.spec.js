@@ -146,6 +146,45 @@ test('demo control options are populated from the manifest snapshot', async ({ p
   expect(manifestState.themeOptions).toContain('royal-plum');
 });
 
+test('demo loads only the specimen JavaScript required by the selected preset', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const loadedSpecimens = () => page.locator('script[src]')
+    .evaluateAll((scripts) => scripts
+      .map((script) => new URL(script.src).pathname.split('/').at(-1))
+      .filter((fileName) => /^demo-(?:art-deco|bauhaus|bento|clay|editorial-lux|neo-noir|organic(?:-icons)?)\.js$/.test(fileName)));
+
+  expect(await loadedSpecimens()).toEqual([]);
+
+  await page.selectOption('#uiSelect', 'clay');
+  await expect(page.locator('#style-specific .clay-milestones')).toBeVisible();
+  expect(await loadedSpecimens()).toEqual(['demo-clay.js']);
+});
+
+test('demo options stay visible while the page scrolls at narrow and wide viewports', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1280, height: 800 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto(demoUrl);
+    await page.evaluate(() => window.scrollTo(0, Math.min(1800, document.documentElement.scrollHeight)));
+
+    const controls = page.locator('.demo-controls');
+    await expect(controls).toHaveCSS('position', 'sticky');
+    const bounds = await controls.boundingBox();
+    expect(bounds.y).toBeGreaterThanOrEqual(-1);
+    expect(bounds.y).toBeLessThanOrEqual(1);
+    expect(bounds.x).toBeGreaterThanOrEqual(-1);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(viewport.width + 1);
+    expect(bounds.height).toBeLessThan(viewport.height / 3);
+
+    await page.locator('nav[aria-label="Primary"] a[href="#tokens"]').click();
+    await expect.poll(() => page.evaluate(() => {
+      const controlsBounds = document.querySelector('.demo-controls').getBoundingClientRect();
+      const targetBounds = document.querySelector('#tokens').getBoundingClientRect();
+      return Math.round(targetBounds.top - controlsBounds.bottom);
+    })).toBeGreaterThanOrEqual(-1);
+  }
+});
+
 test('demo exposes project resource links', async ({ page }) => {
   await page.goto(demoUrl);
 
@@ -248,6 +287,20 @@ test('switching demo controls updates body attributes and rendered classes', asy
 
   await expect(page.locator('#main .cyber-title')).toBeVisible();
   await expect(page.locator('#main .cyber-button.cyber-button-primary').first()).toBeVisible();
+});
+
+test('palette changes preserve the rendered demo and user-entered values', async ({ page }) => {
+  await page.goto(demoUrl);
+
+  const textInput = page.locator('#native input[type="text"]').first();
+  await textInput.fill('Keep this local demo value');
+  const originalNode = await textInput.elementHandle();
+
+  await page.selectOption('#themeSelect', 'arctic-indigo');
+  await page.selectOption('#modeSelect', 'dark');
+
+  await expect(textInput).toHaveValue('Keep this local demo value');
+  expect(await originalNode.evaluate((node) => node.isConnected)).toBe(true);
 });
 
 test('semantic demo nodes and classes remain unchanged through every preset switch', async ({ page }) => {

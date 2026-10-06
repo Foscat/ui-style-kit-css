@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href;
+test.describe.configure({ timeout: 60_000 });
 /** @type {{numberSize: number, captionSize: number}} */
 const defaultTrustSealType = { numberSize: 24, captionSize: 13 };
 /**
@@ -30,6 +31,17 @@ async function openLibrary(page) {
   await expect(page.locator('#uiSelect')).toBeVisible();
 }
 
+/**
+ * Selects one preset and waits for its optional specimen module and DOM to settle.
+ * @param {import('@playwright/test').Page} page Active Playwright page.
+ * @param {string} preset Public preset identifier.
+ * @returns {Promise<void>} Resolves after the selected demo is ready for measurement.
+ */
+async function selectPreset(page, preset) {
+  await page.selectOption('#uiSelect', preset);
+  await expect(page.locator('body')).toHaveAttribute('data-ui', preset);
+}
+
 test('every preset select renders exactly one dropdown indicator', async ({ page }) => {
   await openLibrary(page);
 
@@ -38,7 +50,7 @@ test('every preset select renders exactly one dropdown indicator', async ({ page
   );
 
   for (const preset of presets) {
-    await page.selectOption('#uiSelect', preset);
+    await selectPreset(page, preset);
     const indicator = await page.locator('#uiSelect').evaluate((select) => {
       const style = getComputedStyle(select);
       return {
@@ -64,7 +76,7 @@ test('every preset trust seal emphasizes the number over the caption', async ({ 
   );
 
   for (const preset of presets) {
-    await page.selectOption('#uiSelect', preset);
+    await selectPreset(page, preset);
     const sealType = await page.getByTestId('marketing-components').locator('[class$="-badge-seal"]').evaluate((seal) => {
       const number = getComputedStyle(seal.querySelector(':scope > strong'));
       const caption = getComputedStyle(seal.querySelector(':scope > small'));

@@ -4,6 +4,15 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.6.2] - Unreleased
+
+### Changed
+
+- Kept the demo options toolbar visible while scrolling at mobile and desktop widths, with section anchors offset below it.
+- Loaded optional preset specimen JavaScript only when its preset is selected.
+- Limited theme and mode changes to palette-dependent demo sections so entered values and unrelated DOM stay in place.
+- Reused semantic field and select styles in the demo toolbar and removed preset-specific toolbar overrides.
+
 ## [2.6.1] - 2026-09-30
 
 ### Fixed

@@ -50,7 +50,7 @@
       "programmingLanguage": "CSS",
       "runtimePlatform": "Web browser",
       "license": "https://github.com/Foscat/ui-style-kit-css/blob/main/LICENSE",
-      "version": "2.6.1",
+      "version": "2.6.2",
       "url": "https://foscat.github.io/ui-style-kit-css/",
       "downloadUrl": "https://www.npmjs.com/package/ui-style-kit-css",
       "isAccessibleForFree": true,
@@ -84,15 +84,15 @@
   <meta name="msapplication-TileColor" content="#070b24">
   <meta name="msapplication-config" content="browserconfig.xml">
   <meta name="theme-color" content="#070b24">
-  <link id="styleKitStylesheet" rel="stylesheet" href="dist/ui-style-kit.css?v=853f7a85b9ab" data-default-href="dist/ui-style-kit.css?v=853f7a85b9ab" data-bridge-href="dist/ui-style-kit.with-bridge.css?v=4df2811935e4">
-  <link rel="stylesheet" href="demo/demo.css?v=1bc5d87001f4">
+  <link id="styleKitStylesheet" rel="stylesheet" href="dist/ui-style-kit.css?v=b525588dd7bd" data-default-href="dist/ui-style-kit.css?v=b525588dd7bd" data-bridge-href="dist/ui-style-kit.with-bridge.css?v=956f8983ae63">
+  <link rel="stylesheet" href="demo/demo.css?v=5fdff66a692e">
 </head>
 <body data-ui="minimal-saas" data-mode="light" data-bridge="detached">
   <a id="skip" class="saas-skip-link" href="#main">Skip to content</a>
-  <aside class="demo-controls" aria-label="Demo controls">
-    <label>
-      UI Style
-      <select id="uiSelect">
+  <div class="demo-controls usk-toolbar" role="toolbar" aria-label="Demo options">
+    <label class="usk-field">
+      <span class="usk-label">UI Style</span>
+      <select id="uiSelect" class="usk-select">
         <option value="minimal-saas" data-prefix="saas" selected>Minimal SaaS</option>
         <option value="bento" data-prefix="bento">Bento UI</option>
         <option value="maximalist" data-prefix="max">Maximalist / Playful</option>
@@ -115,9 +115,9 @@
         <option value="neo-noir" data-prefix="noir">Neo-Noir</option>
       </select>
     </label>
-    <label>
-      Color Theme
-      <select id="themeSelect" aria-describedby="demo-palette-help">
+    <label class="usk-field">
+      <span class="usk-label">Color Theme</span>
+      <select id="themeSelect" class="usk-select" aria-describedby="demo-palette-help">
         <option value="" selected>None — style defaults</option>
         <option value="midnight-gold">midnight-gold</option>
         <option value="ocean-steel">ocean-steel</option>
@@ -146,15 +146,15 @@
         <option value="walnut-clay">walnut-clay</option>
       </select>
     </label>
-    <label>
-      Mode
-      <select id="modeSelect">
+    <label class="usk-field">
+      <span class="usk-label">Mode</span>
+      <select id="modeSelect" class="usk-select">
         <option value="light" selected>light</option>
         <option value="dark">dark</option>
         <option value="contrast">contrast</option>
       </select>
     </label>
-  </aside>
+  </div>
 
   <main id="main">
     <p id="demo-palette-help" class="demo-palette-help">UI Style sets the component design. Color Theme overrides its colors; choose <strong>None</strong> for the style’s native palette. Try light, dark, or contrast mode, then <a href="#tokens">edit the active colors</a>.</p>
@@ -265,14 +265,16 @@
 
   <script src="demo/demo-manifest.js?v=86f99fe13243"></script>
   <script src="demo/demo-icons.js?v=3043407f4eb7"></script>
-  <script src="demo/demo-art-deco.js?v=5ffa637a8474"></script>
-    <script src="demo/demo-editorial-lux.js?v=f6512052a286"></script>
-    <script src="demo/demo-neo-noir.js?v=1242cf695823"></script>
-  <script src="demo/demo-clay.js?v=8ca1067b24b7"></script>
-  <script src="demo/demo-bento.js?v=7c5ece4e6ea7"></script>
-  <script src="demo/demo-bauhaus.js?v=dcb8da8a2f90"></script>
-  <script src="demo/demo-organic-icons.js?v=9a8d6adf49b3"></script>
-  <script src="demo/demo-organic.js?v=d0d8a9bba18c"></script>
-  <script src="demo/demo.js?v=6f705c425c6c"></script>
+  <template id="demoPresetScripts">
+    <script data-demo-preset="art-deco" data-demo-specimen="art-deco" src="demo/demo-art-deco.js?v=5ffa637a8474"></script>
+    <script data-demo-preset="editorial-luxe" data-demo-specimen="editorial-luxe" src="demo/demo-editorial-lux.js?v=f6512052a286"></script>
+    <script data-demo-preset="neo-noir" data-demo-specimen="neo-noir" src="demo/demo-neo-noir.js?v=1242cf695823"></script>
+    <script data-demo-preset="clay" data-demo-specimen="clay" src="demo/demo-clay.js?v=8ca1067b24b7"></script>
+    <script data-demo-preset="bento" data-demo-specimen="bento" src="demo/demo-bento.js?v=7c5ece4e6ea7"></script>
+    <script data-demo-preset="bauhaus" data-demo-specimen="bauhaus" src="demo/demo-bauhaus.js?v=dcb8da8a2f90"></script>
+    <script data-demo-preset="organic-modern" data-demo-specimen="organic-icons" src="demo/demo-organic-icons.js?v=9a8d6adf49b3"></script>
+    <script data-demo-preset="organic-modern" data-demo-specimen="organic-modern" src="demo/demo-organic.js?v=d0d8a9bba18c"></script>
+  </template>
+  <script src="demo/demo.js?v=6291b15aa46e"></script>
 </body>
 </html>

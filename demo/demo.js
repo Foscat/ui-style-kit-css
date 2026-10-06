@@ -78,6 +78,8 @@ const bridgeAwareBundle =
 let bridgeAttached = false;
 let copyTooltipId = 0;
 let referencePalette = false;
+let requestedRender = 0;
+const specimenScriptLoads = new Map();
 const interactiveSurfaceSelector = [
   "a[href]",
   "button:not(:disabled)",
@@ -88,6 +90,39 @@ const interactiveSurfaceSelector = [
   "audio[controls]",
   "video[controls]"
 ].join(",");
+
+/**
+ * Loads the inert, versioned script definitions needed by one preset.
+ * Sequential loading preserves dependencies such as Organic Modern's icon catalog.
+ * @param {string} ui Selected preset identifier.
+ * @returns {Promise<void>} Resolves after the selected preset's scripts are executable.
+ */
+async function loadPresetSpecimen(ui) {
+  const catalog = document.getElementById("demoPresetScripts");
+  if (!catalog?.content) return;
+
+  const definitions = catalog.content.querySelectorAll(`[data-demo-preset="${ui}"]`);
+  for (const definition of definitions) {
+    const specimen = definition.dataset.demoSpecimen;
+    let load = specimenScriptLoads.get(specimen);
+    if (!load) {
+      load = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = definition.src;
+        script.async = false;
+        script.dataset.demoSpecimen = specimen;
+        script.addEventListener("load", resolve, { once: true });
+        script.addEventListener("error", () => reject(new Error(`Unable to load demo specimen: ${specimen}`)), { once: true });
+        document.body.append(script);
+      }).catch((error) => {
+        specimenScriptLoads.delete(specimen);
+        throw error;
+      });
+      specimenScriptLoads.set(specimen, load);
+    }
+    await load;
+  }
+}
 
 /** Populates controls from the library inventory while retaining the optional palette selection. */
 function syncManifestSelectOptions() {
@@ -182,7 +217,7 @@ function applyPaletteSelection() {
 /** Selects the same native-palette option from every preset-specific reference button. */
 function selectReferencePalette() {
   themeSelect.value = "";
-  render();
+  refreshPalettePresentation();
 }
 
 /** @returns {string} Copyable setup code that preserves the selected palette source. */
@@ -445,6 +480,32 @@ function renderThemeTokenEditor(tokens) {
 }
 
 /**
+ * Renders the palette-dependent usage examples without rebuilding the surrounding demo.
+ * @param {string} p Active preset class prefix.
+ * @returns {string} Usage section markup for the active palette and mode.
+ */
+function renderUsageSection(p) {
+  return `
+    <section id="usage" class="${p}-card" data-testid="usage-imports">
+      <p class="${p}-kicker">Usage</p>
+      <h2 class="${p}-heading">Import paths and data attributes</h2>
+      <div class="demo-showcase-grid">
+        ${renderCodeBlock(`import "ui-style-kit-css";
+
+document.body.dataset.ui = "${uiSelect.value}";
+${getThemeUsageStatement()}
+document.body.dataset.mode = "${modeSelect.value}";`, "js")}
+        ${renderCodeBlock(`import "ui-style-kit-css/theme-colors.css";
+import "ui-style-kit-css/native-elements.css";
+import "ui-style-kit-css/${uiSelect.value}.css";`, "js")}
+        ${renderCodeBlock(`import "ui-style-kit-css/with-bridge.css";
+import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
+      </div>
+      <p class="${p}-copy">Choose <strong>None — style defaults</strong> to omit <code>data-theme</code> and use the preset’s native colors. Keep <code>data-ui</code> and <code>data-mode</code> set. A named theme overrides colors without replacing component classes; the theme-colors import is optional for standalone native-palette usage.</p>
+    </section>`;
+}
+
+/**
  * Copy text to the clipboard using the Clipboard API if available, or fallback to a textarea method for older browsers.
  * @param {string} text - The text to copy to the clipboard.
  * @returns {Promise<void>}
@@ -470,9 +531,11 @@ async function copyTextToClipboard(text) {
 
 /**
  * Bind click event listeners to all code copy buttons in the document. When a button is clicked, it copies the associated code block's content to the clipboard and provides visual feedback.
+ * @param {ParentNode} root Root containing the copy controls to bind.
+ * @returns {void}
  */
-function bindCodeCopyButtons() {
-  main.querySelectorAll("[data-copy-code]").forEach((button) => {
+function bindCodeCopyButtons(root = main) {
+  root.querySelectorAll("[data-copy-code]").forEach((button) => {
     button.addEventListener("click", async () => {
       const block = button.closest(".demo-code-block");
       const code = block?.querySelector("code")?.innerText || "";
@@ -741,6 +804,51 @@ function bindStyleSpecificGallery() {
       else step.removeAttribute("aria-current");
     });
   }));
+}
+
+/**
+ * Binds only the external specimen module represented by the current DOM.
+ * @param {string} ui Selected preset identifier.
+ * @returns {void}
+ */
+function bindActivePresetSpecimen(ui) {
+  const binders = {
+    "organic-modern": () => window.OrganicSpecimen?.bind(selectReferencePalette, (mode) => {
+      modeSelect.value = mode;
+      refreshPalettePresentation();
+    }),
+    clay: () => window.ClaySpecimen?.bind((mode) => {
+      modeSelect.value = mode;
+      refreshPalettePresentation();
+    }),
+    bento: () => window.BentoSpecimen?.bind(selectReferencePalette, (mode) => {
+      modeSelect.value = mode;
+      refreshPalettePresentation();
+    }),
+    bauhaus: () => window.BauhausSpecimen?.bind(selectReferencePalette, (mode) => {
+      modeSelect.value = mode;
+      refreshPalettePresentation();
+    }),
+    "editorial-luxe": () => window.EditorialLuxSpecimen?.bind(selectReferencePalette),
+    "neo-noir": () => window.NeoNoirSpecimen?.bind(selectReferencePalette),
+    "art-deco": () => window.ArtDecoSpecimen?.bind(selectReferencePalette)
+  };
+  binders[ui]?.();
+}
+
+/**
+ * Binds interactions that exist only in the active preset's rendered regions.
+ * @param {string} ui Selected preset identifier.
+ * @returns {void}
+ */
+function bindPresetSpecificDemo(ui) {
+  syncPresetSpecificVisibility();
+  bindRetroGlassSpecimen();
+  bindBlueprintSpecimen();
+  bindIndustrialSpecimen();
+  bindStyleSpecificGallery();
+  bindPaperEditorialSpecimen();
+  bindActivePresetSpecimen(ui);
 }
 
 /**
@@ -2875,23 +2983,7 @@ function render() {
           </div>
         </section>
 
-        <section id="usage" class="${p}-card" data-testid="usage-imports">
-          <p class="${p}-kicker">Usage</p>
-          <h2 class="${p}-heading">Import paths and data attributes</h2>
-          <div class="demo-showcase-grid">
-            ${renderCodeBlock(`import "ui-style-kit-css";
-
-document.body.dataset.ui = "${ui}";
-${getThemeUsageStatement()}
-document.body.dataset.mode = "${modeSelect.value}";`, "js")}
-            ${renderCodeBlock(`import "ui-style-kit-css/theme-colors.css";
-import "ui-style-kit-css/native-elements.css";
-import "ui-style-kit-css/${ui}.css";`, "js")}
-            ${renderCodeBlock(`import "ui-style-kit-css/with-bridge.css";
-import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
-          </div>
-          <p class="${p}-copy">Choose <strong>None — style defaults</strong> to omit <code>data-theme</code> and use the preset’s native colors. Keep <code>data-ui</code> and <code>data-mode</code> set. A named theme overrides colors without replacing component classes; the theme-colors import is optional for standalone native-palette usage.</p>
-        </section>
+        ${renderUsageSection(p)}
       </div>
     </section>`;
 
@@ -2901,31 +2993,7 @@ import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
   bindCodeCopyButtons();
   bindNativeDialogDemo();
   bindNativeSemanticStates();
-  syncPresetSpecificVisibility();
-  bindRetroGlassSpecimen();
-  bindBlueprintSpecimen();
-  bindIndustrialSpecimen();
-  bindStyleSpecificGallery();
-  bindPaperEditorialSpecimen();
-  window.OrganicSpecimen.bind(selectReferencePalette, (mode) => {
-    modeSelect.value = mode;
-    render();
-  });
-  window.ClaySpecimen.bind((mode) => {
-    modeSelect.value = mode;
-    render();
-  });
-  window.BentoSpecimen.bind(selectReferencePalette, (mode) => {
-    modeSelect.value = mode;
-    render();
-  });
-  window.BauhausSpecimen.bind(selectReferencePalette, (mode) => {
-    modeSelect.value = mode;
-    render();
-  });
-  window.EditorialLuxSpecimen.bind(selectReferencePalette);
-  window.NeoNoirSpecimen.bind(selectReferencePalette);
-  window.ArtDecoSpecimen.bind(selectReferencePalette);
+  bindPresetSpecificDemo(ui);
   syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview");
   if (bridgeToggle) {
     bridgeToggle.checked = bridgeAttached;
@@ -2935,12 +3003,84 @@ import "ui-style-kit-css/interactive-surface-bridge.css";`, "js")}
   updateBridge();
 }
 
+/**
+ * Replaces one palette-dependent section while retaining the rest of the live demo DOM.
+ * @param {string} selector Selector for the current section.
+ * @param {string} markup Replacement section markup.
+ * @returns {HTMLElement|null} Inserted section, or null when the current section is absent.
+ */
+function replaceDemoSection(selector, markup) {
+  const current = main.querySelector(selector);
+  if (!current) return null;
+
+  const template = document.createElement("template");
+  template.innerHTML = markup.trim();
+  const replacement = template.content.firstElementChild;
+  current.replaceWith(replacement);
+  return replacement;
+}
+
+/**
+ * Refreshes only content whose text or controls depend on theme and mode.
+ * The developer reference fixture retains full rendering because its authored boards encode mode in markup.
+ * @returns {void}
+ */
+function refreshPalettePresentation() {
+  if (isTemplateReferenceView()) {
+    render();
+    return;
+  }
+
+  applyPaletteSelection();
+  const ui = uiSelect.value;
+  const p = stylePrefixes[ui];
+  const tokens = replaceDemoSection("#tokens", renderThemeTokenEditor(getActiveColorTokens()));
+  replaceDemoSection("#style-specific", renderStyleSpecificGallery(ui, p));
+  const usage = replaceDemoSection("#usage", renderUsageSection(p));
+
+  bindThemeTokenControls();
+  if (tokens) bindCodeCopyButtons(tokens);
+  if (usage) bindCodeCopyButtons(usage);
+  bindPresetSpecificDemo(ui);
+  syncInteractiveSurfaceHooks(bridgeAttached);
+  drawDemoCanvas();
+}
+
+/**
+ * Renders the most recently requested preset after its optional module is ready.
+ * Stale loads cannot replace a newer user selection.
+ * @returns {Promise<void>} Resolves after the current preset is rendered.
+ */
+async function renderSelectedPreset() {
+  const request = ++requestedRender;
+  const ui = uiSelect.value;
+  demoContent.setAttribute("aria-busy", "true");
+  try {
+    await loadPresetSpecimen(ui);
+    if (request !== requestedRender || ui !== uiSelect.value) return;
+    render();
+  } finally {
+    if (request === requestedRender) demoContent.setAttribute("aria-busy", "false");
+  }
+}
+
+/**
+ * Reports an optional specimen failure without leaving an unhandled promise rejection.
+ * @returns {void}
+ */
+function requestPresetRender() {
+  renderSelectedPreset().catch((error) => {
+    console.error(error);
+    render();
+  });
+}
+
 syncManifestSelectOptions();
 applyDemoQuerySelection();
 hydrateDemoIcons();
 
-uiSelect.addEventListener("change", () => { render(); });
-themeSelect.addEventListener("change", render);
-modeSelect.addEventListener("change", render);
+uiSelect.addEventListener("change", requestPresetRender);
+themeSelect.addEventListener("change", refreshPalettePresentation);
+modeSelect.addEventListener("change", refreshPalettePresentation);
 window.addEventListener("hashchange", () => syncPrimaryNavCurrent(window.location.hash.slice(1) || "overview"));
-render();
+requestPresetRender();
