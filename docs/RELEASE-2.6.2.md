@@ -1,6 +1,6 @@
 # v2.6.2 release candidate
 
-UI Style Kit CSS 2.6.2 is a compatible patch for the interactive demo. The package's public CSS entrypoints, presets, and theme inventory remain unchanged.
+UI Style Kit CSS 2.6.2 is a compatible patch for the interactive demo. The package's public CSS entrypoints, presets, and theme inventory remain unchanged. Version 2.6.1 remains published on npm while this candidate is reviewed.
 
 ## Changed
 
