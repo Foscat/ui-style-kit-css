@@ -92,7 +92,7 @@ test('normal UI preflight queries all six exact minimum and current ecosystem ve
     '/layout-style-css/3.0.0',
     '/layout-style-css/3.2.3',
     '/ui-style-kit-css/2.1.0',
-    '/ui-style-kit-css/2.6.1'
+    '/ui-style-kit-css/2.6.2'
   ]);
 });
 
@@ -175,7 +175,7 @@ test('excludes only the unpublished candidate current version from registry chec
     await releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
       registryUrl: `http://127.0.0.1:${port}`,
       candidatePackage: 'ui-style-kit-css',
-      candidateVersion: '2.6.1'
+      candidateVersion: '2.6.2'
     });
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
@@ -209,7 +209,7 @@ test('excludes exact coordinated local candidates while retaining every publishe
       candidateVersions: {
         'interactive-surface-css': '1.7.3',
         'layout-style-css': '3.2.3',
-        'ui-style-kit-css': '2.6.1'
+        'ui-style-kit-css': '2.6.2'
       }
     });
   } finally {
@@ -265,7 +265,7 @@ test('still rejects a nonexistent companion current version for an unpublished c
       releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
         registryUrl: `http://127.0.0.1:${port}`,
         candidatePackage: 'ui-style-kit-css',
-        candidateVersion: '2.6.1'
+        candidateVersion: '2.6.2'
       }),
       /interactive-surface-css@1\.7\.3 does not exist exactly/
     );
@@ -295,7 +295,7 @@ test('still rejects a candidate minimum distinct from its unpublished current ve
       releasePreflight.verifyPublishedVersions(futureCandidateCompatibility(), {
         registryUrl: `http://127.0.0.1:${port}`,
         candidatePackage: 'ui-style-kit-css',
-        candidateVersion: '2.6.1'
+        candidateVersion: '2.6.2'
       }),
       /ui-style-kit-css@2\.1\.0 does not exist exactly/
     );
@@ -566,7 +566,7 @@ function futureCandidateCompatibility() {
         'layout-style-css': '3.0.0'
       },
       current: {
-        'ui-style-kit-css': '2.6.1',
+        'ui-style-kit-css': '2.6.2',
         'interactive-surface-css': '1.7.3',
         'layout-style-css': '3.2.3'
       }

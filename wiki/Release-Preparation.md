@@ -1,14 +1,14 @@
 # Release Preparation
 
-The current local target is `ui-style-kit-css@2.6.1`. The package version, lockfile,
+The current local target is `ui-style-kit-css@2.6.2` (release candidate). The package version, lockfile,
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
-The backward-compatible minor release adds canonical self-contained preset imports,
-keeps runtime switching in the all-style bundle, and hardens the 75-selector
-semantic component API across all 20 presets. It retains the 25-theme inventory,
-existing native palettes, preset-prefixed compatibility classes, and optional
-bridge compositions.
+The compatible patch release refines the demo toolbar, loads optional preset
+scripts only when selected, and preserves entered demo values during palette
+changes. It retains the 25-theme inventory, existing native palettes,
+preset-prefixed compatibility classes, optional bridge compositions, and
+hardens the 75-selector semantic component API across all 20 presets.
 
 Run focused regressions during development. At final verification, rebuild assets,
 check CSS lint, documented imports, semantic contracts, contrast, compatibility,

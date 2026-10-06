@@ -321,18 +321,18 @@
 
 .demo-controls {
   position: sticky;
-  top: 0;
+  inset-block-start: 0;
   z-index: 1000;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
   gap: .75rem;
-  padding: 1rem;
-  background: Canvas;
-  color: CanvasText;
-  border: 0;
-  border-bottom: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+  margin: 0;
+  padding: clamp(.625rem, 1.5vw, 1rem);
+  border-inline: 0;
+  border-block-start: 0;
   border-radius: 0;
-  box-shadow: none;
+  isolation: isolate;
 }
 
 /** Introductory guidance stays outside the sticky controls to preserve mobile viewing space. */
@@ -342,67 +342,27 @@
   font: 400 .875rem/1.6 system-ui, sans-serif;
 }
 
-.demo-controls label,
+.demo-controls .usk-field {
+  min-inline-size: 0;
+  margin: 0;
+}
+
 .demo-switch-control {
   display: grid;
   gap: .25rem;
   font: 700 .85rem system-ui, sans-serif;
 }
 
-/** Keeps one platform indicator across presets without changing native keyboard behavior. */
-.demo-controls select {
+.demo-controls .usk-select {
   -webkit-appearance: auto;
   appearance: auto;
-  min-height: 2.5rem;
-  padding: .5rem;
+  inline-size: 100%;
   padding-inline-end: 2rem;
   background-image: none;
-  font: inherit;
 }
 
-/** Restores the platform icon when a preset hides its customizable-select counterpart. */
-.demo-controls select::picker-icon {
-  display: block;
-  color: inherit;
-  opacity: 1;
-  filter: none;
-}
-
-/** Preserves Clay's material texture while using the preset-owned select indicator. */
-[data-ui="clay"] .demo-controls select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: var(--usk-native-select-indicator-image), var(--clay-grain-image);
-  background-position: var(--usk-native-select-indicator-position), 0 0;
-  background-size: var(--usk-native-select-indicator-size), var(--clay-grain-size);
-  background-repeat: no-repeat, repeat;
-  background-blend-mode: normal, soft-light;
-}
-
-/** Retains the Retrofuturism console surface around the shared native indicator. */
-[data-ui="retrofuturism"] .demo-controls select {
-  background-color: rgb(var(--retro-surface-rgb));
-  border-radius: var(--retro-instrument-radius-sm);
-}
-
-/** Keeps Art Deco demo controls aligned with the preset's faceted select indicator. */
-[data-ui="art-deco"] .demo-controls select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: var(--usk-native-select-indicator-image);
-  background-position: var(--usk-native-select-indicator-position);
-  background-repeat: no-repeat;
-  background-size: var(--usk-native-select-indicator-size);
-}
-
-/** Keeps Data Terminal demo controls on the same single-indicator select contract as native fields. */
-[data-ui="data-terminal"] .demo-controls select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: var(--usk-native-select-indicator-image);
-  background-position: var(--usk-native-select-indicator-position);
-  background-repeat: no-repeat;
-  background-size: var(--usk-native-select-indicator-size);
+#demoContent :where(#overview, #tokens, #components, #style-specific, #native, #bridge, #usage) {
+  scroll-margin-block-start: 8rem;
 }
 
 .demo-switch-control {
@@ -1603,7 +1563,17 @@ body[data-ui="y2k"][data-mode] .demo-native-sample > h3 {
 
 @media (max-width: 720px) {
   .demo-controls {
-    position: static;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: .5rem;
+    padding: .5rem;
+  }
+
+  .demo-controls .usk-field:first-child {
+    grid-column: 1 / -1;
+  }
+
+  #demoContent :where(#overview, #tokens, #components, #style-specific, #native, #bridge, #usage) {
+    scroll-margin-block-start: 13rem;
   }
 
   .demo-token-workbench-grid {

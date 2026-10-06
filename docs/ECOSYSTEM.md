@@ -14,11 +14,11 @@ Before a UI branch or pull request is expected to validate, verify the reviewed 
 
 | Library | Current aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.6.1` | current release | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.6.2` | current release candidate | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-The current combination is `ui-style-kit-css@2.6.1`, `interactive-surface-css@1.7.3`, and `layout-style-css@3.2.3`. UI Style Kit `2.6.1` is the current release; the companion versions are reviewed releases. Layout Style `3.2.3` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+The current combination is `ui-style-kit-css@2.6.2`, `interactive-surface-css@1.7.3`, and `layout-style-css@3.2.3`. UI Style Kit `2.6.2` is the current release candidate; `2.6.1` remains published on npm. The companion versions are reviewed releases. Layout Style `3.2.3` is the compatible structural release. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 ## Layout-to-visual pairing matrix
 

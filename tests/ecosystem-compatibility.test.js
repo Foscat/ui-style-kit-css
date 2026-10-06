@@ -43,7 +43,7 @@ test('authoritative ecosystem compatibility contract validates supported combina
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.6.1',
+      'ui-style-kit-css': '2.6.2',
       'interactive-surface-css': '1.7.3',
       'layout-style-css': '3.2.3'
     }
@@ -99,8 +99,7 @@ test('current ecosystem documentation consumes canonical imports from the compat
 
     if (!documentPath.endsWith('Installation-and-Setup.md')) {
       assert.match(document, /layout-style-css@3\.0\.0/);
-      assert.match(document, /current release/i);
-      assert.doesNotMatch(document, /current release candidate/i);
+      assert.match(document, /current release candidate/i);
       assert.match(document, /compatible structural release/i);
     }
   }
