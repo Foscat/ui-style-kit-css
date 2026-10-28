@@ -8,6 +8,7 @@ import { defineConfig, devices } from '@playwright/test';
  * @type {RegExp[]}
  */
 const releaseSmokePatterns = [
+  /Cyberpunk mixed semantic variants/,
   /ordinary and explicit inline links/,
   /card spacing is explicit/,
   /Neo Noir current navigation/,

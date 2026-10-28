@@ -671,14 +671,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Reviewed inline/control link composition adds twelve declarations; existing blocks stay unchanged. */
+  /** Reviewed link composition adds twelve declarations; Cyberpunk presses retain variant paint. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36825,
-    sha256: '39e21dc1fc2acadf62441dacc9005165d6d69f68160477a5db7001fe1d6c02f9'
+    count: 36824,
+    sha256: '58150dcfc0167282c7043b4b6887952bdf0d7de567815d2ea61b57a83e09adf9'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37276,
-    sha256: '3dfd59c9f869840249d1c90328e9b14026a55ae88d5b0d86923c6da1769e7b38'
+    count: 37275,
+    sha256: '0361b101cc6185a717651fb155dd5dd33f8c4233fe76508fe186ec9b2a3d56ca'
   });
 });
 
