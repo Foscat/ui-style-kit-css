@@ -193,7 +193,7 @@ SVG icons marked with `data-ui-icon` receive stable `1em` square geometry, block
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2445 KB | ~419 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2446 KB | ~419 KB | Compatible runtime UI-system switchers and demos |
 | `ui-style-kit-css/visual.min.css` | ~2429 KB | ~417 KB | Runtime visual switching with consumer-owned layout |
 | `ui-style-kit-css/with-bridge.css` | ~2814 KB | ~444 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
@@ -201,8 +201,8 @@ SVG icons marked with `data-ui-icon` receive stable `1em` square geometry, block
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/clean-defaults.css` | <10 KB | <2 KB | Shared spacing floors and opt-in flush/underline utilities |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~314 KB | ~46 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
-| `ui-style-kit-css/visual/industrial-utility.css` | ~403 KB | ~56 KB | Focused Industrial Utility, including its instrumentation styles |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~315 KB | ~46 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~404 KB | ~56 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 

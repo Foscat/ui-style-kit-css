@@ -5,6 +5,69 @@
    classes. Visual paint remains preset-owned.
 ========================================================= */
 
+@layer ui-style-kit.clean_defaults {
+/** Long chip content shrinks and wraps before it can displace the separate remove action. */
+[data-ui][data-mode] .usk-chip > .usk-chip__label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+/** Avatar initials fill the containing avatar instead of using a font-relative centering offset. */
+[data-ui][data-mode] .usk-avatar > .usk-avatar__fallback {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  padding: 0;
+  translate: none;
+}
+
+/** Centered dialogs retain auto margins; edge drawers keep their own placement contract. */
+[data-ui][data-mode] :where(.usk-modal:not(.usk-drawer)) {
+  margin: auto;
+}
+
+/** Compound controls own their gap; labels and decorative icons have no separate inset. */
+[data-ui][data-mode] :where(.usk-button__label, .usk-button__icon, .usk-nav-link__label, .usk-nav-link__icon, .usk-link__label, .usk-link__icon) {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/** Explicit card density overrides preset padding through one shared token. */
+[data-ui][data-mode] :where([class~="usk-card"], [class~="ui-card"])[data-card-spacing="flush"] {
+  --usk-card-padding: 0;
+}
+
+[data-ui][data-mode] :where([class~="usk-card"], [class~="ui-card"])[data-card-spacing="compact"] {
+  --usk-card-padding: var(--usk-card-padding-compact, .75rem);
+}
+
+[data-ui][data-mode] :where([class~="usk-card"], [class~="ui-card"])[data-card-spacing="normal"] {
+  --usk-card-padding: var(--usk-card-padding-normal, 1rem);
+}
+
+[data-ui][data-mode] :where([class~="usk-card"], [class~="ui-card"])[data-card-spacing="comfortable"] {
+  --usk-card-padding: var(--usk-card-padding-comfortable, clamp(1.25rem, 2.5vw, 2rem));
+}
+
+[data-ui][data-mode] :where([class~="usk-card"], [class~="ui-card"]):is([data-card-spacing="flush"], [data-card-spacing="compact"], [data-card-spacing="normal"], [data-card-spacing="comfortable"]) {
+  padding: var(--usk-card-padding);
+}
+
+/** Explicit structural boundaries opt out of element insets and panel paint without a global reset. */
+[data-ui][data-mode] :where(div, main, section, header, footer, nav, article, aside)[data-ui-structure="neutral"] {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+}
+
 @layer ui-style-kit.components {
 /* Shared component composition keeps icon content aligned without overriding preset paint. */
 .usk-button__icon {

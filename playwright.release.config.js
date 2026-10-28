@@ -8,6 +8,14 @@ import { defineConfig, devices } from '@playwright/test';
  * @type {RegExp[]}
  */
 const releaseSmokePatterns = [
+  /ordinary and explicit inline links/,
+  /card spacing is explicit/,
+  /Neo Noir current navigation/,
+  /component labels and decorative icons/,
+  /modal auto margins/,
+  /avatar fallback geometry/,
+  /long chip labels/,
+  /explicit neutral shell boundaries/,
   /representative accessibility scans/,
   /demo loads with default theme settings/,
   /demo control options are populated from the manifest snapshot/,
