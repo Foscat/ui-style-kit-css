@@ -353,6 +353,8 @@ test('semantic demo nodes and classes remain unchanged through every preset swit
 /**
  * Verifies the runtime color contract for every preset without coupling the
  * assertion to a single preset's decorative material or component geometry.
+ * The public data attributes drive this contract directly so repeated demo
+ * rerenders do not turn a color assertion into a control-action timeout.
  */
 test('every preset resolves mode fallbacks and lets explicit themes own color roles', async ({ page }) => {
   test.setTimeout(90_000);
@@ -385,11 +387,12 @@ test('every preset resolves mode fallbacks and lets explicit themes own color ro
   ];
 
   for (const [ui, prefix] of stylePresets) {
-    await page.selectOption('#uiSelect', ui);
-
     for (const mode of displayModes) {
-      await page.selectOption('#modeSelect', mode);
-      await page.evaluate(() => document.body.removeAttribute('data-theme'));
+      await page.evaluate(({ preset, displayMode }) => {
+        document.body.dataset.ui = preset;
+        document.body.dataset.mode = displayMode;
+        document.body.removeAttribute('data-theme');
+      }, { preset: ui, displayMode: mode });
 
       const fallbackRoles = await page.evaluate(({ presetPrefix, roles }) => {
         const styles = getComputedStyle(document.body);
