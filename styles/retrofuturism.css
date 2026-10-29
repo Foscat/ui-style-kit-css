@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: 0 0 10px var(--retro-primary);
   --usk-native-range-progress-background: var(--retro-primary);
   --usk-native-range-thumb-size: 1.55rem;
-  --usk-native-range-thumb-background: var(--retro-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--retro-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: 0 0 10px var(--retro-primary);
@@ -438,7 +438,8 @@
 /* Theme-responsive component defaults */
 .retro-card, .retro-panel { background: var(--retro-card-bg); }
 .retro-toolbar, .retro-table-wrap { background: var(--retro-control-bg); }
-.retro-button:not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-warning):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.retro-button:where(:not([data-ui-variant])):not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-warning):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
 .retro-button, .retro-icon-button, .retro-badge, .retro-nav-link { font-family: var(--retro-font-control); }
 
 
@@ -920,7 +921,7 @@
   --usk-native-range-track-shadow: var(--retro-recess-shadow);
   --usk-native-range-progress-background: var(--retro-calibration-track);
   --usk-native-range-thumb-size: 1.25rem;
-  --usk-native-range-thumb-background: var(--retro-metal-rim);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 3px double var(--retro-metal-edge);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: var(--retro-control-shadow);
@@ -1316,9 +1317,10 @@
 }
 
 .retro-icon-medallion {
-  background: var(--retro-metal-rim);
+  /* Keep chrome on the rim and give the central glyph a paired, stable surface. */
+  background: linear-gradient(var(--retro-surface), var(--retro-surface)) padding-box, var(--retro-metal-rim) border-box;
   color: var(--retro-text);
-  border: 3px double var(--retro-metal-edge);
+  border: 3px double transparent;
   box-shadow: var(--retro-control-shadow);
 }
 

@@ -290,7 +290,7 @@
   --usk-native-range-track-shadow: inset 0 1px rgb(255 255 255 / .55);
   --usk-native-range-progress-background: var(--rg-primary);
   --usk-native-range-thumb-size: 1.35rem;
-  --usk-native-range-thumb-background: var(--rg-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--rg-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: inset 0 1px rgb(255 255 255 / .55);
@@ -484,7 +484,8 @@
 /* Theme-responsive component defaults */
 .rg-card, .rg-panel { background: var(--rg-card-bg); }
 .rg-toolbar, .rg-table-wrap { background: var(--rg-control-bg); }
-.rg-button:not(.rg-button-primary):not(.rg-button-secondary):not(.rg-button-danger):not(.rg-button-warning):not(.rg-button-ghost), .rg-icon-button { background: var(--rg-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.rg-button:where(:not([data-ui-variant])):not(.rg-button-primary):not(.rg-button-secondary):not(.rg-button-danger):not(.rg-button-warning):not(.rg-button-ghost), .rg-icon-button { background: var(--rg-control-bg); }
 .rg-button, .rg-icon-button, .rg-badge, .rg-nav-link { font-family: var(--rg-font-control); }
 
 /** All loader APIs share a complete circular track with one rotating accent. */
@@ -806,7 +807,7 @@
   --usk-native-range-track-shadow: inset 0 2px 4px rgb(var(--rg-text-rgb) / .22);
   --usk-native-range-progress-background: linear-gradient(180deg, var(--rg-primary-hover), var(--rg-primary));
   --usk-native-range-thumb-size: 1.2rem;
-  --usk-native-range-thumb-background: radial-gradient(circle at 42% 32%, var(--rg-glass-highlight), transparent 28%), var(--rg-control-material);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--rg-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: inset 0 1px 0 var(--rg-surface-strong), 0 2px 4px rgb(var(--rg-text-rgb) / .28);
@@ -1184,4 +1185,9 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
+}
+
+@layer ui-style-kit.retro_glass {
+/** Console content scrolls inside its frame instead of expanding a narrow parent. */
+.rg-console { box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; margin-inline: 0; overflow-x: auto; }
 }

@@ -55,10 +55,10 @@ function classes(presets, suffixes, decorate = (className) => `.${className}`) {
 }
 
 /**
- * Renders shared component utilities for presets added after the original 2.x set.
+ * Renders shared utilities and the composition contracts used by every preset.
  *
- * The original rules remain untouched for compatibility. This generated extension
- * ensures every later manifest preset receives the same universal component API.
+ * Original visual rules remain preset-owned. Manifest-generated foundations add
+ * universal component coverage, intrinsic containment and explicit state paint.
  *
  * @param {{presets: {prefix: string}[]}} manifest Public UI Style Kit manifest.
  * @returns {string} Generated CSS section, including synchronization markers.
@@ -275,7 +275,7 @@ ${directions}
 :where(${promoted(['tabs']).join(', ')}) { display: grid; gap: .75rem; }
 :where(${promoted(['tab-list']).join(', ')}) { display: flex; flex-wrap: wrap; gap: .25rem; border-block-end: var(--usk-native-border-width) solid var(--usk-native-border); }
 :where(${promoted(['tab']).join(', ')}) { min-block-size: 44px; padding: .6rem .9rem; color: var(--usk-native-text-muted); background: transparent; border: 0; border-block-end: calc(var(--usk-native-border-width) * 2) solid transparent; font: inherit; cursor: pointer; }
-:where(${promoted(['tab'], (className) => `.${className}[aria-selected="true"]`).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); border-block-end-color: var(--usk-native-primary); }
+:where(${promoted(['tab'], (className) => `.${className}[aria-selected="true"]`).join(', ')}) { color: var(--usk-native-text); border-block-end-color: var(--usk-native-primary); }
 :where(${promoted(['tab-panel']).join(', ')}) { padding-block: .75rem; color: var(--usk-native-text); }
 
 :where(${promoted(['pagination', 'breadcrumb-list', 'chip-group', 'avatar-group']).join(', ')}) { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: 0; padding: 0; list-style: none; }
@@ -297,7 +297,7 @@ ${directions}
 @media (prefers-reduced-motion: reduce) { :where(${promoted(['skeleton']).join(', ')}) { animation: none; } }
 
 :where(${promoted(['empty-state']).join(', ')}) { display: grid; justify-items: center; gap: .75rem; max-inline-size: 42rem; padding: clamp(1.25rem, 4vw, 3rem); color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); text-align: center; }
-:where(${promoted(['empty-state-icon']).join(', ')}) { display: grid; place-items: center; color: var(--usk-primary-ink, var(--usk-native-primary)); }
+:where(${promoted(['empty-state-icon']).join(', ')}) { display: grid; place-items: center; color: var(--usk-native-link); }
 :where(${promoted(['empty-state-title', 'toast-title']).join(', ')}) { margin: 0; color: var(--usk-native-text); font-weight: 750; }
 :where(${promoted(['empty-state-body', 'toast-body', 'metric-detail']).join(', ')}) { margin: 0; color: var(--usk-native-text-muted); }
 :where(${promoted(['empty-state-actions', 'toast-actions']).join(', ')}) { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
@@ -346,6 +346,226 @@ ${directions}
 :where(${promoted(['file-upload']).join(', ')}) { display: grid; gap: .75rem; }
 :where(${promoted(['dropzone']).join(', ')}) { display: grid; place-items: center; gap: .5rem; min-block-size: 8rem; padding: 1.25rem; color: var(--usk-native-text-muted); background: var(--usk-native-surface-soft); border: calc(var(--usk-native-border-width) * 2) dashed var(--usk-native-border); border-radius: var(--usk-native-radius); text-align: center; }
 :where(${promoted(['dropzone'], (className) => `.${className}[data-drag-active="true"]`).join(', ')}) { color: var(--usk-primary-ink, var(--usk-native-primary)); border-color: var(--usk-native-primary); }
+}
+@layer ui-style-kit.clean_defaults {
+/** Empty-state symbols remain prominent independently of each preset's body font. */
+[data-ui][data-mode] :where(${promoted(['empty-state-icon']).join(', ')}) {
+  display: grid;
+  place-items: center;
+  font-size: var(--usk-empty-state-icon-size, 2.75rem);
+  line-height: 1;
+  min-inline-size: 1em;
+  min-block-size: 1em;
+  margin: 0;
+  padding: 0;
+}
+
+/** Thin progress tracks own their inset; the fill never inherits element spacing. */
+[data-ui][data-mode] :where(${promoted(['progress']).join(', ')}) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+[data-ui][data-mode] :where(${promoted(['progress-bar']).join(', ')}) {
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  align-self: center;
+  min-inline-size: 0;
+  min-block-size: 0;
+  max-inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/** Status surfaces keep their signal after preset material and border shorthands. */
+${['success', 'warning', 'danger'].map(tone => `
+[data-ui][data-mode] :where(${promoted([`alert-${tone}`]).join(', ')}) {
+  --usk-message-tone: var(--usk-native-${tone});
+  background: var(--usk-message-tone);
+  color: var(--usk-native-on-${tone});
+  border-color: var(--usk-message-tone);
+}
+[data-ui][data-mode] :where(${promoted([`alert-${tone}`]).join(', ')}) :where(${promoted(['alert-title']).join(', ')}) {
+  color: inherit;
+  text-shadow: none;
+}
+[data-ui][data-mode] :where(${promoted([`alert-${tone}`]).join(', ')}) :where(${promoted(['alert-body']).join(', ')}) {
+  color: inherit;
+}
+@supports (color: color-mix(in srgb, #000, #fff)) {
+  [data-ui][data-mode] :where(${promoted([`alert-${tone}`]).join(', ')}) {
+    background: color-mix(in srgb, var(--usk-message-tone) 18%, var(--usk-native-bg));
+    color: var(--usk-native-text);
+  }
+}`).join('\n')}
+
+/** Compact status and selection frames provide a readable inset around their text. */
+[data-ui][data-mode] :where(${promoted(['chip', 'tab', 'segment']).join(', ')}) {
+  box-sizing: border-box;
+  padding-block: var(--usk-compact-content-padding-block, .35rem);
+  padding-inline: var(--usk-compact-content-padding-inline, .65rem);
+}
+
+/** Public component frames shrink within their parent instead of adding an outer inset. */
+[data-ui][data-mode] :where(${promoted(['tabs', 'tab-list', 'tab-panel', 'toast-stack', 'toast', 'popover', 'menu', 'segmented-control']).join(', ')}) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin-inline: 0;
+}
+
+/** Overlay frames retain their content inset after the native element-spacing floor. */
+[data-ui][data-mode] :where(${promoted(['popover', 'menu', 'listbox']).join(', ')}) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding: var(--usk-overlay-padding, .5rem);
+}
+[data-ui][data-mode] :where(${promoted(['menu-item', 'listbox-option']).join(', ')}) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding-block: var(--usk-option-padding-block, .55rem);
+  padding-inline: var(--usk-option-padding-inline, .7rem);
+}
+
+/** A typed tab root stacks its header and panel; legacy direct-button bars keep their own layout. */
+[data-ui][data-mode] :where(${promoted(['tabs'], name => `.${name}:has(> .${name.slice(0, -4)}tab-list)`).join(', ')}) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-flow: row;
+}
+
+/** A direct toast title owns the full row; words are never squeezed into a side column. */
+[data-ui][data-mode] :where(${promoted(['toast'], name => `.${name}:has(> strong)`).join(', ')}) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .5rem;
+  padding: var(--usk-toast-padding, 1rem);
+}
+[data-ui][data-mode] :where(${promoted(['toast-title', 'toast-body', 'toast-actions']).join(', ')}) {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  min-inline-size: 0;
+  inline-size: auto;
+  max-inline-size: 100%;
+  margin: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: normal;
+  hyphens: none;
+}
+/** Switch faces have one inset owner and remain centered at either end of the track. */
+[data-ui][data-mode] :where(${promoted(['switch-track']).join(', ')}) {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-inline-size: 2.75rem;
+  min-block-size: 1.625rem;
+  padding: 0;
+}
+[data-ui][data-mode] :where(${promoted(['switch-thumb']).join(', ')}) {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-block-end: auto;
+  inset-inline-start: .125rem;
+  inset-inline-end: auto;
+  inline-size: var(--usk-switch-thumb-size, 1.125rem);
+  block-size: var(--usk-switch-thumb-size, 1.125rem);
+  min-inline-size: 0;
+  min-block-size: 0;
+  margin: 0;
+  padding: 0;
+  translate: none;
+  transform: translateY(-50%);
+}
+[data-ui][data-mode] :where(${promoted(['switch'], name => `.${name} input:checked + .${name}-track .${name}-thumb`).join(', ')}) {
+  inset-inline-start: auto;
+  inset-inline-end: .125rem;
+  transform: translateY(-50%);
+}
+
+/** A drawn check retains the preset's ink and border weight without a platform-dependent glyph. */
+[data-ui][data-mode] :where(${promoted(['check'], name => `.${name} input:checked + .${name}-control`).join(', ')})::after {
+  content: "";
+  position: static;
+  inset: auto;
+  clip-path: none;
+  translate: none;
+  display: block;
+  box-sizing: border-box;
+  inline-size: .35em;
+  block-size: .65em;
+  margin: 0 0 .15em;
+  padding: 0;
+  border: solid var(--usk-native-choice-mark-color);
+  border-width: 0 max(2px, var(--usk-native-border-width)) max(2px, var(--usk-native-border-width)) 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+/** Tooltip tone is independent of its position and keeps each preset's silhouette. */
+[data-ui][data-mode] :where(${promoted(['tooltip-primary']).join(', ')}) {
+  background: var(--usk-native-primary);
+  color: var(--usk-native-on-primary);
+  border-color: var(--usk-native-primary);
+  border-style: solid;
+}
+[data-ui][data-mode] :where(${promoted(['tooltip-secondary']).join(', ')}) {
+  background: var(--usk-native-surface);
+  color: var(--usk-native-text);
+  border: max(1px, var(--usk-native-border-width)) dashed var(--usk-native-primary);
+}
+[data-ui][data-mode] :where(${promoted(['tooltip-accent']).join(', ')}) {
+  background: var(--usk-native-accent);
+  color: var(--usk-native-on-accent);
+  border: 3px double var(--usk-native-accent);
+}
+
+/** Secondary actions have a framed supporting surface rather than ghost paint. */
+[data-ui][data-mode] :where(${promoted(['button-secondary']).join(', ')}) {
+  background: var(--usk-native-secondary);
+  color: var(--usk-native-on-secondary);
+  border-color: var(--usk-native-primary);
+}
+
+/** Status badges retain an inset without changing seal or medallion dimensions. */
+[data-ui][data-mode] :where(${promoted(['badge']).join(', ')}) {
+  padding-block: var(--usk-badge-padding-block, .22rem);
+  padding-inline: var(--usk-badge-padding-inline, .6rem);
+}
+
+/** Warning actions and statuses use paired amber/orange roles while retaining opaque text. */
+[data-ui][data-mode] :where(${promoted(['button-warning', 'badge-warning']).join(', ')}) {
+  background: var(--usk-native-warning);
+  color: var(--usk-native-on-warning);
+  border-color: var(--usk-native-warning);
+  text-shadow: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-ui][data-mode] :where(${promoted(['button-warning', 'badge-warning']).join(', ')}) {
+    animation: usk-warning-attention var(--usk-warning-attention-duration, 1.8s) ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-ui][data-mode] :where(${promoted(['button-warning', 'badge-warning']).join(', ')}) {
+    animation: none;
+  }
+}
+@keyframes usk-warning-attention {
+  50% { filter: brightness(1.16); }
+}
+
 }
 ${endMarker}`;
 }

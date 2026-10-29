@@ -193,16 +193,16 @@ SVG icons marked with `data-ui-icon` receive stable `1em` square geometry, block
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2446 KB | ~419 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~2429 KB | ~417 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2814 KB | ~444 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2512 KB | ~425 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~2496 KB | ~423 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2888 KB | ~451 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~32 KB | ~5 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~33 KB | ~5 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/clean-defaults.css` | <10 KB | <2 KB | Shared spacing floors and opt-in flush/underline utilities |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~315 KB | ~46 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
-| `ui-style-kit-css/visual/industrial-utility.css` | ~404 KB | ~56 KB | Focused Industrial Utility, including its instrumentation styles |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~355 KB | ~51 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~444 KB | ~61 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 
@@ -299,6 +299,7 @@ Semantic paint variants use context-constrained `data-ui-variant`. Omit it for t
 | `.usk-alert` | `success`, `warning`, `danger` |
 | `.usk-chip` | `primary`, `secondary`, `success`, `warning`, `danger` |
 | `.usk-toast` | `info`, `success`, `warning`, `danger` |
+| `.usk-tooltip` | `primary`, `secondary`, `accent` |
 
 Skeleton shape uses `data-shape="text|circle|block"`. Step workflow presentation uses `data-state="complete|current|upcoming|error"`; React and application code remain responsible for behavior and ARIA state.
 

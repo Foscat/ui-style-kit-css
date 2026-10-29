@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: 0 0 0 2px var(--deco-surface-strong);
   --usk-native-range-progress-background: var(--deco-primary);
   --usk-native-range-thumb-size: 1.35rem;
-  --usk-native-range-thumb-background: var(--deco-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--deco-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: 0 0 0 2px var(--deco-surface-strong);
@@ -437,7 +437,8 @@
 /* Theme-responsive component defaults */
 .deco-card, .deco-panel { background: var(--deco-card-bg); }
 .deco-toolbar, .deco-table-wrap { background: var(--deco-control-bg); }
-.deco-button:not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost), .deco-icon-button { background: var(--deco-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.deco-button:where(:not([data-ui-variant])):not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost), .deco-icon-button { background: var(--deco-control-bg); }
 .deco-button, .deco-icon-button, .deco-badge, .deco-nav-link { font-family: var(--deco-font-control); }
 
 
@@ -858,7 +859,7 @@
   --usk-native-range-track-shadow: inset 0 0 0 1px rgb(var(--deco-surface-strong-rgb) / .72);
   --usk-native-range-progress-background: linear-gradient(90deg, var(--deco-primary), var(--deco-warning));
   --usk-native-range-thumb-size: 1.18rem;
-  --usk-native-range-thumb-background: linear-gradient(135deg, var(--deco-warning), var(--deco-primary));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 3px double var(--deco-border);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: 0 0 0 2px rgb(var(--deco-surface-strong-rgb) / .72);
@@ -1035,8 +1036,7 @@
   --usk-native-range-track-background:
     linear-gradient(90deg, var(--deco-surface-soft), rgb(var(--deco-metal-rgb) / .52), var(--deco-surface-soft));
   --usk-native-range-progress-background: var(--deco-jewel-primary);
-  --usk-native-range-thumb-background:
-    linear-gradient(135deg, var(--deco-jewel-warning), var(--deco-jewel-primary));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-progress-size: .625rem;
   --usk-native-progress-value-background: var(--deco-jewel-primary);
   --usk-native-meter-optimum-background: var(--deco-jewel-success);
@@ -1524,7 +1524,7 @@
   text-indent: 0;
 }
 
-.deco-button:not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost),
+.deco-button:where(:not([data-ui-variant])):not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost),
 .deco-icon-button {
   background-color: var(--deco-surface-strong);
   background-image: none;
@@ -1839,7 +1839,7 @@
   --usk-native-choice-checked-background: var(--deco-secondary);
   --usk-native-choice-mark-color: var(--deco-on-secondary);
   --usk-native-range-progress-background: var(--deco-secondary);
-  --usk-native-range-thumb-background: var(--deco-secondary);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-progress-value-background: var(--deco-secondary);
 }
 /** Decorative layers retain stepped borders without clipping focus or content. */
@@ -1901,7 +1901,7 @@
 .deco-icon-button { width: 36px; min-width: 36px; padding: 0; font-family: "Segoe UI Symbol", Arial, sans-serif; font-size: 16px; line-height: 1; }
 .deco-button-loading { display: inline-flex; align-items: center; justify-content: center; min-inline-size: 152px; }
 .deco-button[aria-busy="true"]::after, .deco-icon-button[aria-busy="true"]::after,
-[data-ui="art-deco"] :where(button[aria-busy="true"])::after { content: ""; position: static; display: inline-block; box-sizing: border-box; flex: 0 0 16px; width: 16px; height: 16px; margin: 0; background: var(--deco-spinner-segmented-background); border: 3px double var(--deco-metal); box-shadow: none; border-radius: 50%; -webkit-mask: none; mask: none; animation: deco-spin 1.4s linear infinite; }
+[data-ui="art-deco"] :where(button[aria-busy="true"])::after { content: ""; position: static; display: inline-block; box-sizing: border-box; flex: 0 0 16px; width: 16px; height: 16px; margin: 0; background: repeating-conic-gradient(currentColor 0 8deg, transparent 8deg 16deg, currentColor 16deg 24deg, transparent 24deg 30deg); border: 3px double var(--deco-metal); box-shadow: none; border-radius: 50%; -webkit-mask: none; mask: none; animation: deco-spin 1.4s linear infinite; }
 /** One loader silhouette across prefixed, native, and generated semantic surfaces. */
 .deco-spinner, .deco-loading-spinner, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner]) { position: relative; display: inline-block; width: 48px; height: 48px; flex: 0 0 48px; border: 3px double var(--deco-metal); border-radius: 50%; background: var(--deco-spinner-segmented-background); box-shadow: none; clip-path: none; animation: deco-spin 1.4s linear infinite; }
 .deco-spinner::before, .deco-loading-spinner::before, [data-ui="art-deco"] :where(.ui-spinner, .loading-spinner, [data-loading-spinner])::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(var(--deco-metal) 0deg 22deg, transparent 22deg 36deg); -webkit-mask: radial-gradient(transparent 49%, #000 51%); mask: radial-gradient(transparent 49%, #000 51%); }

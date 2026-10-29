@@ -235,7 +235,8 @@ const expectedSemanticComponentApi = {
       '.usk-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
       '.usk-alert': ['success', 'warning', 'danger'],
       '.usk-chip': ['primary', 'secondary', 'success', 'warning', 'danger'],
-      '.usk-toast': ['info', 'success', 'warning', 'danger']
+      '.usk-toast': ['info', 'success', 'warning', 'danger'],
+      '.usk-tooltip': ['primary', 'secondary', 'accent']
     }
   },
   stateAttributes: {
@@ -671,14 +672,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Reviewed link composition adds twelve declarations; Cyberpunk presses retain variant paint. */
+  /** Reviewed geometry and feedback repairs add 202 declarations with paired preset paint. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36824,
-    sha256: '58150dcfc0167282c7043b4b6887952bdf0d7de567815d2ea61b57a83e09adf9'
+    count: 37026,
+    sha256: 'fd692187920212b7f6706a7398a47f7ad5556b007e36e597291dbabdcc668971'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37275,
-    sha256: '0361b101cc6185a717651fb155dd5dd33f8c4233fe76508fe186ec9b2a3d56ca'
+    count: 37477,
+    sha256: 'c26bb6dd630deae8274d91f2b0709b7a324368835632e48f6b5e75d5770c6ed1'
   });
 });
 
@@ -686,7 +687,7 @@ test('semantic source suffixes and contextual variants exist in every composed p
   const currentSuffixes = new Set(manifest.classApi.universalVisualSuffixes);
   const requiredSuffixes = semanticRequiredSuffixes();
 
-  assert.equal(manifest.classApi.universalVisualSuffixes.length, 150);
+  assert.equal(manifest.classApi.universalVisualSuffixes.length, 153);
   for (const suffix of requiredSuffixes) {
     assert.equal(currentSuffixes.has(suffix), true, `${suffix} must remain a current universal visual suffix`);
   }

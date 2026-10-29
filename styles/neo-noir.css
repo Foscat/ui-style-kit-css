@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: 0 0 12px var(--noir-primary);
   --usk-native-range-progress-background: var(--noir-primary);
   --usk-native-range-thumb-size: 1.35rem;
-  --usk-native-range-thumb-background: var(--noir-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--noir-border);
   --usk-native-range-thumb-radius: 44% 56%;
   --usk-native-range-thumb-shadow: 0 0 12px var(--noir-primary);
@@ -778,7 +778,8 @@
 .noir-input, .noir-textarea, .noir-select { background: rgb(var(--noir-surface-strong-rgb) / .68); }
 .noir-card-media { border-color: rgb(var(--noir-primary-rgb) / .25); }
 .noir-media-scrim > :where(figcaption, [data-media-caption]) { background: linear-gradient(to top, rgb(0 0 0 / .96), rgb(var(--noir-primary-rgb) / .18) 54%, transparent); }
-.noir-icon-medallion { background: transparent; color: var(--usk-primary-ink, var(--noir-primary)); border-color: var(--noir-primary); box-shadow: 0 0 1.2rem rgb(var(--noir-primary-rgb) / .18); }
+/** The outlined tile uses link ink rather than its luminous border fill as text. */
+.noir-icon-medallion { background: transparent; color: var(--usk-primary-ink, var(--noir-link)); border-color: var(--noir-primary); box-shadow: 0 0 1.2rem rgb(var(--noir-primary-rgb) / .18); }
 .noir-badge-seal { background: transparent; border-color: var(--noir-primary); }
 .noir-card-accent-edge { border-inline-start-color: var(--noir-primary); }
 [data-ui="neo-noir"][data-mode="contrast"] :where(.noir-surface, .noir-card, .noir-panel, .noir-toolbar, .noir-table-wrap, .noir-icon-medallion) { box-shadow: none; text-shadow: none; }
@@ -866,7 +867,7 @@
   --usk-native-range-track-shadow: 0 0 .62rem rgb(var(--noir-warning-rgb) / .34);
   --usk-native-range-progress-background: linear-gradient(90deg, var(--noir-warning), var(--noir-primary));
   --usk-native-range-thumb-size: 1.26rem;
-  --usk-native-range-thumb-background: linear-gradient(135deg, var(--noir-warning), var(--noir-surface-strong));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--noir-warning);
   --usk-native-range-thumb-radius: 0 .18rem 0 .18rem;
   --usk-native-range-thumb-shadow: -.2rem 0 .62rem rgb(var(--noir-focus-rgb) / .42);
@@ -1030,7 +1031,7 @@
   --usk-native-checkbox-radius: 0; --usk-native-radio-radius: 50%;
   --usk-native-range-track-background: var(--noir-border);
   --usk-native-range-track-shadow: none; --usk-native-range-track-radius: 0;
-  --usk-native-range-thumb-background: var(--noir-primary);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-shadow: none;
   --usk-native-progress-track-background: var(--noir-surface-soft);
   --usk-native-progress-track-shadow: none; --usk-native-progress-track-radius: 0;
@@ -1068,7 +1069,8 @@
 }
 .noir-button::before { content: ""; position: absolute; inset: 0 8px; z-index: -1; border: 1px solid var(--noir-action-line); background: var(--noir-action-fill); transform: skewX(-16deg); }
 .noir-button-primary { --noir-action-fill: var(--noir-primary); --noir-action-line: var(--noir-warning); color: var(--noir-on-primary); }
-.noir-button-secondary { --noir-action-line: var(--noir-secondary); }
+/** The skewed face must paint the same secondary fill as its paired foreground. */
+.noir-button-secondary { --noir-action-fill: var(--noir-secondary); --noir-action-line: var(--noir-secondary); }
 .noir-button-outline, .noir-button-ghost { --noir-action-fill: var(--noir-surface); color: var(--noir-text); }
 .noir-button-danger { --noir-action-line: var(--noir-danger); color: var(--noir-danger); }
 .noir-button:hover, .noir-button[data-noir-state="hover"] { background: transparent; color: var(--noir-text); box-shadow: none; transform: none; filter: none; }

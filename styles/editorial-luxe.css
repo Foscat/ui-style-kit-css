@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: var(--luxe-primary);
   --usk-native-range-thumb-size: .85rem;
-  --usk-native-range-thumb-background: var(--luxe-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--luxe-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: none;
@@ -437,7 +437,8 @@
 /* Theme-responsive component defaults */
 .luxe-card, .luxe-panel { background: var(--luxe-card-bg); }
 .luxe-toolbar, .luxe-table-wrap { background: var(--luxe-control-bg); }
-.luxe-button:not(.luxe-button-primary):not(.luxe-button-secondary):not(.luxe-button-danger):not(.luxe-button-warning):not(.luxe-button-ghost), .luxe-icon-button { background: var(--luxe-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.luxe-button:where(:not([data-ui-variant])):not(.luxe-button-primary):not(.luxe-button-secondary):not(.luxe-button-danger):not(.luxe-button-warning):not(.luxe-button-ghost), .luxe-icon-button { background: var(--luxe-control-bg); }
 .luxe-button, .luxe-icon-button, .luxe-badge, .luxe-nav-link { font-family: var(--luxe-font-control); }
 
 
@@ -779,7 +780,8 @@
 .luxe-nav-link[aria-current="page"], .luxe-nav-link.is-active { color: var(--luxe-text); background: transparent; box-shadow: inset 0 -2px 0 var(--luxe-primary); }
 .luxe-input, .luxe-textarea, .luxe-select { border-radius: var(--luxe-radius-sm); background: transparent; }
 .luxe-card-media, .luxe-media-scrim, .luxe-feature-strip, .luxe-callout-bar { border-radius: var(--luxe-radius-md); }
-.luxe-icon-medallion { background: var(--luxe-surface-strong); color: var(--usk-primary-ink, var(--luxe-primary)); border: 1px solid var(--luxe-primary); box-shadow: none; }
+/** The unfilled medallion uses surface-readable link ink in native palettes. */
+.luxe-icon-medallion { background: var(--luxe-surface-strong); color: var(--usk-primary-ink, var(--luxe-link)); border: 1px solid var(--luxe-primary); box-shadow: none; }
 .luxe-badge-seal { border-style: double; border-width: 4px; background: transparent; font-family: var(--luxe-font-display); }
 .luxe-feature-item { align-items: start; }
 .luxe-card-accent-edge { border-inline-start-width: 1px; box-shadow: inset .2rem 0 0 rgb(var(--luxe-primary-rgb) / .2); }
@@ -862,7 +864,7 @@
   --usk-native-range-track-shadow: 0 1px 0 var(--luxe-surface-strong);
   --usk-native-range-progress-background: linear-gradient(90deg, var(--luxe-success), var(--luxe-warning));
   --usk-native-range-thumb-size: .82rem;
-  --usk-native-range-thumb-background: var(--luxe-warning);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--luxe-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: 0 0 0 2px var(--luxe-surface-strong);
@@ -1071,7 +1073,7 @@
   --usk-native-control-padding-inline: .75rem;
   --usk-native-range-track-background: var(--luxe-border);
   --usk-native-range-progress-background: var(--luxe-border);
-  --usk-native-range-thumb-background: var(--luxe-brass-light);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--luxe-brass);
   --usk-native-progress-value-background: var(--luxe-primary);
   --usk-native-choice-checked-background: var(--luxe-primary);

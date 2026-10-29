@@ -257,7 +257,7 @@
   --usk-native-range-track-shadow: var(--tactile-deep-inset-shadow);
   --usk-native-range-progress-background: var(--tactile-action-solid);
   --usk-native-range-thumb-size: 1.55rem;
-  --usk-native-range-thumb-background: var(--tactile-thumb-bg);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--tactile-keyline);
   --usk-native-range-thumb-radius: .22rem;
   --usk-native-range-thumb-shadow: var(--tactile-button-shadow);
@@ -467,7 +467,8 @@
 /* Theme-responsive component defaults */
 .tactile-card, .tactile-panel { background: var(--tactile-card-bg); }
 .tactile-toolbar, .tactile-table-wrap { background: var(--tactile-card-bg); }
-.tactile-button:not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-warning):not(.tactile-button-ghost), .tactile-icon-button { background: var(--tactile-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.tactile-button:where(:not([data-ui-variant])):not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-warning):not(.tactile-button-ghost), .tactile-icon-button { background: var(--tactile-control-bg); }
 .tactile-button, .tactile-icon-button, .tactile-badge, .tactile-nav-link { font-family: var(--tactile-font-control); }
 
 
@@ -1059,7 +1060,14 @@
 
 /* Busy indicators preserve the bevel and pressed-depth cues of tactile controls. */
 .tactile-button[aria-busy="true"]::after, .tactile-icon-button[aria-busy="true"]::after, [data-ui="tactile"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after {
-  border: .12em solid currentColor; border-radius: 50%; background: linear-gradient(145deg, rgb(255 255 255 / .35), transparent 48%); box-shadow: inset .1em .1em .18em rgb(0 0 0 / .3), inset -.08em -.08em .15em rgb(255 255 255 / .32), 0 .08em .16em rgb(0 0 0 / .22); clip-path: circle(50%); animation: tactile-spin .88s cubic-bezier(.2, .8, .2, 1) infinite;
+  border: .14em solid currentColor;
+  border-block-start-color: transparent;
+  border-inline-start-color: transparent;
+  border-radius: 50%;
+  background: none;
+  box-shadow: 0 .08em .16em rgb(0 0 0 / .22);
+  clip-path: none;
+  animation: tactile-spin .88s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1361,7 +1369,7 @@
   --usk-native-range-track-radius: .16rem;
   --usk-native-range-track-shadow: var(--tactile-deep-inset-shadow);
   --usk-native-range-thumb-size: 1.35rem;
-  --usk-native-range-thumb-background: var(--tactile-thumb-bg);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--tactile-keyline);
   --usk-native-range-thumb-radius: .16rem;
   --usk-native-range-thumb-shadow: var(--tactile-button-shadow);
@@ -1557,7 +1565,8 @@
 
 .tactile-button-ghost {
   background: transparent;
-  color: var(--usk-primary-ink, var(--tactile-primary));
+  /* Unfilled controls and their busy arcs need surface ink, not a copper fill. */
+  color: var(--usk-primary-ink, var(--tactile-link));
   border-color: transparent;
   box-shadow: none;
 }
@@ -1804,7 +1813,8 @@
 .tactile-icon-medallion,
 .tactile-badge-seal {
   background: var(--tactile-sidebar-bg);
-  color: var(--tactile-brass);
+  /* The theme may invert this material; its paired ink follows that inversion. */
+  color: var(--tactile-sidebar-fg);
   border-color: rgb(var(--tactile-keyline-rgb) / .82);
   box-shadow: var(--tactile-button-shadow);
 }

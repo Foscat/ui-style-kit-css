@@ -264,7 +264,7 @@
   --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: var(--bau-primary);
   --usk-native-range-thumb-size: 1.55rem;
-  --usk-native-range-thumb-background: var(--bau-primary);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--bau-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: var(--bau-control-shadow-pressed);
@@ -463,7 +463,8 @@
 /* Theme-responsive component defaults */
 .bau-card, .bau-panel { background: var(--bau-card-bg); }
 .bau-toolbar, .bau-table-wrap { background: var(--bau-control-bg); }
-.bau-button:not(.bau-button-primary):not(.bau-button-secondary):not(.bau-button-danger):not(.bau-button-warning):not(.bau-button-ghost):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-busy):not(.is-hover), .bau-icon-button { background: var(--bau-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.bau-button:where(:not([data-ui-variant])):not(.bau-button-primary):not(.bau-button-secondary):not(.bau-button-danger):not(.bau-button-warning):not(.bau-button-ghost):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-busy):not(.is-hover), .bau-icon-button { background: var(--bau-control-bg); }
 .bau-button, .bau-icon-button, .bau-badge, .bau-nav-link { font-family: var(--bau-font-control); }
 
 
@@ -863,7 +864,7 @@
   --usk-native-range-track-shadow: inset 0 -2px 0 rgb(var(--bau-text-rgb) / .3);
   --usk-native-range-progress-background: var(--bau-primary);
   --usk-native-range-thumb-size: 1.58rem;
-  --usk-native-range-thumb-background: var(--bau-primary);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--bau-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: .16rem .16rem 0 rgb(var(--bau-text-rgb) / .7);

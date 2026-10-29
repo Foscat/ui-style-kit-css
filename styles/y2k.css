@@ -272,7 +272,7 @@
   --usk-native-range-track-shadow: inset 0 3px rgb(255 255 255 / .55);
   --usk-native-range-progress-background: var(--y2k-primary);
   --usk-native-range-thumb-size: 1.55rem;
-  --usk-native-range-thumb-background: var(--y2k-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--y2k-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: inset 0 3px rgb(255 255 255 / .55);
@@ -466,7 +466,8 @@
 /* Theme-responsive component defaults */
 .y2k-card, .y2k-panel { background: var(--y2k-card-bg); }
 .y2k-toolbar, .y2k-table-wrap { background: var(--y2k-control-bg); }
-.y2k-button:not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-warning):not(.y2k-button-ghost), .y2k-icon-button { background: var(--y2k-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.y2k-button:where(:not([data-ui-variant])):not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-warning):not(.y2k-button-ghost), .y2k-icon-button { background: var(--y2k-control-bg); }
 .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link { font-family: var(--y2k-font-control); }
 
 /* Spinner geometry follows the y2k preset's glossy plastic controls. */
@@ -768,7 +769,7 @@
   --usk-native-range-track-shadow: inset 1px 1px 0 rgb(var(--y2k-text-rgb) / .28);
   --usk-native-range-progress-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .4rem, var(--y2k-surface) .4rem .48rem);
   --usk-native-range-thumb-size: 1.12rem;
-  --usk-native-range-thumb-background: linear-gradient(135deg, var(--y2k-surface-strong), var(--y2k-surface-soft));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px outset var(--y2k-border);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: 1px 1px 0 rgb(var(--y2k-text-rgb) / .24);
@@ -898,7 +899,7 @@
   --usk-native-range-track-shadow: var(--y2k-bevel-recessed);
   --usk-native-range-progress-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .5rem, var(--y2k-surface) .5rem .5625rem);
   --usk-native-range-thumb-size: .875rem;
-  --usk-native-range-thumb-background: var(--y2k-surface);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px outset var(--y2k-border);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: var(--y2k-bevel-raised);

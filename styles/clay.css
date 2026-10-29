@@ -259,7 +259,7 @@
   --usk-native-range-track-shadow: inset 0 4px rgb(255 255 255 / .3);
   --usk-native-range-progress-background: var(--clay-primary);
   --usk-native-range-thumb-size: 1.65rem;
-  --usk-native-range-thumb-background: var(--clay-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--clay-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: inset 0 4px rgb(255 255 255 / .3);
@@ -445,7 +445,8 @@
 /* Theme-responsive component defaults */
 .clay-card, .clay-panel { background: var(--clay-card-bg); }
 .clay-toolbar, .clay-table-wrap { background: var(--clay-control-bg); }
-.clay-button:not(.clay-button-primary):not(.clay-button-secondary):not(.clay-button-danger):not(.clay-button-warning):not(.clay-button-ghost), .clay-icon-button { background: var(--clay-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.clay-button:where(:not([data-ui-variant])):not(.clay-button-primary):not(.clay-button-secondary):not(.clay-button-danger):not(.clay-button-warning):not(.clay-button-ghost), .clay-icon-button { background: var(--clay-control-bg); }
 .clay-button, .clay-icon-button, .clay-badge, .clay-nav-link { font-family: var(--clay-font-control); }
 
 
@@ -928,7 +929,7 @@
   --usk-native-range-track-shadow: var(--clay-carved-shadow);
   --usk-native-range-progress-background: var(--clay-molded-primary);
   --usk-native-range-thumb-size: 1.32rem;
-  --usk-native-range-thumb-background: var(--clay-molded-thumb);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--clay-material-seam);
   --usk-native-range-thumb-radius: 43% 57% 47% 53% / 52% 45% 55% 48%;
   --usk-native-range-thumb-shadow: inset 0 0 0 1px var(--clay-material-seam), var(--clay-filled-shadow);
@@ -1434,7 +1435,8 @@
   flex: 0 0 auto;
   border: 0;
   background:
-    radial-gradient(circle at 50% 8%, var(--clay-material-highlight) 0 3%, var(--clay-pigment-primary) 4% 9%, transparent 10%),
+    /* The leading bead stays visible on every button fill; other beads retain their pigments. */
+    radial-gradient(circle at 50% 8%, var(--clay-material-highlight) 0 3%, currentColor 4% 9%, transparent 10%),
     radial-gradient(circle at 80% 20%, var(--clay-material-highlight) 0 3%, var(--clay-accent) 4% 9%, transparent 10%),
     radial-gradient(circle at 92% 50%, var(--clay-material-highlight) 0 3%, var(--clay-pigment-secondary) 4% 9%, transparent 10%),
     radial-gradient(circle at 80% 80%, var(--clay-material-highlight) 0 3%, var(--clay-pigment-success) 4% 9%, transparent 10%),

@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: 2px 2px 0 rgb(0 0 0 / .3);
   --usk-native-range-progress-background: var(--utility-primary);
   --usk-native-range-thumb-size: 1.25rem;
-  --usk-native-range-thumb-background: var(--utility-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--utility-border);
   --usk-native-range-thumb-radius: .08rem;
   --usk-native-range-thumb-shadow: 2px 2px 0 rgb(0 0 0 / .3);
@@ -437,7 +437,8 @@
 /* Theme-responsive component defaults */
 .utility-card, .utility-panel { background: var(--utility-card-bg); }
 .utility-toolbar, .utility-table-wrap { background: var(--utility-control-bg); }
-.utility-button:not(.utility-button-primary):not(.utility-button-secondary):not(.utility-button-danger):not(.utility-button-warning):not(.utility-button-ghost):not(.utility-button-guarded), .utility-icon-button { background: var(--utility-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.utility-button:where(:not([data-ui-variant])):not(.utility-button-primary):not(.utility-button-secondary):not(.utility-button-danger):not(.utility-button-warning):not(.utility-button-ghost):not(.utility-button-guarded), .utility-icon-button { background: var(--utility-control-bg); }
 .utility-button, .utility-icon-button, .utility-badge, .utility-nav-link { font-family: var(--utility-font-control); }
 
 
@@ -865,7 +866,7 @@
   --usk-native-range-track-shadow: inset 0 2px 3px rgb(var(--utility-text-rgb) / .3);
   --usk-native-range-progress-background: linear-gradient(90deg, var(--utility-success), var(--utility-primary));
   --usk-native-range-thumb-size: 1.26rem;
-  --usk-native-range-thumb-background: linear-gradient(90deg, var(--utility-surface), var(--utility-surface-strong), var(--utility-surface));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px outset var(--utility-border);
   --usk-native-range-thumb-radius: .1rem;
   --usk-native-range-thumb-shadow: 1px 2px 0 rgb(var(--utility-text-rgb) / .3);
@@ -2298,6 +2299,12 @@ div.utility-dialog { display: block; }
   clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
   box-shadow: none;
   animation: utility-spin .8s steps(8, end) infinite;
+}
+
+/** Native standalone rotors use the same base size as the current classed rotor. */
+[data-ui="industrial-utility"] :where(.loading-spinner, [data-loading-spinner]) {
+  inline-size: 20px;
+  block-size: 20px;
 }
 
 .utility-button.is-loading::before,

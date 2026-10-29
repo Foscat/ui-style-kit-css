@@ -405,8 +405,11 @@
 [data-ui][data-mode] :where(input[type="radio"]) { border-radius: var(--usk-native-radio-radius); }
 
 [data-ui][data-mode] :where(input[type="checkbox"]:checked) {
-  background-color: var(--usk-native-choice-checked-background);
-  background-image: linear-gradient(135deg, transparent 42%, var(--usk-native-choice-mark-color) 42% 56%, transparent 56%), linear-gradient(45deg, transparent 54%, var(--usk-native-choice-mark-color) 54% 68%, transparent 68%);
+  /* The final background layer accepts both solid and gradient preset fills. */
+  background:
+    linear-gradient(45deg, transparent 38%, var(--usk-native-choice-mark-color) 38% 62%, transparent 62%) 24% 62% / 32% 36% no-repeat,
+    linear-gradient(135deg, transparent 40%, var(--usk-native-choice-mark-color) 40% 60%, transparent 60%) 68% 43% / 52% 58% no-repeat,
+    var(--usk-native-choice-checked-background);
 }
 
 [data-ui][data-mode] :where(input[type="checkbox"]:hover:not(:disabled), input[type="radio"]:hover:not(:disabled)) {
@@ -823,6 +826,33 @@
 
   [data-ui][data-mode] :where(input:user-invalid, textarea:user-invalid, select:user-invalid, [aria-invalid="true"], .is-invalid) {
     border-color: Mark;
+  }
+}
+}
+
+/** Choice-state paint follows preset geometry, including presets with material surface tokens. */
+@layer ui-style-kit.clean_defaults {
+/** Disabled choices remain recognizable without relying on faded opacity alone. */
+[data-ui][data-mode] :where(input[type="radio"]:disabled) {
+  background: var(--usk-native-bg);
+  border-color: var(--usk-native-text-muted);
+  border-style: dashed;
+  opacity: .7;
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui][data-mode] :where(input[type="radio"]:disabled) {
+    background: color-mix(in srgb, var(--usk-native-text-muted) 24%, var(--usk-native-bg));
+  }
+}
+[data-ui][data-mode] :where(input[type="radio"]:disabled:checked) {
+  background: radial-gradient(circle, var(--usk-native-text-muted) 0 31%, transparent 34%), var(--usk-native-bg);
+}
+
+
+@media (forced-colors: active) {
+  [data-ui][data-mode] :where(input[type="radio"]:disabled) {
+    border-color: GrayText;
+    background: Canvas;
   }
 }
 }

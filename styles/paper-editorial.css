@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: 2px 2px 0 rgb(0 0 0 / .16);
   --usk-native-range-progress-background: var(--paper-primary);
   --usk-native-range-thumb-size: 1.15rem;
-  --usk-native-range-thumb-background: var(--paper-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--paper-border);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: 2px 2px 0 rgb(0 0 0 / .16);
@@ -437,7 +437,8 @@
 /* Theme-responsive component defaults */
 .paper-card, .paper-panel { background: var(--paper-card-bg); }
 .paper-toolbar, .paper-table-wrap { background: var(--paper-control-bg); }
-.paper-button:not(.paper-button-primary):not(.paper-button-secondary):not(.paper-button-danger):not(.paper-button-warning):not(.paper-button-ghost), .paper-icon-button { background: var(--paper-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.paper-button:where(:not([data-ui-variant])):not(.paper-button-primary):not(.paper-button-secondary):not(.paper-button-danger):not(.paper-button-warning):not(.paper-button-ghost), .paper-icon-button { background: var(--paper-control-bg); }
 .paper-button, .paper-icon-button, .paper-badge, .paper-nav-link { font-family: var(--paper-font-control); }
 
 
@@ -863,7 +864,7 @@
   --usk-native-range-track-shadow: 0 1px 0 rgb(var(--paper-text-rgb) / .22);
   --usk-native-range-progress-background: var(--paper-primary);
   --usk-native-range-thumb-size: 1rem;
-  --usk-native-range-thumb-background: var(--paper-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--paper-primary);
   --usk-native-range-thumb-radius: .02rem;
   --usk-native-range-thumb-shadow: .08rem .08rem 0 rgb(var(--paper-text-rgb) / .28);
@@ -1699,6 +1700,41 @@ dialog.paper-dialog:not([open]) { display: none; }
 .paper-switch input:checked + .paper-switch-track .paper-switch-thumb { background: var(--paper-sheet-on-blue); }
 .paper-switch input:has(+ .paper-switch-track) { position: absolute; opacity: 0; pointer-events: none; }
 .paper-switch input:not(:has(+ .paper-switch-track)) { pointer-events: auto; }
+/** Message symbols have their own lane, centered against the complete text block. */
+.paper-alert {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: .25rem .5rem;
+  padding-inline-start: 2.75rem;
+}
+.paper-alert::before {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: .75rem;
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  min-inline-size: 0;
+  min-block-size: 0;
+  margin: 0;
+  padding: 0;
+  font: 700 1.25rem/1 "Segoe UI Symbol", Arial, sans-serif;
+  transform: translateY(-50%);
+}
+.paper-alert > :is(p, strong, span, div) {
+  min-inline-size: 0;
+  width: auto;
+  margin: 0;
+}
+.paper-alert:has(> button) { grid-template-columns: minmax(0, 1fr) auto; }
+.paper-alert > button {
+  align-self: center;
+  margin: 0;
+}
+
 .paper-spinner, .paper-loading-spinner, [data-ui="paper-editorial"] :where(.ui-spinner,.loading-spinner,[data-loading-spinner]) {
   inline-size: 24px; block-size: 24px; min-width: 24px; padding: 0; border: 2px solid var(--paper-sheet-rule-soft); border-right-color: var(--paper-sheet-blue); border-radius: 50%; background: none; box-shadow: none; clip-path: none; animation: paper-sheet-spin .75s linear infinite;
 }

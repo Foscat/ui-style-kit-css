@@ -2652,9 +2652,9 @@ function render() {
                 <section class="demo-control-panel" data-testid="component-tooltips">
                   <h4>Visible tooltips</h4>
                   <div class="demo-tooltip-row">
-                    <span class="${p}-tooltip ${p}-tooltip-top" role="tooltip" data-testid="tooltip-primary">Primary tip<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
-                    <span class="${p}-tooltip ${p}-tooltip-right" role="tooltip" data-testid="tooltip-secondary">Context cue<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
-                    <span class="${p}-tooltip ${p}-tooltip-bottom" role="tooltip" data-testid="tooltip-accent">Action hint<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
+                    <span class="${p}-tooltip ${p}-tooltip-top ${p}-tooltip-primary" role="tooltip" data-testid="tooltip-primary">Primary tip<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
+                    <span class="${p}-tooltip ${p}-tooltip-right ${p}-tooltip-secondary" role="tooltip" data-testid="tooltip-secondary">Context cue<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
+                    <span class="${p}-tooltip ${p}-tooltip-bottom ${p}-tooltip-accent" role="tooltip" data-testid="tooltip-accent">Action hint<span class="${p}-tooltip-arrow" aria-hidden="true"></span></span>
                   </div>
                 </section>
               </div>

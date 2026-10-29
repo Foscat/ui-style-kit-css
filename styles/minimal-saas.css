@@ -254,7 +254,7 @@
   --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: var(--saas-primary);
   --usk-native-range-thumb-size: .95rem;
-  --usk-native-range-thumb-background: var(--saas-primary);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--saas-surface-strong);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: 0 .2rem .5rem rgb(var(--saas-text-rgb) / .12);
@@ -444,7 +444,8 @@
 /* Theme-responsive component defaults */
 .saas-card, .saas-panel { background: var(--saas-card-bg); }
 .saas-toolbar, .saas-table-wrap { background: var(--saas-control-bg); }
-.saas-button:not(.saas-button-primary):not(.saas-button-secondary):not(.saas-button-danger):not(.saas-button-warning):not(.saas-button-ghost), .saas-icon-button { background: var(--saas-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.saas-button:where(:not([data-ui-variant])):not(.saas-button-primary):not(.saas-button-secondary):not(.saas-button-danger):not(.saas-button-warning):not(.saas-button-ghost), .saas-icon-button { background: var(--saas-control-bg); }
 .saas-button, .saas-icon-button, .saas-badge, .saas-nav-link { font-family: var(--saas-font-control); }
 
 

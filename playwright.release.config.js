@@ -8,6 +8,17 @@ import { defineConfig, devices } from '@playwright/test';
  * @type {RegExp[]}
  */
 const releaseSmokePatterns = [
+  /React mixed button classes preserve/,
+  /status messages preserve signal tints/,
+  /Paper Editorial message icons/,
+  /native loading hooks retain/,
+  /icon tiles keep contrasting ink/,
+  /busy indicators remain visible/,
+  /shared demo geometry/,
+  /annotated selectable controls/,
+  /annotated form choices/,
+  /annotated tooltip and warning/,
+  /annotated demo frames/,
   /Cyberpunk mixed semantic variants/,
   /ordinary and explicit inline links/,
   /card spacing is explicit/,
