@@ -3055,6 +3055,8 @@ async function renderSelectedPreset() {
   const request = ++requestedRender;
   const ui = uiSelect.value;
   demoContent.setAttribute("aria-busy", "true");
+  /** Hide the previous preset's boards while the selected specimen script loads. */
+  syncPresetSpecificVisibility();
   try {
     await loadPresetSpecimen(ui);
     if (request !== requestedRender || ui !== uiSelect.value) return;

@@ -493,8 +493,8 @@ ${['success', 'warning', 'danger'].map(tone => `
   transform: translateY(-50%);
 }
 
-/** A drawn check retains the preset's ink and border weight without a platform-dependent glyph. */
-[data-ui][data-mode] :where(${promoted(['check'], name => `.${name} input:checked + .${name}-control`).join(', ')})::after {
+/** A drawn check retains preset ink while Art Deco keeps its own enamel marker. */
+[data-ui][data-mode]:where(:not([data-ui="art-deco"])) :where(${promoted(['check'], name => `.${name} input:checked + .${name}-control`).join(', ')})::after {
   content: "";
   position: static;
   inset: auto;

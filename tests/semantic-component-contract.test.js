@@ -759,7 +759,7 @@ test('data-ui-variant is the only semantic component attribute added to the pres
   assert.equal(api.presetSwitchAttribute, 'data-ui');
   assert.equal(api.variantAttribute.name, 'data-ui-variant');
   assert.equal(api.variantAttribute.neutral, 'omitted');
-  assert.equal(variantContexts.length, 5);
+  assert.deepEqual(variantContexts.sort(), ['.usk-alert', '.usk-badge', '.usk-button', '.usk-chip', '.usk-toast', '.usk-tooltip']);
   assert.equal(variantContexts.every((selector) => selectors.has(selector)), true);
   for (const values of Object.values(api.variantAttribute.valuesBySelector)) {
     assert.equal(new Set(values).size, values.length, 'variant values must be unique within their selector context');

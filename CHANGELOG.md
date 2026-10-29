@@ -4,10 +4,23 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
-## [2.6.2] - Unreleased
+## [2.7.0] - 2026-10-29
+
+### Added
+
+- Published shared card and link presentation controls, neutral structural defaults, and component spacing contracts for React and plain HTML consumers.
+- Added semantic component and native-control regression coverage across preset, palette, mode, and interaction states.
+
+### Fixed
+
+- Kept message titles in readable neutral ink, centered Paper Editorial status icons, and made Tactile status surfaces, medallions, and loading indicators legible.
+- Repaired annotation contrast, text edge clearance, toast wrapping, progress alignment, radio and checkbox states, secondary and warning button differentiation, and component containment.
+- Prevented legacy prefixed neutral button paint from overriding attribute-selected React variants in 17 presets.
+- Updated development-only dependency resolutions for fast-uri, postcss-selector-parser, and source-map-js after the release audit.
 
 ### Changed
 
+- Refined the demo controls and reference specimens while preserving entered values through theme and mode changes.
 - Kept the demo options toolbar visible while scrolling at mobile and desktop widths, with section anchors offset below it.
 - Loaded optional preset specimen JavaScript only when its preset is selected.
 - Limited theme and mode changes to palette-dependent demo sections so entered values and unrelated DOM stay in place.

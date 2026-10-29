@@ -196,13 +196,27 @@ test('annotated form choices keep centered thumbs and distinct input states', as
         check(disabled.borderStyle === 'dashed' && disabled.backgroundColor !== getComputedStyle(root.querySelector('#radio')).backgroundColor, 'disabled radio has a distinct muted treatment', { border: disabled.borderStyle, fill: disabled.backgroundColor });
         const range = root.querySelector('#range'), probe = document.createElement('span');
         root.append(probe); probe.style.background = 'var(--usk-native-range-thumb-background)';
-        const fill = getComputedStyle(probe).backgroundColor;
+        const fill = getComputedStyle(probe).backgroundColor, artwork = getComputedStyle(probe).backgroundImage;
         probe.style.background = 'var(--usk-native-primary)';
-        check(fill === getComputedStyle(probe).backgroundColor, 'range knob uses the preset action color', { fill, action: getComputedStyle(probe).backgroundColor });
+        const action = getComputedStyle(probe).backgroundColor;
+        /** Reference presets may use paired colored artwork instead of a solid action fill. */
+        if (id === 'editorial-luxe') {
+          probe.style.background = 'var(--luxe-brass-light)';
+          check(fill === getComputedStyle(probe).backgroundColor, 'editorial knob uses brass paint', { fill, brass: getComputedStyle(probe).backgroundColor });
+        } else if (id === 'technical-blueprint' || id === 'data-terminal') {
+          probe.style.background = id === 'technical-blueprint' ? 'var(--blueprint-surface)' : 'var(--terminal-accent)';
+          const pairedColor = getComputedStyle(probe).backgroundColor;
+          check(artwork.startsWith('linear-gradient(') && artwork.includes(action) && artwork.includes(pairedColor), 'range knob uses paired preset color artwork', { artwork, action, pairedColor });
+        } else {
+          check(fill === action, 'range knob uses the preset action color', { fill, action });
+        }
         probe.remove();
         for (const p of ['usk', prefix]) {
           const control = root.querySelector(`.${p}-check-control`), marker = getComputedStyle(control, '::after');
-          check(marker.content !== '"✓"' && parseFloat(marker.borderRightWidth) > 0 && parseFloat(marker.borderBottomWidth) > 0 && marker.position === 'static' && marker.clipPath === 'none', 'choice marker uses a centered unclipped stroke instead of a font glyph', { content: marker.content, border: marker.borderWidth, position: marker.position, clip: marker.clipPath });
+          const drawnStroke = id === 'art-deco'
+            ? parseFloat(marker.borderLeftWidth) > 0 && parseFloat(marker.borderBottomWidth) > 0 && marker.position === 'absolute'
+            : parseFloat(marker.borderRightWidth) > 0 && parseFloat(marker.borderBottomWidth) > 0 && marker.position === 'static';
+          check(marker.content !== '"✓"' && drawnStroke && marker.clipPath === 'none', 'choice marker uses its preset drawn stroke instead of a font glyph', { content: marker.content, border: marker.borderWidth, position: marker.position, clip: marker.clipPath });
           const input = root.querySelector(`.${p}-switch input`), track = root.querySelector(`.${p}-switch-track`), thumb = root.querySelector(`.${p}-switch-thumb`);
           for (const state of [false, true]) {
             input.checked = state;
