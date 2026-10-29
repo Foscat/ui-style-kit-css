@@ -717,9 +717,15 @@ body[data-ui="y2k"][data-mode] .demo-control-panel h4 {
     "buttons progress"
     "buttons loading"
     "tooltips tooltips";
-  grid-template-columns: minmax(14rem, .9fr) minmax(16rem, 1fr);
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1fr);
   gap: 1rem;
   align-items: start;
+  max-inline-size: 100%;
+}
+
+.demo-control-showcase > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .demo-control-panel {

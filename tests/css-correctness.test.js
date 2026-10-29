@@ -195,7 +195,8 @@ test('minimal SaaS preset follows the calm product reference styling', () => {
   assert.equal(declarationFor(css, '[data-ui="minimal-saas"][data-mode]', '--usk-native-control-min-block-size'), '2.375rem');
   assert.equal(declarationFor(css, '[data-ui="minimal-saas"][data-mode]', '--usk-native-range-track-radius'), '999px');
   assert.equal(declarationFor(css, '[data-ui="minimal-saas"][data-mode]', '--usk-native-progress-track-radius'), '999px');
-  assert.equal(declarationFor(css, '[data-ui="minimal-saas"][data-mode]', '--usk-native-range-thumb-background'), 'var(--saas-primary)');
+  assert.equal(declarationFor(css, '[data-ui="minimal-saas"][data-mode]', '--usk-native-primary'), 'var(--saas-primary)');
+  assert.equal(declarationFor(css, '[data-ui="minimal-saas"][data-mode]', '--usk-native-range-thumb-background'), 'var(--usk-native-primary)');
   assert.match(tokenBlock, /--saas-control-bg:\s*var\(--saas-surface\);/);
   assert.match(tokenBlock, /--saas-shadow-md:\s*var\(--saas-reference-shadow\);/);
 
@@ -294,7 +295,8 @@ test('Bauhaus preset follows the workshop grid product reference styling', () =>
   assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-radius'), '0');
   assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-border-width'), '2px');
   assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-range-track-background'), 'var(--bau-border)');
-  assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-range-thumb-background'), 'var(--bau-primary)');
+  assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-primary'), 'var(--bau-primary)');
+  assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-range-thumb-background'), 'var(--usk-native-primary)');
   assert.equal(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-scrollbar-size'), '1rem');
   assert.match(declarationFor(css, '[data-ui="bauhaus"][data-mode]', '--usk-native-progress-value-background'), /repeating-linear-gradient/);
   assert.match(exactBlockFor(css, '.bau-title'), /font-weight:\s*950/);

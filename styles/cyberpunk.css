@@ -264,7 +264,7 @@
   --usk-native-range-track-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .16);
   --usk-native-range-progress-background: var(--cyber-primary);
   --usk-native-range-thumb-size: 1.25rem;
-  --usk-native-range-thumb-background: var(--cyber-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--cyber-border);
   --usk-native-range-thumb-radius: .1rem;
   --usk-native-range-thumb-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .22);
@@ -477,7 +477,8 @@
 /* Theme-responsive component defaults */
 .cyber-card, .cyber-panel { background: var(--cyber-card-bg); }
 .cyber-toolbar, .cyber-table-wrap { background: var(--cyber-control-bg); }
-.cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-warning):not(.cyber-button-ghost), .cyber-icon-button { background: var(--cyber-control-bg); }
+/** Semantic variant attributes take precedence over the legacy neutral-control fallback. */
+.cyber-button:where(:not([data-ui-variant])):not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-warning):not(.cyber-button-ghost), .cyber-icon-button { background: var(--cyber-control-bg); }
 .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link { font-family: var(--cyber-font-control); }
 
 /* Spinner geometry follows the cyberpunk preset's clipped neon readouts. */
@@ -775,7 +776,7 @@
   --usk-native-range-track-shadow: 0 0 .7rem rgb(var(--cyber-primary-rgb) / .4);
   --usk-native-range-progress-background: linear-gradient(90deg, var(--cyber-primary), var(--cyber-accent));
   --usk-native-range-thumb-size: 1.3rem;
-  --usk-native-range-thumb-background: linear-gradient(135deg, var(--cyber-surface-strong), var(--cyber-primary));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--cyber-accent);
   --usk-native-range-thumb-radius: 28%;
   --usk-native-range-thumb-shadow: 0 0 .85rem rgb(var(--cyber-accent-rgb) / .5);
@@ -798,7 +799,8 @@
 .cyber-card, .cyber-panel { padding: 1.08rem; background: var(--cyber-card-bg); border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .24rem 0 0 rgb(var(--cyber-accent-rgb) / .26), 0 0 1.2rem rgb(var(--cyber-primary-rgb) / .24); clip-path: polygon(.6rem 0, 100% 0, 100% calc(100% - .6rem), calc(100% - .6rem) 100%, 0 100%, 0 .6rem); }
 .cyber-well, .cyber-inset { padding: .82rem; background: var(--cyber-control-bg); border: 1px solid var(--cyber-accent); border-radius: 0; box-shadow: inset 0 0 .8rem rgb(var(--cyber-primary-rgb) / .18); clip-path: polygon(.42rem 0, 100% 0, 100% calc(100% - .42rem), calc(100% - .42rem) 100%, 0 100%, 0 .42rem); }
 .cyber-button, .cyber-icon-button { min-height: 2.85rem; padding: .66rem 1.08rem; background: linear-gradient(135deg, rgb(var(--cyber-primary-rgb) / .2), transparent), var(--cyber-control-bg); border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .2rem 0 0 rgb(var(--cyber-accent-rgb) / .38), 0 0 .75rem rgb(var(--cyber-primary-rgb) / .32); font-weight: 850; clip-path: polygon(.5rem 0, 100% 0, 100% calc(100% - .5rem), calc(100% - .5rem) 100%, 0 100%, 0 .5rem); }
-.cyber-button:active, .cyber-button[aria-pressed="true"], .cyber-button.is-active { transform: translateY(1px); background: linear-gradient(135deg, var(--cyber-primary), var(--cyber-accent)); box-shadow: inset 0 0 .6rem rgb(var(--cyber-text-rgb) / .24); }
+/** Press feedback retains each variant's paired fill and foreground. */
+.cyber-button:active, .cyber-button[aria-pressed="true"], .cyber-button.is-active { transform: translateY(1px); box-shadow: inset 0 0 .6rem rgb(var(--cyber-text-rgb) / .24); }
 .cyber-input, .cyber-textarea, .cyber-select { min-height: 2.55rem; padding: .54rem .82rem; background: var(--cyber-control-bg); border: 1px solid var(--cyber-primary); border-radius: 0; box-shadow: inset .18rem 0 0 rgb(var(--cyber-accent-rgb) / .3); clip-path: polygon(.34rem 0, 100% 0, 100% calc(100% - .34rem), calc(100% - .34rem) 100%, 0 100%, 0 .34rem); }
 .cyber-nav, .cyber-toolbar { border: 2px solid var(--cyber-primary); border-radius: 0; box-shadow: inset 0 -.18rem 0 rgb(var(--cyber-accent-rgb) / .28); }
 .cyber-nav-link { border-radius: 0; clip-path: polygon(.35rem 0, 100% 0, calc(100% - .35rem) 100%, 0 100%); }
@@ -902,7 +904,7 @@
   --usk-native-range-track-shadow: 0 0 .45rem rgb(var(--cyber-primary-rgb) / .16);
   --usk-native-range-progress-background: var(--cyber-primary);
   --usk-native-range-thumb-size: 1.25rem;
-  --usk-native-range-thumb-background: var(--cyber-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--cyber-primary);
   --usk-native-range-thumb-radius: .08rem;
   --usk-native-range-thumb-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .24);
@@ -2410,4 +2412,9 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
+}
+
+@layer ui-style-kit.cyberpunk {
+/** Console content scrolls inside its frame instead of expanding a narrow parent. */
+.cyber-console { box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; margin-inline: 0; overflow-x: auto; }
 }

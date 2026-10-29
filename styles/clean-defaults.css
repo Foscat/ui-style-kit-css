@@ -48,6 +48,26 @@
 }
 
 @layer ui-style-kit.clean_defaults {
+/** Inline hyperlinks and their labels must not inherit the control spacing floor. */
+[data-ui][data-mode] :where(a:not([class]), a[data-link-presentation="inline"], a[data-link-presentation="inline"] > .usk-link__label, a[data-link-presentation="inline"] > .usk-link__icon) {
+  display: inline;
+  min-block-size: 0;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/** Explicit control links preserve a wrapping, aligned action composition. */
+[data-ui][data-mode] :where(a[data-link-presentation="control"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--usk-link-gap, .5rem);
+}
+
 /** Keeps semantic state paint paired when a preset also owns broad anchor or input rules. */
 [data-ui][data-mode] :where(
   [class~="usk-pagination-link"][aria-current="page"],

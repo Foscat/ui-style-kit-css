@@ -262,7 +262,7 @@
   --usk-native-range-track-shadow: 4px 4px 0 var(--brutal-border);
   --usk-native-range-progress-background: var(--brutal-primary);
   --usk-native-range-thumb-size: 1.45rem;
-  --usk-native-range-thumb-background: var(--brutal-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 2px solid var(--brutal-border);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: 4px 4px 0 var(--brutal-border);
@@ -524,7 +524,8 @@
 /* Theme-responsive component defaults */
 .brutal-card, .brutal-panel { background: var(--brutal-card-bg); }
 .brutal-toolbar, .brutal-table-wrap { background: var(--brutal-control-bg); }
-.brutal-button:not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-warning):not(.brutal-button-ghost), .brutal-icon-button { background: var(--brutal-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.brutal-button:where(:not([data-ui-variant])):not(.brutal-button-primary):not(.brutal-button-secondary):not(.brutal-button-danger):not(.brutal-button-warning):not(.brutal-button-ghost), .brutal-icon-button { background: var(--brutal-control-bg); }
 .brutal-button, .brutal-icon-button, .brutal-badge, .brutal-nav-link { font-family: var(--brutal-font-control); }
 
 
@@ -835,7 +836,7 @@
   --usk-native-range-track-shadow: inset 0 0 0 2px var(--brutal-surface-strong);
   --usk-native-range-progress-background: repeating-linear-gradient(90deg, var(--brutal-primary) 0 .9rem, var(--brutal-warning) .9rem 1.05rem);
   --usk-native-range-thumb-size: 1.24rem;
-  --usk-native-range-thumb-background: var(--brutal-text);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 3px solid var(--brutal-warning);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: .14rem .14rem 0 var(--brutal-primary);

@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.6.2
+ * UI Style Kit CSS v2.7.0
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -2408,8 +2408,11 @@
 [data-ui][data-mode] :where(input[type="radio"]) { border-radius: var(--usk-native-radio-radius); }
 
 [data-ui][data-mode] :where(input[type="checkbox"]:checked) {
-  background-color: var(--usk-native-choice-checked-background);
-  background-image: linear-gradient(135deg, transparent 42%, var(--usk-native-choice-mark-color) 42% 56%, transparent 56%), linear-gradient(45deg, transparent 54%, var(--usk-native-choice-mark-color) 54% 68%, transparent 68%);
+  /* The final background layer accepts both solid and gradient preset fills. */
+  background:
+    linear-gradient(45deg, transparent 38%, var(--usk-native-choice-mark-color) 38% 62%, transparent 62%) 24% 62% / 32% 36% no-repeat,
+    linear-gradient(135deg, transparent 40%, var(--usk-native-choice-mark-color) 40% 60%, transparent 60%) 68% 43% / 52% 58% no-repeat,
+    var(--usk-native-choice-checked-background);
 }
 
 [data-ui][data-mode] :where(input[type="checkbox"]:hover:not(:disabled), input[type="radio"]:hover:not(:disabled)) {
@@ -2826,6 +2829,33 @@
 
   [data-ui][data-mode] :where(input:user-invalid, textarea:user-invalid, select:user-invalid, [aria-invalid="true"], .is-invalid) {
     border-color: Mark;
+  }
+}
+}
+
+/** Choice-state paint follows preset geometry, including presets with material surface tokens. */
+@layer ui-style-kit.clean_defaults {
+/** Disabled choices remain recognizable without relying on faded opacity alone. */
+[data-ui][data-mode] :where(input[type="radio"]:disabled) {
+  background: var(--usk-native-bg);
+  border-color: var(--usk-native-text-muted);
+  border-style: dashed;
+  opacity: .7;
+}
+@supports (color: color-mix(in srgb, black, white)) {
+  [data-ui][data-mode] :where(input[type="radio"]:disabled) {
+    background: color-mix(in srgb, var(--usk-native-text-muted) 24%, var(--usk-native-bg));
+  }
+}
+[data-ui][data-mode] :where(input[type="radio"]:disabled:checked) {
+  background: radial-gradient(circle, var(--usk-native-text-muted) 0 31%, transparent 34%), var(--usk-native-bg);
+}
+
+
+@media (forced-colors: active) {
+  [data-ui][data-mode] :where(input[type="radio"]:disabled) {
+    border-color: GrayText;
+    background: Canvas;
   }
 }
 }
@@ -4174,7 +4204,7 @@
 :where(.saas-tabs, .bento-tabs, .max-tabs, .bau-tabs, .tactile-tabs, .neo-tabs, .retro-tabs, .brutal-tabs, .cyber-tabs, .y2k-tabs, .rg-tabs, .luxe-tabs, .organic-tabs, .utility-tabs, .blueprint-tabs, .deco-tabs, .clay-tabs, .terminal-tabs, .paper-tabs, .noir-tabs), :where([data-ui="cyberpunk"]) :where(.usk-tabs), :where([data-ui="cyberpunk"]) :where(.ui-tabs) { display: grid; gap: .75rem; }
 :where(.saas-tab-list, .bento-tab-list, .max-tab-list, .bau-tab-list, .tactile-tab-list, .neo-tab-list, .retro-tab-list, .brutal-tab-list, .cyber-tab-list, .y2k-tab-list, .rg-tab-list, .luxe-tab-list, .organic-tab-list, .utility-tab-list, .blueprint-tab-list, .deco-tab-list, .clay-tab-list, .terminal-tab-list, .paper-tab-list, .noir-tab-list), :where([data-ui="cyberpunk"]) :where(.usk-tab-list), :where([data-ui="cyberpunk"]) :where(.ui-tab-list) { display: flex; flex-wrap: wrap; gap: .25rem; border-block-end: var(--usk-native-border-width) solid var(--usk-native-border); }
 :where(.saas-tab, .bento-tab, .max-tab, .bau-tab, .tactile-tab, .neo-tab, .retro-tab, .brutal-tab, .cyber-tab, .y2k-tab, .rg-tab, .luxe-tab, .organic-tab, .utility-tab, .blueprint-tab, .deco-tab, .clay-tab, .terminal-tab, .paper-tab, .noir-tab), :where([data-ui="cyberpunk"]) :where(.usk-tab), :where([data-ui="cyberpunk"]) :where(.ui-tab) { min-block-size: 44px; padding: .6rem .9rem; color: var(--usk-native-text-muted); background: transparent; border: 0; border-block-end: calc(var(--usk-native-border-width) * 2) solid transparent; font: inherit; cursor: pointer; }
-:where(.saas-tab[aria-selected="true"], .bento-tab[aria-selected="true"], .max-tab[aria-selected="true"], .bau-tab[aria-selected="true"], .tactile-tab[aria-selected="true"], .neo-tab[aria-selected="true"], .retro-tab[aria-selected="true"], .brutal-tab[aria-selected="true"], .cyber-tab[aria-selected="true"], .y2k-tab[aria-selected="true"], .rg-tab[aria-selected="true"], .luxe-tab[aria-selected="true"], .organic-tab[aria-selected="true"], .utility-tab[aria-selected="true"], .blueprint-tab[aria-selected="true"], .deco-tab[aria-selected="true"], .clay-tab[aria-selected="true"], .terminal-tab[aria-selected="true"], .paper-tab[aria-selected="true"], .noir-tab[aria-selected="true"]), :where([data-ui="cyberpunk"]) :where(.usk-tab[aria-selected="true"]), :where([data-ui="cyberpunk"]) :where(.ui-tab[aria-selected="true"]) { color: var(--usk-primary-ink, var(--usk-native-primary)); border-block-end-color: var(--usk-native-primary); }
+:where(.saas-tab[aria-selected="true"], .bento-tab[aria-selected="true"], .max-tab[aria-selected="true"], .bau-tab[aria-selected="true"], .tactile-tab[aria-selected="true"], .neo-tab[aria-selected="true"], .retro-tab[aria-selected="true"], .brutal-tab[aria-selected="true"], .cyber-tab[aria-selected="true"], .y2k-tab[aria-selected="true"], .rg-tab[aria-selected="true"], .luxe-tab[aria-selected="true"], .organic-tab[aria-selected="true"], .utility-tab[aria-selected="true"], .blueprint-tab[aria-selected="true"], .deco-tab[aria-selected="true"], .clay-tab[aria-selected="true"], .terminal-tab[aria-selected="true"], .paper-tab[aria-selected="true"], .noir-tab[aria-selected="true"]), :where([data-ui="cyberpunk"]) :where(.usk-tab[aria-selected="true"]), :where([data-ui="cyberpunk"]) :where(.ui-tab[aria-selected="true"]) { color: var(--usk-native-text); border-block-end-color: var(--usk-native-primary); }
 :where(.saas-tab-panel, .bento-tab-panel, .max-tab-panel, .bau-tab-panel, .tactile-tab-panel, .neo-tab-panel, .retro-tab-panel, .brutal-tab-panel, .cyber-tab-panel, .y2k-tab-panel, .rg-tab-panel, .luxe-tab-panel, .organic-tab-panel, .utility-tab-panel, .blueprint-tab-panel, .deco-tab-panel, .clay-tab-panel, .terminal-tab-panel, .paper-tab-panel, .noir-tab-panel), :where([data-ui="cyberpunk"]) :where(.usk-tab-panel), :where([data-ui="cyberpunk"]) :where(.ui-tab-panel) { padding-block: .75rem; color: var(--usk-native-text); }
 
 :where(.saas-pagination, .saas-breadcrumb-list, .saas-chip-group, .saas-avatar-group, .bento-pagination, .bento-breadcrumb-list, .bento-chip-group, .bento-avatar-group, .max-pagination, .max-breadcrumb-list, .max-chip-group, .max-avatar-group, .bau-pagination, .bau-breadcrumb-list, .bau-chip-group, .bau-avatar-group, .tactile-pagination, .tactile-breadcrumb-list, .tactile-chip-group, .tactile-avatar-group, .neo-pagination, .neo-breadcrumb-list, .neo-chip-group, .neo-avatar-group, .retro-pagination, .retro-breadcrumb-list, .retro-chip-group, .retro-avatar-group, .brutal-pagination, .brutal-breadcrumb-list, .brutal-chip-group, .brutal-avatar-group, .cyber-pagination, .cyber-breadcrumb-list, .cyber-chip-group, .cyber-avatar-group, .y2k-pagination, .y2k-breadcrumb-list, .y2k-chip-group, .y2k-avatar-group, .rg-pagination, .rg-breadcrumb-list, .rg-chip-group, .rg-avatar-group, .luxe-pagination, .luxe-breadcrumb-list, .luxe-chip-group, .luxe-avatar-group, .organic-pagination, .organic-breadcrumb-list, .organic-chip-group, .organic-avatar-group, .utility-pagination, .utility-breadcrumb-list, .utility-chip-group, .utility-avatar-group, .blueprint-pagination, .blueprint-breadcrumb-list, .blueprint-chip-group, .blueprint-avatar-group, .deco-pagination, .deco-breadcrumb-list, .deco-chip-group, .deco-avatar-group, .clay-pagination, .clay-breadcrumb-list, .clay-chip-group, .clay-avatar-group, .terminal-pagination, .terminal-breadcrumb-list, .terminal-chip-group, .terminal-avatar-group, .paper-pagination, .paper-breadcrumb-list, .paper-chip-group, .paper-avatar-group, .noir-pagination, .noir-breadcrumb-list, .noir-chip-group, .noir-avatar-group), :where([data-ui="cyberpunk"]) :where(.usk-pagination,.usk-breadcrumb-list,.usk-chip-group,.usk-avatar-group), :where([data-ui="cyberpunk"]) :where(.ui-pagination,.ui-breadcrumb-list,.ui-chip-group,.ui-avatar-group) { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: 0; padding: 0; list-style: none; }
@@ -4196,7 +4226,7 @@
 @media (prefers-reduced-motion: reduce) { :where(.saas-skeleton, .bento-skeleton, .max-skeleton, .bau-skeleton, .tactile-skeleton, .neo-skeleton, .retro-skeleton, .brutal-skeleton, .cyber-skeleton, .y2k-skeleton, .rg-skeleton, .luxe-skeleton, .organic-skeleton, .utility-skeleton, .blueprint-skeleton, .deco-skeleton, .clay-skeleton, .terminal-skeleton, .paper-skeleton, .noir-skeleton), :where([data-ui="cyberpunk"]) :where(.usk-skeleton), :where([data-ui="cyberpunk"]) :where(.ui-skeleton) { animation: none; } }
 
 :where(.saas-empty-state, .bento-empty-state, .max-empty-state, .bau-empty-state, .tactile-empty-state, .neo-empty-state, .retro-empty-state, .brutal-empty-state, .cyber-empty-state, .y2k-empty-state, .rg-empty-state, .luxe-empty-state, .organic-empty-state, .utility-empty-state, .blueprint-empty-state, .deco-empty-state, .clay-empty-state, .terminal-empty-state, .paper-empty-state, .noir-empty-state), :where([data-ui="cyberpunk"]) :where(.usk-empty-state), :where([data-ui="cyberpunk"]) :where(.ui-empty-state) { display: grid; justify-items: center; gap: .75rem; max-inline-size: 42rem; padding: clamp(1.25rem, 4vw, 3rem); color: var(--usk-native-text); background: var(--usk-native-surface); border: var(--usk-native-border-width) solid var(--usk-native-border); border-radius: var(--usk-native-radius); text-align: center; }
-:where(.saas-empty-state-icon, .bento-empty-state-icon, .max-empty-state-icon, .bau-empty-state-icon, .tactile-empty-state-icon, .neo-empty-state-icon, .retro-empty-state-icon, .brutal-empty-state-icon, .cyber-empty-state-icon, .y2k-empty-state-icon, .rg-empty-state-icon, .luxe-empty-state-icon, .organic-empty-state-icon, .utility-empty-state-icon, .blueprint-empty-state-icon, .deco-empty-state-icon, .clay-empty-state-icon, .terminal-empty-state-icon, .paper-empty-state-icon, .noir-empty-state-icon), :where([data-ui="cyberpunk"]) :where(.usk-empty-state-icon), :where([data-ui="cyberpunk"]) :where(.ui-empty-state-icon) { display: grid; place-items: center; color: var(--usk-primary-ink, var(--usk-native-primary)); }
+:where(.saas-empty-state-icon, .bento-empty-state-icon, .max-empty-state-icon, .bau-empty-state-icon, .tactile-empty-state-icon, .neo-empty-state-icon, .retro-empty-state-icon, .brutal-empty-state-icon, .cyber-empty-state-icon, .y2k-empty-state-icon, .rg-empty-state-icon, .luxe-empty-state-icon, .organic-empty-state-icon, .utility-empty-state-icon, .blueprint-empty-state-icon, .deco-empty-state-icon, .clay-empty-state-icon, .terminal-empty-state-icon, .paper-empty-state-icon, .noir-empty-state-icon), :where([data-ui="cyberpunk"]) :where(.usk-empty-state-icon), :where([data-ui="cyberpunk"]) :where(.ui-empty-state-icon) { display: grid; place-items: center; color: var(--usk-native-link); }
 :where(.saas-empty-state-title, .saas-toast-title, .bento-empty-state-title, .bento-toast-title, .max-empty-state-title, .max-toast-title, .bau-empty-state-title, .bau-toast-title, .tactile-empty-state-title, .tactile-toast-title, .neo-empty-state-title, .neo-toast-title, .retro-empty-state-title, .retro-toast-title, .brutal-empty-state-title, .brutal-toast-title, .cyber-empty-state-title, .cyber-toast-title, .y2k-empty-state-title, .y2k-toast-title, .rg-empty-state-title, .rg-toast-title, .luxe-empty-state-title, .luxe-toast-title, .organic-empty-state-title, .organic-toast-title, .utility-empty-state-title, .utility-toast-title, .blueprint-empty-state-title, .blueprint-toast-title, .deco-empty-state-title, .deco-toast-title, .clay-empty-state-title, .clay-toast-title, .terminal-empty-state-title, .terminal-toast-title, .paper-empty-state-title, .paper-toast-title, .noir-empty-state-title, .noir-toast-title), :where([data-ui="cyberpunk"]) :where(.usk-empty-state-title,.usk-toast-title), :where([data-ui="cyberpunk"]) :where(.ui-empty-state-title,.ui-toast-title) { margin: 0; color: var(--usk-native-text); font-weight: 750; }
 :where(.saas-empty-state-body, .saas-toast-body, .saas-metric-detail, .bento-empty-state-body, .bento-toast-body, .bento-metric-detail, .max-empty-state-body, .max-toast-body, .max-metric-detail, .bau-empty-state-body, .bau-toast-body, .bau-metric-detail, .tactile-empty-state-body, .tactile-toast-body, .tactile-metric-detail, .neo-empty-state-body, .neo-toast-body, .neo-metric-detail, .retro-empty-state-body, .retro-toast-body, .retro-metric-detail, .brutal-empty-state-body, .brutal-toast-body, .brutal-metric-detail, .cyber-empty-state-body, .cyber-toast-body, .cyber-metric-detail, .y2k-empty-state-body, .y2k-toast-body, .y2k-metric-detail, .rg-empty-state-body, .rg-toast-body, .rg-metric-detail, .luxe-empty-state-body, .luxe-toast-body, .luxe-metric-detail, .organic-empty-state-body, .organic-toast-body, .organic-metric-detail, .utility-empty-state-body, .utility-toast-body, .utility-metric-detail, .blueprint-empty-state-body, .blueprint-toast-body, .blueprint-metric-detail, .deco-empty-state-body, .deco-toast-body, .deco-metric-detail, .clay-empty-state-body, .clay-toast-body, .clay-metric-detail, .terminal-empty-state-body, .terminal-toast-body, .terminal-metric-detail, .paper-empty-state-body, .paper-toast-body, .paper-metric-detail, .noir-empty-state-body, .noir-toast-body, .noir-metric-detail), :where([data-ui="cyberpunk"]) :where(.usk-empty-state-body,.usk-toast-body,.usk-metric-detail), :where([data-ui="cyberpunk"]) :where(.ui-empty-state-body,.ui-toast-body,.ui-metric-detail) { margin: 0; color: var(--usk-native-text-muted); }
 :where(.saas-empty-state-actions, .saas-toast-actions, .bento-empty-state-actions, .bento-toast-actions, .max-empty-state-actions, .max-toast-actions, .bau-empty-state-actions, .bau-toast-actions, .tactile-empty-state-actions, .tactile-toast-actions, .neo-empty-state-actions, .neo-toast-actions, .retro-empty-state-actions, .retro-toast-actions, .brutal-empty-state-actions, .brutal-toast-actions, .cyber-empty-state-actions, .cyber-toast-actions, .y2k-empty-state-actions, .y2k-toast-actions, .rg-empty-state-actions, .rg-toast-actions, .luxe-empty-state-actions, .luxe-toast-actions, .organic-empty-state-actions, .organic-toast-actions, .utility-empty-state-actions, .utility-toast-actions, .blueprint-empty-state-actions, .blueprint-toast-actions, .deco-empty-state-actions, .deco-toast-actions, .clay-empty-state-actions, .clay-toast-actions, .terminal-empty-state-actions, .terminal-toast-actions, .paper-empty-state-actions, .paper-toast-actions, .noir-empty-state-actions, .noir-toast-actions), :where([data-ui="cyberpunk"]) :where(.usk-empty-state-actions,.usk-toast-actions), :where([data-ui="cyberpunk"]) :where(.ui-empty-state-actions,.ui-toast-actions) { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
@@ -4245,6 +4275,266 @@
 :where(.saas-file-upload, .bento-file-upload, .max-file-upload, .bau-file-upload, .tactile-file-upload, .neo-file-upload, .retro-file-upload, .brutal-file-upload, .cyber-file-upload, .y2k-file-upload, .rg-file-upload, .luxe-file-upload, .organic-file-upload, .utility-file-upload, .blueprint-file-upload, .deco-file-upload, .clay-file-upload, .terminal-file-upload, .paper-file-upload, .noir-file-upload), :where([data-ui="cyberpunk"]) :where(.usk-file-upload), :where([data-ui="cyberpunk"]) :where(.ui-file-upload) { display: grid; gap: .75rem; }
 :where(.saas-dropzone, .bento-dropzone, .max-dropzone, .bau-dropzone, .tactile-dropzone, .neo-dropzone, .retro-dropzone, .brutal-dropzone, .cyber-dropzone, .y2k-dropzone, .rg-dropzone, .luxe-dropzone, .organic-dropzone, .utility-dropzone, .blueprint-dropzone, .deco-dropzone, .clay-dropzone, .terminal-dropzone, .paper-dropzone, .noir-dropzone), :where([data-ui="cyberpunk"]) :where(.usk-dropzone), :where([data-ui="cyberpunk"]) :where(.ui-dropzone) { display: grid; place-items: center; gap: .5rem; min-block-size: 8rem; padding: 1.25rem; color: var(--usk-native-text-muted); background: var(--usk-native-surface-soft); border: calc(var(--usk-native-border-width) * 2) dashed var(--usk-native-border); border-radius: var(--usk-native-radius); text-align: center; }
 :where(.saas-dropzone[data-drag-active="true"], .bento-dropzone[data-drag-active="true"], .max-dropzone[data-drag-active="true"], .bau-dropzone[data-drag-active="true"], .tactile-dropzone[data-drag-active="true"], .neo-dropzone[data-drag-active="true"], .retro-dropzone[data-drag-active="true"], .brutal-dropzone[data-drag-active="true"], .cyber-dropzone[data-drag-active="true"], .y2k-dropzone[data-drag-active="true"], .rg-dropzone[data-drag-active="true"], .luxe-dropzone[data-drag-active="true"], .organic-dropzone[data-drag-active="true"], .utility-dropzone[data-drag-active="true"], .blueprint-dropzone[data-drag-active="true"], .deco-dropzone[data-drag-active="true"], .clay-dropzone[data-drag-active="true"], .terminal-dropzone[data-drag-active="true"], .paper-dropzone[data-drag-active="true"], .noir-dropzone[data-drag-active="true"]), :where([data-ui="cyberpunk"]) :where(.usk-dropzone[data-drag-active="true"]), :where([data-ui="cyberpunk"]) :where(.ui-dropzone[data-drag-active="true"]) { color: var(--usk-primary-ink, var(--usk-native-primary)); border-color: var(--usk-native-primary); }
+}
+@layer ui-style-kit.clean_defaults {
+/** Empty-state symbols remain prominent independently of each preset's body font. */
+[data-ui][data-mode] :where(.saas-empty-state-icon, .bento-empty-state-icon, .max-empty-state-icon, .bau-empty-state-icon, .tactile-empty-state-icon, .neo-empty-state-icon, .retro-empty-state-icon, .brutal-empty-state-icon, .cyber-empty-state-icon, .y2k-empty-state-icon, .rg-empty-state-icon, .luxe-empty-state-icon, .organic-empty-state-icon, .utility-empty-state-icon, .blueprint-empty-state-icon, .deco-empty-state-icon, .clay-empty-state-icon, .terminal-empty-state-icon, .paper-empty-state-icon, .noir-empty-state-icon), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-empty-state-icon), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-empty-state-icon) {
+  display: grid;
+  place-items: center;
+  font-size: var(--usk-empty-state-icon-size, 2.75rem);
+  line-height: 1;
+  min-inline-size: 1em;
+  min-block-size: 1em;
+  margin: 0;
+  padding: 0;
+}
+
+/** Thin progress tracks own their inset; the fill never inherits element spacing. */
+[data-ui][data-mode] :where(.saas-progress, .bento-progress, .max-progress, .bau-progress, .tactile-progress, .neo-progress, .retro-progress, .brutal-progress, .cyber-progress, .y2k-progress, .rg-progress, .luxe-progress, .organic-progress, .utility-progress, .blueprint-progress, .deco-progress, .clay-progress, .terminal-progress, .paper-progress, .noir-progress), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-progress), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-progress) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+[data-ui][data-mode] :where(.saas-progress-bar, .bento-progress-bar, .max-progress-bar, .bau-progress-bar, .tactile-progress-bar, .neo-progress-bar, .retro-progress-bar, .brutal-progress-bar, .cyber-progress-bar, .y2k-progress-bar, .rg-progress-bar, .luxe-progress-bar, .organic-progress-bar, .utility-progress-bar, .blueprint-progress-bar, .deco-progress-bar, .clay-progress-bar, .terminal-progress-bar, .paper-progress-bar, .noir-progress-bar), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-progress-bar), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-progress-bar) {
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  align-self: center;
+  min-inline-size: 0;
+  min-block-size: 0;
+  max-inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/** Status surfaces keep their signal after preset material and border shorthands. */
+
+[data-ui][data-mode] :where(.saas-alert-success, .bento-alert-success, .max-alert-success, .bau-alert-success, .tactile-alert-success, .neo-alert-success, .retro-alert-success, .brutal-alert-success, .cyber-alert-success, .y2k-alert-success, .rg-alert-success, .luxe-alert-success, .organic-alert-success, .utility-alert-success, .blueprint-alert-success, .deco-alert-success, .clay-alert-success, .terminal-alert-success, .paper-alert-success, .noir-alert-success), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="success"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="success"])) {
+  --usk-message-tone: var(--usk-native-success);
+  background: var(--usk-message-tone);
+  color: var(--usk-native-on-success);
+  border-color: var(--usk-message-tone);
+}
+[data-ui][data-mode] :where(.saas-alert-success, .bento-alert-success, .max-alert-success, .bau-alert-success, .tactile-alert-success, .neo-alert-success, .retro-alert-success, .brutal-alert-success, .cyber-alert-success, .y2k-alert-success, .rg-alert-success, .luxe-alert-success, .organic-alert-success, .utility-alert-success, .blueprint-alert-success, .deco-alert-success, .clay-alert-success, .terminal-alert-success, .paper-alert-success, .noir-alert-success) :where(.saas-alert-title, .bento-alert-title, .max-alert-title, .bau-alert-title, .tactile-alert-title, .neo-alert-title, .retro-alert-title, .brutal-alert-title, .cyber-alert-title, .y2k-alert-title, .rg-alert-title, .luxe-alert-title, .organic-alert-title, .utility-alert-title, .blueprint-alert-title, .deco-alert-title, .clay-alert-title, .terminal-alert-title, .paper-alert-title, .noir-alert-title), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="success"])) :where(.usk-alert-title), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="success"])) :where(.ui-alert-title) {
+  color: inherit;
+  text-shadow: none;
+}
+[data-ui][data-mode] :where(.saas-alert-success, .bento-alert-success, .max-alert-success, .bau-alert-success, .tactile-alert-success, .neo-alert-success, .retro-alert-success, .brutal-alert-success, .cyber-alert-success, .y2k-alert-success, .rg-alert-success, .luxe-alert-success, .organic-alert-success, .utility-alert-success, .blueprint-alert-success, .deco-alert-success, .clay-alert-success, .terminal-alert-success, .paper-alert-success, .noir-alert-success) :where(.saas-alert-body, .bento-alert-body, .max-alert-body, .bau-alert-body, .tactile-alert-body, .neo-alert-body, .retro-alert-body, .brutal-alert-body, .cyber-alert-body, .y2k-alert-body, .rg-alert-body, .luxe-alert-body, .organic-alert-body, .utility-alert-body, .blueprint-alert-body, .deco-alert-body, .clay-alert-body, .terminal-alert-body, .paper-alert-body, .noir-alert-body), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="success"])) :where(.usk-alert-body), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="success"])) :where(.ui-alert-body) {
+  color: inherit;
+}
+@supports (color: color-mix(in srgb, #000, #fff)) {
+  [data-ui][data-mode] :where(.saas-alert-success, .bento-alert-success, .max-alert-success, .bau-alert-success, .tactile-alert-success, .neo-alert-success, .retro-alert-success, .brutal-alert-success, .cyber-alert-success, .y2k-alert-success, .rg-alert-success, .luxe-alert-success, .organic-alert-success, .utility-alert-success, .blueprint-alert-success, .deco-alert-success, .clay-alert-success, .terminal-alert-success, .paper-alert-success, .noir-alert-success), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="success"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="success"])) {
+    background: color-mix(in srgb, var(--usk-message-tone) 18%, var(--usk-native-bg));
+    color: var(--usk-native-text);
+  }
+}
+
+[data-ui][data-mode] :where(.saas-alert-warning, .bento-alert-warning, .max-alert-warning, .bau-alert-warning, .tactile-alert-warning, .neo-alert-warning, .retro-alert-warning, .brutal-alert-warning, .cyber-alert-warning, .y2k-alert-warning, .rg-alert-warning, .luxe-alert-warning, .organic-alert-warning, .utility-alert-warning, .blueprint-alert-warning, .deco-alert-warning, .clay-alert-warning, .terminal-alert-warning, .paper-alert-warning, .noir-alert-warning), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="warning"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="warning"])) {
+  --usk-message-tone: var(--usk-native-warning);
+  background: var(--usk-message-tone);
+  color: var(--usk-native-on-warning);
+  border-color: var(--usk-message-tone);
+}
+[data-ui][data-mode] :where(.saas-alert-warning, .bento-alert-warning, .max-alert-warning, .bau-alert-warning, .tactile-alert-warning, .neo-alert-warning, .retro-alert-warning, .brutal-alert-warning, .cyber-alert-warning, .y2k-alert-warning, .rg-alert-warning, .luxe-alert-warning, .organic-alert-warning, .utility-alert-warning, .blueprint-alert-warning, .deco-alert-warning, .clay-alert-warning, .terminal-alert-warning, .paper-alert-warning, .noir-alert-warning) :where(.saas-alert-title, .bento-alert-title, .max-alert-title, .bau-alert-title, .tactile-alert-title, .neo-alert-title, .retro-alert-title, .brutal-alert-title, .cyber-alert-title, .y2k-alert-title, .rg-alert-title, .luxe-alert-title, .organic-alert-title, .utility-alert-title, .blueprint-alert-title, .deco-alert-title, .clay-alert-title, .terminal-alert-title, .paper-alert-title, .noir-alert-title), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="warning"])) :where(.usk-alert-title), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="warning"])) :where(.ui-alert-title) {
+  color: inherit;
+  text-shadow: none;
+}
+[data-ui][data-mode] :where(.saas-alert-warning, .bento-alert-warning, .max-alert-warning, .bau-alert-warning, .tactile-alert-warning, .neo-alert-warning, .retro-alert-warning, .brutal-alert-warning, .cyber-alert-warning, .y2k-alert-warning, .rg-alert-warning, .luxe-alert-warning, .organic-alert-warning, .utility-alert-warning, .blueprint-alert-warning, .deco-alert-warning, .clay-alert-warning, .terminal-alert-warning, .paper-alert-warning, .noir-alert-warning) :where(.saas-alert-body, .bento-alert-body, .max-alert-body, .bau-alert-body, .tactile-alert-body, .neo-alert-body, .retro-alert-body, .brutal-alert-body, .cyber-alert-body, .y2k-alert-body, .rg-alert-body, .luxe-alert-body, .organic-alert-body, .utility-alert-body, .blueprint-alert-body, .deco-alert-body, .clay-alert-body, .terminal-alert-body, .paper-alert-body, .noir-alert-body), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="warning"])) :where(.usk-alert-body), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="warning"])) :where(.ui-alert-body) {
+  color: inherit;
+}
+@supports (color: color-mix(in srgb, #000, #fff)) {
+  [data-ui][data-mode] :where(.saas-alert-warning, .bento-alert-warning, .max-alert-warning, .bau-alert-warning, .tactile-alert-warning, .neo-alert-warning, .retro-alert-warning, .brutal-alert-warning, .cyber-alert-warning, .y2k-alert-warning, .rg-alert-warning, .luxe-alert-warning, .organic-alert-warning, .utility-alert-warning, .blueprint-alert-warning, .deco-alert-warning, .clay-alert-warning, .terminal-alert-warning, .paper-alert-warning, .noir-alert-warning), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="warning"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="warning"])) {
+    background: color-mix(in srgb, var(--usk-message-tone) 18%, var(--usk-native-bg));
+    color: var(--usk-native-text);
+  }
+}
+
+[data-ui][data-mode] :where(.saas-alert-danger, .bento-alert-danger, .max-alert-danger, .bau-alert-danger, .tactile-alert-danger, .neo-alert-danger, .retro-alert-danger, .brutal-alert-danger, .cyber-alert-danger, .y2k-alert-danger, .rg-alert-danger, .luxe-alert-danger, .organic-alert-danger, .utility-alert-danger, .blueprint-alert-danger, .deco-alert-danger, .clay-alert-danger, .terminal-alert-danger, .paper-alert-danger, .noir-alert-danger), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="danger"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="danger"])) {
+  --usk-message-tone: var(--usk-native-danger);
+  background: var(--usk-message-tone);
+  color: var(--usk-native-on-danger);
+  border-color: var(--usk-message-tone);
+}
+[data-ui][data-mode] :where(.saas-alert-danger, .bento-alert-danger, .max-alert-danger, .bau-alert-danger, .tactile-alert-danger, .neo-alert-danger, .retro-alert-danger, .brutal-alert-danger, .cyber-alert-danger, .y2k-alert-danger, .rg-alert-danger, .luxe-alert-danger, .organic-alert-danger, .utility-alert-danger, .blueprint-alert-danger, .deco-alert-danger, .clay-alert-danger, .terminal-alert-danger, .paper-alert-danger, .noir-alert-danger) :where(.saas-alert-title, .bento-alert-title, .max-alert-title, .bau-alert-title, .tactile-alert-title, .neo-alert-title, .retro-alert-title, .brutal-alert-title, .cyber-alert-title, .y2k-alert-title, .rg-alert-title, .luxe-alert-title, .organic-alert-title, .utility-alert-title, .blueprint-alert-title, .deco-alert-title, .clay-alert-title, .terminal-alert-title, .paper-alert-title, .noir-alert-title), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="danger"])) :where(.usk-alert-title), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="danger"])) :where(.ui-alert-title) {
+  color: inherit;
+  text-shadow: none;
+}
+[data-ui][data-mode] :where(.saas-alert-danger, .bento-alert-danger, .max-alert-danger, .bau-alert-danger, .tactile-alert-danger, .neo-alert-danger, .retro-alert-danger, .brutal-alert-danger, .cyber-alert-danger, .y2k-alert-danger, .rg-alert-danger, .luxe-alert-danger, .organic-alert-danger, .utility-alert-danger, .blueprint-alert-danger, .deco-alert-danger, .clay-alert-danger, .terminal-alert-danger, .paper-alert-danger, .noir-alert-danger) :where(.saas-alert-body, .bento-alert-body, .max-alert-body, .bau-alert-body, .tactile-alert-body, .neo-alert-body, .retro-alert-body, .brutal-alert-body, .cyber-alert-body, .y2k-alert-body, .rg-alert-body, .luxe-alert-body, .organic-alert-body, .utility-alert-body, .blueprint-alert-body, .deco-alert-body, .clay-alert-body, .terminal-alert-body, .paper-alert-body, .noir-alert-body), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="danger"])) :where(.usk-alert-body), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="danger"])) :where(.ui-alert-body) {
+  color: inherit;
+}
+@supports (color: color-mix(in srgb, #000, #fff)) {
+  [data-ui][data-mode] :where(.saas-alert-danger, .bento-alert-danger, .max-alert-danger, .bau-alert-danger, .tactile-alert-danger, .neo-alert-danger, .retro-alert-danger, .brutal-alert-danger, .cyber-alert-danger, .y2k-alert-danger, .rg-alert-danger, .luxe-alert-danger, .organic-alert-danger, .utility-alert-danger, .blueprint-alert-danger, .deco-alert-danger, .clay-alert-danger, .terminal-alert-danger, .paper-alert-danger, .noir-alert-danger), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-alert:where([data-ui-variant="danger"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-alert:where([data-ui-variant="danger"])) {
+    background: color-mix(in srgb, var(--usk-message-tone) 18%, var(--usk-native-bg));
+    color: var(--usk-native-text);
+  }
+}
+
+/** Compact status and selection frames provide a readable inset around their text. */
+[data-ui][data-mode] :where(.saas-chip, .saas-tab, .saas-segment, .bento-chip, .bento-tab, .bento-segment, .max-chip, .max-tab, .max-segment, .bau-chip, .bau-tab, .bau-segment, .tactile-chip, .tactile-tab, .tactile-segment, .neo-chip, .neo-tab, .neo-segment, .retro-chip, .retro-tab, .retro-segment, .brutal-chip, .brutal-tab, .brutal-segment, .cyber-chip, .cyber-tab, .cyber-segment, .y2k-chip, .y2k-tab, .y2k-segment, .rg-chip, .rg-tab, .rg-segment, .luxe-chip, .luxe-tab, .luxe-segment, .organic-chip, .organic-tab, .organic-segment, .utility-chip, .utility-tab, .utility-segment, .blueprint-chip, .blueprint-tab, .blueprint-segment, .deco-chip, .deco-tab, .deco-segment, .clay-chip, .clay-tab, .clay-segment, .terminal-chip, .terminal-tab, .terminal-segment, .paper-chip, .paper-tab, .paper-segment, .noir-chip, .noir-tab, .noir-segment), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-chip,.usk-tab,.usk-segment), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-chip,.ui-tab,.ui-segment) {
+  box-sizing: border-box;
+  padding-block: var(--usk-compact-content-padding-block, .35rem);
+  padding-inline: var(--usk-compact-content-padding-inline, .65rem);
+}
+
+/** Public component frames shrink within their parent instead of adding an outer inset. */
+[data-ui][data-mode] :where(.saas-tabs, .saas-tab-list, .saas-tab-panel, .saas-toast-stack, .saas-toast, .saas-popover, .saas-menu, .saas-segmented-control, .bento-tabs, .bento-tab-list, .bento-tab-panel, .bento-toast-stack, .bento-toast, .bento-popover, .bento-menu, .bento-segmented-control, .max-tabs, .max-tab-list, .max-tab-panel, .max-toast-stack, .max-toast, .max-popover, .max-menu, .max-segmented-control, .bau-tabs, .bau-tab-list, .bau-tab-panel, .bau-toast-stack, .bau-toast, .bau-popover, .bau-menu, .bau-segmented-control, .tactile-tabs, .tactile-tab-list, .tactile-tab-panel, .tactile-toast-stack, .tactile-toast, .tactile-popover, .tactile-menu, .tactile-segmented-control, .neo-tabs, .neo-tab-list, .neo-tab-panel, .neo-toast-stack, .neo-toast, .neo-popover, .neo-menu, .neo-segmented-control, .retro-tabs, .retro-tab-list, .retro-tab-panel, .retro-toast-stack, .retro-toast, .retro-popover, .retro-menu, .retro-segmented-control, .brutal-tabs, .brutal-tab-list, .brutal-tab-panel, .brutal-toast-stack, .brutal-toast, .brutal-popover, .brutal-menu, .brutal-segmented-control, .cyber-tabs, .cyber-tab-list, .cyber-tab-panel, .cyber-toast-stack, .cyber-toast, .cyber-popover, .cyber-menu, .cyber-segmented-control, .y2k-tabs, .y2k-tab-list, .y2k-tab-panel, .y2k-toast-stack, .y2k-toast, .y2k-popover, .y2k-menu, .y2k-segmented-control, .rg-tabs, .rg-tab-list, .rg-tab-panel, .rg-toast-stack, .rg-toast, .rg-popover, .rg-menu, .rg-segmented-control, .luxe-tabs, .luxe-tab-list, .luxe-tab-panel, .luxe-toast-stack, .luxe-toast, .luxe-popover, .luxe-menu, .luxe-segmented-control, .organic-tabs, .organic-tab-list, .organic-tab-panel, .organic-toast-stack, .organic-toast, .organic-popover, .organic-menu, .organic-segmented-control, .utility-tabs, .utility-tab-list, .utility-tab-panel, .utility-toast-stack, .utility-toast, .utility-popover, .utility-menu, .utility-segmented-control, .blueprint-tabs, .blueprint-tab-list, .blueprint-tab-panel, .blueprint-toast-stack, .blueprint-toast, .blueprint-popover, .blueprint-menu, .blueprint-segmented-control, .deco-tabs, .deco-tab-list, .deco-tab-panel, .deco-toast-stack, .deco-toast, .deco-popover, .deco-menu, .deco-segmented-control, .clay-tabs, .clay-tab-list, .clay-tab-panel, .clay-toast-stack, .clay-toast, .clay-popover, .clay-menu, .clay-segmented-control, .terminal-tabs, .terminal-tab-list, .terminal-tab-panel, .terminal-toast-stack, .terminal-toast, .terminal-popover, .terminal-menu, .terminal-segmented-control, .paper-tabs, .paper-tab-list, .paper-tab-panel, .paper-toast-stack, .paper-toast, .paper-popover, .paper-menu, .paper-segmented-control, .noir-tabs, .noir-tab-list, .noir-tab-panel, .noir-toast-stack, .noir-toast, .noir-popover, .noir-menu, .noir-segmented-control), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-tabs,.usk-tab-list,.usk-tab-panel,.usk-toast-stack,.usk-toast,.usk-popover,.usk-menu,.usk-segmented-control), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-tabs,.ui-tab-list,.ui-tab-panel,.ui-toast-stack,.ui-toast,.ui-popover,.ui-menu,.ui-segmented-control) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin-inline: 0;
+}
+
+/** Overlay frames retain their content inset after the native element-spacing floor. */
+[data-ui][data-mode] :where(.saas-popover, .saas-menu, .saas-listbox, .bento-popover, .bento-menu, .bento-listbox, .max-popover, .max-menu, .max-listbox, .bau-popover, .bau-menu, .bau-listbox, .tactile-popover, .tactile-menu, .tactile-listbox, .neo-popover, .neo-menu, .neo-listbox, .retro-popover, .retro-menu, .retro-listbox, .brutal-popover, .brutal-menu, .brutal-listbox, .cyber-popover, .cyber-menu, .cyber-listbox, .y2k-popover, .y2k-menu, .y2k-listbox, .rg-popover, .rg-menu, .rg-listbox, .luxe-popover, .luxe-menu, .luxe-listbox, .organic-popover, .organic-menu, .organic-listbox, .utility-popover, .utility-menu, .utility-listbox, .blueprint-popover, .blueprint-menu, .blueprint-listbox, .deco-popover, .deco-menu, .deco-listbox, .clay-popover, .clay-menu, .clay-listbox, .terminal-popover, .terminal-menu, .terminal-listbox, .paper-popover, .paper-menu, .paper-listbox, .noir-popover, .noir-menu, .noir-listbox), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-popover,.usk-menu,.usk-listbox), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-popover,.ui-menu,.ui-listbox) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding: var(--usk-overlay-padding, .5rem);
+}
+[data-ui][data-mode] :where(.saas-menu-item, .saas-listbox-option, .bento-menu-item, .bento-listbox-option, .max-menu-item, .max-listbox-option, .bau-menu-item, .bau-listbox-option, .tactile-menu-item, .tactile-listbox-option, .neo-menu-item, .neo-listbox-option, .retro-menu-item, .retro-listbox-option, .brutal-menu-item, .brutal-listbox-option, .cyber-menu-item, .cyber-listbox-option, .y2k-menu-item, .y2k-listbox-option, .rg-menu-item, .rg-listbox-option, .luxe-menu-item, .luxe-listbox-option, .organic-menu-item, .organic-listbox-option, .utility-menu-item, .utility-listbox-option, .blueprint-menu-item, .blueprint-listbox-option, .deco-menu-item, .deco-listbox-option, .clay-menu-item, .clay-listbox-option, .terminal-menu-item, .terminal-listbox-option, .paper-menu-item, .paper-listbox-option, .noir-menu-item, .noir-listbox-option), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-menu-item,.usk-listbox-option), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-menu-item,.ui-listbox-option) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding-block: var(--usk-option-padding-block, .55rem);
+  padding-inline: var(--usk-option-padding-inline, .7rem);
+}
+
+/** A typed tab root stacks its header and panel; legacy direct-button bars keep their own layout. */
+[data-ui][data-mode] :where(.saas-tabs:has(> .saas-tab-list), .bento-tabs:has(> .bento-tab-list), .max-tabs:has(> .max-tab-list), .bau-tabs:has(> .bau-tab-list), .tactile-tabs:has(> .tactile-tab-list), .neo-tabs:has(> .neo-tab-list), .retro-tabs:has(> .retro-tab-list), .brutal-tabs:has(> .brutal-tab-list), .cyber-tabs:has(> .cyber-tab-list), .y2k-tabs:has(> .y2k-tab-list), .rg-tabs:has(> .rg-tab-list), .luxe-tabs:has(> .luxe-tab-list), .organic-tabs:has(> .organic-tab-list), .utility-tabs:has(> .utility-tab-list), .blueprint-tabs:has(> .blueprint-tab-list), .deco-tabs:has(> .deco-tab-list), .clay-tabs:has(> .clay-tab-list), .terminal-tabs:has(> .terminal-tab-list), .paper-tabs:has(> .paper-tab-list), .noir-tabs:has(> .noir-tab-list)), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-tabs:has(>.usk-tab-list)), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-tabs:has(>.ui-tab-list)) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-flow: row;
+}
+
+/** A direct toast title owns the full row; words are never squeezed into a side column. */
+[data-ui][data-mode] :where(.saas-toast:has(> strong), .bento-toast:has(> strong), .max-toast:has(> strong), .bau-toast:has(> strong), .tactile-toast:has(> strong), .neo-toast:has(> strong), .retro-toast:has(> strong), .brutal-toast:has(> strong), .cyber-toast:has(> strong), .y2k-toast:has(> strong), .rg-toast:has(> strong), .luxe-toast:has(> strong), .organic-toast:has(> strong), .utility-toast:has(> strong), .blueprint-toast:has(> strong), .deco-toast:has(> strong), .clay-toast:has(> strong), .terminal-toast:has(> strong), .paper-toast:has(> strong), .noir-toast:has(> strong)), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-toast:has(>strong)), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-toast:has(>strong)) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .5rem;
+  padding: var(--usk-toast-padding, 1rem);
+}
+[data-ui][data-mode] :where(.saas-toast-title, .saas-toast-body, .saas-toast-actions, .bento-toast-title, .bento-toast-body, .bento-toast-actions, .max-toast-title, .max-toast-body, .max-toast-actions, .bau-toast-title, .bau-toast-body, .bau-toast-actions, .tactile-toast-title, .tactile-toast-body, .tactile-toast-actions, .neo-toast-title, .neo-toast-body, .neo-toast-actions, .retro-toast-title, .retro-toast-body, .retro-toast-actions, .brutal-toast-title, .brutal-toast-body, .brutal-toast-actions, .cyber-toast-title, .cyber-toast-body, .cyber-toast-actions, .y2k-toast-title, .y2k-toast-body, .y2k-toast-actions, .rg-toast-title, .rg-toast-body, .rg-toast-actions, .luxe-toast-title, .luxe-toast-body, .luxe-toast-actions, .organic-toast-title, .organic-toast-body, .organic-toast-actions, .utility-toast-title, .utility-toast-body, .utility-toast-actions, .blueprint-toast-title, .blueprint-toast-body, .blueprint-toast-actions, .deco-toast-title, .deco-toast-body, .deco-toast-actions, .clay-toast-title, .clay-toast-body, .clay-toast-actions, .terminal-toast-title, .terminal-toast-body, .terminal-toast-actions, .paper-toast-title, .paper-toast-body, .paper-toast-actions, .noir-toast-title, .noir-toast-body, .noir-toast-actions), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-toast-title,.usk-toast-body,.usk-toast-actions), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-toast-title,.ui-toast-body,.ui-toast-actions) {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  min-inline-size: 0;
+  inline-size: auto;
+  max-inline-size: 100%;
+  margin: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: normal;
+  hyphens: none;
+}
+/** Switch faces have one inset owner and remain centered at either end of the track. */
+[data-ui][data-mode] :where(.saas-switch-track, .bento-switch-track, .max-switch-track, .bau-switch-track, .tactile-switch-track, .neo-switch-track, .retro-switch-track, .brutal-switch-track, .cyber-switch-track, .y2k-switch-track, .rg-switch-track, .luxe-switch-track, .organic-switch-track, .utility-switch-track, .blueprint-switch-track, .deco-switch-track, .clay-switch-track, .terminal-switch-track, .paper-switch-track, .noir-switch-track), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-switch-track), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-switch-track) {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-inline-size: 2.75rem;
+  min-block-size: 1.625rem;
+  padding: 0;
+}
+[data-ui][data-mode] :where(.saas-switch-thumb, .bento-switch-thumb, .max-switch-thumb, .bau-switch-thumb, .tactile-switch-thumb, .neo-switch-thumb, .retro-switch-thumb, .brutal-switch-thumb, .cyber-switch-thumb, .y2k-switch-thumb, .rg-switch-thumb, .luxe-switch-thumb, .organic-switch-thumb, .utility-switch-thumb, .blueprint-switch-thumb, .deco-switch-thumb, .clay-switch-thumb, .terminal-switch-thumb, .paper-switch-thumb, .noir-switch-thumb), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-switch-thumb), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-switch-thumb) {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-block-end: auto;
+  inset-inline-start: .125rem;
+  inset-inline-end: auto;
+  inline-size: var(--usk-switch-thumb-size, 1.125rem);
+  block-size: var(--usk-switch-thumb-size, 1.125rem);
+  min-inline-size: 0;
+  min-block-size: 0;
+  margin: 0;
+  padding: 0;
+  translate: none;
+  transform: translateY(-50%);
+}
+[data-ui][data-mode] :where(.saas-switch input:checked + .saas-switch-track .saas-switch-thumb, .bento-switch input:checked + .bento-switch-track .bento-switch-thumb, .max-switch input:checked + .max-switch-track .max-switch-thumb, .bau-switch input:checked + .bau-switch-track .bau-switch-thumb, .tactile-switch input:checked + .tactile-switch-track .tactile-switch-thumb, .neo-switch input:checked + .neo-switch-track .neo-switch-thumb, .retro-switch input:checked + .retro-switch-track .retro-switch-thumb, .brutal-switch input:checked + .brutal-switch-track .brutal-switch-thumb, .cyber-switch input:checked + .cyber-switch-track .cyber-switch-thumb, .y2k-switch input:checked + .y2k-switch-track .y2k-switch-thumb, .rg-switch input:checked + .rg-switch-track .rg-switch-thumb, .luxe-switch input:checked + .luxe-switch-track .luxe-switch-thumb, .organic-switch input:checked + .organic-switch-track .organic-switch-thumb, .utility-switch input:checked + .utility-switch-track .utility-switch-thumb, .blueprint-switch input:checked + .blueprint-switch-track .blueprint-switch-thumb, .deco-switch input:checked + .deco-switch-track .deco-switch-thumb, .clay-switch input:checked + .clay-switch-track .clay-switch-thumb, .terminal-switch input:checked + .terminal-switch-track .terminal-switch-thumb, .paper-switch input:checked + .paper-switch-track .paper-switch-thumb, .noir-switch input:checked + .noir-switch-track .noir-switch-thumb), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-switch input:checked+.usk-switch-track .usk-switch-thumb), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-switch input:checked+.ui-switch-track .ui-switch-thumb) {
+  inset-inline-start: auto;
+  inset-inline-end: .125rem;
+  transform: translateY(-50%);
+}
+
+/** A drawn check retains preset ink while Art Deco keeps its own enamel marker. */
+[data-ui][data-mode]:where(:not([data-ui="art-deco"])) :where(.saas-check input:checked + .saas-check-control, .bento-check input:checked + .bento-check-control, .max-check input:checked + .max-check-control, .bau-check input:checked + .bau-check-control, .tactile-check input:checked + .tactile-check-control, .neo-check input:checked + .neo-check-control, .retro-check input:checked + .retro-check-control, .brutal-check input:checked + .brutal-check-control, .cyber-check input:checked + .cyber-check-control, .y2k-check input:checked + .y2k-check-control, .rg-check input:checked + .rg-check-control, .luxe-check input:checked + .luxe-check-control, .organic-check input:checked + .organic-check-control, .utility-check input:checked + .utility-check-control, .blueprint-check input:checked + .blueprint-check-control, .deco-check input:checked + .deco-check-control, .clay-check input:checked + .clay-check-control, .terminal-check input:checked + .terminal-check-control, .paper-check input:checked + .paper-check-control, .noir-check input:checked + .noir-check-control)::after, [data-ui]:where([data-ui="cyberpunk"])[data-mode]:where(:not([data-ui="art-deco"])) :where(.usk-check input:checked+.usk-check-control)::after, [data-ui]:where([data-ui="cyberpunk"])[data-mode]:where(:not([data-ui="art-deco"])) :where(.ui-check input:checked+.ui-check-control)::after {
+  content: "";
+  position: static;
+  inset: auto;
+  clip-path: none;
+  translate: none;
+  display: block;
+  box-sizing: border-box;
+  inline-size: .35em;
+  block-size: .65em;
+  margin: 0 0 .15em;
+  padding: 0;
+  border: solid var(--usk-native-choice-mark-color);
+  border-width: 0 max(2px, var(--usk-native-border-width)) max(2px, var(--usk-native-border-width)) 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+/** Tooltip tone is independent of its position and keeps each preset's silhouette. */
+[data-ui][data-mode] :where(.saas-tooltip-primary, .bento-tooltip-primary, .max-tooltip-primary, .bau-tooltip-primary, .tactile-tooltip-primary, .neo-tooltip-primary, .retro-tooltip-primary, .brutal-tooltip-primary, .cyber-tooltip-primary, .y2k-tooltip-primary, .rg-tooltip-primary, .luxe-tooltip-primary, .organic-tooltip-primary, .utility-tooltip-primary, .blueprint-tooltip-primary, .deco-tooltip-primary, .clay-tooltip-primary, .terminal-tooltip-primary, .paper-tooltip-primary, .noir-tooltip-primary), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-tooltip:where([data-ui-variant="primary"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-tooltip:where([data-ui-variant="primary"])) {
+  background: var(--usk-native-primary);
+  color: var(--usk-native-on-primary);
+  border-color: var(--usk-native-primary);
+  border-style: solid;
+}
+[data-ui][data-mode] :where(.saas-tooltip-secondary, .bento-tooltip-secondary, .max-tooltip-secondary, .bau-tooltip-secondary, .tactile-tooltip-secondary, .neo-tooltip-secondary, .retro-tooltip-secondary, .brutal-tooltip-secondary, .cyber-tooltip-secondary, .y2k-tooltip-secondary, .rg-tooltip-secondary, .luxe-tooltip-secondary, .organic-tooltip-secondary, .utility-tooltip-secondary, .blueprint-tooltip-secondary, .deco-tooltip-secondary, .clay-tooltip-secondary, .terminal-tooltip-secondary, .paper-tooltip-secondary, .noir-tooltip-secondary), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-tooltip:where([data-ui-variant="secondary"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-tooltip:where([data-ui-variant="secondary"])) {
+  background: var(--usk-native-surface);
+  color: var(--usk-native-text);
+  border: max(1px, var(--usk-native-border-width)) dashed var(--usk-native-primary);
+}
+[data-ui][data-mode] :where(.saas-tooltip-accent, .bento-tooltip-accent, .max-tooltip-accent, .bau-tooltip-accent, .tactile-tooltip-accent, .neo-tooltip-accent, .retro-tooltip-accent, .brutal-tooltip-accent, .cyber-tooltip-accent, .y2k-tooltip-accent, .rg-tooltip-accent, .luxe-tooltip-accent, .organic-tooltip-accent, .utility-tooltip-accent, .blueprint-tooltip-accent, .deco-tooltip-accent, .clay-tooltip-accent, .terminal-tooltip-accent, .paper-tooltip-accent, .noir-tooltip-accent), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-tooltip:where([data-ui-variant="accent"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-tooltip:where([data-ui-variant="accent"])) {
+  background: var(--usk-native-accent);
+  color: var(--usk-native-on-accent);
+  border: 3px double var(--usk-native-accent);
+}
+
+/** Secondary actions have a framed supporting surface rather than ghost paint. */
+[data-ui][data-mode] :where(.saas-button-secondary, .bento-button-secondary, .max-button-secondary, .bau-button-secondary, .tactile-button-secondary, .neo-button-secondary, .retro-button-secondary, .brutal-button-secondary, .cyber-button-secondary, .y2k-button-secondary, .rg-button-secondary, .luxe-button-secondary, .organic-button-secondary, .utility-button-secondary, .blueprint-button-secondary, .deco-button-secondary, .clay-button-secondary, .terminal-button-secondary, .paper-button-secondary, .noir-button-secondary), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-button:where([data-ui-variant="secondary"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-button:where([data-ui-variant="secondary"])) {
+  background: var(--usk-native-secondary);
+  color: var(--usk-native-on-secondary);
+  border-color: var(--usk-native-primary);
+}
+
+/** Status badges retain an inset without changing seal or medallion dimensions. */
+[data-ui][data-mode] :where(.saas-badge, .bento-badge, .max-badge, .bau-badge, .tactile-badge, .neo-badge, .retro-badge, .brutal-badge, .cyber-badge, .y2k-badge, .rg-badge, .luxe-badge, .organic-badge, .utility-badge, .blueprint-badge, .deco-badge, .clay-badge, .terminal-badge, .paper-badge, .noir-badge), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-badge), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-badge) {
+  padding-block: var(--usk-badge-padding-block, .22rem);
+  padding-inline: var(--usk-badge-padding-inline, .6rem);
+}
+
+/** Warning actions and statuses use paired amber/orange roles while retaining opaque text. */
+[data-ui][data-mode] :where(.saas-button-warning, .saas-badge-warning, .bento-button-warning, .bento-badge-warning, .max-button-warning, .max-badge-warning, .bau-button-warning, .bau-badge-warning, .tactile-button-warning, .tactile-badge-warning, .neo-button-warning, .neo-badge-warning, .retro-button-warning, .retro-badge-warning, .brutal-button-warning, .brutal-badge-warning, .cyber-button-warning, .cyber-badge-warning, .y2k-button-warning, .y2k-badge-warning, .rg-button-warning, .rg-badge-warning, .luxe-button-warning, .luxe-badge-warning, .organic-button-warning, .organic-badge-warning, .utility-button-warning, .utility-badge-warning, .blueprint-button-warning, .blueprint-badge-warning, .deco-button-warning, .deco-badge-warning, .clay-button-warning, .clay-badge-warning, .terminal-button-warning, .terminal-badge-warning, .paper-button-warning, .paper-badge-warning, .noir-button-warning, .noir-badge-warning), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-button:where([data-ui-variant="warning"]),.usk-badge:where([data-ui-variant="warning"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-button:where([data-ui-variant="warning"]),.ui-badge:where([data-ui-variant="warning"])) {
+  background: var(--usk-native-warning);
+  color: var(--usk-native-on-warning);
+  border-color: var(--usk-native-warning);
+  text-shadow: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-ui][data-mode] :where(.saas-button-warning, .saas-badge-warning, .bento-button-warning, .bento-badge-warning, .max-button-warning, .max-badge-warning, .bau-button-warning, .bau-badge-warning, .tactile-button-warning, .tactile-badge-warning, .neo-button-warning, .neo-badge-warning, .retro-button-warning, .retro-badge-warning, .brutal-button-warning, .brutal-badge-warning, .cyber-button-warning, .cyber-badge-warning, .y2k-button-warning, .y2k-badge-warning, .rg-button-warning, .rg-badge-warning, .luxe-button-warning, .luxe-badge-warning, .organic-button-warning, .organic-badge-warning, .utility-button-warning, .utility-badge-warning, .blueprint-button-warning, .blueprint-badge-warning, .deco-button-warning, .deco-badge-warning, .clay-button-warning, .clay-badge-warning, .terminal-button-warning, .terminal-badge-warning, .paper-button-warning, .paper-badge-warning, .noir-button-warning, .noir-badge-warning), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-button:where([data-ui-variant="warning"]),.usk-badge:where([data-ui-variant="warning"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-button:where([data-ui-variant="warning"]),.ui-badge:where([data-ui-variant="warning"])) {
+    animation: usk-warning-attention var(--usk-warning-attention-duration, 1.8s) ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-ui][data-mode] :where(.saas-button-warning, .saas-badge-warning, .bento-button-warning, .bento-badge-warning, .max-button-warning, .max-badge-warning, .bau-button-warning, .bau-badge-warning, .tactile-button-warning, .tactile-badge-warning, .neo-button-warning, .neo-badge-warning, .retro-button-warning, .retro-badge-warning, .brutal-button-warning, .brutal-badge-warning, .cyber-button-warning, .cyber-badge-warning, .y2k-button-warning, .y2k-badge-warning, .rg-button-warning, .rg-badge-warning, .luxe-button-warning, .luxe-badge-warning, .organic-button-warning, .organic-badge-warning, .utility-button-warning, .utility-badge-warning, .blueprint-button-warning, .blueprint-badge-warning, .deco-button-warning, .deco-badge-warning, .clay-button-warning, .clay-badge-warning, .terminal-button-warning, .terminal-badge-warning, .paper-button-warning, .paper-badge-warning, .noir-button-warning, .noir-badge-warning), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.usk-button:where([data-ui-variant="warning"]),.usk-badge:where([data-ui-variant="warning"])), [data-ui]:where([data-ui="cyberpunk"])[data-mode] :where(.ui-button:where([data-ui-variant="warning"]),.ui-badge:where([data-ui-variant="warning"])) {
+    animation: none;
+  }
+}
+@keyframes usk-warning-attention {
+  50% { filter: brightness(1.16); }
+}
+
 }
 /* END GENERATED 2.2 PRESET COMPONENT FOUNDATIONS */
 
@@ -4300,6 +4590,26 @@
 }
 
 @layer ui-style-kit.clean_defaults {
+/** Inline hyperlinks and their labels must not inherit the control spacing floor. */
+[data-ui][data-mode] :where(a:not([class]), a[data-link-presentation="inline"], a[data-link-presentation="inline"] > .usk-link__label, a[data-link-presentation="inline"] > .usk-link__icon) {
+  display: inline;
+  min-block-size: 0;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/** Explicit control links preserve a wrapping, aligned action composition. */
+[data-ui][data-mode] :where(a[data-link-presentation="control"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--usk-link-gap, .5rem);
+}
+
 /** Keeps semantic state paint paired when a preset also owns broad anchor or input rules. */
 [data-ui][data-mode] :where(
   [class~="usk-pagination-link"][aria-current="page"],
@@ -4795,7 +5105,7 @@
     --usk-native-range-track-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .16);
     --usk-native-range-progress-background: var(--cyber-primary);
     --usk-native-range-thumb-size: 1.25rem;
-    --usk-native-range-thumb-background: var(--cyber-surface-strong);
+    --usk-native-range-thumb-background: var(--usk-native-primary);
     --usk-native-range-thumb-border: 1px solid var(--cyber-border);
     --usk-native-range-thumb-radius: .1rem;
     --usk-native-range-thumb-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .22);
@@ -5310,7 +5620,7 @@
     background: var(--cyber-card-bg);
   }
 
-  .cyber-toolbar, .cyber-table-wrap, .cyber-button:not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-warning):not(.cyber-button-ghost), .cyber-icon-button, :where([data-ui="cyberpunk"]) .usk-toolbar, :where([data-ui="cyberpunk"]) .usk-table-wrap, :where([data-ui="cyberpunk"]) .usk-button:not(.usk-button:where([data-ui-variant="primary"])):not(.usk-button:where([data-ui-variant="secondary"])):not(.usk-button:where([data-ui-variant="danger"])):not(.usk-button:where([data-ui-variant="warning"])):not(.usk-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .usk-icon-button, :where([data-ui="cyberpunk"]) .ui-toolbar, :where([data-ui="cyberpunk"]) .ui-table-wrap, :where([data-ui="cyberpunk"]) .ui-button:not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="warning"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .ui-icon-button {
+  .cyber-toolbar, .cyber-table-wrap, .cyber-button:where(:not([data-ui-variant])):not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-warning):not(.cyber-button-ghost), .cyber-icon-button, :where([data-ui="cyberpunk"]) .usk-toolbar, :where([data-ui="cyberpunk"]) .usk-table-wrap, :where([data-ui="cyberpunk"]) .usk-button:where(:not([data-ui-variant])):not(.usk-button:where([data-ui-variant="primary"])):not(.usk-button:where([data-ui-variant="secondary"])):not(.usk-button:where([data-ui-variant="danger"])):not(.usk-button:where([data-ui-variant="warning"])):not(.usk-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .usk-icon-button, :where([data-ui="cyberpunk"]) .ui-toolbar, :where([data-ui="cyberpunk"]) .ui-table-wrap, :where([data-ui="cyberpunk"]) .ui-button:where(:not([data-ui-variant])):not(.ui-button:where([data-ui-variant="primary"])):not(.ui-button:where([data-ui-variant="secondary"])):not(.ui-button:where([data-ui-variant="danger"])):not(.ui-button:where([data-ui-variant="warning"])):not(.ui-button:where([data-ui-variant="ghost"])), :where([data-ui="cyberpunk"]) .ui-icon-button {
     background: var(--cyber-control-bg);
   }
 
@@ -5678,7 +5988,7 @@
     --usk-native-range-track-shadow: 0 0 .7rem rgb(var(--cyber-primary-rgb) / .4);
     --usk-native-range-progress-background: linear-gradient(90deg, var(--cyber-primary), var(--cyber-accent));
     --usk-native-range-thumb-size: 1.3rem;
-    --usk-native-range-thumb-background: linear-gradient(135deg, var(--cyber-surface-strong), var(--cyber-primary));
+    --usk-native-range-thumb-background: var(--usk-native-primary);
     --usk-native-range-thumb-border: 2px solid var(--cyber-accent);
     --usk-native-range-thumb-radius: 28%;
     --usk-native-range-thumb-shadow: 0 0 .85rem rgb(var(--cyber-accent-rgb) / .5);
@@ -5737,7 +6047,6 @@
   }
 
   .cyber-button:active, .cyber-button[aria-pressed="true"], .cyber-button.is-active, :where([data-ui="cyberpunk"]) .usk-button:active, :where([data-ui="cyberpunk"]) .usk-button[aria-pressed="true"], :where([data-ui="cyberpunk"]) .usk-button.is-active, :where([data-ui="cyberpunk"]) .ui-button:active, :where([data-ui="cyberpunk"]) .ui-button[aria-pressed="true"], :where([data-ui="cyberpunk"]) .ui-button.is-active {
-    background: linear-gradient(135deg,var(--cyber-primary),var(--cyber-accent));
     box-shadow: inset 0 0 .6rem rgb(var(--cyber-text-rgb)/.24);
     transform: translateY(1px);
   }
@@ -5962,7 +6271,7 @@
     --usk-native-range-track-shadow: 0 0 .45rem rgb(var(--cyber-primary-rgb) / .16);
     --usk-native-range-progress-background: var(--cyber-primary);
     --usk-native-range-thumb-size: 1.25rem;
-    --usk-native-range-thumb-background: var(--cyber-surface-strong);
+    --usk-native-range-thumb-background: var(--usk-native-primary);
     --usk-native-range-thumb-border: 1px solid var(--cyber-primary);
     --usk-native-range-thumb-radius: .08rem;
     --usk-native-range-thumb-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .24);
@@ -7256,6 +7565,14 @@
     color: var(--cyber-on-warning);
     border-color: var(--cyber-warning);
     text-shadow: none;
+  }
+
+  .cyber-console {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    margin-inline: 0;
+    overflow-x: auto;
   }
 }
 

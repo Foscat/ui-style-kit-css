@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: .22rem .22rem 0 var(--max-ink);
   --usk-native-range-progress-background: var(--max-warning);
   --usk-native-range-thumb-size: 1.62rem;
-  --usk-native-range-thumb-background: var(--max-warning);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 3px solid var(--max-ink);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: .18rem .18rem 0 rgb(var(--max-secondary-rgb) / .8);
@@ -451,7 +451,8 @@
 /* Theme-responsive component defaults */
 .max-card, .max-panel { background: var(--max-card-bg); }
 .max-toolbar, .max-table-wrap { background: var(--max-control-bg); }
-.max-button:not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-warning):not(.max-button-ghost):not(.max-button-outline-heavy), .max-icon-button { background: var(--max-control-bg); }
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.max-button:where(:not([data-ui-variant])):not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-warning):not(.max-button-ghost):not(.max-button-outline-heavy), .max-icon-button { background: var(--max-control-bg); }
 .max-button, .max-icon-button, .max-badge, .max-nav-link { font-family: var(--max-font-control); }
 
 
@@ -865,7 +866,7 @@
   --usk-native-range-track-shadow: .2rem .2rem 0 var(--max-ink);
   --usk-native-range-progress-background: linear-gradient(90deg, var(--max-success), var(--max-warning), var(--max-danger), var(--max-accent));
   --usk-native-range-thumb-size: 1.78rem;
-  --usk-native-range-thumb-background: conic-gradient(var(--max-warning), var(--max-primary), var(--max-accent), var(--max-warning));
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 3px solid var(--max-ink);
   --usk-native-range-thumb-radius: 42% 58% 46% 54%;
   --usk-native-range-thumb-shadow: .16rem .16rem 0 var(--max-ink), .28rem .28rem 0 rgb(var(--max-secondary-rgb) / .62);
@@ -1080,7 +1081,7 @@
   --usk-native-range-track-radius: 0;
   --usk-native-range-track-shadow: 3px 3px 0 var(--max-ink);
   --usk-native-range-progress-background: var(--max-warning);
-  --usk-native-range-thumb-background: var(--max-accent);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 3px solid var(--max-ink);
   --usk-native-range-thumb-radius: 50%;
   --usk-native-range-thumb-shadow: 2px 2px 0 var(--max-ink);
@@ -1371,6 +1372,8 @@
   border-width: .12em;
   flex-shrink: 0;
   clip-path: none;
+  /* A busy wedge follows its button ink; the standalone loader keeps accent paint. */
+  background: conic-gradient(currentColor 0 28%, transparent 28% 100%);
 }
 
 .max-nav {

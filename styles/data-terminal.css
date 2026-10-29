@@ -251,7 +251,7 @@
   --usk-native-range-track-shadow: 0 0 9px var(--terminal-primary);
   --usk-native-range-progress-background: var(--terminal-primary);
   --usk-native-range-thumb-size: 1.1rem;
-  --usk-native-range-thumb-background: var(--terminal-surface-strong);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--terminal-border);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: 0 0 9px var(--terminal-primary);
@@ -437,7 +437,8 @@
 /* Theme-responsive component defaults */
 .terminal-card, .terminal-panel { background: var(--terminal-card-bg); }
 .terminal-toolbar, .terminal-table-wrap { background: var(--terminal-control-bg); }
-.terminal-button:not(.terminal-button-primary):not(.terminal-button-secondary):not(.terminal-button-danger):not(.terminal-button-warning):not(.terminal-button-ghost):not(.is-active):not([aria-pressed="true"]),
+/** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+.terminal-button:where(:not([data-ui-variant])):not(.terminal-button-primary):not(.terminal-button-secondary):not(.terminal-button-danger):not(.terminal-button-warning):not(.terminal-button-ghost):not(.is-active):not([aria-pressed="true"]),
 .terminal-icon-button:not(.is-active):not([aria-pressed="true"]) { background: var(--terminal-control-bg); }
 .terminal-button, .terminal-icon-button, .terminal-badge, .terminal-nav-link { font-family: var(--terminal-font-control); }
 
@@ -873,7 +874,7 @@
   --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: linear-gradient(90deg, var(--terminal-success), var(--terminal-warning), var(--terminal-danger));
   --usk-native-range-thumb-size: .9rem;
-  --usk-native-range-thumb-background: var(--terminal-text);
+  --usk-native-range-thumb-background: var(--usk-native-primary);
   --usk-native-range-thumb-border: 1px solid var(--terminal-surface);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: 0 0 0 1px var(--terminal-primary);
@@ -1691,7 +1692,8 @@
   --usk-native-range-track-shadow: none;
   --usk-native-range-progress-background: linear-gradient(var(--terminal-primary), var(--terminal-primary));
   --usk-native-range-thumb-size: .75rem;
-  --usk-native-range-thumb-background: var(--terminal-surface);
+  /** Paired signal hues keep the compact terminal thumb visible. */
+  --usk-native-range-thumb-background: linear-gradient(135deg, var(--terminal-primary), var(--terminal-accent));
   --usk-native-range-thumb-border: 2px solid var(--terminal-text);
   --usk-native-range-thumb-radius: 0;
   --usk-native-range-thumb-shadow: none;

@@ -123,16 +123,19 @@ test('Maximalist authored and native busy buttons share the style spinner and mo
   const root = stylesheet('styles/maximalist.css');
   const spinner = declarations(root, '.max-spinner');
   const native = '[data-ui="maximalist"] :where(button[aria-busy="true"], input[type="button"][aria-busy="true"], input[type="submit"][aria-busy="true"], input[type="reset"][aria-busy="true"])::after';
-  for (const selector of ['.max-button[aria-busy="true"]::after', '.max-icon-button[aria-busy="true"]::after', native]) {
+  const busySelectors = ['.max-button[aria-busy="true"]::after', '.max-icon-button[aria-busy="true"]::after', native];
+  const firstBusy = declarations(root, busySelectors[0]);
+  for (const selector of busySelectors) {
     const busy = declarations(root, selector);
-    for (const property of ['background', 'border', 'border-radius', 'box-shadow', 'animation']) {
-      assert.equal(busy.get(property), spinner.get(property), `${selector}: ${property}`);
+    for (const property of ['background', 'border', 'border-radius', 'box-shadow', 'animation', 'border-width', 'flex-shrink', 'clip-path']) {
+      assert.equal(busy.get(property), firstBusy.get(property), `${selector}: ${property}`);
     }
     assert.equal(busy.get('border-width'), '.12em');
     assert.equal(busy.get('flex-shrink'), '0');
     assert.equal(busy.get('clip-path'), 'none');
   }
-  assert.match(spinner.get('background'), /var\(--max-accent\)/, 'Loader paint follows the active palette');
+  assert.match(firstBusy.get('background'), /conic-gradient\(currentColor/, 'Button loaders follow readable button ink');
+  assert.match(spinner.get('background'), /var\(--max-accent\)/, 'Standalone loader keeps its palette accent');
   let reducedMotion = false;
   root.walkAtRules('media', (rule) => {
     if (rule.params !== '(prefers-reduced-motion: reduce)') return;

@@ -235,7 +235,8 @@ const expectedSemanticComponentApi = {
       '.usk-badge': ['primary', 'secondary', 'success', 'warning', 'danger'],
       '.usk-alert': ['success', 'warning', 'danger'],
       '.usk-chip': ['primary', 'secondary', 'success', 'warning', 'danger'],
-      '.usk-toast': ['info', 'success', 'warning', 'danger']
+      '.usk-toast': ['info', 'success', 'warning', 'danger'],
+      '.usk-tooltip': ['primary', 'secondary', 'accent']
     }
   },
   stateAttributes: {
@@ -671,14 +672,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Reviewed 25-theme output includes text-ink fallbacks and preserves other declarations. */
+  /** Locks reviewed declarations after preset-native range identity corrections. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 36813,
-    sha256: '5c91bc6b2e7420344712301403b7484903d506fd04ad10a3ce414a805b532ce8'
+    count: 37026,
+    sha256: 'bcdd86da49ed1ad49d36f6a92aaba38da2759deef347bfb89e43f692e5210f6b'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37264,
-    sha256: '638774eef02572309c557769bb3ed4161d9b7b7d83723e0f0056a22087e9bacd'
+    count: 37477,
+    sha256: 'c086a1f570c042093ac29f3420305a7e01ec32f43a0f0644b2828726f9804d89'
   });
 });
 
@@ -686,7 +687,7 @@ test('semantic source suffixes and contextual variants exist in every composed p
   const currentSuffixes = new Set(manifest.classApi.universalVisualSuffixes);
   const requiredSuffixes = semanticRequiredSuffixes();
 
-  assert.equal(manifest.classApi.universalVisualSuffixes.length, 150);
+  assert.equal(manifest.classApi.universalVisualSuffixes.length, 153);
   for (const suffix of requiredSuffixes) {
     assert.equal(currentSuffixes.has(suffix), true, `${suffix} must remain a current universal visual suffix`);
   }
@@ -758,7 +759,7 @@ test('data-ui-variant is the only semantic component attribute added to the pres
   assert.equal(api.presetSwitchAttribute, 'data-ui');
   assert.equal(api.variantAttribute.name, 'data-ui-variant');
   assert.equal(api.variantAttribute.neutral, 'omitted');
-  assert.equal(variantContexts.length, 5);
+  assert.deepEqual(variantContexts.sort(), ['.usk-alert', '.usk-badge', '.usk-button', '.usk-chip', '.usk-toast', '.usk-tooltip']);
   assert.equal(variantContexts.every((selector) => selectors.has(selector)), true);
   for (const values of Object.values(api.variantAttribute.valuesBySelector)) {
     assert.equal(new Set(values).size, values.length, 'variant values must be unique within their selector context');
