@@ -12,10 +12,10 @@ const rootDir = path.resolve(__dirname, '..');
 const packageJson = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
 const packageLock = JSON.parse(fs.readFileSync(path.join(rootDir, 'package-lock.json'), 'utf8'));
 
-// Exact overrides keep the release audit deterministic without promoting transitive tooling to direct dependencies.
+/** Exact overrides keep audited transitive tooling out of runtime dependencies. */
 const expectedSecurityOverrides = {
   colord: '2.9.4',
-  'fast-uri': '3.1.8',
+  'fast-uri': '3.1.9',
   'js-yaml': '4.3.2',
   nanoid: '3.3.18',
   postcss: '8.5.23'

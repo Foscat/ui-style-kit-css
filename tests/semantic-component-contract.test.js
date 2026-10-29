@@ -672,14 +672,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Reviewed geometry and feedback repairs add 202 declarations with paired preset paint. */
+  /** Locks reviewed declarations after preset-native range identity corrections. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
     count: 37026,
-    sha256: 'fd692187920212b7f6706a7398a47f7ad5556b007e36e597291dbabdcc668971'
+    sha256: 'bcdd86da49ed1ad49d36f6a92aaba38da2759deef347bfb89e43f692e5210f6b'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
     count: 37477,
-    sha256: 'c26bb6dd630deae8274d91f2b0709b7a324368835632e48f6b5e75d5770c6ed1'
+    sha256: 'c086a1f570c042093ac29f3420305a7e01ec32f43a0f0644b2828726f9804d89'
   });
 });
 
