@@ -99,7 +99,8 @@ test('current ecosystem documentation consumes canonical imports from the compat
 
     if (!documentPath.endsWith('Installation-and-Setup.md')) {
       assert.match(document, /layout-style-css@3\.0\.0/);
-      assert.match(document, /current release candidate/i);
+      /** Maintained docs identify the compatible version in both candidate and published states. */
+      assert.match(document, /current UI version/i);
       assert.match(document, /compatible structural release/i);
     }
   }
