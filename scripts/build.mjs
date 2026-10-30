@@ -257,7 +257,73 @@ function dedupeNestedSelectorLists(selector) {
   });
 }
 
+/**
+ * Identifies selectors that positively opt into a promoted component family.
+ *
+ * Exclusion-only rules already cover semantic markup. Cloning them would remove
+ * the original prefixed exclusion and let an alias rule recolor that component.
+ *
+ * @param {import('css-tree').CssNode} selector Authored selector AST.
+ * @param {Map<string, string>} aliases Public aliases keyed by source class.
+ * @returns {boolean} Whether a component class occurs outside a negation.
+ */
+function hasPositiveSemanticClass(selector, aliases) {
+  let negationDepth = 0;
+  let found = false;
+  walk(selector, {
+    enter(node) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth++;
+      const sourceClass = node.type === 'ClassSelector' ? node.name : exactClassToken(node);
+      if (negationDepth === 0 && aliases.has(sourceClass)) found = true;
+    },
+    leave(node) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth--;
+    }
+  });
+  return found;
+}
+
+/**
+ * Preserves prefixed exclusions while excluding both generated namespaces too.
+ *
+ * Exact class-token attributes describe exclusions without promoting a generic
+ * rule into a semantic component rule or changing its authored root specificity.
+ *
+ * @param {import('css-tree').CssNode} selector Authored selector containing component exclusions.
+ * @returns {string|null} Expanded selector, or null when no component was excluded.
+ */
+function expandSemanticExclusions(selector) {
+  const expanded = clone(selector);
+  let changed = false;
+  let negationDepth = 0;
+  walk(expanded, {
+    enter(node, item, list) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth++;
+      if (negationDepth === 0) return;
+      const sourceClass = node.type === 'ClassSelector' ? node.name : exactClassToken(node);
+      const aliases = semanticAliasMaps.map((map) => map.get(sourceClass)).filter(Boolean);
+      if (aliases.length === 0) return;
+      const exclusions = aliases.map((alias) => alias.replace(/^\.([a-z-]+)/, '[class~="$1"]'));
+      list.replace(item, selectorNodes(`:is(${generate(node)}, ${exclusions.join(', ')})`));
+      changed = true;
+    },
+    leave(node) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth--;
+    }
+  });
+  return changed ? generate(expanded) : null;
+}
+
+/**
+ * Projects a positively selected component into one scoped semantic namespace.
+ *
+ * @param {import('css-tree').CssNode} selector Authored selector AST.
+ * @param {string} selectedRoot Specificity-safe scope for the admitted presets.
+ * @param {Map<string, string>} semanticAliasBySourceClass Source-to-semantic selector map.
+ * @returns {string|null} Scoped semantic selector, or null for an exclusion-only rule.
+ */
 function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClass) {
+  if (!hasPositiveSemanticClass(selector, semanticAliasBySourceClass)) return null;
   const aliased = clone(selector);
   let changed = false;
 
@@ -279,6 +345,14 @@ function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClas
   return hasRoot ? generate(aliased) : `${selectedRoot} ${generate(aliased)}`;
 }
 
+/**
+ * Adds semantic selectors while preserving authored declarations and variant guards.
+ *
+ * @param {string} css Normalized authored CSS text.
+ * @param {string} filename Source filename used by parser diagnostics.
+ * @param {object[]} selectedPresets Manifest presets admitted to this entrypoint.
+ * @returns {string} CSS with scoped aliases and namespace-safe component exclusions.
+ */
 function addSemanticAliases(css, filename, selectedPresets) {
   if (semanticAliases.length === 0) return css;
 
@@ -291,8 +365,10 @@ function addSemanticAliases(css, filename, selectedPresets) {
   walk(ast, {
     visit: 'Rule',
     enter(rule) {
+      const selectors = rule.prelude.children.toArray();
+      const exclusions = selectors.map(expandSemanticExclusions);
       const aliases = semanticAliasMaps.flatMap((semanticAliasBySourceClass) =>
-        rule.prelude.children.toArray()
+        selectors
           .map((selector) => aliasSemanticSelector(
             selector,
             selectedRoot,
@@ -301,13 +377,12 @@ function addSemanticAliases(css, filename, selectedPresets) {
           .filter(Boolean)
       );
 
-      if (aliases.length === 0) return;
+      if (aliases.length === 0 && exclusions.every((selector) => selector === null)) return;
+      const authoredSelectors = selectors.map((selector, index) => exclusions[index] ?? generate(selector));
       selectorEdits.push({
         start: rule.prelude.loc.start.offset,
         end: rule.prelude.loc.end.offset,
-        value: `${css.slice(rule.prelude.loc.start.offset, rule.prelude.loc.end.offset)}, ${[
-          ...new Set(aliases)
-        ].join(', ')}`
+        value: [...authoredSelectors, ...new Set(aliases)].join(', ')
       });
     }
   });

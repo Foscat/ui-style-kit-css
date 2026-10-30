@@ -439,7 +439,8 @@
 .retro-card, .retro-panel { background: var(--retro-card-bg); }
 .retro-toolbar, .retro-table-wrap { background: var(--retro-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.retro-button:where(:not([data-ui-variant])):not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-warning):not(.retro-button-ghost), .retro-icon-button { background: var(--retro-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.retro-button:where(:not([data-ui-variant])):not(.retro-button-primary):not(.retro-button-secondary):not(.retro-button-danger):not(.retro-button-warning):not(.retro-button-ghost):not(.retro-button-outline-heavy), .retro-icon-button { background: var(--retro-control-bg); }
 .retro-button, .retro-icon-button, .retro-badge, .retro-nav-link { font-family: var(--retro-font-control); }
 
 
@@ -638,7 +639,7 @@
 .retro-button.retro-button-outline-heavy,
 .retro-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--retro-primary));
+  color: var(--usk-primary-ink, var(--retro-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--retro-primary);
@@ -1336,7 +1337,7 @@
 
 .retro-button.retro-button-outline-heavy, .retro-button-outline-heavy {
   background: var(--retro-enamel-bg);
-  color: var(--usk-primary-ink, var(--retro-primary));
+  color: var(--usk-primary-ink, var(--retro-text));
   border: 4px double var(--retro-metal-edge);
   border-radius: var(--retro-radius-pill);
   clip-path: inset(0 round var(--retro-radius-pill));

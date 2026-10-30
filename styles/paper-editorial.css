@@ -438,7 +438,8 @@
 .paper-card, .paper-panel { background: var(--paper-card-bg); }
 .paper-toolbar, .paper-table-wrap { background: var(--paper-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.paper-button:where(:not([data-ui-variant])):not(.paper-button-primary):not(.paper-button-secondary):not(.paper-button-danger):not(.paper-button-warning):not(.paper-button-ghost), .paper-icon-button { background: var(--paper-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.paper-button:where(:not([data-ui-variant])):not(.paper-button-primary):not(.paper-button-secondary):not(.paper-button-danger):not(.paper-button-warning):not(.paper-button-ghost):not(.paper-button-outline-heavy), .paper-icon-button { background: var(--paper-control-bg); }
 .paper-button, .paper-icon-button, .paper-badge, .paper-nav-link { font-family: var(--paper-font-control); }
 
 
@@ -630,7 +631,7 @@
 .paper-button.paper-button-outline-heavy,
 .paper-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--paper-primary));
+  color: var(--usk-primary-ink, var(--paper-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--paper-primary);
@@ -942,7 +943,8 @@
 @media print {
   [data-ui="paper-editorial"] { background: #fff !important; color: #000 !important; }
   [data-ui="paper-editorial"] * { box-shadow: none !important; text-shadow: none !important; }
-  [data-ui="paper-editorial"] a { color: #000 !important; text-decoration: underline; }
+  /** Inline-link ink must not override the foreground paired with an action surface. */
+[data-ui="paper-editorial"] a { color: #000 !important; text-decoration: underline; }
 }
 }
 
@@ -1070,13 +1072,13 @@
 
 :where([data-ui="paper-editorial"]) :where(button,input,select,textarea) { font: inherit; }
 
-[data-ui="paper-editorial"] a {
+[data-ui="paper-editorial"] a:where(:not(.paper-button):not(.paper-icon-button):not(.paper-nav-link)) {
   color: var(--paper-sheet-blue);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
-[data-ui="paper-editorial"] a:hover { color: var(--paper-sheet-oxblood); }
+[data-ui="paper-editorial"] a:where(:not(.paper-button):not(.paper-icon-button):not(.paper-nav-link)):hover { color: var(--paper-sheet-oxblood); }
 
 .paper-kicker,
 .paper-label,

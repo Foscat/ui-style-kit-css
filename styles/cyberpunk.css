@@ -427,7 +427,8 @@
 }
 [data-ui="cyberpunk"] *, [data-ui="cyberpunk"] *::before, [data-ui="cyberpunk"] *::after { box-sizing: border-box; }
 [data-ui="cyberpunk"][data-mode] { background: var(--cyber-theme-bg); background-size: var(--cyber-theme-bg-size); }
-[data-ui="cyberpunk"] a { color: var(--cyber-link); text-decoration-color: rgb(var(--cyber-primary-rgb) / 0.6); text-underline-offset: 0.18em; }
+/** Inline-link ink must not override the foreground paired with an action surface. */
+[data-ui="cyberpunk"] a:where(:not(.cyber-button):not(.cyber-icon-button)) { color: var(--cyber-link); text-decoration-color: rgb(var(--cyber-primary-rgb) / 0.6); text-underline-offset: 0.18em; }
 [data-ui="cyberpunk"] ::selection { background: var(--cyber-primary); color: var(--cyber-on-primary); }
 
 .cyber-page { position: relative; min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); }
@@ -478,7 +479,8 @@
 .cyber-card, .cyber-panel { background: var(--cyber-card-bg); }
 .cyber-toolbar, .cyber-table-wrap { background: var(--cyber-control-bg); }
 /** Semantic variant attributes take precedence over the legacy neutral-control fallback. */
-.cyber-button:where(:not([data-ui-variant])):not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-warning):not(.cyber-button-ghost), .cyber-icon-button { background: var(--cyber-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.cyber-button:where(:not([data-ui-variant])):not(.cyber-button-primary):not(.cyber-button-secondary):not(.cyber-button-danger):not(.cyber-button-warning):not(.cyber-button-ghost):not(.cyber-button-outline-heavy), .cyber-icon-button { background: var(--cyber-control-bg); }
 .cyber-button, .cyber-icon-button, .cyber-badge, .cyber-nav-link { font-family: var(--cyber-font-control); }
 
 /* Spinner geometry follows the cyberpunk preset's clipped neon readouts. */
@@ -580,7 +582,7 @@
 .cyber-button.cyber-button-outline-heavy,
 .cyber-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--cyber-primary));
+  color: var(--usk-primary-ink, var(--cyber-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--cyber-primary);
@@ -1047,7 +1049,7 @@
 .cyber-button:hover,
 .cyber-icon-button:hover {
   border-color: var(--cyber-primary);
-  color: var(--usk-primary-ink, var(--cyber-primary));
+  color: var(--usk-primary-ink, var(--cyber-text));
   box-shadow: 0 0 .75rem rgb(var(--cyber-primary-rgb) / .2);
 }
 
@@ -1618,7 +1620,8 @@
   border-color: transparent;
   background-color: transparent;
   background-image: none;
-  color: var(--usk-primary-ink, var(--cyber-primary));
+  /** Unfilled native controls use readable surface ink rather than neon fill pigment. */
+  color: var(--usk-primary-ink, var(--cyber-text));
   box-shadow: none;
 }
 
@@ -1627,7 +1630,8 @@
   border-color: var(--cyber-danger);
   background-color: rgb(var(--cyber-danger-rgb) / .12);
   background-image: linear-gradient(135deg, rgb(var(--cyber-danger-rgb) / .16), transparent 62%);
-  color: var(--cyber-danger);
+  /** The signal tint is decorative; its label uses the contrasting surface foreground. */
+  color: var(--cyber-text);
   box-shadow: var(--cyber-template-danger-glow);
 }
 

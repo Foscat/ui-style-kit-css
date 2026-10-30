@@ -9,7 +9,11 @@ UI Style Kit CSS provides presentation-level accessibility helpers. Semantic str
 - Native HTML coverage for common typography/form/table elements
 - Visible tooltip surfaces through prefixed utilities and generic `[role="tooltip"]` hooks
 - Theme-aware text utilities, filled-surface `on-*` colors, 4.5:1 text contrast checks, and 3:1 light-mode component-edge checks
-- Shared `--usk-*` color-scheme roles with a manifest-driven audit of all 20 presets, 20 schemes, and three modes
+- Shared `--usk-*` color-scheme roles with a manifest-driven audit of all 20 presets, 25 schemes, and three modes
+
+Interaction regressions also check native palettes and preserve foreground/background
+pairs through hover, press, and keyboard focus. Inline-link colors must not override
+action or navigation component paint. Decorative gloss stays outside the label lane.
 
 Native palettes also work without `data-theme`. Text inside trust seals inherits
 the seal's own foreground rather than the native page-text color; Tactile pairs

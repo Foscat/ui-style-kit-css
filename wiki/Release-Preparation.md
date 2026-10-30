@@ -1,12 +1,12 @@
 # Release Preparation
 
-The current local target is `ui-style-kit-css@2.7.0` (release candidate). The package version, lockfile,
+The current local target is `ui-style-kit-css@2.7.1` (compatible patch version). The package version, lockfile,
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
-The compatible patch release refines the demo toolbar, loads optional preset
-scripts only when selected, and preserves entered demo values during palette
-changes. It retains the 25-theme inventory, existing native palettes,
+The compatible patch release repairs disappearing hover and pressed labels,
+preserves action colors on links, and corrects exclusion-only semantic aliases.
+It retains the 25-theme inventory, existing native palettes,
 preset-prefixed compatibility classes, optional bridge compositions, and
 hardens the 75-selector semantic component API across all 20 presets.
 

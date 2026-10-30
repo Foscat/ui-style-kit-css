@@ -438,7 +438,8 @@
 .deco-card, .deco-panel { background: var(--deco-card-bg); }
 .deco-toolbar, .deco-table-wrap { background: var(--deco-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.deco-button:where(:not([data-ui-variant])):not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost), .deco-icon-button { background: var(--deco-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.deco-button:where(:not([data-ui-variant])):not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost):not(.deco-button-outline-heavy), .deco-icon-button { background: var(--deco-control-bg); }
 .deco-button, .deco-icon-button, .deco-badge, .deco-nav-link { font-family: var(--deco-font-control); }
 
 
@@ -630,7 +631,7 @@
 .deco-button.deco-button-outline-heavy,
 .deco-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--deco-primary));
+  color: var(--usk-primary-ink, var(--deco-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--deco-primary);
@@ -1056,6 +1057,12 @@
     --deco-jewel-warning: color-mix(in srgb, rgb(var(--deco-warning-rgb)) 20%, rgb(94 59 14));
     --deco-jewel-danger: color-mix(in srgb, rgb(var(--deco-danger-rgb)) 35%, rgb(90 23 23));
   }
+}
+
+/** Named palettes preserve their tested primary paint pair instead of tempering only the fill. */
+[data-ui="art-deco"][data-theme][data-mode] :is(.deco-button-primary, .deco-nav-link[aria-current="page"], .deco-nav-link.is-active) {
+  background-color: var(--deco-primary);
+  color: var(--deco-on-primary);
 }
 
 /**
@@ -1524,7 +1531,9 @@
   text-indent: 0;
 }
 
-.deco-button:where(:not([data-ui-variant])):not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost),
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+
+.deco-button:where(:not([data-ui-variant])):not(.deco-button-primary):not(.deco-button-secondary):not(.deco-button-danger):not(.deco-button-warning):not(.deco-button-ghost):not(.deco-button-outline-heavy),
 .deco-icon-button {
   background-color: var(--deco-surface-strong);
   background-image: none;

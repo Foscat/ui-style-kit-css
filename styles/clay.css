@@ -446,7 +446,8 @@
 .clay-card, .clay-panel { background: var(--clay-card-bg); }
 .clay-toolbar, .clay-table-wrap { background: var(--clay-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.clay-button:where(:not([data-ui-variant])):not(.clay-button-primary):not(.clay-button-secondary):not(.clay-button-danger):not(.clay-button-warning):not(.clay-button-ghost), .clay-icon-button { background: var(--clay-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.clay-button:where(:not([data-ui-variant])):not(.clay-button-primary):not(.clay-button-secondary):not(.clay-button-danger):not(.clay-button-warning):not(.clay-button-ghost):not(.clay-button-outline-heavy), .clay-icon-button { background: var(--clay-control-bg); }
 .clay-button, .clay-icon-button, .clay-badge, .clay-nav-link { font-family: var(--clay-font-control); }
 
 
@@ -638,7 +639,7 @@
 .clay-button.clay-button-outline-heavy,
 .clay-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--clay-primary));
+  color: var(--usk-primary-ink, var(--clay-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--clay-primary);
@@ -895,7 +896,8 @@
   --clay-molded-track: var(--clay-grain-image), linear-gradient(180deg, var(--clay-material-contact), transparent 46%), var(--clay-material-inset);
   --clay-molded-raised: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), var(--clay-material-raised);
   --clay-molded-thumb: var(--clay-grain-image), radial-gradient(circle at 34% 24%, var(--clay-material-highlight), transparent 46%), linear-gradient(176deg, var(--clay-material-highlight), transparent 44%), var(--clay-thumb-material);
-  --clay-molded-primary: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), var(--clay-pigment-primary);
+  /** Raised highlights stay above the label, preserving the pigment's paired ink. */
+  --clay-molded-primary: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 20%), var(--clay-pigment-primary);
   --clay-molded-success: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), var(--clay-pigment-success);
   --clay-molded-warning: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), var(--clay-pigment-warning);
   --clay-molded-danger: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), var(--clay-pigment-danger);
@@ -1073,11 +1075,12 @@
 }
 
 /** Gives every button the shallow relief and debossed lettering shown in the reference. */
+/** Action and icon labels use the control surface; thumb pigment belongs to movable parts. */
 .clay-button, .clay-icon-button,
 [data-ui="clay"][data-mode] :where(button:not([class]), input[type="button"]:not([class]), input[type="submit"]:not([class]), input[type="reset"]:not([class])) {
   min-height: 2rem;
   padding: .34rem .64rem;
-  background-color: var(--clay-thumb-material);
+  background-color: var(--clay-control-bg);
   background-image: var(--clay-grain-image), linear-gradient(174deg, var(--clay-material-highlight), transparent 34%);
   background-size: var(--clay-grain-size), auto;
   border: 1px solid var(--clay-material-seam);
@@ -1102,7 +1105,8 @@
   text-shadow: var(--clay-label-relief);
 }
 .clay-button-primary { background: var(--clay-molded-primary); color: var(--clay-pigment-ink); border-color: var(--clay-pigment-primary); }
-.clay-button-primary:hover { background-color: var(--clay-pigment-primary-hover); border-color: var(--clay-pigment-primary-hover); }
+/** Hover changes the relief and edge without lightening the pigment beneath its label. */
+.clay-button-primary:hover { background: var(--clay-molded-primary); border-color: var(--clay-pigment-primary-hover); }
 .clay-button-secondary { background: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), var(--clay-pigment-secondary); color: var(--clay-on-secondary); border-color: var(--clay-pigment-secondary); }
 .clay-button-secondary:hover { background-color: var(--clay-pigment-secondary); border-color: var(--clay-pigment-secondary); }
 .clay-button-danger { background: var(--clay-molded-danger); color: rgb(var(--clay-danger-text-rgb)); border-color: var(--clay-pigment-danger); }
@@ -1127,7 +1131,7 @@
 }
 .clay-button.clay-button-outline-heavy, .clay-button-outline-heavy {
   background-color: var(--clay-material-raised);
-  color: var(--usk-primary-ink, var(--clay-primary));
+  color: var(--usk-primary-ink, var(--clay-text));
   border: 2px solid var(--clay-primary);
   clip-path: var(--clay-chip-clip);
 }
@@ -1229,7 +1233,8 @@
   .clay-badge-danger { background: var(--clay-grain-image), linear-gradient(176deg, var(--clay-material-highlight), transparent 42%), color-mix(in srgb, var(--clay-pigment-danger) 28%, var(--clay-material-raised)); color: var(--clay-material-ink); border-color: color-mix(in srgb, var(--clay-pigment-danger), var(--clay-material-seam) 52%); }
 }
 .clay-nav { gap: 0; padding: .18rem; background: var(--clay-material-inset); border-color: var(--clay-material-seam); border-radius: .48rem .6rem .52rem .56rem; box-shadow: var(--clay-carved-shadow); clip-path: var(--clay-control-clip); filter: var(--clay-edge-filter); }
-.clay-nav-link { min-height: 2.1rem; padding: .42rem .62rem; border-radius: .3rem .38rem .32rem .36rem; clip-path: var(--clay-control-clip); font-weight: 500; text-shadow: var(--clay-label-relief); }
+/** Navigation labels retain full surface ink over the textured clay slab. */
+.clay-nav-link { min-height: 2.1rem; padding: .42rem .62rem; border-radius: .3rem .38rem .32rem .36rem; clip-path: var(--clay-control-clip); font-weight: 500; color: var(--clay-text); text-shadow: var(--clay-label-relief); }
 .clay-nav-link[aria-current="page"], .clay-nav-link.is-active { background: var(--clay-molded-primary); color: var(--clay-pigment-ink); box-shadow: var(--clay-filled-shadow); clip-path: var(--clay-control-clip); filter: var(--clay-edge-filter); }
 
 .clay-alert { padding: .7rem .82rem; background-color: var(--clay-material-raised); background-image: var(--clay-grain-image), linear-gradient(170deg, var(--clay-material-highlight), transparent 42%); background-size: var(--clay-grain-size), auto; border: 1px solid var(--clay-material-seam); border-inline-start-width: .28rem; border-radius: .42rem .55rem .46rem .52rem; box-shadow: var(--clay-relief-shadow); clip-path: var(--clay-control-clip); filter: var(--clay-edge-filter); }

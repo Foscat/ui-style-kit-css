@@ -440,7 +440,8 @@
 .max-button:hover, .max-icon-button:hover { transform: translate(-2px, -2px); border-color: var(--max-ink); box-shadow: .4rem .4rem 0 rgb(var(--max-secondary-rgb) / .76); }
 .max-button:active, .max-icon-button:active, .max-button[aria-pressed="true"], .max-icon-button[aria-pressed="true"], .max-button.is-active, .max-icon-button.is-active { transform: translate(.12rem, .12rem); box-shadow: .12rem .12rem 0 var(--max-ink); }
 .max-button-primary { background: var(--max-poster-fill); color: var(--max-on-primary); border-color: var(--max-ink); }
-.max-button-primary:hover { background: linear-gradient(110deg, var(--max-primary-hover), var(--max-danger), var(--max-accent)); border-color: var(--max-ink); }
+/** A single foreground can span only gradient stops from its paired color role. */
+.max-button-primary:hover { background: linear-gradient(110deg, var(--max-primary-hover), var(--max-primary)); border-color: var(--max-ink); }
 .max-button-secondary { background: var(--max-secondary); color: var(--max-on-secondary); border-color: var(--max-secondary); }
 .max-button-secondary:hover { background: var(--max-secondary-hover); border-color: var(--max-secondary-hover); }
 .max-button-danger { background: var(--max-danger); color: var(--max-on-danger); border-color: var(--max-ink); }
@@ -452,6 +453,7 @@
 .max-card, .max-panel { background: var(--max-card-bg); }
 .max-toolbar, .max-table-wrap { background: var(--max-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
 .max-button:where(:not([data-ui-variant])):not(.max-button-primary):not(.max-button-secondary):not(.max-button-danger):not(.max-button-warning):not(.max-button-ghost):not(.max-button-outline-heavy), .max-icon-button { background: var(--max-control-bg); }
 .max-button, .max-icon-button, .max-badge, .max-nav-link { font-family: var(--max-font-control); }
 

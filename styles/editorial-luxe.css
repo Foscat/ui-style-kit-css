@@ -438,7 +438,8 @@
 .luxe-card, .luxe-panel { background: var(--luxe-card-bg); }
 .luxe-toolbar, .luxe-table-wrap { background: var(--luxe-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.luxe-button:where(:not([data-ui-variant])):not(.luxe-button-primary):not(.luxe-button-secondary):not(.luxe-button-danger):not(.luxe-button-warning):not(.luxe-button-ghost), .luxe-icon-button { background: var(--luxe-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.luxe-button:where(:not([data-ui-variant])):not(.luxe-button-primary):not(.luxe-button-secondary):not(.luxe-button-danger):not(.luxe-button-warning):not(.luxe-button-ghost):not(.luxe-button-outline-heavy), .luxe-icon-button { background: var(--luxe-control-bg); }
 .luxe-button, .luxe-icon-button, .luxe-badge, .luxe-nav-link { font-family: var(--luxe-font-control); }
 
 
@@ -630,7 +631,7 @@
 .luxe-button.luxe-button-outline-heavy,
 .luxe-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--luxe-primary));
+  color: var(--usk-primary-ink, var(--luxe-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--luxe-primary);

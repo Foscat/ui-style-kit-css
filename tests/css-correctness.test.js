@@ -272,8 +272,8 @@ test('Bento preset follows the soft mosaic product reference styling', () => {
     );
     assert.match(
       blockFor(css, `.bento-badge-${state}`),
-      new RegExp(`color:\\s*var\\(--bento-${state}\\);`),
-      `.bento-badge-${state} should keep semantic text emphasis`
+      new RegExp(`color:\\s*var\\(--bento-${state === 'danger' ? state : 'text'}\\);`),
+      `.bento-badge-${state} should keep readable ink on its semantic tint`
     );
   }
 });

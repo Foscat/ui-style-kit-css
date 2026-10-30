@@ -91,3 +91,20 @@ test('every preset trust seal emphasizes the number over the caption', async ({ 
     expect(sealType.captionSize, `${preset} seal caption size`).toBe(expectedType.captionSize);
   }
 });
+
+test('Y2K trust seal keeps its complete number and caption inside the frame', async ({ page }) => {
+  await openLibrary(page);
+  await selectPreset(page, 'y2k');
+  for (const mode of ['light', 'dark', 'contrast']) {
+    await page.selectOption('#modeSelect', mode);
+    const contained = await page.locator('.y2k-badge-seal').evaluate((seal) => {
+      const frame = seal.getBoundingClientRect();
+      return [...seal.children].every((child) => {
+        const label = child.getBoundingClientRect();
+        return label.left >= frame.left && label.right <= frame.right &&
+          label.top >= frame.top && label.bottom <= frame.bottom;
+      });
+    });
+    expect(contained, `Complete Y2K seal labels in ${mode}`).toBe(true);
+  }
+});

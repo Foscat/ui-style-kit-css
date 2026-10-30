@@ -438,7 +438,9 @@
 .terminal-card, .terminal-panel { background: var(--terminal-card-bg); }
 .terminal-toolbar, .terminal-table-wrap { background: var(--terminal-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.terminal-button:where(:not([data-ui-variant])):not(.terminal-button-primary):not(.terminal-button-secondary):not(.terminal-button-danger):not(.terminal-button-warning):not(.terminal-button-ghost):not(.is-active):not([aria-pressed="true"]),
+/** Native press state bypasses the neutral fallback just like persistent pressed hooks. */
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.terminal-button:where(:not([data-ui-variant])):not(.terminal-button-primary):not(.terminal-button-secondary):not(.terminal-button-danger):not(.terminal-button-warning):not(.terminal-button-ghost):not(.terminal-button-outline-heavy):not(.is-active):not([aria-pressed="true"]):not(:active),
 .terminal-icon-button:not(.is-active):not([aria-pressed="true"]) { background: var(--terminal-control-bg); }
 .terminal-button, .terminal-icon-button, .terminal-badge, .terminal-nav-link { font-family: var(--terminal-font-control); }
 
@@ -631,7 +633,7 @@
 .terminal-button.terminal-button-outline-heavy,
 .terminal-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--terminal-primary));
+  color: var(--usk-primary-ink, var(--terminal-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--terminal-primary);
