@@ -454,7 +454,8 @@
 /* Theme-responsive component defaults */
 .bento-card, .bento-panel { background: var(--bento-card-bg); }
 .bento-toolbar, .bento-table-wrap { background: var(--bento-control-bg); }
-.bento-button:where(:not(.bento-button-primary):not(.bento-button-secondary):not(.bento-button-danger):not(.bento-button-warning):not(.bento-button-ghost):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-hover):not(.is-busy)), .bento-icon-button { background: var(--bento-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.bento-button:where(:not(.bento-button-primary):not(.bento-button-secondary):not(.bento-button-danger):not(.bento-button-warning):not(.bento-button-ghost):not(.bento-button-outline-heavy):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-hover):not(.is-busy)), .bento-icon-button { background: var(--bento-control-bg); }
 .bento-button, .bento-icon-button, .bento-badge, .bento-nav-link { font-family: var(--bento-font-control); }
 
 
@@ -500,8 +501,9 @@
 .bento-badge { display: inline-flex; align-items: center; gap: var(--bento-space-1); min-height: 1.75rem; padding: .38rem .72rem; background: var(--bento-tile-secondary-bg); color: var(--bento-text); border: 1px solid var(--bento-tile-edge); border-radius: var(--bento-radius-sm); box-shadow: inset 0 1px 0 rgb(var(--bento-surface-strong-rgb) / .62); font-size: .8125rem; font-weight: 800; line-height: 1; }
 .bento-badge-primary { background: var(--bento-primary); color: var(--bento-on-primary); border-color: var(--bento-primary); }
 .bento-badge-secondary { background: rgb(var(--bento-primary-rgb) / .10); color: var(--usk-primary-ink, var(--bento-primary)); border-color: transparent; }
-.bento-badge-success { background: rgb(var(--bento-success-rgb) / .14); color: var(--bento-success); border-color: transparent; }
-.bento-badge-warning { background: rgb(var(--bento-warning-rgb) / .14); color: var(--bento-warning); border-color: transparent; }
+/** Warning and success tints use surface text rather than their solid signal fill as ink. */
+.bento-badge-success { background: rgb(var(--bento-success-rgb) / .14); color: var(--bento-text); border-color: transparent; }
+.bento-badge-warning { background: rgb(var(--bento-warning-rgb) / .14); color: var(--bento-text); border-color: transparent; }
 .bento-badge-danger { background: rgb(var(--bento-danger-rgb) / .14); color: var(--bento-danger); border-color: transparent; }
 
 .bento-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bento-space-2); padding: var(--bento-space-2); background: var(--bento-card-bg); border: 1px solid var(--bento-tile-edge); border-radius: var(--bento-tile-radius); box-shadow: var(--bento-tile-shadow); }
@@ -674,7 +676,7 @@
 .bento-button.bento-button-outline-heavy,
 .bento-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--bento-primary));
+  color: var(--usk-primary-ink, var(--bento-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--bento-primary);
@@ -817,7 +819,7 @@
 }
 .bento-button.bento-button-outline-heavy, .bento-button-outline-heavy {
   background: rgb(var(--bento-surface-strong-rgb) / var(--bento-panel-alpha));
-  color: var(--usk-primary-ink, var(--bento-primary));
+  color: var(--usk-primary-ink, var(--bento-text));
   border-width: 1px;
   border-color: rgb(var(--bento-primary-rgb) / .32);
   border-radius: var(--bento-control-radius);
@@ -1210,7 +1212,6 @@
 
 [data-ui=bento][data-mode] :is(.bento-button, .bento-icon-button) {
   align-items: center;
-  background: var(--bento-mosaic-panel-soft);
   border: 1px solid var(--bento-mosaic-line);
   border-radius: 8px;
   display: inline-flex;
@@ -1221,6 +1222,8 @@
   padding: 0 16px;
   transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
+/** Mosaic neutral paint yields to the outlined CTA's paired hover fill. */
+[data-ui=bento][data-mode] :is(.bento-button, .bento-icon-button):where(:not(.bento-button-outline-heavy)) { background: var(--bento-mosaic-panel-soft); }
 [data-ui=bento][data-mode] .bento-button:hover:not(:disabled) { transform: translateY(-1px); }
 [data-ui=bento][data-mode] .bento-button:active:not(:disabled) { transform: translateY(1px); }
 [data-ui=bento][data-mode] .bento-button.is-primary,
@@ -1595,7 +1598,8 @@
 [data-ui=bento][data-mode] .bento-card, [data-ui=bento][data-mode] .bento-panel { padding: 16px; }
 [data-ui=bento][data-mode] .bento-button, [data-ui=bento][data-mode] .bento-icon-button { border-radius: 8px; box-shadow: none; font-weight: 750; text-shadow: none; }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-[data-ui=bento][data-mode] .bento-button:where(:not([data-ui-variant])):not(.bento-button-primary):not(.bento-button-secondary):not(.bento-button-danger):not(.bento-button-warning):not(.bento-button-ghost):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-busy):not(.is-hover) { background: var(--bento-surface-soft); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+[data-ui=bento][data-mode] .bento-button:where(:not([data-ui-variant])):not(.bento-button-primary):not(.bento-button-secondary):not(.bento-button-danger):not(.bento-button-warning):not(.bento-button-ghost):not(.bento-button-outline-heavy):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-busy):not(.is-hover) { background: var(--bento-surface-soft); }
 [data-ui=bento][data-mode] .bento-button.bento-button-primary, [data-ui=bento][data-mode] .bento-button.is-primary, [data-ui=bento][data-mode] .bento-button.is-busy { background: var(--bento-primary); color: var(--bento-on-primary); border-color: var(--bento-primary); }
 [data-ui=bento][data-mode] .bento-button.bento-button-secondary, [data-ui=bento][data-mode] .bento-button.is-secondary { background: transparent; color: var(--bento-link); border-color: var(--bento-primary); }
 [data-ui=bento][data-mode] .bento-button.bento-button-danger, [data-ui=bento][data-mode] .bento-button.is-danger { background: var(--bento-mosaic-danger-soft); color: var(--bento-text); border-color: var(--bento-danger); }

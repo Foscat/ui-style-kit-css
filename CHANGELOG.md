@@ -4,6 +4,17 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.7.1] - 2026-10-29
+
+### Fixed
+
+- Preserved readable hover and pressed labels across prefixed controls, semantic aliases, anchor actions, native controls, navigation, and tables.
+- Prevented inline-link colors and generated alias exclusions from overriding component foreground pairs, including mixed React class models.
+- Kept decorative gloss outside action label areas and paired selected fills with their proper foregrounds.
+- Prevented neutral defaults from replacing outlined CTA hover fills and corrected Clay icon-button surface pairing.
+- Preserved primary paint on Y2K cut CTAs and kept complete trust-seal labels inside their frame.
+- Corrected Bento success and warning badge ink on translucent surfaces.
+
 ## [2.7.0] - 2026-10-29
 
 ### Added

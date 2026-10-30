@@ -464,7 +464,8 @@
 .bau-card, .bau-panel { background: var(--bau-card-bg); }
 .bau-toolbar, .bau-table-wrap { background: var(--bau-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.bau-button:where(:not([data-ui-variant])):not(.bau-button-primary):not(.bau-button-secondary):not(.bau-button-danger):not(.bau-button-warning):not(.bau-button-ghost):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-busy):not(.is-hover), .bau-icon-button { background: var(--bau-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.bau-button:where(:not([data-ui-variant])):not(.bau-button-primary):not(.bau-button-secondary):not(.bau-button-danger):not(.bau-button-warning):not(.bau-button-ghost):not(.bau-button-outline-heavy):not(.is-primary):not(.is-secondary):not(.is-danger):not(.is-ghost):not(.is-busy):not(.is-hover), .bau-icon-button { background: var(--bau-control-bg); }
 .bau-button, .bau-icon-button, .bau-badge, .bau-nav-link { font-family: var(--bau-font-control); }
 
 
@@ -662,7 +663,7 @@
 .bau-button.bau-button-outline-heavy,
 .bau-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--bau-primary));
+  color: var(--usk-primary-ink, var(--bau-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--bau-primary);
@@ -950,7 +951,8 @@
 .bau-button-primary { background: var(--bau-primary); color: var(--bau-on-primary); border-color: var(--bau-primary); }
 .bau-button-secondary { background: var(--bau-secondary); color: var(--bau-on-secondary); border-color: var(--bau-secondary); }
 .bau-button-danger { background: var(--bau-danger); color: var(--bau-on-danger); border-color: var(--bau-danger); }
-.bau-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--bau-primary)); border-color: transparent; }
+/** Native palettes need surface ink when the primary fill is too dark for an unfilled action. */
+.bau-button-ghost { background: transparent; color: var(--usk-primary-ink, var(--bau-text)); border-color: transparent; }
 }
 
 @layer ui-style-kit.bauhaus {

@@ -438,7 +438,8 @@
 .utility-card, .utility-panel { background: var(--utility-card-bg); }
 .utility-toolbar, .utility-table-wrap { background: var(--utility-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.utility-button:where(:not([data-ui-variant])):not(.utility-button-primary):not(.utility-button-secondary):not(.utility-button-danger):not(.utility-button-warning):not(.utility-button-ghost):not(.utility-button-guarded), .utility-icon-button { background: var(--utility-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.utility-button:where(:not([data-ui-variant])):not(.utility-button-primary):not(.utility-button-secondary):not(.utility-button-danger):not(.utility-button-warning):not(.utility-button-ghost):not(.utility-button-outline-heavy):not(.utility-button-guarded), .utility-icon-button { background: var(--utility-control-bg); }
 .utility-button, .utility-icon-button, .utility-badge, .utility-nav-link { font-family: var(--utility-font-control); }
 
 
@@ -630,7 +631,7 @@
 .utility-button.utility-button-outline-heavy,
 .utility-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--utility-primary));
+  color: var(--usk-primary-ink, var(--utility-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--utility-primary);
@@ -944,7 +945,8 @@
 @media print {
   [data-ui="industrial-utility"] { background: #fff !important; color: #000 !important; }
   [data-ui="industrial-utility"] * { box-shadow: none !important; text-shadow: none !important; }
-  [data-ui="industrial-utility"] a { color: #000 !important; text-decoration: underline; }
+  /** Inline-link ink must not override the foreground paired with an action surface. */
+[data-ui="industrial-utility"] a { color: #000 !important; text-decoration: underline; }
 }
 }
 
@@ -1096,15 +1098,15 @@
   outline-offset: 2px;
 }
 
-[data-ui="industrial-utility"] a {
+[data-ui="industrial-utility"] a:where(:not(.utility-button):not(.utility-icon-button):not(.utility-nav-link)) {
   color: var(--utility-material-lamp-blue);
   font-weight: 700;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
-[data-ui="industrial-utility"] a:hover,
-[data-ui="industrial-utility"] a.is-hover {
+[data-ui="industrial-utility"] a:where(:not(.utility-button):not(.utility-icon-button):not(.utility-nav-link)):hover,
+[data-ui="industrial-utility"] a:where(:not(.utility-button):not(.utility-icon-button):not(.utility-nav-link)).is-hover {
   color: var(--utility-material-warning);
 }
 

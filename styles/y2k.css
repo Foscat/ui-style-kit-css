@@ -433,7 +433,8 @@
 }
 [data-ui="y2k"] *, [data-ui="y2k"] *::before, [data-ui="y2k"] *::after { box-sizing: border-box; }
 [data-ui="y2k"][data-mode] { background: var(--y2k-theme-bg); background-size: var(--y2k-theme-bg-size); }
-[data-ui="y2k"] a { color: var(--y2k-link); text-decoration-thickness: 0.11em; text-underline-offset: 0.18em; } [data-ui="y2k"] ::selection { background: var(--y2k-primary); color: var(--y2k-on-primary); }
+/** Inline-link ink must not override the foreground paired with an action surface. */
+[data-ui="y2k"] a:where(:not(.y2k-button):not(.y2k-icon-button)) { color: var(--y2k-link); text-decoration-thickness: 0.11em; text-underline-offset: 0.18em; } [data-ui="y2k"] ::selection { background: var(--y2k-primary); color: var(--y2k-on-primary); }
 
 .y2k-page { min-height: 100vh; padding: clamp(1rem, 4vw, 3rem); background-image: radial-gradient(rgb(var(--y2k-border-rgb) / var(--y2k-grid-alpha)) 1px, transparent 1px); background-size: 22px 22px; }
 .y2k-container { width: min(100% - 2rem, 1200px); margin-inline: auto; } .y2k-stack { display: flex; flex-direction: column; gap: var(--y2k-space-4); } .y2k-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--y2k-space-3); } .y2k-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--y2k-space-5); } .y2k-section { padding: clamp(1.25rem, 4vw, 2.5rem); }
@@ -467,7 +468,8 @@
 .y2k-card, .y2k-panel { background: var(--y2k-card-bg); }
 .y2k-toolbar, .y2k-table-wrap { background: var(--y2k-control-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.y2k-button:where(:not([data-ui-variant])):not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-warning):not(.y2k-button-ghost), .y2k-icon-button { background: var(--y2k-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.y2k-button:where(:not([data-ui-variant])):not(.y2k-button-primary):not(.y2k-button-secondary):not(.y2k-button-danger):not(.y2k-button-warning):not(.y2k-button-ghost):not(.y2k-button-outline-heavy), .y2k-icon-button { background: var(--y2k-control-bg); }
 .y2k-button, .y2k-icon-button, .y2k-badge, .y2k-nav-link { font-family: var(--y2k-font-control); }
 
 /* Spinner geometry follows the y2k preset's glossy plastic controls. */
@@ -568,7 +570,7 @@
 .y2k-button.y2k-button-outline-heavy,
 .y2k-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--y2k-primary));
+  color: var(--usk-primary-ink, var(--y2k-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--y2k-primary);
@@ -926,7 +928,7 @@
   font: 400 11px/1.2 Tahoma, Verdana, Arial, sans-serif;
 }
 
-[data-ui="y2k"] a {
+[data-ui="y2k"] a:where(:not(.y2k-button):not(.y2k-icon-button)) {
   color: var(--y2k-link);
   text-decoration: underline;
   text-decoration-thickness: auto;
@@ -1098,10 +1100,11 @@
   padding: 0;
 }
 
-.y2k-button:hover,
+/** Hovered neutral controls retain the foreground paired with their neutral surface. */
+.y2k-button:where(:not(.y2k-button-primary):not(.y2k-button-danger):not(.y2k-button-warning)):hover,
 .y2k-icon-button:hover {
-  background: var(--y2k-primary-hover);
-  color: var(--y2k-on-primary);
+  background: var(--y2k-surface-soft);
+  color: var(--y2k-text);
   transform: none;
   box-shadow: var(--y2k-bevel-raised);
 }
@@ -1118,9 +1121,15 @@
 }
 
 .y2k-button-primary {
-  background: linear-gradient(180deg, rgb(255 255 255 / .2), transparent 48%), var(--y2k-primary);
+  /** Keep the raised bevel's reflection outside the label lane. */
+  background: linear-gradient(180deg, rgb(255 255 255 / .2), transparent 20%), var(--y2k-primary);
   color: var(--y2k-on-primary);
   border-color: var(--y2k-border);
+}
+
+.y2k-button-primary:hover {
+  background: var(--y2k-primary-hover);
+  color: var(--y2k-on-primary);
 }
 
 .y2k-button-secondary {
@@ -1131,8 +1140,9 @@
 
 .y2k-button-danger {
   background: var(--y2k-surface-soft);
-  color: var(--y2k-danger);
-  border-color: var(--y2k-border);
+  /** The outline carries the danger signal while surface ink keeps its label readable. */
+  color: var(--y2k-text);
+  border-color: var(--y2k-danger);
 }
 
 /**
@@ -1157,12 +1167,16 @@
 .y2k-button.y2k-button-outline-heavy {
   min-inline-size: 0;
   min-block-size: 1.375rem;
-  background: var(--y2k-surface-soft);
   border: 1px outset var(--y2k-border);
   border-radius: 0;
   box-shadow: var(--y2k-bevel-raised);
   clip-path: none;
 }
+/** Compact CTA geometry preserves a primary action's filled paint and paired ink. */
+.y2k-button-cut:where(:not(.y2k-button-primary)),
+.y2k-button.y2k-button-cut:where(:not(.y2k-button-primary)),
+.y2k-button-outline-heavy,
+.y2k-button.y2k-button-outline-heavy { background: var(--y2k-surface-soft); }
 
 .y2k-field {
   gap: .125rem;
@@ -1379,6 +1393,11 @@
   font: 700 .75rem/1 Tahoma, Verdana, Arial, sans-serif;
   text-align: center;
 }
+
+/** The two-line seal needs its own frame; compact icon dimensions clip its labels. */
+.y2k-badge-seal { inline-size: 4rem; min-inline-size: 4rem; block-size: 4rem; }
+/** Native inline spacing must not consume the compact seal's label tracks. */
+.y2k-badge-seal > strong, .y2k-badge-seal > small { margin: 0; padding: 0; white-space: nowrap; }
 
 .y2k-feature-item > .y2k-icon-medallion,
 .y2k-callout-bar > .y2k-icon-medallion {

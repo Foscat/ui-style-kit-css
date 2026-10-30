@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 25 shared color themes, and 3 display modes.
 
-Version `v2.7.0` is the current minor release candidate with shared card and link controls, readable message feedback, and corrected selected-button paint across presets. The demo keeps its options visible and preserves entered values during palette changes. The 75-selector `.usk-*` API remains available across every visual system.
+Version `v2.7.1` is a compatible patch release with readable hover and pressed labels, matched action colors, and corrected semantic selector generation. The 75-selector `.usk-*` API remains available across every visual system.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 

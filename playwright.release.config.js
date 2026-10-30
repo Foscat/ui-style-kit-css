@@ -8,6 +8,9 @@ import { defineConfig, devices } from '@playwright/test';
  * @type {RegExp[]}
  */
 const releaseSmokePatterns = [
+  /interactive labels retain contrast through hover across every palette and mode/,
+  /filled marketing actions retain contrast through hover across every palette and mode/,
+  /Bento .* badge labels retain AA contrast in every palette and mode/,
   /React mixed button classes preserve/,
   /status messages preserve signal tints/,
   /Paper Editorial message icons/,
@@ -43,6 +46,7 @@ const releaseSmokePatterns = [
   /icon-only actions retain neutral or subtle paint/,
   /every preset select renders exactly one dropdown indicator/,
   /every preset trust seal emphasizes the number over the caption/,
+  /Y2K trust seal keeps its complete number and caption inside the frame/,
   /semantic aliases preserve every shared safety property across all presets/,
   /semantic buttons and cards match prefixed twins across every preset/,
   /semantic buttons retain keyboard focus and forced-colors behavior/,

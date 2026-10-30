@@ -4,6 +4,22 @@ The default `index.html` and `demo/index.html` present one shared library showca
 semantic components, overview, color tokens, prefixed components, native HTML,
 the Interactive Surface bridge, and usage examples.
 
+## Interaction contrast
+
+Hover, press, and keyboard focus must preserve readable labels. A filled action
+keeps its paired foreground and background; an inline-link rule must not recolor
+a button or navigation component. Gloss and grain remain decorative rather than
+replacing the label's underlying paint.
+
+The release regressions check 20 presets, 25 named palettes plus native palettes,
+three modes, and five interaction states, including hover on pressed buttons.
+They cover prefixed, semantic, and mixed React class models, anchor buttons,
+native controls, disclosures, navigation, and table labels. The
+contrast probe samples the central label lane and accounts for translucent paint
+and full-face pseudo-elements; positioned dropdown arrows are outside that lane.
+
+Recheck the rendered demo after changing palette values in the workbench.
+
 ## Preview state and palette editing
 
 Use `?ui=tactile&theme=None&mode=dark` to preview a native palette. The `personality`

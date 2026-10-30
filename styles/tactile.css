@@ -468,7 +468,8 @@
 .tactile-card, .tactile-panel { background: var(--tactile-card-bg); }
 .tactile-toolbar, .tactile-table-wrap { background: var(--tactile-card-bg); }
 /** Attribute-selected variants bypass the legacy neutral-only paint fallback. */
-.tactile-button:where(:not([data-ui-variant])):not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-warning):not(.tactile-button-ghost), .tactile-icon-button { background: var(--tactile-control-bg); }
+/** Neutral defaults exclude outlined actions so their hover fill and ink remain paired. */
+.tactile-button:where(:not([data-ui-variant])):not(.tactile-button-primary):not(.tactile-button-secondary):not(.tactile-button-danger):not(.tactile-button-warning):not(.tactile-button-ghost):not(.tactile-button-outline-heavy), .tactile-icon-button { background: var(--tactile-control-bg); }
 .tactile-button, .tactile-icon-button, .tactile-badge, .tactile-nav-link { font-family: var(--tactile-font-control); }
 
 
@@ -664,7 +665,7 @@
 .tactile-button.tactile-button-outline-heavy,
 .tactile-button-outline-heavy {
   background: transparent;
-  color: var(--usk-primary-ink, var(--tactile-primary));
+  color: var(--usk-primary-ink, var(--tactile-text));
   border-style: solid;
   border-width: 2px;
   border-color: var(--tactile-primary);
@@ -1552,7 +1553,8 @@
 /** Enhances supported browsers with the reference's light-to-dark enamel ramp. */
 @supports (color: color-mix(in srgb, black, white)) {
   .tactile-button-primary {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--tactile-primary), white 16%), var(--tactile-primary) 48%, color-mix(in srgb, var(--tactile-primary), black 18%));
+    /** Both enamel stops retain the same tested primary foreground pair. */
+    background: linear-gradient(180deg, var(--tactile-primary-hover), var(--tactile-primary) 48%, var(--tactile-primary));
     border-color: color-mix(in srgb, var(--tactile-primary), black 34%);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .42), inset 0 -2px 0 rgb(0 0 0 / .25), 0 1px 2px rgb(var(--tactile-material-shadow-rgb) / .3);
   }
@@ -1705,7 +1707,8 @@
 
 .tactile-nav-link[aria-current="page"],
 .tactile-nav-link.is-active {
-  color: var(--tactile-brass);
+  /** The copper rail carries selection; text retains the sidebar's paired foreground. */
+  color: var(--tactile-sidebar-fg);
   background: rgb(var(--tactile-sidebar-text-rgb) / .06);
   border-color: rgb(var(--tactile-sidebar-text-rgb) / .18);
   box-shadow: inset .18rem 0 0 var(--tactile-copper), inset .08rem .08rem .18rem rgb(0 0 0 / .38);
