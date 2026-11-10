@@ -4,6 +4,8 @@
 
 The owner authorized selected affected checks and prohibited CI/full suites for this repair. Follow [the 2.7.2 publication boundary](RELEASE-2.7.2.md) and the reviewed manual publish-select-patch.yml workflow. It requires signed exact source, the merged exact-head STE-Adam review, generated-asset reproduction, package admission and anonymous byte readback. It uses the existing npm publisher credential; no new secret or application deployment is included. Do not dispatch either legacy publisher for this patch. The 2.7.1 procedure below is historical and does not describe current 2.7.2 evidence.
 
+If run 42890785010 reports upload success but its immediate registry readback returns 404, use the same manual workflow with complete_only=true, source 56b1e3d50c4c1b17d2f28733cb590e0a742e2941 and approval PR 61. The continuation skips install/build/pack/publication, requires the original prepublication SHA-512 and producer SHA-1 plus exact public byte length, and completes only readback and release records. Preserve the original failed run; do not claim it passed or rerun its successful publication.
+
 ## 2.7.1 release workflow
 
 This guide prepares version `2.7.1`. [Release preparation notes](RELEASE-2.7.1.md)
