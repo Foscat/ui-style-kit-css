@@ -1010,7 +1010,8 @@
 .rg-button:disabled, .rg-icon-button:disabled, .rg-button.is-disabled { opacity: .4; filter: saturate(.45); cursor: not-allowed; box-shadow: none; }
 .rg-field { display: block; min-inline-size: 0; }
 .rg-input, .rg-select, .rg-textarea { inline-size: 100%; min-block-size: var(--rg-control-height); padding: 8px 11px; background: var(--rg-glass-inset); color: var(--rg-text); border: 1px solid var(--rg-line-strong); border-radius: var(--rg-radius-sm); box-shadow: inset 0 1px 3px var(--rg-recess), 0 1px 0 var(--rg-highlight); font: 14px/1.3 var(--rg-font-body); }
-.rg-select { padding-inline-end: 32px; background-image: var(--usk-native-select-indicator-image), linear-gradient(180deg, rgb(0 0 0 / .12), transparent 18%); background-size: var(--usk-native-select-indicator-size), auto; background-position: var(--usk-native-select-indicator-position), center; background-repeat: no-repeat; }
+/** Native and semantic selects retain the same indicator above the recessed glass material. */
+.rg-select, [data-ui="retro-glass"][data-mode] :where(select:not([multiple])) { padding-inline-end: 32px; background-image: var(--usk-native-select-indicator-image), linear-gradient(180deg, rgb(0 0 0 / .12), transparent 18%); background-size: var(--usk-native-select-indicator-size), auto; background-position: var(--usk-native-select-indicator-position), center; background-repeat: no-repeat; }
 .rg-textarea { min-block-size: 64px; resize: vertical; }
 .rg-input::placeholder, .rg-textarea::placeholder { color: var(--rg-muted); opacity: 1; }
 .rg-input-wrap { display: flex; align-items: center; position: relative; }

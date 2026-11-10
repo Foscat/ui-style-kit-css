@@ -856,3 +856,22 @@
   }
 }
 }
+
+/** Native select affordances survive component background shorthands in the preset layer. */
+@layer ui-style-kit.presets {
+/** Keep functional chrome above native defaults while leaving component surface colors intact. */
+[data-ui][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+}
+
+/** Preset density may tune other edges, but text must retain the native indicator gutter. */
+@layer ui-style-kit.clean_defaults {
+[data-ui][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+}
+}

@@ -1,5 +1,9 @@
 # Publishing Guide
 
+## 2.7.2 focused patch route
+
+The owner authorized selected affected checks and prohibited CI/full suites for this repair. Follow [the 2.7.2 publication boundary](RELEASE-2.7.2.md) and the reviewed manual publish-select-patch.yml workflow. It requires signed exact source, the merged exact-head STE-Adam review, generated-asset reproduction, package admission and anonymous byte readback. It uses the existing npm publisher credential; no new secret or application deployment is included. Do not dispatch either legacy publisher for this patch. The 2.7.1 procedure below is historical and does not describe current 2.7.2 evidence.
+
 ## 2.7.1 release workflow
 
 This guide prepares version `2.7.1`. [Release preparation notes](RELEASE-2.7.1.md)

@@ -1,11 +1,10 @@
 # Release Preparation
 
-The current local target is `ui-style-kit-css@2.7.1` (compatible patch version). The package version, lockfile,
+The current local target is `ui-style-kit-css@2.7.2` (compatible patch version). The package version, lockfile,
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
-The compatible patch release repairs disappearing hover and pressed labels,
-preserves action colors on links, and corrects exclusion-only semantic aliases.
+This patch repairs shared native/semantic select chrome. Its exact focused verification and artifact-only publication route are documented in [the 2.7.2 notes](https://github.com/Foscat/ui-style-kit-css/blob/main/docs/RELEASE-2.7.2.md). No full suite or CI is authorized for this owner-directed repair.
 It retains the 25-theme inventory, existing native palettes,
 preset-prefixed compatibility classes, optional bridge compositions, and
 hardens the 75-selector semantic component API across all 20 presets.
