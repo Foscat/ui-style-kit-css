@@ -1,5 +1,5 @@
 /*!
- * UI Style Kit CSS v2.7.1
+ * UI Style Kit CSS v2.7.2
  * CSS theme and UI style preset library.
  * License: MIT
  */
@@ -2857,6 +2857,25 @@
     border-color: GrayText;
     background: Canvas;
   }
+}
+}
+
+/** Native select affordances survive component background shorthands in the preset layer. */
+@layer ui-style-kit.presets {
+/** Keep functional chrome above native defaults while leaving component surface colors intact. */
+[data-ui][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
+  background-image: var(--usk-native-select-indicator-image);
+  background-repeat: no-repeat;
+  background-position: var(--usk-native-select-indicator-position);
+  background-size: var(--usk-native-select-indicator-size);
+}
+}
+
+/** Preset density may tune other edges, but text must retain the native indicator gutter. */
+@layer ui-style-kit.clean_defaults {
+[data-ui][data-mode] :where(select:not([multiple])) {
+  padding-inline-end: var(--usk-native-select-padding-inline-end);
 }
 }
 
@@ -6045,7 +6064,7 @@
     padding: 8px 11px;
   }
 
-  .rg-select, :where([data-ui="retro-glass"]) .usk-select, :where([data-ui="retro-glass"]) .ui-select {
+  .rg-select, [data-ui="retro-glass"][data-mode] :where(select:not([multiple])), :where([data-ui="retro-glass"]) .usk-select, :where([data-ui="retro-glass"]) .ui-select {
     background-image: var(--usk-native-select-indicator-image),linear-gradient(180deg,#0000001f,transparent 18%);
     background-size: var(--usk-native-select-indicator-size),auto;
     background-position: var(--usk-native-select-indicator-position),center;

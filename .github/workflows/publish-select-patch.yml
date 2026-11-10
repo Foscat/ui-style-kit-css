@@ -1,0 +1,75 @@
+name: Publish reviewed 2.7.2 artifact only
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact signed and independently reviewed 2.7.2 source commit
+        required: true
+        type: string
+      approval_pr:
+        description: Merged pull request with STE-Adam approval of this exact head
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: native-select-2.7.2-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha }}
+      APPROVAL_PR: ${{ inputs.approval_pr }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # trusted main controller
+        with:
+          persist-credentials: false
+      - name: Retain trusted controller before candidate checkout
+        run: cp scripts/publish-select-patch.mjs "$RUNNER_TEMP/publish-select-patch.mjs"
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+      - name: Admit exact source and independent review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node "$RUNNER_TEMP/publish-select-patch.mjs" admit
+      - name: Install build dependencies without lifecycle hooks
+        run: npm ci --ignore-scripts
+      - name: Reproduce generated assets without tests
+        run: |
+          node scripts/build.mjs
+          git diff --exit-code -- dist index.html demo/index.html README.md
+          node scripts/check-package.mjs
+      - name: Pack and attest only the published payload
+        run: |
+          npm pack --ignore-scripts --json > select-patch-pack.json
+          node "$RUNNER_TEMP/publish-select-patch.mjs" attest
+      - name: Publish using the existing package-owner credential
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          publisher="$(npm whoami --registry https://registry.npmjs.org/)"
+          npm owner ls ui-style-kit-css --registry https://registry.npmjs.org/ | awk '{print $1}' | grep -Fx "${publisher}"
+          npm publish ./ui-style-kit-css-2.7.2.tgz --access public --ignore-scripts --registry https://registry.npmjs.org/
+      - name: Verify public bytes and create the matching GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # The built-in token prevents tag/release writes from starting the legacy CI publishers.
+        run: |
+          node "$RUNNER_TEMP/publish-select-patch.mjs" readback
+          node "$RUNNER_TEMP/publish-select-patch.mjs" release

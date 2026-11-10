@@ -4,6 +4,19 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.7.2] - 2026-11-10
+
+### Fixed
+
+- Restore native, canonical, compatibility and prefixed select indicators after semantic field background shorthands.
+- Preserve the reserved indicator gutter when compact preset density rules change control padding.
+- Keep Retro Glass indicators above its recessed material and retain Neo Noir's browser-owned arrow without duplicate custom paint.
+- Retain existing keyboard, disabled, multiple-select and RTL behavior.
+
+### Release tooling
+
+- Add a manual 2.7.2-only artifact publisher requiring a verified source commit, a merged exact-head independent review, reproduced generated assets and public tarball checksum readback. It uses the existing npm package-owner credential and runs no CI or test suite.
+
 ## [2.7.1] - 2026-10-29
 
 ### Fixed
