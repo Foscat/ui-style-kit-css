@@ -12,6 +12,12 @@ on:
         required: true
         type: string
 
+      complete_only:
+        description: Read back the exact successful 42890785010 upload without install, build or publication
+        required: false
+        default: false
+        type: boolean
+
 permissions:
   contents: write
   pull-requests: read
@@ -48,17 +54,52 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: node "$RUNNER_TEMP/publish-select-patch.mjs" admit
       - name: Install build dependencies without lifecycle hooks
+        if: ${{ !inputs.complete_only }}
         run: npm ci --ignore-scripts
       - name: Reproduce generated assets without tests
+        if: ${{ !inputs.complete_only }}
         run: |
           node scripts/build.mjs
           git diff --exit-code -- dist index.html demo/index.html README.md
           node scripts/check-package.mjs
       - name: Pack and attest only the published payload
+        if: ${{ !inputs.complete_only }}
         run: |
           npm pack --ignore-scripts --json > select-patch-pack.json
           node "$RUNNER_TEMP/publish-select-patch.mjs" attest
+      - name: Restore the exact public artifact for readback only
+        if: ${{ inputs.complete_only }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from "node:assert/strict";
+          import fs from "node:fs";
+          import { createHash } from "node:crypto";
+          /** Bind continuation to the original upload and frozen prepublication pack receipt. */
+          const sourceSha = "56b1e3d50c4c1b17d2f28733cb590e0a742e2941";
+          const integrity = "sha512-8x8jukUL2KSn+KZ2zJe2LinsVk9RxDcdz7sCljiovORNcq2gRod2uBiZBR0ypEbSCUnP9Z3MrnekfRfIunR6JQ==";
+          assert.equal(process.env.SOURCE_SHA, sourceSha);
+          assert.equal(process.env.APPROVAL_PR, "61");
+          const filename = "ui-style-kit-css-2.7.2.tgz";
+          const response = await fetch("https://registry.npmjs.org/ui-style-kit-css/2.7.2", { signal: AbortSignal.timeout(20000) });
+          assert.equal(response.status, 200);
+          const metadata = await response.json();
+          assert.equal(metadata.name, "ui-style-kit-css");
+          assert.equal(metadata.version, "2.7.2");
+          assert.equal(metadata.dist.integrity, integrity);
+          assert.equal(metadata.dist.shasum, "9d28c359f9e2b8b35f64924ccd5849ec69f867a0");
+          assert.equal(metadata.dist.tarball, "https://registry.npmjs.org/ui-style-kit-css/-/" + filename);
+          const download = await fetch(metadata.dist.tarball, { signal: AbortSignal.timeout(30000) });
+          assert.equal(download.status, 200);
+          const bytes = Buffer.from(await download.arrayBuffer());
+          assert.equal(bytes.length, 13956698);
+          assert.equal("sha512-" + createHash("sha512").update(bytes).digest("base64"), integrity);
+          assert.equal(createHash("sha1").update(bytes).digest("hex"), metadata.dist.shasum);
+          fs.writeFileSync(filename, bytes);
+          fs.writeFileSync("select-patch-artifact.json", JSON.stringify({ name: metadata.name, version: metadata.version, filename, sourceSha, integrity, sha256: createHash("sha256").update(bytes).digest("hex"), bytes: bytes.length, entries: 138, producerRun: 42890785010, continuationOnly: true }, null, 2) + "\n");
+          console.log("Verified original published bytes; no build or publication repeated");
+          NODE
       - name: Publish using the existing package-owner credential
+        if: ${{ !inputs.complete_only }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
