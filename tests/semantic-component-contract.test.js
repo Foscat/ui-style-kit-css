@@ -530,16 +530,30 @@ test('authored preset CSS retains only the two historical ui compatibility hooks
     assert.equal(ruleHasAttribute(tooltipRule, 'data-ui', preset.id), true);
   }
 
-  // Scan every authored stylesheet so pending selectors cannot collide with retained hooks early.
+  // Preset sources retain only historical hooks; optional composition may use these exact public aliases.
+  const compositionAliases = new Set();
+  const supportedCompositionAliases = new Set([
+    '.ui-breadcrumb', '.ui-breadcrumb-list', '.ui-breadcrumb-item', '.ui-breadcrumb-link'
+  ]);
+  const availableSelectors = new Set([
+    ...manifest.semanticComponentApi.implementationStatus.implemented.selectors,
+    ...manifest.semanticComponentApi.implementationStatus.retained.selectors
+  ]);
+  for (const alias of supportedCompositionAliases) {
+    assert.equal(availableSelectors.has(alias.replace('.ui-', '.usk-')), true);
+  }
   const authoredCssFiles = fs.readdirSync(path.join(rootDir, 'styles'))
     .filter((fileName) => fileName.endsWith('.css'));
   for (const fileName of authoredCssFiles) {
     for (const rule of selectorFacts(`styles/${fileName}`)) {
       for (const className of rule.classes) {
-        if (className.startsWith('.ui-')) authoredSemanticClasses.add(className);
+        if (!className.startsWith('.ui-')) continue;
+        if (fileName === 'component-composition.css') compositionAliases.add(className);
+        else authoredSemanticClasses.add(className);
       }
     }
   }
+  assert.deepEqual(compositionAliases, supportedCompositionAliases);
 
   const anchorRules = selectorFacts('styles/components.css')
     .filter((rule) => ruleHasAttribute(rule, 'data-ui-tooltip-anchor'));
@@ -672,14 +686,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Locks the unchanged published 2.7.2 declarations retained by the 2.7.3 composition patch. */
+  /** Locks the reviewed 2.7.4 declarations after the isolated Forest Moss focus-token correction. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
     count: 37049,
-    sha256: 'aff00c2083882a55428c4933f9d69797a495f18d4e618139eae161da0f8dda3d'
+    sha256: 'd75a97b78dbcb5ea8324911c9841751718eaa8b5948066d464176af93f9392f2'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
     count: 37500,
-    sha256: 'b7e2bdb832ecd023867e0c7a7a57a9ff30d046bea6dcbe6040707cc7a79dde79'
+    sha256: 'a7527eb15b5435a38443f334db62a71fcc93ecd0bba734f2a9671529fedf915f'
   });
 });
 

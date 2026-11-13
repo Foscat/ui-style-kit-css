@@ -1,0 +1,5 @@
+# UI Style Kit CSS 2.7.4
+
+This accessibility patch corrects three shared defects reproduced by SYS browser acceptance. Navigable semantic breadcrumbs have 44px minimum targets and own their compound spacing; current-page labels retain their semantics and ordinary lists retain native spacing. Forest Moss light-mode focus uses the palette's existing dark green link ink, correcting the observed 1.78-2.20 contrast ratios on neutral surfaces. Nested native `small` metadata inherits its semantic alert body foreground through the optional component-composition entrypoint.
+
+The focused geometry regression covers every manifest preset and both semantic namespaces. Separate focused keyboard-focus and alert-metadata regressions fail before their respective corrections and pass afterward. Alert metadata also covers the default visual bundle, its minified distribution and the focused Minimal SaaS/Bento exports across palettes and modes. Normal release verification remains required. Published artifact, SYS consumer and deployment acceptance are separate delivery gates.

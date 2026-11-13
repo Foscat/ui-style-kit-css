@@ -6,6 +6,22 @@
 ========================================================= */
 
 @layer ui-style-kit.clean_defaults {
+/** Breadcrumb compounds own their spacing instead of accumulating native element insets. */
+[data-ui][data-mode] :is(.usk-breadcrumb, .ui-breadcrumb, .usk-breadcrumb-list, .ui-breadcrumb-list, .usk-breadcrumb-item, .ui-breadcrumb-item) {
+  margin: 0;
+  padding: 0;
+}
+
+/** Navigable breadcrumb links expose touch targets without enlarging the current-page label. */
+[data-ui][data-mode] :is(.usk-breadcrumb-link, .ui-breadcrumb-link):any-link {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  margin: 0;
+}
+
 /** Long chip content shrinks and wraps before it can displace the separate remove action. */
 [data-ui][data-mode] .usk-chip > .usk-chip__label {
   min-inline-size: 0;
@@ -891,9 +907,9 @@
 }
 }
 
-/** Native prose and lists retain their owning semantic message body foreground. */
+/** Native prose, lists and small metadata retain their owning semantic message foreground. */
 @layer ui-style-kit.clean_defaults {
-[data-ui][data-mode] .usk-alert__body :where(p, ul, ol, menu) {
+[data-ui][data-mode] .usk-alert__body :where(p, ul, ol, menu, small) {
   color: inherit;
 }
 }
