@@ -4,6 +4,13 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.7.4] - 2026-11-13
+
+- Give semantic breadcrumb links 44px minimum targets and remove inherited compound spacing without changing native prose lists.
+- Use the existing dark green palette ink for Forest Moss light-mode focus so it remains visible on all neutral surfaces.
+- Preserve semantic alert foregrounds in nested native small metadata in Minimal SaaS and Bento.
+- Retain focused failing-before/passing-after browser regressions in the normal release selection.
+
 ## [2.7.3] - 2026-11-12
 
 - Preserve semantic alert-body message ink in nested paragraphs and lists through the optional component-composition entrypoint, including Bento warnings.
