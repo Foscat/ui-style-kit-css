@@ -4,6 +4,11 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.7.3] - 2026-11-12
+
+- Preserve semantic alert-body message ink in nested paragraphs and lists through the optional component-composition entrypoint, including Bento warnings.
+- Add a palette/mode and distribution-entry regression to the existing release browser selection.
+
 ## [2.7.2] - 2026-11-10
 
 ### Fixed

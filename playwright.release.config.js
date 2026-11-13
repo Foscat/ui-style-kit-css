@@ -11,6 +11,7 @@ const releaseSmokePatterns = [
   /interactive labels retain contrast through hover across every palette and mode/,
   /filled marketing actions retain contrast through hover across every palette and mode/,
   /Bento .* badge labels retain AA contrast in every palette and mode/,
+  /Bento alert body lists inherit semantic message ink across palettes and modes/,
   /React mixed button classes preserve/,
   /status messages preserve signal tints/,
   /Paper Editorial message icons/,
