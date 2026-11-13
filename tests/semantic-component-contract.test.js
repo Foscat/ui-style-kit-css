@@ -686,14 +686,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Locks the reviewed 2.7.4 declarations after the isolated Forest Moss focus-token correction. */
+  /** Locks reviewed 2.7.5 declarations after the isolated Graphite Cyan focus-token correction. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
     count: 37049,
-    sha256: 'd75a97b78dbcb5ea8324911c9841751718eaa8b5948066d464176af93f9392f2'
+    sha256: 'f3a372ff2a887c79b2313a1a784c84654ffaaabb74f27fae4904e41ed32f5938'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
     count: 37500,
-    sha256: 'a7527eb15b5435a38443f334db62a71fcc93ecd0bba734f2a9671529fedf915f'
+    sha256: '0786b27e873a051f2e09b926cdbaa623ce863330dc7131c87fd45954580217da'
   });
 });
 

@@ -2,7 +2,7 @@
 
 UI Style Kit CSS is a CSS-only visual style library with 20 UI systems, 25 shared color themes, and 3 display modes.
 
-Version `v2.7.4` is a compatible patch release that restores dropdown indicators and their text gutter while preserving preset materials and native arrow ownership. The 75-selector `.usk-*` API remains available across every visual system.
+Version `v2.7.5` is a compatible patch release that restores dropdown indicators and their text gutter while preserving preset materials and native arrow ownership. The 75-selector `.usk-*` API remains available across every visual system.
 
 Use this wiki as the canonical reference for setup, theming, class naming, and style coverage.
 
