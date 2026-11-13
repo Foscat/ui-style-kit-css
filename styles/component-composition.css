@@ -890,3 +890,10 @@
   }
 }
 }
+
+/** Native prose and lists retain their owning semantic message body foreground. */
+@layer ui-style-kit.clean_defaults {
+[data-ui][data-mode] .usk-alert__body :where(p, ul, ol, menu) {
+  color: inherit;
+}
+}
