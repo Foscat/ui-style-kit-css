@@ -4,6 +4,11 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.7.5] - 2026-11-13
+
+- Use Graphite Cyan light mode's existing dark cyan link ink for keyboard focus, correcting the low-contrast breadcrumb ring reproduced by the published SYS consumer.
+- Add a focused failing-before/passing-after regression against all four neutral palette surfaces; retain focus width, geometry and existing Forest Moss behavior.
+
 ## [2.7.4] - 2026-11-13
 
 - Give semantic breadcrumb links 44px minimum targets and remove inherited compound spacing without changing native prose lists.

@@ -105,3 +105,45 @@ test('Forest Moss light keyboard focus contrasts with neutral surfaces', async (
   expect(focus.width).toBeGreaterThanOrEqual(2);
   expect(focus.ratios.filter(({ ratio }) => ratio < 3)).toEqual([]);
 });
+
+/** Graphite Cyan focus uses visible ink against each neutral surface in its light palette. */
+test('Graphite Cyan light keyboard focus contrasts with neutral surfaces', async ({ page }) => {
+  await page.setContent(
+    '<html data-ui="bento" data-theme="graphite-cyan" data-mode="light"><body><a href="#destination" class="usk-breadcrumb-link">Prairie Star Auto Salvage</a></body></html>'
+  );
+  await page.addStyleTag({ path: path.resolve('dist/ui-style-kit.visual.css') });
+  await page.addStyleTag({ path: path.resolve('styles/component-composition.css') });
+  await page.keyboard.press('Tab');
+  const focus = await page.locator('a').evaluate((element) => {
+    const style = getComputedStyle(element);
+    const root = getComputedStyle(document.documentElement);
+    const rgb = (text) =>
+      text
+        .match(/[\d.]+/g)
+        .slice(0, 3)
+        .map(Number);
+    const luminance = (channels) =>
+      channels
+        .map((value) => {
+          const scaled = value / 255;
+          return scaled <= 0.04045 ? scaled / 12.92 : ((scaled + 0.055) / 1.055) ** 2.4;
+        })
+        .reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+    const foreground = luminance(rgb(style.outlineColor));
+    return {
+      focused: document.activeElement === element,
+      width: Number.parseFloat(style.outlineWidth),
+      ratios: ['bg', 'surface', 'surface-strong', 'surface-soft'].map((role) => {
+        const background = luminance(rgb(root.getPropertyValue(`--usk-${role}-rgb`)));
+        return {
+          role,
+          ratio:
+            (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05)
+        };
+      })
+    };
+  });
+  expect(focus.focused).toBe(true);
+  expect(focus.width).toBeGreaterThanOrEqual(2);
+  expect(focus.ratios.filter(({ ratio }) => ratio < 3)).toEqual([]);
+});

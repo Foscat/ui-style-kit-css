@@ -19,6 +19,12 @@ const representativeStates = [
   { ui: 'retro-glass', theme: 'royal-plum', mode: 'contrast', bridge: true }
 ];
 
+/**
+ * Apply a demo palette and wait for its actual paint transitions before measuring contrast.
+ * @param {import("@playwright/test").Page} page Active demo page.
+ * @param {object} state Preset, palette, mode and bridge selection.
+ * @returns {Promise<void>} Resolves after the selected state and finite CSS transitions settle.
+ */
 async function applyState(page, { ui, theme, mode, bridge }) {
   await page.selectOption('#uiSelect', ui);
   await page.selectOption('#themeSelect', theme);
@@ -28,6 +34,10 @@ async function applyState(page, { ui, theme, mode, bridge }) {
   await expect(page.locator('body')).toHaveAttribute('data-theme', theme);
   await expect(page.locator('body')).toHaveAttribute('data-mode', mode);
   await expect(page.locator('body')).toHaveAttribute('data-bridge', bridge ? 'attached' : 'detached');
+  // Match the existing demo-theme-contrast readiness contract; do not disable motion or Axe rules.
+  await page.waitForFunction(() => document.getAnimations()
+    .filter((animation) => animation.constructor.name === 'CSSTransition')
+    .every((animation) => animation.playState === 'finished'));
 }
 
 test.describe('representative accessibility scans', () => {

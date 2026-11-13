@@ -15,6 +15,7 @@ const releaseSmokePatterns = [
   /Semantic alert metadata inherits owning message ink in Minimal SaaS and Bento/,
   /Semantic breadcrumb links retain accessible targets and own their list spacing/,
   /Forest Moss light keyboard focus contrasts with neutral surfaces/,
+  /Graphite Cyan light keyboard focus contrasts with neutral surfaces/,
   /React mixed button classes preserve/,
   /status messages preserve signal tints/,
   /Paper Editorial message icons/,
