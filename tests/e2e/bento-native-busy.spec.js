@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -23,7 +24,7 @@ async function loaderFacts(button) {
 
 test('Bento native busy buttons use the same ring as classed and semantic controls', async ({ page }) => {
   await page.setViewportSize({ width: 1012, height: 792 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href);
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href);
   await page.selectOption('#uiSelect', 'bento');
   for (const mode of ['light', 'dark', 'contrast']) {
     await page.selectOption('#modeSelect', mode);

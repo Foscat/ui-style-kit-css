@@ -1,0 +1,80 @@
+/** Studio shell geometry and visibility; shared Layout defaults live in demo.css. */
+.studio {
+  --ly-sidebar-size: 13rem;
+  --ly-sidebar-content-min: 30rem;
+}
+.studio-fields {
+  --ly-grid-min: 10rem;
+}
+.studio-token-row {
+  --ly-grid-min: 6rem;
+  --ly-grid-gap: var(--ly-space-2);
+}
+.studio-previews {
+  --ly-grid-columns: 1;
+}
+.studio-previews[data-comparing='true'] {
+  --ly-grid-columns: 2;
+}
+
+/** Isolated document viewports and transient frame reports are application geometry. */
+.studio-preview-panel iframe {
+  inline-size: 100%;
+  block-size: min(76vh, 56rem);
+  min-block-size: 28rem;
+}
+.studio-frame-wrap {
+  position: relative;
+}
+.studio-frame-status {
+  position: absolute;
+  inset: auto 1rem 1rem;
+  pointer-events: none;
+}
+.studio-preview-panel[data-status='ready'] .studio-frame-status,
+.studio-toast:empty {
+  display: none;
+}
+.studio-preview-panel[data-status='error'] .studio-frame-status {
+  pointer-events: auto;
+}
+.studio-toast {
+  position: fixed;
+  inset: auto 1rem 1rem;
+  z-index: 100;
+}
+
+/** Desktop and mobile reuse the same native disclosure and comparison controls. */
+@media (min-width: 681px) {
+  .studio-mobile-group,
+  .studio-appearance > summary {
+    display: none;
+  }
+}
+@media (min-width: 1101px) {
+  .studio-comparison-switch {
+    display: none;
+  }
+}
+@media (max-width: 1100px) {
+  .studio-previews[data-comparing='true'] {
+    --ly-grid-columns: 1;
+  }
+  .studio-previews[data-comparing='true'][data-visible-side='a'] #panel-b,
+  .studio-previews[data-comparing='true'][data-visible-side='b'] #panel-a {
+    display: none;
+  }
+}
+
+/** Secondary context is disclosed alongside the native appearance controls on phones. */
+@media (max-width: 680px) {
+  #component-list,
+  .studio-docs,
+  .studio-collection,
+  .studio-intro .studio-eyebrow,
+  #workspace-description,
+  .studio-sample-label,
+  .studio-appearance:not([open]) ~ .studio-help {
+    display: none;
+  }
+}

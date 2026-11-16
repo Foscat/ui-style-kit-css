@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
@@ -5,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const demoUrl = pathToFileURL(path.resolve('index.html')).href + '?view=reference';
+const demoUrl = pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference';
 const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
 const evidenceDir = path.join(os.tmpdir(), 'usk-retro-glass-annotations');
 fs.mkdirSync(evidenceDir, { recursive: true });

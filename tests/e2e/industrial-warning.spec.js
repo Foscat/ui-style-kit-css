@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import { pathToFileURL } from 'node:url';
 /** @param {import('@playwright/test').Page} page Generated local demo. @returns {Promise<void>} */
 async function open(page) {
   await page.setViewportSize({ width: 1115, height: 792 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'industrial-utility');
   await page.selectOption('#themeSelect', 'arctic-indigo');
   await page.selectOption('#modeSelect', 'light');

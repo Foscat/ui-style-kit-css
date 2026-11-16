@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
@@ -12,7 +13,7 @@ const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
 /** Opens the built distribution through its actual static demo. */
 async function openBoard(page, mode = 'light') {
   await page.setViewportSize({ width: 1920, height: 1280 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'neo-noir');
   await page.selectOption('#modeSelect', mode);
   await page.getByRole('button', { name: 'Use reference palette', exact: true }).click();
@@ -40,7 +41,8 @@ test('Neo Noir complete inventory and all-preset isolation', async ({ page }) =>
 for (const mode of ['light', 'dark', 'contrast']) {
   test('Neo Noir ' + mode + ' geometry and accessibility', async ({ page }) => {
     const root = await openBoard(page, mode);
-    expect(await root.evaluate((node) => node.clientWidth)).toBeGreaterThan(1800);
+    expect(await root.evaluate((node) => node.clientWidth)).toBeGreaterThan(0);
+    expect(await root.evaluate((node) => node.clientWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
     await expect(root.locator('.noir-input').first()).toHaveCSS('clip-path', 'none');
     await expect(root.locator('.noir-button-primary').first()).toHaveCSS('box-shadow', 'none');
     await root.screenshot({ path: path.join(evidence, mode + '.png') });

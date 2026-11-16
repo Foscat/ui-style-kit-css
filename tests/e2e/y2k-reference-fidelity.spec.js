@@ -1,9 +1,10 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect, devices } from '@playwright/test';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href;
+const demoUrl = pathToFileURL(path.join(rootDir, 'demo', 'reference.html')).href;
 
 /**
  * Opens the component demo with Y2K active and applies either a library theme

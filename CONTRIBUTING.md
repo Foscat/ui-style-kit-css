@@ -30,3 +30,7 @@ wiki sources; updating them alone does not publish the hosted GitHub Wiki.
 - Patch: CSS fixes, docs fixes, small accessibility corrections.
 - Minor: new UI style, new theme, new public utility classes.
 - Major: breaking token names, class names, mode names, or import paths.
+
+## Style Studio maintenance
+
+Edit `demo/studio/` sources, then use `npm run demo:build` for the studio or `npm run build` for library and studio assets. Run `npm run format:studio`, `npm run docs`, and the focused checks before the final CI sequence. Generated HTML, bundles, companion assets, and `docs/api/studio-*.md` are build outputs. See [the studio guide](docs/DEMO-SHOWCASE.md).

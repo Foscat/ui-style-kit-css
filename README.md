@@ -9,11 +9,11 @@ It is separate from, but complementary to, **Interactive Surface CSS** and **Lay
 
 ## Current version
 
-Version `v2.7.5` is the current UI version. Semantic breadcrumbs retain accessible link targets and compact compound spacing. Forest Moss and Graphite Cyan light-mode focus use their contrasting palette link inks, and native alert metadata inherits the message foreground. The 2.7.2 dropdown indicators and 2.7.1 interaction-contrast corrections remain intact. New markup should use `.usk-*`; generated `.ui-*` aliases remain available for existing consumers.
+Version `v2.8.0` introduces Style Studio with working examples, a dense component catalog, copyable markup, isolated comparison, editable palettes, and CSS/setup export. Native Clay edits now paint and export the same material colors, and browser Back preserves drafts and pending saves. The library retains the existing accessibility corrections and the canonical `.usk-*` API; generated `.ui-*` aliases remain available for existing consumers.
 
 The exhaustive browser suite defines 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). Run the final release gate on the frozen candidate before treating that full matrix as current verification.
 
-The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.7.5 release notes](docs/RELEASE-2.7.5.md) for the current scope and verification boundaries.
+The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.8.0 release notes](docs/RELEASE-2.8.0.md) for the current scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -48,7 +48,11 @@ flowchart TB
 
 The demo shows computed RGB colors for the active native palette or shared theme, supports live edits, and copies a scoped override block. Native mode includes preset-specific material channels such as paper, ink, and brass; shared-theme mode exposes the 23 semantic RGB roles.
 
-The [demo showcase guide](docs/DEMO-SHOWCASE.md) explains the unified component gallery, Industrial Utility instruments, palette editing, and the opt-in `?view=reference` boards. Existing `?personality=maximalist` links work; `?ui=tactile&theme=None&mode=dark` selects a native-palette preview.
+The studio loads only the selected preset CSS and icon treatment, retains controls during filtering, and generates markup on demand. Shared authored modules and linked source maps keep the demo maintainable. See [optimization measurements](docs/DEMO-OPTIMIZATION.md).
+
+The studio offers a dense, copyable component catalog and optional `ui-style-kit-icons@2.0.0` setup through NPM or CDN. Minimal SaaS monochrome icons are the default; style matching and themed artwork are selectable.
+
+The [Style Studio guide](docs/DEMO-SHOWCASE.md) explains working examples, isolated style comparison, component exploration, palette editing, export, and the retained reference fixtures. Existing `?personality=maximalist` links work; `?ui=tactile&theme=None&mode=dark` selects a native-palette preview.
 
 ## Ecosystem compatibility
 
@@ -56,11 +60,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.7.5` | current UI version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.8.0` | current UI version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.7.5` is the current UI version. This version is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.8.0` is the current UI version. This version is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -124,6 +128,8 @@ import "ui-style-kit-css/presets/minimal-saas.css";
 ```
 
 The existing `ui-style-kit-css/visual/<preset>.css` paths remain supported aliases to the same generated files.
+
+The supported compatibility contract is **one preset per document**, retaining Safari 16 support. Select that preset through the document root and update `data-ui` to switch styles. Use separate iframe documents for side-by-side presets, as Studio does. Mixed nested preset roots are unsupported: a nested `data-ui` attribute is not a CSS isolation boundary, so ancestor preset selectors can still match its semantic/native components.
 
 For applications that let a user switch styles at runtime, import the all-style bundle once and update `data-ui`. Theme and mode remain independent attributes:
 
@@ -193,11 +199,11 @@ SVG icons marked with `data-ui-icon` receive stable `1em` square geometry, block
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2534 KB | ~427 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~2517 KB | ~425 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2905 KB | ~453 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2392 KB | ~318 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~2375 KB | ~316 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2762 KB | ~343 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
-| `ui-style-kit-css/native-elements.css` | ~34 KB | ~6 KB | Shared native HTML fallback styling |
+| `ui-style-kit-css/native-elements.css` | ~33 KB | ~6 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/clean-defaults.css` | <10 KB | <2 KB | Shared spacing floors and opt-in flush/underline utilities |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
@@ -343,7 +349,7 @@ For example, a fixed Minimal SaaS integration may continue to use `<button class
 
 Each description is backed by concrete CSS declaration checks and preset-scoped visual cases. This lets a failing preset or pair be rerun directly without repeating unrelated green coverage.
 
-The demo uses one shared layout with a **Style-specific components** gallery. Industrial Utility's switchgear, instruments, and alarm workflow are showcased alongside each preset's distinctive components. Original template boards remain available for visual QA at `index.html?view=reference` (also supported by `demo/index.html`). See the [demo showcase guide](docs/DEMO-SHOWCASE.md) for the gallery, native/shared palettes, and reference-fixture workflow.
+Style Studio uses canonical `usk-*` controls with the selected named palette and mode, while isolated previews show working dashboard, form, and content examples. Pin a configuration for comparison, explore component markup, edit public palette tokens, and export CSS. Distinctive authored boards remain under **Style details**, with the complete QA fixture at `demo/reference.html?view=reference`. See the [studio guide](docs/DEMO-SHOWCASE.md) for URL compatibility, native/shared palettes, and the build workflow.
 
 See the [Retro Glass component guide](docs/RETRO-GLASS.md) for the full reference-board API, native palette selection, token customization, and accessible interaction contracts. Preset-specific demo components appear only while their owning style is selected.
 

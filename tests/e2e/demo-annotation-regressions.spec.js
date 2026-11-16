@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import fs from 'node:fs';
 
 import { expect, test } from '@playwright/test';
@@ -146,7 +147,7 @@ test('annotated selectable controls keep readable foreground and background pair
 
 test('annotated demo frames stay contained at narrow and wide viewports', async ({ page }) => {
   test.setTimeout(180000);
-  await page.goto(new URL('../../index.html', import.meta.url).href);
+  await page.goto(new URL('../../demo/reference.html', import.meta.url).href);
   await page.addStyleTag({ content: '* { transition: none !important; }' });
   const failures = [];
   const widths = process.env.USK_DEMO_WIDTH_FILTER?.split(',').map(Number) ?? [320, 390, 768, 1280, 1440];

@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import os from 'node:os';
 /** Opens the annotated preset with deterministic theme and viewport settings. */
 async function openRefinements(page, mode = 'light', width = 1115) {
   await page.setViewportSize({ width, height: 792 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'neo-noir');
   await page.selectOption('#themeSelect', 'arctic-indigo');
   await page.selectOption('#modeSelect', mode);

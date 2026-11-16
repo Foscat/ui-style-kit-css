@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import vm from 'node:vm';
+import { loadReferenceController } from './helpers/reference-controller.js';
+import { bind as bindIndustrial } from '../demo/studio/authored/industrial-utility.js';
 
 const manifest = JSON.parse(fs.readFileSync(new URL('../manifest.json', import.meta.url), 'utf8'));
-const source = fs.readFileSync(new URL('../demo/demo.js', import.meta.url), 'utf8');
+const source = fs.readFileSync(new URL('../demo/studio/reference.js', import.meta.url), 'utf8');
 
 /**
  * Loads the authored renderers without browser bootstrapping or approximating their HTML.
@@ -12,20 +13,16 @@ const source = fs.readFileSync(new URL('../demo/demo.js', import.meta.url), 'utf
  * @returns {object} Isolated renderer context.
  */
 function createShowcase(search = '') {
-  const context = vm.createContext({
+  const context = loadReferenceController({
     URL,
     URLSearchParams,
-    location: { pathname: '/index.html' },
+    location: { pathname: '/demo/reference.html', href:'https://demo.example/demo/reference.html' },
     window: { UI_STYLE_KIT_MANIFEST: manifest, UI_STYLE_KIT_ICONS: {}, location: { search } },
     document: {
       currentScript: { src: 'https://demo.example/demo/module.js' },
       getElementById: () => ({ value: 'light', dataset: { defaultHref: 'dist/ui-style-kit.css' } })
     }
   });
-  for (const name of ['art-deco', 'editorial-lux', 'neo-noir', 'clay', 'organic', 'bento', 'bauhaus']) {
-    vm.runInContext(fs.readFileSync(new URL(`../demo/demo-${name}.js`, import.meta.url), 'utf8'), context);
-  }
-  vm.runInContext(source.slice(0, source.lastIndexOf('\nsyncManifestSelectOptions();')), context);
   return context;
 }
 
@@ -142,7 +139,7 @@ test('Industrial gallery binds without removed board controls and preserves loca
     querySelector: (selector) => nodes.get(selector) || null,
     querySelectorAll: (selector) => selector === '[data-utility-ack-open]' ? [ack] : []
   });
-  assert.doesNotThrow(() => app.bindIndustrialSpecimen());
+  assert.doesNotThrow(() => bindIndustrial(app.document.getElementById(), {appearance:{ui:"industrial-utility",mode:"light"},prefix:"utility",byId:()=>app.document.getElementById()},new AbortController().signal));
   pressure.value = '81.2';
   pressure.fire('input');
   assert.equal(readout.value, '81.2');
@@ -177,7 +174,7 @@ test('feature deep links keep Components selected in the shared navigation', () 
       removeAttribute: (name) => attributes.delete(name)
     };
   });
-  app.main = { querySelector: () => ({ querySelectorAll: () => links }) };
+  app.main.querySelector = () => ({ querySelectorAll: () => links });
   app.syncPrimaryNavCurrent('style-specific');
   assert.equal(links[2].getAttribute('aria-current'), 'page');
   assert.equal(links.filter((link) => link.getAttribute('aria-current')).length, 1);

@@ -1,280 +1,590 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UI Style Kit CSS Demo | CSS Theme and Component Preset Library</title>
-  <meta name="description" content="Interactive UI Style Kit CSS demo for 20 visual systems, 25 color themes, light/dark/contrast modes, native HTML styling, editable theme tokens, and the optional Interactive Surface bridge.">
-  <meta name="keywords" content="CSS library, design system, CSS themes, UI style presets, native HTML styling, CSS variables, design tokens, dark mode, high contrast, component styling">
-  <meta name="author" content="Kyle Foster">
-  <meta name="robots" content="noindex, follow">
-  <meta name="application-name" content="UI Style Kit CSS">
-  <meta name="color-scheme" content="light dark">
-  <link rel="canonical" href="https://foscat.github.io/ui-style-kit-css/">
-  <link rel="license" href="../LICENSE">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="UI Style Kit CSS">
-  <meta property="og:title" content="UI Style Kit CSS | CSS Theme and Component Preset Library">
-  <meta property="og:description" content="Explore a CSS-only library with 20 UI systems, 25 color themes, native HTML coverage, and copyable theme overrides.">
-  <meta property="og:url" content="https://foscat.github.io/ui-style-kit-css/">
-  <meta property="og:image" content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card-25-themes.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1774">
-  <meta property="og:image:height" content="887">
-  <meta property="og:image:alt" content="UI Style Kit CSS preview featuring 20 UI systems, 25 color themes, and light, dark, and contrast modes.">
-  <meta property="og:updated_time" content="2026-09-19T00:00:00-05:00">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="UI Style Kit CSS | CSS Theme and Component Preset Library">
-  <meta name="twitter:description" content="CSS-only library with 20 UI systems, 25 color themes, native element styling, and accessible light, dark, and contrast modes.">
-  <meta name="twitter:image" content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card-25-themes.png">
-  <meta name="twitter:image:alt" content="UI Style Kit CSS preview featuring 20 UI systems, 25 color themes, and light, dark, and contrast modes.">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://foscat.github.io/ui-style-kit-css/#website",
-      "url": "https://foscat.github.io/ui-style-kit-css/",
-      "name": "UI Style Kit CSS",
-      "description": "Interactive documentation and demo for 20 UI systems and 25 color themes in UI Style Kit CSS.",
-      "inLanguage": "en-US"
-    },
-    {
-      "@type": "SoftwareSourceCode",
-      "@id": "https://foscat.github.io/ui-style-kit-css/#software",
-      "name": "UI Style Kit CSS",
-      "description": "CSS-only library with 20 UI systems and 25 color themes for accessible websites, dashboards, admin interfaces, and client-facing pages.",
-      "codeRepository": "https://github.com/Foscat/ui-style-kit-css",
-      "programmingLanguage": "CSS",
-      "runtimePlatform": "Web browser",
-      "license": "https://github.com/Foscat/ui-style-kit-css/blob/main/LICENSE",
-      "version": "2.7.5",
-      "url": "https://foscat.github.io/ui-style-kit-css/",
-      "downloadUrl": "https://www.npmjs.com/package/ui-style-kit-css",
-      "isAccessibleForFree": true,
-      "keywords": [
-        "CSS library",
-        "design system",
-        "theme tokens",
-        "UI presets",
-        "native HTML styling",
-        "dark mode",
-        "high contrast"
-      ],
-      "sameAs": [
-        "https://github.com/Foscat/ui-style-kit-css",
-        "https://github.com/Foscat/ui-style-kit-css/wiki",
-        "https://www.npmjs.com/package/ui-style-kit-css"
-      ]
-    }
-  ]
-}
-  </script>
-  <!-- Relative favicon paths keep the npm-packaged demo portable from any install location. -->
-  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon-256x256.png">
-  <link rel="icon" href="assets/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-  <link rel="manifest" href="assets/site.webmanifest">
-  <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#6e56ff">
-  <meta name="msapplication-TileColor" content="#070b24">
-  <meta name="msapplication-config" content="assets/browserconfig.xml">
-  <meta name="theme-color" content="#070b24">
-  <link id="styleKitStylesheet" rel="stylesheet" href="../dist/ui-style-kit.css?v=a828a6c265e5" data-default-href="../dist/ui-style-kit.css?v=a828a6c265e5" data-bridge-href="../dist/ui-style-kit.with-bridge.css?v=6ba6db579814">
-  <link rel="stylesheet" href="demo.css?v=973b75d7d0ff">
-</head>
-<body data-ui="minimal-saas" data-mode="light" data-bridge="detached">
-  <a id="skip" class="saas-skip-link" href="#main">Skip to content</a>
-  <div class="demo-controls usk-toolbar" role="toolbar" aria-label="Demo options">
-    <label class="usk-field">
-      <span class="usk-label">UI Style</span>
-      <select id="uiSelect" class="usk-select">
-        <option value="minimal-saas" data-prefix="saas" selected>Minimal SaaS</option>
-        <option value="bento" data-prefix="bento">Bento UI</option>
-        <option value="maximalist" data-prefix="max">Maximalist / Playful</option>
-        <option value="bauhaus" data-prefix="bau">Bauhaus / Swiss Modern</option>
-        <option value="tactile" data-prefix="tactile">Skeuomorphic / Tactile</option>
-        <option value="neumorphism" data-prefix="neo">Neumorphism</option>
-        <option value="retrofuturism" data-prefix="retro">Retrofuturism</option>
-        <option value="brutalism" data-prefix="brutal">Brutalism</option>
-        <option value="cyberpunk" data-prefix="cyber">Cyberpunk</option>
-        <option value="y2k" data-prefix="y2k">Y2K</option>
-        <option value="retro-glass" data-prefix="rg">Retro Glass</option>
-        <option value="editorial-luxe" data-prefix="luxe">Editorial Lux</option>
-        <option value="organic-modern" data-prefix="organic">Organic Modern</option>
-        <option value="industrial-utility" data-prefix="utility">Industrial Utility</option>
-        <option value="technical-blueprint" data-prefix="blueprint">Technical Blueprint</option>
-        <option value="art-deco" data-prefix="deco">Art Deco</option>
-        <option value="clay" data-prefix="clay">Clay</option>
-        <option value="data-terminal" data-prefix="terminal">Data Terminal</option>
-        <option value="paper-editorial" data-prefix="paper">Paper Editorial</option>
-        <option value="neo-noir" data-prefix="noir">Neo-Noir</option>
-      </select>
-    </label>
-    <label class="usk-field">
-      <span class="usk-label">Color Theme</span>
-      <select id="themeSelect" class="usk-select" aria-describedby="demo-palette-help">
-        <option value="" selected>None — style defaults</option>
-        <option value="midnight-gold">midnight-gold</option>
-        <option value="ocean-steel">ocean-steel</option>
-        <option value="forest-moss">forest-moss</option>
-        <option value="sunset-ember">sunset-ember</option>
-        <option value="royal-plum">royal-plum</option>
-        <option value="graphite-cyan">graphite-cyan</option>
-        <option value="desert-sage">desert-sage</option>
-        <option value="rose-quartz">rose-quartz</option>
-        <option value="cyber-lime">cyber-lime</option>
-        <option value="arctic-indigo">arctic-indigo</option>
-        <option value="chrome-navy">chrome-navy</option>
-        <option value="recycled-emerald">recycled-emerald</option>
-        <option value="industrial-orange">industrial-orange</option>
-        <option value="performance-red">performance-red</option>
-        <option value="heritage-brass">heritage-brass</option>
-        <option value="service-blue-red">service-blue-red</option>
-        <option value="newsprint-crimson">newsprint-crimson</option>
-        <option value="foundry-amber">foundry-amber</option>
-        <option value="soft-orchid">soft-orchid</option>
-        <option value="electric-noir">electric-noir</option>
-        <option value="signal-yellow">signal-yellow</option>
-        <option value="botanical-green">botanical-green</option>
-        <option value="cobalt-electric">cobalt-electric</option>
-        <option value="stone-graphite">stone-graphite</option>
-        <option value="walnut-clay">walnut-clay</option>
-      </select>
-    </label>
-    <label class="usk-field">
-      <span class="usk-label">Mode</span>
-      <select id="modeSelect" class="usk-select">
-        <option value="light" selected>light</option>
-        <option value="dark">dark</option>
-        <option value="contrast">contrast</option>
-      </select>
-    </label>
-  </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Style Studio | UI Style Kit CSS</title>
+    <meta
+      name="description"
+      content="CSS-only UI style kit with 20 visual systems, 25 color themes, light/dark/contrast modes, native HTML styling, editable theme tokens, and an optional Interactive Surface bridge."
+    />
+    <meta
+      name="keywords"
+      content="CSS library, design system, CSS themes, UI style presets, native HTML styling, CSS variables, design tokens, dark mode, high contrast, component styling"
+    />
+    <meta name="author" content="Kyle Foster" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="application-name" content="UI Style Kit CSS" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://foscat.github.io/ui-style-kit-css/" />
+    <link rel="license" href="../LICENSE" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="UI Style Kit CSS" />
+    <meta property="og:title" content="UI Style Kit CSS | CSS Theme and Component Preset Library" />
+    <meta
+      property="og:description"
+      content="Explore a CSS-only library with 20 UI systems, 25 color themes, native HTML coverage, and copyable theme overrides."
+    />
+    <meta property="og:url" content="https://foscat.github.io/ui-style-kit-css/" />
+    <meta
+      property="og:image"
+      content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card-25-themes.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1774" />
+    <meta property="og:image:height" content="887" />
+    <meta
+      property="og:image:alt"
+      content="UI Style Kit CSS preview featuring 20 UI systems, 25 color themes, and light, dark, and contrast modes."
+    />
+    <meta property="og:updated_time" content="2026-09-19T00:00:00-05:00" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="UI Style Kit CSS | CSS Theme and Component Preset Library"
+    />
+    <meta
+      name="twitter:description"
+      content="CSS-only library with 20 UI systems, 25 color themes, native element styling, and accessible light, dark, and contrast modes."
+    />
+    <meta
+      name="twitter:image"
+      content="https://foscat.github.io/ui-style-kit-css/demo/assets/seo/social-card-25-themes.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="UI Style Kit CSS preview featuring 20 UI systems, 25 color themes, and light, dark, and contrast modes."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://foscat.github.io/ui-style-kit-css/#website",
+            "url": "https://foscat.github.io/ui-style-kit-css/",
+            "name": "UI Style Kit CSS",
+            "description": "Interactive documentation and demo for 20 UI systems and 25 color themes in UI Style Kit CSS.",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://foscat.github.io/ui-style-kit-css/#software",
+            "name": "UI Style Kit CSS",
+            "description": "CSS-only library with 20 UI systems and 25 color themes for accessible websites, dashboards, admin interfaces, and client-facing pages.",
+            "codeRepository": "https://github.com/Foscat/ui-style-kit-css",
+            "programmingLanguage": "CSS",
+            "runtimePlatform": "Web browser",
+            "license": "https://github.com/Foscat/ui-style-kit-css/blob/main/LICENSE",
+            "version": "2.8.0",
+            "url": "https://foscat.github.io/ui-style-kit-css/",
+            "downloadUrl": "https://www.npmjs.com/package/ui-style-kit-css",
+            "isAccessibleForFree": true,
+            "keywords": [
+              "CSS library",
+              "design system",
+              "theme tokens",
+              "UI presets",
+              "native HTML styling",
+              "dark mode",
+              "high contrast"
+            ],
+            "sameAs": [
+              "https://github.com/Foscat/ui-style-kit-css",
+              "https://github.com/Foscat/ui-style-kit-css/wiki",
+              "https://www.npmjs.com/package/ui-style-kit-css"
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- The crawler-facing PNG stays stable and large enough for search surfaces; ICO remains a root fallback. -->
+    <link rel="icon" type="image/png" sizes="256x256" href="../favicon-256x256.png" />
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#6e56ff" />
+    <meta name="msapplication-TileColor" content="#070b24" />
+    <meta name="msapplication-config" content="../browserconfig.xml" />
+    <meta name="theme-color" content="#070b24" />
+    <link rel="stylesheet" href="../dist/visual/minimal-saas.css?v=ee42a9fd4130" />
+    <link rel="stylesheet" href="../styles/component-composition.css?v=533bd499725c" />
+    <link rel="stylesheet" href="vendor/icons.css?v=1eb4d656bf5e" />
+    <link rel="stylesheet" href="vendor/layout.css?v=d460d0c0d492" />
+    <link rel="stylesheet" href="../styles/interactive-surface-theme.css?v=c2032dd38ef5" />
+    <link rel="stylesheet" href="vendor/state-core.css?v=03dc533796d9" />
+    <link rel="stylesheet" href="vendor/motion.css?v=98b165c2b277" />
+    <link rel="stylesheet" href="demo.css?v=390de929475e" />
+    <link rel="stylesheet" href="studio.css?v=dc4cb99df697" />
+    <script defer src="demo-manifest.js?v=c806ac21c417"></script>
+    <script defer src="studio.js?v=c4e3ad8bf918"></script>
+  </head>
+  <body
+    class="studio ly-root ly-page usk-icons-theme"
+    data-ui="minimal-saas"
+    data-ly-layout="minimal-saas"
+    data-ly-density="normal"
+    data-mode="light"
+  >
+    <a class="studio-skip usk-skip-link usk-button" href="#workspace">Skip to the workspace</a>
+    <header
+      class="studio-header ly-cluster usk-toolbar ly-wrapper ly-wrapper--wide ly-justify-between"
+    >
+      <a class="studio-wordmark usk-nav-link ly-cluster" href="../index.html"
+        ><img src="assets/favicon-32x32.png" alt="" width="28" height="28" /><span
+          >UI Style Kit<span class="studio-wordmark-divider">/</span><strong>Studio</strong></span
+        ></a
+      >
 
-  <main id="main">
-    <p id="demo-palette-help" class="demo-palette-help">UI Style sets the component design. Color Theme overrides its colors; choose <strong>None</strong> for the style’s native palette. Try light, dark, or contrast mode, then <a href="#tokens">edit the active colors</a>.</p>
-    <section id="semantic-runtime" class="demo-semantic-section" data-testid="semantic-runtime-components" aria-labelledby="semantic-runtime-title">
-      <div class="demo-semantic-heading">
-        <p class="demo-semantic-kicker">Runtime semantic API</p>
-        <h1 id="semantic-runtime-title">Switch presets without changing component classes</h1>
-        <p>Every component below keeps its <code>.usk-*</code> class while the UI Style control changes only the root <code>data-ui</code> value.</p>
+      <div data-ui-structure="neutral" class="studio-header-actions ly-cluster">
+        <a href="https://github.com/Foscat/ui-style-kit-css" class="studio-docs usk-nav-link"
+          >Documentation
+          <span
+            class="usk-button__icon"
+            aria-hidden="true"
+            data-studio-icon="external-link"
+          ></span></a
+        ><button class="usk-button studio-share" id="copy-link" type="button">
+          <span class="usk-button__icon" aria-hidden="true" data-studio-icon="copy"></span>Copy link
+        </button>
       </div>
-      <div class="demo-semantic-grid">
-        <article class="usk-card" data-semantic-node="actions-card">
-          <nav class="usk-nav" data-semantic-node="nav" aria-label="Semantic component preview">
-            <a class="usk-nav-link is-active" data-semantic-node="nav-current" href="#semantic-runtime" aria-current="page">Semantic API</a>
-            <a class="usk-nav-link" data-semantic-node="nav-docs" href="#demoContent">Advanced showcase</a>
-          </nav>
-          <div class="usk-toolbar" data-semantic-node="toolbar" role="toolbar" aria-label="Semantic actions">
-            <button class="usk-button" data-semantic-node="button-neutral">Neutral</button>
-            <button class="usk-button" data-semantic-node="button-primary" data-ui-variant="primary">Primary</button>
-            <button class="usk-button" data-semantic-node="button-secondary" data-ui-variant="secondary">Secondary</button>
-            <button class="usk-button is-alarm" data-semantic-node="button-danger" data-ui-variant="danger">Danger</button>
-            <button class="usk-button" data-semantic-node="button-ghost" data-ui-variant="ghost">Ghost</button>
-            <button class="usk-icon-button" data-semantic-node="icon-button" aria-label="Semantic settings" title="Semantic settings"><span class="demo-control-icon" data-demo-icon="settings" aria-hidden="true">&#9881;</span></button>
-          </div>
-          <div class="demo-semantic-row" aria-label="Semantic status badges">
-            <span class="usk-badge" data-semantic-node="badge-neutral">Neutral</span>
-            <span class="usk-badge" data-semantic-node="badge-success" data-ui-variant="success">Ready</span>
-            <span class="usk-badge" data-semantic-node="badge-warning" data-ui-variant="warning">Review</span>
-          </div>
-          <aside class="usk-alert" data-semantic-node="alert" data-ui-variant="success">
-            <strong class="usk-alert-title" data-semantic-node="alert-title">Markup stays stable</strong>
-            <span class="usk-alert-body" data-semantic-node="alert-body">Only the selected preset changes.</span>
-          </aside>
-        </article>
-
-        <article class="usk-card" data-semantic-node="form-card">
-          <div class="usk-field" data-semantic-node="field">
-            <label class="usk-label" data-semantic-node="label" for="semantic-name">Project name</label>
-            <input id="semantic-name" class="usk-input" data-semantic-node="input" value="Runtime-ready UI">
-            <span class="usk-help-text" data-semantic-node="help-text">Native labels and controls keep their semantics.</span>
-          </div>
-          <label class="usk-field" data-semantic-node="select-field">
-            <span class="usk-label" data-semantic-node="select-label">Release channel</span>
-            <select class="usk-select" data-semantic-node="select"><option>Stable</option><option>Preview</option></select>
-          </label>
-          <label class="usk-field" data-semantic-node="textarea-field">
-            <span class="usk-label" data-semantic-node="textarea-label">Notes</span>
-            <textarea class="usk-textarea" data-semantic-node="textarea">Semantic component markup.</textarea>
-          </label>
-          <div class="demo-semantic-row">
-            <label class="usk-check" data-semantic-node="check"><input type="checkbox" checked><span class="usk-check-control" data-semantic-node="check-control" aria-hidden="true"></span><span>Checked</span></label>
-            <label class="usk-radio" data-semantic-node="radio"><input type="radio" name="semantic-choice" checked><span class="usk-radio-control" data-semantic-node="radio-control" aria-hidden="true"></span><span>Selected</span></label>
-            <label class="usk-switch" data-semantic-node="switch"><input type="checkbox" checked><span class="usk-switch-track" data-semantic-node="switch-track" aria-hidden="true"><span class="usk-switch-thumb usk-flush" data-semantic-node="switch-thumb"></span></span><span>Enabled</span></label>
-          </div>
-        </article>
-
-        <article class="usk-card" data-semantic-node="data-card">
-          <div class="usk-table-wrap" data-semantic-node="table-wrap">
-            <table class="usk-table" data-semantic-node="table"><caption>Stable semantic markup</caption><thead><tr><th>Contract</th><th>Status</th></tr></thead><tbody><tr><td>75 selectors</td><td>Implemented</td></tr></tbody></table>
-          </div>
-          <div class="usk-progress" data-semantic-node="progress" role="progressbar" aria-label="Semantic API coverage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div class="usk-progress-bar" data-semantic-node="progress-bar"></div></div>
-          <div class="demo-semantic-row">
-            <span class="usk-spinner" data-semantic-node="spinner" role="status" aria-label="Loading preview"></span>
-            <span class="usk-tooltip" data-semantic-node="tooltip" role="tooltip">Same class, new preset</span>
-          </div>
-          <p class="demo-semantic-dialog-note">Modal surfaces use the styled native <code>&lt;dialog&gt;</code> fallback; the API intentionally has no <code>.usk-modal</code> or <code>.usk-dialog</code>.</p>
-        </article>
-
-        <article class="usk-card" data-semantic-node="expanded-card">
-          <div class="usk-tabs" data-semantic-node="tabs">
-            <div class="usk-tab-list" data-semantic-node="tab-list" role="tablist"><button class="usk-tab" data-semantic-node="tab" role="tab" aria-selected="true">Overview</button></div>
-            <section class="usk-tab-panel" data-semantic-node="tab-panel" role="tabpanel">The promoted component families use the same stable runtime classes.</section>
-          </div>
-          <nav class="usk-breadcrumb" data-semantic-node="breadcrumb" aria-label="Semantic breadcrumb"><ol class="usk-breadcrumb-list" data-semantic-node="breadcrumb-list"><li class="usk-breadcrumb-item" data-semantic-node="breadcrumb-item"><a class="usk-breadcrumb-link" data-semantic-node="breadcrumb-link" href="#semantic-runtime">Components</a><span class="usk-breadcrumb-separator" data-semantic-node="breadcrumb-separator" aria-hidden="true">/</span></li></ol></nav>
-          <nav aria-label="Semantic pagination"><ul class="usk-pagination" data-semantic-node="pagination"><li class="usk-pagination-item" data-semantic-node="pagination-item"><a class="usk-pagination-link" data-semantic-node="pagination-link" href="#semantic-runtime" aria-current="page">1</a></li></ul></nav>
-          <span class="usk-skeleton" data-semantic-node="skeleton" data-shape="text" aria-hidden="true"></span>
-          <section class="usk-empty-state" data-semantic-node="empty-state"><span class="usk-empty-state-icon" data-semantic-node="empty-state-icon" aria-hidden="true">&#9734;</span><h2 class="usk-empty-state-title" data-semantic-node="empty-state-title">Empty state</h2><p class="usk-empty-state-body" data-semantic-node="empty-state-body">No pending records.</p><div class="usk-empty-state-actions" data-semantic-node="empty-state-actions"></div></section>
-          <article class="usk-metric" data-semantic-node="metric"><span class="usk-metric-label" data-semantic-node="metric-label">Selectors</span><strong class="usk-metric-value" data-semantic-node="metric-value">75</strong><span class="usk-metric-detail" data-semantic-node="metric-detail">Stable API</span></article>
-          <div class="usk-chip-group" data-semantic-node="chip-group"><span class="usk-chip" data-semantic-node="chip" data-ui-variant="primary">Promoted</span></div>
-          <div class="usk-avatar-group" data-semantic-node="avatar-group"><span class="usk-avatar" data-semantic-node="avatar" aria-label="UI Style Kit">UI</span></div>
-          <ol class="usk-stepper" data-semantic-node="stepper"><li class="usk-step" data-semantic-node="step" data-state="current"><span class="usk-step-marker" data-semantic-node="step-marker">1</span><span class="usk-step-label" data-semantic-node="step-label">Release verified</span></li></ol>
-          <div class="usk-toast-stack" data-semantic-node="toast-stack"><aside class="usk-toast" data-semantic-node="toast" data-ui-variant="info"><strong class="usk-toast-title" data-semantic-node="toast-title">Runtime API</strong><p class="usk-toast-body" data-semantic-node="toast-body">Preset switching keeps semantic markup stable.</p><div class="usk-toast-actions" data-semantic-node="toast-actions"></div></aside></div>
-          <div class="usk-popover" data-semantic-node="popover">Popover surface</div>
-          <div class="usk-menu" data-semantic-node="menu" role="menu"><div class="usk-menu-group" data-semantic-node="menu-group"><button class="usk-menu-item" data-semantic-node="menu-item" role="menuitem">Action</button></div><div class="usk-menu-separator" data-semantic-node="menu-separator" role="separator"></div></div>
-          <div class="usk-segmented-control" data-semantic-node="segmented-control"><button class="usk-segment" data-semantic-node="segment" aria-pressed="true">Grid</button></div>
-          <div class="usk-file-upload" data-semantic-node="file-upload"><label class="usk-dropzone" data-semantic-node="dropzone">Upload<input type="file"></label></div>
-          <div class="usk-listbox" data-semantic-node="listbox" role="listbox" aria-label="Semantic options"><div class="usk-listbox-option" data-semantic-node="listbox-option" role="option" aria-selected="true">Option</div></div>
-        </article>
+      <nav class="studio-nav ly-cluster usk-nav ly-w-full" aria-label="Studio workspace">
+        <a class="usk-nav-link" href="?view=examples" data-view="examples" aria-current="page"
+          >Examples</a
+        >
+        <a class="usk-nav-link" href="?view=components" data-view="components">Components</a>
+        <a class="usk-nav-link" href="?view=details" data-view="details" aria-label="Style details"
+          >Details</a
+        >
+      </nav>
+    </header>
+    <main
+      data-ui-structure="neutral"
+      class="studio-main ly-wrapper ly-wrapper--wide ly-section ly-section--compact ly-stack"
+      id="workspace"
+      aria-label="Style Studio workspace"
+    >
+      <div data-ui-structure="neutral" class="studio-intro ly-cluster ly-justify-between">
+        <div data-ui-structure="neutral">
+          <p class="studio-eyebrow usk-badge">A working canvas for your next interface</p>
+          <h1>See your next interface.</h1>
+          <p id="workspace-description">
+            Real examples. Distinct styles. Find the combination that feels right.
+          </p>
+        </div>
+        <span class="studio-collection usk-badge"
+          ><strong>20</strong> styles <span aria-hidden="true">·</span>
+          <strong>25</strong> palettes</span
+        >
       </div>
-    </section>
-
-    <div id="demoContent">
-    <section class="saas-page">
-      <div class="saas-container saas-stack">
-        <article class="saas-card">
-          <p class="saas-kicker">CSS theme and preset library</p>
-          <h1 class="saas-title">UI Style Kit CSS</h1>
-          <p class="saas-subtitle">A CSS-only library with 20 visual systems, 25 shared color themes, light, dark, and contrast modes, scoped native HTML styling, editable RGB theme tokens, and an optional Interactive Surface bridge.</p>
-          <div class="saas-cluster" aria-label="Project resources">
-            <a class="saas-button saas-button-primary" href="https://github.com/Foscat/ui-style-kit-css">GitHub</a>
-            <a class="saas-button saas-button-secondary" href="https://www.npmjs.com/package/ui-style-kit-css">npm</a>
-            <a class="saas-button" href="https://github.com/Foscat/ui-style-kit-css/wiki">Wiki</a>
+      <section class="studio-toolbar usk-card ly-stack" aria-label="Preview appearance">
+        <details class="studio-appearance ly-w-full" id="appearance-controls" open>
+          <summary><strong>Appearance</strong><span id="appearance-summary"></span></summary>
+          <div data-ui-structure="neutral" class="studio-fields ly-grid">
+            <label class="usk-field studio-style-field"
+              ><span class="usk-label">Style</span
+              ><select class="usk-select" id="uiSelect">
+                <option value="minimal-saas" data-prefix="saas" selected>Minimal SaaS</option><option value="bento" data-prefix="bento">Bento UI</option><option value="maximalist" data-prefix="max">Maximalist / Playful</option><option value="bauhaus" data-prefix="bau">Bauhaus / Swiss Modern</option><option value="tactile" data-prefix="tactile">Skeuomorphic / Tactile</option><option value="neumorphism" data-prefix="neo">Neumorphism</option><option value="retrofuturism" data-prefix="retro">Retrofuturism</option><option value="brutalism" data-prefix="brutal">Brutalism</option><option value="cyberpunk" data-prefix="cyber">Cyberpunk</option><option value="y2k" data-prefix="y2k">Y2K</option><option value="retro-glass" data-prefix="rg">Retro Glass</option><option value="editorial-luxe" data-prefix="luxe">Editorial Lux</option><option value="organic-modern" data-prefix="organic">Organic Modern</option><option value="industrial-utility" data-prefix="utility">Industrial Utility</option><option value="technical-blueprint" data-prefix="blueprint">Technical Blueprint</option><option value="art-deco" data-prefix="deco">Art Deco</option><option value="clay" data-prefix="clay">Clay</option><option value="data-terminal" data-prefix="terminal">Data Terminal</option><option value="paper-editorial" data-prefix="paper">Paper Editorial</option><option value="neo-noir" data-prefix="noir">Neo-Noir</option>
+              </select></label
+            >
+            <label class="usk-field studio-palette-field"
+              ><span class="usk-label">Palette</span
+              ><select class="usk-select" id="themeSelect" aria-describedby="palette-help">
+                <option value="" selected>Style defaults</option><option value="midnight-gold">midnight-gold</option><option value="ocean-steel">ocean-steel</option><option value="forest-moss">forest-moss</option><option value="sunset-ember">sunset-ember</option><option value="royal-plum">royal-plum</option><option value="graphite-cyan">graphite-cyan</option><option value="desert-sage">desert-sage</option><option value="rose-quartz">rose-quartz</option><option value="cyber-lime">cyber-lime</option><option value="arctic-indigo">arctic-indigo</option><option value="chrome-navy">chrome-navy</option><option value="recycled-emerald">recycled-emerald</option><option value="industrial-orange">industrial-orange</option><option value="performance-red">performance-red</option><option value="heritage-brass">heritage-brass</option><option value="service-blue-red">service-blue-red</option><option value="newsprint-crimson">newsprint-crimson</option><option value="foundry-amber">foundry-amber</option><option value="soft-orchid">soft-orchid</option><option value="electric-noir">electric-noir</option><option value="signal-yellow">signal-yellow</option><option value="botanical-green">botanical-green</option><option value="cobalt-electric">cobalt-electric</option><option value="stone-graphite">stone-graphite</option><option value="walnut-clay">walnut-clay</option>
+              </select></label
+            >
+            <label class="usk-field studio-mode-field"
+              ><span class="usk-label">Mode</span
+              ><select class="usk-select" id="modeSelect">
+                <option value="light" selected>light</option><option value="dark">dark</option><option value="contrast">contrast</option>
+              </select></label
+            >
           </div>
-        </article>
+          <fieldset class="ly-cluster">
+            <legend>Icons</legend>
+            <label class="usk-check"
+              ><input type="checkbox" id="style-icons" /><span
+                class="usk-check-control"
+                aria-hidden="true"
+              ></span
+              ><span>Match icons to style</span></label
+            ><label class="usk-check"
+              ><input type="checkbox" id="themed-icons" /><span
+                class="usk-check-control"
+                aria-hidden="true"
+              ></span
+              ><span>Themed icons</span></label
+            ><small class="usk-help-text" id="icon-status" aria-live="polite"
+              >Minimal SaaS / Monochrome</small
+            >
+          </fieldset>
+        </details>
+        <div
+          data-ui-structure="neutral"
+          class="studio-toolbar-actions ly-grid ly-grid--fixed ly-cols-2"
+        >
+          <button
+            class="usk-button interactive-surface"
+            data-surface-level="2"
+            id="compare"
+            type="button"
+            aria-pressed="false"
+          >
+            Compare styles</button
+          ><button
+            class="usk-button interactive-surface"
+            data-ui-variant="primary"
+            data-surface-level="2"
+            data-surface-variant="primary"
+            id="customize"
+            type="button"
+          >
+            Customize &amp; export
+          </button>
+        </div>
+        <p id="palette-help" class="studio-help usk-help-text">
+          Style defaults preserve the preset’s native palette. Named palettes override its colors.
+        </p>
+      </section>
+      <div data-ui-structure="neutral" class="studio-context ly-cluster ly-justify-between">
+        <div
+          data-ui-structure="neutral"
+          class="studio-scenarios ly-cluster"
+          role="group"
+          aria-label="Example"
+        >
+          <button class="usk-button" type="button" data-example="dashboard" aria-pressed="true">
+            Dashboard</button
+          ><button
+            class="usk-button"
+            type="button"
+            data-example="form"
+            aria-label="Settings form"
+            aria-pressed="false"
+          >
+            Form</button
+          ><button
+            class="usk-button"
+            type="button"
+            data-example="content"
+            aria-label="Content page"
+            aria-pressed="false"
+          >
+            Content
+          </button>
+        </div>
+        <div data-ui-structure="neutral" id="component-context" class="ly-cluster" hidden>
+          <label class="studio-mobile-group usk-field"
+            ><span class="usk-label">Component group</span
+            ><select class="usk-select" id="component-group"></select></label
+          ><label class="studio-search usk-field"
+            ><span class="visually-hidden usk-visually-hidden">Search components</span
+            ><input
+              class="usk-input"
+              id="component-search"
+              type="search"
+              placeholder="Find a component…" /></label
+          ><label class="studio-markup usk-field"
+            ><span>Markup</span
+            ><select class="usk-select" id="markupSelect">
+              <option value="semantic">Semantic classes</option>
+              <option value="prefixed">Prefixed classes</option>
+              <option value="native">Native HTML</option>
+            </select></label
+          >
+        </div>
+        <div data-ui-structure="neutral" id="details-context" hidden>
+          <p>Distinctive components, using the actual authored specimens.</p>
+          <a id="reference-link" href="reference.html?view=reference"
+            >Open complete reference
+            <span
+              class="usk-button__icon"
+              aria-hidden="true"
+              data-studio-icon="external-link"
+            ></span
+          ></a>
+        </div>
+        <span class="studio-sample-label" id="sample-label"
+          ><span aria-hidden="true">●</span> Interactive sample</span
+        >
       </div>
-    </section>
-    </div>
-  </main>
-
-  <script src="demo-manifest.js?v=86f99fe13243"></script>
-  <script src="demo-icons.js?v=3043407f4eb7"></script>
-  <template id="demoPresetScripts">
-    <script data-demo-preset="art-deco" data-demo-specimen="art-deco" src="demo-art-deco.js?v=5ffa637a8474"></script>
-    <script data-demo-preset="editorial-luxe" data-demo-specimen="editorial-luxe" src="demo-editorial-lux.js?v=f6512052a286"></script>
-    <script data-demo-preset="neo-noir" data-demo-specimen="neo-noir" src="demo-neo-noir.js?v=1242cf695823"></script>
-    <script data-demo-preset="clay" data-demo-specimen="clay" src="demo-clay.js?v=8ca1067b24b7"></script>
-    <script data-demo-preset="bento" data-demo-specimen="bento" src="demo-bento.js?v=7c5ece4e6ea7"></script>
-    <script data-demo-preset="bauhaus" data-demo-specimen="bauhaus" src="demo-bauhaus.js?v=dcb8da8a2f90"></script>
-    <script data-demo-preset="organic-modern" data-demo-specimen="organic-icons" src="demo-organic-icons.js?v=9a8d6adf49b3"></script>
-    <script data-demo-preset="organic-modern" data-demo-specimen="organic-modern" src="demo-organic.js?v=d0d8a9bba18c"></script>
-  </template>
-  <script src="demo.js?v=07418806e642"></script>
-</body>
+      <div data-ui-structure="neutral" class="studio-explorer ly-sidebar" id="explorer">
+        <aside
+          data-ui-structure="neutral"
+          class="studio-component-list ly-sidebar__side ly-stack"
+          id="component-list"
+          aria-label="Component families"
+          hidden
+        ></aside>
+        <section
+          data-ui-structure="neutral"
+          class="studio-canvas ly-sidebar__content"
+          aria-label="Style preview"
+        >
+          <div
+            data-ui-structure="neutral"
+            class="studio-comparison-switch ly-cluster"
+            id="comparison-switch"
+            aria-label="Visible comparison"
+            hidden
+          >
+            <button class="usk-button" type="button" data-side="a" aria-pressed="false">
+              A · Pinned</button
+            ><button class="usk-button" type="button" data-side="b" aria-pressed="true">
+              B · Editing
+            </button>
+          </div>
+          <div
+            data-ui-structure="neutral"
+            class="studio-previews ly-grid ly-grid--fixed"
+            id="previews"
+            data-visible-side="b"
+          >
+            <article
+              class="studio-preview-panel usk-card ly-stack"
+              data-card-spacing="flush"
+              id="panel-a"
+              data-status="loading"
+              hidden
+            >
+              <header
+                data-ui-structure="neutral"
+                class="studio-preview-heading ly-cluster ly-justify-between usk-toolbar"
+              >
+                <div data-ui-structure="neutral">
+                  <span class="studio-preview-letter">A</span
+                  ><strong id="title-a">Pinned comparison</strong><small id="subtitle-a"></small>
+                </div>
+                <button class="studio-text-button usk-button" type="button" id="replace-baseline">
+                  Replace baseline
+                </button>
+              </header>
+              <div data-ui-structure="neutral" class="studio-frame-wrap">
+                <iframe id="preview-a" title="Pinned style preview"></iframe>
+                <div
+                  data-ui-structure="neutral"
+                  class="studio-frame-status usk-alert"
+                  role="status"
+                ></div>
+              </div>
+            </article>
+            <article
+              class="studio-preview-panel usk-card ly-stack"
+              data-card-spacing="flush"
+              id="panel-b"
+              data-status="loading"
+            >
+              <header
+                data-ui-structure="neutral"
+                class="studio-preview-heading ly-cluster ly-justify-between usk-toolbar"
+              >
+                <div data-ui-structure="neutral">
+                  <span class="studio-preview-letter" id="letter-b">●</span
+                  ><strong id="title-b">Preparing preview</strong><small id="subtitle-b"></small>
+                </div>
+                <span class="studio-live-label" id="status-b">Live preview</span>
+              </header>
+              <div data-ui-structure="neutral" class="studio-frame-wrap">
+                <iframe id="preview-b" title="Editable style preview"></iframe>
+                <div
+                  data-ui-structure="neutral"
+                  class="studio-frame-status usk-alert"
+                  role="status"
+                >
+                  Preparing your workspace…
+                </div>
+              </div>
+            </article>
+          </div>
+          <p class="studio-canvas-note usk-help-text ly-cluster ly-justify-between">
+            <span id="canvas-note">The same content stays in place when you change styles.</span
+            ><span id="preview-width"></span>
+          </p>
+        </section>
+      </div>
+      <noscript
+        ><p class="usk-alert">
+          Enable JavaScript to explore the studio.
+          <a href="reference.html">The original reference is also available.</a>
+        </p></noscript
+      >
+    </main>
+    <footer
+      data-ui-structure="neutral"
+      class="studio-footer ly-cluster ly-wrapper ly-wrapper--wide ly-section ly-section--compact"
+    >
+      <span>UI Style Kit CSS <span id="studio-version"></span></span
+      ><span>Sample content · no connected accounts or production data</span
+      ><a href="https://github.com/Foscat/ui-style-kit-css">Sanderson Technology Enterprises</a>
+    </footer>
+    <dialog
+      class="studio-inspector usk-drawer usk-modal usk-drawer--right"
+      id="inspector"
+      aria-labelledby="inspector-title"
+    >
+      <div
+        data-ui-structure="neutral"
+        class="studio-inspector-inner usk-modal__body ly-stack ly-h-full"
+        id="inspector-motion"
+      >
+        <header
+          data-ui-structure="neutral"
+          class="ly-cluster studio-inspector-header ly-justify-between"
+        >
+          <div data-ui-structure="neutral">
+            <p class="studio-eyebrow usk-badge">Make it yours</p>
+            <h2 id="inspector-title">Customize &amp; export</h2>
+          </div>
+          <button
+            class="usk-button"
+            id="close-inspector"
+            type="button"
+            aria-label="Close customization"
+          >
+            <span class="usk-button__icon" aria-hidden="true" data-studio-icon="close"></span>
+          </button>
+        </header>
+        <p class="studio-inspector-context usk-help-text" id="inspector-context"></p>
+        <div
+          data-ui-structure="neutral"
+          class="studio-inspector-tabs ly-cluster usk-tab-list"
+          role="tablist"
+          aria-label="Customization"
+        >
+          <button
+            class="usk-tab"
+            id="colors-tab"
+            type="button"
+            role="tab"
+            aria-controls="colors-panel"
+            aria-selected="true"
+          >
+            Colors
+          </button>
+          <button
+            class="usk-tab"
+            id="code-tab"
+            type="button"
+            role="tab"
+            aria-controls="code-panel"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Code &amp; export
+          </button>
+        </div>
+        <section
+          data-ui-structure="neutral"
+          id="colors-panel"
+          role="tabpanel"
+          aria-labelledby="colors-tab"
+        >
+          <label class="studio-feedback-toggle usk-check ly-cluster"
+            ><input type="checkbox" id="feedback-toggle" /><span
+              class="usk-check-control"
+              aria-hidden="true"
+            ></span
+            ><span>Enable interaction feedback</span></label
+          >
+          <div
+            data-ui-structure="neutral"
+            class="studio-token-heading ly-cluster ly-justify-between"
+          >
+            <p>Edit RGB channels or choose a color.</p>
+            <button class="studio-text-button usk-button" id="reset-palette" type="button">
+              Reset this palette
+            </button>
+          </div>
+          <p class="studio-help usk-help-text">
+            Custom colors can change contrast. Check text, focus, and interaction states before
+            using them.
+          </p>
+          <div data-ui-structure="neutral" id="tokens"></div>
+        </section>
+        <section
+          data-ui-structure="neutral"
+          id="code-panel"
+          role="tabpanel"
+          aria-labelledby="code-tab"
+          hidden
+        >
+          <details>
+            <summary>Optional icon library</summary>
+            <p>
+              Install UI Style Kit Icons when you want the companion artwork and &lt;usk-icon&gt;
+              element in your project.
+            </p>
+            <label class="usk-field"
+              ><span class="usk-label">Icon installation</span
+              ><select class="usk-select" id="icon-install-method">
+                <option value="npm">NPM / self-hosted assets</option>
+                <option value="cdn">CDN</option>
+              </select></label
+            >
+            <pre tabindex="0"><code id="icon-install-code"></code></pre>
+            <button class="usk-button" type="button" data-copy="icon-install-code">
+              <span class="usk-button__icon" aria-hidden="true" data-studio-icon="copy"></span>Copy
+              icon setup
+            </button>
+          </details>
+          <div
+            data-ui-structure="neutral"
+            class="studio-code-heading ly-cluster ly-justify-between"
+          >
+            <h3>CSS-only setup</h3>
+            <button class="studio-text-button usk-button" type="button" data-copy="setup-code">
+              Copy setup
+            </button>
+          </div>
+          <pre><code id="setup-code"></code></pre>
+          <div
+            data-ui-structure="neutral"
+            class="studio-code-heading ly-cluster ly-justify-between"
+          >
+            <h3>Resolved palette CSS</h3>
+            <button class="studio-text-button usk-button" type="button" data-copy="css-code">
+              Copy CSS
+            </button>
+          </div>
+          <pre><code id="css-code"></code></pre>
+          <button class="usk-button" id="download-css" type="button">Download CSS</button>
+          <div
+            data-ui-structure="neutral"
+            class="studio-code-heading ly-cluster ly-justify-between"
+          >
+            <h3>Selected component</h3>
+            <button class="studio-text-button usk-button" type="button" data-copy="markup-code">
+              Copy markup
+            </button>
+          </div>
+          <pre><code id="markup-code"></code></pre>
+          <label class="usk-field"
+            ><span class="usk-label">Share this configuration</span
+            ><input class="usk-input" id="share-url" readonly
+          /></label>
+          <p class="studio-help usk-help-text">
+            Includes visual edits and comparison. Form contents are excluded.
+          </p>
+        </section>
+      </div>
+    </dialog>
+    <dialog
+      id="copy-fallback"
+      class="studio-copy-dialog usk-modal usk-modal--md"
+      aria-labelledby="copy-title"
+    >
+      <h2 id="copy-title">Copy this text</h2>
+      <p>Your browser did not grant clipboard access. Select and copy the text below.</p>
+      <label
+        ><span class="visually-hidden usk-visually-hidden">Text to copy</span
+        ><textarea class="usk-textarea" id="copy-value" readonly rows="10"></textarea>
+      </label>
+      <form method="dialog"><button class="usk-button">Done</button></form>
+    </dialog>
+    <p id="studio-announcement" class="studio-toast usk-toast" role="status" aria-live="polite"></p>
+  </body>
 </html>

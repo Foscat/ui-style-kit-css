@@ -1,9 +1,10 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href + '?view=reference';
+const demoUrl = pathToFileURL(path.join(rootDir, 'demo', 'reference.html')).href + '?view=reference';
 
 /**
  * Opens the demo with Tactile active and waits for its representative action

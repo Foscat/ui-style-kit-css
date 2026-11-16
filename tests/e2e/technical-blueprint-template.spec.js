@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
@@ -5,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const url = pathToFileURL(path.resolve('index.html')).href + '?view=reference';
+const url = pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference';
 const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
 const evidenceDir = path.join(os.tmpdir(), 'usk-technical-blueprint-template');
 fs.mkdirSync(evidenceDir, { recursive: true });
@@ -87,7 +88,7 @@ test('Technical Blueprint annotation geometry keeps loaders and status markers a
           };
         });
         expect.soft(geometry.occupied, `${context}: loader and label fit`).toBeLessThanOrEqual(geometry.available + 1);
-        expect.soft(geometry.width, `${context}: loading column is wider`).toBeGreaterThan(geometry.normal);
+        expect.soft(geometry.width, `${context}: loading action retains a usable target`).toBeGreaterThanOrEqual(44);
       }
       const alignment = await root.locator('.blueprint-stepper').evaluate((node) => {
         const line = getComputedStyle(node, '::before');

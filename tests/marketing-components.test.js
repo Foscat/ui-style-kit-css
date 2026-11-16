@@ -117,7 +117,7 @@ function effectiveClassDeclarations(css, className) {
 }
 
 test('commercial CTAs use separate filled and outlined roles', () => {
-  const demo = read('demo/demo.js');
+  const demo = read('demo/studio/reference.js');
 
   assert.match(demo, /data-testid="marketing-primary-cta"[^>]*button-cut/);
   assert.match(demo, /data-testid="marketing-secondary-cta"[^>]*button-outline-heavy/);

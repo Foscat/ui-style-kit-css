@@ -10,7 +10,7 @@ import { writeGeneratedFile } from './write-generated-file.mjs';
  * @returns {Promise<void>} Resolves after both entrypoints contain current asset hashes.
  */
 export async function syncDemoAssetVersions(root) {
-  for (const entry of ['index.html', 'demo/index.html']) {
+  for (const entry of ['index.html', 'demo/index.html', 'demo/reference.html', 'demo/preview.html']) {
     const filename = path.join(root, entry);
     const original = fs.readFileSync(filename, 'utf8');
     const updated = original.replace(/\b(data-default-href|data-bridge-href|href|src)="([^"\s]+\.(?:css|js)(?:\?[^"\s]*)?)"/g, (attribute, name, value) => {

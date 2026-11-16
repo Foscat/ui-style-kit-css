@@ -1,3 +1,14 @@
+/**
+ * @module scripts/build
+ * @description Generates standalone, visual, compatibility, and focused library distributions from the public manifest.
+ */
+/** Browser version thresholds encoded by Lightning CSS.
+ * @typedef {Object.<string, number>} BrowserTargets
+ */
+/** CSS Tree grammar node consumed by selector transformations.
+ * @typedef {Object} CssNode
+ * @property {string} type Grammar node kind.
+ */
 import fs from 'node:fs';
 import path from 'node:path';
 import browserslist from 'browserslist';
@@ -7,7 +18,7 @@ import { syncContentOverflowCss } from './generate-content-overflow.mjs';
 import { syncExpandedComponents } from './generate-expanded-components.mjs';
 import { validatePresetIdentities } from './preset-identities.mjs';
 import { syncReadmeBundleSizes } from './sync-readme-sizes.mjs';
-import { syncDemoAssetVersions } from './sync-demo-asset-versions.mjs';
+import { buildStudio } from './build-studio.mjs';
 import { writeGeneratedFile } from './write-generated-file.mjs';
 
 const root = process.cwd();
@@ -31,6 +42,7 @@ const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
   prefix,
   file: `styles/${id}.css`
 }));
+const preparedPresets = new Map();
 const stylePrefixes = new Map(presetFiles.map(({ file, id, prefix }) => [file, [id, prefix]]));
 const semanticEntries = Object.values(publicManifest.semanticComponentApi.selectorsByRole).flat();
 const semanticClassNamespaces = [
@@ -97,7 +109,7 @@ const layerOrder = publicManifest.cascadeLayers.join(', ');
  * Resolve the package browser policy into Lightning CSS compilation targets.
  *
  * @param {string[]} queries Browserslist queries from package metadata.
- * @returns {import('lightningcss').Targets} Lightning CSS target map.
+ * @returns {BrowserTargets} Lightning CSS target map.
  */
 function resolveBrowserTargets(queries) {
   if (!Array.isArray(queries) || queries.length === 0) {
@@ -235,7 +247,7 @@ function addPresetConstraintToRoot(selector, selectedRoot) {
  * Removes selector-list duplicates created when several preset classes collapse
  * to the same public namespace alias.
  *
- * @param {import('css-tree').CssNode} selector Selector AST to normalize.
+ * @param {CssNode} selector Selector AST to normalize.
  * @returns {void}
  */
 function dedupeNestedSelectorLists(selector) {
@@ -263,7 +275,7 @@ function dedupeNestedSelectorLists(selector) {
  * Exclusion-only rules already cover semantic markup. Cloning them would remove
  * the original prefixed exclusion and let an alias rule recolor that component.
  *
- * @param {import('css-tree').CssNode} selector Authored selector AST.
+ * @param {CssNode} selector Authored selector AST.
  * @param {Map<string, string>} aliases Public aliases keyed by source class.
  * @returns {boolean} Whether a component class occurs outside a negation.
  */
@@ -289,7 +301,7 @@ function hasPositiveSemanticClass(selector, aliases) {
  * Exact class-token attributes describe exclusions without promoting a generic
  * rule into a semantic component rule or changing its authored root specificity.
  *
- * @param {import('css-tree').CssNode} selector Authored selector containing component exclusions.
+ * @param {CssNode} selector Authored selector containing component exclusions.
  * @returns {string|null} Expanded selector, or null when no component was excluded.
  */
 function expandSemanticExclusions(selector) {
@@ -317,7 +329,7 @@ function expandSemanticExclusions(selector) {
 /**
  * Projects a positively selected component into one scoped semantic namespace.
  *
- * @param {import('css-tree').CssNode} selector Authored selector AST.
+ * @param {CssNode} selector Authored selector AST.
  * @param {string} selectedRoot Specificity-safe scope for the admitted presets.
  * @param {Map<string, string>} semanticAliasBySourceClass Source-to-semantic selector map.
  * @returns {string|null} Scoped semantic selector, or null for an exclusion-only rule.
@@ -511,7 +523,17 @@ function filterViewportLayoutDeclarations(rule, keepViewportLayout) {
   });
 }
 
+/** Prepares each immutable preset/composition partition once within this build invocation.
+ * Cached strings are safe to reuse; mutable parser nodes never cross transformation owners.
+ * @param {string} file Authored stylesheet path relative to the package root.
+ * @param {string} id Manifest preset identifier.
+ * @param {string} prefix Namespaced component prefix.
+ * @param {string} composition Visual paint or deprecated structural compatibility partition.
+ * @returns {string} Formatted generated CSS for the exact input partition.
+ */
 function preparedPresetCss(file, id, prefix, composition) {
+  const key = JSON.stringify([file, id, prefix, composition]);
+  if (preparedPresets.has(key)) return preparedPresets.get(key);
   const ast = parseStylesheet(file);
   removeImports(ast);
 
@@ -550,7 +572,9 @@ function preparedPresetCss(file, id, prefix, composition) {
   );
 
   // Generated partitions stay human-readable while sharing the reviewed parser path.
-  return formatGeneratedCss(generate(ast), file);
+  const css = formatGeneratedCss(generate(ast), file);
+  preparedPresets.set(key, css);
+  return css;
 }
 
 function sourceSection(file) {
@@ -578,46 +602,6 @@ async function syncDemoManifest() {
   const output = `/* Generated by scripts/build.mjs. Keep demo controls aligned with manifest.json. */\nwindow.UI_STYLE_KIT_MANIFEST = ${JSON.stringify(demoManifest, null, 2)};\n`;
 
   await writeGeneratedFile(path.join(root, 'demo', 'demo-manifest.js'), output);
-}
-
-/**
- * Adds the public icon-geometry hook to an embedded SVG without changing its
- * licensed paths, accessible naming, or other source attributes.
- * @param {string} svg Licensed SVG source markup.
- * @returns {string} SVG markup carrying the universal UI icon hook.
- */
-function withUiIconContract(svg) {
-  return svg.replace('<svg', '<svg data-ui-icon');
-}
-
-/**
- * Embeds licensed Lucide source icons so both file and HTTP demos render offline.
- * @returns {Promise<void>} Resolves after the generated icon module is written.
- */
-async function syncDemoIcons() {
-  const iconDir = path.join(root, 'demo', 'assets', 'lucide');
-  const icons = Object.fromEntries(fs.readdirSync(iconDir).filter((name) => name.endsWith('.svg')).sort()
-    .map((name) => [name.slice(0, -4), withUiIconContract(fs.readFileSync(path.join(iconDir, name), 'utf8'))]));
-  await writeGeneratedFile(
-    path.join(root, 'demo', 'demo-icons.js'),
-    `/* Generated by scripts/build.mjs from licensed Lucide icons in assets/lucide. */\nwindow.UI_STYLE_KIT_ICONS = ${JSON.stringify(icons, null, 2)};\n`
-  );
-}
-
-/**
- * Embeds the Organic reference's licensed Phosphor icons for offline and HTTP parity.
- * These icons intentionally retain preset-owned geometry instead of opting into
- * the generic `data-ui-icon` sizing contract used by reusable control glyphs.
- * @returns {Promise<void>} Resolves after the generated icon module is written.
- */
-async function syncOrganicIcons() {
-  const iconDir = path.join(root, 'demo', 'assets', 'phosphor');
-  const icons = Object.fromEntries(fs.readdirSync(iconDir).filter((name) => name.endsWith('.svg')).sort()
-    .map((name) => [name.slice(0, -4), fs.readFileSync(path.join(iconDir, name), 'utf8')]));
-  await writeGeneratedFile(
-    path.join(root, 'demo', 'demo-organic-icons.js'),
-    `/* Generated by scripts/build.mjs from licensed Phosphor icons in assets/phosphor. */\nwindow.ORGANIC_PHOSPHOR_ICONS = ${JSON.stringify(icons, null, 2)};\n`
-  );
 }
 
 /**
@@ -691,10 +675,8 @@ for (const preset of presetFiles) {
 }
 
 await syncDemoManifest();
-await syncDemoIcons();
-await syncOrganicIcons();
 await syncReadmeBundleSizes(root);
-await syncDemoAssetVersions(root);
+await buildStudio();
 
 console.log(
   'Built default, visual-only, focused visual, and deprecated with-bridge distribution entrypoints.'

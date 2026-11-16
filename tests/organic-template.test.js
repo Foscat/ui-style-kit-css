@@ -55,13 +55,14 @@ test('Organic publishes every reference component and isolates its specimen', ()
   });
   const window = {};
   vm.runInNewContext(fs.readFileSync('demo/demo-organic.js', 'utf8'), { window, URL, document: { currentScript: { src: pathToFileURL(path.resolve('demo/demo-organic.js')).href } } });
-  const html = window.OrganicSpecimen.render('organic-modern', 'light');
+  const context = {appearance:{ui:'organic-modern',mode:'light'},prefix:'organic',icons:{},organicIcons:{},scriptUrl:pathToFileURL(path.resolve('demo/demo-organic.js')).href};
+  const html = window.StudioAuthored['organic-modern'].render(context);
   for (const suffix of required) {
     assert.ok(api.has(suffix), `Missing API: organic-${suffix}`);
     assert.ok(selectors.has(`organic-${suffix}`), `Missing CSS: organic-${suffix}`);
     assert.match(html, new RegExp(`\\borganic-${suffix}\\b`), `Missing demo: organic-${suffix}`);
   }
   for (const preset of manifest.presets.filter(({ id }) => id !== 'organic-modern')) {
-    assert.equal(window.OrganicSpecimen.render(preset.id), '', preset.id);
+    assert.equal(window.StudioAuthored['organic-modern'].render({...context,appearance:{ui:preset.id,mode:'light'}}), '', preset.id);
   }
 });

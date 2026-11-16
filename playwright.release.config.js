@@ -8,6 +8,8 @@ import { defineConfig, devices } from '@playwright/test';
  * @type {RegExp[]}
  */
 const releaseSmokePatterns = [
+  /library emphasis inherits/,
+  /studio /,
   /interactive labels retain contrast through hover across every palette and mode/,
   /filled marketing actions retain contrast through hover across every palette and mode/,
   /Bento .* badge labels retain AA contrast in every palette and mode/,
@@ -87,7 +89,7 @@ const releaseSmokePatterns = [
   /Industrial warning signals use warning paint and danger examples opt into alarms/,
   /Technical Blueprint annotation geometry keeps loaders and status markers aligned/,
   /Data Terminal keeps controls and icons on the dense terminal grid/,
-  /Bento native samples flow without row-height gaps on desktop and mobile/,
+  /Bento native samples use intrinsic Layout flow on desktop and mobile/,
   /Clay reference controls are functional and isolated across every preset/,
   /Clay keyboard navigation, uploads and contrast remain usable/
 ];

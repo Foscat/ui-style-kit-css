@@ -1,67 +1,38 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-/** @param {import('@playwright/test').Page} page Browser page. @returns {Promise<void>} */
+/** Opens the shared specimen and waits for its visible mount before measuring library geometry.
+ * @param {import('@playwright/test').Page} page Browser page.
+ * @returns {Promise<void>} Resolves after the selected specimen has finished loading.
+ */
 async function openBento(page) {
   await page.setViewportSize({ width: 1012, height: 792 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'bento');
   await page.selectOption('#modeSelect', 'light');
 }
 
-/**
- * Reads Bento's packed native sample grid after the current viewport change.
+/** Reads actual Layout grid flow without coupling the fixture to measured row spans.
  * @param {import('@playwright/test').Page} page Browser page.
- * @param {number} width Expected viewport width.
- * @returns {Promise<{columns: number, gaps: number[], maxGap: number, bottomGap: number, overflow: number}>}
+ * @returns {Promise<Object>} Intrinsic columns, containment, and overlap facts.
  */
-async function readNativeGridFacts(page, width) {
-  return page.locator('.demo-native-grid').evaluate((grid, viewportWidth) => {
-    const rects = [...grid.children].map(node => {
-      const r = node.getBoundingClientRect();
-      return { x: Math.round(r.x), top: r.top, bottom: r.bottom };
-    });
-    const columns = new Map();
-    for (const rect of rects) {
-      if (!columns.has(rect.x)) columns.set(rect.x, []);
-      columns.get(rect.x).push(rect);
-    }
-    const gaps = [...columns.values()].flatMap(column => column
-      .sort((a, b) => a.top - b.top)
-      .slice(1)
-      .map((rect, i) => rect.top - column[i].bottom));
-    const bottoms = [...columns.values()].map(column => Math.max(...column.map(rect => rect.bottom)));
+async function readNativeGridFacts(page) {
+  return page.locator('.demo-native-grid').evaluate(grid => {
+    const style = getComputedStyle(grid);
+    const rects = [...grid.children].map(node => node.getBoundingClientRect());
+    const overlaps = rects.some((a, index) => rects.slice(index + 1).some(b =>
+      Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 &&
+      Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1));
     return {
-      columns: columns.size,
-      gaps,
-      maxGap: Math.max(0, ...gaps),
-      bottomGap: Math.max(...bottoms) - Math.min(...bottoms),
+      columns: style.gridTemplateColumns.split(' ').length,
+      flow: style.gridAutoFlow,
       overflow: grid.scrollWidth - grid.clientWidth,
-      expectedColumns: viewportWidth > 800 ? 2 : 1,
+      measured: [...grid.children].some(node => node.style.gridRowEnd),
+      overlaps,
     };
-  }, width);
-}
-
-/**
- * Waits for Bento's ResizeObserver masonry spans to settle after viewport changes.
- * @param {import('@playwright/test').Page} page Browser page.
- * @param {number} width Expected viewport width.
- * @returns {Promise<{columns: number, gaps: number[], maxGap: number, bottomGap: number, overflow: number}>}
- */
-async function waitForNativeGridFlow(page, width) {
-  let facts = await readNativeGridFacts(page, width);
-  await expect.poll(async () => {
-    facts = await readNativeGridFacts(page, width);
-    return facts.columns === facts.expectedColumns
-      && facts.bottomGap < 700
-      && facts.maxGap <= 24
-      && facts.overflow <= 1;
-  }, {
-    message: `Bento native sample grid should settle at ${width}px`,
-    timeout: 5000,
-  }).toBe(true);
-  return facts;
+  });
 }
 
 test('Bento labeled switches keep readable labels and operable tracks', async ({ page }) => {
@@ -149,14 +120,16 @@ test('Bento native spinner aliases share the reference ring in every mode', asyn
   await page.locator('.demo-control-panel').filter({ has: page.locator('.bento-spinner-lg') }).screenshot({ path: '.tmp/bento-loader-aliases.png' });
 });
 
-test('Bento native samples flow without row-height gaps on desktop and mobile', async ({ page }) => {
+test('Bento native samples use intrinsic Layout flow on desktop and mobile', async ({ page }) => {
   await openBento(page);
   for (const width of [1012, 390]) {
     await page.setViewportSize({ width, height: 792 });
-    const facts = await waitForNativeGridFlow(page, width);
-    expect(facts.columns).toBe(width > 800 ? 2 : 1);
-    expect(facts.bottomGap).toBeLessThan(700);
-    for (const gap of facts.gaps) expect(gap).toBeLessThanOrEqual(24);
+    const facts = await readNativeGridFacts(page);
+    if (width > 800) expect(facts.columns).toBeGreaterThan(1);
+    else expect(facts.columns).toBe(1);
+    expect(facts.flow).toBe('row');
+    expect(facts.measured).toBe(false);
+    expect(facts.overlaps).toBe(false);
     expect(facts.overflow).toBeLessThanOrEqual(1);
     await page.locator('.demo-native-grid').screenshot({ path: `.tmp/bento-native-columns-${width}.png`, style: '.demo-controls { visibility: hidden; }' });
   }

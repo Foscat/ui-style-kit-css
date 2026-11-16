@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import os from 'node:os';
 /** Opens the exact preset and theme reported in the browser annotations. */
 async function openAnnotations(page, mode) {
   await page.setViewportSize({ width: 1115, height: 792 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'editorial-luxe');
   await page.selectOption('#themeSelect', 'heritage-brass');
   await page.selectOption('#modeSelect', mode);
@@ -16,8 +17,8 @@ for (const mode of ['light', 'dark']) {
   test(`Editorial Lux annotation fixes in ${mode}`, async ({ page }) => {
     await openAnnotations(page, mode);
     for (const select of await page.locator('.demo-controls select').all()) {
-      await expect.soft(select).toHaveCSS('appearance', 'auto');
-      await expect.soft(select).toHaveCSS('background-image', 'none');
+      await expect.soft(select).toHaveCSS('appearance', 'none');
+      await expect.soft(select).not.toHaveCSS('background-image', 'none');
     }
     const seal = page.locator('.luxe-badge-seal').first();
     await expect.soft(seal.locator('strong')).toHaveCSS('font-size', '28px');

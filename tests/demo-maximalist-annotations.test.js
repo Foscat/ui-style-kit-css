@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { loadReferenceController } from './helpers/reference-controller.js';
 import postcss from 'postcss';
 
 /**
@@ -29,22 +30,18 @@ function declarations(root, selector) {
   return result;
 }
 
-test('demo toolbar uses semantic fields with one shared platform indicator rule', () => {
+test('reference toolbar uses semantic fields without demo platform indicator overrides', () => {
   const root = stylesheet('demo/demo.css');
-  for (const entry of ['index.html', 'demo/index.html']) {
+  for (const entry of ['demo/reference.html']) {
     const html = fs.readFileSync(new URL(`../${entry}`, import.meta.url), 'utf8');
-    assert.match(html, /class="demo-controls usk-toolbar"/);
+    assert.match(html, /class="demo-controls usk-toolbar[^"]*"/);
     for (const id of ['uiSelect', 'themeSelect', 'modeSelect']) {
       assert.match(html, new RegExp(`<select id="${id}" class="usk-select"`), `${entry}: ${id}`);
     }
   }
 
   const base = declarations(root, '.demo-controls .usk-select');
-  assert.equal(base.get('-webkit-appearance'), 'auto');
-  assert.equal(base.get('appearance'), 'auto');
-  assert.equal(base.get('inline-size'), '100%');
-  assert.equal(base.get('padding-inline-end'), '2rem');
-  assert.equal(base.get('background-image'), 'none');
+  assert.equal(base.size, 0, 'The library alone owns select paint and its native indicator');
   const presetSpecificOverrides = [];
   root.walkRules((rule) => {
     if (rule.selectors.some((selector) => selector.startsWith('[data-ui=') && selector.includes('.demo-controls'))) {
@@ -55,7 +52,7 @@ test('demo toolbar uses semantic fields with one shared platform indicator rule'
 });
 
 test('Maximalist medallions use scalable artwork for the star, check and arrow only', () => {
-  const context = vm.createContext({
+  const context = loadReferenceController({
     URL,
     URLSearchParams,
     location: { pathname: '/demo/index.html' },
@@ -68,8 +65,6 @@ test('Maximalist medallions use scalable artwork for the star, check and arrow o
     }
   });
   vm.runInContext(fs.readFileSync(new URL('../demo/demo-icons.js', import.meta.url), 'utf8'), context);
-  const source = fs.readFileSync(new URL('../demo/demo.js', import.meta.url), 'utf8');
-  vm.runInContext(source.slice(0, source.lastIndexOf('\nsyncManifestSelectOptions();')), context);
 
   for (const [name, glyph] of [['star', '★'], ['check', '✓'], ['arrow-right', '→']]) {
     const svg = context.window.UI_STYLE_KIT_ICONS[name];
@@ -92,15 +87,11 @@ test('Maximalist medallions use scalable artwork for the star, check and arrow o
   }
 });
 
-test('Maximalist native forms get a full responsive row instead of stranding a neighbor', () => {
-  const root = stylesheet('demo/demo.css');
-  const forms = declarations(root, '[data-ui="maximalist"] .demo-native-grid > [data-testid="native-forms"]');
-  assert.equal(forms.get('grid-column'), '1 / -1');
-  assert.equal(forms.has('order'), false, 'Keep the native DOM and keyboard order');
-  assert.equal(
-    declarations(root, '.demo-form-grid').get('grid-template-columns'),
-    'repeat(auto-fit, minmax(min(100%, 15rem), 1fr))'
-  );
+test('native forms use public Layout flow without demo component overrides', () => {
+  const source = fs.readFileSync(new URL('../demo/studio/reference.js', import.meta.url), 'utf8');
+  assert.match(source, /demo-native-sample ly-span-full" data-testid="native-forms"/);
+  assert.match(source, /demo-form-grid ly-grid/);
+  assert.equal(declarations(stylesheet('demo/demo.css'), '.demo-form-grid').size, 0);
 });
 
 test('Maximalist range alignment accounts for the track border without offsetting Firefox', () => {

@@ -1,81 +1,60 @@
-# Demo showcase and reference fixtures
+# Style Studio and reference fixtures
 
-The default `index.html` and `demo/index.html` present one shared library showcase:
-semantic components, overview, color tokens, prefixed components, native HTML,
-the Interactive Surface bridge, and usage examples.
+Both the project root and `demo/index.html` open the same Style Studio. Its shell keeps Minimal SaaS component structure and follows the selected named palette and mode through public library attributes. Each isolated preview selects its own style, palette, mode, and optional interaction feedback.
 
-## Interaction contrast
+## Working views
 
-Hover, press, and keyboard focus must preserve readable labels. A filled action
-keeps its paired foreground and background; an inline-link rule must not recolor
-a button or navigation component. Gloss and grain remain decorative rather than
-replacing the label's underlying paint.
+**Examples** contains a searchable records dashboard, a validated settings form, and a customer-facing content page. These use deterministic sample data and local interactions. The settings example visibly saves or reports a simulated failure when its email contains `fail`; no remote account or record is changed.
 
-The release regressions check 20 presets, 25 named palettes plus native palettes,
-three modes, and five interaction states, including hover on pressed buttons.
-They cover prefixed, semantic, and mixed React class models, anchor buttons,
-native controls, disclosures, navigation, and table labels. The
-contrast probe samples the central label lane and accounts for translucent paint
-and full-face pseudo-elements; positioned dropdown arrows are outside that lane.
+**Components** opens a dense grid of 74 options covering every public component role. Search matches names and class names; family navigation becomes a compact native selector on phones. Each card has a Copy icon that copies its rendered element block with the selected public classes and icon artwork. Semantic `usk-*` classes are the default; advanced prefixed and native representations remain available. Keyboard tabs, native dialogs, form controls, and feedback are interactive. Canonical semantic markup remains mounted while appearance changes.
 
-Recheck the rendered demo after changing palette values in the workbench.
+**Style details** lazily loads only the selected authored specimen and its icon dependencies. The studio does not extract component fragments from HTML comments. The original complete reference can also be opened separately.
 
-## Preview state and palette editing
+## Comparison and palette editing
 
-Use `?ui=tactile&theme=None&mode=dark` to preview a native palette. The `personality`
-query parameter is a compatibility alias for `ui`; `ui` takes precedence when both
-are present. Only manifest-supported preset, theme, and mode values are accepted.
+Choose **Compare styles** to pin A. The toolbar edits B; both sides share the same example and local interaction state. Desktop displays equal-width previews, and narrower screens provide an A/B switch. **Replace baseline** explicitly captures the current visual configuration and edits. Style details is a single-preview view; returning to Examples or Components restores an existing comparison.
 
-**None — style defaults** omits `data-theme`. The color workbench exposes the
-selected preset's computed RGB variables, including material colors such as paper,
-ink, and brass. Native edits export `--<prefix>-*-rgb` and remain scoped to that
-preset and mode. Named themes expose the 23 shared `--usk-*-rgb` roles instead.
-Switching contexts restores that context's edits; reset affects only the active
-palette. Reload clears temporary edits. Recheck accessibility after editing colors.
+**Style defaults** omits `data-theme`. Native color edits belong to the preset and mode; named-theme edits belong to the theme and mode and follow that theme across presets. On phones, appearance controls start collapsed while Compare and Customize remain visible. Open **Appearance** to change style, palette, or mode.
 
-The toolbar uses one native dropdown indicator across styles. This does not change
-the preset-specific select specimens or their platform-owned popup behavior.
+The editor includes the 23 shared roles and available native material RGB roles. Clay canvas, surfaces, ink, seams, and primary backgrounds and label ink use the same public RGB channels in native and named palettes; native defaults reflect the authored material colors. Primary channels contain the finished pigment without an additional color-mix dependency; the dark hover pair meets the 4.5:1 text threshold. Edits paint the preview and work in a standalone consumer of the exported CSS. Reset changes only the selected editing context.
 
-## Style-specific components
+Browser Back can restore a cached Studio document without rebuilding it. Persisted page transitions retain the authored board, local field values, delegated actions, observers, and pending sample-save completion. Permanent navigation still disposes those resources.
 
-The Components section begins with `#style-specific`. This gallery changes with
-the selected UI style without adding a second page header, navigation system,
-palette picker, or repeated form/button catalogue.
+**Customize & export** provides setup markup, resolved palette CSS, selected example markup, CSS download, and a configuration URL. Shared URLs include the visual configuration, active palette edits, workspace selection, and pinned comparison. They exclude entered form text. Ordinary interactions do not create history entries.
 
-Industrial Utility includes its pilot/status bank, switchgear, key switch, guarded
-stop, pressure readout, meters, process stages, and alarm acknowledgment flow.
-These controls operate on local demonstration state only; no equipment is connected.
-Acknowledging a sample alarm does not remove its critical condition.
+Existing `?personality=maximalist` links work. `ui` takes precedence, and `?ui=tactile&theme=None&mode=dark` retains native-palette behavior. `?view=reference` opens the selected complete specimen in the studio. The standalone QA fixture lives at [reference.html](../demo/reference.html?view=reference).
 
-Clay, Neo Noir, Art Deco, Editorial Lux, Retro Glass, and Technical Blueprint also
-reuse distinctive progress and instrumentation fragments from their authored boards.
-Other presets retain their public surface/shape examples in this same section.
+## Companion icons (optional)
 
-Gallery fragments use the actual library classes and inherit the active palette.
-Selecting **None — style defaults** uses native preset colors; named themes and
-token-editor overrides continue to apply. No gallery sets its own color theme.
+The demo uses pinned `ui-style-kit-icons@2.0.0` artwork. **Minimal SaaS monochrome** is the explicit default. **Match icons to style** selects each preview's own family, including separate comparison styles; **Themed icons** selects the companion's color treatment. Both preferences survive shared URLs and local preference storage. Filled action icons use the companion's public monochrome treatment to retain their action foreground.
 
-## Original reference boards
+**Customize & export, Code & export, Optional icon library** offers pinned CDN and NPM setup. The NPM example includes the asset-copy locations and public asset-base configuration. The CSS-only setup stays independently usable. Copied inline SVG blocks already contain their artwork; consumers only need the optional icon runtime when choosing the custom-element setup. Application behavior for copied controls remains consumer-owned. Composed blocks that include `ly-*` utilities also require Layout Style CSS.
 
-Open `index.html?view=reference` (or `demo/index.html?view=reference`) to display
-the original complete boards for developer comparisons. Select the desired preset
-using the normal controls. The curated gallery is omitted in this view to avoid
-duplicate component IDs and event handlers. The view includes a return link.
+The build embeds exact licensed package SVGs in one lazy classic-script chunk per family and treatment, preserving HTTP and direct-file use. It normalizes variable-bearing SVG attributes with the companion's public `inlineSvg` helper and namespaces SVG fragment IDs. Appearance changes replace artwork without replacing inputs or focused buttons. The retained specimen icon registries use the same companion artwork through explicit compatibility name mappings.
 
-The reference assets, board renderers, and library styles have not been deleted.
-Existing board-specific browser tests use this explicit query. Public-page tests
-continue to use the default URL.
+## Architecture and maintenance
 
-## Maintaining excerpts
+Authored JavaScript modules live in `demo/studio/`. Maintain `demo/demo.css` for shared Layout defaults and `demo/studio.css` for shell geometry and visibility. These two stylesheets are used directly; the build does not copy them into duplicate CSS files. The host owns configuration and URL history; each preview owns its DOM and disposable interactions. Frame messages validate the source window, origin where available, random channel, protocol version, and event type. Asynchronous rendering and error reports use separate generation and interaction revisions so typing cannot cancel a pending visual load. Failed replacement styles retain the last good preview and an actionable Retry state.
 
-The authored board marks complete, non-nesting fragments with
-`<!--demo-style-feature-->` / `<!--/demo-style-feature-->` comments. The gallery
-extracts only those explicit boundaries, not arbitrary HTML tags. Associated
-dialog/live-region markup uses `demo-style-support` boundaries and stays outside
-the feature grid. Keep unique IDs and their referenced labels inside retained
-fragments, and bind any interactive controls in the public view as well as the fixture.
+`scripts/build-studio.mjs` bundles classic scripts for HTTP and direct `file:` use. One shell generates both entrypoints, populates manifest-backed static options, copies licensed companion CSS, and updates content hashes. Explicit modules in `demo/studio/authored/` are the single source for both Studio and the retained reference controller. The build compiles their declared inventory directly; it does not extract functions from another bundle. Each binder receives an owned root, appearance, assets and callbacks and returns complete resource cleanup.
 
-`tests/demo-style-showcase.test.js` verifies rendering and focused controller
-behavior without launching a browser. `tests/e2e/demo-style-showcase.spec.js`
-covers actual layout, keyboard interaction, modal focus, and theme/mode switching.
-The latter requires an available, authorized browser session for rendered QA.
+The shell loads the public Minimal SaaS visual entrypoint; each preview loads only its selected public preset stylesheet, alongside public `component-composition.css`, Layout Style CSS, and Interactive Surface state-core composition. Its controls use `usk-*` classes and supported `data-ui-variant` values; the library owns all UI colors, typography, borders, and elevation. Working examples use the same canonical classes, and their actions and status feedback demonstrate meaningful library variants. Chart artwork reads documented `--ui-color-*` tokens directly.
+
+Responsive reflow and shared spacing use Layout Style CSS defaults, including its short-viewport adjustments. Local column minimums are optional content-density settings.
+
+Local CSS contains only public `--ly-*` composition tokens, isolated-frame geometry, and application visibility/positioning. Reference-board markup uses Layout primitives rather than per-board visual overrides. Bento native samples use intrinsic grid flow without JavaScript row measurement. The retained fixture alone preserves the older optional bundle-switch demonstration so established library regressions remain valid. Library-focused browser tests target that fixture; `tests/e2e/demo-studio.spec.js` verifies the actual studio and preview frames.
+
+Component filtering changes visibility in place and retains entered values. Animation-frame batching sends one coherent configuration snapshot; interaction-only updates touch their own domain. Palette reads and icon hydration occur only when their inputs change. Public example markup is cloned only when Code or Copy consumes it.
+
+Generated classic scripts are minified with linked, content-versioned source maps containing the maintained sources. HTML, styles, lazy assets and maps carry versioned URLs. Generated browser bundles, HTML entrypoints, vendored assets, and API Markdown must not be edited by hand. See [optimization measurements](DEMO-OPTIMIZATION.md) for the bounded before/after evidence.
+
+## Development and verification
+
+- `npm run demo` starts a loopback-only server; `PORT` or a positional port selects another port.
+- `npm run demo:build` rebuilds studio assets using existing CSS distributions.
+- `npm run build` rebuilds library distributions and the studio together.
+- `npm run docs` regenerates 36 granular jsdoc2md references; `npm run docs:check` detects drift.
+- `npm run format:studio` formats authored studio files; `npm run format:check` checks them.
+- `npm run lint:js` checks the authored JavaScript. Existing CSS lint rules remain in force.
+
+Run individual Node or Playwright cases during implementation. Refresh documentation, expected behavior, and generated assets before the final local CI sequence. A local check does not establish publication or deployment.

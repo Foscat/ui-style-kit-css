@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import os from 'node:os';
@@ -5,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 
 /** @param {import('@playwright/test').Page} page Isolated demo page. @returns {Promise<void>} */
 async function openClay(page) {
-  await page.goto(pathToFileURL(path.resolve('demo/index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'clay');
   await page.selectOption('#themeSelect', 'arctic-indigo');
   await page.selectOption('#modeSelect', 'light');

@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
@@ -12,7 +13,7 @@ const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
 /** Opens the generated library, with its actual preset and reference-palette controls. */
 async function openBoard(page, mode = 'dark') {
   await page.setViewportSize({ width: 1920, height: 1280 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'industrial-utility');
   await page.selectOption('#modeSelect', mode);
   await page.getByRole('button', { name: 'Use reference palette', exact: true }).click();

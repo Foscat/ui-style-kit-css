@@ -19,13 +19,14 @@ test('Clay publishes and showcases every reference component', () => {
   });
   const window = { UI_STYLE_KIT_ICONS: {} };
   vm.runInNewContext(fs.readFileSync('demo/demo-clay.js', 'utf8'), { window, URL, document: { currentScript: { src: pathToFileURL(path.resolve('demo/demo-clay.js')).href } } });
-  const html = window.ClaySpecimen.render('clay', 'light');
+  const context = {appearance:{ui:'clay',mode:'light'},prefix:'clay',icons:{},organicIcons:{},scriptUrl:pathToFileURL(path.resolve('demo/demo-clay.js')).href};
+  const html = window.StudioAuthored['clay'].render(context);
   for (const suffix of required) {
     assert.ok(api.has(suffix), `Missing API: clay-${suffix}`);
     assert.ok(selectors.has(`clay-${suffix}`), `Missing CSS: clay-${suffix}`);
     assert.match(html, new RegExp(`\\bclay-${suffix}\\b`), `Missing demo: clay-${suffix}`);
   }
   for (const preset of manifest.presets.filter((item) => item.id !== 'clay')) {
-    assert.equal(window.ClaySpecimen.render(preset.id, 'light'), '', preset.id);
+    assert.equal(window.StudioAuthored['clay'].render({...context,appearance:{ui:preset.id,mode:'light'}}), '', preset.id);
   }
 });

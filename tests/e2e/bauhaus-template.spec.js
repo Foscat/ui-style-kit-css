@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,7 +8,7 @@ import AxeBuilder from '@axe-core/playwright';
 /** @param {import('@playwright/test').Page} page Demo browser. @returns {Promise<void>} */
 async function open(page) {
   await page.setViewportSize({ width: 1536, height: 1024 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'bauhaus');
   await page.selectOption('#modeSelect', 'light');
 }
