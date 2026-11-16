@@ -89,3 +89,11 @@ test('fallback contrast validation rejects an unreadable preset palette', async 
 
   assert.ok(failures.some((failure) => failure.includes('text on background')));
 });
+
+/** Native material fields must expose the same readable palette that components actually paint. */
+test('Clay native RGB channels form readable primary pairs in every supported mode', async () => {
+  const { validateFallbackContrast } = await import('../scripts/check-contrast.mjs');
+  const css = fs.readFileSync(path.join(rootDir, 'styles/clay.css'), 'utf8');
+  assert.deepEqual(validateFallbackContrast(new Map([['clay', css]]), [{ id: 'clay', prefix: 'clay' }]), []);
+  assert.doesNotMatch(css, /--clay-pigment-primary(?:-hover)?:\s*color-mix\(/, 'public primary edits must not depend on color-mix support or receive a second material blend');
+});

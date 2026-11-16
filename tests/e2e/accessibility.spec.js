@@ -1,10 +1,12 @@
+import { setBridgeChecked } from './helpers/bridge.js';
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'index.html')).href;
+const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'demo', 'reference.html')).href;
 
 const representativeStates = [
   { ui: 'editorial-luxe', theme: 'arctic-indigo', mode: 'light', bridge: false },
@@ -29,7 +31,7 @@ async function applyState(page, { ui, theme, mode, bridge }) {
   await page.selectOption('#uiSelect', ui);
   await page.selectOption('#themeSelect', theme);
   await page.selectOption('#modeSelect', mode);
-  await page.locator('#bridgeToggle').setChecked(bridge, { force: true });
+  await setBridgeChecked(page.locator('#bridgeToggle'), bridge);
   await expect(page.locator('body')).toHaveAttribute('data-ui', ui);
   await expect(page.locator('body')).toHaveAttribute('data-theme', theme);
   await expect(page.locator('body')).toHaveAttribute('data-mode', mode);

@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -8,7 +9,7 @@ const root = path.resolve(
   "..",
   "..",
 );
-const demoUrl = pathToFileURL(path.join(root, "index.html")).href;
+const demoUrl = pathToFileURL(path.join(root, "demo", "reference.html")).href;
 const manifest = JSON.parse(
   readFileSync(path.join(root, "manifest.json"), "utf8"),
 );

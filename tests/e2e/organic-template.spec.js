@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -36,7 +37,7 @@ test.afterAll(async () => {
 
 /** Opens the local generated distribution, leaving the user's browser session untouched. */
 async function openOrganic(page) {
-  await page.goto(origin ? `${origin}/index.html?view=reference` : pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(origin ? `${origin}/demo/reference.html?view=reference` : pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.selectOption('#uiSelect', 'organic-modern');
   await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });

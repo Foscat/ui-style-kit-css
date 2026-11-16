@@ -16,5 +16,5 @@ test('Paper Editorial publishes every retained template component without source
     assert.ok(classes.has(`paper-${suffix}`), `Missing CSS component ${suffix}`);
   }
   assert.ok(![...classes].some((name) => name.startsWith('pe-')));
-  assert.match(css, /data:image\/png;base64/);
+  assert.match(css, /assets\/paper-sheet-(?:light|dark)\.png/);
 });

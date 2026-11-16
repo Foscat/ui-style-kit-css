@@ -1,0 +1,1216 @@
+/* Motion Style CSS — independent motion layer. No component paint or layout ownership. */
+.ms-motion {
+  --ms-duration: 600ms;
+  --ms-delay: 0ms;
+  --ms-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ms-offset: 58px;
+  --ms-blur: 12px;
+  --ms-rotate: 225deg;
+  --ms-origin: center;
+  --ms-gravity-distance: 118px;
+  --ms-float-rotate: 12deg;
+  --ms-pixel-size: 32px;
+  --ms-glitch-shift: 12px;
+  --ms-scanline-glow: 1.4;
+  animation-duration: var(--ms-duration);
+  animation-delay: var(--ms-delay);
+  animation-timing-function: var(--ms-ease);
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  transform-origin: var(--ms-origin);
+  backface-visibility: hidden;
+}
+[data-ms-exited='true'] {
+  visibility: hidden;
+}
+/* Form and dissolve */
+.ms-motion[data-ms-preset='form'][data-ms-phase='in'] {
+  animation-name: ms-form-in;
+}
+.ms-motion[data-ms-preset='form'][data-ms-phase='out'] {
+  animation-name: ms-form-out;
+}
+@keyframes ms-form-in {
+  from {
+    opacity: 0;
+    filter: blur(var(--ms-blur));
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+@keyframes ms-form-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(var(--ms-blur));
+    transform: scale(1.025);
+  }
+}
+/* The direction defaults to left. In is from side -> center; out is center -> side. */
+.ms-motion[data-ms-direction='left'] {
+  --ms-x: calc(-1 * var(--ms-offset));
+  --ms-y: 0px;
+}
+.ms-motion[data-ms-direction='right'] {
+  --ms-x: var(--ms-offset);
+  --ms-y: 0px;
+}
+.ms-motion[data-ms-direction='up'] {
+  --ms-x: 0px;
+  --ms-y: calc(-1 * var(--ms-offset));
+}
+.ms-motion[data-ms-direction='down'] {
+  --ms-x: 0px;
+  --ms-y: var(--ms-offset);
+}
+.ms-motion[data-ms-preset='slide'][data-ms-phase='in'] {
+  animation-name: ms-slide-in;
+}
+.ms-motion[data-ms-preset='slide'][data-ms-phase='out'] {
+  animation-name: ms-slide-out;
+}
+@keyframes ms-slide-in {
+  from {
+    opacity: 0;
+    filter: blur(var(--ms-blur));
+    transform: translate(var(--ms-x, -58px), var(--ms-y, 0px));
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(0, 0);
+  }
+}
+@keyframes ms-slide-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(var(--ms-blur));
+    transform: translate(var(--ms-x, -58px), var(--ms-y, 0px));
+  }
+}
+/* Swirl */
+.ms-motion[data-ms-preset='swirl'][data-ms-phase='in'] {
+  animation-name: ms-swirl-in;
+}
+.ms-motion[data-ms-preset='swirl'][data-ms-phase='out'] {
+  animation-name: ms-swirl-out;
+}
+@keyframes ms-swirl-in {
+  from {
+    opacity: 0;
+    filter: blur(16px);
+    transform: rotate(calc(-1 * var(--ms-rotate))) scale(0.15);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: rotate(0) scale(1);
+  }
+}
+@keyframes ms-swirl-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: rotate(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(16px);
+    transform: rotate(var(--ms-rotate)) scale(0.12);
+  }
+}
+/* Slam / boom uses pseudo-element radial-burst decorative accents. */
+.ms-motion[data-ms-preset='slam'][data-ms-phase='in'] {
+  animation-name: ms-slam-in;
+  --ms-ease: cubic-bezier(0.18, 0.9, 0.27, 1);
+}
+.ms-motion[data-ms-preset='slam'][data-ms-phase='out'] {
+  animation-name: ms-boom-out;
+}
+@keyframes ms-slam-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(-28px) scale(1.025);
+  }
+  68% {
+    transform: translateY(8px) scale(1.06, 0.9);
+  }
+  83% {
+    transform: translateY(-4px) scale(0.98, 1.025);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes ms-boom-out {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.26);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(13px);
+    transform: scale(1.6);
+  }
+}
+/* An optional decorative burst drawn with pure CSS during the boom exit.
+   Pseudo-elements may conflict with component-owned pseudo-elements; wrap in a motion shell if needed. */
+.ms-motion[data-ms-preset='slam'][data-ms-phase='out'][data-ms-burst='true'] {
+  position: relative;
+}
+.ms-motion[data-ms-preset='slam'][data-ms-phase='out'][data-ms-burst='true']::after {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(circle, #f8ffab 0 3px, transparent 4px) 8% 17%/24% 24%
+      no-repeat,
+    radial-gradient(circle, #e5a2ff 0 3px, transparent 4px) 88% 11%/23% 29%
+      no-repeat,
+    radial-gradient(circle, #b0f881 0 4px, transparent 5px) 13% 85%/25% 27%
+      no-repeat,
+    radial-gradient(circle, #ffe3a6 0 3px, transparent 4px) 87% 82%/25% 27%
+      no-repeat,
+    radial-gradient(circle, #aaeeff 0 3px, transparent 4px) 52% 0%/25% 25%
+      no-repeat;
+  animation: ms-boom-sparks var(--ms-duration) var(--ms-ease) var(--ms-delay)
+    both;
+}
+@keyframes ms-boom-sparks {
+  0%,
+  25% {
+    opacity: 0;
+    transform: scale(0.25) rotate(-8deg);
+  }
+  48% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7) rotate(32deg);
+  }
+}
+/* Origami */
+.ms-motion[data-ms-preset='origami'][data-ms-phase='in'] {
+  animation-name: ms-origami-in;
+  transform-origin: top center;
+}
+.ms-motion[data-ms-preset='origami'][data-ms-phase='out'] {
+  animation-name: ms-origami-out;
+  transform-origin: top center;
+}
+@keyframes ms-origami-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-86deg) scaleY(0.3);
+  }
+  70% {
+    opacity: 1;
+    transform: perspective(900px) rotateX(12deg) scaleY(1);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateX(0) scaleY(1);
+  }
+}
+@keyframes ms-origami-out {
+  from {
+    opacity: 1;
+    transform: perspective(900px) rotateX(0) scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-86deg) scaleY(0.3);
+  }
+}
+/* Portal */
+.ms-motion[data-ms-preset='portal'][data-ms-phase='in'] {
+  animation-name: ms-portal-in;
+}
+.ms-motion[data-ms-preset='portal'][data-ms-phase='out'] {
+  animation-name: ms-portal-out;
+}
+@keyframes ms-portal-in {
+  from {
+    opacity: 0;
+    filter: blur(20px) brightness(2.5);
+    transform: scale(0.04);
+  }
+  65% {
+    opacity: 1;
+    filter: blur(4px) brightness(1.35);
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: scale(1);
+  }
+}
+@keyframes ms-portal-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.02);
+  }
+}
+/* Curtain: clip-path means no element translation. */
+.ms-motion[data-ms-preset='curtain'][data-ms-phase='in'] {
+  animation-name: ms-curtain-in-left;
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-phase='out'] {
+  animation-name: ms-curtain-out-left;
+}
+@keyframes ms-curtain-in-left {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes ms-curtain-out-left {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-direction='right'][data-ms-phase='in'] {
+  animation-name: ms-curtain-in-right;
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-direction='right'][data-ms-phase='out'] {
+  animation-name: ms-curtain-out-right;
+}
+@keyframes ms-curtain-in-right {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes ms-curtain-out-right {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-direction='up'][data-ms-phase='in'] {
+  animation-name: ms-curtain-in-up;
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-direction='up'][data-ms-phase='out'] {
+  animation-name: ms-curtain-out-up;
+}
+@keyframes ms-curtain-in-up {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes ms-curtain-out-up {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-direction='down'][data-ms-phase='in'] {
+  animation-name: ms-curtain-in-down;
+}
+.ms-motion[data-ms-preset='curtain'][data-ms-direction='down'][data-ms-phase='out'] {
+  animation-name: ms-curtain-out-down;
+}
+@keyframes ms-curtain-in-down {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes ms-curtain-out-down {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+/* Elastic */
+.ms-motion[data-ms-preset='elastic'][data-ms-phase='in'] {
+  animation-name: ms-elastic-in;
+}
+.ms-motion[data-ms-preset='elastic'][data-ms-phase='out'] {
+  animation-name: ms-elastic-out;
+}
+@keyframes ms-elastic-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.15);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  75% {
+    transform: scale(0.94);
+  }
+  90% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes ms-elastic-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  28% {
+    transform: scale(1.09);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+/* Cascade: apply to child elements with stagger(), not a parent transform. */
+.ms-motion[data-ms-preset='cascade'][data-ms-phase='in'] {
+  animation-name: ms-cascade-in;
+}
+.ms-motion[data-ms-preset='cascade'][data-ms-phase='out'] {
+  animation-name: ms-cascade-out;
+}
+@keyframes ms-cascade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 34px, 0) scale(0.95);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+@keyframes ms-cascade-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(34px, -50px, 0) rotate(12deg) scale(0.8);
+  }
+}
+/* Flip deck */
+.ms-motion[data-ms-preset='flip'][data-ms-phase='in'] {
+  animation-name: ms-flip-in;
+}
+.ms-motion[data-ms-preset='flip'][data-ms-phase='out'] {
+  animation-name: ms-flip-out;
+}
+@keyframes ms-flip-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateY(-95deg) translateY(-35px) scale(0.8);
+  }
+  80% {
+    opacity: 1;
+    transform: perspective(900px) rotateY(8deg) translateY(0) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0) translateY(0) scale(1);
+  }
+}
+@keyframes ms-flip-out {
+  from {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: perspective(900px) rotateY(95deg) translateY(40px) scale(0.8);
+  }
+}
+
+/* Scanline: a directional display sweep with a brief brightness pulse. */
+.ms-motion[data-ms-preset='scanline'][data-ms-phase='in'] {
+  animation-name: ms-scanline-in-left;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-phase='out'] {
+  animation-name: ms-scanline-out-left;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-direction='right'][data-ms-phase='in'] {
+  animation-name: ms-scanline-in-right;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-direction='right'][data-ms-phase='out'] {
+  animation-name: ms-scanline-out-right;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-direction='up'][data-ms-phase='in'] {
+  animation-name: ms-scanline-in-up;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-direction='up'][data-ms-phase='out'] {
+  animation-name: ms-scanline-out-up;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-direction='down'][data-ms-phase='in'] {
+  animation-name: ms-scanline-in-down;
+}
+.ms-motion[data-ms-preset='scanline'][data-ms-direction='down'][data-ms-phase='out'] {
+  animation-name: ms-scanline-out-down;
+}
+@keyframes ms-scanline-in-left {
+  0% {
+    opacity: 0.15;
+    clip-path: inset(0 100% 0 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  72% {
+    opacity: 1;
+    clip-path: inset(0 12% 0 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+}
+@keyframes ms-scanline-out-left {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+  28% {
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 0.1;
+    clip-path: inset(0 0 0 100%);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+}
+@keyframes ms-scanline-in-right {
+  0% {
+    opacity: 0.15;
+    clip-path: inset(0 0 0 100%);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  72% {
+    opacity: 1;
+    clip-path: inset(0 0 0 12%);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+}
+@keyframes ms-scanline-out-right {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+  28% {
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 0.1;
+    clip-path: inset(0 100% 0 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+}
+@keyframes ms-scanline-in-up {
+  0% {
+    opacity: 0.15;
+    clip-path: inset(0 0 100% 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  72% {
+    opacity: 1;
+    clip-path: inset(0 0 12% 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+}
+@keyframes ms-scanline-out-up {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+  28% {
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 0.1;
+    clip-path: inset(100% 0 0 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+}
+@keyframes ms-scanline-in-down {
+  0% {
+    opacity: 0.15;
+    clip-path: inset(100% 0 0 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  72% {
+    opacity: 1;
+    clip-path: inset(12% 0 0 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+}
+@keyframes ms-scanline-out-down {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: brightness(1);
+  }
+  28% {
+    filter: brightness(var(--ms-scanline-glow));
+  }
+  100% {
+    opacity: 0.1;
+    clip-path: inset(0 0 100% 0);
+    filter: brightness(var(--ms-scanline-glow));
+  }
+}
+
+/* Blueprint: draw the surface into existence, then erase it in irregular top-left-to-bottom-right rubbing passes. */
+.ms-motion[data-ms-preset='blueprint'][data-ms-phase='in'] {
+  animation-name: ms-blueprint-in;
+}
+.ms-motion[data-ms-preset='blueprint'][data-ms-phase='out'] {
+  animation-name: ms-blueprint-out;
+}
+@keyframes ms-blueprint-in {
+  0% {
+    opacity: 0;
+    clip-path: polygon(0 0, 0 0, 0 2%, 0 2%);
+    filter: contrast(1.2) brightness(1.25);
+  }
+  18% {
+    opacity: 0.3;
+    clip-path: polygon(0 0, 100% 0, 100% 3%, 0 3%);
+  }
+  42% {
+    opacity: 0.58;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 58%);
+  }
+  72% {
+    opacity: 0.88;
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 0 94%);
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    filter: contrast(1) brightness(1);
+  }
+}
+@keyframes ms-blueprint-out {
+  0% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    filter: blur(0);
+  }
+  14% {
+    clip-path: polygon(
+      16% 0,
+      100% 0,
+      100% 100%,
+      2% 100%,
+      7% 86%,
+      2% 73%,
+      10% 59%,
+      4% 44%,
+      13% 29%,
+      6% 14%
+    );
+  }
+  30% {
+    clip-path: polygon(
+      34% 0,
+      100% 0,
+      100% 100%,
+      12% 100%,
+      19% 87%,
+      14% 73%,
+      26% 58%,
+      18% 43%,
+      30% 28%,
+      22% 13%
+    );
+  }
+  48% {
+    clip-path: polygon(
+      54% 0,
+      100% 0,
+      100% 100%,
+      30% 100%,
+      38% 86%,
+      31% 72%,
+      46% 58%,
+      36% 43%,
+      50% 27%,
+      42% 12%
+    );
+  }
+  66% {
+    opacity: 0.9;
+    clip-path: polygon(
+      72% 0,
+      100% 0,
+      100% 100%,
+      50% 100%,
+      59% 86%,
+      52% 72%,
+      66% 57%,
+      57% 42%,
+      69% 27%,
+      63% 12%
+    );
+    filter: blur(0.35px);
+  }
+  82% {
+    opacity: 0.72;
+    clip-path: polygon(
+      90% 0,
+      100% 0,
+      100% 100%,
+      70% 100%,
+      78% 86%,
+      72% 72%,
+      84% 57%,
+      76% 42%,
+      88% 27%,
+      82% 12%
+    );
+    filter: blur(0.7px);
+  }
+  94% {
+    opacity: 0.38;
+    clip-path: polygon(
+      99% 0,
+      100% 0,
+      100% 100%,
+      90% 100%,
+      95% 84%,
+      91% 68%,
+      98% 52%,
+      93% 36%,
+      99% 20%,
+      96% 8%
+    );
+    filter: blur(1.2px);
+  }
+  100% {
+    opacity: 0;
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    filter: blur(1.8px);
+  }
+}
+
+/* Hinge: swing open from an attachment point; exit loses one corner, swings, then drops. */
+.ms-motion[data-ms-preset='hinge'] {
+  --ms-origin: top left;
+}
+.ms-motion[data-ms-preset='hinge'][data-ms-phase='in'] {
+  animation-name: ms-hinge-in;
+}
+.ms-motion[data-ms-preset='hinge'][data-ms-phase='out'] {
+  animation-name: ms-hinge-out;
+}
+@keyframes ms-hinge-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-78deg) translateY(-8px) scale(0.96);
+  }
+  68% {
+    opacity: 1;
+    transform: rotate(7deg) translateY(0) scale(1);
+  }
+  86% {
+    transform: rotate(-2.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+}
+@keyframes ms-hinge-out {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  18% {
+    transform: translateY(4px) rotate(11deg) scale(1);
+  }
+  36% {
+    transform: translateY(10px) rotate(-5deg) scale(0.995);
+  }
+  54% {
+    transform: translateY(26px) rotate(21deg) scale(0.985);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(calc(var(--ms-gravity-distance) * 2.25)) rotate(48deg)
+      scale(0.86);
+  }
+}
+
+/* Gravity / Zero-G: weighted acceleration in, weightless drift out. */
+.ms-motion[data-ms-preset='gravity'][data-ms-phase='in'] {
+  animation-name: ms-gravity-in;
+  --ms-ease: linear;
+}
+.ms-motion[data-ms-preset='gravity'][data-ms-phase='out'] {
+  animation-name: ms-gravity-out;
+  --ms-ease: cubic-bezier(0.15, 0.55, 0.25, 1);
+}
+@keyframes ms-gravity-in {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--ms-gravity-distance))) scale(1);
+  }
+  18% {
+    opacity: 0.35;
+    transform: translateY(calc(-0.92 * var(--ms-gravity-distance))) scale(1);
+  }
+  42% {
+    opacity: 0.78;
+    transform: translateY(calc(-0.64 * var(--ms-gravity-distance))) scale(1);
+  }
+  67% {
+    opacity: 1;
+    transform: translateY(calc(-0.16 * var(--ms-gravity-distance))) scale(1);
+  }
+  76% {
+    transform: translateY(0) scale(1.035, 0.92);
+  }
+  86% {
+    transform: translateY(-8px) scale(0.99, 1.025);
+  }
+  94% {
+    transform: translateY(2px) scale(1.01, 0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes ms-gravity-out {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) rotate(1deg) scale(1);
+  }
+  55% {
+    opacity: 0.94;
+    filter: blur(0.4px);
+    transform: translateY(-34px) rotate(4deg) scale(0.99);
+  }
+  80% {
+    opacity: 0.56;
+    filter: blur(2px);
+    transform: translateY(calc(-0.68 * var(--ms-gravity-distance)))
+      rotate(calc(var(--ms-float-rotate) * 0.65)) scale(0.97);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(calc(-1 * var(--ms-gravity-distance)))
+      rotate(var(--ms-float-rotate)) scale(0.94);
+  }
+}
+
+/* Pixelate: deterministic checkerboard resolution using a CSS mask, with a solid fallback at completion. */
+.ms-motion[data-ms-preset='pixelate'][data-ms-phase='in'] {
+  animation-name: ms-pixelate-in;
+}
+.ms-motion[data-ms-preset='pixelate'][data-ms-phase='out'] {
+  animation-name: ms-pixelate-out;
+}
+@keyframes ms-pixelate-in {
+  0% {
+    opacity: 0.16;
+    -webkit-mask-image: conic-gradient(
+      #000 0 25%,
+      transparent 0 50%,
+      #000 0 75%,
+      transparent 0
+    );
+    mask-image: conic-gradient(
+      #000 0 25%,
+      transparent 0 50%,
+      #000 0 75%,
+      transparent 0
+    );
+    -webkit-mask-size: var(--ms-pixel-size) var(--ms-pixel-size);
+    mask-size: var(--ms-pixel-size) var(--ms-pixel-size);
+    filter: blur(5px) contrast(1.25);
+  }
+  38% {
+    opacity: 0.54;
+    -webkit-mask-size: calc(var(--ms-pixel-size) * 0.7)
+      calc(var(--ms-pixel-size) * 0.7);
+    mask-size: calc(var(--ms-pixel-size) * 0.7) calc(var(--ms-pixel-size) * 0.7);
+    filter: blur(3px) contrast(1.18);
+  }
+  72% {
+    opacity: 0.88;
+    -webkit-mask-size: calc(var(--ms-pixel-size) * 0.34)
+      calc(var(--ms-pixel-size) * 0.34);
+    mask-size: calc(var(--ms-pixel-size) * 0.34)
+      calc(var(--ms-pixel-size) * 0.34);
+    filter: blur(1px) contrast(1.08);
+  }
+  100% {
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(#000, #000);
+    mask-image: linear-gradient(#000, #000);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    filter: blur(0) contrast(1);
+  }
+}
+@keyframes ms-pixelate-out {
+  0% {
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(#000, #000);
+    mask-image: linear-gradient(#000, #000);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    filter: blur(0) contrast(1);
+  }
+  32% {
+    opacity: 0.9;
+    -webkit-mask-image: conic-gradient(
+      #000 0 25%,
+      transparent 0 50%,
+      #000 0 75%,
+      transparent 0
+    );
+    mask-image: conic-gradient(
+      #000 0 25%,
+      transparent 0 50%,
+      #000 0 75%,
+      transparent 0
+    );
+    -webkit-mask-size: calc(var(--ms-pixel-size) * 0.34)
+      calc(var(--ms-pixel-size) * 0.34);
+    mask-size: calc(var(--ms-pixel-size) * 0.34)
+      calc(var(--ms-pixel-size) * 0.34);
+    filter: blur(1px);
+  }
+  68% {
+    opacity: 0.52;
+    -webkit-mask-size: calc(var(--ms-pixel-size) * 0.72)
+      calc(var(--ms-pixel-size) * 0.72);
+    mask-size: calc(var(--ms-pixel-size) * 0.72)
+      calc(var(--ms-pixel-size) * 0.72);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-mask-size: var(--ms-pixel-size) var(--ms-pixel-size);
+    mask-size: var(--ms-pixel-size) var(--ms-pixel-size);
+    filter: blur(6px);
+  }
+}
+
+/* Glitch Assemble / Signal Lost: fixed, testable offsets rather than random jitter. */
+.ms-motion[data-ms-preset='glitch'][data-ms-phase='in'] {
+  animation-name: ms-glitch-in;
+}
+.ms-motion[data-ms-preset='glitch'][data-ms-phase='out'] {
+  animation-name: ms-glitch-out;
+}
+@keyframes ms-glitch-in {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 0 82% 0);
+    filter: blur(5px);
+    transform: translateX(calc(-1 * var(--ms-glitch-shift)));
+  }
+  14% {
+    opacity: 0.42;
+    clip-path: inset(8% 0 58% 0);
+    transform: translateX(var(--ms-glitch-shift));
+  }
+  29% {
+    opacity: 0.62;
+    clip-path: inset(42% 0 28% 0);
+    transform: translateX(calc(-0.65 * var(--ms-glitch-shift)));
+  }
+  44% {
+    opacity: 0.78;
+    clip-path: inset(18% 0 18% 0);
+    transform: translateX(calc(0.55 * var(--ms-glitch-shift)));
+  }
+  61% {
+    opacity: 0.9;
+    clip-path: inset(5% 0 7% 0);
+    filter: blur(1.5px);
+    transform: translateX(calc(-0.25 * var(--ms-glitch-shift)));
+  }
+  78% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: blur(0.4px);
+    transform: translateX(2px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: blur(0);
+    transform: translateX(0);
+  }
+}
+@keyframes ms-glitch-out {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+    filter: blur(0);
+    transform: translateX(0);
+  }
+  16% {
+    opacity: 0.72;
+    clip-path: inset(8% 0 11% 0);
+    transform: translateX(calc(0.45 * var(--ms-glitch-shift)));
+  }
+  25% {
+    opacity: 0.94;
+    clip-path: inset(0);
+    transform: translateX(calc(-0.5 * var(--ms-glitch-shift)));
+  }
+  42% {
+    opacity: 0.48;
+    clip-path: inset(38% 0 26% 0);
+    filter: blur(1.2px);
+    transform: translateX(var(--ms-glitch-shift));
+  }
+  55% {
+    opacity: 0.82;
+    clip-path: inset(13% 0 48% 0);
+    transform: translateX(calc(-0.8 * var(--ms-glitch-shift)));
+  }
+  72% {
+    opacity: 0.34;
+    clip-path: inset(61% 0 8% 0);
+    filter: blur(3px);
+    transform: translateX(calc(0.65 * var(--ms-glitch-shift)));
+  }
+  88% {
+    opacity: 0.12;
+    clip-path: inset(34% 0 52% 0);
+    filter: blur(6px);
+    transform: translateX(calc(-1 * var(--ms-glitch-shift)));
+  }
+  100% {
+    opacity: 0;
+    clip-path: inset(50% 0 50% 0);
+    filter: blur(10px);
+    transform: translateX(0);
+  }
+}
+
+/* Transmission: successive horizontal signal bands resolve into, or break apart from, a clean frame. */
+.ms-motion[data-ms-preset='transmission'][data-ms-phase='in'] {
+  animation-name: ms-transmission-in;
+}
+.ms-motion[data-ms-preset='transmission'][data-ms-phase='out'] {
+  animation-name: ms-transmission-out;
+}
+@keyframes ms-transmission-in {
+  0% {
+    opacity: 0.12;
+    -webkit-mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 5px,
+      transparent 5px 18px
+    );
+    mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 5px,
+      transparent 5px 18px
+    );
+    -webkit-mask-position: 0 -22px;
+    mask-position: 0 -22px;
+    filter: blur(3px);
+    transform: translateX(-4px);
+  }
+  30% {
+    opacity: 0.46;
+    -webkit-mask-position: 0 16px;
+    mask-position: 0 16px;
+    transform: translateX(3px);
+  }
+  58% {
+    opacity: 0.76;
+    -webkit-mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 9px,
+      transparent 9px 14px
+    );
+    mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 9px,
+      transparent 9px 14px
+    );
+    -webkit-mask-position: 0 -7px;
+    mask-position: 0 -7px;
+    filter: blur(1.4px);
+    transform: translateX(-2px);
+  }
+  82% {
+    opacity: 0.95;
+    transform: translateX(1px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(#000, #000);
+    mask-image: linear-gradient(#000, #000);
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+    filter: blur(0);
+    transform: translateX(0);
+  }
+}
+@keyframes ms-transmission-out {
+  0% {
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(#000, #000);
+    mask-image: linear-gradient(#000, #000);
+    filter: blur(0);
+    transform: translateX(0);
+  }
+  22% {
+    opacity: 0.92;
+    -webkit-mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 9px,
+      transparent 9px 14px
+    );
+    mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 9px,
+      transparent 9px 14px
+    );
+    -webkit-mask-position: 0 5px;
+    mask-position: 0 5px;
+    transform: translateX(2px);
+  }
+  54% {
+    opacity: 0.56;
+    -webkit-mask-position: 0 -15px;
+    mask-position: 0 -15px;
+    filter: blur(1.6px);
+    transform: translateX(-4px);
+  }
+  78% {
+    opacity: 0.24;
+    -webkit-mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 4px,
+      transparent 4px 20px
+    );
+    mask-image: repeating-linear-gradient(
+      to bottom,
+      #000 0 4px,
+      transparent 4px 20px
+    );
+    transform: translateX(5px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-mask-position: 0 28px;
+    mask-position: 0 28px;
+    filter: blur(4px);
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-motion[data-ms-preset='slam'][data-ms-phase='out'][data-ms-burst='true']::after {
+    animation: none !important;
+    content: none !important;
+  }
+  .ms-motion {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

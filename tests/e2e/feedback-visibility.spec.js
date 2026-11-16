@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import fs from 'node:fs';
 import { expect, test } from '@playwright/test';
 import { PNG } from 'pngjs';
@@ -178,7 +179,7 @@ async function verify(page, kind, tactileOnly = false) {
   expect(presets.length).toBeGreaterThan(0);
   const themes = process.env.USK_FEEDBACK_THEMES?.split(',').map(x => x === 'none' ? null : x) ?? [null, ...manifest.themes];
   const modes = process.env.USK_FEEDBACK_MODES?.split(',') ?? manifest.modes;
-  await page.goto(new URL('../../index.html', import.meta.url).href);
+  await page.goto(new URL('../../demo/reference.html', import.meta.url).href);
   await page.setContent(`<base href="${assetsUrl}"><style>${css}\nmain { width: 360px; background: var(--usk-native-bg); color: var(--usk-native-text); } * { transition: none !important; }</style><main></main>`);
   const result = kind === 'icons' ? await inspectIconPixels(page, presets, themes, modes) : await page.evaluate(inspectFeedback, { kind, presets, themes, modes });
   await test.info().attach('feedback-results', { body: JSON.stringify(result, null, 2), contentType: 'application/json' });

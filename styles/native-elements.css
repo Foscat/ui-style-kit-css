@@ -212,7 +212,8 @@
   border-radius: .2em;
 }
 
-[data-ui][data-mode] :where(small, sub, sup, rt, rp) { color: var(--usk-native-text-muted); }
+/** Supporting inline text retains its owning surface ink, including filled companion surfaces. */
+[data-ui][data-mode] :where(small, sub, sup, rt, rp) { color: inherit; }
 [data-ui][data-mode] :where(rt, rp) { font-size: .72em; }
 
 [data-ui][data-mode] :where(abbr[title]) {
@@ -710,7 +711,8 @@
 }
 
 [data-ui][data-mode] :where(dd) { margin: .25rem 0 .75rem 1.25rem; }
-[data-ui][data-mode] :where(strong, b) { color: var(--usk-native-text); font-weight: 900; }
+/** Emphasis retains the readable ink chosen by its containing component or filled surface. */
+[data-ui][data-mode] :where(strong, b) { color: inherit; font-weight: 900; }
 [data-ui][data-mode] :where(u) { text-decoration-color: var(--usk-native-primary); text-decoration-thickness: .08em; text-underline-offset: .16em; }
 [data-ui][data-mode] :where(bdi, bdo) { color: var(--usk-native-text); unicode-bidi: isolate; }
 [data-ui][data-mode] :where(em, i, cite, var, q) { color: var(--usk-native-text); }
@@ -857,21 +859,13 @@
 }
 }
 
-/** Native select affordances survive component background shorthands in the preset layer. */
-@layer ui-style-kit.presets {
-/** Keep functional chrome above native defaults while leaving component surface colors intact. */
+/** Functional select chrome belongs above preset background shorthands. */
+@layer ui-style-kit.clean_defaults {
 [data-ui][data-mode] :where(select:not([multiple])) {
   padding-inline-end: var(--usk-native-select-padding-inline-end);
   background-image: var(--usk-native-select-indicator-image);
   background-repeat: no-repeat;
   background-position: var(--usk-native-select-indicator-position);
   background-size: var(--usk-native-select-indicator-size);
-}
-}
-
-/** Preset density may tune other edges, but text must retain the native indicator gutter. */
-@layer ui-style-kit.clean_defaults {
-[data-ui][data-mode] :where(select:not([multiple])) {
-  padding-inline-end: var(--usk-native-select-padding-inline-end);
 }
 }

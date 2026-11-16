@@ -1,8 +1,9 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const demoUrl = pathToFileURL(path.resolve('index.html')).href + '?view=reference';
+const demoUrl = pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference';
 
 /**
  * Opens the generated Industrial Utility demo in the annotated light-mode

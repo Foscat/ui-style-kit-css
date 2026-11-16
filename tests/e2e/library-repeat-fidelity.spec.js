@@ -1,9 +1,10 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href;
+const demoUrl = pathToFileURL(path.join(rootDir, 'demo', 'reference.html')).href;
 test.describe.configure({ timeout: 60_000 });
 /** @type {{numberSize: number, captionSize: number}} */
 const defaultTrustSealType = { numberSize: 24, captionSize: 13 };

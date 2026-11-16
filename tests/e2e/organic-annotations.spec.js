@@ -1,10 +1,11 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 /** @param {import('@playwright/test').Page} page Isolated local demo. @returns {Promise<void>} */
 async function openOrganic(page) {
-  await page.goto(pathToFileURL(path.resolve('demo/index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'organic-modern');
   await page.selectOption('#themeSelect', 'arctic-indigo');
   await page.selectOption('#modeSelect', 'light');
@@ -20,8 +21,8 @@ test('Organic annotations share a leaf loader and center marketing details', asy
   expect(await leaf.evaluate((node) => getComputedStyle(node).animationName)).toBe('organic-leaf-sway');
   const busy = page.locator('.demo-state-grid .organic-button[aria-busy="true"]');
   expect(await busy.evaluate((node) => getComputedStyle(node, '::after').maskImage)).toBe(mask);
-  await expect(page.locator('#uiSelect')).toHaveCSS('appearance', 'auto');
-  await expect(page.locator('#uiSelect')).toHaveCSS('background-image', 'none');
+  await expect(page.locator('#uiSelect')).toHaveCSS('appearance', 'none');
+  await expect(page.locator('#uiSelect')).not.toHaveCSS('background-image', 'none');
   for (const [selector, size] of [['.organic-card-service > .organic-icon-medallion', 36], ['.organic-callout-bar > .organic-icon-medallion', 32], ['.organic-feature-item > .organic-icon-medallion', 32]]) {
     const svg = page.locator(`${selector} > svg`).first();
     await expect(svg).toHaveCount(1);

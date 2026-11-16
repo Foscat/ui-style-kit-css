@@ -1,10 +1,12 @@
+import { setBridgeChecked } from './helpers/bridge.js';
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'index.html')).href;
+const demoUrl = pathToFileURL(path.resolve(__dirname, '..', '..', 'demo', 'reference.html')).href;
 const semanticSelectors = Object.values(JSON.parse(
   readFileSync(path.resolve(__dirname, '..', '..', 'manifest.json'), 'utf8')
 ).semanticComponentApi.selectorsByRole).flat().map(({ selector }) => selector);
@@ -53,12 +55,12 @@ const interactableSelector = [
 
 const bundleExpectations = {
   detached: {
-    href: 'dist/ui-style-kit.css',
-    versionedHref: /^dist\/ui-style-kit\.css\?v=[a-f0-9]{12}$/
+    href: '../dist/ui-style-kit.css',
+    versionedHref: /^\.\.\/dist\/ui-style-kit\.css\?v=[a-f0-9]{12}$/
   },
   attached: {
-    href: 'dist/ui-style-kit.with-bridge.css',
-    versionedHref: /^dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}$/
+    href: '../dist/ui-style-kit.with-bridge.css',
+    versionedHref: /^\.\.\/dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}$/
   }
 };
 
@@ -102,7 +104,7 @@ async function expectStyleKitBundle(page, attached) {
 async function setBridgeForLayoutProbe(page, attached) {
   const bridgeToggle = page.locator('#bridgeToggle');
 
-  await bridgeToggle.setChecked(attached, { force: true });
+  await setBridgeChecked(bridgeToggle, attached);
   await expect(page.locator('body')).toHaveAttribute('data-bridge', attached ? 'attached' : 'detached');
   await expectStyleKitBundle(page, attached);
 }
@@ -110,7 +112,7 @@ async function setBridgeForLayoutProbe(page, attached) {
 test('demo loads with default theme settings', async ({ page }) => {
   await page.goto(demoUrl);
 
-  await expect(page).toHaveTitle(/UI Style Kit CSS \| CSS Theme and Component Preset Library/i);
+  await expect(page).toHaveTitle(/Reference fixture - UI Style Kit CSS Demo \| CSS Theme and Component Preset Library/i);
 
   await expect(page.locator('#uiSelect')).toHaveValue(defaultDemoState.ui);
   await expect(page.locator('#themeSelect')).toHaveValue(defaultDemoState.theme);
@@ -449,7 +451,7 @@ test('demo starts with the interactive surface bridge detached and can attach it
 
   const detachedThumbX = await switchThumb.evaluate((thumb) => thumb.getBoundingClientRect().left);
 
-  await bridgeToggle.check();
+  await setBridgeChecked(bridgeToggle, true);
 
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
   await expectStyleKitBundle(page, true);
@@ -468,7 +470,7 @@ test('attached bridge wires every enabled interactable element to interactive su
     .filter((element) => element.classList.contains('interactive-surface')).length, interactableSelector);
   expect(detachedHookCount).toBe(0);
 
-  await page.locator('#bridgeToggle').check();
+  await setBridgeChecked(page.locator('#bridgeToggle'), true);
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
   // Firefox can observe the bridge attribute before the swapped stylesheet has finished applying.
   await expect(page.locator('.interactive-surface').first()).toHaveCSS('--interactive-surface-bg', /.+/);
@@ -515,7 +517,7 @@ test('attached bridge shows three distinct interactive surface state levels', as
   await expect(bridgePreview.getByTestId('bridge-level-2')).toBeVisible();
   await expect(bridgePreview.getByTestId('bridge-level-3')).toBeVisible();
 
-  await bridgePreview.locator('#bridgeToggle').check();
+  await setBridgeChecked(bridgePreview.locator('#bridgeToggle'), true);
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
   await page.waitForFunction(() => {
     const surfaces = [1, 2, 3].map((level) => document.querySelector(`[data-testid="bridge-level-${level}"]`));

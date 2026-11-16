@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "scope": "substantial-ui",
+  "packages": [
+    {
+      "name": "ui-style-kit-css",
+      "version": "2.8.0",
+      "state": "Available",
+      "evidence": [
+        "package-lock.json",
+        "scripts/build-studio.mjs",
+        "./.tmp/studio-evidence/package-catalog.json"
+      ]
+    },
+    {
+      "name": "layout-style-css",
+      "version": "3.2.3",
+      "state": "Available",
+      "evidence": [
+        "package-lock.json",
+        "scripts/build-studio.mjs",
+        "./.tmp/studio-evidence/package-catalog.json"
+      ]
+    },
+    {
+      "name": "interactive-surface-css",
+      "version": "1.7.3",
+      "state": "Available",
+      "evidence": [
+        "package-lock.json",
+        "scripts/build-studio.mjs",
+        "./.tmp/studio-evidence/package-catalog.json"
+      ]
+    },
+    {
+      "name": "@sanderson-technology-enterprises/motion-style-css",
+      "version": "1.1.0",
+      "state": "Available",
+      "evidence": [
+        "package-lock.json",
+        "scripts/build-studio.mjs",
+        "./.tmp/studio-evidence/package-catalog.json"
+      ]
+    },
+    {
+      "name": "ui-style-kit-icons",
+      "version": "2.0.0",
+      "state": "Available",
+      "evidence": [
+        "package-lock.json",
+        "scripts/build-studio.mjs",
+        "demo/studio/icons.js"
+      ]
+    }
+  ],
+  "layout": [
+    {
+      "need": "Stable shell, responsive component navigation, and equal comparison previews",
+      "hook": ".ly-wrapper, .ly-grid, .ly-stack, .ly-cluster, .ly-sidebar and public --ly-* tokens; intrinsic native reference flow",
+      "evidence": [
+        "demo/studio/shell.html",
+        "demo/studio.css"
+      ],
+      "check": "All 20 presets contain Examples and Style details at phone width; native Bento grids reflow without measured row spans."
+    }
+  ],
+  "components": [
+    {
+      "need": "Real component paint and native control behavior in every visual system",
+      "hook": "Canonical usk-* components and choice subparts, public data-ui-variant, data-ui/data-theme/data-mode, and ui-style-kit-css/component-composition.css",
+      "evidence": [
+        "manifest.json",
+        "demo/studio/examples.js"
+      ],
+      "check": "Disabling demo CSS leaves library component paint and typography identical. Palette and mode propagate through public attributes; save feedback uses success/danger variants."
+    }
+  ],
+  "elevation": [
+    {
+      "target": "Preview links and form inputs with feedback enabled",
+      "level": 1,
+      "reason": "Quiet resting controls",
+      "check": "theme-refine/rendered-proof.json contains measured level 1 shadow"
+    },
+    {
+      "target": "Preview action buttons and studio primary actions",
+      "level": 2,
+      "reason": "Normal raised actions",
+      "check": "theme-refine/rendered-proof.json contains measured level 2 shadow"
+    },
+    {
+      "target": "Selected plans and current pagination with feedback enabled",
+      "level": 3,
+      "reason": "Selected interaction state",
+      "check": "theme-refine/rendered-proof.json contains a distinct measured level 3 shadow"
+    }
+  ],
+  "motion": {
+    "policy": "expressive",
+    "respectReducedMotion": true,
+    "decisions": [
+      {
+        "target": "#inspector-motion",
+        "trigger": "Open Customize & export",
+        "owner": "@sanderson-technology-enterprises/motion-style-css",
+        "effect": "slide from left, 180 ms, cancellation on close and reduced-motion default",
+        "check": "Six sampled transforms change during entry; reduced-motion browser scenario reports no animation"
+      }
+    ]
+  },
+  "localCss": {
+    "beforeBytes": 144228,
+    "afterBytes": 2243,
+    "unapproved": 0,
+    "exceptions": []
+  },
+  "proof": [
+    {
+      "requirement": "Rendered and functional studio behavior",
+      "status": "verified",
+      "evidence": [
+        "tests/e2e/demo-studio.spec.js: focused palette, paint, containment, drawer, feedback and comparison checks",
+        "./.tmp/theme-refine/rendered-proof.json",
+        "tests/e2e/demo-studio.spec.js: catalog copy, search, icon preferences, exports, install guide, phone group navigation",
+        ".tmp/theme-refine/catalog-review.json",
+        ".tmp/theme-refine/catalog-packs.json"
+      ]
+    },
+    {
+      "requirement": "Canonical ownership and dynamic template/style review",
+      "status": "verified",
+      "evidence": [
+        ".tmp/layout-defaults/composition-audit.json",
+        ".tmp/layout-defaults/audit-config.json",
+        "tests/demo-studio-theme-ownership.test.js"
+      ]
+    },
+    {
+      "requirement": "React component adoption",
+      "status": "not-applicable",
+      "evidence": [
+        "This repository is a direct CSS and vanilla JavaScript demo, with no React client."
+      ]
+    },
+    {
+      "requirement": "Browser evidence surface",
+      "status": "verified",
+      "evidence": [
+        ".tmp/audit-remedies/gnomie.json",
+        "Gnomie Browser Commander became available on retry and verified real local Edge flows. The earlier locked-profile limit remains historical. Native Windows and deployed/cloud acceptance are not claimed."
+      ]
+    },
+    {
+      "requirement": "Incremental runtime, explicit shared specimen ownership, focused assets and source maps",
+      "status": "verified",
+      "evidence": [
+        "tests/e2e/demo-studio-optimization.spec.js",
+        "tests/demo-studio-optimization.test.js",
+        "tests/demo-studio-lifetime.test.js",
+        "tests/demo-studio-build.test.js",
+        ".tmp/optimization/renderer-parity.json",
+        ".tmp/optimization/measurements.json",
+        ".tmp/optimization/rendered-proof.json"
+      ]
+    },
+    {
+      "requirement": "Shared spacing follows installed Layout normal and short-viewport defaults",
+      "status": "verified",
+      "evidence": [
+        "tests/e2e/demo-studio-optimization.spec.js: studio inherits Layout responsive spacing for normal and short screens",
+        ".tmp/layout-defaults/after.log",
+        "node_modules/layout-style-css/dist/foundation.css"
+      ]
+    },
+    {
+      "requirement": "Audit remedies preserve library ownership and recoverable preview state",
+      "status": "verified",
+      "evidence": [
+        "tests/e2e/demo-studio-audit-remedies.spec.js",
+        ".tmp/audit-remedies/gnomie.json",
+        ".tmp/audit-remedies/ownership.json",
+        "tests/paper-texture-assets.test.js",
+        "tests/demo-studio-api-docs.test.js",
+        "Nine browser regressions and twelve Studio optimization cases passed before the final uninterrupted gate; local CSS remains 2243 bytes with no new paint overrides."
+      ]
+    },
+    {
+      "requirement": "PR review blockers: actual native material paint and persisted document restoration",
+      "status": "verified",
+      "evidence": [
+        "tests/e2e/demo-studio-pr-blockers.spec.js",
+        ".tmp/pr-blocker-fixes-2026-11-16/gnomie-color-edit.json",
+        ".tmp/pr-blocker-fixes-2026-11-16/lifecycle-trace.json",
+        ".tmp/pr-blocker-fixes-2026-11-16/declaration-review.json",
+        "Native and standalone paint passed in three modes; real cache restoration retained the board and draft, completed a pending save, and accepted a trusted reset click. Demo CSS remains unchanged at 2243 bytes."
+      ]
+    }
+  ]
+}

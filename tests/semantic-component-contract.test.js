@@ -475,14 +475,20 @@ test('semantic components publish canonical usk classes with ui compatibility al
 });
 
 /** Verifies that the public proof page exercises the canonical namespace consumers should copy. */
-test('library demos render the canonical usk semantic component namespace', () => {
+test('library studio and retained reference use the canonical usk namespace', () => {
   for (const relativeFile of ['index.html', 'demo/index.html']) {
     const markup = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
     assert.match(markup, /class="[^"]*\busk-button\b/);
-    assert.match(markup, /class="[^"]*\busk-stepper\b/);
     assert.doesNotMatch(markup, /class="[^"]*\bui-[a-z]/);
-    assert.match(markup, /Every component below keeps its <code>\.usk-\*<\/code> class/);
+    assert.match(markup, /studio\.js/);
+    assert.doesNotMatch(markup, /id="semantic-runtime"/);
   }
+  const reference = fs.readFileSync(path.join(rootDir, 'demo/reference.html'), 'utf8');
+  assert.match(reference, /class="[^"]*\busk-stepper\b/);
+  assert.match(reference, /Every component below keeps its <code>\.usk-\*<\/code> class/);
+  const examples = fs.readFileSync(path.join(rootDir, 'demo/studio/examples.js'), 'utf8');
+  assert.match(examples, /usk-button/);
+  assert.match(examples, /usk-input/);
 });
 
 test('manifest partitions retained, implemented, and pending Task 11 selectors', () => {
@@ -686,14 +692,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Locks reviewed 2.7.5 declarations after the isolated Graphite Cyan focus-token correction. */
+  /** Locks reviewed declarations, including native Clay RGB routing, AA ink and exact external Paper textures. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 37049,
-    sha256: 'f3a372ff2a887c79b2313a1a784c84654ffaaabb74f27fae4904e41ed32f5938'
+    count: 37040,
+    sha256: '44af54531cce6d783ccdcb702908c6a3e66954a238074942af63374a5108f129'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37500,
-    sha256: '0786b27e873a051f2e09b926cdbaa623ce863330dc7131c87fd45954580217da'
+    count: 37491,
+    sha256: '791b573dd495994c22b77780a9ad041cb35cf0689c7bac51d8424d8f0747dcc7'
   });
 });
 

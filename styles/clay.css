@@ -51,16 +51,16 @@
 
 [data-ui="clay"][data-mode="light"] {
   color-scheme: light;
-  --clay-fallback-bg-rgb: 248 242 231;
-  --clay-fallback-surface-rgb: 255 255 255;
-  --clay-fallback-surface-strong-rgb: 255 250 241;
-  --clay-fallback-surface-soft-rgb: 234 223 205;
-  --clay-fallback-text-rgb: 43 36 25;
-  --clay-fallback-text-muted-rgb: 107 97 78;
-  --clay-fallback-border-rgb: 215 198 167;
-  --clay-fallback-primary-rgb: 115 75 32;
-  --clay-fallback-primary-hover-rgb: 112 83 47;
-  --clay-fallback-primary-text-rgb: 255 255 255;
+  --clay-fallback-bg-rgb: 235 228 219;
+  --clay-fallback-surface-rgb: 233 226 217;
+  --clay-fallback-surface-strong-rgb: 229 221 211;
+  --clay-fallback-surface-soft-rgb: 229 222 213;
+  --clay-fallback-text-rgb: 52 49 47;
+  --clay-fallback-text-muted-rgb: 101 94 87;
+  --clay-fallback-border-rgb: 175 164 152;
+  --clay-fallback-primary-rgb: 128 96 59;
+  --clay-fallback-primary-hover-rgb: 126 100 68;
+  --clay-fallback-primary-text-rgb: 248 244 238;
   --clay-fallback-secondary-rgb: 95 118 85;
   --clay-fallback-secondary-hover-rgb: 72 92 64;
   --clay-fallback-secondary-text-rgb: 255 255 255;
@@ -83,16 +83,16 @@
 
 [data-ui="clay"][data-mode="dark"] {
   color-scheme: dark;
-  --clay-fallback-bg-rgb: 18 15 9;
-  --clay-fallback-surface-rgb: 33 27 18;
-  --clay-fallback-surface-strong-rgb: 47 40 27;
-  --clay-fallback-surface-soft-rgb: 25 20 13;
-  --clay-fallback-text-rgb: 248 239 223;
-  --clay-fallback-text-muted-rgb: 199 186 163;
-  --clay-fallback-border-rgb: 91 78 56;
-  --clay-fallback-primary-rgb: 217 184 120;
-  --clay-fallback-primary-hover-rgb: 240 211 154;
-  --clay-fallback-primary-text-rgb: 21 16 6;
+  --clay-fallback-bg-rgb: 28 30 31;
+  --clay-fallback-surface-rgb: 32 35 36;
+  --clay-fallback-surface-strong-rgb: 41 44 45;
+  --clay-fallback-surface-soft-rgb: 24 26 27;
+  --clay-fallback-text-rgb: 222 218 211;
+  --clay-fallback-text-muted-rgb: 166 162 155;
+  --clay-fallback-border-rgb: 12 13 14;
+  --clay-fallback-primary-rgb: 115 102 74;
+  --clay-fallback-primary-hover-rgb: 106 93 62;
+  --clay-fallback-primary-text-rgb: 242 239 234;
   --clay-fallback-secondary-rgb: 168 206 153;
   --clay-fallback-secondary-hover-rgb: 200 233 187;
   --clay-fallback-secondary-text-rgb: 9 20 7;
@@ -116,11 +116,11 @@
 [data-ui="clay"][data-mode="contrast"] {
   color-scheme: dark;
   --clay-fallback-bg-rgb: 0 0 0;
-  --clay-fallback-surface-rgb: 15 11 3;
-  --clay-fallback-surface-strong-rgb: 26 18 5;
+  --clay-fallback-surface-rgb: 17 17 17;
+  --clay-fallback-surface-strong-rgb: 28 28 28;
   --clay-fallback-surface-soft-rgb: 0 0 0;
   --clay-fallback-text-rgb: 255 255 255;
-  --clay-fallback-text-muted-rgb: 255 248 232;
+  --clay-fallback-text-muted-rgb: 255 255 255;
   --clay-fallback-border-rgb: 255 255 255;
   --clay-fallback-primary-rgb: 255 209 102;
   --clay-fallback-primary-hover-rgb: 255 255 255;
@@ -775,70 +775,65 @@
 }
 
 /**
- * Establishes the paired mineral fallbacks retained by the Clay design document.
- * Explicit color themes replace the paint, but retain the molded material geometry.
+ * Routes native mineral planes through the same public RGB contract as shared themes.
+ * Native fallback channels retain the reference colors; primary channels contain the finished pigment so edits paint identically without color-mix support.
  */
 [data-ui="clay"][data-mode="light"] {
-  --clay-material-canvas: #ebe4db;
-  --clay-material-slab: #e9e2d9;
-  --clay-material-raised: #e5ddd3;
-  --clay-material-inset: #e5ded5;
-  --clay-material-seam: #afa498;
+  --clay-material-canvas: rgb(var(--clay-bg-rgb));
+  --clay-material-slab: rgb(var(--clay-surface-rgb));
+  --clay-material-raised: rgb(var(--clay-surface-strong-rgb));
+  --clay-material-inset: rgb(var(--clay-surface-soft-rgb));
+  --clay-material-seam: rgb(var(--clay-border-rgb));
   --clay-material-highlight: rgb(255 252 246 / .78);
   --clay-material-contact: rgb(71 60 52 / .28);
   --clay-material-deep: rgb(49 41 35 / .48);
-  --clay-material-ink: #34312f;
-  --clay-material-muted-ink: #6e675f;
+  --clay-material-ink: rgb(var(--clay-text-rgb));
+  /** Keeps normal muted text readable on both the mineral canvas and inset. */
+  --clay-material-muted-ink: rgb(var(--clay-text-muted-rgb));
   --clay-grain-dark: rgb(70 58 49 / .045);
   --clay-grain-light: rgb(255 253 248 / .1);
   --clay-thumb-material: #cec2b5;
-  --clay-pigment-base: #90795d;
-  --clay-pigment-share: 55%;
-  --clay-pigment-ink: #f8f4ee;
+  --clay-pigment-ink: rgb(var(--clay-primary-text-rgb));
   --clay-tooltip-material: #474541;
   --clay-tooltip-ink: #f8f3ec;
   --clay-label-relief: 0 -.7px .45px rgb(54 44 37 / .34), 0 .8px .55px rgb(255 255 255 / .68);
 }
 
 [data-ui="clay"][data-mode="dark"] {
-  --clay-material-canvas: #1c1e1f;
-  --clay-material-slab: #202324;
-  --clay-material-raised: #292c2d;
-  --clay-material-inset: #181a1b;
-  --clay-material-seam: #0c0d0e;
+  --clay-material-canvas: rgb(var(--clay-bg-rgb));
+  --clay-material-slab: rgb(var(--clay-surface-rgb));
+  --clay-material-raised: rgb(var(--clay-surface-strong-rgb));
+  --clay-material-inset: rgb(var(--clay-surface-soft-rgb));
+  --clay-material-seam: rgb(var(--clay-border-rgb));
   --clay-material-highlight: rgb(143 148 147 / .28);
   --clay-material-contact: rgb(0 0 0 / .72);
   --clay-material-deep: rgb(0 0 0 / .9);
-  --clay-material-ink: #dedad3;
-  --clay-material-muted-ink: #a6a29b;
+  --clay-material-ink: rgb(var(--clay-text-rgb));
+  --clay-material-muted-ink: rgb(var(--clay-text-muted-rgb));
   --clay-grain-dark: rgb(0 0 0 / .075);
   --clay-grain-light: rgb(164 168 166 / .04);
   --clay-thumb-material: #6d6a65;
-  --clay-pigment-base: #202225;
-  --clay-pigment-share: 45%;
-  --clay-pigment-ink: #f2efea;
+  --clay-pigment-ink: rgb(var(--clay-primary-text-rgb));
   --clay-tooltip-material: #0d0f10;
   --clay-tooltip-ink: #eee9e2;
   --clay-label-relief: 0 -.7px .45px rgb(0 0 0 / .82), 0 .8px .55px rgb(145 149 147 / .3);
 }
 
 [data-ui="clay"][data-mode="contrast"] {
-  --clay-material-canvas: #000;
-  --clay-material-slab: #111;
-  --clay-material-raised: #1c1c1c;
-  --clay-material-inset: #000;
-  --clay-material-seam: #fff;
+  --clay-material-canvas: rgb(var(--clay-bg-rgb));
+  --clay-material-slab: rgb(var(--clay-surface-rgb));
+  --clay-material-raised: rgb(var(--clay-surface-strong-rgb));
+  --clay-material-inset: rgb(var(--clay-surface-soft-rgb));
+  --clay-material-seam: rgb(var(--clay-border-rgb));
   --clay-material-highlight: rgb(255 255 255 / .3);
   --clay-material-contact: rgb(0 0 0 / .9);
   --clay-material-deep: #000;
-  --clay-material-ink: #fff;
-  --clay-material-muted-ink: #fff;
+  --clay-material-ink: rgb(var(--clay-text-rgb));
+  --clay-material-muted-ink: rgb(var(--clay-text-muted-rgb));
   --clay-grain-dark: transparent;
   --clay-grain-light: transparent;
   --clay-thumb-material: #fff;
-  --clay-pigment-base: #000;
-  --clay-pigment-share: 100%;
-  --clay-pigment-ink: #000;
+  --clay-pigment-ink: rgb(var(--clay-primary-text-rgb));
   --clay-tooltip-material: #000;
   --clay-tooltip-ink: #fff;
   --clay-label-relief: none;
@@ -955,13 +950,11 @@
 }
 
 /**
- * Tempers fallback accents with the document's mineral pigments.
+ * Tempers secondary and status accents with the document's mineral pigments.
  * Explicit schemes below keep their own paired foreground and background roles.
  */
 @supports (color: color-mix(in srgb, black, white)) {
   [data-ui="clay"][data-mode] {
-    --clay-pigment-primary: color-mix(in srgb, rgb(var(--clay-primary-rgb)) var(--clay-pigment-share), var(--clay-pigment-base));
-    --clay-pigment-primary-hover: color-mix(in srgb, rgb(var(--clay-primary-hover-rgb)) var(--clay-pigment-share), var(--clay-pigment-base));
     --clay-pigment-secondary: color-mix(in srgb, rgb(var(--clay-secondary-rgb)) 44%, #7f8577);
     --clay-pigment-danger: color-mix(in srgb, rgb(var(--clay-danger-rgb)) 48%, #bd725a);
     --clay-pigment-success: color-mix(in srgb, rgb(var(--clay-success-rgb)) 42%, #7f8d76);
@@ -979,7 +972,6 @@
   --clay-material-ink: rgb(var(--clay-text-rgb));
   --clay-material-muted-ink: rgb(var(--clay-text-muted-rgb));
   --clay-thumb-material: rgb(var(--clay-surface-strong-rgb));
-  --clay-pigment-base: rgb(var(--clay-surface-soft-rgb));
   --clay-pigment-primary: rgb(var(--clay-primary-rgb));
   --clay-pigment-primary-hover: rgb(var(--clay-primary-hover-rgb));
   --clay-pigment-secondary: rgb(var(--clay-secondary-rgb));
@@ -1589,7 +1581,8 @@
 .clay-chip .clay-icon-button { min-width: 15px; width: 15px; min-height: 15px; height: 15px; padding: 0; background: transparent; border: 0; box-shadow: none; }
 .clay-chip svg { width: 12px; height: 12px; }
 .clay-tags > .clay-input { background: transparent; box-shadow: none; border: 0; margin-top: 4px; }
-.clay-choices { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+/** Wraps choice groups to the available component width while preserving 44px switch controls. */
+.clay-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr)); gap: 12px; }
 .clay-choices > div { min-width: 0; }
 .clay-choices :where(.clay-check, .clay-radio, .clay-switch) { display: flex; align-items: center; gap: 8px; min-height: 33px; margin: 0; font-size: 9px; font-weight: 400; }
 .clay-choices :where(.clay-check-control, .clay-radio-control) { flex: 0 0 15px; width: 15px; height: 15px; }

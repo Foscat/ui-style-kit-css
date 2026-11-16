@@ -6,7 +6,7 @@ import crypto from 'node:crypto';
 
 /** Both demo entrypoints must request the exact current bytes, including bridge switches. */
 test('demo asset URLs carry current content hashes', () => {
-  for (const entry of ['index.html', 'demo/index.html']) {
+  for (const entry of ['index.html', 'demo/index.html', 'demo/reference.html', 'demo/preview.html']) {
     const html = fs.readFileSync(entry, 'utf8');
     const assets = [...html.matchAll(/(?:href|src|data-default-href|data-bridge-href)="([^"\s]+\.(?:css|js)(?:\?[^"\s]*)?)"/g)]
       .map((match) => match[1]).filter((value) => !/^(?:https?:)?\/\//.test(value));

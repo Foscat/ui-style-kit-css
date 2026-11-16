@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import fs from 'node:fs';
@@ -6,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const manifest = JSON.parse(fs.readFileSync(new URL('../../manifest.json', import.meta.url), 'utf8'));
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
-const demoUrl = pathToFileURL(path.resolve(currentDirectory, '..', '..', 'index.html')).href;
+const demoUrl = pathToFileURL(path.resolve(currentDirectory, '..', '..', 'demo', 'reference.html')).href;
 const modes = ['light', 'dark', 'contrast'];
 
 test.use({ video: 'off' });

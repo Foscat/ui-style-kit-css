@@ -4,6 +4,19 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+## [2.8.0] - 2026-11-16
+
+- Connect native Clay material paint to public RGB channels and export the actual material palette; expose primary paint without a color-mix dependency and retain 4.5:1 dark hover text contrast.
+- Wrap Clay choice groups to available component width without shrinking 44px switch tracks or leaking mobile overflow.
+- Preserve preview DOM, drafts, listeners, and pending save outcomes through back-forward cache navigation; retain cleanup on permanent navigation.
+
+- Removed demo-local UI paint and typography overrides, composed responsive layouts with Layout Style CSS, and restored the public component-composition import. Canonical `usk-*` variants now carry primary actions and save feedback; studio controls reflect the selected shared palette and mode.
+
+
+- Replace the repetitive public demo with Style Studio: a stable shell, isolated working examples, a focused component explorer, authored style details, and pinned two-style comparison.
+- Preserve form and filter state while changing appearance; add scoped color editing, CSS/setup export, share links, request-safe loading/retry, and offline-capable generated assets.
+- Retain the complete library reference fixture and its existing regressions; add studio browser coverage, scoped JavaScript lint/format checks, and generated granular jsdoc2md references.
+
 ## [2.7.5] - 2026-11-13
 
 - Use Graphite Cyan light mode's existing dark cyan link ink for keyboard focus, correcting the low-contrast breadcrumb ring reproduced by the published SYS consumer.

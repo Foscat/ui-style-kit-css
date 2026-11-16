@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
@@ -26,7 +27,7 @@ test.beforeAll(async () => {
     } catch { response.writeHead(404).end(); }
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  demoUrl = `http://127.0.0.1:${server.address().port}/index.html?view=reference`;
+  demoUrl = `http://127.0.0.1:${server.address().port}/demo/reference.html?view=reference`;
 });
 
 test.afterAll(async () => {

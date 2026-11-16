@@ -475,11 +475,13 @@ test('remaining presets expose template-specific CSS signatures instead of arbit
       /\.deco-table th,\s*\.deco-table td\s*\{[^}]*border-inline-start:\s*1px solid/
     ]],
     ['clay', [
-      /--clay-material-slab:\s*#e9e2d9/,
+      /** Native materials preserve reference RGB defaults while consuming the public editable channels. */
+      /--clay-fallback-surface-rgb:\s*233 226 217/,
+      /--clay-material-slab:\s*rgb\(var\(--clay-surface-rgb\)\)/,
       /--clay-panel-clip:\s*polygon\([^;]*calc\(100% - 13px\) calc\(100% - 2px\)/,
       /--clay-carved-shadow:\s*inset/,
       /--clay-label-relief:\s*0 -\.7px \.45px/,
-      /--clay-pigment-primary:\s*color-mix/,
+      /--clay-pigment-primary:\s*var\(--clay-primary\)/,
       /\.clay-button, \.clay-icon-button,[^{]*\{[^}]*min-height:\s*2rem[^}]*font-weight:\s*500/s,
       /\.clay-table th\s*\{[^}]*background:\s*var\(--clay-material-raised\)/
     ]],

@@ -1,9 +1,13 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import os from 'node:os';
 import { pathToFileURL } from 'node:url';
 
-/** Reads rendered colors against the public theme roles, not private material aliases. */
+/** Reads rendered colors against the public theme roles.
+ * @param {import('@playwright/test').Page} page Active reference fixture.
+ * @returns {Promise<Object>} Rendered role pairs and unchanged material geometry.
+ */
 async function colors(page) {
   return page.evaluate(() => {
     const style = (selector) => getComputedStyle(document.querySelector(selector));
@@ -18,7 +22,7 @@ async function colors(page) {
       ['canvas', style('body').backgroundColor, role('bg')],
       ['sheet', style('.clay-sheet').backgroundColor, role('surface')],
       ['panel', style('.clay-panel').backgroundColor, role('surface')],
-      ['semantic card', style('.ui-card').backgroundColor, role('surface')],
+      ['semantic card', style('.usk-card').backgroundColor, role('surface')],
       ['field', style('#clay-field-search').backgroundColor, role('surface-soft')],
       ['native field', style('#clay-theme-native').backgroundColor, role('surface-soft')],
       ['text', style('.clay-sheet').color, role('text')],
@@ -43,7 +47,7 @@ async function colors(page) {
 test('Clay themes paint the complete preset in all modes and honor live RGB overrides', async ({ page }) => {
   test.setTimeout(120_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });
   await page.selectOption('#uiSelect', 'clay');
   const themes = await page.locator('#themeSelect option').evaluateAll((nodes) => nodes.map((node) => node.value).filter((value) => value && value !== 'reference-palette'));
@@ -78,7 +82,7 @@ test('Clay themes paint the complete preset in all modes and honor live RGB over
 
 test('Clay themed sheets preserve responsive material geometry', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'clay');
   for (const [theme, mode] of [['ocean-steel', 'light'], ['heritage-brass', 'dark']]) {
     await page.locator('.demo-controls').evaluate((node) => { node.style.visibility = 'visible'; });
@@ -87,8 +91,22 @@ test('Clay themed sheets preserve responsive material geometry', async ({ page }
     await page.setViewportSize({ width: 1600, height: 1100 });
     await page.locator('.demo-controls').evaluate((node) => { node.style.visibility = 'hidden'; });
     await page.locator('.clay-sheet').screenshot({ path: path.join(os.tmpdir(), `clay-theme-${theme}-${mode}.png`), animations: 'disabled' });
-    await page.setViewportSize({ width: 390, height: 844 });
-    expect(await page.locator('.clay-sheet').evaluate((node) => node.scrollWidth - node.clientWidth)).toBeLessThanOrEqual(2);
+    /** Choice groups must wrap without shrinking accessible switch tracks or overflowing the board. */
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 844 });
+      const bounds = await page.locator('.clay-sheet').evaluate((sheet) => {
+        const board = sheet.getBoundingClientRect();
+        return {
+          overflow: sheet.scrollWidth - sheet.clientWidth,
+          tracksFit: Array.from(sheet.querySelectorAll('.clay-switch-track')).every((track) => {
+            const rectangle = track.getBoundingClientRect();
+            return rectangle.width >= 44 && rectangle.left >= board.left && rectangle.right <= board.right;
+          })
+        };
+      });
+      expect(bounds.overflow, `${theme}/${mode}/${width}px board`).toBeLessThanOrEqual(2);
+      expect(bounds.tracksFit, `${theme}/${mode}/${width}px switches`).toBe(true);
+    }
     await page.locator('.clay-masthead').screenshot({ path: path.join(os.tmpdir(), `clay-theme-${theme}-mobile.png`), animations: 'disabled' });
   }
 });

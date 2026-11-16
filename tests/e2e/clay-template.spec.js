@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import os from 'node:os';
@@ -6,7 +7,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 /** Opens the actual local demo, without controlling the user's browser tab. */
 async function openClay(page, mode = 'light') {
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.locator('#uiSelect').selectOption('clay');
   await page.locator('#modeSelect').selectOption(mode);
 }

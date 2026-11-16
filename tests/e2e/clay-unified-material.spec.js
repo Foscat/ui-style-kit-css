@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import os from 'node:os';
@@ -16,7 +17,7 @@ async function material(locator) {
 }
 
 test('Clay sheet and public components share one molded material and crisp text', async ({ page }) => {
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });
   await page.selectOption('#uiSelect', 'clay');
   for (const mode of ['light', 'dark']) {
@@ -51,7 +52,7 @@ test('Clay sheet and public components share one molded material and crisp text'
 });
 
 test('Clay unified material remains readable and contained on desktop and mobile', async ({ page }) => {
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'clay');
   for (const [theme, mode] of [['ocean-steel', 'light'], ['heritage-brass', 'dark']]) {
     await page.locator('.demo-controls').evaluate((node) => { node.style.visibility = 'visible'; });

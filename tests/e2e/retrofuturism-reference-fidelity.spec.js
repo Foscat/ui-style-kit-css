@@ -1,9 +1,10 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href;
+const demoUrl = pathToFileURL(path.join(rootDir, 'demo', 'reference.html')).href;
 
 /**
  * Loads the editable Retrofuturism source after the generated demo bundle.
@@ -259,8 +260,8 @@ test('Retrofuturism forms use recessed fields, one selector indicator, and a cal
     expect(select.paddingInlineEnd).toBeGreaterThanOrEqual(40);
     expect(select.radius).toBeLessThanOrEqual(10);
   }
-  expect(evidence.demoSelect.appearance).toBe('auto');
-  expect(evidence.demoSelect.backgroundImage).toBe('none');
+  expect(evidence.demoSelect.appearance).toBe('none');
+  expect(evidence.demoSelect.backgroundImage).not.toBe('none');
   expect(evidence.demoSelect.paddingInlineEnd).toBeGreaterThanOrEqual(32);
   expect(evidence.demoSelect.radius).toBeLessThanOrEqual(10);
   expect(evidence.range.appearance).toBe('none');

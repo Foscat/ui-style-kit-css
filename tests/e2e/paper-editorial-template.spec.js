@@ -1,3 +1,4 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
@@ -12,7 +13,7 @@ fs.mkdirSync(evidence, { recursive: true });
 /** Opens the actual generated bundle and selects its reference-palette specimen. */
 async function openBoard(page, mode = 'dark') {
   await page.setViewportSize({ width: 1920, height: 1280 });
-  await page.goto(pathToFileURL(path.resolve('index.html')).href + '?view=reference');
+  await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'paper-editorial');
   await page.selectOption('#modeSelect', mode);
   await page.getByRole('button', { name: 'Use reference palette', exact: true }).click();
@@ -59,7 +60,7 @@ for (const mode of ['dark', 'light']) {
     const root = await openBoard(page, mode);
     await expect(root).toBeVisible();
     await expect(root.locator('.paper-button-primary').first()).toHaveCSS('border-radius', '1px');
-    await expect(root).toHaveCSS('background-image', /data:image\/png;base64/);
+    await expect(root).toHaveCSS('background-image', /paper-sheet-(?:light|dark)\.png/);
     await expect(root.locator('.paper-check input').first()).toHaveCSS('opacity', '1');
     await expect(root.locator('.paper-folio-section').first()).toHaveCSS('display', 'block');
     await expect(root.locator('.paper-radio input').first()).toHaveCSS('box-shadow', 'none');

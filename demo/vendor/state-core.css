@@ -1,0 +1,675 @@
+/*!
+ * state-core.css
+ * Generated from: styles/state-core.css
+ * Do not edit directly; run node scripts/build.mjs.
+ */
+
+/*
+ * Interaction mechanics for interactive surfaces.
+ * Standalone paint and component geometry belong to the companion preset.
+ */
+
+.interactive-surface {
+  /* Preset-only fallbacks keep the core neutral while preserving complete-bundle behavior. */
+  --_is-lift-base: var(
+    --interactive-surface-lift-base,
+    var(--_is-preset-lift-base, 0px)
+  );
+  --_is-lift-hover: var(
+    --interactive-surface-lift-hover,
+    var(--_is-preset-lift-hover, 0px)
+  );
+  --_is-lift-active: var(
+    --interactive-surface-lift-active,
+    var(--_is-preset-lift-active, 0px)
+  );
+  --_is-base-shadow: var(
+    --interactive-surface-shadow-base,
+    var(--interactive-surface-level-shadow, var(--_is-preset-shadow-base, none))
+  );
+  --_is-shadow-base: var(--_is-base-shadow);
+  --_is-shadow-hover: var(
+    --interactive-surface-shadow-hover,
+    var(--_is-preset-shadow-hover, var(--_is-base-shadow))
+  );
+  --_is-shadow-active: var(
+    --interactive-surface-shadow-active,
+    var(--_is-preset-shadow-active, var(--_is-base-shadow))
+  );
+  --_is-darken-hover: var(
+    --interactive-surface-darken-hover,
+    var(--surface-darken-hover, 0.96)
+  );
+  --_is-darken-active: var(
+    --interactive-surface-darken-active,
+    var(--surface-darken-active, 0.98)
+  );
+  --_is-state-layer-base-opacity: var(
+    --interactive-surface-state-layer-opacity,
+    0
+  );
+  --_is-state-layer-hover-opacity: var(
+    --interactive-surface-state-layer-hover-opacity,
+    var(
+      --interactive-surface-state-layer-opacity-hover,
+      calc(1 - var(--_is-darken-hover))
+    )
+  );
+  --_is-state-layer-active-opacity: var(
+    --interactive-surface-state-layer-active-opacity,
+    var(
+      --interactive-surface-state-layer-opacity-active,
+      calc(1 - var(--_is-darken-active))
+    )
+  );
+  --_is-state-layer-focus-opacity: var(
+    --interactive-surface-state-layer-focus-opacity,
+    var(
+      --interactive-surface-state-layer-opacity-focus,
+      var(--_is-state-layer-hover-opacity)
+    )
+  );
+  --_is-state-layer-color: var(
+    --interactive-surface-state-layer-color,
+    rgb(0 0 0)
+  );
+  --_is-motion-default: var(
+    --interactive-surface-motion-default,
+    var(--ui-motion-duration, var(--motion-default, 140ms))
+  );
+  --_is-motion-press: var(
+    --interactive-surface-motion-press,
+    var(--motion-press, 60ms)
+  );
+  --_is-ease-standard: var(
+    --interactive-surface-ease-standard,
+    var(--ui-motion-easing, var(--ease-standard, cubic-bezier(0.2, 0, 0.2, 1)))
+  );
+  --_is-ease-press: var(
+    --interactive-surface-ease-press,
+    var(--ease-press, cubic-bezier(0.4, 0, 0.6, 1))
+  );
+
+  --_is-transition-property: var(
+    --interactive-surface-transition-property,
+    translate,
+    box-shadow,
+    outline-color
+  );
+  --_is-transition-duration: var(
+    --interactive-surface-transition-duration,
+    var(
+      --interactive-surface-motion-default,
+      var(--ui-motion-duration, var(--motion-default, 140ms))
+    )
+  );
+  --_is-transition-easing: var(
+    --interactive-surface-transition-easing,
+    var(
+      --interactive-surface-ease-standard,
+      var(
+        --ui-motion-easing,
+        var(--ease-standard, cubic-bezier(0.2, 0, 0.2, 1))
+      )
+    )
+  );
+  --_is-transition-delay: var(--interactive-surface-transition-delay, 0s);
+  --_is-focus-ring-color: var(
+    --interactive-surface-focus-ring-color,
+    var(--ui-focus-color, var(--focus-ring, rgb(11 99 246)))
+  );
+  --_is-focus-ring-width: var(--interactive-surface-focus-ring-width, 2px);
+  --_is-focus-ring-offset: var(--interactive-surface-focus-ring-offset, 2px);
+  --_is-disabled-opacity: var(--interactive-surface-disabled-opacity, 0.72);
+  --_is-tap-highlight: var(
+    --interactive-surface-tap-highlight-color,
+    rgb(11 99 246 / 0.18)
+  );
+  --_is-feedback-duration: var(--interactive-surface-feedback-duration, 240ms);
+  --_is-feedback-easing: var(
+    --interactive-surface-feedback-easing,
+    cubic-bezier(0.2, 0, 0.2, 1)
+  );
+  --_is-feedback-distance: var(--interactive-surface-feedback-distance, 3px);
+  --_is-feedback-layer-opacity: var(
+    --interactive-surface-feedback-layer-opacity,
+    0.18
+  );
+  --_is-feedback-error-color: var(
+    --interactive-surface-feedback-error-color,
+    var(--_is-preset-feedback-error-color, currentcolor)
+  );
+  --_is-feedback-success-color: var(
+    --interactive-surface-feedback-success-color,
+    var(--_is-preset-feedback-success-color, currentcolor)
+  );
+  --_is-feedback-attention-color: var(
+    --interactive-surface-feedback-attention-color,
+    var(--_is-preset-feedback-attention-color, currentcolor)
+  );
+
+  isolation: isolate;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: var(--_is-tap-highlight);
+  translate: 0 var(--_is-lift-base);
+  box-shadow: var(--_is-shadow-base);
+  /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Public tuple tokens must remain independently replaceable lists. */
+  transition-property: var(--_is-transition-property);
+  transition-duration: var(--_is-transition-duration);
+  transition-timing-function: var(--_is-transition-easing);
+  transition-delay: var(--_is-transition-delay);
+  /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+  will-change: auto;
+}
+
+/*
+ * The state layer needs a containing block, but consumer topology must win even
+ * when application CSS loads before this package.
+ */
+:where(.interactive-surface) {
+  position: relative;
+}
+
+/* The isolated state layer changes interaction emphasis without filtering content. */
+.interactive-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--_is-state-layer-color);
+  opacity: var(--_is-state-layer-base-opacity);
+  pointer-events: none;
+  z-index: -1;
+  /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Public timing tokens may contain independently replaceable lists. */
+  transition-property: opacity;
+  transition-duration: var(--_is-transition-duration);
+  transition-timing-function: var(--_is-transition-easing);
+  transition-delay: var(--_is-transition-delay);
+  /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+}
+
+.interactive-surface:focus {
+  outline: var(--_is-focus-ring-width) solid var(--_is-focus-ring-color);
+  outline-offset: var(--_is-focus-ring-offset);
+}
+
+@supports selector(:focus-visible) {
+  .interactive-surface:focus {
+    outline: none;
+  }
+}
+
+.interactive-surface:not(
+    :is(.is-disabled, :disabled, [aria-disabled="true"])
+  ):focus-visible {
+  outline: var(--_is-focus-ring-width) solid var(--_is-focus-ring-color);
+  outline-offset: var(--_is-focus-ring-offset);
+}
+
+/* Native file inputs expose an inner button that needs the same interaction feedback as the host. */
+:where(input[type="file"].interactive-surface)::file-selector-button {
+  cursor: pointer;
+  /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Public timing tokens may contain independently replaceable lists. */
+  transition-property: background-color, border-color, box-shadow, color;
+  transition-duration: var(--_is-transition-duration);
+  transition-timing-function: var(--_is-transition-easing);
+  transition-delay: var(--_is-transition-delay);
+  /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+}
+
+/* Matching specificity lets source order apply the public precedence to the native subcontrol. */
+input[type="file"].interactive-surface.interactive-surface:where(
+    :focus-visible
+  ):where(
+    :not(:is(.is-disabled, :disabled, [aria-disabled="true"]))
+  )::file-selector-button {
+  box-shadow: inset 0 0 0 999px
+    rgb(0 0 0 / var(--_is-state-layer-focus-opacity));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive-surface {
+    will-change: translate, box-shadow;
+  }
+
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):hover {
+    translate: 0 var(--_is-lift-hover);
+    box-shadow: var(--_is-shadow-hover);
+  }
+
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):hover::before {
+    opacity: var(--_is-state-layer-hover-opacity);
+  }
+
+  input[type="file"].interactive-surface.interactive-surface:where(
+      :hover
+    ):where(
+      :not(:is(.is-disabled, :disabled, [aria-disabled="true"]))
+    )::file-selector-button {
+    box-shadow: inset 0 0 0 999px
+      rgb(0 0 0 / var(--_is-state-layer-hover-opacity));
+  }
+}
+
+/* Repeating the public class normalizes specificity so source order can encode state precedence. */
+.interactive-surface.interactive-surface:where(
+    .is-active,
+    [aria-pressed="true"],
+    [aria-pressed="mixed"],
+    [aria-current]:not([aria-current="false"]),
+    [aria-selected="true"]
+  ):not(:is(.is-disabled, :disabled, [aria-disabled="true"])) {
+  translate: 0 var(--_is-lift-active);
+  box-shadow: var(--_is-shadow-active);
+}
+
+.interactive-surface.interactive-surface:where(
+    .is-active,
+    [aria-pressed="true"],
+    [aria-pressed="mixed"],
+    [aria-current]:not([aria-current="false"]),
+    [aria-selected="true"]
+  ):not(:is(.is-disabled, :disabled, [aria-disabled="true"]))::before {
+  opacity: var(--_is-state-layer-active-opacity);
+}
+
+input[type="file"].interactive-surface.interactive-surface:where(
+    .is-active,
+    [aria-pressed="true"],
+    [aria-pressed="mixed"],
+    [aria-current]:not([aria-current="false"]),
+    [aria-selected="true"]
+  ):where(
+    :not(:is(.is-disabled, :disabled, [aria-disabled="true"]))
+  )::file-selector-button {
+  box-shadow: inset 0 0 0 999px
+    rgb(0 0 0 / var(--_is-state-layer-active-opacity));
+}
+
+.interactive-surface:not(
+    :is(.is-disabled, :disabled, [aria-disabled="true"])
+  ):active {
+  --_is-transition-duration: var(
+    --interactive-surface-transition-duration,
+    var(--_is-motion-press)
+  );
+  --_is-transition-easing: var(
+    --interactive-surface-transition-easing,
+    var(--_is-ease-press)
+  );
+
+  translate: 0 var(--_is-lift-base);
+  box-shadow: var(--_is-shadow-base);
+}
+
+.interactive-surface:not(
+    :is(.is-disabled, :disabled, [aria-disabled="true"])
+  ):active::before {
+  opacity: 0;
+  transition-duration: var(--_is-transition-duration);
+  transition-timing-function: var(--_is-transition-easing);
+}
+
+input[type="file"].interactive-surface.interactive-surface:where(:active):where(
+    :not(:is(.is-disabled, :disabled, [aria-disabled="true"]))
+  )::file-selector-button {
+  box-shadow: inset 0 0 0 999px
+    rgb(0 0 0 / var(--_is-state-layer-active-opacity));
+  transition-duration: var(--_is-transition-duration);
+  transition-timing-function: var(--_is-transition-easing);
+}
+
+@keyframes interactive-surface-feedback-error {
+  0%,
+  100% {
+    translate: 0 var(--_is-lift-base);
+  }
+
+  20%,
+  60% {
+    translate: calc(0px - var(--_is-feedback-distance)) var(--_is-lift-base);
+  }
+
+  40%,
+  80% {
+    translate: var(--_is-feedback-distance) var(--_is-lift-base);
+  }
+}
+
+@keyframes interactive-surface-feedback-success {
+  0%,
+  100% {
+    translate: 0 var(--_is-lift-base);
+  }
+
+  45% {
+    translate: 0 calc(var(--_is-lift-base) - var(--_is-feedback-distance));
+  }
+}
+
+@keyframes interactive-surface-feedback-attention {
+  0%,
+  45%,
+  100% {
+    translate: 0 var(--_is-lift-base);
+  }
+
+  25%,
+  70% {
+    translate: 0 calc(var(--_is-lift-base) - var(--_is-feedback-distance));
+  }
+}
+
+@keyframes interactive-surface-feedback-layer {
+  0% {
+    opacity: 0;
+  }
+
+  35%,
+  100% {
+    opacity: var(--_is-feedback-layer-opacity);
+  }
+}
+
+@keyframes interactive-surface-feedback-layer-attention {
+  0%,
+  45% {
+    opacity: 0;
+  }
+
+  20%,
+  70%,
+  100% {
+    opacity: var(--_is-feedback-layer-opacity);
+  }
+}
+
+.interactive-surface[data-surface-feedback="error"] {
+  --_is-feedback-color: var(--_is-feedback-error-color);
+  --_is-feedback-host-animation: interactive-surface-feedback-error;
+  --_is-feedback-layer-animation: interactive-surface-feedback-layer;
+}
+
+.interactive-surface[data-surface-feedback="success"] {
+  --_is-feedback-color: var(--_is-feedback-success-color);
+  --_is-feedback-host-animation: interactive-surface-feedback-success;
+  --_is-feedback-layer-animation: interactive-surface-feedback-layer;
+}
+
+.interactive-surface[data-surface-feedback="attention"] {
+  --_is-feedback-color: var(--_is-feedback-attention-color);
+  --_is-feedback-host-animation: interactive-surface-feedback-attention;
+  --_is-feedback-layer-animation: interactive-surface-feedback-layer-attention;
+}
+
+/* Semantic outcome feedback is application-triggered and remains below busy/loading precedence. */
+.interactive-surface.interactive-surface:where(
+    [data-surface-feedback="error"],
+    [data-surface-feedback="success"],
+    [data-surface-feedback="attention"]
+  ):not(
+    :is(
+      .is-disabled,
+      :disabled,
+      [aria-disabled="true"],
+      [aria-busy="true"],
+      .is-loading
+    )
+  ) {
+  translate: 0 var(--_is-lift-base);
+  box-shadow: var(--_is-shadow-base);
+  /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Public feedback timing tokens must remain independently assertable. */
+  animation-name: var(--_is-feedback-host-animation);
+  animation-duration: var(--_is-feedback-duration);
+  animation-timing-function: var(--_is-feedback-easing);
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+}
+
+.interactive-surface.interactive-surface:where(
+    [data-surface-feedback="error"],
+    [data-surface-feedback="success"],
+    [data-surface-feedback="attention"]
+  ):not(
+    :is(
+      .is-disabled,
+      :disabled,
+      [aria-disabled="true"],
+      [aria-busy="true"],
+      .is-loading
+    )
+  )::before {
+  background-color: var(--_is-feedback-color);
+  opacity: var(--_is-feedback-layer-opacity);
+  /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Public feedback timing tokens must remain independently assertable. */
+  animation-name: var(--_is-feedback-layer-animation);
+  animation-duration: var(--_is-feedback-duration);
+  animation-timing-function: var(--_is-feedback-easing);
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+}
+
+.interactive-surface.interactive-surface:where(
+    [aria-busy="true"],
+    .is-loading
+  ):not(:is(.is-disabled, :disabled, [aria-disabled="true"])) {
+  --_is-transition-duration: var(
+    --interactive-surface-transition-duration,
+    var(--_is-motion-default)
+  );
+  --_is-transition-easing: var(
+    --interactive-surface-transition-easing,
+    var(--_is-ease-standard)
+  );
+
+  translate: 0 var(--_is-lift-active);
+  box-shadow: var(--_is-shadow-active);
+}
+
+.interactive-surface.interactive-surface:where(
+    [aria-busy="true"],
+    .is-loading
+  ):not(:is(.is-disabled, :disabled, [aria-disabled="true"]))::before {
+  opacity: var(--_is-state-layer-active-opacity);
+}
+
+input[type="file"].interactive-surface.interactive-surface:where(
+    [aria-busy="true"],
+    .is-loading
+  ):where(
+    :not(:is(.is-disabled, :disabled, [aria-disabled="true"]))
+  )::file-selector-button {
+  box-shadow: inset 0 0 0 999px
+    rgb(0 0 0 / var(--_is-state-layer-active-opacity));
+}
+
+/*
+ * Disabled styling is visual only. Consumers must still suppress programmatic and keyboard
+ * activation for custom controls that use aria-disabled or the is-disabled class.
+ */
+.interactive-surface:is(.is-disabled, :disabled, [aria-disabled="true"]) {
+  --_is-transition-duration: 0s;
+
+  cursor: not-allowed;
+  pointer-events: none;
+  translate: none;
+  box-shadow: none;
+  opacity: var(--_is-disabled-opacity);
+  animation: none;
+  transition: none;
+}
+
+.interactive-surface:is(
+    .is-disabled,
+    :disabled,
+    [aria-disabled="true"]
+  )::before {
+  opacity: 0;
+  animation: none;
+  transition: none;
+}
+
+input[type="file"].interactive-surface.interactive-surface:where(
+    :is(.is-disabled, :disabled, [aria-disabled="true"])
+  )::file-selector-button {
+  cursor: not-allowed;
+  box-shadow: none;
+  transition: none;
+}
+
+/* Focus remains visible on custom disabled widgets that stay in the keyboard tab order. */
+.interactive-surface:is(.is-disabled, [aria-disabled="true"]):focus-visible {
+  outline: var(--_is-focus-ring-width) solid var(--_is-focus-ring-color);
+  outline-offset: var(--_is-focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-surface,
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):hover,
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):focus-visible,
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):active,
+  .interactive-surface.interactive-surface:where(
+      .is-active,
+      [aria-pressed="true"],
+      [aria-pressed="mixed"],
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [aria-busy="true"],
+      .is-loading
+    ):not(:is(.is-disabled, :disabled, [aria-disabled="true"])) {
+    --_is-transition-duration: 0s;
+
+    translate: none;
+    animation: none;
+    transition: none;
+  }
+
+  .interactive-surface::before {
+    animation: none;
+    transition: none;
+  }
+
+  .interactive-surface.interactive-surface:where(
+      [data-surface-feedback="error"],
+      [data-surface-feedback="success"],
+      [data-surface-feedback="attention"]
+    ):not(:is(.is-disabled, :disabled, [aria-disabled="true"])) {
+    translate: none;
+    animation: none;
+    transition: none;
+  }
+
+  .interactive-surface.interactive-surface:where(
+      [data-surface-feedback="error"],
+      [data-surface-feedback="success"],
+      [data-surface-feedback="attention"]
+    ):not(:is(.is-disabled, :disabled, [aria-disabled="true"]))::before {
+    animation: none;
+    transition: none;
+  }
+
+  :where(input[type="file"].interactive-surface)::file-selector-button {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .interactive-surface {
+    --_is-focus-ring-width: 3px;
+  }
+
+  .interactive-surface:where(
+      .is-active,
+      [aria-pressed="true"],
+      [aria-pressed="mixed"],
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [data-surface-feedback="error"],
+      [data-surface-feedback="success"],
+      [data-surface-feedback="attention"],
+      [aria-busy="true"],
+      .is-loading
+    ):not(:is(.is-disabled, :disabled, [aria-disabled="true"])) {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+
+  .interactive-surface:focus,
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):focus-visible,
+  .interactive-surface[aria-disabled="true"]:focus-visible {
+    outline: var(--_is-focus-ring-width) solid var(--_is-focus-ring-color);
+  }
+}
+
+@media (forced-colors: active) {
+  .interactive-surface {
+    --_is-lift-base: 0px;
+    --_is-lift-hover: 0px;
+
+    --_is-lift-active: 0px;
+    --_is-shadow-base: none;
+    --_is-shadow-hover: none;
+    --_is-shadow-active: none;
+
+    box-shadow: none;
+  }
+
+  .interactive-surface::before {
+    display: none;
+  }
+
+  .interactive-surface:where(
+      .is-active,
+      [aria-pressed="true"],
+      [aria-pressed="mixed"],
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [data-surface-feedback="error"],
+      [data-surface-feedback="success"],
+      [data-surface-feedback="attention"],
+      [aria-busy="true"],
+      .is-loading
+    ):not(:is(.is-disabled, :disabled, [aria-disabled="true"])) {
+    outline: 2px solid ButtonText;
+    outline-offset: 2px;
+  }
+
+  .interactive-surface:focus,
+  .interactive-surface:not(
+      :is(.is-disabled, :disabled, [aria-disabled="true"])
+    ):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .interactive-surface:is(.is-disabled, :disabled, [aria-disabled="true"]) {
+    outline: 1px solid GrayText;
+    outline-offset: 2px;
+    opacity: 1;
+  }
+
+  .interactive-surface[aria-disabled="true"]:focus-visible {
+    outline: 2px solid GrayText;
+    outline-offset: 2px;
+  }
+}

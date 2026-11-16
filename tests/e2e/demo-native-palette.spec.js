@@ -1,8 +1,10 @@
+import { setBridgeChecked } from './helpers/bridge.js';
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
 
-const demoUrl = pathToFileURL(path.resolve('index.html')).href;
+const demoUrl = pathToFileURL(path.resolve('demo/reference.html')).href;
 
 /** Confirms real CSS fallback resolution and editor coverage, not just controller state. */
 test('None exposes every native palette and retains all showcase sections', async ({ page }) => {
@@ -75,7 +77,7 @@ test('native palette editing remains isolated and updates displayed components',
   await expect(input).toHaveValue('18 52 86');
   await page.getByTestId('reset-palette').click();
   await expect(input).toHaveValue(original);
-  await page.locator('#bridgeToggle').check({ force: true });
+  await setBridgeChecked(page.locator('#bridgeToggle'), true);
   await expect(page.locator('body')).not.toHaveAttribute('data-theme');
   await expect(page.locator('body')).toHaveAttribute('data-bridge', 'attached');
   await expect(page.getByTestId('bridge-status')).toContainText('Attached');

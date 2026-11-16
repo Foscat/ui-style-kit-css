@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import vm from 'node:vm';
+import { loadReferenceController } from './helpers/reference-controller.js';
 
 const source = fs.readFileSync(new URL('../demo/demo.js', import.meta.url), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(new URL('../manifest.json', import.meta.url), 'utf8'));
@@ -54,8 +54,8 @@ function createWorkbench() {
     })
   };
   // Omit only bootstrapping; execute the real declarations, not rewritten helpers.
-  vm.runInNewContext(source.slice(0, source.lastIndexOf('\nsyncManifestSelectOptions();')), sandbox);
-  return { app: sandbox, controls, body, inline, palettes, preview, nativeProperties };
+  const app = loadReferenceController(sandbox);
+  return { app, controls, body, inline, palettes, preview, nativeProperties };
 }
 
 test('None and null selections activate the native palette for every preset and mode', () => {
@@ -72,7 +72,7 @@ test('None and null selections activate the native palette for every preset and 
         const tokens = app.getActiveColorTokens();
         assert.equal(tokens.length, 23);
         for (const token of tokens) assert.equal(token.value, palettes.get(`${id}|${mode}`).get(token.role));
-        assert.equal(inline.get('--demo-primary-rgb'), `var(--${prefix}-primary-rgb)`);
+        assert.equal([...inline.keys()].some(name => name.startsWith('--demo-')), false, 'No demo-only color namespace');
       }
     }
   }

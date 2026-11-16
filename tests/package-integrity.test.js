@@ -38,7 +38,7 @@ function parseDemoManifestScript() {
 }
 
 function selectOptions(html, selectId) {
-  const selectMatch = html.match(new RegExp(`<select id="${escapeRegExp(selectId)}"[\\s\\S]*?<\\/select>`));
+  const selectMatch = html.match(new RegExp(`<select\\b[^>]*\\bid="${escapeRegExp(selectId)}"[^>]*>[\\s\\S]*?<\\/select\\s*>`));
   assert.ok(selectMatch, `Expected #${selectId} to exist`);
 
   return [...selectMatch[0].matchAll(/<option\s+([^>]*)>([\s\S]*?)<\/option>/g)].map((optionMatch) => {
@@ -317,7 +317,7 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
     value: theme,
     prefix: '',
     selected: theme === '',
-    label: theme || 'None — style defaults'
+    label: theme || 'Style defaults'
   }));
   const expectedModes = manifest.modes.map((mode) => ({
     value: mode,
@@ -336,20 +336,20 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.7.5 library system and released companion set', () => {
+test('README documents the 2.8.0 library system and released companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.7\.5/);
+  assert.match(readme, /v2\.8\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.7\.5/);
+  assert.match(readme, /ui-style-kit-css@2\.8\.0/);
   assert.match(readme, /interactive-surface-css@1\.7\.3/);
   assert.match(readme, /layout-style-css@3\.2\.3/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /UI Style Kit `2\.7\.5` is the current UI version/);
+  assert.match(readme, /UI Style Kit `2\.8\.0` is the current UI version/);
   assert.doesNotMatch(readme, /remains the published npm release/);
   assert.match(readme, /Layout Style `3\.2\.3` release/);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
@@ -411,7 +411,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.7\.5/);
+    assert.match(contents, /ui-style-kit-css@2\.8\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
     assert.match(contents, /layout-style-css@3\.2\.3/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
@@ -427,7 +427,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
-test('ecosystem fixture records the UI 2.7.5 candidate train with reviewed companion release commits', () => {
+test('ecosystem fixture records the UI 2.8.0 candidate train with reviewed companion release commits', () => {
   const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
@@ -441,14 +441,14 @@ test('ecosystem fixture records the UI 2.7.5 candidate train with reviewed compa
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.7.5',
+      'ui-style-kit-css': '2.8.0',
       'interactive-surface-css': '1.7.3',
       'layout-style-css': '3.2.3'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.7\.5[\s\S]{0,160}current UI version/i);
+    assert.match(contents, /ui-style-kit-css@2\.8\.0[\s\S]{0,160}current UI version/i);
     assert.match(contents, /interactive-surface-css@1\.7\.3[\s\S]{0,160}release/i);
     assert.match(contents, /layout-style-css@3\.2\.3[\s\S]{0,160}release/i);
   }
@@ -490,23 +490,23 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.7\.5` is the current UI version/);
+    assert.match(contents, /UI Style Kit `2\.8\.0` is the current UI version/);
     assert.match(contents, /layout-style-css@3\.2\.3[\s\S]{0,160}release/i);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
 });
 
-test('current public wiki pages describe the 2.7.5 version', () => {
+test('current public wiki pages describe the 2.8.0 version', () => {
   const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');
   const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
   const releasePreparationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Release-Preparation.md'), 'utf8');
 
   for (const contents of [wikiHome, installationWiki, releasePreparationWiki]) {
-    assert.match(contents, /2\.7\.5/);
-    assert.doesNotMatch(contents, /2\.7\.5[^\n]*candidate/i);
+    assert.match(contents, /2\.8\.0/);
+    assert.doesNotMatch(contents, /2\.8\.0[^\n]*candidate/i);
   }
 
-  assert.match(wikiHome, /patch release/i);
+  assert.match(wikiHome, /minor release/i);
   assert.match(
     releasePreparationWiki,
     /hardens the 75-selector\s+semantic component API/i,
@@ -674,8 +674,8 @@ test('publishing docs preserve reviewed companion release pins', () => {
     publishingGuide,
     /aligned companion releases are `layout-style-css@3\.2\.3` and `interactive-surface-css@1\.7\.3`/i,
   );
-  assert.match(publishingGuide, /This guide prepares version `2\.7\.5`/i);
-  assert.match(publishingGuide, /Prepare `ui-style-kit-css@2\.7\.5` on its release branch/i);
+  assert.match(publishingGuide, /This guide prepares version `2\.8\.0`/i);
+  assert.match(publishingGuide, /Prepare `ui-style-kit-css@2\.8\.0` on its release branch/i);
   assert.match(publishingGuide, /reviewed Interactive 1\.7\.3 and Layout 3\.2\.3 release commits/i);
   assert.doesNotMatch(publishingGuide, /active staged candidate/i);
   assert.match(publishingGuide, /current matrix[^\n]*layout-style-css@3\.2\.3/i);
@@ -1089,17 +1089,17 @@ test('demo favicon assets stay repo-local and use portable paths', () => {
   assert.match(rootDemoHtml, /href="favicon\.ico"/);
   assert.match(rootDemoHtml, /href="site\.webmanifest"/);
   assert.match(rootDemoHtml, /content="browserconfig\.xml"/);
-  assert.match(rootDemoHtml, /href="demo\/demo\.css\?v=[a-f0-9]{12}"/);
-  assert.match(rootDemoHtml, /src="demo\/demo\.js\?v=[a-f0-9]{12}"/);
-  assert.match(rootDemoHtml, /data-default-href="dist\/ui-style-kit\.css\?v=[a-f0-9]{12}"/);
-  assert.match(rootDemoHtml, /data-bridge-href="dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}"/);
-  assert.match(packageDemoHtml, /href="assets\/favicon\.ico"/);
-  assert.match(packageDemoHtml, /href="assets\/site\.webmanifest"/);
-  assert.match(packageDemoHtml, /content="assets\/browserconfig\.xml"/);
-  assert.match(packageDemoHtml, /href="demo\.css\?v=[a-f0-9]{12}"/);
-  assert.match(packageDemoHtml, /src="demo\.js\?v=[a-f0-9]{12}"/);
-  assert.match(packageDemoHtml, /data-default-href="\.\.\/dist\/ui-style-kit\.css\?v=[a-f0-9]{12}"/);
-  assert.match(packageDemoHtml, /data-bridge-href="\.\.\/dist\/ui-style-kit\.with-bridge\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /href="demo\/studio\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /src="demo\/studio\.js\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /href="dist\/visual\/minimal-saas\.css\?v=[a-f0-9]{12}"/);
+  assert.match(rootDemoHtml, /href="styles\/interactive-surface-theme\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /href="\.\.\/favicon\.ico"/);
+  assert.match(packageDemoHtml, /href="\.\.\/site\.webmanifest"/);
+  assert.match(packageDemoHtml, /content="\.\.\/browserconfig\.xml"/);
+  assert.match(packageDemoHtml, /href="studio\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /src="studio\.js\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /href="\.\.\/dist\/visual\/minimal-saas\.css\?v=[a-f0-9]{12}"/);
+  assert.match(packageDemoHtml, /href="\.\.\/styles\/interactive-surface-theme\.css\?v=[a-f0-9]{12}"/);
   assert.doesNotMatch(packageDemoHtml, /href="\/(?:favicon|site\.webmanifest|apple-touch-icon)/);
 
   assert.equal(rootManifest.theme_color, '#070b24');
@@ -1123,14 +1123,14 @@ test('published demo HTML exposes search and social metadata', () => {
   const packageDemoHtml = fs.readFileSync(path.join(rootDir, 'demo', 'index.html'), 'utf8');
   const jsonLdMatch = rootDemoHtml.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
 
-  assert.match(rootDemoHtml, /<html lang="en-US">/);
-  assert.match(rootDemoHtml, /<title>UI Style Kit CSS \| CSS Theme and Component Preset Library<\/title>/);
-  assert.match(rootDemoHtml, /<meta name="description" content="CSS-only UI style kit/);
-  assert.match(rootDemoHtml, /<meta name="robots" content="index, follow, max-image-preview:large">/);
-  assert.match(rootDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/">/);
-  assert.match(rootDemoHtml, /<meta property="og:image" content="https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card-25-themes\.png">/);
-  assert.match(rootDemoHtml, /<meta name="twitter:card" content="summary_large_image">/);
-  assert.match(rootDemoHtml, /A CSS-only library with 20 visual systems/);
+  assert.match(rootDemoHtml, /<html lang="en-US"\s*\/?>/);
+  assert.match(rootDemoHtml, /<title>Style Studio \| UI Style Kit CSS<\/title>/);
+  assert.match(rootDemoHtml, /<meta\s+name="description"\s+content="CSS-only UI style kit/);
+  assert.match(rootDemoHtml, /<meta name="robots" content="index, follow, max-image-preview:large"\s*\/?>/);
+  assert.match(rootDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/"\s*\/?>/);
+  assert.match(rootDemoHtml, /<meta\s+property="og:image"\s+content="https:\/\/foscat\.github\.io\/ui-style-kit-css\/demo\/assets\/seo\/social-card-25-themes\.png"\s*\/?>/);
+  assert.match(rootDemoHtml, /<meta name="twitter:card" content="summary_large_image"\s*\/?>/);
+  assert.match(rootDemoHtml, /See your next interface\./);
   assert.ok(jsonLdMatch, 'Root demo should include JSON-LD structured data');
 
   const jsonLd = JSON.parse(jsonLdMatch[1]);
@@ -1140,8 +1140,8 @@ test('published demo HTML exposes search and social metadata', () => {
   assert.equal(softwareNode.codeRepository, 'https://github.com/Foscat/ui-style-kit-css');
   assert.equal(softwareNode.downloadUrl, 'https://www.npmjs.com/package/ui-style-kit-css');
 
-  assert.match(packageDemoHtml, /<meta name="robots" content="noindex, follow">/);
-  assert.match(packageDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/">/);
+  assert.match(packageDemoHtml, /<meta name="robots" content="noindex, follow"\s*\/?>/);
+  assert.match(packageDemoHtml, /<link rel="canonical" href="https:\/\/foscat\.github\.io\/ui-style-kit-css\/"\s*\/?>/);
 });
 
 test('robots and sitemap describe the canonical demo URL', () => {

@@ -1,10 +1,11 @@
+/** Library regressions retain their authored fixture; studio workflows are covered by demo-studio.spec.js. */
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const demoUrl = pathToFileURL(path.join(rootDir, 'index.html')).href + '?view=reference';
+const demoUrl = pathToFileURL(path.join(rootDir, 'demo', 'reference.html')).href + '?view=reference';
 
 /**
  * Reads the visible material treatment from representative Clay components.
@@ -126,7 +127,8 @@ test('Clay recreates the reference material in light and dark modes', async ({ p
   expect(light.buttonFontWeight).toBe('500');
   expect(light.buttonBackgroundImage).toContain('clay-grain.png');
   expect(light.buttonTextShadow).toContain('0px 1px 0px');
-  expect(light.primaryButtonBackground).toBe('rgb(142, 113, 75)');
+  /** The reviewed AA pigment replaces the earlier lighter reference swatch. */
+  expect(light.primaryButtonBackground).toBe('rgb(128, 96, 59)');
   expect(light.pressedShadow).toContain('inset');
   expect(light.inputClip).toContain('polygon(');
   expect(light.inputShadow).toContain('inset');
@@ -346,7 +348,7 @@ test('Clay uses soft type and sculpted identity surfaces from the reference', as
   expect(evidence.bodyFont).toContain('Segoe UI');
   expect(evidence.bodyColor).toBe('rgb(52, 49, 47)');
   expect(evidence.buttonFont).toMatch(/^"?Segoe UI"?/);
-  expect(evidence.copyColor).toBe('rgb(110, 103, 95)');
+  expect(evidence.copyColor).toBe('rgb(101, 94, 87)');
   expect(evidence.inputBackground).toBe('rgb(229, 222, 213)');
   expect(evidence.tooltipBackgroundImage).toContain('radial-gradient');
   expect(evidence.tooltipShadow).toContain('inset');
@@ -413,6 +415,7 @@ test('Clay native tracks, fills, and knobs share the molded material recipe', as
     return {
       track: tokens.getPropertyValue('--usk-native-range-track-background').trim(),
       thumb: tokens.getPropertyValue('--usk-native-range-thumb-background').trim(),
+      primary: tokens.getPropertyValue('--clay-primary').trim(),
       progressTrack: tokens.getPropertyValue('--usk-native-progress-track-background').trim(),
       progressValue: tokens.getPropertyValue('--usk-native-progress-value-background').trim(),
       optimumValue: tokens.getPropertyValue('--usk-native-meter-optimum-background').trim()
@@ -421,7 +424,8 @@ test('Clay native tracks, fills, and knobs share the molded material recipe', as
 
   expect(evidence.track).toContain('clay-grain.png');
   expect(evidence.track).toContain('linear-gradient');
-  expect(evidence.thumb).toContain('radial-gradient');
+  /** Native thumbs use the selected palette's primary paint. */
+  expect(evidence.thumb).toBe(evidence.primary);
   expect(evidence.progressTrack).toContain('clay-grain.png');
   expect(evidence.progressValue).toContain('linear-gradient');
   expect(evidence.optimumValue).toContain('linear-gradient');
@@ -451,6 +455,8 @@ test('Clay painted controls retain grain, highlight, and lower-edge relief', asy
       const style = getComputedStyle(document.querySelector(selector));
       return {
         image: style.backgroundImage,
+        background: style.backgroundColor,
+        ink: style.color,
         shadow: style.boxShadow,
         clip: style.clipPath
       };
@@ -469,8 +475,15 @@ test('Clay painted controls retain grain, highlight, and lower-edge relief', asy
   });
 
   for (const [name, material] of Object.entries(evidence)) {
-    expect(material.image, `${name} grain and highlight`).toContain('clay-grain.png');
-    expect(material.image, `${name} directional light`).toContain('linear-gradient');
+    if (name === 'alert') {
+      /** Named status paint retains its paired readable ink without a decorative grain layer. */
+      expect(material.image).toBe('none');
+      expect(material.background).not.toBe('rgba(0, 0, 0, 0)');
+      expect(material.ink).toBe('rgb(20, 27, 46)');
+    } else {
+      expect(material.image, `${name} grain and highlight`).toContain('clay-grain.png');
+      expect(material.image, `${name} directional light`).toContain('linear-gradient');
+    }
     expect(material.shadow, `${name} relief`).not.toBe('none');
     expect(material.clip, `${name} molded edge`).toContain('polygon(');
   }
@@ -503,8 +516,10 @@ test('Clay form adornments remain visible while sharing the pressed material tre
     };
   });
 
-  expect(evidence.selectBackgroundImage).toContain('clay-grain.png');
-  expect(evidence.selectBackgroundImage.match(/linear-gradient/g)?.length ?? 0).toBeGreaterThanOrEqual(3);
+  /** Native selection affordances use the shared palette indicator without a demo material override. */
+  expect(evidence.selectBackgroundImage).not.toContain('clay-grain.png');
+  expect(evidence.selectBackgroundImage).toContain('rgb(64, 94, 184)');
+  expect(evidence.selectBackgroundImage.match(/linear-gradient/g)?.length ?? 0).toBe(2);
   expect(evidence.selectBackgroundPosition).toContain('calc(100%');
   expect(evidence.selectTextShadow).toBe('none');
   expect(evidence.indicatorFilter).toBe('none');
@@ -613,14 +628,28 @@ test('Clay vendor control rules survive browser parsing as separate molded parts
 
 /**
  * Protects the utility specimens and status indicators highlighted by the Clay reference crops.
- * These demo-only wrappers must inherit the same formed material as public Clay components.
+ * Demo wrappers retain layout hooks while composed public classes own material paint.
  */
-test('Clay utility specimens and status indicators use the complete molded material', async ({ page }) => {
+test('Clay utility specimens compose public material classes without demo paint overrides', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(demoUrl);
   await page.selectOption('#uiSelect', 'clay');
   await page.selectOption('#themeSelect', 'arctic-indigo');
   await page.selectOption('#modeSelect', 'light');
+
+  /** Demo wrappers carry layout hooks; public classes must supply every visible material. */
+  await expect(page.locator('.demo-color-chip').first()).toHaveCSS('background-image', 'none');
+  await expect(page.locator('.demo-color-chip').first()).toHaveCSS('box-shadow', 'none');
+  await page.evaluate(() => {
+    const fixture = document.createElement('main');
+    fixture.innerHTML = `
+      <article class="demo-color-chip clay-card"><span class="clay-swatch"></span>Palette</article>
+      <div class="demo-utility-surface clay-inset">Inset</div>
+      <div class="demo-utility-surface clay-card clay-bg-primary">Primary</div>
+      <div class="demo-utility-shape clay-panel">Material shape</div>
+      <span class="clay-badge clay-badge-success">Saved</span>`;
+    document.body.replaceChildren(fixture);
+  });
 
   const evidence = await page.evaluate(() => {
     const materialFor = (selector) => {
@@ -634,8 +663,7 @@ test('Clay utility specimens and status indicators use the complete molded mater
       };
     };
     const statusDot = getComputedStyle(document.querySelector('.clay-badge-success'), '::before');
-    const swatch = getComputedStyle(document.querySelector('.demo-color-swatch'));
-    const shapeLabel = getComputedStyle(document.querySelector('.demo-utility-shape span'));
+    const swatch = getComputedStyle(document.querySelector('.clay-swatch'));
     return {
       colorChip: materialFor('.demo-color-chip'),
       insetSurface: materialFor('.demo-utility-surface'),
@@ -644,7 +672,8 @@ test('Clay utility specimens and status indicators use the complete molded mater
       swatch: {
         image: swatch.backgroundImage,
         shadow: swatch.boxShadow,
-        clip: swatch.clipPath
+        clip: swatch.clipPath,
+        radius: swatch.borderRadius
       },
       statusDot: {
         content: statusDot.content,
@@ -652,7 +681,7 @@ test('Clay utility specimens and status indicators use the complete molded mater
         shadow: statusDot.boxShadow,
         inlineSize: statusDot.inlineSize
       },
-      shapeLabelWeight: shapeLabel.fontWeight
+      shapeInk: getComputedStyle(document.querySelector('.demo-utility-shape')).color
     };
   });
 
@@ -669,14 +698,17 @@ test('Clay utility specimens and status indicators use the complete molded mater
     expect(material.filter, `${name} no stacked contact shadow`).toBe('none');
     expect(material.radius.split(' '), `${name} asymmetric corners`).toHaveLength(4);
   }
-  expect(evidence.swatch.image).toContain('radial-gradient');
+  expect(evidence.swatch.image).toContain('clay-grain.png');
+  expect(evidence.swatch.image).toContain('linear-gradient');
   expect(evidence.swatch.shadow).toContain('inset');
-  expect(evidence.swatch.clip).toContain('polygon(');
+  /** Public swatches use authored asymmetric radii rather than the removed demo polygon. */
+  expect(evidence.swatch.clip).toBe('none');
+  expect(evidence.swatch.radius).toBe('6px 7px 5px 6px');
   expect(evidence.statusDot.content).not.toBe('none');
   expect(evidence.statusDot.image).toContain('radial-gradient');
   expect(evidence.statusDot.shadow).toContain('inset');
   expect(parseFloat(evidence.statusDot.inlineSize)).toBeGreaterThan(0);
-  expect(evidence.shapeLabelWeight).toBe('600');
+  expect(evidence.shapeInk).toBe('rgb(20, 27, 46)');
 });
 
 /**
