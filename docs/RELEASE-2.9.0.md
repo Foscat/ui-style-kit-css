@@ -7,3 +7,5 @@ Explicit guided corner choices now apply consistently to ordinary controls and s
 The module is included in standard, visual and focused preset distributions and exported as `ui-style-kit-css/guided-corners.css`. Its closed values and cascade position are declared in the manifest. The Art Deco action rule honors the explicit choice while retaining its existing fallback.
 
 Selected Chromium cases cover all twenty presets and all four choices independently in light, dark and contrast modes, including default restoration and avatar preservation. Focused CSS ownership, lint, generated references and package checks qualify the source; no whole test suite or CI script is used. Publication requires a signed exact source, merged canonical pull request and STE-Adam's current independent approval. The artifact-only publisher performs immutable checksum/public-byte verification and preserves the earlier 2.7.2 continuation unchanged.
+
+Cross-engine qualification: the individually selected light-mode case also passes in Firefox and WebKit across all twenty presets, all four corner values, authored-default restoration and independent avatar geometry.
