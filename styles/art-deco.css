@@ -2076,7 +2076,8 @@ dialog.deco-dialog:not([open]) { display: none; }
  */
 [data-ui="art-deco"][data-mode] :is(.deco-button, .deco-icon-button) {
   border: 3px double var(--deco-metal);
-  border-radius: 0;
+  /* Preserve the authored fallback while honoring the explicit guided geometry contract. */
+  border-radius: var(--usk-guided-corner-radius, 0);
   clip-path: var(--deco-step-sm);
   box-shadow:
     inset 0 0 0 1px var(--deco-surface-strong),

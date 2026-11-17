@@ -5,14 +5,15 @@
     "breakingChange": "increment-schemaVersion-before-removing-or-renaming-fields"
   },
   "name": "ui-style-kit-css",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "cascadeLayers": [
     "ui-style-kit.theme_colors",
     "ui-style-kit.native_elements",
     "ui-style-kit.components",
     "ui-style-kit.presets",
     "ui-style-kit.compat_layout",
-    "ui-style-kit.clean_defaults"
+    "ui-style-kit.clean_defaults",
+    "ui-style-kit.customization"
   ],
   "presets": [
     {
@@ -1742,5 +1743,22 @@
     "nonRendered": [
       "datalist"
     ]
+  },
+  "guidedCorners": {
+    "attribute": "data-usk-corners",
+    "values": [
+      "none",
+      "small",
+      "medium",
+      "large"
+    ],
+    "scope": "[data-ui][data-mode]",
+    "omission": "authored-preset-defaults",
+    "excludes": [
+      "avatar",
+      "circular-decoration",
+      "clipping"
+    ],
+    "entrypoint": "./guided-corners.css"
   }
 }

@@ -16,6 +16,7 @@ import { clone, generate, parse, walk } from 'css-tree';
 import { browserslistToTargets, transform } from 'lightningcss';
 import { syncContentOverflowCss } from './generate-content-overflow.mjs';
 import { syncExpandedComponents } from './generate-expanded-components.mjs';
+import { syncGuidedCorners } from './generate-guided-corners.mjs';
 import { validatePresetIdentities } from './preset-identities.mjs';
 import { syncReadmeBundleSizes } from './sync-readme-sizes.mjs';
 import { buildStudio } from './build-studio.mjs';
@@ -29,13 +30,15 @@ const themeColorFile = 'styles/theme-colors.css';
 const nativeElementsFile = 'styles/native-elements.css';
 const componentsFile = 'styles/components.css';
 const cleanDefaultsFile = 'styles/clean-defaults.css';
+const guidedCornersFile = 'styles/guided-corners.css';
 const compatibilityLayoutFile = 'styles/compat-layout.css';
 const legacyBridgeFile = 'styles/interactive-surface-bridge.css';
 const foundationFiles = [
   themeColorFile,
   nativeElementsFile,
   componentsFile,
-  cleanDefaultsFile
+  cleanDefaultsFile,
+  guidedCornersFile
 ];
 const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
   id,
@@ -126,6 +129,7 @@ if (publicManifest.version !== packageJson.version) {
 validatePresetIdentities(publicManifest);
 syncContentOverflowCss(root, publicManifest);
 syncExpandedComponents(root, publicManifest);
+syncGuidedCorners(root, publicManifest);
 
 const banner = `/*!
  * UI Style Kit CSS v${packageJson.version}

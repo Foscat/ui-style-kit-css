@@ -13,7 +13,8 @@ const publicLayerOrder = [
   'ui-style-kit.components',
   'ui-style-kit.presets',
   'ui-style-kit.compat_layout',
-  'ui-style-kit.clean_defaults'
+  'ui-style-kit.clean_defaults',
+  'ui-style-kit.customization',
 ];
 const required = [
   'dist/ui-style-kit.css',
@@ -34,9 +35,10 @@ const required = [
   'styles/clean-defaults.css',
   'styles/compat-layout.css',
   'styles/content-overflow.css',
+  'styles/guided-corners.css',
   'styles/interactive-surface-theme.css',
   'styles/interactive-surface-bridge.css',
-  ...manifest.presets.map(({ id }) => `dist/visual/${id}.css`)
+  ...manifest.presets.map(({ id }) => `dist/visual/${id}.css`),
 ];
 for (const file of required) {
   if (!fs.existsSync(path.join(root, file))) throw new Error(`Missing required file: ${file}`);
@@ -50,13 +52,21 @@ if (lock.version !== pkg.version || lock.packages['']?.version !== pkg.version) 
 if (lock.packages['']?.dependencies && Object.keys(lock.packages[''].dependencies).length) {
   throw new Error('package-lock.json root package should not have runtime dependencies.');
 }
-if (manifest.schemaVersion !== 1 || manifest.name !== pkg.name || manifest.version !== pkg.version) {
+if (
+  manifest.schemaVersion !== 1 ||
+  manifest.name !== pkg.name ||
+  manifest.version !== pkg.version
+) {
   throw new Error('manifest.json identity and schema version must match the package release.');
 }
 if (JSON.stringify(manifest.cascadeLayers) !== JSON.stringify(publicLayerOrder)) {
-  throw new Error('manifest.json must declare the six public cascade layers in order.');
+  throw new Error('manifest.json must declare the seven public cascade layers in order.');
 }
-if (manifest.presets.length !== 20 || manifest.themes.length !== 25 || manifest.modes.length !== 3) {
+if (
+  manifest.presets.length !== 20 ||
+  manifest.themes.length !== 25 ||
+  manifest.modes.length !== 3
+) {
   throw new Error('manifest.json must describe all 20 presets, 25 themes, and 3 modes.');
 }
 
@@ -72,7 +82,7 @@ const requiredScripts = [
   'check:package',
   'check:ecosystem:packs',
   'check',
-  'pack:dry-run'
+  'pack:dry-run',
 ];
 for (const scriptName of requiredScripts) {
   if (!pkg.scripts?.[scriptName]) throw new Error(`Missing script: ${scriptName}`);
@@ -80,7 +90,9 @@ for (const scriptName of requiredScripts) {
 
 const packageFileEntries = pkg.files ?? [];
 if (packageFileEntries.some((entry) => entry === 'demo' || entry.startsWith('demo/'))) {
-  throw new Error('Keep the npm package library-focused; demo assets publish through GitHub Pages only.');
+  throw new Error(
+    'Keep the npm package library-focused; demo assets publish through GitHub Pages only.',
+  );
 }
 if (!packageFileEntries.includes('manifest.json')) {
   throw new Error('manifest.json must be included in the published package.');
@@ -99,6 +111,7 @@ const requiredExports = [
   './theme-colors.css',
   './styles/content-overflow.css',
   './content-overflow.css',
+  './guided-corners.css',
   './styles/component-composition.css',
   './component-composition.css',
   './styles/clean-defaults.css',
@@ -110,10 +123,7 @@ const requiredExports = [
   './interactive-surface-theme',
   './interactive-surface-theme.css',
   './manifest.json',
-  ...manifest.presets.flatMap(({ id }) => [
-    `./visual/${id}.css`,
-    `./presets/${id}.css`
-  ])
+  ...manifest.presets.flatMap(({ id }) => [`./visual/${id}.css`, `./presets/${id}.css`]),
 ];
 for (const key of requiredExports) {
   if (!pkg.exports[key]) throw new Error(`Missing export: ${key}`);
@@ -131,13 +141,22 @@ const minCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.min.css'), 'ut
 const visualCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.visual.css'), 'utf8');
 const visualMinCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.visual.min.css'), 'utf8');
 const withBridgeCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.with-bridge.css'), 'utf8');
-const withBridgeMinCss = fs.readFileSync(path.join(root, 'dist/ui-style-kit.with-bridge.min.css'), 'utf8');
-const themeBridgeCss = fs.readFileSync(path.join(root, 'styles/interactive-surface-theme.css'), 'utf8');
+const withBridgeMinCss = fs.readFileSync(
+  path.join(root, 'dist/ui-style-kit.with-bridge.min.css'),
+  'utf8',
+);
+const themeBridgeCss = fs.readFileSync(
+  path.join(root, 'styles/interactive-surface-theme.css'),
+  'utf8',
+);
 
 if (!css.includes(`UI Style Kit CSS v${pkg.version}`)) {
   throw new Error(`dist/ui-style-kit.css banner must include version ${pkg.version}.`);
 }
-if (css.includes('--interactive-surface-border-width') || minCss.includes('--interactive-surface-border-width')) {
+if (
+  css.includes('--interactive-surface-border-width') ||
+  minCss.includes('--interactive-surface-border-width')
+) {
   throw new Error('Default dist bundle must not include the interactive surface bridge.');
 }
 if (
@@ -159,17 +178,16 @@ for (const [file, contents] of [
   ['dist/ui-style-kit.css', css],
   ['dist/ui-style-kit.min.css', minCss],
   ['dist/ui-style-kit.visual.css', visualCss],
-  ['dist/ui-style-kit.visual.min.css', visualMinCss]
+  ['dist/ui-style-kit.visual.min.css', visualMinCss],
 ]) {
   if (!contents.includes(layerDeclaration)) {
     throw new Error(`${file} must declare the five public cascade layers in order.`);
   }
 }
-if (
-  !css.includes('styles/compat-layout.css') ||
-  visualCss.includes('styles/compat-layout.css')
-) {
-  throw new Error('Only compatible default output should include the compatibility layout foundation.');
+if (!css.includes('styles/compat-layout.css') || visualCss.includes('styles/compat-layout.css')) {
+  throw new Error(
+    'Only compatible default output should include the compatibility layout foundation.',
+  );
 }
 if (!css.includes('.saas-page') || visualCss.includes('.saas-page')) {
   throw new Error('Visual-only output must omit deprecated prefixed structural helpers.');
@@ -184,7 +202,7 @@ for (const forbidden of [
   'transform:',
   'opacity:',
   '--_is-',
-  '!important'
+  '!important',
 ]) {
   if (themeBridgeCss.includes(forbidden)) {
     throw new Error(`Canonical Interactive Surface theme bridge must not contain ${forbidden}.`);
@@ -193,7 +211,7 @@ for (const forbidden of [
 for (const requiredToken of [
   '--interactive-surface-bg',
   '--interactive-surface-level-1-bg',
-  '--interactive-surface-level-3-shadow'
+  '--interactive-surface-level-3-shadow',
 ]) {
   if (!themeBridgeCss.includes(requiredToken)) {
     throw new Error(`Canonical Interactive Surface theme bridge must define ${requiredToken}.`);

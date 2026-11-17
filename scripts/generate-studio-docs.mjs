@@ -23,6 +23,8 @@ const files = sources
   ]);
 files.push(
   ['scripts/build.mjs', 'build-library'],
+  ['scripts/generate-guided-corners.mjs', 'guided-corners'],
+  ['scripts/publish-guided-corners.mjs', 'publish-guided-corners'],
   ['scripts/build-studio.mjs', 'build-studio'],
   ['scripts/serve-studio.mjs', 'serve-studio'],
 );

@@ -413,3 +413,9 @@ Filled UI uses the matching `on-*` alias:
 - Concrete color authoring moved to `--usk-*` shared roles.
 - Bundled CSS inlines `theme-colors.css`; standalone style files import it.
 - If a consumer build system ignores CSS `@import`, import `ui-style-kit-css/theme-colors.css` before the standalone style file.
+
+## Guided corner customization
+
+Set `data-usk-corners="none"`, `"small"`, `"medium"` or `"large"` on the same element as `data-ui` and `data-mode`. The library applies 0, 0.25rem, 0.65rem or 1rem to ordinary native controls and canonical, compatibility and prefixed control/surface roles across every preset. This opt-in layer is included in standard, visual and focused preset entrypoints; native-only consumers can import `ui-style-kit-css/guided-corners.css`.
+
+Remove the attribute to restore the exact authored preset. Avatars, circular decoration, clipping, colors, spacing and motion retain their existing ownership. The library-produced `--usk-guided-corner-radius` also feeds the existing native radius handshake. A consumer can continue using per-component unlayered CSS where a deliberate override is needed.

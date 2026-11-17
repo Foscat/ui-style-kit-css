@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.9.0
+
+- Add opt-in guided corners across all published presets. Explicit choices override hardcoded ordinary surface/control geometry while omission restores authored defaults and decorative circles remain unchanged.
+
 All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
