@@ -20,7 +20,7 @@ for (const mode of ['light', 'dark', 'contrast']) {
     for (const { id } of manifest.presets) {
       // A fresh document has no transition inherited from the previous preset.
       await page.setContent(
-        '<html data-ui="minimal-saas" data-mode="light" data-theme="forest-moss"><body><div class="ui-card" data-corner-probe>Card</div><div class="ui-alert" data-corner-probe>Alert</div><button class="ui-button" data-corner-probe>Button</button><input class="ui-input" data-corner-probe value="Fixture"><select class="ui-select" data-corner-probe><option>Choice</option></select><span class="ui-avatar">AB</span></body></html>',
+        '<html data-ui="minimal-saas" data-mode="light" data-theme="forest-moss"><body><div class="ui-card" data-corner-probe>Card</div><div class="ui-alert" data-corner-probe>Alert</div><button class="ui-button" data-corner-probe>Button</button><input class="ui-input" data-corner-probe value="Fixture"><select class="ui-select" data-corner-probe><option>Choice</option></select><span class="ui-avatar">AB</span><button class="ui-avatar" data-button-avatar-probe>AB</button></body></html>',
       );
       await page.evaluate(
         ({ preset, mode }) => {
@@ -41,7 +41,10 @@ for (const mode of ['light', 'dark', 'contrast']) {
       );
       const original = await read();
       const avatar = await page
-        .locator('.ui-avatar')
+        .locator('span.ui-avatar')
+        .evaluate((node) => getComputedStyle(node).borderRadius);
+      const buttonAvatar = await page
+        .locator('[data-button-avatar-probe]')
         .evaluate((node) => getComputedStyle(node).borderRadius);
       for (const [corners, expected] of [
         ['none', '0px'],
@@ -56,9 +59,17 @@ for (const mode of ['light', 'dark', 'contrast']) {
           .poll(read, { message: `${id} must honor explicit ${corners} corners` })
           .toEqual(Array(5).fill(expected));
         expect(
-          await page.locator('.ui-avatar').evaluate((node) => getComputedStyle(node).borderRadius),
+          await page
+            .locator('span.ui-avatar')
+            .evaluate((node) => getComputedStyle(node).borderRadius),
           `${id} avatar stays independent`,
         ).toBe(avatar);
+        expect(
+          await page
+            .locator('[data-button-avatar-probe]')
+            .evaluate((node) => getComputedStyle(node).borderRadius),
+          `${id} button avatar stays independent`,
+        ).toBe(buttonAvatar);
       }
       await page.evaluate(() => {
         delete document.documentElement.dataset.uskCorners;

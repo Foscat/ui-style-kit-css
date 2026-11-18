@@ -5,6 +5,8 @@
     --usk-native-radius: var(--usk-guided-corner-radius);
     --usk-native-radius-sm: var(--usk-guided-corner-radius);
     --usk-native-radius-lg: var(--usk-guided-corner-radius);
+    --usk-native-file-button-radius: var(--usk-guided-corner-radius);
+    --usk-native-color-swatch-radius: var(--usk-guided-corner-radius);
   }
 
   [data-ui][data-mode][data-usk-corners="small"] {
@@ -12,6 +14,8 @@
     --usk-native-radius: var(--usk-guided-corner-radius);
     --usk-native-radius-sm: var(--usk-guided-corner-radius);
     --usk-native-radius-lg: var(--usk-guided-corner-radius);
+    --usk-native-file-button-radius: var(--usk-guided-corner-radius);
+    --usk-native-color-swatch-radius: var(--usk-guided-corner-radius);
   }
 
   [data-ui][data-mode][data-usk-corners="medium"] {
@@ -19,6 +23,8 @@
     --usk-native-radius: var(--usk-guided-corner-radius);
     --usk-native-radius-sm: var(--usk-guided-corner-radius);
     --usk-native-radius-lg: var(--usk-guided-corner-radius);
+    --usk-native-file-button-radius: var(--usk-guided-corner-radius);
+    --usk-native-color-swatch-radius: var(--usk-guided-corner-radius);
   }
 
   [data-ui][data-mode][data-usk-corners="large"] {
@@ -26,6 +32,8 @@
     --usk-native-radius: var(--usk-guided-corner-radius);
     --usk-native-radius-sm: var(--usk-guided-corner-radius);
     --usk-native-radius-lg: var(--usk-guided-corner-radius);
+    --usk-native-file-button-radius: var(--usk-guided-corner-radius);
+    --usk-native-color-swatch-radius: var(--usk-guided-corner-radius);
   }
 
   [data-ui][data-mode]:is([data-usk-corners="none"], [data-usk-corners="small"], [data-usk-corners="medium"], [data-usk-corners="large"]) :where(
@@ -431,7 +439,7 @@
     .noir-dialog,
     .noir-modal,
     .noir-nav-link
-  ) {
+  ):where(:not(:is([class^="ui-avatar"], [class*=" ui-avatar"], [class^="usk-avatar"], [class*=" usk-avatar"], [class^="saas-avatar"], [class*=" saas-avatar"], [class^="bento-avatar"], [class*=" bento-avatar"], [class^="max-avatar"], [class*=" max-avatar"], [class^="bau-avatar"], [class*=" bau-avatar"], [class^="tactile-avatar"], [class*=" tactile-avatar"], [class^="neo-avatar"], [class*=" neo-avatar"], [class^="retro-avatar"], [class*=" retro-avatar"], [class^="brutal-avatar"], [class*=" brutal-avatar"], [class^="cyber-avatar"], [class*=" cyber-avatar"], [class^="y2k-avatar"], [class*=" y2k-avatar"], [class^="rg-avatar"], [class*=" rg-avatar"], [class^="luxe-avatar"], [class*=" luxe-avatar"], [class^="organic-avatar"], [class*=" organic-avatar"], [class^="utility-avatar"], [class*=" utility-avatar"], [class^="blueprint-avatar"], [class*=" blueprint-avatar"], [class^="deco-avatar"], [class*=" deco-avatar"], [class^="clay-avatar"], [class*=" clay-avatar"], [class^="terminal-avatar"], [class*=" terminal-avatar"], [class^="paper-avatar"], [class*=" paper-avatar"], [class^="noir-avatar"], [class*=" noir-avatar"]))) {
     border-radius: var(--usk-guided-corner-radius);
   }
 }
