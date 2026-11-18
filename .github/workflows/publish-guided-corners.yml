@@ -38,7 +38,7 @@ jobs:
     env:
       SOURCE_SHA: ${{ inputs.source_sha }}
       APPROVAL_PR: ${{ inputs.approval_pr }}
-      PRODUCER_RUN: ${{ inputs.producer_run }}
+      PRODUCER_RUN: ${{ inputs.producer_run || github.run_id }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # trusted main controller
         with:
@@ -60,8 +60,10 @@ jobs:
         run: node "$RUNNER_TEMP/publish-guided-corners.mjs" admit
       - name: Validate continuation run
         if: ${{ inputs.complete_only }}
+        env:
+          PRODUCER_RUN_INPUT: ${{ inputs.producer_run }}
         run: |
-          if [[ ! "$PRODUCER_RUN" =~ ^[0-9]+$ ]]; then
+          if [[ ! "$PRODUCER_RUN_INPUT" =~ ^[1-9][0-9]*$ ]]; then
             echo "complete_only requires the workflow run that uploaded the artifact" >&2
             exit 1
           fi
@@ -90,13 +92,19 @@ jobs:
           if-no-files-found: error
           retention-days: 90
           compression-level: 0
+      - name: Validate trusted artifact producer
+        if: ${{ inputs.complete_only || github.run_attempt > 1 }}
+        id: producer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node "$RUNNER_TEMP/publish-guided-corners.mjs" validate-producer
       - name: Restore the original published artifact for continuation only
         if: ${{ inputs.complete_only || github.run_attempt > 1 }}
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          name: guided-corners-${{ env.SOURCE_SHA }}
+          artifact-ids: ${{ steps.producer.outputs.artifact_id }}
           path: .
-          run-id: ${{ inputs.producer_run || github.run_id }}
+          run-id: ${{ env.PRODUCER_RUN }}
           github-token: ${{ github.token }}
       - name: Verify the restored tarball and checksum receipt
         if: ${{ inputs.complete_only || github.run_attempt > 1 }}

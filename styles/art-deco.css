@@ -2076,12 +2076,41 @@ dialog.deco-dialog:not([open]) { display: none; }
  */
 [data-ui="art-deco"][data-mode] :is(.deco-button, .deco-icon-button) {
   border: 3px double var(--deco-metal);
-  /* Preserve the authored fallback while honoring the explicit guided geometry contract. */
-  border-radius: var(--usk-guided-corner-radius, 0);
+  border-radius: 0;
   clip-path: var(--deco-step-sm);
   box-shadow:
     inset 0 0 0 1px var(--deco-surface-strong),
     0 3px 0 var(--deco-metal);
+}
+
+[data-ui="art-deco"][data-mode]
+  :is(.deco-button, .deco-icon-button):not(
+    :is(
+      [class^="ui-avatar"], [class*=" ui-avatar"],
+      [class^="usk-avatar"], [class*=" usk-avatar"],
+      [class^="saas-avatar"], [class*=" saas-avatar"],
+      [class^="bento-avatar"], [class*=" bento-avatar"],
+      [class^="max-avatar"], [class*=" max-avatar"],
+      [class^="bau-avatar"], [class*=" bau-avatar"],
+      [class^="tactile-avatar"], [class*=" tactile-avatar"],
+      [class^="neo-avatar"], [class*=" neo-avatar"],
+      [class^="retro-avatar"], [class*=" retro-avatar"],
+      [class^="brutal-avatar"], [class*=" brutal-avatar"],
+      [class^="cyber-avatar"], [class*=" cyber-avatar"],
+      [class^="y2k-avatar"], [class*=" y2k-avatar"],
+      [class^="rg-avatar"], [class*=" rg-avatar"],
+      [class^="luxe-avatar"], [class*=" luxe-avatar"],
+      [class^="organic-avatar"], [class*=" organic-avatar"],
+      [class^="utility-avatar"], [class*=" utility-avatar"],
+      [class^="blueprint-avatar"], [class*=" blueprint-avatar"],
+      [class^="deco-avatar"], [class*=" deco-avatar"],
+      [class^="clay-avatar"], [class*=" clay-avatar"],
+      [class^="terminal-avatar"], [class*=" terminal-avatar"],
+      [class^="paper-avatar"], [class*=" paper-avatar"],
+      [class^="noir-avatar"], [class*=" noir-avatar"]
+    )
+  ) {
+  border-radius: var(--usk-guided-corner-radius, 0);
 }
 
 @supports (color: color-mix(in srgb, black, white)) {

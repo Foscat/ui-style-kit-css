@@ -549,7 +549,7 @@ test('authored preset CSS retains only the two historical ui compatibility hooks
     assert.equal(availableSelectors.has(alias.replace('.ui-', '.usk-')), true);
   }
   const authoredCssFiles = fs.readdirSync(path.join(rootDir, 'styles'))
-    .filter((fileName) => fileName.endsWith('.css'));
+    .filter((fileName) => fileName.endsWith('.css') && fileName !== 'guided-corners.css');
   for (const fileName of authoredCssFiles) {
     for (const rule of selectorFacts(`styles/${fileName}`)) {
       for (const className of rule.classes) {
@@ -694,12 +694,12 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
   /** Locks reviewed declarations, including native Clay RGB routing, AA ink and exact external Paper textures. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 37057,
-    sha256: '186da8d98fa877c797a5b62fb4fe3939b6defdf0e7048a82695d1eb3951949bc'
+    count: 37067,
+    sha256: 'b95540d310e460cae068c8d1c9f287f1b164db64c383c21fccfd780ef4725bf3'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37508,
-    sha256: 'e5e6f8a20e181bc815938f603096dadc15c30dc9cb3628bf00e0de7edeb736ea'
+    count: 37518,
+    sha256: '599db4cb75b9534f37c2387097772e4667c57238af09b1da86da4502e5e9154c'
   });
 });
 

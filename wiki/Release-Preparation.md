@@ -1,13 +1,10 @@
 # Release Preparation
 
-The current local target is `ui-style-kit-css@2.8.0` (compatible minor version). The package version, lockfile,
+The current local target is `ui-style-kit-css@2.9.0` (compatible minor version). The package version, lockfile,
 manifest, generated bundle banners, README, changelog, and maintained documentation
 must agree before publication.
 
-This release adds Style Studio and compatible library refinements. Scope and publication boundaries are documented in [the 2.8.0 notes](https://github.com/Foscat/ui-style-kit-css/blob/main/docs/RELEASE-2.8.0.md). Complete the normal local release gate, merge the reviewed release PR, then push the signed version tag for protected publication.
-It retains the 25-theme inventory, existing native palettes,
-preset-prefixed compatibility classes, optional bridge compositions, and
-hardens the 75-selector semantic component API across all 20 presets.
+This release adds guided corner choices across all 20 presets while preserving authored defaults and independent avatar geometry. Scope and publication boundaries are documented in [the 2.9.0 notes](https://github.com/Foscat/ui-style-kit-css/blob/main/docs/RELEASE-2.9.0.md). The fixed-version publisher verifies the admitted source and can resume from its immutable artifact without republishing.
 
 Run focused regressions during development. At final verification, rebuild assets,
 check CSS lint, documented imports, semantic contracts, contrast, compatibility,

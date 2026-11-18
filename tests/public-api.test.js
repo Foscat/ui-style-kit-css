@@ -238,7 +238,7 @@ test('2.9.0 package exports resolve the full, standalone preset, manifest, and b
   assert.equal(packageJson.exports['./with-bridge'], './dist/ui-style-kit.with-bridge.css');
 });
 
-test('release-facing current-version surfaces identify 2.8.0', () => {
+test('release-facing current-version surfaces identify 2.9.0', () => {
   const currentVersionFiles = [
     'README.md',
     'index.html',
@@ -253,7 +253,7 @@ test('release-facing current-version surfaces identify 2.8.0', () => {
 
   for (const relativeFile of currentVersionFiles) {
     const contents = fs.readFileSync(relativePath(relativeFile), 'utf8');
-    assert.equal(contents.includes('2.8.0'), true, `${relativeFile} should identify the current version`);
+    assert.equal(contents.includes('2.9.0'), true, `${relativeFile} should identify the current version`);
   }
 
   const changelog = fs.readFileSync(relativePath('CHANGELOG.md'), 'utf8');

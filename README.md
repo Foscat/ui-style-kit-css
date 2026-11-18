@@ -9,11 +9,11 @@ It is separate from, but complementary to, **Interactive Surface CSS** and **Lay
 
 ## Current version
 
-Version `v2.8.0` introduces Style Studio with working examples, a dense component catalog, copyable markup, isolated comparison, editable palettes, and CSS/setup export. Native Clay edits now paint and export the same material colors, and browser Back preserves drafts and pending saves. The library retains the existing accessibility corrections and the canonical `.usk-*` API; generated `.ui-*` aliases remain available for existing consumers.
+Version `v2.9.0` adds opt-in guided corner choices across all 20 presets while preserving authored defaults and independent avatar geometry. The library retains the canonical `.usk-*` API; generated `.ui-*` aliases remain available for existing consumers.
 
 The exhaustive browser suite defines 20 presets × 25 themes × 3 modes × 3 engines (4,500 combinations). Run the final release gate on the frozen candidate before treating that full matrix as current verification.
 
-The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.8.0 release notes](docs/RELEASE-2.8.0.md) for the current scope and verification boundaries.
+The `v2.4.0` baseline introduced complete native-control identities, native light/dark/contrast palettes when `data-theme` is omitted, a palette-aware color workbench, a unified demo with style-specific components, and exactly pinned parser-based minification. See the [2.9.0 release notes](docs/RELEASE-2.9.0.md) for the current scope and verification boundaries.
 
 [Showcase website](https://foscat.github.io/ui-style-kit-css/)
 
@@ -60,11 +60,11 @@ These libraries stay standalone, but the current aligned set is:
 
 | Library | Aligned version | Owns |
 |---|---:|---|
-| `ui-style-kit-css@2.8.0` | current UI version | visual identity, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
+| `ui-style-kit-css@2.9.0` | current UI version | visual identity, guided corner choices, color themes, UI paint, native HTML styling, content wrapping, and bridge tokens |
 | `interactive-surface-css@1.7.3` | compatible state release | interaction-state primitives, surface behavior, state layers, and input affordances |
 | `layout-style-css@3.2.3` | compatible structural release | structural wrappers, grids, sections, app shells, and layout recipes |
 
-UI Style Kit `2.8.0` is the current UI version. This version is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
+UI Style Kit `2.9.0` is the current UI version. This version is aligned with the reviewed Interactive Surface `1.7.3` and Layout Style `3.2.3` releases. The validated minimum remains `ui-style-kit-css@2.1.0`, `interactive-surface-css@1.5.0`, and `layout-style-css@3.0.0`.
 
 Use one, two, or all three depending on the project. UI Style Kit does not require the sibling libraries, and the optional bridge only maps shared `--usk-*` roles into Interactive Surface tokens when consumers import it.
 
@@ -199,16 +199,16 @@ SVG icons marked with `data-ui-icon` receive stable `1em` square geometry, block
 
 | Import | Raw | Gzip | Best for |
 |---|---:|---:|---|
-| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2402 KB | ~320 KB | Compatible runtime UI-system switchers and demos |
-| `ui-style-kit-css/visual.min.css` | ~2386 KB | ~318 KB | Runtime visual switching with consumer-owned layout |
-| `ui-style-kit-css/with-bridge.css` | ~2773 KB | ~345 KB | Deprecated runtime switcher plus stateful bridge |
+| `ui-style-kit-css/dist/ui-style-kit.min.css` | ~2410 KB | ~320 KB | Compatible runtime UI-system switchers and demos |
+| `ui-style-kit-css/visual.min.css` | ~2394 KB | ~318 KB | Runtime visual switching with consumer-owned layout |
+| `ui-style-kit-css/with-bridge.css` | ~2781 KB | ~346 KB | Deprecated runtime switcher plus stateful bridge |
 | `ui-style-kit-css/theme-colors.css` | ~64 KB | ~8 KB | Shared color schemes for standalone style imports |
 | `ui-style-kit-css/native-elements.css` | ~33 KB | ~6 KB | Shared native HTML fallback styling |
 | `ui-style-kit-css/content-overflow.css` | ~20 KB | ~3 KB | Shared long-text containment for standalone style imports |
 | `ui-style-kit-css/clean-defaults.css` | <10 KB | <2 KB | Shared spacing floors and opt-in flush/underline utilities |
 | `ui-style-kit-css/interactive-surface-theme.css` | ~9 KB | ~1 KB | Canonical token-and-paint bridge for Interactive Surface state core |
-| `ui-style-kit-css/visual/minimal-saas.css` | ~362 KB | ~53 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
-| `ui-style-kit-css/visual/industrial-utility.css` | ~451 KB | ~63 KB | Focused Industrial Utility, including its instrumentation styles |
+| `ui-style-kit-css/visual/minimal-saas.css` | ~367 KB | ~53 KB | Focused Minimal SaaS, including semantic aliases and shared foundations |
+| `ui-style-kit-css/visual/industrial-utility.css` | ~456 KB | ~64 KB | Focused Industrial Utility, including its instrumentation styles |
 
 ## CDN usage
 

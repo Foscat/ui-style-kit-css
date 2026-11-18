@@ -25,9 +25,11 @@ export function admitGuidedCornerRelease(evidence) {
   assert.equal(versions.length, 4);
   assert(versions.every((value) => value === version));
   assert.equal(pr.base.repo.full_name, repository);
+  assert.equal(pr.base.ref, 'main');
   assert.equal(pr.head.repo.full_name, repository);
   assert.equal(pr.head.sha, sourceSha);
   assert(pr.merged_at);
+  assert.match(pr.merge_commit_sha || '', /^[a-f0-9]{40}$/);
   assert.equal(verifiedCommit, true);
   assert(['ahead', 'identical'].includes(comparison));
   assert(reviews.length < 100, 'Review pagination must be resolved before admission');
@@ -38,6 +40,44 @@ export function admitGuidedCornerRelease(evidence) {
   assert.equal(latest.state, 'APPROVED');
   assert.equal(latest.commit_id, sourceSha);
   return sourceSha;
+}
+
+/**
+ * Validate that a continuation artifact came from this trusted workflow and admitted source.
+ * @param {object} evidence GitHub workflow-run and artifact API results.
+ * @returns {number} Immutable artifact ID to restore.
+ */
+export function validateGuidedCornerProducer({
+  run,
+  artifacts,
+  producerRun,
+  sourceSha,
+  approvalPr,
+  currentRunId,
+  runAttempt,
+}) {
+  assert.match(producerRun || '', /^[1-9]\d*$/);
+  assert.equal(String(run.id), producerRun);
+  assert.equal(run.path, '.github/workflows/publish-guided-corners.yml@refs/heads/main');
+  assert.equal(run.event, 'workflow_dispatch');
+  assert.equal(run.head_branch, 'main');
+  assert.equal(run.head_repository.full_name, repository);
+  if (run.status === 'in_progress') {
+    assert.equal(String(run.id), currentRunId);
+    assert(Number(runAttempt) > 1);
+  } else {
+    assert.equal(run.status, 'completed');
+    assert.equal(typeof run.conclusion, 'string');
+  }
+  assert.match(sourceSha || '', /^[a-f0-9]{40}$/);
+  assert.match(approvalPr || '', /^[1-9]\d*$/);
+  const matching = artifacts.filter((item) => item.name === `guided-corners-${sourceSha}`);
+  assert.equal(matching.length, 1);
+  const [artifactInfo] = matching;
+  assert.equal(artifactInfo.expired, false);
+  assert.match(artifactInfo.digest || '', /^sha256:[a-f0-9]{64}$/);
+  assert(Number.isSafeInteger(artifactInfo.id) && artifactInfo.id > 0);
+  return artifactInfo.id;
 }
 
 /**
@@ -84,16 +124,32 @@ export function verifyGuidedCornerArtifactBytes(expected, bytes) {
 }
 
 /**
+ * Bind a retained checksum receipt to the admitted source, approval and producing run.
+ * @param {object} value Persisted receipt contents.
+ * @param {object} expected Current workflow identity.
+ * @returns {object} Verified receipt.
+ */
+export function verifyGuidedCornerReceipt(value, { sourceSha, approvalPr, producerRun }) {
+  assert.equal(value.name, 'ui-style-kit-css');
+  assert.equal(value.version, version);
+  assert.equal(value.filename, artifact);
+  assert.equal(value.sourceSha, sourceSha);
+  assert.equal(value.approvalPr, approvalPr);
+  assert.equal(value.producerRun, producerRun);
+  return value;
+}
+
+/**
  * Read the immutable checksum receipt produced before publication.
  * @returns {object} Exact artifact identity.
  */
 function receipt() {
   const value = JSON.parse(fs.readFileSync('guided-corners-artifact.json', 'utf8'));
-  assert.equal(value.name, 'ui-style-kit-css');
-  assert.equal(value.version, version);
-  assert.equal(value.filename, artifact);
-  assert.equal(value.sourceSha, process.env.SOURCE_SHA);
-  return value;
+  return verifyGuidedCornerReceipt(value, {
+    sourceSha: process.env.SOURCE_SHA,
+    approvalPr: process.env.APPROVAL_PR,
+    producerRun: process.env.PRODUCER_RUN,
+  });
 }
 
 /**
@@ -148,9 +204,24 @@ async function main(mode) {
       pr,
       reviews: api(`repos/${repository}/pulls/${process.env.APPROVAL_PR}/reviews?per_page=100`),
       verifiedCommit: api(`repos/${repository}/commits/${sha}`).commit.verification.verified,
-      comparison: api(`repos/${repository}/compare/${sha}...main`).status,
+      comparison: api(`repos/${repository}/compare/${pr.merge_commit_sha}...main`).status,
     });
     console.log(`Admitted independently reviewed ${repository}@${sha} for ${version}`);
+  } else if (mode === 'validate-producer') {
+    const producerRun = process.env.PRODUCER_RUN;
+    assert.match(producerRun || '', /^[1-9]\d*$/);
+    const workflowRun = api(`repos/${repository}/actions/runs/${producerRun}`);
+    const result = api(`repos/${repository}/actions/runs/${producerRun}/artifacts?per_page=100`);
+    const artifactId = validateGuidedCornerProducer({
+      run: workflowRun,
+      artifacts: result.artifacts,
+      producerRun,
+      sourceSha: sha,
+      approvalPr: process.env.APPROVAL_PR,
+      currentRunId: process.env.GITHUB_RUN_ID,
+      runAttempt: process.env.GITHUB_RUN_ATTEMPT,
+    });
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `artifact_id=${artifactId}\n`);
   } else if (mode === 'attest') {
     const rows = JSON.parse(fs.readFileSync('guided-corners-pack.json', 'utf8'));
     assert.equal(rows.length, 1);
@@ -186,6 +257,8 @@ async function main(mode) {
           version,
           filename: artifact,
           sourceSha: sha,
+          approvalPr: process.env.APPROVAL_PR,
+          producerRun: process.env.GITHUB_RUN_ID,
           integrity,
           sha256: createHash('sha256').update(bytes).digest('hex'),
           bytes: bytes.length,

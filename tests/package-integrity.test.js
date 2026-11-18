@@ -162,9 +162,9 @@ test('package metadata preserves the v2 distribution and demo contracts', () => 
   const exportDigest = createHash('sha256').update(JSON.stringify(sortedExports)).digest('hex');
 
   assert.equal(packageJson.homepage, 'https://foscat.github.io/ui-style-kit-css/');
-  assert.equal(sortedExports.length, 162, 'Every retained and additive v2 export must remain available');
+  assert.equal(sortedExports.length, 163, 'Every retained and additive v2 export must remain available');
   // This digest protects every public key-to-target mapping while keeping the fixture compact and reviewable.
-  assert.equal(exportDigest, '7f3acf96edc1558ca64ea31b18c2b3302cfa2b64af0d05ea814a723d0c8ba945');
+  assert.equal(exportDigest, '662b709ce9f6380be63336573c3e8475b8f0643f640ae702fb154d136022595c');
   assert.equal(packageJson.exports['.'], './dist/ui-style-kit.css');
   assert.equal(packageJson.exports['./min.css'], './dist/ui-style-kit.min.css');
   assert.equal(packageJson.exports['./css'], packageJson.exports['.']);
@@ -336,20 +336,20 @@ test('demo select fallbacks match manifest presets, themes, and modes', () => {
   }
 });
 
-test('README documents the 2.8.0 library system and released companion set', () => {
+test('README documents the 2.9.0 library system and released companion set', () => {
   const readme = fs.readFileSync(path.join(rootDir, 'README.md'), 'utf8');
 
   assert.match(readme, /```mermaid/);
   assert.match(readme, /layout-style-css/);
   assert.match(readme, /interactive-surface-css/);
   assert.match(readme, /Demo token workbench/);
-  assert.match(readme, /v2\.8\.0/);
+  assert.match(readme, /v2\.9\.0/);
   assert.match(readme, /Ecosystem compatibility/);
-  assert.match(readme, /ui-style-kit-css@2\.8\.0/);
+  assert.match(readme, /ui-style-kit-css@2\.9\.0/);
   assert.match(readme, /interactive-surface-css@1\.7\.3/);
   assert.match(readme, /layout-style-css@3\.2\.3/);
   assert.match(readme, /layout-style-css@3\.0\.0/);
-  assert.match(readme, /UI Style Kit `2\.8\.0` is the current UI version/);
+  assert.match(readme, /UI Style Kit `2\.9\.0` is the current UI version/);
   assert.doesNotMatch(readme, /remains the published npm release/);
   assert.match(readme, /Layout Style `3\.2\.3` release/);
   assert.match(readme, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
@@ -411,7 +411,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   assert.match(wikiSidebar, /\[\[Ecosystem Compatibility\]\]/);
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.8\.0/);
+    assert.match(contents, /ui-style-kit-css@2\.9\.0/);
     assert.match(contents, /interactive-surface-css@1\.5\.0/);
     assert.match(contents, /layout-style-css@3\.2\.3/);
     assert.match(contents, /layout-style-css@3\.0\.0/);
@@ -427,7 +427,7 @@ test('ecosystem compatibility guidance is packaged and linked from public docs',
   }
 });
 
-test('ecosystem fixture records the UI 2.8.0 candidate train with reviewed companion release commits', () => {
+test('ecosystem fixture records the UI 2.9.0 candidate train with reviewed companion release commits', () => {
   const compatibility = JSON.parse(fs.readFileSync(path.join(rootDir, 'ecosystem-compatibility.json'), 'utf8'));
   const ecosystemDoc = fs.readFileSync(path.join(rootDir, 'docs', 'ECOSYSTEM.md'), 'utf8');
   const ecosystemWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Ecosystem-Compatibility.md'), 'utf8');
@@ -441,14 +441,14 @@ test('ecosystem fixture records the UI 2.8.0 candidate train with reviewed compa
       'layout-style-css': '3.0.0'
     },
     current: {
-      'ui-style-kit-css': '2.8.0',
+      'ui-style-kit-css': '2.9.0',
       'interactive-surface-css': '1.7.3',
       'layout-style-css': '3.2.3'
     }
   });
 
   for (const contents of [ecosystemDoc, ecosystemWiki]) {
-    assert.match(contents, /ui-style-kit-css@2\.8\.0[\s\S]{0,160}current UI version/i);
+    assert.match(contents, /ui-style-kit-css@2\.9\.0[\s\S]{0,160}current UI version/i);
     assert.match(contents, /interactive-surface-css@1\.7\.3[\s\S]{0,160}release/i);
     assert.match(contents, /layout-style-css@3\.2\.3[\s\S]{0,160}release/i);
   }
@@ -490,26 +490,26 @@ test('canonical ecosystem examples preserve ownership-first import order', () =>
 
   for (const contents of ecosystemGuides) {
     assert.match(contents, exactJsBlock(visualThemeStateLayout));
-    assert.match(contents, /UI Style Kit `2\.8\.0` is the current UI version/);
+    assert.match(contents, /UI Style Kit `2\.9\.0` is the current UI version/);
     assert.match(contents, /layout-style-css@3\.2\.3[\s\S]{0,160}release/i);
     assert.match(contents, /validated minimum remains[^\n]*layout-style-css@3\.0\.0/i);
   }
 });
 
-test('current public wiki pages describe the 2.8.0 version', () => {
+test('current public wiki pages describe the 2.9.0 version', () => {
   const wikiHome = fs.readFileSync(path.join(rootDir, 'wiki', 'Home.md'), 'utf8');
   const installationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Installation-and-Setup.md'), 'utf8');
   const releasePreparationWiki = fs.readFileSync(path.join(rootDir, 'wiki', 'Release-Preparation.md'), 'utf8');
 
   for (const contents of [wikiHome, installationWiki, releasePreparationWiki]) {
-    assert.match(contents, /2\.8\.0/);
-    assert.doesNotMatch(contents, /2\.8\.0[^\n]*candidate/i);
+    assert.match(contents, /2\.9\.0/);
+    assert.doesNotMatch(contents, /2\.9\.0[^\n]*candidate/i);
   }
 
   assert.match(wikiHome, /minor release/i);
   assert.match(
     releasePreparationWiki,
-    /hardens the 75-selector\s+semantic component API/i,
+    /guided corner choices across all 20 presets/i,
   );
 });
 
