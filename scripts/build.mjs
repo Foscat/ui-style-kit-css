@@ -16,6 +16,7 @@ import { clone, generate, parse, walk } from 'css-tree';
 import { browserslistToTargets, transform } from 'lightningcss';
 import { syncContentOverflowCss } from './generate-content-overflow.mjs';
 import { syncExpandedComponents } from './generate-expanded-components.mjs';
+import { syncGuidedCorners } from './generate-guided-corners.mjs';
 import { validatePresetIdentities } from './preset-identities.mjs';
 import { syncReadmeBundleSizes } from './sync-readme-sizes.mjs';
 import { buildStudio } from './build-studio.mjs';
@@ -29,13 +30,15 @@ const themeColorFile = 'styles/theme-colors.css';
 const nativeElementsFile = 'styles/native-elements.css';
 const componentsFile = 'styles/components.css';
 const cleanDefaultsFile = 'styles/clean-defaults.css';
+const guidedCornersFile = 'styles/guided-corners.css';
 const compatibilityLayoutFile = 'styles/compat-layout.css';
 const legacyBridgeFile = 'styles/interactive-surface-bridge.css';
 const foundationFiles = [
   themeColorFile,
   nativeElementsFile,
   componentsFile,
-  cleanDefaultsFile
+  cleanDefaultsFile,
+  guidedCornersFile
 ];
 const presetFiles = publicManifest.presets.map(({ id, prefix }) => ({
   id,
@@ -126,6 +129,7 @@ if (publicManifest.version !== packageJson.version) {
 validatePresetIdentities(publicManifest);
 syncContentOverflowCss(root, publicManifest);
 syncExpandedComponents(root, publicManifest);
+syncGuidedCorners(root, publicManifest);
 
 const banner = `/*!
  * UI Style Kit CSS v${packageJson.version}
@@ -338,9 +342,14 @@ function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClas
   if (!hasPositiveSemanticClass(selector, semanticAliasBySourceClass)) return null;
   const aliased = clone(selector);
   let changed = false;
+  let negationDepth = 0;
 
   walk(aliased, {
     enter(node, item, list) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth++;
+      // A native fallback can match prefixed markup too. Preserve its exclusions;
+      // replacing them with semantic-only names would reopen the excluded role.
+      if (negationDepth > 0) return;
       const sourceClass = node.type === 'ClassSelector' ? node.name : exactClassToken(node);
       const semanticSelector = semanticAliasBySourceClass.get(sourceClass);
       if (!semanticSelector) return;
@@ -348,13 +357,18 @@ function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClas
       // Replace only complete selector nodes; declarations remain untouched in their source rule.
       list.replace(item, selectorNodes(semanticSelector));
       changed = true;
+    },
+    leave(node) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth--;
     }
   });
 
   if (!changed) return null;
-  dedupeNestedSelectorLists(aliased);
-  const hasRoot = addPresetConstraintToRoot(aliased, selectedRoot);
-  return hasRoot ? generate(aliased) : `${selectedRoot} ${generate(aliased)}`;
+  const exclusions = expandSemanticExclusions(aliased);
+  const complete = exclusions ? parse(exclusions, { context: 'selector' }) : aliased;
+  dedupeNestedSelectorLists(complete);
+  const hasRoot = addPresetConstraintToRoot(complete, selectedRoot);
+  return hasRoot ? generate(complete) : `${selectedRoot} ${generate(complete)}`;
 }
 
 /**

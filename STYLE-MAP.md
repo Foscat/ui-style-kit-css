@@ -130,3 +130,9 @@ The machine-readable source of truth is `manifest.json#semanticComponentApi`. It
 `data-ui-variant` is the only new attribute. Omission means neutral. `.ui-button` accepts `primary`, `secondary`, `danger`, and `ghost`; `.ui-badge` accepts `primary`, `secondary`, `success`, `warning`, and `danger`; `.ui-alert` accepts `success`, `warning`, and `danger`.
 
 Modal and dialog roles retain native `<dialog>` as their one neutral fallback; `.ui-modal` and `.ui-dialog` are not defined. Preset-prefixed classes remain supported for compatibility and advanced use. Partial preset extras and the seven deprecated structural suffixes stay out of the semantic contract.
+
+## Guided corner customization
+
+Set `data-usk-corners="none"`, `"small"`, `"medium"` or `"large"` on the same element as `data-ui` and `data-mode`. The library applies 0, 0.25rem, 0.65rem or 1rem to ordinary native controls and canonical, compatibility and prefixed control/surface roles across every preset. This opt-in layer is included in standard, visual and focused preset entrypoints; native-only consumers can import `ui-style-kit-css/guided-corners.css`.
+
+Remove the attribute to restore the exact authored preset. Avatars, circular decoration, clipping, colors, spacing and motion retain their existing ownership. The library-produced `--usk-guided-corner-radius` also feeds the existing native radius handshake. A consumer can continue using per-component unlayered CSS where a deliberate override is needed.

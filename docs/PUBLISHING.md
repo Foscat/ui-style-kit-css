@@ -1,5 +1,11 @@
 # Publishing
 
+## 2.9.0 guided corners artifact
+
+The fixed-version `.github/workflows/publish-guided-corners.yml` workflow publishes only the independently reviewed 2.9.0 package artifact. Use its continuation path to verify the retained artifact and complete public readback or release creation without republishing. See [the 2.9.0 release notes](RELEASE-2.9.0.md).
+
+Continuation verifies GitHub REST run metadata, the retained checksum receipt and every existing release asset. Matching uploaded assets are reused unchanged; missing assets are uploaded without replacement. An empty `starter` placeholder from a failed upload is the only removable retry state. Populated, duplicate, foreign or mismatched assets stop completion. Review, signing and public-byte verification remain required.
+
 ## 2.8.0 Style Studio release
 
 Publish the reviewed Style Studio and library refinements through the normal local release gate, main merge, signed version tag, Release Version Alignment, and protected npm workflow. See [the 2.8.0 release notes](RELEASE-2.8.0.md).
