@@ -68,6 +68,22 @@ function api(endpoint) {
 }
 
 /**
+ * Verify that the retained tarball is byte-for-byte identical to its checksum receipt.
+ * @param {object} expected Immutable artifact identity.
+ * @param {Buffer} bytes Retained tarball contents.
+ * @returns {boolean} Whether all recorded checksums and size match.
+ */
+export function verifyGuidedCornerArtifactBytes(expected, bytes) {
+  assert.equal(bytes.length, expected.bytes);
+  assert.equal(
+    `sha512-${createHash('sha512').update(bytes).digest('base64')}`,
+    expected.integrity,
+  );
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), expected.sha256);
+  return true;
+}
+
+/**
  * Read the immutable checksum receipt produced before publication.
  * @returns {object} Exact artifact identity.
  */
@@ -78,6 +94,34 @@ function receipt() {
   assert.equal(value.filename, artifact);
   assert.equal(value.sourceSha, process.env.SOURCE_SHA);
   return value;
+}
+
+/**
+ * Verify the retained artifact against its prepublication receipt.
+ * @returns {object} Verified artifact identity.
+ */
+function verifyArtifact() {
+  const expected = receipt();
+  verifyGuidedCornerArtifactBytes(expected, fs.readFileSync(artifact));
+  return expected;
+}
+
+/**
+ * Run a fixed program and return null when it exits unsuccessfully.
+ * @param {string} program Fixed executable.
+ * @param {string[]} args Literal arguments.
+ * @returns {string|null} Successful standard output or null on command failure.
+ */
+function runIfSuccessful(program, args) {
+  const result = spawnSync(program, args, {
+    encoding: 'utf8',
+    maxBuffer: 4 * 1024 * 1024,
+  });
+  if (result.error)
+    throw new Error(
+      `${program} operation failed (launch); no credential data emitted`,
+    );
+  return result.status === 0 ? result.stdout.trim() : null;
 }
 
 /**
@@ -151,8 +195,12 @@ async function main(mode) {
         2,
       ) + '\n',
     );
+    verifyArtifact();
+  } else if (mode === 'verify-artifact') {
+    verifyArtifact();
+    console.log(`Verified retained ${artifact} against its prepublication receipt`);
   } else if (mode === 'readback') {
-    const expected = receipt();
+    const expected = verifyArtifact();
     const metadataResponse = await fetch(`https://registry.npmjs.org/ui-style-kit-css/${version}`);
     assert.equal(metadataResponse.status, 200);
     const metadata = await metadataResponse.json();
@@ -170,32 +218,69 @@ async function main(mode) {
     assert.equal(createHash('sha256').update(bytes).digest('hex'), expected.sha256);
     console.log(`Public npm bytes match the admitted ${sha} artifact`);
   } else if (mode === 'release') {
-    receipt();
+    verifyArtifact();
     const tag = `v${version}`;
-    run('gh', [
-      'api',
-      `repos/${repository}/git/refs`,
-      '-X',
-      'POST',
-      '-f',
-      `ref=refs/tags/${tag}`,
-      '-f',
-      `sha=${sha}`,
-    ]);
-    run('gh', [
+    const tagRef = `refs/tags/${tag}`;
+    const matchingRefs = api(`repos/${repository}/git/matching-refs/tags/${tag}`).filter(
+      (ref) => ref.ref === tagRef,
+    );
+    assert(matchingRefs.length <= 1);
+    if (matchingRefs.length) {
+      assert.equal(matchingRefs[0].object.type, 'commit');
+      assert.equal(matchingRefs[0].object.sha, sha);
+    } else {
+      run('gh', [
+        'api',
+        `repos/${repository}/git/refs`,
+        '-X',
+        'POST',
+        '-f',
+        `ref=${tagRef}`,
+        '-f',
+        `sha=${sha}`,
+      ]);
+    }
+
+    const title = 'v2.9.0 guided corner customization';
+    const existingRelease = runIfSuccessful('gh', [
       'release',
-      'create',
+      'view',
       tag,
       '--repo',
       repository,
-      '--verify-tag',
-      '--title',
-      'v2.9.0 guided corner customization',
-      '--notes-file',
-      'docs/RELEASE-2.9.0.md',
-      artifact,
-      'guided-corners-artifact.json',
+      '--json',
+      'tagName,name',
     ]);
+    if (existingRelease) {
+      const release = JSON.parse(existingRelease);
+      assert.equal(release.tagName, tag);
+      assert.equal(release.name, title);
+      run('gh', [
+        'release',
+        'upload',
+        tag,
+        artifact,
+        'guided-corners-artifact.json',
+        '--repo',
+        repository,
+        '--clobber',
+      ]);
+    } else {
+      run('gh', [
+        'release',
+        'create',
+        tag,
+        '--repo',
+        repository,
+        '--verify-tag',
+        '--title',
+        title,
+        '--notes-file',
+        'docs/RELEASE-2.9.0.md',
+        artifact,
+        'guided-corners-artifact.json',
+      ]);
+    }
     console.log(`Created ${repository} ${tag} with the verified public artifact`);
   } else throw new Error('Unknown focused publication phase');
 }

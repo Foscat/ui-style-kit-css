@@ -11,8 +11,18 @@ on:
         description: Merged pull request with STE-Adam approval of this exact head
         required: true
         type: string
+      complete_only:
+        description: Restore a previously published artifact and finish readback and release creation without publishing
+        required: false
+        default: false
+        type: boolean
+      producer_run:
+        description: Workflow run that uploaded the artifact (required for complete_only)
+        required: false
+        type: string
 
 permissions:
+  actions: read
   contents: write
   pull-requests: read
 
@@ -28,6 +38,7 @@ jobs:
     env:
       SOURCE_SHA: ${{ inputs.source_sha }}
       APPROVAL_PR: ${{ inputs.approval_pr }}
+      PRODUCER_RUN: ${{ inputs.producer_run }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # trusted main controller
         with:
@@ -47,18 +58,51 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: node "$RUNNER_TEMP/publish-guided-corners.mjs" admit
+      - name: Validate continuation run
+        if: ${{ inputs.complete_only }}
+        run: |
+          if [[ ! "$PRODUCER_RUN" =~ ^[0-9]+$ ]]; then
+            echo "complete_only requires the workflow run that uploaded the artifact" >&2
+            exit 1
+          fi
       - name: Install build dependencies without lifecycle hooks
+        if: ${{ !inputs.complete_only && github.run_attempt == 1 }}
         run: npm ci --ignore-scripts
       - name: Reproduce generated assets without tests
+        if: ${{ !inputs.complete_only && github.run_attempt == 1 }}
         run: |
           node scripts/build.mjs
           git diff --exit-code
           node scripts/check-package.mjs
       - name: Pack and attest only the published payload
+        if: ${{ !inputs.complete_only && github.run_attempt == 1 }}
         run: |
           npm pack --ignore-scripts --json > guided-corners-pack.json
           node "$RUNNER_TEMP/publish-guided-corners.mjs" attest
+      - name: Persist the exact artifact and checksum receipt
+        if: ${{ !inputs.complete_only && github.run_attempt == 1 }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: guided-corners-${{ env.SOURCE_SHA }}
+          path: |
+            ui-style-kit-css-2.9.0.tgz
+            guided-corners-artifact.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+      - name: Restore the original published artifact for continuation only
+        if: ${{ inputs.complete_only || github.run_attempt > 1 }}
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: guided-corners-${{ env.SOURCE_SHA }}
+          path: .
+          run-id: ${{ inputs.producer_run || github.run_id }}
+          github-token: ${{ github.token }}
+      - name: Verify the restored tarball and checksum receipt
+        if: ${{ inputs.complete_only || github.run_attempt > 1 }}
+        run: node "$RUNNER_TEMP/publish-guided-corners.mjs" verify-artifact
       - name: Publish using the existing package-owner credential
+        if: ${{ !inputs.complete_only && github.run_attempt == 1 }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |

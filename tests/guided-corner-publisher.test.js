@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { admitGuidedCornerRelease } from '../scripts/publish-guided-corners.mjs';
+import { createHash } from 'node:crypto';
+import {
+  admitGuidedCornerRelease,
+  verifyGuidedCornerArtifactBytes,
+} from '../scripts/publish-guided-corners.mjs';
 
 /** Keep the artifact-only route fixed to signed, merged and independently current-reviewed 2.9.0 source. */
 test('guided release admission binds exact source and preserves independent review controls', () => {
@@ -34,4 +38,18 @@ test('guided release admission binds exact source and preserves independent revi
     { pr: { ...valid.pr, base: { repo: { full_name: 'someone/other' } } } },
   ])
     assert.throws(() => admitGuidedCornerRelease({ ...valid, ...changed }));
+});
+
+test('guided release continuation verifies the retained tarball against its receipt', () => {
+  const bytes = Buffer.from('original published artifact');
+  const expected = {
+    bytes: bytes.length,
+    integrity: `sha512-${createHash('sha512').update(bytes).digest('base64')}`,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  };
+  assert.equal(verifyGuidedCornerArtifactBytes(expected, bytes), true);
+  assert.throws(() => verifyGuidedCornerArtifactBytes(expected, Buffer.from('changed artifact')));
+  assert.throws(() =>
+    verifyGuidedCornerArtifactBytes({ ...expected, integrity: 'sha512-invalid' }, bytes),
+  );
 });
