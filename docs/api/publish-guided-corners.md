@@ -12,6 +12,7 @@ Publish only the independently reviewed 2.9.0 artifact through the existing pack
   - _static_
     - [.admitGuidedCornerRelease(evidence)](#module_scripts/publish-guided-corners.admitGuidedCornerRelease) ⇒ <code>string</code>
     - [.validateGuidedCornerProducer(evidence)](#module_scripts/publish-guided-corners.validateGuidedCornerProducer) ⇒ <code>number</code>
+    - [.planGuidedCornerReleaseAssets(expected, assets)](#module_scripts/publish-guided-corners.planGuidedCornerReleaseAssets) ⇒ <code>Object</code>
     - [.verifyGuidedCornerArtifactBytes(expected, bytes)](#module_scripts/publish-guided-corners.verifyGuidedCornerArtifactBytes) ⇒ <code>boolean</code>
     - [.verifyGuidedCornerReceipt(value, expected)](#module_scripts/publish-guided-corners.verifyGuidedCornerReceipt) ⇒ <code>object</code>
   - _inner_
@@ -47,6 +48,24 @@ Validate that a continuation artifact came from this trusted workflow and admitt
 | Param    | Type                | Description                                   |
 | -------- | ------------------- | --------------------------------------------- |
 | evidence | <code>object</code> | GitHub workflow-run and artifact API results. |
+
+<a name="module_scripts/publish-guided-corners.planGuidedCornerReleaseAssets"></a>
+
+### scripts/publish-guided-corners.planGuidedCornerReleaseAssets(expected, assets) ⇒ <code>Object</code>
+
+Plan immutable release completion from verified local identities and actual REST asset metadata.
+Existing uploaded bytes must match; only empty failed upload placeholders may be removed.
+
+**Kind**: static method of [<code>scripts/publish-guided-corners</code>](#module_scripts/publish-guided-corners)  
+**Returns**: <code>Object</code> - Bounded missing-file uploads and empty placeholder IDs.  
+**Throws**:
+
+- <code>Error</code> When metadata is incomplete, duplicated, foreign or inconsistent with retained bytes.
+
+| Param    | Type                              | Description                                                                  |
+| -------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| expected | <code>Array.&lt;object&gt;</code> | Exact retained tarball and checksum-receipt names, sizes and SHA-256 values. |
+| assets   | <code>Array.&lt;object&gt;</code> | Current assets on the already verified release/tag.                          |
 
 <a name="module_scripts/publish-guided-corners.verifyGuidedCornerArtifactBytes"></a>
 

@@ -342,9 +342,14 @@ function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClas
   if (!hasPositiveSemanticClass(selector, semanticAliasBySourceClass)) return null;
   const aliased = clone(selector);
   let changed = false;
+  let negationDepth = 0;
 
   walk(aliased, {
     enter(node, item, list) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth++;
+      // A native fallback can match prefixed markup too. Preserve its exclusions;
+      // replacing them with semantic-only names would reopen the excluded role.
+      if (negationDepth > 0) return;
       const sourceClass = node.type === 'ClassSelector' ? node.name : exactClassToken(node);
       const semanticSelector = semanticAliasBySourceClass.get(sourceClass);
       if (!semanticSelector) return;
@@ -352,13 +357,18 @@ function aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClas
       // Replace only complete selector nodes; declarations remain untouched in their source rule.
       list.replace(item, selectorNodes(semanticSelector));
       changed = true;
+    },
+    leave(node) {
+      if (node.type === 'PseudoClassSelector' && node.name === 'not') negationDepth--;
     }
   });
 
   if (!changed) return null;
-  dedupeNestedSelectorLists(aliased);
-  const hasRoot = addPresetConstraintToRoot(aliased, selectedRoot);
-  return hasRoot ? generate(aliased) : `${selectedRoot} ${generate(aliased)}`;
+  const exclusions = expandSemanticExclusions(aliased);
+  const complete = exclusions ? parse(exclusions, { context: 'selector' }) : aliased;
+  dedupeNestedSelectorLists(complete);
+  const hasRoot = addPresetConstraintToRoot(complete, selectedRoot);
+  return hasRoot ? generate(complete) : `${selectedRoot} ${generate(complete)}`;
 }
 
 /**

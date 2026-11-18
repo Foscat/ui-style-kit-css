@@ -100,7 +100,7 @@ test('guided release continuation accepts only the exact trusted workflow artifa
     runAttempt: '1',
     run: {
       id: Number(producerRun),
-      path: '.github/workflows/publish-guided-corners.yml@refs/heads/main',
+      path: '.github/workflows/publish-guided-corners.yml',
       event: 'workflow_dispatch',
       head_branch: 'main',
       head_repository: { full_name: 'Foscat/ui-style-kit-css' },
@@ -111,7 +111,13 @@ test('guided release continuation accepts only the exact trusted workflow artifa
   };
   assert.equal(validateGuidedCornerProducer(evidence), artifact.id);
   for (const changed of [
-    { run: { ...evidence.run, path: '.github/workflows/other.yml@refs/heads/main' } },
+    { run: { ...evidence.run, path: '.github/workflows/other.yml' } },
+    {
+      run: {
+        ...evidence.run,
+        path: '.github/workflows/publish-guided-corners.yml@refs/heads/other',
+      },
+    },
     { run: { ...evidence.run, event: 'push' } },
     { run: { ...evidence.run, head_branch: 'release' } },
     { run: { ...evidence.run, head_repository: { full_name: 'someone/else' } } },
@@ -136,4 +142,43 @@ test('guided release continuation accepts only the exact trusted workflow artifa
     }),
     artifact.id,
   );
+});
+
+test('guided release retries preserve uploaded assets and repair only empty failed placeholders', async () => {
+  const { planGuidedCornerReleaseAssets } = await import('../scripts/publish-guided-corners.mjs');
+  const expected = [
+    { name: 'ui-style-kit-css-2.9.0.tgz', size: 1200, sha256: 'a'.repeat(64) },
+    { name: 'guided-corners-artifact.json', size: 400, sha256: 'b'.repeat(64) },
+  ];
+  const assets = expected.map((file, index) => ({
+    id: index + 11,
+    name: file.name,
+    size: file.size,
+    digest: 'sha256:' + file.sha256,
+    state: 'uploaded',
+  }));
+  assert.deepEqual(planGuidedCornerReleaseAssets(expected, assets), {
+    upload: [],
+    removeStarterIds: [],
+  });
+  assert.deepEqual(planGuidedCornerReleaseAssets(expected, assets.slice(0, 1)), {
+    upload: [expected[1].name],
+    removeStarterIds: [],
+  });
+  const starter = { id: 12, name: expected[1].name, size: 0, digest: null, state: 'starter' };
+  assert.deepEqual(planGuidedCornerReleaseAssets(expected, [assets[0], starter]), {
+    upload: [expected[1].name],
+    removeStarterIds: [12],
+  });
+  for (const invalid of [
+    [assets[0], { ...assets[1], digest: 'sha256:' + 'c'.repeat(64) }],
+    [assets[0], { ...assets[1], size: 399 }],
+    [assets[0], { ...assets[1], digest: null }],
+    [assets[0], { ...starter, size: 1 }],
+    [assets[0], { ...starter, digest: assets[1].digest }],
+    [assets[0], { ...assets[1], id: -1 }],
+    [assets[0], assets[0]],
+    [...assets, { ...assets[1], id: 13, name: 'unexpected.txt' }],
+  ])
+    assert.throws(() => planGuidedCornerReleaseAssets(expected, invalid));
 });

@@ -58,7 +58,8 @@ export function validateGuidedCornerProducer({
 }) {
   assert.match(producerRun || '', /^[1-9]\d*$/);
   assert.equal(String(run.id), producerRun);
-  assert.equal(run.path, '.github/workflows/publish-guided-corners.yml@refs/heads/main');
+  // REST run.path is a repository path; head_branch independently binds the main ref.
+  assert.equal(run.path, '.github/workflows/publish-guided-corners.yml');
   assert.equal(run.event, 'workflow_dispatch');
   assert.equal(run.head_branch, 'main');
   assert.equal(run.head_repository.full_name, repository);
@@ -78,6 +79,56 @@ export function validateGuidedCornerProducer({
   assert.match(artifactInfo.digest || '', /^sha256:[a-f0-9]{64}$/);
   assert(Number.isSafeInteger(artifactInfo.id) && artifactInfo.id > 0);
   return artifactInfo.id;
+}
+
+/**
+ * Plan immutable release completion from verified local identities and actual REST asset metadata.
+ * Existing uploaded bytes must match; only empty failed upload placeholders may be removed.
+ * @param {object[]} expected Exact retained tarball and checksum-receipt names, sizes and SHA-256 values.
+ * @param {object[]} assets Current assets on the already verified release/tag.
+ * @returns {{upload: string[], removeStarterIds: number[]}} Bounded missing-file uploads and empty placeholder IDs.
+ * @throws {Error} When metadata is incomplete, duplicated, foreign or inconsistent with retained bytes.
+ */
+export function planGuidedCornerReleaseAssets(expected, assets) {
+  assert(Array.isArray(expected) && Array.isArray(assets));
+  assert.deepEqual(
+    expected.map((file) => file.name).sort(),
+    [artifact, 'guided-corners-artifact.json'].sort(),
+  );
+  const names = new Set(expected.map((file) => file.name));
+  const ids = new Set();
+  for (const asset of assets) {
+    assert(names.has(asset.name), 'Unexpected release asset');
+    assert(Number.isSafeInteger(asset.id) && asset.id > 0 && !ids.has(asset.id));
+    ids.add(asset.id);
+  }
+  const upload = [];
+  const removeStarterIds = [];
+  for (const file of expected) {
+    assert(Number.isSafeInteger(file.size) && file.size > 0);
+    assert.match(file.sha256, /^[a-f0-9]{64}$/);
+    const matching = assets.filter((asset) => asset.name === file.name);
+    assert(matching.length <= 1, 'Duplicate release asset name');
+    if (!matching.length) {
+      upload.push(file.name);
+      continue;
+    }
+    const [asset] = matching;
+    if (asset.state === 'starter') {
+      assert.equal(asset.size, 0, 'A populated asset is never deleted for retry');
+      assert(
+        asset.digest === null || asset.digest === undefined,
+        'A checksummed asset is never deleted for retry',
+      );
+      removeStarterIds.push(asset.id);
+      upload.push(file.name);
+    } else {
+      assert.equal(asset.state, 'uploaded');
+      assert.equal(asset.size, file.size);
+      assert.equal(asset.digest, 'sha256:' + file.sha256, 'Existing release bytes differ');
+    }
+  }
+  return { upload, removeStarterIds };
 }
 
 /**
@@ -115,10 +166,7 @@ function api(endpoint) {
  */
 export function verifyGuidedCornerArtifactBytes(expected, bytes) {
   assert.equal(bytes.length, expected.bytes);
-  assert.equal(
-    `sha512-${createHash('sha512').update(bytes).digest('base64')}`,
-    expected.integrity,
-  );
+  assert.equal(`sha512-${createHash('sha512').update(bytes).digest('base64')}`, expected.integrity);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), expected.sha256);
   return true;
 }
@@ -174,9 +222,7 @@ function runIfSuccessful(program, args) {
     maxBuffer: 4 * 1024 * 1024,
   });
   if (result.error)
-    throw new Error(
-      `${program} operation failed (launch); no credential data emitted`,
-    );
+    throw new Error(`${program} operation failed (launch); no credential data emitted`);
   return result.status === 0 ? result.stdout.trim() : null;
 }
 
@@ -315,6 +361,10 @@ async function main(mode) {
     }
 
     const title = 'v2.9.0 guided corner customization';
+    const expectedAssets = [artifact, 'guided-corners-artifact.json'].map((name) => {
+      const bytes = fs.readFileSync(name);
+      return { name, size: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
+    });
     const existingRelease = runIfSuccessful('gh', [
       'release',
       'view',
@@ -328,16 +378,17 @@ async function main(mode) {
       const release = JSON.parse(existingRelease);
       assert.equal(release.tagName, tag);
       assert.equal(release.name, title);
-      run('gh', [
-        'release',
-        'upload',
-        tag,
-        artifact,
-        'guided-corners-artifact.json',
-        '--repo',
-        repository,
-        '--clobber',
-      ]);
+      const metadata = api(`repos/${repository}/releases/tags/${tag}`);
+      assert.equal(metadata.tag_name, tag);
+      assert.equal(metadata.name, title);
+      assert.equal(metadata.draft, false);
+      assert.equal(metadata.prerelease, false);
+      const plan = planGuidedCornerReleaseAssets(expectedAssets, metadata.assets);
+      // GitHub documents a zero-byte starter as a failed upload, not a published asset.
+      for (const id of plan.removeStarterIds)
+        run('gh', ['api', `repos/${repository}/releases/assets/${id}`, '-X', 'DELETE']);
+      if (plan.upload.length)
+        run('gh', ['release', 'upload', tag, ...plan.upload, '--repo', repository]);
     } else {
       run('gh', [
         'release',
@@ -354,7 +405,16 @@ async function main(mode) {
         'guided-corners-artifact.json',
       ]);
     }
-    console.log(`Created ${repository} ${tag} with the verified public artifact`);
+    const completed = api(`repos/${repository}/releases/tags/${tag}`);
+    assert.equal(completed.tag_name, tag);
+    assert.equal(completed.name, title);
+    assert.equal(completed.draft, false);
+    assert.equal(completed.prerelease, false);
+    assert.deepEqual(planGuidedCornerReleaseAssets(expectedAssets, completed.assets), {
+      upload: [],
+      removeStarterIds: [],
+    });
+    console.log(`Verified ${repository} ${tag} and its immutable public assets`);
   } else throw new Error('Unknown focused publication phase');
 }
 
