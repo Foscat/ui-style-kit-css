@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { load } from 'js-yaml';
 import {
   admitGuidedCornerRelease,
   validateGuidedCornerProducer,
@@ -181,4 +183,33 @@ test('guided release retries preserve uploaded assets and repair only empty fail
     [...assets, { ...assets[1], id: 13, name: 'unexpected.txt' }],
   ])
     assert.throws(() => planGuidedCornerReleaseAssets(expected, invalid));
+});
+
+/** Preserve immutable-ID selection while placing receipt and tarball where the trusted verifier reads them. */
+test('guided continuation restores only the admitted artifact at the verifier root', () => {
+  const workflow = load(
+    readFileSync(
+      new URL('../.github/workflows/publish-guided-corners.yml', import.meta.url),
+      'utf8',
+    ),
+  );
+  const steps = workflow.jobs.publish.steps;
+  const index = steps.findIndex(
+    (step) => step.name === 'Restore the original published artifact for continuation only',
+  );
+  assert(index > 0);
+  const step = steps[index];
+  assert.equal(step.uses, 'actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093');
+  assert.equal(step.with['artifact-ids'], '${{ steps.producer.outputs.artifact_id }}');
+  assert.equal(step.with['run-id'], '${{ env.PRODUCER_RUN }}');
+  assert.equal(step.with['github-token'], '${{ github.token }}');
+  assert.equal(step.with.path, '.');
+  assert.equal(
+    step.with['merge-multiple'],
+    true,
+    'ID-selected artifacts otherwise enter a named subdirectory',
+  );
+  assert(!Object.hasOwn(step.with, 'name') && !Object.hasOwn(step.with, 'pattern'));
+  assert.equal(steps[index - 1].name, 'Validate trusted artifact producer');
+  assert.equal(steps[index + 1].name, 'Verify the restored tarball and checksum receipt');
 });

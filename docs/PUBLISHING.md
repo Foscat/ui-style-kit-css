@@ -6,6 +6,8 @@ The fixed-version `.github/workflows/publish-guided-corners.yml` workflow publis
 
 Continuation verifies GitHub REST run metadata, the retained checksum receipt and every existing release asset. Matching uploaded assets are reused unchanged; missing assets are uploaded without replacement. An empty `starter` placeholder from a failed upload is the only removable retry state. Populated, duplicate, foreign or mismatched assets stop completion. Review, signing and public-byte verification remain required.
 
+The pinned download action selects the one validated immutable artifact ID and restores its contents directly at the verifier working directory. This avoids its default named subfolder while retaining producer, receipt and public-byte checks. This controller correction changes no already published package bytes.
+
 ## 2.8.0 Style Studio release
 
 Publish the reviewed Style Studio and library refinements through the normal local release gate, main merge, signed version tag, Release Version Alignment, and protected npm workflow. See [the 2.8.0 release notes](RELEASE-2.8.0.md).
