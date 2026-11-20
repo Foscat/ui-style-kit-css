@@ -2,6 +2,7 @@
  * @module studio/reference
  * @description Retained library QA controller; authored board markup is owned by shared modules.
  */
+import { createState } from './state.js';
 import { prepareSpecimen } from './specimen-loader.js';
 import { createSpecimenContext } from './specimen-context.js';
 import { renderStyleSpecificSurface } from './surfaces.js';
@@ -76,6 +77,7 @@ const colorTokenRoles = [
 ];
 const rgbChannelPattern = /^\d{1,3}\s+\d{1,3}\s+\d{1,3}$/;
 const themeTokenOverrides = new Map();
+let referenceCorners = '';
 const appliedColorTokenNames = new Set();
 const stylesWithCustomChoices = new Set([
   'minimal-saas',
@@ -184,14 +186,20 @@ function normalizeThemeSelection(value) {
 /**
  * Restores a shareable demo state using only values from the public inventory.
  * The personality alias retains compatibility with existing style-review URLs.
+ * Omitted fields and invalid preset/mode requests preserve the current controls; an explicit
+ * unresolved palette request restores style defaults. Shared edits and corners remain validated.
  * @returns {void}
  */
 function applyDemoQuerySelection() {
   const query = new URLSearchParams(window.location.search);
+  const restored = createState(demoManifest, query.toString());
   const ui = query.get('ui') ?? query.get('personality');
-  if (Object.hasOwn(stylePrefixes, ui)) uiSelect.value = ui;
-  if (query.has('theme')) themeSelect.value = normalizeThemeSelection(query.get('theme'));
-  if (demoManifest.modes.includes(query.get('mode'))) modeSelect.value = query.get('mode');
+  if (Object.hasOwn(stylePrefixes, ui)) uiSelect.value = restored.appearance.ui;
+  if (query.has('theme')) themeSelect.value = restored.appearance.theme;
+  if (demoManifest.modes.includes(query.get('mode'))) modeSelect.value = restored.appearance.mode;
+  referenceCorners = restored.appearance.corners;
+  for (const [key, edits] of Object.entries(restored.edits))
+    themeTokenOverrides.set(key, new Map(Object.entries(edits)));
 }
 
 /**
@@ -204,6 +212,8 @@ function applyPaletteSelection() {
   referencePalette = !theme;
   document.body.dataset.ui = uiSelect.value;
   document.body.dataset.mode = modeSelect.value;
+  if (referenceCorners) document.body.dataset.uskCorners = referenceCorners;
+  else document.body.removeAttribute('data-usk-corners');
   if (theme) document.body.dataset.theme = theme;
   else document.body.removeAttribute('data-theme');
   applyActiveTokenOverrides();

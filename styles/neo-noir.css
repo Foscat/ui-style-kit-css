@@ -1093,7 +1093,8 @@
   border-radius: 0; clip-path: none; box-shadow: none; font: 11px/1.4 var(--noir-font-mono);
 }
 /** Classed Noir selects retain the platform arrow through the shared indicator token. */
-.noir-select, [data-ui="neo-noir"][data-mode] .noir-select { --usk-native-select-indicator-image: none; appearance: auto; background-image: none; padding-right: .5rem; }
+.noir-select, [data-ui="neo-noir"][data-mode] .noir-select,
+[data-ui="neo-noir"][data-mode] :where(select:not([multiple])) { --usk-native-select-indicator-image: none; appearance: auto; background-image: none; padding-right: .5rem; }
 .noir-input:focus, .noir-textarea:focus, .noir-select:focus, .noir-field-row[data-noir-state="focus"] :is(input,textarea) { border-color: var(--noir-focus); box-shadow: none; outline: 2px solid var(--noir-focus); outline-offset: 1px; }
 .noir-input[aria-invalid="true"], .noir-textarea[aria-invalid="true"] { border-color: var(--noir-danger); color: var(--noir-danger); box-shadow: none; }
 .noir-field-row[data-noir-state="success"] input { border-color: var(--noir-success); color: var(--noir-success); }

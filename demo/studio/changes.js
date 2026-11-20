@@ -18,12 +18,13 @@ function same(left = {}, right = {}) {
  * Missing previous state intentionally requests a complete initial render.
  * @param {?Object} previous Last accepted frame snapshot.
  * @param {Object} next Requested frame snapshot.
- * @returns {Object} Mount, appearance, palette, icon, filter, bridge and interaction changes.
+ * @returns {Object} Mount, appearance, geometry, palette, icon, filter, bridge and interaction changes.
  */
 export function changesBetween(previous, next) {
   const before = previous?.appearance ?? {};
   const after = next.appearance;
   const appearance = !previous || ['ui', 'theme', 'mode'].some((key) => before[key] !== after[key]);
+  const geometry = !previous || before.corners !== after.corners;
   const mount =
     !previous ||
     ['view', 'example', 'markup'].some((key) => previous[key] !== next[key]) ||
@@ -42,11 +43,14 @@ export function changesBetween(previous, next) {
   return {
     mount,
     appearance,
+    geometry,
     palette,
     icons,
     filter,
     bridge,
     scopes,
-    changed: Boolean(mount || appearance || palette || icons || filter || bridge || scopes.length),
+    changed: Boolean(
+      mount || appearance || geometry || palette || icons || filter || bridge || scopes.length,
+    ),
   };
 }

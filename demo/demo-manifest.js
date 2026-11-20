@@ -234,6 +234,23 @@ window.UI_STYLE_KIT_MANIFEST = {
     "dark",
     "contrast"
   ],
+  "guidedCorners": {
+    "attribute": "data-usk-corners",
+    "values": [
+      "none",
+      "small",
+      "medium",
+      "large"
+    ],
+    "scope": "[data-ui][data-mode]",
+    "omission": "authored-preset-defaults",
+    "excludes": [
+      "avatar",
+      "circular-decoration",
+      "clipping"
+    ],
+    "entrypoint": "./guided-corners.css"
+  },
   "paletteRoles": {
     "minimal-saas": [
       "bg",
@@ -907,28 +924,28 @@ window.UI_STYLE_KIT_MANIFEST = {
   },
   "studio": {
     "version": "2.9.0",
-    "buildId": "2ff8abf4fe86",
+    "buildId": "db34cae435ea",
     "styles": {
-      "minimal-saas": "ebd5b1322453",
-      "bento": "69d02938a200",
-      "maximalist": "bfdc41d636be",
-      "bauhaus": "7868c0d9128b",
-      "tactile": "cc909206d0bf",
-      "neumorphism": "ee0f17bc7465",
-      "retrofuturism": "90d831e1f2a9",
-      "brutalism": "91a86c309849",
-      "cyberpunk": "d286ce0790f9",
-      "y2k": "6e5c57c35e78",
-      "retro-glass": "202c30cb481a",
-      "editorial-luxe": "a5d875f90dab",
-      "organic-modern": "36975c13e843",
-      "industrial-utility": "cf75051dabd8",
-      "technical-blueprint": "a3eadf3f88a1",
-      "art-deco": "b1bdcb958312",
-      "clay": "2500c356d3fe",
-      "data-terminal": "96cd44bb3a23",
-      "paper-editorial": "d56dd689dab9",
-      "neo-noir": "afa3e57fd27d"
+      "minimal-saas": "ffc55dd4f336",
+      "bento": "a21bdc0a2573",
+      "maximalist": "f69ef5f9b636",
+      "bauhaus": "482f8db76ed2",
+      "tactile": "477141a4cf7d",
+      "neumorphism": "1e0ed05edd3e",
+      "retrofuturism": "165d40eb2dec",
+      "brutalism": "8ad2241dcc23",
+      "cyberpunk": "030199760dde",
+      "y2k": "8d599acdabec",
+      "retro-glass": "6b97cc92b31e",
+      "editorial-luxe": "3795e6f8d24b",
+      "organic-modern": "7003953fc56c",
+      "industrial-utility": "16a00e653c02",
+      "technical-blueprint": "bd1e18a56e84",
+      "art-deco": "da4c4d7cfa43",
+      "clay": "03d8372d836a",
+      "data-terminal": "cbb472645c14",
+      "paper-editorial": "5b9e4d4a076a",
+      "neo-noir": "5b4687adf4b8"
     }
   }
 };

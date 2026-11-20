@@ -72,6 +72,52 @@ test('studio comparison pins colors independently and shares search and empty re
   await expect(baseline.locator('[data-project-empty]')).toBeVisible();
 });
 
+test('studio previews and shares guided corners with an independent pinned baseline', async ({
+  page,
+}) => {
+  await page.goto(url + '?ui=bento&example=form');
+  const active = await ready(page);
+  const name = active.getByLabel('Full name', { exact: true });
+  const defaultRadius = await name.evaluate((input) => getComputedStyle(input).borderTopLeftRadius);
+  await name.fill('Alex Example');
+  await name.evaluate((input) => {
+    input.dataset.identity = 'retained';
+  });
+
+  const corners = page.getByRole('combobox', { name: 'Corners', exact: true });
+  await corners.selectOption('none');
+  await expect(name).toHaveCSS('border-top-left-radius', '0px');
+  await page.getByRole('button', { name: 'Compare styles', exact: true }).click();
+  const baseline = await ready(page, 'a');
+  await corners.selectOption('large');
+  await expect(name).toHaveCSS('border-top-left-radius', '16px');
+  await expect(name).toHaveAttribute('data-identity', 'retained');
+  await expect(name).toHaveValue('Alex Example');
+  await expect(baseline.getByLabel('Full name', { exact: true })).toHaveCSS(
+    'border-top-left-radius',
+    '0px',
+  );
+  await expect(page.locator('#subtitle-a')).toContainText('Square corners');
+  await expect(page.locator('#subtitle-b')).toContainText('Large corners');
+
+  await page.getByRole('button', { name: 'Customize & export', exact: true }).click();
+  await page.getByRole('tab', { name: 'Code & export', exact: true }).click();
+  await expect(page.locator('#setup-code')).toContainText('data-usk-corners="large"');
+  await page.goto(await page.locator('#share-url').inputValue());
+  const restored = await ready(page);
+  const restoredBaseline = await ready(page, 'a');
+  await expect(corners).toHaveValue('large');
+  await expect(restored.locator('body')).toHaveAttribute('data-usk-corners', 'large');
+  await expect(restoredBaseline.locator('body')).toHaveAttribute('data-usk-corners', 'none');
+
+  await corners.selectOption('');
+  await expect(restored.locator('body')).not.toHaveAttribute('data-usk-corners');
+  await expect(restored.getByLabel('Full name', { exact: true })).toHaveCSS(
+    'border-top-left-radius',
+    defaultRadius,
+  );
+});
+
 test('studio token edits export their public namespace and reproduce through a share URL', async ({
   page,
 }) => {
@@ -535,4 +581,173 @@ test('studio phone catalog keeps navigation compact and all component groups rea
   expect(
     await page.locator('#preview-b').evaluate((n) => n.getBoundingClientRect().top),
   ).toBeLessThan(1000);
+});
+
+/** A geometry-only transition must retain both form state and the committed palette. */
+test('studio corners update without loading or palette reports', async ({ page }) => {
+  await page.goto(url + '?ui=bento&example=form');
+  const preview = await ready(page);
+  await preview.getByLabel('Full name', { exact: true }).fill('Alex Example');
+  await page.evaluate(() => {
+    window.cornerAudit = { loading: 0, colors: 0, rendered: 0 };
+    new MutationObserver((records) => {
+      for (const record of records)
+        if (record.target.dataset.status === 'loading') window.cornerAudit.loading++;
+    }).observe(document.querySelector('#panel-b'), {
+      attributes: true,
+      attributeFilter: ['data-status'],
+    });
+    addEventListener('message', (event) => {
+      if (event.data?.type === 'rendered') {
+        window.cornerAudit.rendered++;
+        if (event.data.tokens) window.cornerAudit.colors++;
+      }
+    });
+  });
+  await page.getByRole('combobox', { name: 'Corners', exact: true }).selectOption('large');
+  await expect(preview.getByLabel('Full name', { exact: true })).toHaveCSS(
+    'border-top-left-radius',
+    '16px',
+  );
+  await expect.poll(() => page.evaluate(() => window.cornerAudit.rendered)).toBeGreaterThan(0);
+  expect(
+    await page.evaluate(() => ({
+      loading: window.cornerAudit.loading,
+      colors: window.cornerAudit.colors,
+    })),
+  ).toEqual({ loading: 0, colors: 0 });
+  await expect(preview.getByLabel('Full name', { exact: true })).toHaveValue('Alex Example');
+  await page.getByRole('button', { name: 'Customize & export', exact: true }).click();
+  await page.getByRole('tab', { name: 'Code & export', exact: true }).click();
+  await expect(page.locator('#setup-code')).toContainText('data-usk-corners="large"');
+  await expect(page.locator('#download-css')).toBeEnabled();
+});
+
+/** Geometry accepted during an asynchronous mount must appear in its committed preview. */
+test('studio pending specimen mounts commit the latest corner choice', async ({ page }) => {
+  const server = await startStudioServer(0);
+  let pendingRoute;
+  let receivedRequest;
+  const requested = new Promise((resolve) => {
+    receivedRequest = resolve;
+  });
+  const holdSpecimen = (route) => {
+    pendingRoute = route;
+    receivedRequest();
+  };
+  try {
+    await page.goto(server.url + '?example=form');
+    const preview = await ready(page);
+    await preview.locator('body').evaluate(() => {
+      window.pendingCornerConfig = false;
+      addEventListener('message', (event) => {
+        if (event.data?.type === 'configure' && event.data.config?.appearance.corners === 'large')
+          window.pendingCornerConfig = true;
+      });
+    });
+    await page.route('**/studio-specimens.js*', holdSpecimen);
+    await page.getByRole('link', { name: 'Style details', exact: true }).click();
+    await requested;
+    await expect(page.locator('#panel-b')).toHaveAttribute('data-status', 'loading');
+    await page.getByRole('combobox', { name: 'Corners', exact: true }).selectOption('large');
+    await expect
+      .poll(() => preview.locator('body').evaluate(() => window.pendingCornerConfig))
+      .toBe(true);
+    await pendingRoute.continue();
+    pendingRoute = null;
+    await ready(page);
+    await expect(preview.locator('body')).toHaveAttribute('data-usk-corners', 'large');
+  } finally {
+    if (pendingRoute) await pendingRoute.abort().catch(() => {});
+    await page.unroute('**/studio-specimens.js*', holdSpecimen);
+    await server.close();
+  }
+});
+
+/** The retained reference receives validated state from the same share contract as Studio. */
+test('studio complete reference retains native and named edits and corners', async ({ page }) => {
+  for (const [theme, owner, variable] of [
+    ['', 'preset:bento', '--bento-bg-rgb'],
+    ['arctic-indigo', 'theme:arctic-indigo', '--usk-bg-rgb'],
+  ]) {
+    const query = new URLSearchParams({
+      ui: 'bento',
+      theme,
+      mode: 'light',
+      corners: 'large',
+      view: 'details',
+      studio: JSON.stringify({ version: 1, edits: { [owner + '|light']: { bg: '18 52 86' } } }),
+    });
+    await page.goto(url + '?' + query);
+    await ready(page);
+    await page.goto(await page.locator('#reference-link').getAttribute('href'));
+    await expect(page.locator('body')).toHaveAttribute('data-usk-corners', 'large');
+    await expect
+      .poll(() =>
+        page
+          .locator('body')
+          .evaluate(
+            (body, token) => getComputedStyle(body).getPropertyValue(token).trim(),
+            variable,
+          ),
+      )
+      .toBe('18 52 86');
+  }
+});
+
+/** Hidden appearance controls still expose a complete concise visual context. */
+test('studio compact appearance summary includes palette and corner choices', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(url + '?ui=bento&theme=arctic-indigo&mode=contrast&corners=large');
+  await ready(page);
+  await expect(page.locator('#appearance-controls')).not.toHaveAttribute('open');
+  await expect(page.locator('#appearance-summary')).toContainText('Arctic Indigo');
+  await expect(page.locator('#appearance-summary')).toContainText('High contrast');
+  await expect(page.locator('#appearance-summary')).toContainText('Large corners');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+});
+
+/** Exported examples must work in a clean consumer without the Studio shell's dependency links. */
+test('studio exported examples include a usable Layout companion setup', async ({ page }) => {
+  const server = await startStudioServer(0);
+  try {
+    await page.goto(server.url + '?ui=bento&example=form');
+    await ready(page);
+    await page.getByRole('button', { name: 'Customize & export', exact: true }).click();
+    await page.getByRole('tab', { name: 'Code & export', exact: true }).click();
+    await expect(page.locator('#markup-code')).toContainText('ly-wrapper');
+    const setup = await page.locator('#setup-code').textContent();
+    const markup = await page.locator('#markup-code').textContent();
+    expect(setup).toContain('layout-style-css');
+    const consumer = await page.context().newPage();
+    try {
+      await consumer.goto(server.url);
+      await consumer.setContent(
+        setup
+          .replaceAll('./node_modules/ui-style-kit-css/', server.url)
+          .replace(
+            '<button class="usk-button" data-ui-variant="primary">Get started</button>',
+            markup,
+          ),
+        { waitUntil: 'load' },
+      );
+      await expect(consumer.locator('body')).toHaveClass('ly-root ly-page');
+      for (const width of [1440, 390]) {
+        await consumer.setViewportSize({ width, height: 844 });
+        await expect(consumer.locator('.ly-cluster').last()).toHaveCSS('display', 'flex');
+        expect(
+          await consumer
+            .locator('.ly-wrapper')
+            .evaluate((node) => parseFloat(getComputedStyle(node).paddingInlineStart)),
+        ).toBeGreaterThan(0);
+        expect(
+          await consumer.evaluate(() => document.documentElement.scrollWidth > innerWidth),
+        ).toBe(false);
+      }
+    } finally {
+      await consumer.close();
+    }
+  } finally {
+    await server.close();
+  }
 });

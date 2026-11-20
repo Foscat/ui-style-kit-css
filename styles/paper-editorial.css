@@ -240,9 +240,9 @@
   --usk-native-choice-shadow: 2px 2px 0 rgb(0 0 0 / .16);
   --usk-native-choice-checked-background: var(--paper-primary);
   --usk-native-choice-mark-color: var(--paper-on-primary);
-  --usk-native-select-indicator-image: linear-gradient(81deg, transparent 50%, var(--paper-primary) 50%), linear-gradient(99deg, var(--paper-primary) 50%, transparent 50%);
-  --usk-native-select-indicator-size: 0.46rem 0.46rem, 0.46rem 0.46rem;
-  --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - 0.84rem) 50%;
+  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+  --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+  --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
   --usk-native-select-padding-inline-end: 2.55rem;
   --usk-native-range-track-size: .22rem;
   --usk-native-range-track-background: var(--paper-surface-soft);
@@ -854,9 +854,6 @@
   --usk-native-choice-shadow: 1px 1px 0 rgb(var(--paper-text-rgb) / .28);
   --usk-native-choice-checked-background: var(--paper-primary);
   --usk-native-choice-mark-color: var(--paper-on-primary);
-  --usk-native-select-indicator-image: linear-gradient(45deg, transparent 46%, var(--paper-text) 47% 53%, transparent 54%), linear-gradient(135deg, var(--paper-text) 47% 53%, transparent 54%);
-  --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
-  --usk-native-select-indicator-position: calc(100% - 1.12rem) 50%, calc(100% - .86rem) 50%;
   --usk-native-select-padding-inline-end: 2.42rem;
   --usk-native-range-track-size: .28rem;
   --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--paper-border) 0 1px, transparent 1px .62rem), linear-gradient(var(--paper-surface-soft), var(--paper-surface-soft));
@@ -1248,20 +1245,15 @@
 .paper-textarea[aria-invalid="true"] { border-color: var(--paper-sheet-danger); box-shadow: 0 2px 0 var(--paper-sheet-danger); }
 .paper-textarea { min-height: 66px; resize: vertical; }
 .paper-select {
-  background-image: none;
+  background-image: var(--usk-native-select-indicator-image);
+  background-size: var(--usk-native-select-indicator-size);
+  background-position: var(--usk-native-select-indicator-position);
+  background-repeat: no-repeat;
   cursor: pointer;
   padding-right: 28px;
 }
 .paper-select-wrap { position: relative; }
-.paper-select-wrap::after {
-  color: var(--paper-sheet-ink-soft);
-  content: "⌄";
-  font: 700 1rem var(--paper-sheet-serif);
-  pointer-events: none;
-  position: absolute;
-  right: 10px;
-  top: 7px;
-}
+/** The select owns its indicator; wrappers do not add font glyphs or a duplicate arrow. */
 .paper-help {
   color: var(--paper-sheet-ink-faint);
   display: block;

@@ -308,6 +308,24 @@ function composedClassNames(preset) {
   return classNames;
 }
 
+/** Collects positive class hooks without treating negated exclusions as implementations.
+ * @param {Object} selector Parsed css-tree selector or selector list.
+ * @returns {Set<string>} Complete class tokens prefixed with a dot.
+ */
+function matchingClasses(selector) {
+  const classes = new Set();
+  walk(selector, {
+    enter(node) {
+      // Exclusions constrain a rule without providing a class hook.
+      if (node.type === 'PseudoClassSelector' && node.name.toLowerCase() === 'not') {
+        return this.skip;
+      }
+      if (node.type === 'ClassSelector') classes.add(`.${node.name}`);
+    }
+  });
+  return classes;
+}
+
 function selectorFacts(relativeFile) {
   const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
   const facts = [];
@@ -315,13 +333,12 @@ function selectorFacts(relativeFile) {
   walk(parse(css, { filename: relativeFile }), {
     visit: 'Rule',
     enter(rule) {
-      const classes = new Set();
+      const classes = matchingClasses(rule.prelude);
       const attributes = [];
       const declarations = new Map();
 
       walk(rule.prelude, {
         enter(node) {
-          if (node.type === 'ClassSelector') classes.add(`.${node.name}`);
           if (node.type === 'AttributeSelector') {
             attributes.push({
               name: node.name?.name,
@@ -354,19 +371,37 @@ function selectorTexts(relativeFile) {
   return selectors;
 }
 
-function generatedSelectorRules(relativeFile) {
+/** Reads generated rules while separating optional geometry from preset ownership checks.
+ * @param {string} relativeFile Generated stylesheet relative to the repository.
+ * @param {Object} [options={}] Rule inventory options.
+ * @param {boolean} [options.skipGuidedCorners=false] Omit the shared customization layer.
+ * @returns {Array<Object>} Parsed selectors, positive class hooks and declarations.
+ */
+function generatedSelectorRules(relativeFile, { skipGuidedCorners = false } = {}) {
   const css = fs.readFileSync(path.join(rootDir, relativeFile), 'utf8');
   const rules = [];
 
   walk(parse(css, { filename: relativeFile }), {
     visit: 'Rule',
     enter(rule) {
+      // This opt-in layer targets public classes across presets to override their radii.
+      if (
+        skipGuidedCorners &&
+        this.atrule?.name === 'layer' &&
+        generate(this.atrule.prelude) === 'ui-style-kit.customization'
+      )
+        return;
       const declarations = new Set();
       rule.block.children.forEach((node) => {
         if (node.type === 'Declaration') declarations.add(node.property);
       });
       rule.prelude.children.forEach((selector) => {
-        rules.push({ selector, text: generate(selector), declarations });
+        rules.push({
+          selector,
+          text: generate(selector),
+          classes: matchingClasses(selector),
+          declarations
+        });
       });
     }
   });
@@ -417,6 +452,17 @@ function declarationArtifactFacts(relativeFile) {
     sha256: crypto.createHash('sha256').update(declarationBlocks.join('\n')).digest('hex')
   };
 }
+
+/** Verifies that class ownership follows positive, complete selector tokens. */
+test('selector class ownership excludes negations and compares complete tokens', () => {
+  const selector = parse('.usk-button:not(:is(.usk-avatar, .usk-avatar-lg))', {
+    context: 'selector'
+  });
+  assert.deepEqual([...matchingClasses(selector)], ['.usk-button']);
+  const variant = matchingClasses(parse('.usk-button-danger', { context: 'selector' }));
+  assert.equal(variant.has('.usk-button'), false);
+  assert.equal(variant.has('.usk-button-danger'), true);
+});
 
 test('build normalizes authored CSS line endings before offset-based selector edits', () => {
   const buildSource = fs.readFileSync(path.join(rootDir, 'scripts/build.mjs'), 'utf8');
@@ -583,12 +629,12 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
   ];
 
   for (const relativeFile of aggregateEntrypoints) {
-    const selectors = selectorTexts(relativeFile);
+    const rules = generatedSelectorRules(relativeFile, { skipGuidedCorners: true });
     for (const selector of expectedImplementedSelectors) {
-      const owningRules = selectors.filter((candidate) => candidate.includes(selector));
+      const owningRules = rules.filter(({ classes }) => classes.has(selector));
       assert.ok(owningRules.length > 0, `${relativeFile} must implement ${selector}`);
       assert.equal(
-        owningRules.every((candidate) => candidate.includes(':where([data-ui=')),
+        owningRules.every(({ text }) => text.includes(':where([data-ui=')),
         true,
         `${relativeFile} must scope ${selector} beneath a specificity-safe preset root`
       );
@@ -598,9 +644,9 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
     )) {
       for (const variant of variants) {
         assert.equal(
-          selectors.some((candidate) =>
-            candidate.includes(selector)
-            && selectorHasAttributeValue(candidate, 'data-ui-variant', variant)
+          rules.some(
+            ({ classes, text }) =>
+              classes.has(selector) && selectorHasAttributeValue(text, 'data-ui-variant', variant)
           ),
           true,
           `${relativeFile} must implement the ${selector} ${variant} variant`
@@ -611,12 +657,12 @@ test('generated entrypoints scope implemented aliases while raw preset exports s
 
   for (const preset of manifest.presets) {
     const relativeFile = `dist/visual/${preset.id}.css`;
-    const selectors = selectorTexts(relativeFile);
+    const rules = generatedSelectorRules(relativeFile, { skipGuidedCorners: true });
     for (const selector of expectedImplementedSelectors) {
-      const owningRules = selectors.filter((candidate) => candidate.includes(selector));
+      const owningRules = rules.filter(({ classes }) => classes.has(selector));
       assert.ok(owningRules.length > 0, `${relativeFile} must implement ${selector}`);
       assert.equal(
-        owningRules.every((candidate) => selectorHasAttributeValue(candidate, 'data-ui', preset.id)),
+        owningRules.every(({ text }) => selectorHasAttributeValue(text, 'data-ui', preset.id)),
         true,
         `${relativeFile} must scope ${selector} to its focused preset`
       );
@@ -692,14 +738,14 @@ test('generated semantic aliases never require descendant data-ui roots', () => 
 });
 
 test('selector alias generation preserves reviewed declaration artifacts byte-for-byte', () => {
-  /** Locks reviewed declarations, including native Clay RGB routing, AA ink and exact external Paper textures. */
+  /** Locks reviewed declarations, including shared select arrows, native Clay RGB routing, AA ink and exact Paper textures. */
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.visual.css'), {
-    count: 37067,
-    sha256: 'b95540d310e460cae068c8d1c9f287f1b164db64c383c21fccfd780ef4725bf3'
+    count: 36999,
+    sha256: '234ffbba089916524ca164a49c7ac634e178561b0ec729990599429378e5d07d'
   });
   assert.deepEqual(declarationArtifactFacts('dist/ui-style-kit.css'), {
-    count: 37518,
-    sha256: '599db4cb75b9534f37c2387097772e4667c57238af09b1da86da4502e5e9154c'
+    count: 37450,
+    sha256: 'ac86aaf1ae662acd622dd869f9e34e18c979113e939af653d9fb9808776efcf3'
   });
 });
 

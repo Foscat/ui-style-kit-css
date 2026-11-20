@@ -85,7 +85,7 @@ test('native controls retain RTL focus disabled zoom and motion accessibility st
     indicatorPosition: getComputedStyle(select).getPropertyValue('--usk-native-select-indicator-position').trim()
   }));
   expect(selectDirection.direction).toBe('rtl');
-  expect(selectDirection.indicatorPosition).toMatch(/^1\./);
+  expect(selectDirection.indicatorPosition).toBe('.7rem 50%, 1rem 50%');
 
   const range = page.getByTestId('native-range-focus');
   await range.focus();

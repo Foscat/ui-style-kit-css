@@ -13,6 +13,7 @@ Pure studio state and URL contracts. Preview documents never own configuration.
     - [.COLOR_ROLES](#module_studio/state.COLOR_ROLES)
     - [.normalizeRgb(value)](#module_studio/state.normalizeRgb) ⇒ <code>string</code>
     - [.paletteKey(appearance)](#module_studio/state.paletteKey) ⇒ <code>string</code>
+    - [.appearanceLabels(appearance, inventory)](#module_studio/state.appearanceLabels) ⇒ <code>Array.&lt;string&gt;</code>
     - [.createState(inventory, [search])](#module_studio/state.createState) ⇒ <code>StudioState</code>
     - [.changeAppearance(state, patch, inventory)](#module_studio/state.changeAppearance) ⇒ <code>StudioState</code>
     - [.editToken(state, role, value)](#module_studio/state.editToken) ⇒ <code>StudioState</code>
@@ -59,6 +60,20 @@ Returns the palette owner, preserving named-theme portability across styles.
 | Param      | Type                    | Description    |
 | ---------- | ----------------------- | -------------- |
 | appearance | <code>Appearance</code> | Configuration. |
+
+<a name="module_studio/state.appearanceLabels"></a>
+
+### studio/state.appearanceLabels(appearance, inventory) ⇒ <code>Array.&lt;string&gt;</code>
+
+Describes validated visual choices consistently in compact and expanded UI context.
+
+**Kind**: static method of [<code>studio/state</code>](#module_studio/state)  
+**Returns**: <code>Array.&lt;string&gt;</code> - Preset, palette, mode and optional corner labels.
+
+| Param      | Type                    | Description                                     |
+| ---------- | ----------------------- | ----------------------------------------------- |
+| appearance | <code>Appearance</code> | Current visual configuration.                   |
+| inventory  | <code>Inventory</code>  | Authoritative preset labels and corner choices. |
 
 <a name="module_studio/state.createState"></a>
 
@@ -185,12 +200,13 @@ Drops unknown roles and malformed channel values from shared configuration.
 **Kind**: inner typedef of [<code>studio/state</code>](#module_studio/state)  
 **Properties**
 
-| Name           | Type                                                     | Description                             |
-| -------------- | -------------------------------------------------------- | --------------------------------------- |
-| presets        | <code>Array.&lt;Object&gt;</code>                        | Public preset identifiers and prefixes. |
-| themes         | <code>Array.&lt;string&gt;</code>                        | Named palette identifiers.              |
-| modes          | <code>Array.&lt;string&gt;</code>                        | Supported display modes.                |
-| [paletteRoles] | <code>Object.&lt;string, Array.&lt;string&gt;&gt;</code> | Public native material roles by preset. |
+| Name            | Type                                                     | Description                             |
+| --------------- | -------------------------------------------------------- | --------------------------------------- |
+| presets         | <code>Array.&lt;Object&gt;</code>                        | Public preset identifiers and prefixes. |
+| themes          | <code>Array.&lt;string&gt;</code>                        | Named palette identifiers.              |
+| modes           | <code>Array.&lt;string&gt;</code>                        | Supported display modes.                |
+| [guidedCorners] | <code>Object</code>                                      | Supported corner choices.               |
+| [paletteRoles]  | <code>Object.&lt;string, Array.&lt;string&gt;&gt;</code> | Public native material roles by preset. |
 
 <a name="module_studio/state..PinnedAppearance"></a>
 
@@ -199,13 +215,14 @@ Drops unknown roles and malformed channel values from shared configuration.
 **Kind**: inner typedef of [<code>studio/state</code>](#module_studio/state)  
 **Properties**
 
-| Name   | Type                                       | Description                                |
-| ------ | ------------------------------------------ | ------------------------------------------ |
-| ui     | <code>string</code>                        | Pinned preset.                             |
-| theme  | <code>string</code>                        | Pinned palette or an empty native palette. |
-| mode   | <code>string</code>                        | Pinned mode.                               |
-| bridge | <code>boolean</code>                       | Whether interaction feedback is enabled.   |
-| edits  | <code>Object.&lt;string, string&gt;</code> | Detached RGB overrides.                    |
+| Name    | Type                                       | Description                                      |
+| ------- | ------------------------------------------ | ------------------------------------------------ |
+| ui      | <code>string</code>                        | Pinned preset.                                   |
+| theme   | <code>string</code>                        | Pinned palette or an empty native palette.       |
+| mode    | <code>string</code>                        | Pinned mode.                                     |
+| corners | <code>string</code>                        | Pinned corner choice or an empty preset default. |
+| bridge  | <code>boolean</code>                       | Whether interaction feedback is enabled.         |
+| edits   | <code>Object.&lt;string, string&gt;</code> | Detached RGB overrides.                          |
 
 <a name="module_studio/state..StudioState"></a>
 

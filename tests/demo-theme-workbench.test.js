@@ -194,6 +194,11 @@ test('demo deep links honor supported presets, palettes and modes without accept
   assert.equal(controls.uiSelect.value, 'tactile');
   assert.equal(controls.themeSelect.value, 'arctic-indigo');
   assert.equal(controls.modeSelect.value, 'contrast');
+  app.window.location.search = '?corners=large';
+  app.applyDemoQuerySelection();
+  assert.equal(controls.uiSelect.value, 'tactile');
+  assert.equal(controls.themeSelect.value, 'arctic-indigo');
+  assert.equal(controls.modeSelect.value, 'contrast');
   app.window.location.search = '?ui=__proto__&theme=invalid&mode=invalid';
   app.applyDemoQuerySelection();
   assert.equal(controls.uiSelect.value, 'tactile');

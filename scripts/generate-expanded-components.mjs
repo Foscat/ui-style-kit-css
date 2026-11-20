@@ -595,7 +595,7 @@ export function syncExpandedComponents(rootDir, manifest) {
   }
 
   const next = `${authored.trimEnd()}\n\n${generated}\n`;
-  fs.writeFileSync(outputPath, next);
+  if (current !== next) fs.writeFileSync(outputPath, next);
   return outputPath;
 }
 

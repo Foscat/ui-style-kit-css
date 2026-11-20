@@ -13,13 +13,14 @@ Owns one isolated preview document and its local, disposable interaction wiring.
   - [~send(type, [payload])](#module_studio/frame..send) ⇒ <code>void</code>
   - [~action(scope, patch)](#module_studio/frame..action) ⇒ <code>void</code>
   - [~tokens()](#module_studio/frame..tokens) ⇒ <code>Array.&lt;{role:string, value:string}&gt;</code>
+  - [~applyCorners()](#module_studio/frame..applyCorners) ⇒ <code>void</code>
   - [~applyAppearance([retag])](#module_studio/frame..applyAppearance) ⇒ <code>void</code>
   - [~syncInteractions([scopes], [surfaces])](#module_studio/frame..syncInteractions) ⇒ <code>void</code>
   - [~publicMarkup(source)](#module_studio/frame..publicMarkup) ⇒ <code>string</code>
   - [~copyComponent(id)](#module_studio/frame..copyComponent) ⇒ <code>void</code>
   - [~bind()](#module_studio/frame..bind) ⇒ <code>void</code>
   - [~loadSpecimens()](#module_studio/frame..loadSpecimens) ⇒ <code>Promise.&lt;Object&gt;</code>
-  - [~configure(next, nextRevision)](#module_studio/frame..configure) ⇒ <code>Promise.&lt;void&gt;</code>
+  - [~configure(next, nextRevision, [force])](#module_studio/frame..configure) ⇒ <code>Promise.&lt;void&gt;</code>
   - [~filterCatalog()](#module_studio/frame..filterCatalog) ⇒ <code>void</code>
 
 <a name="module_studio/frame..iconObserver"></a>
@@ -63,6 +64,13 @@ Resolves palette roles from the actual selected preview, including material colo
 
 **Kind**: inner method of [<code>studio/frame</code>](#module_studio/frame)  
 **Returns**: <code>Array.&lt;{role:string, value:string}&gt;</code> - Editable resolved colors.  
+<a name="module_studio/frame..applyCorners"></a>
+
+### studio/frame~applyCorners() ⇒ <code>void</code>
+
+Applies public geometry without invalidating palette reads or the mounted example.
+
+**Kind**: inner method of [<code>studio/frame</code>](#module_studio/frame)  
 <a name="module_studio/frame..applyAppearance"></a>
 
 ### studio/frame~applyAppearance([retag]) ⇒ <code>void</code>
@@ -130,17 +138,18 @@ Lazily loads the explicit authored-specimen registry only for Style details.
 **Returns**: <code>Promise.&lt;Object&gt;</code> - Registry.  
 <a name="module_studio/frame..configure"></a>
 
-### studio/frame~configure(next, nextRevision) ⇒ <code>Promise.&lt;void&gt;</code>
+### studio/frame~configure(next, nextRevision, [force]) ⇒ <code>Promise.&lt;void&gt;</code>
 
 Reconciles one host configuration; stale asynchronous mounts cannot commit.
 
 **Kind**: inner method of [<code>studio/frame</code>](#module_studio/frame)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - Resolves when this configuration is visible.
 
-| Param        | Type                | Description                   |
-| ------------ | ------------------- | ----------------------------- |
-| next         | <code>Object</code> | Validated host configuration. |
-| nextRevision | <code>number</code> | Monotonic host revision.      |
+| Param        | Type                 | Default            | Description                                         |
+| ------------ | -------------------- | ------------------ | --------------------------------------------------- |
+| next         | <code>Object</code>  |                    | Validated host configuration.                       |
+| nextRevision | <code>number</code>  |                    | Monotonic host revision.                            |
+| [force]      | <code>boolean</code> | <code>false</code> | Whether retrying must refresh visual prerequisites. |
 
 <a name="module_studio/frame..filterCatalog"></a>
 

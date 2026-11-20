@@ -2064,9 +2064,10 @@
   --usk-native-choice-shadow: none;
   --usk-native-choice-checked-background: var(--usk-native-primary);
   --usk-native-choice-mark-color: var(--usk-native-on-primary);
+  /** Joined, equal-size halves make one downward chevron without font-dependent glyphs. */
   --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
-  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .85rem) 50%;
+  --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+  --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
   --usk-native-select-padding-inline-end: 2.5rem;
   --usk-native-range-track-size: .45rem;
   --usk-native-range-track-background: var(--usk-native-track);
@@ -2356,7 +2357,7 @@
 
 [dir="rtl"] [data-ui][data-mode] :where(select:not([multiple])),
 [data-ui][data-mode][dir="rtl"] :where(select:not([multiple])) {
-  --usk-native-select-indicator-position: 1.15rem 50%, .85rem 50%;
+  --usk-native-select-indicator-position: .7rem 50%, 1rem 50%;
 }
 
 [data-ui][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
@@ -2871,6 +2872,21 @@
   background-repeat: no-repeat;
   background-position: var(--usk-native-select-indicator-position);
   background-size: var(--usk-native-select-indicator-size);
+}
+}
+
+/** Listboxes retain option rows without single-select arrows or preset endcap decorations. */
+@layer ui-style-kit.clean_defaults {
+[data-ui][data-mode] :where(select[multiple], select[size]:not([size="0"]):not([size="1"])) {
+  background-image: none;
+}
+
+/** Platform indicators remain visible when forced colors suppress gradient-based artwork. */
+@media (forced-colors: active) {
+  [data-ui][data-mode] :where(select:not([multiple])) {
+    appearance: auto;
+    background-image: none;
+  }
 }
 }
 
@@ -4574,9 +4590,9 @@
     --usk-native-choice-shadow: none;
     --usk-native-choice-checked-background: var(--saas-primary);
     --usk-native-choice-mark-color: var(--saas-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(27deg, transparent 50%, var(--saas-primary) 50%), linear-gradient(153deg, var(--saas-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.25rem;
     --usk-native-range-track-size: .32rem;
     --usk-native-range-track-background: var(--saas-surface-soft);
@@ -5730,8 +5746,6 @@
     --usk-native-choice-border: 1px solid rgb(var(--saas-border-rgb) / .9);
     --usk-native-checkbox-radius: .1875rem;
     --usk-native-choice-shadow: none;
-    --usk-native-select-indicator-size: .31rem .31rem, .31rem .31rem;
-    --usk-native-select-indicator-position: calc(100% - .92rem) 50%, calc(100% - .68rem) 50%;
     --usk-native-select-padding-inline-end: 2.1rem;
     --usk-native-range-track-size: .28rem;
     --usk-native-range-track-background: rgb(var(--saas-surface-soft-rgb) / .82);
@@ -6222,9 +6236,9 @@
     --usk-native-choice-shadow: 0 .2rem .55rem rgb(var(--bento-text-rgb) / .12), inset 0 1px 0 rgb(var(--bento-surface-strong-rgb) / .7);
     --usk-native-choice-checked-background: var(--bento-primary);
     --usk-native-choice-mark-color: var(--bento-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(30deg, transparent 50%, var(--bento-primary) 50%), linear-gradient(150deg, var(--bento-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.4rem;
     --usk-native-range-track-size: .6rem;
     --usk-native-range-track-background: var(--bento-surface-soft);
@@ -7456,8 +7470,6 @@
     --usk-native-checkbox-radius: .375rem;
     --usk-native-choice-shadow: 0 .2rem .55rem rgb(var(--bento-text-rgb) / .12), inset 0 1px 0 rgb(var(--bento-surface-strong-rgb) / .78);
     --usk-native-choice-checked-background: linear-gradient(145deg, var(--bento-primary), var(--bento-primary-hover));
-    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
     --usk-native-select-padding-inline-end: 2.4rem;
     --usk-native-range-track-size: .6rem;
     --usk-native-range-track-background: linear-gradient(90deg, rgb(var(--bento-surface-soft-rgb) / .9), rgb(var(--bento-primary-rgb) / .12));
@@ -10337,9 +10349,9 @@
     --usk-native-choice-shadow: .18rem .18rem 0 rgb(var(--max-secondary-rgb) / .72);
     --usk-native-choice-checked-background: var(--max-primary);
     --usk-native-choice-mark-color: var(--max-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(33deg, transparent 50%, var(--max-primary) 50%), linear-gradient(147deg, var(--max-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.55rem;
     --usk-native-range-track-size: .72rem;
     --usk-native-range-track-background: var(--max-paper-bg);
@@ -11476,9 +11488,6 @@
     --usk-native-choice-shadow: .16rem .16rem 0 rgb(var(--max-secondary-rgb) / .72);
     --usk-native-choice-checked-background: linear-gradient(135deg, var(--max-primary), var(--max-accent));
     --usk-native-choice-mark-color: var(--max-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(35deg, transparent 43%, var(--max-ink) 44% 56%, transparent 57%), linear-gradient(145deg, transparent 43%, var(--max-ink) 44% 56%, transparent 57%);
-    --usk-native-select-indicator-size: .52rem .52rem, .52rem .52rem;
-    --usk-native-select-indicator-position: calc(100% - 1.32rem) 48%, calc(100% - .92rem) 52%;
     --usk-native-select-padding-inline-end: 3.15rem;
     --usk-native-range-track-size: .82rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--max-warning) 0 .9rem, var(--max-accent) .9rem 1.8rem, var(--max-primary) 1.8rem 2.7rem);
@@ -11755,7 +11764,6 @@
   }
 
   [data-ui="maximalist"][data-mode] {
-    --usk-native-select-indicator-position: calc(100% - 1.7rem) 48%, calc(100% - 1.25rem) 52%;
     --usk-native-select-padding-inline-end: 3.5rem;
   }
 
@@ -12192,10 +12200,6 @@
     --max-poster-warning-deep: var(--max-warning);
     --max-poster-secondary-deep: var(--max-secondary);
     --max-poster-success-deep: var(--max-success);
-    --usk-native-select-indicator-image: linear-gradient(38deg, transparent 38%, var(--max-ink) 39% 66%, transparent 67%),
-    linear-gradient(142deg, transparent 38%, var(--max-ink) 39% 66%, transparent 67%);
-    --usk-native-select-indicator-size: .68rem .68rem, .68rem .68rem;
-    --usk-native-select-indicator-position: calc(100% - 1.7rem) 48%, calc(100% - 1.16rem) 52%;
   }
 
   @supports (color: color-mix(in srgb,black,white)) {
@@ -12660,9 +12664,9 @@
     --usk-native-choice-shadow: var(--bau-control-shadow-pressed);
     --usk-native-choice-checked-background: var(--bau-primary);
     --usk-native-choice-mark-color: var(--bau-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--bau-text) 50%), linear-gradient(135deg, var(--bau-text) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .58rem .58rem, .58rem .58rem;
-    --usk-native-select-indicator-position: calc(100% - 1.45rem) 50%, calc(100% - 1.04rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 3rem;
     --usk-native-range-track-size: .24rem;
     --usk-native-range-track-background: var(--bau-border);
@@ -13789,9 +13793,6 @@
     --usk-native-choice-shadow: inset 0 0 0 2px var(--bau-surface-strong);
     --usk-native-choice-checked-background: var(--bau-primary);
     --usk-native-choice-mark-color: var(--bau-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 48%, var(--bau-text) 49%), linear-gradient(135deg, var(--bau-text) 51%, transparent 52%);
-    --usk-native-select-indicator-size: .62rem .62rem, .62rem .62rem;
-    --usk-native-select-indicator-position: calc(100% - 1.5rem) 50%, calc(100% - 1.05rem) 50%;
     --usk-native-select-padding-inline-end: 3.2rem;
     --usk-native-range-track-size: .3rem;
     --usk-native-range-track-background: linear-gradient(90deg, var(--bau-warning) 0 34%, var(--bau-border) 34% 68%, var(--bau-primary) 68%);
@@ -16575,9 +16576,9 @@
     --usk-native-choice-shadow: var(--tactile-inset-shadow);
     --usk-native-choice-checked-background: var(--tactile-action-solid);
     --usk-native-choice-mark-color: var(--tactile-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--tactile-text) 50%), linear-gradient(135deg, var(--tactile-text) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.25rem;
     --usk-native-range-track-size: .56rem;
     --usk-native-range-track-background: var(--tactile-recessed-track);
@@ -17610,7 +17611,6 @@
     --usk-native-choice-border: 1px solid var(--tactile-keyline);
     --usk-native-choice-shadow: var(--tactile-inset-shadow);
     --usk-native-checkbox-radius: .08rem;
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
     --usk-native-range-track-size: .68rem;
     --usk-native-range-track-border: 2px solid var(--tactile-track-rim);
     --usk-native-range-track-radius: 0;
@@ -18171,8 +18171,6 @@
     --usk-native-choice-checked-background: var(--tactile-copper);
     --usk-native-choice-mark-color: var(--tactile-paper-highlight);
     --usk-native-checkbox-radius: .08rem;
-    --usk-native-select-indicator-size: .36rem .36rem, .36rem .36rem;
-    --usk-native-select-indicator-position: calc(100% - 1.05rem) calc(50% - .22rem), calc(100% - 1.05rem) calc(50% + .22rem);
     --usk-native-select-padding-inline-end: 2.6rem;
     --usk-native-range-track-size: .55rem;
     --usk-native-range-track-background: var(--tactile-recessed-track);
@@ -19311,9 +19309,9 @@
     --usk-native-choice-shadow: 4px 4px 8px #00000038;
     --usk-native-choice-checked-background: var(--neo-primary);
     --usk-native-choice-mark-color: var(--neo-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(42deg, transparent 50%, var(--neo-primary) 50%), linear-gradient(138deg, var(--neo-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.4rem;
     --usk-native-range-track-size: .62rem;
     --usk-native-range-track-background: var(--neo-surface-soft);
@@ -21141,9 +21139,9 @@
     --usk-native-choice-shadow: 0 0 10px var(--retro-primary);
     --usk-native-choice-checked-background: var(--retro-primary);
     --usk-native-choice-mark-color: var(--retro-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--retro-primary) 50%), linear-gradient(135deg, var(--retro-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
-    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.55rem;
     --usk-native-range-track-size: .72rem;
     --usk-native-range-track-background: var(--retro-surface-soft);
@@ -22177,9 +22175,6 @@
     --usk-native-radio-radius: 50%;
     --usk-native-choice-shadow: var(--retro-recess-shadow);
     --usk-native-choice-checked-background: var(--retro-action-bg);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 48%, var(--retro-text) 50%), linear-gradient(135deg, var(--retro-text) 50%, transparent 52%);
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-    --usk-native-select-indicator-position: calc(100% - 1.2rem) 50%, calc(100% - .87rem) 50%;
     --usk-native-select-padding-inline-end: 2.7rem;
     --usk-native-range-track-size: .38rem;
     --usk-native-range-track-background: var(--retro-calibration-track);
@@ -23161,9 +23156,9 @@
     --usk-native-choice-shadow: 4px 4px 0 var(--brutal-border);
     --usk-native-choice-checked-background: var(--brutal-primary);
     --usk-native-choice-mark-color: var(--brutal-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(48deg, transparent 50%, var(--brutal-primary) 50%), linear-gradient(132deg, var(--brutal-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.7rem;
     --usk-native-range-track-size: .8rem;
     --usk-native-range-track-background: var(--brutal-surface-soft);
@@ -24038,9 +24033,6 @@
     --usk-native-choice-shadow: .12rem .12rem 0 var(--brutal-primary);
     --usk-native-choice-checked-background: var(--brutal-primary);
     --usk-native-choice-mark-color: var(--brutal-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 38%, var(--brutal-warning) 39% 61%, transparent 62%), linear-gradient(135deg, var(--brutal-warning) 0 50%, transparent 51%);
-    --usk-native-select-indicator-size: .7rem .7rem, .7rem .7rem;
-    --usk-native-select-indicator-position: calc(100% - 1.38rem) 50%, calc(100% - .92rem) 50%;
     --usk-native-select-padding-inline-end: 2.85rem;
     --usk-native-range-track-size: .92rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--brutal-surface-soft) 0 1.05rem, var(--brutal-text) 1.05rem calc(1.05rem + 3px));
@@ -24494,9 +24486,9 @@
     --usk-native-choice-shadow: 0 0 .55rem rgb(var(--cyber-primary-rgb) / .18);
     --usk-native-choice-checked-background: var(--cyber-primary);
     --usk-native-choice-mark-color: var(--cyber-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(51deg, transparent 50%, var(--cyber-primary) 50%), linear-gradient(129deg, var(--cyber-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.25rem;
     --usk-native-range-track-size: .5rem;
     --usk-native-range-track-background: linear-gradient(90deg, var(--cyber-success), var(--cyber-warning) 62%, var(--cyber-danger));
@@ -25377,9 +25369,6 @@
     --usk-native-choice-shadow: inset .16rem 0 0 rgb(var(--cyber-accent-rgb) / .34), 0 0 .55rem rgb(var(--cyber-primary-rgb) / .3);
     --usk-native-choice-checked-background: linear-gradient(135deg, var(--cyber-primary), var(--cyber-accent));
     --usk-native-choice-mark-color: var(--cyber-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 45%, var(--cyber-primary) 45% 56%, transparent 56%), linear-gradient(135deg, transparent 45%, var(--cyber-accent) 45% 56%, transparent 56%);
-    --usk-native-select-indicator-size: .7rem .7rem, .7rem .7rem;
-    --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .78rem) 50%;
     --usk-native-select-padding-inline-end: 2.5rem;
     --usk-native-range-track-size: .46rem;
     --usk-native-range-track-background: linear-gradient(90deg, var(--cyber-success), var(--cyber-warning) 62%, var(--cyber-danger));
@@ -25660,9 +25649,6 @@
     --usk-native-choice-shadow: 0 0 .5rem rgb(var(--cyber-primary-rgb) / .18);
     --usk-native-choice-checked-background: var(--cyber-primary);
     --usk-native-choice-mark-color: var(--cyber-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 46%, var(--cyber-primary) 46% 56%, transparent 56%), linear-gradient(135deg, transparent 46%, var(--cyber-primary) 46% 56%, transparent 56%);
-    --usk-native-select-indicator-size: .62rem .62rem, .62rem .62rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .74rem) 50%;
     --usk-native-select-padding-inline-end: 2.45rem;
     --usk-native-range-track-size: .5rem;
     --usk-native-range-track-background: linear-gradient(90deg, var(--cyber-success), var(--cyber-warning) 62%, var(--cyber-danger));
@@ -27240,9 +27226,9 @@
     --usk-native-choice-shadow: inset 0 3px #ffffff8c;
     --usk-native-choice-checked-background: var(--y2k-primary);
     --usk-native-choice-mark-color: var(--y2k-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(54deg, transparent 50%, var(--y2k-primary) 50%), linear-gradient(126deg, var(--y2k-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.4rem;
     --usk-native-range-track-size: .66rem;
     --usk-native-range-track-background: var(--y2k-surface-soft);
@@ -28070,9 +28056,6 @@
     --usk-native-choice-shadow: inset 1px 1px 0 var(--y2k-border), inset -1px -1px 0 var(--y2k-surface-strong);
     --usk-native-choice-checked-background: linear-gradient(180deg, var(--y2k-primary-hover), var(--y2k-primary));
     --usk-native-choice-mark-color: var(--y2k-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 45%, var(--y2k-text) 45% 55%, transparent 55%), linear-gradient(135deg, transparent 45%, var(--y2k-text) 45% 55%, transparent 55%);
-    --usk-native-select-indicator-size: .48rem .48rem, .48rem .48rem;
-    --usk-native-select-indicator-position: calc(100% - .84rem) 50%, calc(100% - .56rem) 50%;
     --usk-native-select-padding-inline-end: 1.85rem;
     --usk-native-range-track-size: .38rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .4rem, var(--y2k-surface-soft) .4rem .48rem);
@@ -28341,9 +28324,6 @@
     --usk-native-choice-shadow: var(--y2k-bevel-recessed);
     --usk-native-choice-checked-background: var(--y2k-primary);
     --usk-native-choice-mark-color: var(--y2k-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 46%, var(--y2k-text) 46% 56%, transparent 56%), linear-gradient(135deg, transparent 46%, var(--y2k-text) 46% 56%, transparent 56%);
-    --usk-native-select-indicator-size: .375rem .375rem, .375rem .375rem;
-    --usk-native-select-indicator-position: calc(100% - .75rem) 50%, calc(100% - .5rem) 50%;
     --usk-native-select-padding-inline-end: 1.5rem;
     --usk-native-range-track-size: .375rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--y2k-primary) 0 .5rem, var(--y2k-surface-soft) .5rem .5625rem);
@@ -29211,9 +29191,9 @@
     --usk-native-track-fill: linear-gradient(180deg, var(--rg-primary-hover), var(--rg-primary));
     --usk-native-thumb: radial-gradient(circle at 42% 30%, var(--rg-glass-highlight), transparent 32%), var(--rg-control-material);
     --usk-native-thumb-border: var(--rg-border);
-    --usk-native-select-indicator-image: linear-gradient(57deg, transparent 50%, var(--rg-primary) 50%), linear-gradient(123deg, var(--rg-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
-    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.55rem;
     --usk-native-range-track-size: .54rem;
     --usk-native-range-track-background: var(--rg-surface-soft);
@@ -30117,9 +30097,6 @@
     --usk-native-choice-shadow: inset 0 1px 0 rgb(var(--rg-surface-strong-rgb) / .9), 0 1px 3px rgb(var(--rg-text-rgb) / .22);
     --usk-native-choice-checked-background: linear-gradient(180deg, var(--rg-primary-hover), var(--rg-primary));
     --usk-native-choice-mark-color: var(--rg-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(55deg, transparent 46%, var(--rg-text) 46% 56%, transparent 56%), linear-gradient(125deg, transparent 46%, var(--rg-text) 46% 56%, transparent 56%);
-    --usk-native-select-indicator-size: .44rem .44rem, .44rem .44rem;
-    --usk-native-select-indicator-position: calc(100% - 1.02rem) 50%, calc(100% - .72rem) 50%;
     --usk-native-select-padding-inline-end: 2.2rem;
     --usk-native-range-track-size: .42rem;
     --usk-native-range-track-background: var(--rg-glass-inset);
@@ -31896,9 +31873,9 @@
     --usk-native-choice-shadow: none;
     --usk-native-choice-checked-background: var(--luxe-primary);
     --usk-native-choice-mark-color: var(--luxe-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(60deg, transparent 50%, var(--luxe-primary) 50%), linear-gradient(120deg, var(--luxe-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
-    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.7rem;
     --usk-native-range-track-size: 1px;
     --usk-native-range-track-background: var(--luxe-surface-soft);
@@ -33080,9 +33057,6 @@
     --usk-native-choice-shadow: inset 0 0 0 2px var(--luxe-surface-strong);
     --usk-native-choice-checked-background: var(--luxe-success);
     --usk-native-choice-mark-color: var(--luxe-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(55deg, transparent 48%, var(--luxe-warning) 49% 51%, transparent 52%), linear-gradient(125deg, transparent 48%, var(--luxe-warning) 49% 51%, transparent 52%);
-    --usk-native-select-indicator-size: .4rem .5rem, .4rem .5rem;
-    --usk-native-select-indicator-position: calc(100% - 1.28rem) 50%, calc(100% - .96rem) 50%;
     --usk-native-select-padding-inline-end: 2.82rem;
     --usk-native-range-track-size: 1px;
     --usk-native-range-track-background: linear-gradient(90deg, var(--luxe-border), rgb(var(--luxe-warning-rgb) / .62), var(--luxe-border));
@@ -34603,9 +34577,9 @@
     --usk-native-choice-shadow: 0 3px 8px #0000002e;
     --usk-native-choice-checked-background: var(--organic-primary);
     --usk-native-choice-mark-color: var(--organic-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(63deg, transparent 50%, var(--organic-primary) 50%), linear-gradient(117deg, var(--organic-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.25rem;
     --usk-native-range-track-size: .6rem;
     --usk-native-range-track-background: var(--organic-surface-soft);
@@ -35792,9 +35766,6 @@
     --usk-native-choice-border: 1px solid var(--organic-hairline);
     --usk-native-checkbox-radius: 42% 58% 46% 54%;
     --usk-native-choice-shadow: inset 0 1px 2px rgb(var(--organic-text-rgb) / .1);
-    --usk-native-select-indicator-image: linear-gradient(55deg, transparent 48%, var(--organic-primary) 50%), linear-gradient(125deg, var(--organic-primary) 48%, transparent 50%);
-    --usk-native-select-indicator-size: .4rem .28rem, .28rem .4rem;
-    --usk-native-select-indicator-position: calc(100% - 1.02rem) 48%, calc(100% - .72rem) 54%;
     --usk-native-select-padding-inline-end: 2.3rem;
     --usk-native-range-track-size: .3rem;
     --usk-native-range-track-background: linear-gradient(90deg, rgb(var(--organic-surface-soft-rgb) / .84), rgb(var(--organic-primary-rgb) / .14));
@@ -37716,9 +37687,9 @@
     --usk-native-choice-shadow: 2px 2px 0 #0000004d;
     --usk-native-choice-checked-background: var(--utility-primary);
     --usk-native-choice-mark-color: var(--utility-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(66deg, transparent 50%, var(--utility-primary) 50%), linear-gradient(114deg, var(--utility-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.4rem;
     --usk-native-range-track-size: .7rem;
     --usk-native-range-track-background: var(--utility-surface-soft);
@@ -38881,9 +38852,6 @@
     --usk-native-choice-shadow: inset 0 2px 3px rgb(var(--utility-text-rgb) / .22);
     --usk-native-choice-checked-background: linear-gradient(180deg, var(--utility-primary-hover), var(--utility-primary));
     --usk-native-choice-mark-color: var(--utility-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(60deg, transparent 48%, var(--utility-text) 48% 58%, transparent 58%), linear-gradient(120deg, transparent 48%, var(--utility-text) 48% 58%, transparent 58%);
-    --usk-native-select-indicator-size: .52rem .52rem, .52rem .52rem;
-    --usk-native-select-indicator-position: calc(100% - 1.06rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.3rem;
     --usk-native-range-track-size: .64rem;
     --usk-native-range-track-background: linear-gradient(90deg, var(--utility-success) 0 58%, var(--utility-warning) 58% 78%, var(--utility-danger) 78%);
@@ -41233,9 +41201,6 @@
     --usk-native-choice-shadow: 0 0 0 1px var(--blueprint-surface-strong);
     --usk-native-choice-checked-background: linear-gradient(135deg, var(--blueprint-primary) 0 46%, var(--blueprint-surface) 46% 54%, var(--blueprint-primary) 54%);
     --usk-native-choice-mark-color: var(--blueprint-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 47%, var(--blueprint-primary) 47% 53%, transparent 53%), linear-gradient(135deg, transparent 47%, var(--blueprint-primary) 47% 53%, transparent 53%);
-    --usk-native-select-indicator-size: .62rem .62rem, .62rem .62rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .64rem) 50%;
     --usk-native-select-padding-inline-end: 2.15rem;
     --usk-native-range-track-size: .22rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--blueprint-primary) 0 1px, transparent 1px .62rem), var(--blueprint-surface-soft);
@@ -41275,6 +41240,9 @@
   }
 
   [data-ui="technical-blueprint"][data-mode] {
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-bg: var(--blueprint-bg);
     --blueprint-bg-rgb: var(--usk-bg-rgb, var(--blueprint-fallback-bg-rgb));
     --blueprint-surface-rgb: var(--usk-surface-rgb, var(--blueprint-fallback-surface-rgb));
@@ -41348,9 +41316,6 @@
     --usk-native-choice-shadow: 0 0 0 1px var(--blueprint-primary);
     --usk-native-choice-checked-background: var(--blueprint-primary);
     --usk-native-choice-mark-color: var(--blueprint-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(69deg, transparent 50%, var(--blueprint-primary) 50%), linear-gradient(111deg, var(--blueprint-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .5rem .5rem, .5rem .5rem;
-    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
     --usk-native-select-padding-inline-end: 2.55rem;
     --usk-native-range-track-size: .34rem;
     --usk-native-range-track-background: var(--blueprint-surface-soft);
@@ -42519,9 +42484,6 @@
     --usk-native-choice-shadow: 0 0 0 1px var(--blueprint-surface-strong);
     --usk-native-choice-checked-background: linear-gradient(135deg, var(--blueprint-primary) 0 46%, var(--blueprint-surface) 46% 54%, var(--blueprint-primary) 54%);
     --usk-native-choice-mark-color: var(--blueprint-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 47%, var(--blueprint-primary) 47% 53%, transparent 53%), linear-gradient(135deg, transparent 47%, var(--blueprint-primary) 47% 53%, transparent 53%);
-    --usk-native-select-indicator-size: .62rem .62rem, .62rem .62rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .64rem) 50%;
     --usk-native-select-padding-inline-end: 2.15rem;
     --usk-native-range-track-size: .22rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--blueprint-primary) 0 1px, transparent 1px .62rem), var(--blueprint-surface-soft);
@@ -44219,9 +44181,9 @@
     --usk-native-choice-shadow: 0 0 0 2px var(--deco-surface-strong);
     --usk-native-choice-checked-background: var(--deco-primary);
     --usk-native-choice-mark-color: var(--deco-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(72deg, transparent 50%, var(--deco-primary) 50%), linear-gradient(108deg, var(--deco-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
-    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.7rem;
     --usk-native-range-track-size: .48rem;
     --usk-native-range-track-background: var(--deco-surface-soft);
@@ -45339,9 +45301,6 @@
     --usk-native-choice-shadow: inset 0 0 0 1px rgb(var(--deco-warning-rgb) / .46);
     --usk-native-choice-checked-background: linear-gradient(135deg, var(--deco-primary), var(--deco-success));
     --usk-native-choice-mark-color: var(--deco-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(60deg, transparent 46%, var(--deco-warning) 47% 53%, transparent 54%), linear-gradient(120deg, transparent 46%, var(--deco-warning) 47% 53%, transparent 54%);
-    --usk-native-select-indicator-size: .48rem .64rem, .48rem .64rem;
-    --usk-native-select-indicator-position: calc(100% - 1.34rem) 50%, calc(100% - .98rem) 50%;
     --usk-native-select-padding-inline-end: 3rem;
     --usk-native-range-track-size: .36rem;
     --usk-native-range-track-background: linear-gradient(90deg, var(--deco-success), var(--deco-warning), var(--deco-danger));
@@ -47838,9 +47797,9 @@
     --usk-native-choice-shadow: inset 0 4px #ffffff4d;
     --usk-native-choice-checked-background: var(--clay-primary);
     --usk-native-choice-mark-color: var(--clay-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(75deg, transparent 50%, var(--clay-primary) 50%), linear-gradient(105deg, var(--clay-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
-    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .72rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.25rem;
     --usk-native-range-track-size: .76rem;
     --usk-native-range-track-background: var(--clay-surface-soft);
@@ -48960,8 +48919,6 @@
     --usk-native-checkbox-radius: .24rem;
     --usk-native-choice-shadow: var(--clay-relief-shadow);
     --usk-native-choice-checked-background: var(--clay-pigment-primary);
-    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
-    --usk-native-select-indicator-position: calc(100% - .92rem) 48%, calc(100% - .67rem) 48%;
     --usk-native-select-padding-inline-end: 2rem;
     --usk-native-range-track-size: .46rem;
     --usk-native-range-track-background: var(--clay-molded-track);
@@ -51892,9 +51849,9 @@
     --usk-native-choice-shadow: 0 0 9px var(--terminal-primary);
     --usk-native-choice-checked-background: var(--terminal-primary);
     --usk-native-choice-mark-color: var(--terminal-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(78deg, transparent 50%, var(--terminal-primary) 50%), linear-gradient(102deg, var(--terminal-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-    --usk-native-select-indicator-position: calc(100% - 1.08rem) 50%, calc(100% - .78rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.4rem;
     --usk-native-range-track-size: .5rem;
     --usk-native-range-track-background: var(--terminal-surface-soft);
@@ -53070,9 +53027,6 @@
     --usk-native-choice-shadow: inset 0 0 0 1px var(--terminal-surface);
     --usk-native-choice-checked-background: linear-gradient(var(--terminal-primary), var(--terminal-primary));
     --usk-native-choice-mark-color: var(--terminal-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(90deg, transparent 38%, var(--terminal-primary) 38% 62%, transparent 62%);
-    --usk-native-select-indicator-size: .72rem .5rem;
-    --usk-native-select-indicator-position: calc(100% - .66rem) 50%;
     --usk-native-select-padding-inline-end: 1.65rem;
     --usk-native-range-track-size: .32rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--terminal-primary) 0 1px, transparent 1px .5rem), var(--terminal-surface-soft);
@@ -53655,10 +53609,6 @@
   }
 
   [data-ui="data-terminal"][data-mode] {
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--terminal-text) 50%),
-    linear-gradient(135deg, var(--terminal-text) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .35rem .35rem, .35rem .35rem;
-    --usk-native-select-indicator-position: calc(100% - .8rem) 50%, calc(100% - .55rem) 50%;
     --usk-native-select-padding-inline-end: 1.6rem;
   }
 
@@ -54331,9 +54281,9 @@
     --usk-native-choice-shadow: 2px 2px 0 #00000029;
     --usk-native-choice-checked-background: var(--paper-primary);
     --usk-native-choice-mark-color: var(--paper-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(81deg, transparent 50%, var(--paper-primary) 50%), linear-gradient(99deg, var(--paper-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .46rem .46rem, .46rem .46rem;
-    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.55rem;
     --usk-native-range-track-size: .22rem;
     --usk-native-range-track-background: var(--paper-surface-soft);
@@ -55477,9 +55427,6 @@
     --usk-native-choice-shadow: 1px 1px 0 rgb(var(--paper-text-rgb) / .28);
     --usk-native-choice-checked-background: var(--paper-primary);
     --usk-native-choice-mark-color: var(--paper-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 46%, var(--paper-text) 47% 53%, transparent 54%), linear-gradient(135deg, var(--paper-text) 47% 53%, transparent 54%);
-    --usk-native-select-indicator-size: .34rem .34rem, .34rem .34rem;
-    --usk-native-select-indicator-position: calc(100% - 1.12rem) 50%, calc(100% - .86rem) 50%;
     --usk-native-select-padding-inline-end: 2.42rem;
     --usk-native-range-track-size: .28rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--paper-border) 0 1px, transparent 1px .62rem), linear-gradient(var(--paper-surface-soft), var(--paper-surface-soft));
@@ -56050,23 +55997,16 @@
   }
 
   .paper-select, :where([data-ui="paper-editorial"]) .usk-select, :where([data-ui="paper-editorial"]) .ui-select {
+    background-image: var(--usk-native-select-indicator-image);
+    background-size: var(--usk-native-select-indicator-size);
+    background-position: var(--usk-native-select-indicator-position);
     cursor: pointer;
-    background-image: none;
+    background-repeat: no-repeat;
     padding-right: 28px;
   }
 
   .paper-select-wrap {
     position: relative;
-  }
-
-  .paper-select-wrap:after {
-    color: var(--paper-sheet-ink-soft);
-    content: "⌄";
-    font: 700 1rem var(--paper-sheet-serif);
-    pointer-events: none;
-    position: absolute;
-    top: 7px;
-    right: 10px;
   }
 
   .paper-help {
@@ -59403,7 +59343,7 @@
     padding: .4rem .65rem;
   }
 
-  .noir-select, [data-ui="neo-noir"][data-mode] .noir-select, :where([data-ui="neo-noir"]) .usk-select, :where([data-ui="neo-noir"])[data-mode] .usk-select, :where([data-ui="neo-noir"]) .ui-select, :where([data-ui="neo-noir"])[data-mode] .ui-select {
+  .noir-select, [data-ui="neo-noir"][data-mode] .noir-select, [data-ui="neo-noir"][data-mode] :where(select:not([multiple])), :where([data-ui="neo-noir"]) .usk-select, :where([data-ui="neo-noir"])[data-mode] .usk-select, :where([data-ui="neo-noir"]) .ui-select, :where([data-ui="neo-noir"])[data-mode] .ui-select {
     --usk-native-select-indicator-image: none;
     appearance: auto;
     background-image: none;

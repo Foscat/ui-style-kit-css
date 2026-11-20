@@ -14,8 +14,8 @@ import {
   STUDIO_ICON_NAMES,
   decorateIcon,
 } from '../demo/studio/icons.js';
-import { syncDemoAssetVersions } from './sync-demo-asset-versions.mjs';
-import { writeGeneratedFile } from './write-generated-file.mjs';
+import { syncDemoAssetVersions, versionDemoAssetUrls } from './sync-demo-asset-versions.mjs';
+import { writeGeneratedFile, copyGeneratedFile } from './write-generated-file.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 /** Builds lazy family assets directly from the pinned companion package.
@@ -102,11 +102,14 @@ async function buildStudioIcons(manifest) {
         );
       }
   }
-  await fs.copyFile(
+  await copyGeneratedFile(
     path.join(iconRoot, 'dist/ui-style-kit-icons.css'),
     path.join(demo, 'vendor/icons.css'),
   );
-  await fs.copyFile(path.join(iconRoot, 'LICENSE'), path.join(demo, 'vendor/icons-LICENSE.txt'));
+  await copyGeneratedFile(
+    path.join(iconRoot, 'LICENSE'),
+    path.join(demo, 'vendor/icons-LICENSE.txt'),
+  );
   return {
     version: ICON_VERSION,
     defaultPack: 'minimal-saas',
@@ -225,13 +228,13 @@ export async function buildStudio() {
       'motion.css',
     ],
   ])
-    await fs.copyFile(path.join(root, source), path.join(demo, 'vendor', target));
+    await copyGeneratedFile(path.join(root, source), path.join(demo, 'vendor', target));
   for (const [name, folder] of [
     ['layout', 'layout-style-css'],
     ['interaction', 'interactive-surface-css'],
     ['motion', '@sanderson-technology-enterprises/motion-style-css'],
   ]) {
-    await fs.copyFile(
+    await copyGeneratedFile(
       path.join(root, 'node_modules', folder, 'LICENSE'),
       path.join(demo, 'vendor', name + '-LICENSE.txt'),
     );
@@ -256,6 +259,7 @@ export async function buildStudio() {
     presets: manifest.presets,
     themes: manifest.themes,
     modes: manifest.modes,
+    guidedCorners: manifest.guidedCorners,
     paletteRoles,
     icons,
     specimens: Object.fromEntries(
@@ -316,14 +320,25 @@ export async function buildStudio() {
             '</option>',
         )
         .join(''),
+      cornersSelect:
+        '<option value="" selected>Preset default</option>' +
+        manifest.guidedCorners.values
+          .map((value) => {
+            const label = value === 'none' ? 'Square' : value[0].toUpperCase() + value.slice(1);
+            return '<option value="' + value + '">' + label + '</option>';
+          })
+          .join(''),
     };
     for (const [id, markup] of Object.entries(options))
       html = html.replaceAll('{{' + id + 'Options}}', markup);
-    await writeGeneratedFile(path.join(root, file), html);
+    await writeGeneratedFile(path.join(root, file), versionDemoAssetUrls(root, file, html));
   }
   const preview =
     '<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Style preview</title><link rel="stylesheet" href="../styles/component-composition.css"><link rel="stylesheet" href="vendor/icons.css"><link rel="stylesheet" href="vendor/layout.css"><link rel="stylesheet" href="../styles/interactive-surface-theme.css"><link rel="stylesheet" href="vendor/state-core.css"><link rel="stylesheet" href="demo.css"><script defer src="demo-manifest.js"></script><script defer src="preview.js"></script></head><body class="ly-root ly-page usk-icons-theme" data-ly-layout="minimal-saas" data-ly-density="normal" data-ui="minimal-saas" data-mode="light"><main id="preview-root" data-ui-structure="neutral"></main></body></html>\n';
-  await writeGeneratedFile(path.join(demo, 'preview.html'), preview);
+  await writeGeneratedFile(
+    path.join(demo, 'preview.html'),
+    versionDemoAssetUrls(root, 'demo/preview.html', preview),
+  );
   await syncDemoAssetVersions(root);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url))

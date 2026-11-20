@@ -22,7 +22,7 @@ Computes independent visual and interaction invalidation domains.
 Missing previous state intentionally requests a complete initial render.
 
 **Kind**: static method of [<code>studio/changes</code>](#module_studio/changes)  
-**Returns**: <code>Object</code> - Mount, appearance, palette, icon, filter, bridge and interaction changes.
+**Returns**: <code>Object</code> - Mount, appearance, geometry, palette, icon, filter, bridge and interaction changes.
 
 | Param    | Type                | Description                   |
 | -------- | ------------------- | ----------------------------- |

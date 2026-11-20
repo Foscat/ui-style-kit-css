@@ -12,6 +12,8 @@ async function openBento(page) {
   await page.goto(pathToFileURL(path.resolve('demo/reference.html')).href + '?view=reference');
   await page.selectOption('#uiSelect', 'bento');
   await page.selectOption('#modeSelect', 'light');
+  await expect(page.locator('#demoContent')).toHaveAttribute('aria-busy', 'false');
+  await expect(page.locator('.bento-page.demo-showcase')).toBeVisible();
 }
 
 /** Reads actual Layout grid flow without coupling the fixture to measured row spans.
