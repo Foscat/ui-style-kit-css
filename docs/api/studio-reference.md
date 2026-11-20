@@ -121,6 +121,8 @@ Unknown names also fall back safely instead of activating an unresolved theme se
 
 Restores a shareable demo state using only values from the public inventory.
 The personality alias retains compatibility with existing style-review URLs.
+Omitted fields and invalid preset/mode requests preserve the current controls; an explicit
+unresolved palette request restores style defaults. Shared edits and corners remain validated.
 
 **Kind**: inner method of [<code>studio/reference</code>](#module_studio/reference)  
 <a name="module_studio/reference..applyPaletteSelection"></a>

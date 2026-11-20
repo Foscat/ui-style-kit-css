@@ -198,6 +198,17 @@ const allPresetNativeIdentityTokens = Object.freeze([
   '--usk-native-scrollbar-radius'
 ]);
 
+/** Functional select geometry is shared and covered by select-indicator-contract.test.js.
+ * Preserve the existing authored distinction budget after removing these three shared traits.
+ */
+const sharedSelectGeometryTokens = new Set([
+  '--usk-native-select-indicator-image',
+  '--usk-native-select-indicator-size',
+  '--usk-native-select-indicator-position'
+]);
+const authoredNativeIdentityTokens = allPresetNativeIdentityTokens.filter(token => !sharedSelectGeometryTokens.has(token));
+const minimumAuthoredNativeDifferences = 32 - sharedSelectGeometryTokens.size;
+
 /**
  * Check whether a selector branch targets the requested class as its subject.
  *
@@ -643,18 +654,18 @@ test('every preset pair remains materially distinct across visible and native-co
         leftCss,
         left.id,
         left.prefix,
-        allPresetNativeIdentityTokens
+        authoredNativeIdentityTokens
       );
       const rightNative = nativeIdentityValues(
         rightCss,
         right.id,
         right.prefix,
-        allPresetNativeIdentityTokens
+        authoredNativeIdentityTokens
       );
 
       const nativeDifferences = identityDifferenceCount(leftNative, rightNative);
-      if (nativeDifferences < 32 && !intentionalNativeControlOverlaps.has(`${left.id}/${right.id}`)) {
-        failures.push(`${left.id}/${right.id} native: ${nativeDifferences}/48, requires 32`);
+      if (nativeDifferences < minimumAuthoredNativeDifferences && !intentionalNativeControlOverlaps.has(`${left.id}/${right.id}`)) {
+        failures.push(`${left.id}/${right.id} native: ${nativeDifferences}/${authoredNativeIdentityTokens.length}, requires ${minimumAuthoredNativeDifferences}`);
       }
     }
   }

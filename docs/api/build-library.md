@@ -18,7 +18,6 @@ Generates standalone, visual, compatibility, and focused library distributions f
   - [~aliasSemanticSelector(selector, selectedRoot, semanticAliasBySourceClass)](#module_scripts/build..aliasSemanticSelector) ⇒ <code>string</code> \| <code>null</code>
   - [~addSemanticAliases(css, filename, selectedPresets)](#module_scripts/build..addSemanticAliases) ⇒ <code>string</code>
   - [~preparedPresetCss(file, id, prefix, composition)](#module_scripts/build..preparedPresetCss) ⇒ <code>string</code>
-  - [~syncDemoManifest()](#module_scripts/build..syncDemoManifest) ⇒ <code>Promise.&lt;void&gt;</code>
   - [~rebaseFocusedAssets(css)](#module_scripts/build..rebaseFocusedAssets) ⇒ <code>string</code>
   - [~BrowserTargets](#module_scripts/build..BrowserTargets) : <code>Object.&lt;string, number&gt;</code>
   - [~CssNode](#module_scripts/build..CssNode) : <code>Object</code>
@@ -157,14 +156,6 @@ Cached strings are safe to reuse; mutable parser nodes never cross transformatio
 | prefix      | <code>string</code> | Namespaced component prefix.                                   |
 | composition | <code>string</code> | Visual paint or deprecated structural compatibility partition. |
 
-<a name="module_scripts/build..syncDemoManifest"></a>
-
-### scripts/build~syncDemoManifest() ⇒ <code>Promise.&lt;void&gt;</code>
-
-Write the demo's runtime manifest snapshot from the package manifest.
-
-**Kind**: inner method of [<code>scripts/build</code>](#module_scripts/build)  
-**Returns**: <code>Promise.&lt;void&gt;</code> - Resolves after the generated manifest is written.  
 <a name="module_scripts/build..rebaseFocusedAssets"></a>
 
 ### scripts/build~rebaseFocusedAssets(css) ⇒ <code>string</code>

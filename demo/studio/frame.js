@@ -72,6 +72,15 @@ function tokens() {
   });
 }
 
+/** Applies public geometry without invalidating palette reads or the mounted example.
+ * @returns {void}
+ */
+function applyCorners() {
+  const corners = current.appearance.corners;
+  if (corners) document.body.dataset.uskCorners = corners;
+  else document.body.removeAttribute('data-usk-corners');
+}
+
 /** Applies only visual attributes and public tokens, retaining the live example DOM.
  * @param {boolean} [retag=true] Whether retained prefixed components need their classes updated.
  * @returns {void}
@@ -84,6 +93,7 @@ function applyAppearance(retag = true) {
   document.body.dataset.mode = appearance.mode;
   if (appearance.theme) document.body.dataset.theme = appearance.theme;
   else document.body.removeAttribute('data-theme');
+  applyCorners();
   for (const name of tokenNames) document.body.style.removeProperty(name);
   tokenNames.clear();
   for (const [role, value] of Object.entries(current.edits)) {
@@ -425,6 +435,7 @@ function loadSpecimens() {
 /** Reconciles one host configuration; stale asynchronous mounts cannot commit.
  * @param {Object} next Validated host configuration.
  * @param {number} nextRevision Monotonic host revision.
+ * @param {boolean} [force=false] Whether retrying must refresh visual prerequisites.
  * @returns {Promise<void>} Resolves when this configuration is visible.
  */
 async function configure(next, nextRevision, force = false) {
@@ -436,6 +447,7 @@ async function configure(next, nextRevision, force = false) {
     force || !mounted || changes.mount || changes.palette || changes.icons || changes.bridge;
   if (!visual) {
     if (rendering) return;
+    if (changes.geometry) applyCorners();
     if (changes.filter && current.view === 'components') filterCatalog();
     if (changes.scopes.length) syncInteractions(changes.scopes);
     if (renderError) send('error', { message: renderError });
@@ -480,10 +492,9 @@ async function configure(next, nextRevision, force = false) {
       tokens: [...tokenNames],
       label: root.getAttribute('aria-label'),
       focus: root.contains(document.activeElement) ? document.activeElement : null,
-      attributes: ['data-ui', 'data-mode', 'data-theme', 'style'].map((name) => [
-        name,
-        document.body.getAttribute(name),
-      ]),
+      attributes: ['data-ui', 'data-mode', 'data-theme', 'data-usk-corners', 'style'].map(
+        (name) => [name, document.body.getAttribute(name)],
+      ),
     };
     const activation = stylesheet.activate();
     restoreMount = () => {
@@ -514,6 +525,8 @@ async function configure(next, nextRevision, force = false) {
       previous.focus?.focus();
     };
     if (changes.palette || !mounted || force) applyAppearance(!needsMount);
+    // Geometry may change while this mount awaits prerequisites; commit its latest accepted value.
+    else applyCorners();
     if (needsMount) {
       cleanup = () => {};
       controller = new AbortController();

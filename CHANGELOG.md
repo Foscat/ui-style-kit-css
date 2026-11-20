@@ -8,6 +8,10 @@ All notable changes to **UI Style Kit CSS** will be documented here.
 
 ## [Unreleased]
 
+- Replace inconsistent custom select symbols with shared, font-independent down indicators while preserving preset colors, native keyboard behavior, listboxes, RTL placement and forced-colors controls. Neo Noir retains its platform indicator.
+- Include Layout setup in exported compositions, retain corners and scoped palette edits in the complete reference, and show palette/corner context in compact controls. Corner-only changes preserve the mounted preview and palette work, including choices made during an asynchronous mount.
+- Preserve identical generated assets and documentation without rewriting them; version generated HTML before writing and keep one demo-manifest owner.
+
 ## [2.8.0] - 2026-11-16
 
 - Connect native Clay material paint to public RGB channels and export the actual material palette; expose primary paint without a color-mix dependency and retain 4.5:1 dark hover text contrast.

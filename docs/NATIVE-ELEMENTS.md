@@ -51,7 +51,7 @@ Preset files map existing `--usk-native-*` roles through their active visual sys
 | File and color | `--usk-native-file-button-*`, `--usk-native-color-swatch-*` |
 | Indicators and scrollbars | `--usk-native-indicator-*`, `--usk-native-scrollbar-*` |
 
-Single selects consume the preset indicator with logical LTR/RTL positioning. Multiple selects deliberately suppress it. Chromium/WebKit and Firefox pseudo-elements stay in separate safe selector blocks so one unsupported vendor selector cannot invalidate another engine's paint.
+Single selects use one joined, font-independent down-chevron with logical LTR/RTL positioning and preset-owned indicator color. Neo Noir retains its platform arrow. Multiple and sized listboxes suppress dropdown indicators; forced-colors mode restores the platform arrow so it remains visible without custom gradients. Chromium/WebKit and Firefox pseudo-elements stay in separate safe selector blocks so one unsupported vendor selector cannot invalidate another engine's paint.
 
 Platform-owned select/datalist popups, date/time and color picker dialogs, file pickers, autofill/spellcheck menus, media internals, and operating-system chrome remain native. The library themes only their exposed launch controls and indicators.
 

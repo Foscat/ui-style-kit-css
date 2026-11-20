@@ -5,6 +5,7 @@
 import { enter, cancel } from '@sanderson-technology-enterprises/motion-style-css';
 import {
   createState,
+  appearanceLabels,
   changeAppearance,
   paletteKey,
   editToken,
@@ -23,7 +24,12 @@ const scriptUrl = new URL(document.currentScript.src);
 const assetRoot = new URL('.', scriptUrl);
 const origin = targetOrigin(location.href);
 const byId = (id) => document.getElementById(id);
-const controls = { ui: byId('uiSelect'), theme: byId('themeSelect'), mode: byId('modeSelect') };
+const controls = {
+  ui: byId('uiSelect'),
+  theme: byId('themeSelect'),
+  mode: byId('modeSelect'),
+  corners: byId('cornersSelect'),
+};
 const inspector = byId('inspector');
 const frames = new Map();
 const operationTimers = new Map();
@@ -84,6 +90,7 @@ function configuration(side) {
       ui: appearance.ui,
       theme: appearance.theme,
       mode: appearance.mode,
+      corners: appearance.corners,
       bridge: appearance.bridge,
     },
     edits: side === 'a' ? state.baseline.edits : (state.edits[paletteKey(appearance)] ?? {}),
@@ -318,25 +325,16 @@ function renderShell() {
     const appearance = side === 'a' ? state.baseline : state.appearance;
     const label = inventory.presets.find(({ id }) => id === appearance.ui).label;
     byId('title-' + side).textContent = label;
-    byId('subtitle-' + side).textContent =
-      (appearance.theme ? titleCase(appearance.theme) : 'Style defaults') +
-      ' / ' +
-      titleCase(appearance.mode);
+    const subtitle = appearanceLabels(appearance, inventory).slice(1);
+    byId('subtitle-' + side).textContent = subtitle.join(' / ');
   }
   const reference = new URL('reference.html', assetRoot);
   reference.search = serializeState(state);
   reference.searchParams.set('view', 'reference');
   byId('reference-link').href = reference.href;
-  byId('appearance-summary').textContent =
-    inventory.presets.find(({ id }) => id === state.appearance.ui).label +
-    ' / ' +
-    titleCase(state.appearance.mode);
-  byId('inspector-context').textContent =
-    inventory.presets.find(({ id }) => id === state.appearance.ui).label +
-    ' · ' +
-    (state.appearance.theme ? titleCase(state.appearance.theme) : 'Style defaults') +
-    ' · ' +
-    titleCase(state.appearance.mode);
+  const labels = appearanceLabels(state.appearance, inventory);
+  byId('appearance-summary').textContent = labels.join(' / ');
+  byId('inspector-context').textContent = labels.join(' · ');
   if (state.view === 'components') renderComponentList();
   if (comparing) connectFrame('a');
   if (!state.baseline && frames.has('a')) {
@@ -528,7 +526,10 @@ function updateExport() {
   document.querySelector('[data-copy="markup-code"]').disabled = !ready || !renderedMarkup;
   byId('colors-panel').setAttribute('aria-busy', String(!ready));
   if (!tokens.length) byId('tokens').textContent = 'Preparing the active palette...';
-  byId('setup-code').textContent = setupMarkup(state.appearance);
+  byId('setup-code').textContent = setupMarkup(state.appearance, {
+    layout: state.view === 'examples',
+    markup: renderedMarkup,
+  });
   byId('icon-install-code').textContent = iconInstallMarkup(
     state.icons,
     state.appearance.ui,
@@ -710,7 +711,7 @@ addEventListener('message', (event) => {
   }
 });
 
-for (const control of Object.values(controls)) control.replaceChildren();
+for (const control of [controls.ui, controls.theme, controls.mode]) control.replaceChildren();
 for (const { id, label } of componentInventory) byId('component-group').add(new Option(label, id));
 byId('component-group').addEventListener('change', (event) =>
   commit({ ...state, component: event.target.value }),

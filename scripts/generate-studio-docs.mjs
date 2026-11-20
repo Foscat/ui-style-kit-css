@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import jsdoc2md from 'jsdoc-to-markdown';
 import prettier from 'prettier';
+import { writeGeneratedFile } from './write-generated-file.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const sources = await fs.readdir(path.join(root, 'demo/studio'), { recursive: true });
@@ -23,6 +24,8 @@ const files = sources
   ]);
 files.push(
   ['scripts/build.mjs', 'build-library'],
+  ['scripts/write-generated-file.mjs', 'generated-files'],
+  ['scripts/sync-demo-asset-versions.mjs', 'demo-asset-versions'],
   ['scripts/generate-guided-corners.mjs', 'guided-corners'],
   ['scripts/publish-guided-corners.mjs', 'publish-guided-corners'],
   ['scripts/build-studio.mjs', 'build-studio'],
@@ -53,7 +56,7 @@ for (const [source, name] of files) {
     }
   } else {
     await fs.mkdir(path.dirname(target), { recursive: true });
-    await fs.writeFile(target, content);
+    await writeGeneratedFile(target, content);
   }
 }
 if (drift) process.exitCode = 1;

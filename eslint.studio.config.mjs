@@ -26,11 +26,17 @@ const globals = Object.fromEntries(
 );
 export default [
   {
+    files: ['scripts/write-generated-file.mjs'],
+    languageOptions: { globals: { Buffer: 'readonly' } },
+  },
+  {
     files: [
       'demo/studio/**/*.js',
       'scripts/build-studio.mjs',
       'scripts/serve-studio.mjs',
       'scripts/generate-studio-docs.mjs',
+      'scripts/write-generated-file.mjs',
+      'scripts/sync-demo-asset-versions.mjs',
     ],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals },
     rules: {

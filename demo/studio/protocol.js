@@ -65,20 +65,43 @@ export function overrideCss(appearance, prefix, tokens) {
   );
 }
 
-/** Produces a minimal CSS-only setup rather than a demo runtime dependency.
+/** Produces CSS-only setup with the companions required by the selected composition.
+ * Plain UI elements stay independent of Layout; copied ly-* compositions include its root hooks.
  * @param {Appearance} appearance Visual configuration.
+ * @param {Object} [options={}] Selected composition requirements.
+ * @param {string} [options.markup=''] Copied markup whose public classes identify companions.
+ * @param {boolean} [options.layout=false] Whether the selected example requires Layout.
  * @returns {string} Copyable installation and HTML example.
  */
-export function setupMarkup(appearance) {
+export function setupMarkup(appearance, options = {}) {
+  const layout =
+    options.layout === true || /\bclass\s*=\s*["'][^"']*\bly-[\w-]+/.test(options.markup ?? '');
   const theme = appearance.theme ? ' data-theme="' + appearance.theme + '"' : '';
+  const corners = appearance.corners ? ' data-usk-corners="' + appearance.corners + '"' : '';
   return (
-    '<!-- Install: npm install ui-style-kit-css -->\n<!-- Save this HTML at the project root and serve that folder. -->\n<!-- Bundlers can import ui-style-kit-css/visual.css instead of this link. -->\n<link rel="stylesheet" href="./node_modules/ui-style-kit-css/dist/ui-style-kit.visual.css">\n<link rel="stylesheet" href="./node_modules/ui-style-kit-css/styles/component-composition.css">\n\n<body data-ui="' +
+    '<!-- Install: npm install ui-style-kit-css' +
+    (layout ? ' layout-style-css' : '') +
+    ' -->\n' +
+    '<!-- Save this HTML at the project root and serve that folder. -->\n' +
+    '<!-- Bundlers can import ui-style-kit-css/visual.css' +
+    (layout ? ' and layout-style-css' : '') +
+    ' instead of these links. -->\n' +
+    '<link rel="stylesheet" href="./node_modules/ui-style-kit-css/dist/ui-style-kit.visual.css">\n' +
+    '<link rel="stylesheet" href="./node_modules/ui-style-kit-css/styles/component-composition.css">\n' +
+    (layout
+      ? '<link rel="stylesheet" href="./node_modules/layout-style-css/dist/layout-style-css.css">\n'
+      : '') +
+    '\n<body' +
+    (layout ? ' class="ly-root ly-page"' : '') +
+    ' data-ui="' +
     appearance.ui +
     '"' +
     theme +
     ' data-mode="' +
     appearance.mode +
-    '">\n  <button class="usk-button" data-ui-variant="primary">Get started</button>\n</body>\n' +
+    '"' +
+    corners +
+    '>\n  <button class="usk-button" data-ui-variant="primary">Get started</button>\n</body>\n' +
     (appearance.bridge
       ? '\n<!-- Interaction feedback: also compose ui-style-kit-css/interactive-surface-theme.css\n     and interactive-surface-css/state-core.css, then apply .interactive-surface hooks. -->\n'
       : '')

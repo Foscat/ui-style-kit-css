@@ -15,7 +15,13 @@ const inventory = JSON.parse(readFileSync(new URL('../manifest.json', import.met
 
 test('studio accepts supported deep links and preserves native palette semantics', () => {
   const state = createState(inventory, '?personality=tactile&theme=None&mode=dark');
-  assert.deepEqual(state.appearance, { ui: 'tactile', theme: '', mode: 'dark', bridge: false });
+  assert.deepEqual(state.appearance, {
+    ui: 'tactile',
+    theme: '',
+    mode: 'dark',
+    corners: '',
+    bridge: false,
+  });
   assert.equal(
     createState(inventory, '?ui=missing&personality=tactile&theme=missing&mode=missing').appearance
       .ui,
@@ -83,6 +89,19 @@ test('malformed share data falls back to a usable studio', () => {
   assert.equal(state.view, 'examples');
   assert.equal(state.example, 'dashboard');
   assert.equal(state.appearance.ui, 'minimal-saas');
+});
+
+test('studio corner choices round-trip independently for both comparison sides', () => {
+  const pinned = pinBaseline(createState(inventory, '?corners=none'));
+  for (const corners of inventory.guidedCorners.values) {
+    const changed = changeAppearance(pinned, { corners }, inventory);
+    const restored = createState(inventory, serializeState(changed));
+    assert.equal(restored.appearance.corners, corners);
+    assert.equal(restored.baseline.corners, 'none');
+  }
+  const invalid = createState(inventory, '?corners=unknown');
+  assert.equal(invalid.appearance.corners, '');
+  assert.equal(new URLSearchParams(serializeState(invalid)).has('corners'), false);
 });
 /** The demo deliberately chooses a neutral icon family and monochrome artwork by default. */
 test('studio icon preferences default to Minimal SaaS monochrome and round-trip independently', () => {

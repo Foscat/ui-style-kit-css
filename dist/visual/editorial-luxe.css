@@ -2064,9 +2064,10 @@
   --usk-native-choice-shadow: none;
   --usk-native-choice-checked-background: var(--usk-native-primary);
   --usk-native-choice-mark-color: var(--usk-native-on-primary);
+  /** Joined, equal-size halves make one downward chevron without font-dependent glyphs. */
   --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
-  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .85rem) 50%;
+  --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+  --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
   --usk-native-select-padding-inline-end: 2.5rem;
   --usk-native-range-track-size: .45rem;
   --usk-native-range-track-background: var(--usk-native-track);
@@ -2356,7 +2357,7 @@
 
 [dir="rtl"] [data-ui][data-mode] :where(select:not([multiple])),
 [data-ui][data-mode][dir="rtl"] :where(select:not([multiple])) {
-  --usk-native-select-indicator-position: 1.15rem 50%, .85rem 50%;
+  --usk-native-select-indicator-position: .7rem 50%, 1rem 50%;
 }
 
 [data-ui][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
@@ -2871,6 +2872,21 @@
   background-repeat: no-repeat;
   background-position: var(--usk-native-select-indicator-position);
   background-size: var(--usk-native-select-indicator-size);
+}
+}
+
+/** Listboxes retain option rows without single-select arrows or preset endcap decorations. */
+@layer ui-style-kit.clean_defaults {
+[data-ui][data-mode] :where(select[multiple], select[size]:not([size="0"]):not([size="1"])) {
+  background-image: none;
+}
+
+/** Platform indicators remain visible when forced colors suppress gradient-based artwork. */
+@media (forced-colors: active) {
+  [data-ui][data-mode] :where(select:not([multiple])) {
+    appearance: auto;
+    background-image: none;
+  }
 }
 }
 
@@ -4571,9 +4587,9 @@
     --usk-native-choice-shadow: none;
     --usk-native-choice-checked-background: var(--luxe-primary);
     --usk-native-choice-mark-color: var(--luxe-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(60deg, transparent 50%, var(--luxe-primary) 50%), linear-gradient(120deg, var(--luxe-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .38rem .38rem, .38rem .38rem;
-    --usk-native-select-indicator-position: calc(100% - 1.24rem) 50%, calc(100% - .9rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.7rem;
     --usk-native-range-track-size: 1px;
     --usk-native-range-track-background: var(--luxe-surface-soft);
@@ -5755,9 +5771,6 @@
     --usk-native-choice-shadow: inset 0 0 0 2px var(--luxe-surface-strong);
     --usk-native-choice-checked-background: var(--luxe-success);
     --usk-native-choice-mark-color: var(--luxe-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(55deg, transparent 48%, var(--luxe-warning) 49% 51%, transparent 52%), linear-gradient(125deg, transparent 48%, var(--luxe-warning) 49% 51%, transparent 52%);
-    --usk-native-select-indicator-size: .4rem .5rem, .4rem .5rem;
-    --usk-native-select-indicator-position: calc(100% - 1.28rem) 50%, calc(100% - .96rem) 50%;
     --usk-native-select-padding-inline-end: 2.82rem;
     --usk-native-range-track-size: 1px;
     --usk-native-range-track-background: linear-gradient(90deg, var(--luxe-border), rgb(var(--luxe-warning-rgb) / .62), var(--luxe-border));

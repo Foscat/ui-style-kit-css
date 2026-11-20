@@ -102,7 +102,9 @@ ${formatSelectors(controls)}
  */
 export function syncContentOverflowCss(rootDir, manifest) {
   const outputPath = path.join(rootDir, 'styles', 'content-overflow.css');
-  fs.writeFileSync(outputPath, renderContentOverflowCss(manifest));
+  const next = renderContentOverflowCss(manifest);
+  if (!fs.existsSync(outputPath) || fs.readFileSync(outputPath, 'utf8') !== next)
+    fs.writeFileSync(outputPath, next);
   return outputPath;
 }
 

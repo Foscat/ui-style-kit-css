@@ -29,17 +29,19 @@ export const COLOR_ROLES = [
   'link',
   'focus',
 ];
-/** @typedef {{ui: string, theme: string, mode: string, bridge: boolean}} Appearance */
+/** @typedef {{ui: string, theme: string, mode: string, corners: string, bridge: boolean}} Appearance */
 /** @typedef {Object} Inventory
  * @property {Array<Object>} presets Public preset identifiers and prefixes.
  * @property {Array<string>} themes Named palette identifiers.
  * @property {Array<string>} modes Supported display modes.
+ * @property {{values: string[]}} [guidedCorners] Supported corner choices.
  * @property {Object<string, Array<string>>} [paletteRoles] Public native material roles by preset.
  */
 /** @typedef {Object} PinnedAppearance
  * @property {string} ui Pinned preset.
  * @property {string} theme Pinned palette or an empty native palette.
  * @property {string} mode Pinned mode.
+ * @property {string} corners Pinned corner choice or an empty preset default.
  * @property {boolean} bridge Whether interaction feedback is enabled.
  * @property {Object<string, string>} edits Detached RGB overrides.
  */
@@ -94,6 +96,29 @@ export function paletteKey(appearance) {
   );
 }
 
+/** Describes validated visual choices consistently in compact and expanded UI context.
+ * @param {Appearance} appearance Current visual configuration.
+ * @param {Inventory} inventory Authoritative preset labels and corner choices.
+ * @returns {string[]} Preset, palette, mode and optional corner labels.
+ */
+export function appearanceLabels(appearance, inventory) {
+  const title = (value) =>
+    value
+      .split('-')
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(' ');
+  const labels = [
+    inventory.presets.find(({ id }) => id === appearance.ui)?.label ?? appearance.ui,
+    appearance.theme ? title(appearance.theme) : 'Style defaults',
+    appearance.mode === 'contrast' ? 'High contrast' : title(appearance.mode),
+  ];
+  if (inventory.guidedCorners?.values.includes(appearance.corners))
+    labels.push(
+      (appearance.corners === 'none' ? 'Square' : title(appearance.corners)) + ' corners',
+    );
+  return labels;
+}
+
 /** Validates appearance against the authoritative inventory.
  * @param {Object} value Candidate appearance.
  * @param {Inventory} inventory Public library inventory.
@@ -104,6 +129,7 @@ function appearanceFor(value, inventory) {
     ui: inventory.presets.some(({ id }) => id === value.ui) ? value.ui : 'minimal-saas',
     theme: inventory.themes.includes(value.theme) ? value.theme : '',
     mode: inventory.modes.includes(value.mode) ? value.mode : 'light',
+    corners: inventory.guidedCorners?.values.includes(value.corners) ? value.corners : '',
     bridge: value.bridge === true,
   };
 }
@@ -134,6 +160,7 @@ export function createState(inventory, search = '') {
       ui: query.get('ui') ?? query.get('personality'),
       theme: query.get('theme'),
       mode: query.get('mode'),
+      corners: query.get('corners'),
       bridge: query.get('bridge') === 'on',
     },
     inventory,
@@ -251,7 +278,7 @@ export function updateInteraction(state, example, patch) {
  * @returns {string} Query string compatible with legacy appearance links.
  */
 export function serializeState(state) {
-  const { ui, theme, mode, bridge } = state.appearance;
+  const { ui, theme, mode, corners, bridge } = state.appearance;
   const query = new URLSearchParams({
     ui,
     theme: theme || 'None',
@@ -261,6 +288,7 @@ export function serializeState(state) {
     component: state.component,
     markup: state.markup,
   });
+  if (corners) query.set('corners', corners);
   if (bridge) query.set('bridge', 'on');
   if (state.icons?.styleSpecific) query.set('icons', 'style');
   if (state.icons?.themed) query.set('iconColor', 'themed');

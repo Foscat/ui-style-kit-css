@@ -2064,9 +2064,10 @@
   --usk-native-choice-shadow: none;
   --usk-native-choice-checked-background: var(--usk-native-primary);
   --usk-native-choice-mark-color: var(--usk-native-on-primary);
+  /** Joined, equal-size halves make one downward chevron without font-dependent glyphs. */
   --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
-  --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-  --usk-native-select-indicator-position: calc(100% - 1.15rem) 50%, calc(100% - .85rem) 50%;
+  --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+  --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
   --usk-native-select-padding-inline-end: 2.5rem;
   --usk-native-range-track-size: .45rem;
   --usk-native-range-track-background: var(--usk-native-track);
@@ -2356,7 +2357,7 @@
 
 [dir="rtl"] [data-ui][data-mode] :where(select:not([multiple])),
 [data-ui][data-mode][dir="rtl"] :where(select:not([multiple])) {
-  --usk-native-select-indicator-position: 1.15rem 50%, .85rem 50%;
+  --usk-native-select-indicator-position: .7rem 50%, 1rem 50%;
 }
 
 [data-ui][data-mode] :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
@@ -2871,6 +2872,21 @@
   background-repeat: no-repeat;
   background-position: var(--usk-native-select-indicator-position);
   background-size: var(--usk-native-select-indicator-size);
+}
+}
+
+/** Listboxes retain option rows without single-select arrows or preset endcap decorations. */
+@layer ui-style-kit.clean_defaults {
+[data-ui][data-mode] :where(select[multiple], select[size]:not([size="0"]):not([size="1"])) {
+  background-image: none;
+}
+
+/** Platform indicators remain visible when forced colors suppress gradient-based artwork. */
+@media (forced-colors: active) {
+  [data-ui][data-mode] :where(select:not([multiple])) {
+    appearance: auto;
+    background-image: none;
+  }
 }
 }
 
@@ -4571,9 +4587,9 @@
     --usk-native-choice-shadow: .18rem .18rem 0 rgb(var(--max-secondary-rgb) / .72);
     --usk-native-choice-checked-background: var(--max-primary);
     --usk-native-choice-mark-color: var(--max-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(33deg, transparent 50%, var(--max-primary) 50%), linear-gradient(147deg, var(--max-primary) 50%, transparent 50%);
-    --usk-native-select-indicator-size: .42rem .42rem, .42rem .42rem;
-    --usk-native-select-indicator-position: calc(100% - 1.16rem) 50%, calc(100% - .84rem) 50%;
+    --usk-native-select-indicator-image: linear-gradient(45deg, transparent 50%, var(--usk-native-indicator) 50%), linear-gradient(135deg, var(--usk-native-indicator) 50%, transparent 50%);
+    --usk-native-select-indicator-size: .3rem .3rem, .3rem .3rem;
+    --usk-native-select-indicator-position: calc(100% - 1rem) 50%, calc(100% - .7rem) 50%;
     --usk-native-select-padding-inline-end: 2.55rem;
     --usk-native-range-track-size: .72rem;
     --usk-native-range-track-background: var(--max-paper-bg);
@@ -5710,9 +5726,6 @@
     --usk-native-choice-shadow: .16rem .16rem 0 rgb(var(--max-secondary-rgb) / .72);
     --usk-native-choice-checked-background: linear-gradient(135deg, var(--max-primary), var(--max-accent));
     --usk-native-choice-mark-color: var(--max-on-primary);
-    --usk-native-select-indicator-image: linear-gradient(35deg, transparent 43%, var(--max-ink) 44% 56%, transparent 57%), linear-gradient(145deg, transparent 43%, var(--max-ink) 44% 56%, transparent 57%);
-    --usk-native-select-indicator-size: .52rem .52rem, .52rem .52rem;
-    --usk-native-select-indicator-position: calc(100% - 1.32rem) 48%, calc(100% - .92rem) 52%;
     --usk-native-select-padding-inline-end: 3.15rem;
     --usk-native-range-track-size: .82rem;
     --usk-native-range-track-background: repeating-linear-gradient(90deg, var(--max-warning) 0 .9rem, var(--max-accent) .9rem 1.8rem, var(--max-primary) 1.8rem 2.7rem);
@@ -5989,7 +6002,6 @@
   }
 
   [data-ui="maximalist"][data-mode] {
-    --usk-native-select-indicator-position: calc(100% - 1.7rem) 48%, calc(100% - 1.25rem) 52%;
     --usk-native-select-padding-inline-end: 3.5rem;
   }
 
@@ -6426,10 +6438,6 @@
     --max-poster-warning-deep: var(--max-warning);
     --max-poster-secondary-deep: var(--max-secondary);
     --max-poster-success-deep: var(--max-success);
-    --usk-native-select-indicator-image: linear-gradient(38deg, transparent 38%, var(--max-ink) 39% 66%, transparent 67%),
-    linear-gradient(142deg, transparent 38%, var(--max-ink) 39% 66%, transparent 67%);
-    --usk-native-select-indicator-size: .68rem .68rem, .68rem .68rem;
-    --usk-native-select-indicator-position: calc(100% - 1.7rem) 48%, calc(100% - 1.16rem) 52%;
   }
 
   @supports (color: color-mix(in srgb,black,white)) {
